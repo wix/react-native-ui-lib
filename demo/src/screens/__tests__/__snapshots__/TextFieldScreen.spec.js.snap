@@ -224,7 +224,40 @@ exports[`TextField Screen renders screen 1`] = `
               undefined,
             ]
           }
-        />
+        >
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "flex": 1,
+                },
+                undefined,
+                {},
+                {},
+                {},
+                undefined,
+              ]
+            }
+          />
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          />
+        </View>
       </View>
       <View
         marginV-s3={true}
@@ -682,38 +715,71 @@ exports[`TextField Screen renders screen 1`] = `
             ]
           }
         >
-          <Text
-            $textDangerLight={true}
+          <View
             style={
               [
-                {
-                  "backgroundColor": "transparent",
-                  "color": "#20303C",
-                  "writingDirection": "ltr",
-                },
+                undefined,
+                undefined,
                 undefined,
                 {
-                  "color": "#FC3D2F",
+                  "flex": 1,
                 },
-                undefined,
                 undefined,
                 {},
+                {},
+                {},
                 undefined,
-                undefined,
-                undefined,
-                [
-                  {
-                    "flexShrink": 1,
-                    "minHeight": 20,
-                  },
-                  [
-                    undefined,
-                    undefined,
-                  ],
-                ],
               ]
             }
-            testID="undefined.validationMessage"
+          >
+            <Text
+              $textDangerLight={true}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "writingDirection": "ltr",
+                  },
+                  undefined,
+                  {
+                    "color": "#FC3D2F",
+                  },
+                  undefined,
+                  undefined,
+                  {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  [
+                    {
+                      "flexShrink": 1,
+                      "minHeight": 20,
+                    },
+                    [
+                      undefined,
+                      undefined,
+                    ],
+                  ],
+                ]
+              }
+              testID="undefined.validationMessage"
+            />
+          </View>
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
           />
         </View>
       </View>
@@ -1009,38 +1075,71 @@ exports[`TextField Screen renders screen 1`] = `
               ]
             }
           >
-            <Text
-              $textDangerLight={true}
+            <View
               style={
                 [
-                  {
-                    "backgroundColor": "transparent",
-                    "color": "#20303C",
-                    "writingDirection": "ltr",
-                  },
+                  undefined,
+                  undefined,
                   undefined,
                   {
-                    "color": "#FC3D2F",
+                    "flex": 1,
                   },
-                  undefined,
                   undefined,
                   {},
+                  {},
+                  {},
                   undefined,
-                  undefined,
-                  undefined,
-                  [
-                    {
-                      "flexShrink": 1,
-                      "minHeight": 20,
-                    },
-                    [
-                      undefined,
-                      undefined,
-                    ],
-                  ],
                 ]
               }
-              testID="undefined.validationMessage"
+            >
+              <Text
+                $textDangerLight={true}
+                style={
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "color": "#20303C",
+                      "writingDirection": "ltr",
+                    },
+                    undefined,
+                    {
+                      "color": "#FC3D2F",
+                    },
+                    undefined,
+                    undefined,
+                    {},
+                    undefined,
+                    undefined,
+                    undefined,
+                    [
+                      {
+                        "flexShrink": 1,
+                        "minHeight": 20,
+                      },
+                      [
+                        undefined,
+                        undefined,
+                      ],
+                    ],
+                  ]
+                }
+                testID="undefined.validationMessage"
+              />
+            </View>
+            <View
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
             />
           </View>
         </View>
@@ -1201,38 +1300,71 @@ exports[`TextField Screen renders screen 1`] = `
               ]
             }
           >
-            <Text
-              $textDangerLight={true}
+            <View
               style={
                 [
-                  {
-                    "backgroundColor": "transparent",
-                    "color": "#20303C",
-                    "writingDirection": "ltr",
-                  },
+                  undefined,
+                  undefined,
                   undefined,
                   {
-                    "color": "#FC3D2F",
+                    "flex": 1,
                   },
-                  undefined,
                   undefined,
                   {},
+                  {},
+                  {},
                   undefined,
-                  undefined,
-                  undefined,
-                  [
-                    {
-                      "flexShrink": 1,
-                      "minHeight": 20,
-                    },
-                    [
-                      undefined,
-                      undefined,
-                    ],
-                  ],
                 ]
               }
-              testID="undefined.validationMessage"
+            >
+              <Text
+                $textDangerLight={true}
+                style={
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "color": "#20303C",
+                      "writingDirection": "ltr",
+                    },
+                    undefined,
+                    {
+                      "color": "#FC3D2F",
+                    },
+                    undefined,
+                    undefined,
+                    {},
+                    undefined,
+                    undefined,
+                    undefined,
+                    [
+                      {
+                        "flexShrink": 1,
+                        "minHeight": 20,
+                      },
+                      [
+                        undefined,
+                        undefined,
+                      ],
+                    ],
+                  ]
+                }
+                testID="undefined.validationMessage"
+              />
+            </View>
+            <View
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
             />
           </View>
         </View>
@@ -1745,38 +1877,71 @@ exports[`TextField Screen renders screen 1`] = `
             ]
           }
         >
-          <Text
-            $textDangerLight={true}
+          <View
             style={
               [
-                {
-                  "backgroundColor": "transparent",
-                  "color": "#20303C",
-                  "writingDirection": "ltr",
-                },
+                undefined,
+                undefined,
                 undefined,
                 {
-                  "color": "#FC3D2F",
+                  "flex": 1,
                 },
-                undefined,
                 undefined,
                 {},
+                {},
+                {},
                 undefined,
-                undefined,
-                undefined,
-                [
-                  {
-                    "flexShrink": 1,
-                    "minHeight": 20,
-                  },
-                  [
-                    undefined,
-                    undefined,
-                  ],
-                ],
               ]
             }
-            testID="undefined.validationMessage"
+          >
+            <Text
+              $textDangerLight={true}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "writingDirection": "ltr",
+                  },
+                  undefined,
+                  {
+                    "color": "#FC3D2F",
+                  },
+                  undefined,
+                  undefined,
+                  {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  [
+                    {
+                      "flexShrink": 1,
+                      "minHeight": 20,
+                    },
+                    [
+                      undefined,
+                      undefined,
+                    ],
+                  ],
+                ]
+              }
+              testID="undefined.validationMessage"
+            />
+          </View>
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
           />
         </View>
       </View>
@@ -2036,37 +2201,71 @@ exports[`TextField Screen renders screen 1`] = `
                 undefined,
               ]
             }
-          />
-          <Text
-            $textNeutralHeavy={true}
-            marginT-s1={true}
-            style={
-              [
-                {
-                  "backgroundColor": "transparent",
-                  "color": "#20303C",
-                  "writingDirection": "ltr",
-                },
-                undefined,
-                {
-                  "color": "#4D5963",
-                },
-                undefined,
-                undefined,
-                {
-                  "marginTop": 4,
-                },
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-              ]
-            }
-            subtext={true}
-            testID="undefined.helperText"
           >
-            Enter first and last name
-          </Text>
+            <View
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  {},
+                  {},
+                  {},
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                $textNeutralHeavy={true}
+                marginT-s1={true}
+                style={
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "color": "#20303C",
+                      "writingDirection": "ltr",
+                    },
+                    undefined,
+                    {
+                      "color": "#4D5963",
+                    },
+                    undefined,
+                    undefined,
+                    {
+                      "marginTop": 4,
+                    },
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+                subtext={true}
+                testID="undefined.helperText"
+              >
+                Enter first and last name
+              </Text>
+            </View>
+            <View
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            />
+          </View>
         </View>
         <View
           accessibilityRole="button"
@@ -2431,38 +2630,71 @@ exports[`TextField Screen renders screen 1`] = `
             ]
           }
         >
-          <Text
-            $textDangerLight={true}
+          <View
             style={
               [
-                {
-                  "backgroundColor": "transparent",
-                  "color": "#20303C",
-                  "writingDirection": "ltr",
-                },
+                undefined,
+                undefined,
                 undefined,
                 {
-                  "color": "#FC3D2F",
+                  "flex": 1,
                 },
-                undefined,
                 undefined,
                 {},
+                {},
+                {},
                 undefined,
-                undefined,
-                undefined,
-                [
-                  {
-                    "flexShrink": 1,
-                    "minHeight": 20,
-                  },
-                  [
-                    undefined,
-                    undefined,
-                  ],
-                ],
               ]
             }
-            testID="undefined.validationMessage"
+          >
+            <Text
+              $textDangerLight={true}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "writingDirection": "ltr",
+                  },
+                  undefined,
+                  {
+                    "color": "#FC3D2F",
+                  },
+                  undefined,
+                  undefined,
+                  {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  [
+                    {
+                      "flexShrink": 1,
+                      "minHeight": 20,
+                    },
+                    [
+                      undefined,
+                      undefined,
+                    ],
+                  ],
+                ]
+              }
+              testID="undefined.validationMessage"
+            />
+          </View>
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
           />
         </View>
       </View>
@@ -2822,38 +3054,71 @@ exports[`TextField Screen renders screen 1`] = `
             ]
           }
         >
-          <Text
-            $textDangerLight={true}
+          <View
             style={
               [
-                {
-                  "backgroundColor": "transparent",
-                  "color": "#20303C",
-                  "writingDirection": "ltr",
-                },
+                undefined,
+                undefined,
                 undefined,
                 {
-                  "color": "#FC3D2F",
+                  "flex": 1,
                 },
-                undefined,
                 undefined,
                 {},
+                {},
+                {},
                 undefined,
-                undefined,
-                undefined,
-                [
-                  {
-                    "flexShrink": 1,
-                    "minHeight": 20,
-                  },
-                  [
-                    undefined,
-                    undefined,
-                  ],
-                ],
               ]
             }
-            testID="undefined.validationMessage"
+          >
+            <Text
+              $textDangerLight={true}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "writingDirection": "ltr",
+                  },
+                  undefined,
+                  {
+                    "color": "#FC3D2F",
+                  },
+                  undefined,
+                  undefined,
+                  {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  [
+                    {
+                      "flexShrink": 1,
+                      "minHeight": 20,
+                    },
+                    [
+                      undefined,
+                      undefined,
+                    ],
+                  ],
+                ]
+              }
+              testID="undefined.validationMessage"
+            />
+          </View>
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
           />
         </View>
       </View>
@@ -3081,106 +3346,140 @@ exports[`TextField Screen renders screen 1`] = `
             ]
           }
         >
-          <Text
-            $textDangerLight={true}
+          <View
             style={
               [
-                {
-                  "backgroundColor": "transparent",
-                  "color": "#20303C",
-                  "writingDirection": "ltr",
-                },
+                undefined,
+                undefined,
                 undefined,
                 {
-                  "color": "#FC3D2F",
+                  "flex": 1,
                 },
-                undefined,
                 undefined,
                 {},
+                {},
+                {},
                 undefined,
-                undefined,
-                undefined,
+              ]
+            }
+          >
+            <Text
+              $textDangerLight={true}
+              style={
                 [
                   {
-                    "flexShrink": 1,
-                    "minHeight": 20,
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "writingDirection": "ltr",
                   },
+                  undefined,
+                  {
+                    "color": "#FC3D2F",
+                  },
+                  undefined,
+                  undefined,
+                  {},
+                  undefined,
+                  undefined,
+                  undefined,
                   [
-                    undefined,
-                    undefined,
+                    {
+                      "flexShrink": 1,
+                      "minHeight": 20,
+                    },
+                    [
+                      undefined,
+                      undefined,
+                    ],
                   ],
-                ],
-              ]
-            }
-            testID="undefined.validationMessage"
-          />
-          <Text
-            style={
-              [
-                {
-                  "backgroundColor": "transparent",
-                  "color": "#20303C",
-                  "writingDirection": "ltr",
-                },
-                {
-                  "fontFamily": "System",
-                  "fontSize": 10,
-                  "fontWeight": "700",
-                  "lineHeight": 16,
-                },
-                undefined,
-                undefined,
-                undefined,
-                {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-              ]
-            }
-            text100={true}
-          >
-            🍇
-             
-            🍈
-             
-            🍌
-          </Text>
-          <Text
-            $textNeutral={true}
-            fsTagName="unmask"
-            style={
-              [
-                {
-                  "backgroundColor": "transparent",
-                  "color": "#20303C",
-                  "writingDirection": "ltr",
-                },
-                undefined,
-                {
-                  "color": "#6E7881",
-                },
-                undefined,
-                undefined,
-                {},
-                undefined,
-                undefined,
-                undefined,
+                ]
+              }
+              testID="undefined.validationMessage"
+            />
+            <Text
+              style={
                 [
                   {
-                    "flexGrow": 1,
-                    "textAlign": "right",
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "writingDirection": "ltr",
                   },
                   {
-                    "color": "#116DFF",
+                    "fontFamily": "System",
+                    "fontSize": 10,
+                    "fontWeight": "700",
+                    "lineHeight": 16,
                   },
-                ],
+                  undefined,
+                  undefined,
+                  undefined,
+                  {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+              text100={true}
+            >
+              🍇
+               
+              🍈
+               
+              🍌
+            </Text>
+          </View>
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
               ]
             }
-            testID="undefined.charCounter"
           >
-            0/20
-          </Text>
+            <Text
+              $textNeutral={true}
+              fsTagName="unmask"
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "writingDirection": "ltr",
+                  },
+                  undefined,
+                  {
+                    "color": "#6E7881",
+                  },
+                  undefined,
+                  undefined,
+                  {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  [
+                    {
+                      "flexGrow": 1,
+                      "textAlign": "right",
+                    },
+                    {
+                      "color": "#116DFF",
+                    },
+                  ],
+                ]
+              }
+              testID="undefined.charCounter"
+            >
+              0/20
+            </Text>
+          </View>
         </View>
       </View>
       <Text
@@ -3470,38 +3769,71 @@ exports[`TextField Screen renders screen 1`] = `
             ]
           }
         >
-          <Text
-            $textDangerLight={true}
+          <View
             style={
               [
-                {
-                  "backgroundColor": "transparent",
-                  "color": "#20303C",
-                  "writingDirection": "ltr",
-                },
+                undefined,
+                undefined,
                 undefined,
                 {
-                  "color": "#FC3D2F",
+                  "flex": 1,
                 },
-                undefined,
                 undefined,
                 {},
+                {},
+                {},
                 undefined,
-                undefined,
-                undefined,
-                [
-                  {
-                    "flexShrink": 1,
-                    "minHeight": 20,
-                  },
-                  [
-                    undefined,
-                    undefined,
-                  ],
-                ],
               ]
             }
-            testID="undefined.validationMessage"
+          >
+            <Text
+              $textDangerLight={true}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "writingDirection": "ltr",
+                  },
+                  undefined,
+                  {
+                    "color": "#FC3D2F",
+                  },
+                  undefined,
+                  undefined,
+                  {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  [
+                    {
+                      "flexShrink": 1,
+                      "minHeight": 20,
+                    },
+                    [
+                      undefined,
+                      undefined,
+                    ],
+                  ],
+                ]
+              }
+              testID="undefined.validationMessage"
+            />
+          </View>
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
           />
         </View>
       </View>
@@ -3691,38 +4023,71 @@ exports[`TextField Screen renders screen 1`] = `
             ]
           }
         >
-          <Text
-            $textDangerLight={true}
+          <View
             style={
               [
-                {
-                  "backgroundColor": "transparent",
-                  "color": "#20303C",
-                  "writingDirection": "ltr",
-                },
+                undefined,
+                undefined,
                 undefined,
                 {
-                  "color": "#FC3D2F",
+                  "flex": 1,
                 },
-                undefined,
                 undefined,
                 {},
+                {},
+                {},
                 undefined,
-                undefined,
-                undefined,
-                [
-                  {
-                    "flexShrink": 1,
-                    "minHeight": 20,
-                  },
-                  [
-                    undefined,
-                    undefined,
-                  ],
-                ],
               ]
             }
-            testID="undefined.validationMessage"
+          >
+            <Text
+              $textDangerLight={true}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "writingDirection": "ltr",
+                  },
+                  undefined,
+                  {
+                    "color": "#FC3D2F",
+                  },
+                  undefined,
+                  undefined,
+                  {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  [
+                    {
+                      "flexShrink": 1,
+                      "minHeight": 20,
+                    },
+                    [
+                      undefined,
+                      undefined,
+                    ],
+                  ],
+                ]
+              }
+              testID="undefined.validationMessage"
+            />
+          </View>
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
           />
         </View>
       </View>
@@ -3942,38 +4307,71 @@ exports[`TextField Screen renders screen 1`] = `
             ]
           }
         >
-          <Text
-            $textDangerLight={true}
+          <View
             style={
               [
-                {
-                  "backgroundColor": "transparent",
-                  "color": "#20303C",
-                  "writingDirection": "ltr",
-                },
+                undefined,
+                undefined,
                 undefined,
                 {
-                  "color": "#FC3D2F",
+                  "flex": 1,
                 },
-                undefined,
                 undefined,
                 {},
+                {},
+                {},
                 undefined,
-                undefined,
-                undefined,
-                [
-                  {
-                    "flexShrink": 1,
-                    "minHeight": 20,
-                  },
-                  [
-                    undefined,
-                    undefined,
-                  ],
-                ],
               ]
             }
-            testID="undefined.validationMessage"
+          >
+            <Text
+              $textDangerLight={true}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "writingDirection": "ltr",
+                  },
+                  undefined,
+                  {
+                    "color": "#FC3D2F",
+                  },
+                  undefined,
+                  undefined,
+                  {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  [
+                    {
+                      "flexShrink": 1,
+                      "minHeight": 20,
+                    },
+                    [
+                      undefined,
+                      undefined,
+                    ],
+                  ],
+                ]
+              }
+              testID="undefined.validationMessage"
+            />
+          </View>
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
           />
         </View>
       </View>
@@ -4645,38 +5043,71 @@ exports[`TextField Screen renders screen 1`] = `
             ]
           }
         >
-          <Text
-            $textDangerLight={true}
+          <View
             style={
               [
-                {
-                  "backgroundColor": "transparent",
-                  "color": "#20303C",
-                  "writingDirection": "ltr",
-                },
+                undefined,
+                undefined,
                 undefined,
                 {
-                  "color": "#FC3D2F",
+                  "flex": 1,
                 },
-                undefined,
                 undefined,
                 {},
+                {},
+                {},
                 undefined,
-                undefined,
-                undefined,
-                [
-                  {
-                    "flexShrink": 1,
-                    "minHeight": 20,
-                  },
-                  [
-                    undefined,
-                    undefined,
-                  ],
-                ],
               ]
             }
-            testID="undefined.validationMessage"
+          >
+            <Text
+              $textDangerLight={true}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "writingDirection": "ltr",
+                  },
+                  undefined,
+                  {
+                    "color": "#FC3D2F",
+                  },
+                  undefined,
+                  undefined,
+                  {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  [
+                    {
+                      "flexShrink": 1,
+                      "minHeight": 20,
+                    },
+                    [
+                      undefined,
+                      undefined,
+                    ],
+                  ],
+                ]
+              }
+              testID="undefined.validationMessage"
+            />
+          </View>
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
           />
         </View>
       </View>
@@ -4907,38 +5338,71 @@ exports[`TextField Screen renders screen 1`] = `
             ]
           }
         >
-          <Text
-            $textDangerLight={true}
+          <View
             style={
               [
-                {
-                  "backgroundColor": "transparent",
-                  "color": "#20303C",
-                  "writingDirection": "ltr",
-                },
+                undefined,
+                undefined,
                 undefined,
                 {
-                  "color": "#FC3D2F",
+                  "flex": 1,
                 },
-                undefined,
                 undefined,
                 {},
+                {},
+                {},
                 undefined,
-                undefined,
-                undefined,
-                [
-                  {
-                    "flexShrink": 1,
-                    "minHeight": 20,
-                  },
-                  [
-                    undefined,
-                    undefined,
-                  ],
-                ],
               ]
             }
-            testID="undefined.validationMessage"
+          >
+            <Text
+              $textDangerLight={true}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "writingDirection": "ltr",
+                  },
+                  undefined,
+                  {
+                    "color": "#FC3D2F",
+                  },
+                  undefined,
+                  undefined,
+                  {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  [
+                    {
+                      "flexShrink": 1,
+                      "minHeight": 20,
+                    },
+                    [
+                      undefined,
+                      undefined,
+                    ],
+                  ],
+                ]
+              }
+              testID="undefined.validationMessage"
+            />
+          </View>
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
           />
         </View>
       </View>
@@ -5197,38 +5661,71 @@ exports[`TextField Screen renders screen 1`] = `
             ]
           }
         >
-          <Text
-            $textDangerLight={true}
+          <View
             style={
               [
-                {
-                  "backgroundColor": "transparent",
-                  "color": "#20303C",
-                  "writingDirection": "ltr",
-                },
+                undefined,
+                undefined,
                 undefined,
                 {
-                  "color": "#FC3D2F",
+                  "flex": 1,
                 },
-                undefined,
                 undefined,
                 {},
+                {},
+                {},
                 undefined,
-                undefined,
-                undefined,
-                [
-                  {
-                    "flexShrink": 1,
-                    "minHeight": 20,
-                  },
-                  [
-                    undefined,
-                    undefined,
-                  ],
-                ],
               ]
             }
-            testID="undefined.validationMessage"
+          >
+            <Text
+              $textDangerLight={true}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "writingDirection": "ltr",
+                  },
+                  undefined,
+                  {
+                    "color": "#FC3D2F",
+                  },
+                  undefined,
+                  undefined,
+                  {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  [
+                    {
+                      "flexShrink": 1,
+                      "minHeight": 20,
+                    },
+                    [
+                      undefined,
+                      undefined,
+                    ],
+                  ],
+                ]
+              }
+              testID="undefined.validationMessage"
+            />
+          </View>
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
           />
         </View>
       </View>
@@ -5532,40 +6029,73 @@ exports[`TextField Screen renders screen 1`] = `
             ]
           }
         >
-          <Text
-            $textDangerLight={true}
+          <View
             style={
               [
-                {
-                  "backgroundColor": "transparent",
-                  "color": "#20303C",
-                  "writingDirection": "ltr",
-                },
+                undefined,
+                undefined,
                 undefined,
                 {
-                  "color": "#FC3D2F",
+                  "flex": 1,
                 },
-                undefined,
                 undefined,
                 {},
+                {},
+                {},
                 undefined,
-                undefined,
-                undefined,
-                [
-                  {
-                    "flexShrink": 1,
-                    "minHeight": 20,
-                  },
-                  [
-                    undefined,
-                    {
-                      "textAlign": "center",
-                    },
-                  ],
-                ],
               ]
             }
-            testID="undefined.validationMessage"
+          >
+            <Text
+              $textDangerLight={true}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "writingDirection": "ltr",
+                  },
+                  undefined,
+                  {
+                    "color": "#FC3D2F",
+                  },
+                  undefined,
+                  undefined,
+                  {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  [
+                    {
+                      "flexShrink": 1,
+                      "minHeight": 20,
+                    },
+                    [
+                      undefined,
+                      {
+                        "textAlign": "center",
+                      },
+                    ],
+                  ],
+                ]
+              }
+              testID="undefined.validationMessage"
+            />
+          </View>
+          <View
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
           />
         </View>
       </View>
@@ -5769,38 +6299,71 @@ exports[`TextField Screen renders screen 1`] = `
               ]
             }
           >
-            <Text
-              $textDangerLight={true}
+            <View
               style={
                 [
-                  {
-                    "backgroundColor": "transparent",
-                    "color": "#20303C",
-                    "writingDirection": "ltr",
-                  },
+                  undefined,
+                  undefined,
                   undefined,
                   {
-                    "color": "#FC3D2F",
+                    "flex": 1,
                   },
-                  undefined,
                   undefined,
                   {},
+                  {},
+                  {},
                   undefined,
-                  undefined,
-                  undefined,
-                  [
-                    {
-                      "flexShrink": 1,
-                      "minHeight": 20,
-                    },
-                    [
-                      undefined,
-                      undefined,
-                    ],
-                  ],
                 ]
               }
-              testID="undefined.validationMessage"
+            >
+              <Text
+                $textDangerLight={true}
+                style={
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "color": "#20303C",
+                      "writingDirection": "ltr",
+                    },
+                    undefined,
+                    {
+                      "color": "#FC3D2F",
+                    },
+                    undefined,
+                    undefined,
+                    {},
+                    undefined,
+                    undefined,
+                    undefined,
+                    [
+                      {
+                        "flexShrink": 1,
+                        "minHeight": 20,
+                      },
+                      [
+                        undefined,
+                        undefined,
+                      ],
+                    ],
+                  ]
+                }
+                testID="undefined.validationMessage"
+              />
+            </View>
+            <View
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
             />
           </View>
         </View>
@@ -5986,38 +6549,71 @@ exports[`TextField Screen renders screen 1`] = `
               ]
             }
           >
-            <Text
-              $textDangerLight={true}
+            <View
               style={
                 [
-                  {
-                    "backgroundColor": "transparent",
-                    "color": "#20303C",
-                    "writingDirection": "ltr",
-                  },
+                  undefined,
+                  undefined,
                   undefined,
                   {
-                    "color": "#FC3D2F",
+                    "flex": 1,
                   },
-                  undefined,
                   undefined,
                   {},
+                  {},
+                  {},
                   undefined,
-                  undefined,
-                  undefined,
-                  [
-                    {
-                      "flexShrink": 1,
-                      "minHeight": 20,
-                    },
-                    [
-                      undefined,
-                      undefined,
-                    ],
-                  ],
                 ]
               }
-              testID="undefined.validationMessage"
+            >
+              <Text
+                $textDangerLight={true}
+                style={
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "color": "#20303C",
+                      "writingDirection": "ltr",
+                    },
+                    undefined,
+                    {
+                      "color": "#FC3D2F",
+                    },
+                    undefined,
+                    undefined,
+                    {},
+                    undefined,
+                    undefined,
+                    undefined,
+                    [
+                      {
+                        "flexShrink": 1,
+                        "minHeight": 20,
+                      },
+                      [
+                        undefined,
+                        undefined,
+                      ],
+                    ],
+                  ]
+                }
+                testID="undefined.validationMessage"
+              />
+            </View>
+            <View
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
             />
           </View>
         </View>

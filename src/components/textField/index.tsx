@@ -209,31 +209,35 @@ const TextField = (props: InternalTextFieldProps) => {
           {/* </View> */}
         </View>
         <View row spread>
-          {validationMessagePosition === ValidationMessagePosition.BOTTOM && (
-            <ValidationMessage
-              enableErrors={enableErrors}
-              validate={others.validate}
-              validationMessage={others.validationMessage}
-              validationIcon={validationIcon}
-              validationMessageStyle={_validationMessageStyle}
-              retainValidationSpace={retainValidationSpace}
-              testID={`${props.testID}.validationMessage`}
-            />
-          )}
-          {bottomAccessory}
-          {showCharCounter && (
-            <CharCounter
-              maxLength={others.maxLength}
-              charCounterStyle={charCounterStyle}
-              testID={`${props.testID}.charCounter`}
-            />
-          )}
+          <View flex>
+            {validationMessagePosition === ValidationMessagePosition.BOTTOM && (
+              <ValidationMessage
+                enableErrors={enableErrors}
+                validate={others.validate}
+                validationMessage={others.validationMessage}
+                validationIcon={validationIcon}
+                validationMessageStyle={_validationMessageStyle}
+                retainValidationSpace={retainValidationSpace}
+                testID={`${props.testID}.validationMessage`}
+              />
+            )}
+            {helperText && (
+              <Text $textNeutralHeavy subtext marginT-s1 testID={`${props.testID}.helperText`}>
+                {helperText}
+              </Text>
+            )}
+            {bottomAccessory}
+          </View>
+          <View>
+            {showCharCounter && (
+              <CharCounter
+                maxLength={others.maxLength}
+                charCounterStyle={charCounterStyle}
+                testID={`${props.testID}.charCounter`}
+              />
+            )}
+          </View>
         </View>
-        {helperText && (
-          <Text $textNeutralHeavy subtext marginT-s1 testID={`${props.testID}.helperText`}>
-            {helperText}
-          </Text>
-        )}
       </View>
     </FieldContext.Provider>
   );
