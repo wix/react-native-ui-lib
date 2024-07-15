@@ -1909,13 +1909,13 @@ exports[`TextField Screen renders screen 1`] = `
                 style={
                   [
                     undefined,
-                    undefined,
                     {
                       "height": 16,
                       "width": 16,
                     },
                     undefined,
                     false,
+                    undefined,
                   ]
                 }
               />
@@ -2763,6 +2763,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
                 style={
                   [
+                    undefined,
+                    undefined,
+                    undefined,
+                    {
+                      "tintColor": "#5A48F5",
+                    },
                     [
                       {
                         "tintColor": "#5A48F5",
@@ -2771,12 +2777,6 @@ exports[`TextField Screen renders screen 1`] = `
                         "tintColor": "#A6ACB1",
                       },
                     ],
-                    undefined,
-                    undefined,
-                    undefined,
-                    {
-                      "tintColor": "#5A48F5",
-                    },
                   ]
                 }
                 testID="undefined.clearButton.icon"
@@ -2796,8 +2796,8 @@ exports[`TextField Screen renders screen 1`] = `
                 undefined,
                 undefined,
                 undefined,
-                undefined,
                 false,
+                undefined,
               ]
             }
           />
@@ -3432,18 +3432,18 @@ exports[`TextField Screen renders screen 1`] = `
               }
               style={
                 [
-                  [
-                    {
-                      "tintColor": "#20303C",
-                    },
-                    undefined,
-                  ],
                   undefined,
                   undefined,
                   undefined,
                   {
                     "tintColor": "#20303C",
                   },
+                  [
+                    {
+                      "tintColor": "#20303C",
+                    },
+                    undefined,
+                  ],
                 ]
               }
               testID="undefined.icon"
@@ -5399,7 +5399,6 @@ exports[`TextField Screen renders screen 1`] = `
               }
               style={
                 [
-                  undefined,
                   {
                     "marginLeft": 4,
                   },
@@ -5409,6 +5408,7 @@ exports[`TextField Screen renders screen 1`] = `
                   },
                   undefined,
                   false,
+                  undefined,
                 ]
               }
             />
