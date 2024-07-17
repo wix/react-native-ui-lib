@@ -266,7 +266,7 @@ export default class PickerScreen extends Component {
           <Picker
             value={this.state.filter}
             onChange={value => this.setState({filter: value})}
-            label="Your Posts"
+            label="Your Posts: "
             placeholder="Filter posts"
             fieldType={Picker.fieldTypes.filter}
             marginB-s3
