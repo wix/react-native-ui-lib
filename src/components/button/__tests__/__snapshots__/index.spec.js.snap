@@ -2334,6 +2334,214 @@ exports[`Button icon should apply color on icon 2`] = `
 </View>
 `;
 
+exports[`Button icon should apply the right icon color 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onLayout={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "#5A48F5",
+      "borderRadius": 999,
+      "flexDirection": "row",
+      "justifyContent": "center",
+      "minWidth": undefined,
+      "opacity": 1,
+      "paddingHorizontal": undefined,
+      "paddingVertical": undefined,
+    }
+  }
+>
+  <Image
+    accessibilityRole="image"
+    accessible={false}
+    source={12}
+    style={
+      [
+        undefined,
+        undefined,
+        undefined,
+        {
+          "tintColor": "red",
+        },
+        [
+          {},
+          undefined,
+        ],
+      ]
+    }
+    testID="undefined.icon"
+  />
+</View>
+`;
+
+exports[`Button icon should apply the right icon color 2`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onLayout={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "#5A48F5",
+      "borderRadius": 999,
+      "flexDirection": "row",
+      "justifyContent": "center",
+      "minWidth": undefined,
+      "opacity": 1,
+      "paddingHorizontal": undefined,
+      "paddingVertical": undefined,
+    }
+  }
+>
+  <Image
+    accessibilityRole="image"
+    accessible={false}
+    source={12}
+    style={
+      [
+        undefined,
+        undefined,
+        undefined,
+        {
+          "tintColor": "#FFFFFF",
+        },
+        [
+          {},
+          {
+            "tintColor": "#ffee22",
+          },
+        ],
+      ]
+    }
+    testID="undefined.icon"
+  />
+</View>
+`;
+
+exports[`Button icon should apply the right icon color 3`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onLayout={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "#5A48F5",
+      "borderRadius": 999,
+      "flexDirection": "row",
+      "justifyContent": "center",
+      "minWidth": undefined,
+      "opacity": 1,
+      "paddingHorizontal": undefined,
+      "paddingVertical": undefined,
+    }
+  }
+>
+  <Image
+    accessibilityRole="image"
+    accessible={false}
+    source={12}
+    style={
+      [
+        undefined,
+        undefined,
+        undefined,
+        {
+          "tintColor": "red",
+        },
+        [
+          {},
+          {
+            "tintColor": "#ffee22",
+          },
+        ],
+      ]
+    }
+    testID="undefined.icon"
+  />
+</View>
+`;
+
 exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
 <View
   accessibilityRole="button"
