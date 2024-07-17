@@ -124,6 +124,17 @@ class Button extends PureComponent<Props, ButtonState> {
     return color;
   }
 
+  getIconColor(): string | undefined {
+    const {disabled} = this.props;
+    let tintColor = this.getLabelColor();
+
+    if (disabled && !this.isFilled) {
+      tintColor = Colors.$iconDisabled;
+    }
+
+    return tintColor;
+  }
+
   getLabelSizeStyle() {
     const size = this.props.size || DEFAULT_SIZE;
 
@@ -249,11 +260,9 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getIconStyle(): [ImageStyle, StyleProp<ImageStyle>] {
-    const {disabled, iconStyle: propsIconStyle, iconOnRight, size: propsSize, link} = this.props;
+    const {iconStyle: propsIconStyle, iconOnRight, size: propsSize, link} = this.props;
     const size = propsSize || DEFAULT_SIZE;
-    const iconStyle: ImageStyle = {
-      tintColor: this.getLabelColor()
-    };
+    const iconStyle: ImageStyle = {};
     const marginSide = link
       ? 4
       : ([Button.sizes.large, Button.sizes.medium] as ButtonSizeProp[]).includes(size)
@@ -266,10 +275,6 @@ class Button extends PureComponent<Props, ButtonState> {
       } else {
         iconStyle.marginRight = marginSide;
       }
-    }
-
-    if (disabled && !this.isFilled) {
-      iconStyle.tintColor = Colors.$iconDisabled;
     }
 
     return [iconStyle, propsIconStyle];
@@ -297,10 +302,11 @@ class Button extends PureComponent<Props, ButtonState> {
     const {iconSource, supportRTL, testID, iconProps} = this.props;
 
     if (iconSource) {
+      const iconColor = this.getIconColor();
       const iconStyle = this.getIconStyle();
 
       if (typeof iconSource === 'function') {
-        return iconSource(iconStyle);
+        return iconSource([{tintColor: iconColor}, this.getIconStyle()]);
       } else {
         // if (Constants.isWeb) {
         return (
@@ -309,9 +315,8 @@ class Button extends PureComponent<Props, ButtonState> {
             source={iconSource}
             supportRTL={supportRTL}
             testID={`${testID}.icon`}
-            // Note Passing tintColor as prop is required for Web
-            // @ts-expect-error RN ImageStyle conflicts with ImageProps in tintColor type
-            tintColor={iconStyle[0]?.tintColor}
+            // Note: Passing tintColor as prop is required for Web
+            tintColor={iconColor}
             {...iconProps}
           />
         );

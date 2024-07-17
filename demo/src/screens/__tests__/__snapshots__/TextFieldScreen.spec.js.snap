@@ -3002,9 +3002,7 @@ exports[`TextField Screen renders screen 1`] = `
                       "tintColor": "#5A48F5",
                     },
                     [
-                      {
-                        "tintColor": "#5A48F5",
-                      },
+                      {},
                       {
                         "tintColor": "#A6ACB1",
                       },
@@ -3738,9 +3736,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "tintColor": "#20303C",
                   },
                   [
-                    {
-                      "tintColor": "#20303C",
-                    },
+                    {},
                     undefined,
                   ],
                 ]
