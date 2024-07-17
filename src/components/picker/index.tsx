@@ -196,7 +196,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     }
   };
 
-  const renderTextField = useCallback(() => {
+  const renderTextField = () => {
     return renderInput ? (
       // @ts-expect-error - hopefully will be solved after the picker migration ends
       renderInput(value, label)
@@ -218,17 +218,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         {pickerInnerInput}
       </TextField>
     );
-  }, [
-    renderInput,
-    pickerRef,
-    propsByFieldType,
-    containerStyle,
-    labelStyle,
-    accessibilityInfo,
-    label,
-    pickerInnerInput,
-    testID
-  ]);
+  };
 
   const expandableModalContent = useMemo(() => {
     const useItems = useWheelPicker || propItems;
