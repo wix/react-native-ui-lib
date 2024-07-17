@@ -1133,7 +1133,6 @@ exports[`Button container size should have no padding of button is an icon butto
         [
           {
             "marginRight": 8,
-            "tintColor": "#FFFFFF",
           },
           undefined,
         ],
@@ -2257,9 +2256,7 @@ exports[`Button icon should apply color on icon 1`] = `
           "tintColor": "green",
         },
         [
-          {
-            "tintColor": "green",
-          },
+          {},
           undefined,
         ],
       ]
@@ -2327,9 +2324,7 @@ exports[`Button icon should apply color on icon 2`] = `
           "tintColor": "#FC3D2F",
         },
         [
-          {
-            "tintColor": "#FC3D2F",
-          },
+          {},
           undefined,
         ],
       ]
@@ -2397,9 +2392,7 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
           "tintColor": "#FFFFFF",
         },
         [
-          {
-            "tintColor": "#FFFFFF",
-          },
+          {},
           {
             "marginRight": 9,
             "tintColor": "red",
@@ -2472,9 +2465,7 @@ exports[`Button icon should return icon style according to different variations 
           "tintColor": "#5A48F5",
         },
         [
-          {
-            "tintColor": "#5A48F5",
-          },
+          {},
           undefined,
         ],
       ]
@@ -2542,9 +2533,7 @@ exports[`Button icon should return icon style according to different variations 
           "tintColor": "#5A48F5",
         },
         [
-          {
-            "tintColor": "#5A48F5",
-          },
+          {},
           undefined,
         ],
       ]
@@ -2612,9 +2601,7 @@ exports[`Button icon should return icon style according to different variations 
           "tintColor": "#FFFFFF",
         },
         [
-          {
-            "tintColor": "#FFFFFF",
-          },
+          {},
           undefined,
         ],
       ]
@@ -3856,9 +3843,7 @@ exports[`Button labelColor should return undefined color if this is an icon butt
           "tintColor": "#FFFFFF",
         },
         [
-          {
-            "tintColor": "#FFFFFF",
-          },
+          {},
           undefined,
         ],
       ]
