@@ -3398,39 +3398,6 @@ exports[`TextField Screen renders screen 1`] = `
             }
           >
             <Text
-              $textDangerLight={true}
-              style={
-                [
-                  {
-                    "backgroundColor": "transparent",
-                    "color": "#20303C",
-                    "writingDirection": "ltr",
-                  },
-                  undefined,
-                  {
-                    "color": "#FC3D2F",
-                  },
-                  undefined,
-                  undefined,
-                  {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  [
-                    {
-                      "flexShrink": 1,
-                      "minHeight": 20,
-                    },
-                    [
-                      undefined,
-                      undefined,
-                    ],
-                  ],
-                ]
-              }
-              testID="undefined.validationMessage"
-            />
-            <Text
               style={
                 [
                   {
