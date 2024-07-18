@@ -80,7 +80,7 @@ const TextField = (props: InternalTextFieldProps) => {
     enableErrors, // TODO: rename to enableValidation
     validationMessageStyle,
     validationMessagePosition = ValidationMessagePosition.BOTTOM,
-    retainValidationSpace = !helperText,
+    retainValidationSpace = !helperText && !bottomAccessory,
     // Char Counter
     showCharCounter,
     charCounterStyle,
