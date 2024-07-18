@@ -127,7 +127,7 @@ const TextField = (props: InternalTextFieldProps) => {
   const _labelStyle = useMemo(() => [labelStyle, centeredTextStyle], [labelStyle, centeredTextStyle]);
   const _validationMessageStyle = useMemo(() => [validationMessageStyle, centeredTextStyle],
     [validationMessageStyle, centeredTextStyle]);
-  const hasValue = fieldState.value !== undefined;
+  const hasValue = fieldState.value !== undefined; // NOTE: not pressable if centered without a value (so can't center placeholder)
   const inputStyle = useMemo(() => [typographyStyle, colorStyle, others.style, hasValue && centeredTextStyle],
     [typographyStyle, colorStyle, others.style, centeredTextStyle, hasValue]);
   const dummyPlaceholderStyle = useMemo(() => [inputStyle, styles.dummyPlaceholder], [inputStyle]);
