@@ -170,11 +170,11 @@ class ActionSheet extends Component<ActionSheetProps> {
         key={index}
         testID={option.testID}
         onPress={() => this.onOptionPress(index)}
-        activeBackgroundColor={Colors.grey80}
+        activeBackgroundColor={Colors.$backgroundNeutralLight}
       >
         <View row paddingL-16 flex centerV>
           {this.handleRenderIcon(option)}
-          <Text text70 grey10 numberOfLines={1} style={option.labelStyle}>
+          <Text text70 $textDefault numberOfLines={1} style={option.labelStyle}>
             {option.label}
           </Text>
         </View>
@@ -201,7 +201,7 @@ class ActionSheet extends Component<ActionSheetProps> {
     if (!_.isEmpty(title)) {
       return (
         <View height={56} paddingL-16 centerV>
-          <Text grey40 text70 style={{alignSelf: 'flex-start'}}>
+          <Text $textNeutralLight text70 style={{alignSelf: 'flex-start'}}>
             {title}
           </Text>
         </View>
@@ -287,13 +287,13 @@ export default asBaseComponent<ActionSheetProps>(ActionSheet);
 
 const styles = StyleSheet.create({
   sheet: {
-    backgroundColor: Colors.white
+    backgroundColor: Colors.$backgroundDefault
   },
   dialog: {
-    backgroundColor: Colors.white
+    backgroundColor: Colors.$backgroundDefault
   },
   incubatorDialog: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.$backgroundDefault,
     marginBottom: 0
   },
   listWithTitle: {
