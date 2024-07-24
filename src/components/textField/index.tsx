@@ -123,7 +123,7 @@ const TextField = (props: InternalTextFieldProps) => {
   const hidePlaceholder = shouldHidePlaceholder(props, fieldState.isFocused);
   const retainTopMessageSpace = !floatingPlaceholder && isEmpty(trim(label));
   const centeredContainerStyle = centered && styles.centeredContainer;
-  const centeredTextStyle = centered && styles.centeredText;
+  const centeredTextStyle = centered && !showCharCounter && styles.centeredText;
   const _labelStyle = useMemo(() => [labelStyle, centeredTextStyle], [labelStyle, centeredTextStyle]);
   const _validationMessageStyle = useMemo(() => [validationMessageStyle, centeredTextStyle],
     [validationMessageStyle, centeredTextStyle]);
