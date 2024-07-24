@@ -31,7 +31,7 @@
     {
       "name": "orderItemsByIndex",
       "type": "boolean",
-      "description": "Wether to reorder the items by index instead of by replacing locations."
+      "description": "Wether to reorder the items by index instead of by swapping locations."
     }
   ],
   "snippet": [
