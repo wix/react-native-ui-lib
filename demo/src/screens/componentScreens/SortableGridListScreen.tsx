@@ -13,6 +13,7 @@ import {
   Button,
   Switch
 } from 'react-native-ui-lib';
+import {renderBooleanOption} from '../ExampleScreenPresenter';
 import _ from 'lodash';
 import products from '../../data/products';
 
@@ -100,9 +101,8 @@ class SortableGridListScreen extends Component {
           />
           <Button label="Remove Item" size={Button.sizes.xSmall} marginL-s3 onPress={this.removeSelectedItem}/>
         </View>
-        <View row spread paddingH-s4>
-          <Text>Order by index</Text>
-          <Switch value={shouldOrderByIndex} onValueChange={(value) => this.setState({shouldOrderByIndex: value})}/>
+        <View paddingH-s5>
+          {renderBooleanOption.call(this, 'Order by index', 'shouldOrderByIndex')}
         </View>
         <View flex>
           <SortableGridList
