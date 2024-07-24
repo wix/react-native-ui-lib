@@ -8,7 +8,7 @@ import {LogService} from 'services';
 import SortableListContext from './SortableListContext';
 import SortableListItem, {DEFAULT_LIST_ITEM_SIZE} from './SortableListItem';
 import {useDidUpdate, useThemeProps} from 'hooks';
-import {SortableListProps, SortableListItemProps} from './types';
+import type {SortableListProps, SortableListItemProps, OrderChangeInfo} from './types';
 import type {Dictionary} from '../../typings/common';
 
 export {SortableListProps, SortableListItemProps};
@@ -46,7 +46,7 @@ const SortableList = <ItemT extends SortableListItemProps>(props: SortableListPr
     itemsOrder.value = generateItemsOrder(data);
   }, [data]);
 
-  const onChange = useCallback(() => {
+  const onChange = useCallback((info: OrderChangeInfo) => {
     const newData: ItemT[] = [];
     const dataByIds = mapKeys(data, 'id');
     if (data?.length) {
@@ -55,7 +55,7 @@ const SortableList = <ItemT extends SortableListItemProps>(props: SortableListPr
       });
     }
 
-    onOrderChange?.(newData);
+    onOrderChange?.(newData, info);
   }, [onOrderChange, data]);
 
   const onItemLayout = useCallback((event: LayoutChangeEvent) => {
