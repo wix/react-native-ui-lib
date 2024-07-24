@@ -10,8 +10,7 @@ import {
   BorderRadiuses,
   GridListProps,
   SortableGridListProps,
-  Button,
-  Switch
+  Button
 } from 'react-native-ui-lib';
 import {renderBooleanOption} from '../ExampleScreenPresenter';
 import _ from 'lodash';
