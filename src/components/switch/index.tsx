@@ -176,7 +176,7 @@ function createStyles({
   width = DEFAULT_WIDTH,
   height = DEFAULT_HEIGHT,
   onColor = Colors.$backgroundPrimaryHeavy,
-  offColor = Colors.$backgroundNeutralIdle,
+  offColor = Colors.$backgroundNeutralHeavy,
   disabledColor = Colors.$backgroundDisabled,
   thumbColor = Colors.$iconDefaultLight,
   thumbSize = DEFAULT_THUMB_SIZE
