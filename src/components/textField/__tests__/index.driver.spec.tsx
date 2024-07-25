@@ -169,6 +169,31 @@ describe('TextField', () => {
         expect(textFieldDriver.getValidationMessage().exists()).toBe(!!defaultProps?.preset);
       });
 
+      it('should render validationMessage if validationMessage passed and remove it when validationMessage is changed to undefined', () => {
+        const renderTree = render(<TestCase {...defaultProps} value={''} validationMessage={'mock message'} enableErrors/>);
+        const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
+
+        expect(textFieldDriver.getValidationMessage().exists()).toBe(true);
+        expect(textFieldDriver.getValidationMessage().getText()).toEqual('mock message');
+
+        renderTree.rerender(<TestCase {...defaultProps} value={''} validationMessage={undefined} enableErrors/>);
+
+        expect(textFieldDriver.getValidationMessage().exists()).toBe(false);
+      });
+
+      it('should not render validationMessage if validationMessage is undefined and add it when validationMessage is passed', () => {
+        const renderTree = render(<TestCase {...defaultProps} value={''} validationMessage={undefined} enableErrors/>);
+        const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
+
+        expect(textFieldDriver.getValidationMessage().exists()).toBe(false);
+
+        renderTree.rerender(<TestCase {...defaultProps} value={''} validationMessage={'mock message'} enableErrors/>);
+
+        expect(textFieldDriver.getValidationMessage().exists()).toBe(true);
+        expect(textFieldDriver.getValidationMessage().getText()).toEqual('mock message');
+      });
+
+
       it('should render validationMessage on start if input required and validateOnStart passed', () => {
         const renderTree = render(<TestCase {...defaultProps} value={''} validationMessage={'mock message'} enableErrors validateOnStart/>);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
