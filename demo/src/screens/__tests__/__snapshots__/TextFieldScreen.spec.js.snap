@@ -1982,7 +1982,7 @@ exports[`TextField Screen renders screen 1`] = `
               undefined,
               undefined,
               [
-                undefined,
+                {},
                 undefined,
                 {
                   "flex": 1,
@@ -2103,7 +2103,7 @@ exports[`TextField Screen renders screen 1`] = `
                   "flexDirection": "row",
                 },
                 [
-                  undefined,
+                  {},
                   [
                     [
                       {
@@ -2144,6 +2144,7 @@ exports[`TextField Screen renders screen 1`] = `
                   }
                 }
                 editable={true}
+                maxLength={20}
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
@@ -2178,6 +2179,7 @@ exports[`TextField Screen renders screen 1`] = `
                 underlineColorAndroid="transparent"
                 validate="required"
                 validateOnBlur={true}
+                validateOnChange={true}
                 validationMessage="This field is required. That means you have to enter some value"
               />
             </View>
@@ -2203,6 +2205,7 @@ exports[`TextField Screen renders screen 1`] = `
             }
           >
             <View
+              marginR-s4={true}
               style={
                 [
                   undefined,
@@ -2213,7 +2216,9 @@ exports[`TextField Screen renders screen 1`] = `
                   },
                   undefined,
                   {},
-                  {},
+                  {
+                    "marginRight": 16,
+                  },
                   {},
                   undefined,
                 ]
@@ -2264,7 +2269,41 @@ exports[`TextField Screen renders screen 1`] = `
                   undefined,
                 ]
               }
-            />
+            >
+              <Text
+                $textNeutral={true}
+                fsTagName="unmask"
+                style={
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "color": "#20303C",
+                      "writingDirection": "ltr",
+                    },
+                    undefined,
+                    {
+                      "color": "#6E7881",
+                    },
+                    undefined,
+                    undefined,
+                    {},
+                    undefined,
+                    undefined,
+                    undefined,
+                    [
+                      {
+                        "flexGrow": 1,
+                        "textAlign": "right",
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
+                testID="undefined.charCounter"
+              >
+                0/20
+              </Text>
+            </View>
           </View>
         </View>
         <View
@@ -3345,6 +3384,7 @@ exports[`TextField Screen renders screen 1`] = `
           }
         >
           <View
+            marginR-s4={true}
             style={
               [
                 undefined,
@@ -3355,45 +3395,14 @@ exports[`TextField Screen renders screen 1`] = `
                 },
                 undefined,
                 {},
-                {},
+                {
+                  "marginRight": 16,
+                },
                 {},
                 undefined,
               ]
             }
           >
-            <Text
-              $textDangerLight={true}
-              style={
-                [
-                  {
-                    "backgroundColor": "transparent",
-                    "color": "#20303C",
-                    "writingDirection": "ltr",
-                  },
-                  undefined,
-                  {
-                    "color": "#FC3D2F",
-                  },
-                  undefined,
-                  undefined,
-                  {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  [
-                    {
-                      "flexShrink": 1,
-                      "minHeight": 20,
-                    },
-                    [
-                      undefined,
-                      undefined,
-                    ],
-                  ],
-                ]
-              }
-              testID="undefined.validationMessage"
-            />
             <Text
               style={
                 [
@@ -6006,6 +6015,7 @@ exports[`TextField Screen renders screen 1`] = `
           </View>
         </View>
         <View
+          center={true}
           row={true}
           spread={true}
           style={
@@ -6018,22 +6028,22 @@ exports[`TextField Screen renders screen 1`] = `
               {},
               {},
               {
+                "alignItems": "center",
                 "flexDirection": "row",
-                "justifyContent": "space-between",
+                "justifyContent": "center",
               },
               undefined,
             ]
           }
         >
           <View
+            flexG={true}
             style={
               [
                 undefined,
                 undefined,
                 undefined,
-                {
-                  "flex": 1,
-                },
+                undefined,
                 undefined,
                 {},
                 {},
