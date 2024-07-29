@@ -2205,6 +2205,7 @@ exports[`TextField Screen renders screen 1`] = `
             }
           >
             <View
+              marginR-s4={true}
               style={
                 [
                   undefined,
@@ -2215,7 +2216,9 @@ exports[`TextField Screen renders screen 1`] = `
                   },
                   undefined,
                   {},
-                  {},
+                  {
+                    "marginRight": 16,
+                  },
                   {},
                   undefined,
                 ]
@@ -3381,6 +3384,7 @@ exports[`TextField Screen renders screen 1`] = `
           }
         >
           <View
+            marginR-s4={true}
             style={
               [
                 undefined,
@@ -3391,7 +3395,9 @@ exports[`TextField Screen renders screen 1`] = `
                 },
                 undefined,
                 {},
-                {},
+                {
+                  "marginRight": 16,
+                },
                 {},
                 undefined,
               ]

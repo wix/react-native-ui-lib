@@ -209,7 +209,7 @@ const TextField = (props: InternalTextFieldProps) => {
           {/* </View> */}
         </View>
         <View row spread center={centered}>
-          <View flex={!centered} flexG={centered}>
+          <View flex={!centered} flexG={centered} marginR-s4={showCharCounter}>
             {validationMessagePosition === ValidationMessagePosition.BOTTOM && (
               <ValidationMessage
                 enableErrors={enableErrors}
