@@ -112,9 +112,9 @@ The last type of modifiers is for styling your components
 ```
 
 
-! all styling modifiers are based on our [`Colors` & `Typography` presets](/docs/foundation/style.md).  
+! all styling modifiers are based on our [`Colors` & `Typography` presets](/docs/foundation/style).  
 You can load your own presets and use them as modifiers. 
 
 
 
-Check out [this example](/docs/getting-started/usage.md) where we use most of these props.
+Check out [this example](/docs/getting-started/usage) where we use most of these props.
