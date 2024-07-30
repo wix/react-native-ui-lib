@@ -1,5 +1,4 @@
 import {NativeModules, AccessibilityInfo, Animated} from 'react-native';
-import React from 'react';
 // ========= Mock Object.defineProperty to always allow overriding =========
 const originalDefineProperty = Object.defineProperty;
 Object.defineProperty = (obj, prop, desc) => {
@@ -16,16 +15,6 @@ Object.defineProperties = (obj, props) => {
   return obj;
 };
 // =========================================================================
-const OriginalReactComponent = React.Component;
-Object.defineProperty(React, 'Component', {
-  value: class MockedReactComponent extends OriginalReactComponent {
-    componentDidMount() {
-      super.componentDidMount?.();
-      this.props.onLayout?.({nativeEvent: {layout: {}}});
-      this.measureInWindow?.({nativeEvent: {layout: {}}});
-    }
-  }
-});
 
 global._UILIB_TESTING = true;
 

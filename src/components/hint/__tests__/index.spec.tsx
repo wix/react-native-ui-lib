@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 import {waitFor, render} from '@testing-library/react-native';
-import {Hint, Colors, Button} from 'react-native-ui-lib';
+import {Hint, Colors, Button} from '../../../';
 import {HintDriver} from '../Hint.driver.new';
 
 const TEST_ID = 'Hint';
