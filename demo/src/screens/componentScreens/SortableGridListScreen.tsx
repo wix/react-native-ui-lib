@@ -115,7 +115,7 @@ class SortableGridListScreen extends Component {
             listPadding={Spacings.s5}
             // keepItemSize
             contentContainerStyle={styles.list}
-            orderItemsByIndex={shouldOrderByIndex}
+            orderByIndex={shouldOrderByIndex}
             onOrderChange={this.onOrderChange}
             extraData={selectedItemId}
           />

@@ -29,7 +29,7 @@ describe('SortableGridlist', () => {
   });
   it('should reorder by index', () => {
     const onOrderChange = jest.fn();
-    const renderTree = render(<TestCase onOrderChange={onOrderChange} orderItemsByIndex/>);
+    const renderTree = render(<TestCase onOrderChange={onOrderChange} orderByIndex/>);
     const driverItem = useDraggableDriver(useComponentDriver({renderTree, testID: itemsTestId('0')}));
     driverItem.drag(150); // Items height is 50 but dragging 100 doesn't work for some reason. 150 works and drags one row down.
     expect(onOrderChange).toHaveBeenCalledTimes(1);
