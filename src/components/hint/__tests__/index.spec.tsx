@@ -85,7 +85,7 @@ describe('Hint Screen component test', () => {
   describe('Test Hint content', () => {
     it('Hint should include message', async () => {
       const renderTree = render(<HintTestComponent showHint/>);
-      const message = renderTree.getByTestId(`${TEST_ID}.text`).props.children;
+      const message = renderTree.getByTestId(`${TEST_ID}.message.text`).props.children;
       expect(message).toBe('Hint message to hint things');
     });
   });
