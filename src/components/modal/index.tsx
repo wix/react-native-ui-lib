@@ -112,9 +112,8 @@ class Modal extends Component<ModalProps> {
       ...others
     } = this.props;
     const defaultContainer = enableModalBlur && Constants.isIOS && BlurView ? BlurView : View;
-    const useGestureHandler = useGestureHandlerRootView;
-    const GestureContainer = useGestureHandler ? GestureHandlerRootView : React.Fragment;
-    const gestureContainerProps = useGestureHandler ? {style: styles.fill} : {};
+    const GestureContainer = useGestureHandlerRootView ? GestureHandlerRootView : React.Fragment;
+    const gestureContainerProps = useGestureHandlerRootView ? {style: styles.fill} : {};
     const useKeyboardAvoiding = useKeyboardAvoidingView && Constants.isIOS;
     const KeyboardAvoidingContainer = useKeyboardAvoiding ? KeyboardAvoidingView : React.Fragment;
     const keyboardAvoidingContainerProps = useKeyboardAvoiding
