@@ -45,7 +45,7 @@ export interface ModalProps extends RNModalProps {
    */
   accessibilityLabel?: string;
   /**
-   * Should add a GestureHandlerRootView (Android only)
+   * Should add a GestureHandlerRootView
    */
   useGestureHandlerRootView?: boolean;
   /**
@@ -112,7 +112,7 @@ class Modal extends Component<ModalProps> {
       ...others
     } = this.props;
     const defaultContainer = enableModalBlur && Constants.isIOS && BlurView ? BlurView : View;
-    const useGestureHandler = useGestureHandlerRootView && Constants.isAndroid;
+    const useGestureHandler = useGestureHandlerRootView;
     const GestureContainer = useGestureHandler ? GestureHandlerRootView : React.Fragment;
     const gestureContainerProps = useGestureHandler ? {style: styles.fill} : {};
     const useKeyboardAvoiding = useKeyboardAvoidingView && Constants.isIOS;
