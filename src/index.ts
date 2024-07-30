@@ -1,5 +1,6 @@
 /* ===== General Stuff ===== */
 export {default as Assets} from './assets';
+export type {emojis as EmojisAssetsType} from './assets/emojis';
 export * from './style';
 export * from './services';
 export * from '../lib/components';
@@ -171,7 +172,8 @@ export {
   TextFieldValidationMessagePositionType,
   TextFieldMandatoryIndication,
   TextFieldValidator,
-  FieldContextType
+  FieldContextType,
+  TextFieldValidators
 } from './components/textField';
 // @ts-expect-error
 export {default as Toast} from './components/toast';

@@ -112,6 +112,7 @@ const SortableListScreen = () => {
       </View>
       <View flex useSafeArea>
         <SortableList
+          flexMigration
           data={items}
           renderItem={renderItem}
           keyExtractor={keyExtractor}

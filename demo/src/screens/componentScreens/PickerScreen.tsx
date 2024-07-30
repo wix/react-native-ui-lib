@@ -24,14 +24,39 @@ const tagIcon = require('../../assets/icons/tags.png');
 const dropdown = require('../../assets/icons/chevronDown.png');
 const dropdownIcon = <Icon source={dropdown} tintColor={Colors.$iconDefault}/>;
 
-const contacts = _.map(contactsData, (c, index) => ({...c, value: index, label: c.name}));
+const renderContact = (contactValue: any, props: any) => {
+  const contact = contacts[contactValue as number];
+  return (
+    <View
+      style={{
+        height: 56,
+        borderBottomWidth: 1,
+        borderColor: Colors.$backgroundNeutral
+      }}
+      paddingH-15
+      row
+      centerV
+      spread
+    >
+      <View row centerV>
+        <Avatar size={35} source={{uri: contact?.thumbnail}}/>
+        <Text marginL-10 text70 $textDefault>
+          {contact?.name}
+        </Text>
+      </View>
+      {props.isSelected && <Icon source={Assets.icons.check} tintColor={Colors.$iconDefault}/>}
+    </View>
+  );
+};
+
+const contacts = _.map(contactsData, (c, index) => ({...c, value: index, label: c.name, renderItem: renderContact}));
 
 const options = [
-  {label: 'JavaScript', value: 'js'},
-  {label: 'Java', value: 'java'},
-  {label: 'Python', value: 'python'},
-  {label: 'C++', value: 'c++', disabled: true},
-  {label: 'Perl', value: 'perl'}
+  {label: 'JavaScript', value: 'js', labelStyle: Typography.text65},
+  {label: 'Java', value: 'java', labelStyle: Typography.text65},
+  {label: 'Python', value: 'python', labelStyle: Typography.text65},
+  {label: 'C++', value: 'c++', disabled: true, labelStyle: Typography.text65},
+  {label: 'Perl', value: 'perl', labelStyle: Typography.text65}
 ];
 
 const filters = [
@@ -57,6 +82,7 @@ const dialogOptions = [
   {label: 'Option 7', value: 6},
   {label: 'Option 8', value: 6}
 ];
+
 export default class PickerScreen extends Component {
   picker = React.createRef<PickerMethods>();
   state = {
@@ -66,17 +92,16 @@ export default class PickerScreen extends Component {
     language2: options[2].value,
     languages: [],
     option: undefined,
-    nativePickerValue: 'java',
+    wheelPickerValue: 'java',
     dialogPickerValue: 'java',
     customModalValues: [],
-    filter: filters[0].value,
-    scheme: schemes[0].value,
+    filter: undefined,
+    scheme: undefined,
     contact: 0
   };
 
-  renderDialog: PickerProps['renderCustomModal'] = (modalProps: RenderCustomModalProps) => {
+  renderDialog: PickerProps['renderOverlay'] = (modalProps: RenderCustomModalProps) => {
     const {visible, children, toggleModal, onDone} = modalProps;
-
     return (
       <Incubator.Dialog
         visible={visible}
@@ -104,6 +129,7 @@ export default class PickerScreen extends Component {
           <Text text40 $textDefault>
             Picker
           </Text>
+          
           <Picker
             placeholder="Favorite Language"
             floatingPlaceholder
@@ -116,11 +142,8 @@ export default class PickerScreen extends Component {
             searchPlaceholder={'Search a language'}
             searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
             // onSearchChange={value => console.warn('value', value)}
-          >
-            {_.map(longOptions, option => (
-              <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
-            ))}
-          </Picker>
+            items={longOptions}
+          />
 
           <Picker
             placeholder="Favorite Languages (up to 3)"
@@ -129,33 +152,18 @@ export default class PickerScreen extends Component {
             mode={Picker.modes.MULTI}
             selectionLimit={3}
             trailingAccessory={dropdownIcon}
-          >
-            {_.map(options, option => (
-              <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
-            ))}
-          </Picker>
+            items={options}
+          />
 
           <Picker
             label="Wheel Picker"
             placeholder="Pick a Language"
             useWheelPicker
-            value={this.state.nativePickerValue}
-            onChange={nativePickerValue => this.setState({nativePickerValue})}
+            value={this.state.wheelPickerValue}
+            onChange={wheelPickerValue => this.setState({wheelPickerValue})}
             trailingAccessory={<Icon source={dropdown}/>}
-            // containerStyle={{marginTop: 20}}
-            // renderPicker={() => {
-            //   return (
-            //     <View>
-            //       <Text>Open Native Picker!</Text>
-            //     </View>
-            //   );
-            // }}
-            // topBarProps={{doneLabel: 'YES', cancelLabel: 'NO'}}
-          >
-            {_.map(options, option => (
-              <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
-            ))}
-          </Picker>
+            items={options}
+          />
 
           <Picker
             label="Custom modal"
@@ -164,18 +172,9 @@ export default class PickerScreen extends Component {
             onChange={items => this.setState({customModalValues: items})}
             mode={Picker.modes.MULTI}
             trailingAccessory={dropdownIcon}
-            renderCustomModal={this.renderDialog}
-          >
-            {_.map(options, option => (
-              <Picker.Item
-                key={option.value}
-                value={option.value}
-                label={option.label}
-                labelStyle={Typography.text65}
-                disabled={option.disabled}
-              />
-            ))}
-          </Picker>
+            renderOverlay={this.renderDialog}
+            items={options}
+          />
 
           <Picker
             label="Dialog Picker"
@@ -186,7 +185,7 @@ export default class PickerScreen extends Component {
             onChange={item => this.setState({option: item})}
             topBarProps={{title: 'Languages'}}
             useDialog
-            renderCustomDialogHeader={({onDone, onCancel}) => (
+            renderHeader={({onDone, onCancel}) => (
               <View padding-s5 row spread>
                 <Button link label="Cancel" onPress={onCancel}/>
                 <Button link label="Done" onPress={onDone}/>
@@ -195,19 +194,16 @@ export default class PickerScreen extends Component {
             customPickerProps={{migrateDialog: true, dialogProps: {bottom: true, width: '100%', height: '45%'}}}
             showSearch
             searchPlaceholder={'Search a language'}
-          >
-            {_.map(dialogOptions, option => (
-              <Picker.Item key={option.value} value={option.value} label={option.label} disabled={option.disabled}/>
-            ))}
-          </Picker>
-
+            items={dialogOptions}
+          />
+          
           <Text marginB-10 text70 $textDefault>
             Custom Picker:
           </Text>
           <Picker
             value={this.state.filter}
             onChange={filter => this.setState({filter})}
-            renderPicker={(_value?: any, label?: string) => {
+            renderInput={(_value?: any, label?: string) => {
               return (
                 <View row>
                   <Icon
@@ -221,11 +217,8 @@ export default class PickerScreen extends Component {
                 </View>
               );
             }}
-          >
-            {_.map(filters, filter => (
-              <Picker.Item key={filter.value} value={filter.value} label={filter.label}/>
-            ))}
-          </Picker>
+            items={filters}
+          />
 
           <Text marginT-20 marginB-10 text70 $textDefault>
             Custom Picker Items:
@@ -236,8 +229,7 @@ export default class PickerScreen extends Component {
             onChange={contact => {
               this.setState({contact});
             }}
-            // getItemValue={contact => contact?.value}
-            renderPicker={(contactValue?: number) => {
+            renderInput={(contactValue?: number) => {
               const contact = contacts[contactValue!] ?? undefined;
               return (
                 <View row>
@@ -256,78 +248,38 @@ export default class PickerScreen extends Component {
                 </View>
               );
             }}
-          >
-            {_.map(contacts, contact => (
-              <Picker.Item
-                key={contact.name}
-                value={contact.value}
-                label={contact.label}
-                renderItem={(contactValue, props) => {
-                  const contact = contacts[contactValue as number];
-                  return (
-                    <View
-                      style={{
-                        height: 56,
-                        borderBottomWidth: 1,
-                        borderColor: Colors.$backgroundNeutral
-                      }}
-                      paddingH-15
-                      row
-                      centerV
-                      spread
-                    >
-                      <View row centerV>
-                        <Avatar size={35} source={{uri: contact?.thumbnail}}/>
-                        <Text marginL-10 text70 $textDefault>
-                          {contact?.name}
-                        </Text>
-                      </View>
-                      {props.isSelected && <Icon source={Assets.icons.check} tintColor={Colors.$iconDefault}/>}
-                    </View>
-                  );
-                }}
-                getItemLabel={contactValue => contacts[contactValue as number]?.name}
-              />
-            ))}
-          </Picker>
-
+            items={contacts}
+          />
           <Button
             label="Open Picker Manually"
             link
             style={{alignSelf: 'flex-start'}}
             onPress={() => this.picker.current?.openExpandable?.()}
           />
-
+          
           <Text text60 marginT-s5>
             Different Field Types
           </Text>
           <Text text80 marginB-s5>
             (Form/Filter/Settings)
           </Text>
-
           <Picker
             value={this.state.filter}
             onChange={value => this.setState({filter: value})}
+            label="Your Posts: "
             placeholder="Filter posts"
             fieldType={Picker.fieldTypes.filter}
             marginB-s3
-          >
-            {filters.map(filter => (
-              <Picker.Item key={filter.value} {...filter}/>
-            ))}
-          </Picker>
-
+            items={filters}
+          />
           <Picker
             value={this.state.scheme}
             onChange={value => this.setState({scheme: value})}
             label="Color Scheme"
-            placeholder="Filter posts"
+            placeholder="Select scheme"
             fieldType={Picker.fieldTypes.settings}
-          >
-            {schemes.map(scheme => (
-              <Picker.Item key={scheme.value} {...scheme}/>
-            ))}
-          </Picker>
+            items={schemes}
+          />
         </View>
       </ScrollView>
     );

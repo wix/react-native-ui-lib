@@ -139,6 +139,10 @@ export interface SliderProps extends AccessibilityProps {
    * Whether to use the new Slider implementation using Reanimated
    */
   migrate?: boolean;
+  /** 
+   * Control the throttle time of the onValueChange and onRangeChange callbacks
+   */
+  throttleTime?: number;
 }
 
 type Props = SliderProps & ForwardRefInjectedProps<SliderRef>;
@@ -188,7 +192,8 @@ const Slider = React.memo((props: Props) => {
     useGap = true,
     accessible = true,
     testID,
-    enableThumbShadow = true
+    enableThumbShadow = true,
+    throttleTime = 200
   } = themeProps;
 
   const accessibilityProps = useMemo(() => {
@@ -227,14 +232,15 @@ const Slider = React.memo((props: Props) => {
   
   const thumbBackground: StyleProp<ViewStyle> = useMemo(() => [
     {backgroundColor: disabled ? disabledThumbTintColor : thumbTintColor}
-  ], [disabled, thumbTintColor]);
+  ], [disabled, thumbTintColor, disabledThumbTintColor]);
   const defaultThumbStyle: StyleProp<ViewStyle> = useMemo(() => [
     styles.thumb, thumbBackground
   ], [thumbBackground]);
   const customThumbStyle: StyleProp<ViewStyle> = useMemo(() => [
     thumbStyle, thumbBackground
   ], [thumbStyle, thumbBackground]); 
-  const _thumbStyle = useSharedValue(StyleUtils.unpackStyle(customThumbStyle || defaultThumbStyle, {flatten: true}));
+  const _thumbStyle = 
+    useSharedValue(StyleUtils.unpackStyle(thumbStyle ? customThumbStyle : defaultThumbStyle, {flatten: true}));
   const _activeThumbStyle = useSharedValue(StyleUtils.unpackStyle(activeThumbStyle, {flatten: true}));
 
   const setInitialPositions = useCallback((trackWidth: number) => {
@@ -271,16 +277,16 @@ const Slider = React.memo((props: Props) => {
   }, [defaultThumbStyle, thumbStyle]);
 
   const onValueChangeThrottled = useCallback(_.throttle(value => {
-    if (!didValueUpdate.current) { // NOTE: fix for GradientSlider (should be removed after fix in the GradientSlider component): don't invoke onChange when slider's value changes to prevent updates loop
+    if (!didValueUpdate.current) { // NOTE: don't invoke onValueChange when slider's value prop updated programmatically
       onValueChange?.(value);
     } else {
       didValueUpdate.current = false;
     }
-  }, 200), [onValueChange]);
+  }, throttleTime), [onValueChange]);
 
   const onRangeChangeThrottled = useCallback(_.throttle((min, max) => {
     onRangeChange?.({min, max});
-  }, 100), [onRangeChange]);
+  }, throttleTime), [onRangeChange]);
 
   useAnimatedReaction(() => {
     return Math.round(defaultThumbOffset.value);

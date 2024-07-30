@@ -1,10 +1,13 @@
 import React, {useCallback, useMemo} from 'react';
-import {LayoutChangeEvent, ImageSourcePropType, ImageStyle, StyleProp, ViewStyle} from 'react-native';
+import {LayoutChangeEvent, ImageStyle, StyleProp, ViewStyle, StyleSheet} from 'react-native';
 import Reanimated, {useAnimatedStyle} from 'react-native-reanimated';
 import {Spacings, Typography} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
 import {SegmentedControlProps} from './index';
+import Icon, {IconProps} from '../icon';
+
+const ICON_SPACING = Spacings.s1;
 
 export type SegmentedControlItemProps = Pick<SegmentedControlProps, 'segmentLabelStyle'> & {
   /**
@@ -14,7 +17,7 @@ export type SegmentedControlItemProps = Pick<SegmentedControlProps, 'segmentLabe
   /**
    * An icon for the segment.
    */
-  iconSource?: ImageSourcePropType;
+  iconSource?: IconProps['source'];
   /**
    * An icon for the segment.
    */
@@ -23,6 +26,10 @@ export type SegmentedControlItemProps = Pick<SegmentedControlProps, 'segmentLabe
    * Should the icon be on right of the label
    */
   iconOnRight?: boolean;
+  /**
+   * Icon tint color
+   */
+  iconTintColor?: string;
 };
 
 export type SegmentProps = SegmentedControlItemProps & {
@@ -74,8 +81,11 @@ const Segment = React.memo((props: SegmentProps) => {
     iconOnRight,
     style,
     segmentLabelStyle,
-    testID
+    testID,
+    iconTintColor
   } = props;
+
+  const AnimatedUIIcon = Reanimated.createAnimatedComponent(Icon);
 
   const animatedTextStyle = useAnimatedStyle(() => {
     const color = selectedIndex?.value === index ? activeColor : inactiveColor;
@@ -83,7 +93,7 @@ const Segment = React.memo((props: SegmentProps) => {
   });
 
   const animatedIconStyle = useAnimatedStyle(() => {
-    const tintColor = selectedIndex?.value === index ? activeColor : inactiveColor;
+    const tintColor = selectedIndex?.value === index ? activeColor : (iconTintColor || inactiveColor);
     return {tintColor};
   });
 
@@ -92,8 +102,7 @@ const Segment = React.memo((props: SegmentProps) => {
   }, [style]);
 
   const renderIcon = useCallback(() => {
-    return iconSource && <Reanimated.Image source={iconSource} style={[animatedIconStyle, iconStyle]}/>;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return iconSource && <AnimatedUIIcon source={iconSource} style={[animatedIconStyle, iconStyle]}/>;
   }, [iconSource, iconStyle]);
 
   const onSegmentPress = useCallback(() => {
@@ -105,7 +114,7 @@ const Segment = React.memo((props: SegmentProps) => {
     onLayout?.(index, event);
   },
   [onLayout, index]);
-
+  const labelMargins = !!iconSource && (iconOnRight ? styles.rightMargin : styles.leftMargin);
   return (
     <TouchableOpacity
       onLayout={segmentOnLayout}
@@ -121,7 +130,7 @@ const Segment = React.memo((props: SegmentProps) => {
         <Reanimated.Text
           fsTagName={'unmasked'}
           numberOfLines={1}
-          style={[Typography.text90, segmentLabelStyle, animatedTextStyle]}
+          style={[Typography.text90, segmentLabelStyle, animatedTextStyle, labelMargins]}
         >
           {label}
         </Reanimated.Text>
@@ -129,6 +138,16 @@ const Segment = React.memo((props: SegmentProps) => {
       {iconOnRight && renderIcon()}
     </TouchableOpacity>
   );
+});
+Segment.displayName = 'SegmentedControl.Segment';
+
+const styles = StyleSheet.create({
+  leftMargin: {
+    marginLeft: ICON_SPACING
+  },
+  rightMargin: {
+    marginRight: ICON_SPACING
+  }
 });
 
 export default asBaseComponent<SegmentProps>(Segment);

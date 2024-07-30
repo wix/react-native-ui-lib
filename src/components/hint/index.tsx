@@ -55,6 +55,8 @@ type HintPositionStyle = Position & Pick<ViewStyle, 'alignItems'>;
 
 type Paddings = Pick<ViewStyle, 'paddingLeft' | 'paddingRight' | 'paddingVertical' | 'paddingHorizontal'>;
 
+type ContentType = string | ReactElement;
+
 export interface HintProps {
   /**
    * Control the visibility of the hint
@@ -67,7 +69,7 @@ export interface HintProps {
   /**
    * The hint message
    */
-  message?: string | ReactElement;
+  message?: ContentType | ContentType[];
   /**
    * The hint message custom style
    */
@@ -484,7 +486,7 @@ class Hint extends Component<HintProps, HintState> {
         {customContent}
         {!customContent && icon && <Image source={icon} style={[styles.icon, iconStyle]} testID={`${testID}.icon`}/>}
         {!customContent && (
-          <Text recorderTag={'unmask'} style={[styles.hintMessage, messageStyle]} testID={`${testID}.text`}>
+          <Text recorderTag={'unmask'} style={[styles.hintMessage, messageStyle]} testID={`${testID}.message.text`}>
             {message}
           </Text>
         )}
@@ -509,7 +511,7 @@ class Hint extends Component<HintProps, HintState> {
           ]}
           pointerEvents="box-none"
         >
-          <TouchableOpacity activeOpacity={opacity} onPress={onPress} testID={`${testID}`}>
+          <TouchableOpacity activeOpacity={opacity} onPress={onPress} testID={testID}>
             {this.renderContent()}
           </TouchableOpacity>
           {this.renderHintTip()}
@@ -558,6 +560,7 @@ class Hint extends Component<HintProps, HintState> {
 
   renderChildren() {
     const {targetFrame} = this.props;
+
     if (!targetFrame && isValidElement(this.props.children)) {
       return React.cloneElement<any>(this.props.children, {
         key: 'clone',

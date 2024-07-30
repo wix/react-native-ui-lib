@@ -12,27 +12,40 @@ import {
   GridListItem
 } from 'react-native-ui-lib';
 import products from '../../data/products';
-import {renderBooleanOption} from '../ExampleScreenPresenter';
+import {renderBooleanOption, renderMultipleSegmentOptions} from '../ExampleScreenPresenter';
 
 class GridListScreen extends Component {
   state = {
     orientation: Constants.orientation,
-    useGridListItem: false
+    useGridListItem: true,
+    horizontalAlignment: GridListItem.horizontalAlignment.left,
+    overlayText: false,
+    alignToStart: false
   };
 
   renderHeader = () => {
     return (
       <View>
-        <Text h1 marginB-s5>
+        <Text h1 marginV-s3>
           GridList
         </Text>
         {renderBooleanOption.call(this, 'UseGridListItem', 'useGridListItem')}
+        <Text h3 marginV-s2>
+          GridListItem props
+        </Text>
+        {renderMultipleSegmentOptions.call(this, 'Horizontal Alignment:', 'horizontalAlignment', [
+          {label: 'left', value: GridListItem.horizontalAlignment.left},
+          {label: 'center', value: GridListItem.horizontalAlignment.center},
+          {label: 'right', value: GridListItem.horizontalAlignment.right}
+        ])}
+        {renderBooleanOption.call(this, 'Align to start:', 'alignToStart')}
+        {renderBooleanOption.call(this, 'Use overlay text:', 'overlayText')}
       </View>
     );
   };
 
   renderItem: GridListProps<(typeof products)[0]>['renderItem'] = ({item}) => {
-    const {useGridListItem} = this.state;
+    const {useGridListItem, horizontalAlignment, overlayText, alignToStart} = this.state;
 
     if (useGridListItem) {
       return (
@@ -41,8 +54,10 @@ class GridListScreen extends Component {
           itemSize={{width: '100%', height: 200}}
           imageProps={{source: {uri: item.mediaUrl}}}
           title="Title"
-          subtitle="Subitle"
-          overlayText
+          subtitle="Subtile"
+          alignToStart={alignToStart}
+          overlayText={overlayText}
+          horizontalAlignment={horizontalAlignment}
         />
       );
     } else {

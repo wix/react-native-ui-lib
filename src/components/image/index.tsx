@@ -6,6 +6,7 @@ import {
   Image as RNImage,
   ImageProps as RNImageProps,
   ImageBackground,
+  ImageBackgroundProps,
   NativeSyntheticEvent,
   ImageErrorEventData
 } from 'react-native';
@@ -27,6 +28,7 @@ import {ComponentStatics} from 'src/typings/common';
 export type ImageSourceType = string | RNImageProps['source'];
 
 export type ImageProps = Omit<RNImageProps, 'source'> &
+  Pick<ImageBackgroundProps, 'imageStyle'> &
   MarginModifiers &
   RecorderProps & {
     /**
@@ -73,7 +75,7 @@ export type ImageProps = Omit<RNImageProps, 'source'> &
     /**
      * Render an overlay with custom content
      */
-    customOverlayContent?: JSX.Element;
+    customOverlayContent?: React.ReactElement | React.ReactElement[];
     /**
      * Default image source in case of an error
      */
@@ -183,6 +185,13 @@ class Image extends PureComponent<Props, State> {
     return this.getVerifiedSource(source);
   }
 
+  getImageStyle = () => {
+    const {imageStyle, borderRadius} = this.props;
+    if (this.shouldUseImageBackground()) {
+      return borderRadius ? [{borderRadius}, imageStyle] : imageStyle;
+    }
+  };
+
   onError = (event: NativeSyntheticEvent<ImageErrorEventData>) => {
     if (event.nativeEvent.error) {
       this.setState({error: true});
@@ -224,6 +233,7 @@ class Image extends PureComponent<Props, State> {
       customOverlayContent,
       modifiers,
       recorderTag,
+      borderRadius,
       ...others
     } = this.props;
     const shouldFlipRTL = supportRTL && Constants.isRTL;
@@ -238,6 +248,7 @@ class Image extends PureComponent<Props, State> {
           shouldFlipRTL && styles.rtlFlipped,
           width && {width},
           height && {height},
+          borderRadius && {borderRadius},
           cover && styles.coverImage,
           this.isGif() && styles.gifImage,
           aspectRatio && {aspectRatio},
@@ -250,6 +261,8 @@ class Image extends PureComponent<Props, State> {
         accessibilityRole={'image'}
         fsTagName={recorderTag}
         {...others}
+        // NOTE: imageStyle prop is only relevant for when rendering ImageBackground component
+        imageStyle={this.getImageStyle()}
         onError={this.onError}
         source={source}
       >
@@ -259,7 +272,7 @@ class Image extends PureComponent<Props, State> {
             intensity={overlayIntensity}
             color={overlayColor}
             customContent={customOverlayContent}
-            borderRadius={others?.borderRadius}
+            borderRadius={borderRadius}
           />
         )}
       </ImageView>

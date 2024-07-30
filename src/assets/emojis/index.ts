@@ -1342,5 +1342,5 @@ export const emojis = {
   "woman-woman-girl-girl": "👩‍👩‍👧‍👧",
   "woman-heart-woman": "👩‍❤️‍👩",
   "woman-kiss-woman": "👩‍❤️‍💋‍👩"
-}
+} as const;
 

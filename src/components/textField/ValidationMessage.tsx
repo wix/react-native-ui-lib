@@ -1,12 +1,16 @@
 import React, {useContext, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
+import {Colors} from '../../style';
+import View from '../view';
 import Text from '../text';
+import Icon from '../icon';
 import FieldContext from './FieldContext';
 import {getRelevantValidationMessage} from './Presenter';
 import {ValidationMessageProps} from './types';
 
 const ValidationMessage = ({
   validationMessage,
+  validationIcon,
   enableErrors,
   validationMessageStyle,
   retainValidationSpace,
@@ -24,11 +28,25 @@ const ValidationMessage = ({
   const relevantValidationMessage = getRelevantValidationMessage(validationMessage, context.failingValidatorIndex);
   const showValidationMessage = !context.isValid || (!validate && !!validationMessage);
 
-  return (
-    <Text testID={testID} $textDangerLight style={style}>
-      {showValidationMessage ? relevantValidationMessage : ''}
-    </Text>
-  );
+  const renderMessage = () => {
+    return (
+      <Text testID={testID} $textDangerLight style={style}>
+        {showValidationMessage ? relevantValidationMessage : ''}
+      </Text>
+    );
+  };
+
+  if (validationIcon?.source) {
+    return (
+      <View row>
+        {showValidationMessage && validationMessage &&
+          <Icon tintColor={Colors.$textDangerLight} size={14} marginR-s1 {...validationIcon} testID={`${testID}.icon`}/>}
+        {renderMessage()}
+      </View>
+    );
+  }
+
+  return renderMessage();
 };
 
 const styles = StyleSheet.create({

@@ -12,6 +12,7 @@ import {TextProps} from '../text';
 import {RecorderProps} from '../../typings/recorderTypes';
 import {PropsWithChildren, ReactElement} from 'react';
 import {ViewProps} from '../view';
+import type {IconProps} from '../icon';
 
 export type ColorType =
   | string
@@ -26,6 +27,12 @@ export type ColorType =
 export enum ValidationMessagePosition {
   TOP = 'top',
   BOTTOM = 'bottom'
+}
+
+export enum Presets {
+  DEFAULT = 'default', // TODO: remove
+  UNDERLINE = 'underline',
+  OUTLINE = 'outline'
 }
 
 export type ValidationMessagePositionType = `${ValidationMessagePosition}` | ValidationMessagePosition;
@@ -119,6 +126,10 @@ export interface ValidationMessageProps {
    * Custom style for the validation message
    */
   validationMessageStyle?: StyleProp<TextStyle>;
+  /** 
+   * Icon left to the validation message
+   */
+  validationIcon?: IconProps;
   /**
    * Keep the validation space even if there is no validation message
    */
@@ -191,9 +202,25 @@ export type TextFieldProps = MarginModifiers &
      */
     trailingAccessory?: ReactElement;
     /**
+     * Pass to render a top trailing element
+     */
+    topTrailingAccessory?: ReactElement;
+    /**
      * Pass to render a bottom element below the input
      */
     bottomAccessory?: ReactElement;
+    /**
+     * Should show a clear button when there is a value
+     */
+    showClearButton?: boolean;
+    /**
+     * On clear button callback
+     */
+    onClear?: () => void;
+    /**
+     * Text to display under the input
+     */
+    helperText?: string;
     /**
      * Pass to add floating placeholder support
      */
@@ -249,7 +276,7 @@ export type TextFieldProps = MarginModifiers &
     /**
      * Predefined preset to use for styling the field
      */
-    preset?: 'default' | null | string;
+    preset?: Presets | `${Presets}` | null | string;
     /**
      * Whether to center the TextField - container and label
      */

@@ -1,12 +1,11 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, TextStyle} from 'react-native';
+import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, TextStyle, StyleProp} from 'react-native';
 import {asBaseComponent, forwardRef, Constants} from '../../commons/new';
 import {Colors, Typography, BorderRadiuses} from 'style';
 import TouchableOpacity from '../touchableOpacity';
 import type {Dictionary, ComponentStatics} from '../../typings/common';
 import Text from '../text';
-import Image from '../image';
 import Icon from '../icon';
 import {
   ButtonSize,
@@ -16,7 +15,7 @@ import {
   Props,
   DEFAULT_PROPS,
   ButtonSizeProp
-} from './ButtonTypes';
+} from './types';
 import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE} from './ButtonConstants';
 
 export {ButtonSize, ButtonAnimationDirection, ButtonProps};
@@ -123,6 +122,17 @@ class Button extends PureComponent<Props, ButtonState> {
 
     color = propsColor || modifiersColor || color;
     return color;
+  }
+
+  getIconColor(): string | undefined {
+    const {disabled} = this.props;
+    let tintColor = this.getLabelColor();
+
+    if (disabled && !this.isFilled) {
+      tintColor = Colors.$iconDisabled;
+    }
+
+    return tintColor;
   }
 
   getLabelSizeStyle() {
@@ -249,12 +259,10 @@ class Button extends PureComponent<Props, ButtonState> {
     }
   }
 
-  getIconStyle() {
-    const {disabled, iconStyle: propsIconStyle, iconOnRight, size: propsSize, link} = this.props;
+  getIconStyle(): [ImageStyle, StyleProp<ImageStyle>] {
+    const {iconStyle: propsIconStyle, iconOnRight, size: propsSize, link} = this.props;
     const size = propsSize || DEFAULT_SIZE;
-    const iconStyle: ImageStyle = {
-      tintColor: this.getLabelColor()
-    };
+    const iconStyle: ImageStyle = {};
     const marginSide = link
       ? 4
       : ([Button.sizes.large, Button.sizes.medium] as ButtonSizeProp[]).includes(size)
@@ -267,10 +275,6 @@ class Button extends PureComponent<Props, ButtonState> {
       } else {
         iconStyle.marginRight = marginSide;
       }
-    }
-
-    if (disabled && !this.isFilled) {
-      iconStyle.tintColor = Colors.$iconDisabled;
     }
 
     return [iconStyle, propsIconStyle];
@@ -298,31 +302,34 @@ class Button extends PureComponent<Props, ButtonState> {
     const {iconSource, supportRTL, testID, iconProps} = this.props;
 
     if (iconSource) {
+      const iconColor = this.getIconColor();
       const iconStyle = this.getIconStyle();
 
       if (typeof iconSource === 'function') {
-        return iconSource(iconStyle);
+        return iconSource([{tintColor: iconColor}, this.getIconStyle()]);
       } else {
-        if (Constants.isWeb) {
-          return (
-            <Icon
-              style={iconStyle}
-              tintColor={Colors.$iconDefault}
-              source={iconSource}
-              testID={`${testID}.icon`}
-              {...iconProps}
-            />
-          );
-        }
+        // if (Constants.isWeb) {
         return (
-          <Image
+          <Icon
+            style={iconStyle}
             source={iconSource}
             supportRTL={supportRTL}
-            style={iconStyle}
             testID={`${testID}.icon`}
+            // Note: Passing tintColor as prop is required for Web
+            tintColor={iconColor}
             {...iconProps}
           />
         );
+        // }
+        // return (
+        //   <Image
+        //     source={iconSource}
+        //     supportRTL={supportRTL}
+        //     style={iconStyle}
+        //     testID={`${testID}.icon`}
+        //     {...iconProps}
+        //   />
+        // );
       }
     }
     return null;

@@ -88,11 +88,13 @@ const Icon = forwardRef((props: Props, ref: any) => {
 
   const renderImage = () => (
     <Image
+      accessible={false}
+      accessibilityRole={'image'}
       fsTagName={recorderTag}
       {...others}
       ref={ref}
       source={iconSource}
-      style={[style, margins, iconSize, shouldFlipRTL && styles.rtlFlipped, !!tintColor && {tintColor}]}
+      style={[margins, iconSize, shouldFlipRTL && styles.rtlFlipped, !!tintColor && {tintColor}, style]}
     />
   );
 

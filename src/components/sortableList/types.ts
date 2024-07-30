@@ -9,6 +9,7 @@ export interface SortableListItemProps {
 
 // Internal
 export type Data<ItemT extends SortableListItemProps> = FlatListProps<ItemT>['data'];
+export type OrderChangeInfo = {from: number, to: number};
 
 export interface SortableListProps<ItemT extends SortableListItemProps>
   extends Omit<FlatListProps<ItemT>, 'extraData' | 'data'>,
@@ -21,7 +22,7 @@ export interface SortableListProps<ItemT extends SortableListItemProps>
   /**
    * A callback to get the new order (or swapped items).
    */
-  onOrderChange: (data: ItemT[] /* TODO: add more data? */) => void;
+  onOrderChange: (data: ItemT[], info: OrderChangeInfo /* TODO: add more data? */) => void;
   /**
    * Whether to enable the haptic feedback
    * (please note that react-native-haptic-feedback does not support the specific haptic type on Android starting on an unknown version, you can use 1.8.2 for it to work properly)
@@ -35,4 +36,8 @@ export interface SortableListProps<ItemT extends SortableListItemProps>
    * List forwarded ref.
    */
   listRef?: ForwardedRef<FlatList<ItemT>>
+  /**
+   * Temporary migration flag for enabling flex on the container of the list (like it should be by default)
+   */
+  flexMigration?: boolean;
 }

@@ -9,8 +9,8 @@ const BROKEN_URL = 'file:///Desktop/website/img/cupcake.jpg';
 const DEFAULT_SIZE = 100;
 
 const file = Assets.svgs.demo.logo;
-const uri = {uri: 'http://thenewcode.com/assets/images/thumbnails/homer-simpson.svg'};
-const uriWithCss = {uri: 'http://thenewcode.com/assets/svg/accessibility.svg'};
+const uri = {uri: 'https://www.svgrepo.com/show/530581/cell-phone.svg'};
+// const uriWithCss = {uri: ''}; // TODO: find an example
 const xml = `
   <svg width="32" height="32" viewBox="0 0 32 32">
     <path
@@ -43,7 +43,7 @@ enum SizeType {
 enum SvgType {
   File = 'file',
   Uri = 'uri',
-  UriWithCss = 'use_with_css',
+  // UriWithCss = 'use_with_css',
   Xml = 'xml'
 }
 
@@ -69,7 +69,8 @@ class ImageScreen extends Component<{}, State> {
     showErrorImage: false,
     showSvg: false,
     svgType: SvgType.File,
-    sizeType: SizeType.None
+    sizeType: SizeType.None,
+    borderRadius: 0
   };
 
   getSvgSource() {
@@ -79,8 +80,8 @@ class ImageScreen extends Component<{}, State> {
         return file;
       case SvgType.Uri:
         return uri;
-      case SvgType.UriWithCss:
-        return uriWithCss;
+      // case SvgType.UriWithCss:
+      //   return uriWithCss;
       case SvgType.Xml:
       default:
         return xml;
@@ -112,7 +113,7 @@ class ImageScreen extends Component<{}, State> {
   }
 
   renderImage() {
-    const {cover, overlayType, overlayIntensity, margin, showErrorImage} = this.state;
+    const {cover, overlayType, overlayIntensity, margin, showErrorImage, borderRadius} = this.state;
     return (
       <Image
         key={`${overlayType}-${overlayIntensity}`}
@@ -126,6 +127,7 @@ class ImageScreen extends Component<{}, State> {
         height={!cover ? DEFAULT_SIZE : undefined}
         customOverlayContent={this.renderOverlayContent()}
         {...{[`margin-${margin}`]: true}}
+        borderRadius={borderRadius}
       />
     );
   }
@@ -156,6 +158,7 @@ class ImageScreen extends Component<{}, State> {
           {renderRadioGroup.call(this, 'Overlay Intensity', 'overlayIntensity', Image.overlayIntensityType)}
         </View>
         {renderSliderOption.call(this, 'Margin(margin-XX)', 'margin', {step: 4, min: 0, max: 40})}
+        {renderSliderOption.call(this, 'Border Radius', 'borderRadius', {step: 5, min: 0, max: 100})}
       </>
     );
   }

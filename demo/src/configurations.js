@@ -1,4 +1,4 @@
-import {Assets, Colors, Typography, Spacings, Incubator} from 'react-native-ui-lib'; // eslint-disable-line
+import {Assets, Colors, Typography, Spacings, TextField} from 'react-native-ui-lib'; // eslint-disable-line
 
 export const loadDemoConfigurations = () => {
   Assets.loadAssetsGroup('icons.demo', {
@@ -14,7 +14,9 @@ export const loadDemoConfigurations = () => {
     refresh: require('./assets/icons/refresh.png'),
     search: require('./assets/icons/search.png'),
     settings: require('./assets/icons/settings.png'),
-    share: require('./assets/icons/share.png')
+    share: require('./assets/icons/share.png'),
+    info: require('./assets/icons/info.png'),
+    exclamation: require('./assets/icons/exclamationFillSmall.png')
   });
 
   Assets.loadAssetsGroup('images.demo', {
@@ -56,5 +58,5 @@ export const loadDemoConfigurations = () => {
   });
 
   /* Components */
-  Incubator.TextField.defaultProps = {...Incubator.TextField.defaultProps, preset: 'default'};
+  TextField.defaultProps = {preset: TextField.presets.UNDERLINE, ...TextField.defaultProps};
 };

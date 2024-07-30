@@ -3,17 +3,17 @@ import {ScrollView} from 'react-native';
 import {Assets, View, Text, Icon, Colors, Image, Button, Carousel, Picker, PickerValue} from 'react-native-ui-lib';
 import _ from 'lodash';
 
-const colorOptions: {[key: string]: {name: string; color: string}} = {
-  red: {name: 'Red', color: Colors.red30},
-  green: {name: 'Green', color: Colors.green30},
-  blue: {name: 'Blue', color: Colors.blue30}
-};
+const colorOptions = [
+  {label: 'Red', value: 'red', color: Colors.red30},
+  {label: 'Green', value: 'green', color: Colors.green30},
+  {label: 'Blue', value: 'blue', color: Colors.blue30}
+];
 
-const sizeOptions = {
-  s: {name: 'Small'},
-  m: {name: 'Medium'},
-  l: {name: 'Large'}
-};
+const sizeOptions = [
+  {label: 'S', value: 's'},
+  {label: 'M', value: 'm'},
+  {label: 'L', value: 'l'}
+];
 
 const images = [
   'https://images.pexels.com/photos/3297502/pexels-photo-3297502.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
@@ -74,7 +74,6 @@ class Product extends Component {
 
           <View marginT-s2>
             <Picker
-              migrate
               value={selectedColor}
               onChange={(value: PickerValue) => this.setState({selectedColor: value})}
               trailingAccessory={
@@ -82,25 +81,19 @@ class Product extends Component {
                   {...{
                     width: 24,
                     height: 24,
-                    backgroundColor: colorOptions[selectedColor].color,
+                    backgroundColor: colorOptions[_.findIndex(colorOptions, {value: selectedColor})].color,
                     borderRadius: 12
                   }}
                 />
               }
-            >
-              {_.map(colorOptions, (colorOption, colorKey) => {
-                return <Picker.Item key={colorKey} value={colorKey} label={colorOption.name}/>;
-              })}
-            </Picker>
+              items={colorOptions}
+            />
+
             <Picker
-              migrate
               value={selectedSize}
               onChange={(value: PickerValue) => this.setState({selectedSize: value})}
-            >
-              {_.map(sizeOptions, (sizeOption, sizeKey) => {
-                return <Picker.Item key={sizeKey} value={sizeKey} label={sizeOption.name}/>;
-              })}
-            </Picker>
+              items={sizeOptions}
+            />
           </View>
 
           <Button label={'Add to Cart'}/>

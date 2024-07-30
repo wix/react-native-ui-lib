@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {map, mapKeys, filter, reduce} from 'lodash';
-import React, {useMemo, useCallback} from 'react';
-import {FlatList, LayoutChangeEvent} from 'react-native';
+import React, {useMemo, useCallback, useEffect} from 'react';
+import {StyleSheet, FlatList, LayoutChangeEvent} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {LogService} from 'services';
 import SortableListContext from './SortableListContext';
 import SortableListItem, {DEFAULT_LIST_ITEM_SIZE} from './SortableListItem';
 import {useDidUpdate, useThemeProps} from 'hooks';
-import {SortableListProps, SortableListItemProps} from './types';
+import type {SortableListProps, SortableListItemProps, OrderChangeInfo} from './types';
 import type {Dictionary} from '../../typings/common';
 
 export {SortableListProps, SortableListItemProps};
@@ -26,17 +27,26 @@ function generateLockedIds<ItemT extends SortableListItemProps>(data: SortableLi
 
 const SortableList = <ItemT extends SortableListItemProps>(props: SortableListProps<ItemT>) => {
   const themeProps = useThemeProps(props, 'SortableList');
-  const {data, onOrderChange, enableHaptic, scale, itemProps, horizontal, listRef, ...others} = themeProps;
+  const {data, onOrderChange, enableHaptic, scale, itemProps, horizontal, listRef, flexMigration, ...others} =
+    themeProps;
 
   const itemsOrder = useSharedValue<string[]>(generateItemsOrder(data));
   const lockedIds = useSharedValue<Dictionary<boolean>>(generateLockedIds(data));
   const itemSize = useSharedValue<number>(DEFAULT_LIST_ITEM_SIZE);
 
+  // TODO: Remove once flexMigration migration is completed 
+  useEffect(() => {
+    if (flexMigration === undefined) {
+      LogService.error(`SortableList "flexMigration" prop is a temporary migration flag to transition to a flex behavior for SortableList. 
+      Please make sure to pass it and check your UI before it becomes true by default`);
+    }
+  }, []);
+
   useDidUpdate(() => {
     itemsOrder.value = generateItemsOrder(data);
   }, [data]);
 
-  const onChange = useCallback(() => {
+  const onChange = useCallback((info: OrderChangeInfo) => {
     const newData: ItemT[] = [];
     const dataByIds = mapKeys(data, 'id');
     if (data?.length) {
@@ -45,7 +55,7 @@ const SortableList = <ItemT extends SortableListItemProps>(props: SortableListPr
       });
     }
 
-    onOrderChange?.(newData);
+    onOrderChange?.(newData, info);
   }, [onOrderChange, data]);
 
   const onItemLayout = useCallback((event: LayoutChangeEvent) => {
@@ -76,7 +86,7 @@ const SortableList = <ItemT extends SortableListItemProps>(props: SortableListPr
     };
   }, [data]);
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={flexMigration ? styles.container : undefined}>
       <SortableListContext.Provider value={context}>
         <FlatList
           {...others}
@@ -90,5 +100,11 @@ const SortableList = <ItemT extends SortableListItemProps>(props: SortableListPr
     </GestureHandlerRootView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
+});
 
 export default SortableList;
