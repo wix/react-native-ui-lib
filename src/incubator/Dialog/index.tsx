@@ -24,6 +24,7 @@ import Modal from '../../components/modal';
 import {extractAlignmentsValues} from '../../commons/modifiers';
 import useHiddenLocation from '../hooks/useHiddenLocation';
 import DialogHeader from './DialogHeader';
+import useDialogCloseButton from './useDialogCloseButton';
 import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps, DialogMigrationProps} from './types';
 export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps, DialogMigrationProps};
 
@@ -42,8 +43,10 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
   const {
     visible = false,
     headerProps,
-    containerStyle,
-    containerProps,
+    showClose,
+    closeProps,
+    containerStyle: propsContainerStyle,
+    containerProps: propsContainerProps,
     width,
     height,
     onDismiss,
@@ -124,6 +127,14 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const {DialogContent, containerProps, containerStyle} = useDialogCloseButton({
+    showClose,
+    close,
+    closeProps,
+    containerStyle: propsContainerStyle,
+    containerProps: propsContainerProps
+  });
+
   // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
   const animatedStyle = useAnimatedStyle(() => {
     if (isVertical) {
@@ -202,8 +213,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     <GestureDetector gesture={panGesture}>
       {/* @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881) */}
       <View {...containerProps} reanimated style={style} onLayout={onLayout} ref={setRef} testID={testID}>
-        {headerProps && <DialogHeader {...headerProps}/>}
-        {children}
+        <DialogContent headerProps={headerProps} children={children}/>
       </View>
     </GestureDetector>
   );

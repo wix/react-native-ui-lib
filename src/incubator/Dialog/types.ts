@@ -2,10 +2,11 @@ import {PropsWithChildren, ReactElement} from 'react';
 import {StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {AlignmentModifiers} from '../../commons/modifiers';
 import {DialogProps as DialogPropsOld} from '../../components/dialog';
+import {IconProps} from '../../components/icon';
 import {ModalProps} from '../../components/modal';
-import {ViewProps} from '../../components/view';
-import {TextProps} from '../../components/text';
 import {PanningDirections, PanningDirectionsEnum} from '../panView';
+import {TextProps} from '../../components/text';
+import {ViewProps} from '../../components/view';
 type DialogDirections = PanningDirections;
 const DialogDirectionsEnum = PanningDirectionsEnum;
 export {DialogDirections, DialogDirectionsEnum};
@@ -69,15 +70,22 @@ export interface DialogHeaderProps extends ViewProps {
   onPress?: () => void;
 }
 
-export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSafeArea'> {
+export interface DialogCloseButton {
   /**
-   * The visibility of the dialog.
+   * Change the default close button text
    */
-  visible?: boolean;
+  closeText?: string;
   /**
-   * The Dialog's header (title, subtitle etc)
+   * The text props
    */
-  headerProps?: DialogHeaderProps;
+  textProps?: TextProps;
+  /**
+   *  The close icon props
+   */
+  iconProps?: IconProps;
+}
+
+export interface DialogCloseButtonProps {
   /**
    * The Dialog`s container style (it is set to {position: 'absolute'})
    */
@@ -86,6 +94,32 @@ export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSa
    * Extra props for the container
    */
   containerProps?: Omit<ViewProps, 'reanimated' | 'animated' | 'style' | 'onLayout' | 'ref' | 'testID'>;
+  /**
+   * Whether to show the close button or not
+   */
+  showClose?: boolean;
+  /**
+   * The close button props
+   */
+  closeProps?: DialogCloseButton;
+}
+
+export interface DialogContentProps {
+  /**
+   * The Dialog's header (title, subtitle etc)
+   */
+  headerProps?: DialogHeaderProps;
+}
+
+export interface _DialogProps
+  extends AlignmentModifiers,
+    Pick<ViewProps, 'useSafeArea'>,
+    DialogContentProps,
+    DialogCloseButtonProps {
+  /**
+   * The visibility of the dialog.
+   */
+  visible?: boolean;
   /**
    * The dialog width.
    */
