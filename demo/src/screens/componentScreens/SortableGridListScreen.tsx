@@ -12,9 +12,9 @@ import {
   SortableGridListProps,
   Button
 } from 'react-native-ui-lib';
-import {renderBooleanOption} from '../ExampleScreenPresenter';
 import _ from 'lodash';
 import products from '../../data/products';
+import {renderBooleanOption} from '../ExampleScreenPresenter';
 
 const productsWithIds = products.map(product => ({...product}));
 type Item = (typeof productsWithIds)[0];
