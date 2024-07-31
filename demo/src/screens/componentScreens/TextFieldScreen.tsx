@@ -209,11 +209,14 @@ export default class TextFieldScreen extends Component {
             validate="required"
             validationMessage="This field is required. That means you have to enter some value"
             containerStyle={{flex: 1}}
+            validateOnChange
             validationMessagePosition={errorPosition}
             helperText={'Enter first and last name'}
             validationIcon={{source: Assets.icons.demo.exclamation, style: {marginTop: 1}}}
             topTrailingAccessory={<Icon source={Assets.icons.demo.info} size={16}/>}
             preset={preset}
+            maxLength={20}
+            showCharCounter
           />
           <Button
             outline

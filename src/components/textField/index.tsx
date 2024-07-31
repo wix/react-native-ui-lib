@@ -80,7 +80,7 @@ const TextField = (props: InternalTextFieldProps) => {
     enableErrors, // TODO: rename to enableValidation
     validationMessageStyle,
     validationMessagePosition = ValidationMessagePosition.BOTTOM,
-    retainValidationSpace = !helperText,
+    retainValidationSpace = !helperText && !bottomAccessory,
     // Char Counter
     showCharCounter,
     charCounterStyle,
@@ -123,11 +123,11 @@ const TextField = (props: InternalTextFieldProps) => {
   const hidePlaceholder = shouldHidePlaceholder(props, fieldState.isFocused);
   const retainTopMessageSpace = !floatingPlaceholder && isEmpty(trim(label));
   const centeredContainerStyle = centered && styles.centeredContainer;
-  const centeredTextStyle = centered && styles.centeredText;
+  const centeredTextStyle = centered && !showCharCounter && styles.centeredText;
   const _labelStyle = useMemo(() => [labelStyle, centeredTextStyle], [labelStyle, centeredTextStyle]);
   const _validationMessageStyle = useMemo(() => [validationMessageStyle, centeredTextStyle],
     [validationMessageStyle, centeredTextStyle]);
-  const hasValue = fieldState.value !== undefined;
+  const hasValue = fieldState.value !== undefined; // NOTE: not pressable if centered without a value (so can't center placeholder)
   const inputStyle = useMemo(() => [typographyStyle, colorStyle, others.style, hasValue && centeredTextStyle],
     [typographyStyle, colorStyle, others.style, centeredTextStyle, hasValue]);
   const dummyPlaceholderStyle = useMemo(() => [inputStyle, styles.dummyPlaceholder], [inputStyle]);
@@ -208,32 +208,36 @@ const TextField = (props: InternalTextFieldProps) => {
           {trailingAccessory}
           {/* </View> */}
         </View>
-        <View row spread>
-          {validationMessagePosition === ValidationMessagePosition.BOTTOM && (
-            <ValidationMessage
-              enableErrors={enableErrors}
-              validate={others.validate}
-              validationMessage={others.validationMessage}
-              validationIcon={validationIcon}
-              validationMessageStyle={_validationMessageStyle}
-              retainValidationSpace={retainValidationSpace}
-              testID={`${props.testID}.validationMessage`}
-            />
-          )}
-          {bottomAccessory}
-          {showCharCounter && (
-            <CharCounter
-              maxLength={others.maxLength}
-              charCounterStyle={charCounterStyle}
-              testID={`${props.testID}.charCounter`}
-            />
-          )}
+        <View row spread center={centered}>
+          <View flex={!centered} flexG={centered} marginR-s4={showCharCounter}>
+            {validationMessagePosition === ValidationMessagePosition.BOTTOM && (
+              <ValidationMessage
+                enableErrors={enableErrors}
+                validate={others.validate}
+                validationMessage={others.validationMessage}
+                validationIcon={validationIcon}
+                validationMessageStyle={_validationMessageStyle}
+                retainValidationSpace={retainValidationSpace}
+                testID={`${props.testID}.validationMessage`}
+              />
+            )}
+            {helperText && (
+              <Text $textNeutralHeavy subtext marginT-s1 testID={`${props.testID}.helperText`}>
+                {helperText}
+              </Text>
+            )}
+            {bottomAccessory}
+          </View>
+          <View>
+            {showCharCounter && (
+              <CharCounter
+                maxLength={others.maxLength}
+                charCounterStyle={charCounterStyle}
+                testID={`${props.testID}.charCounter`}
+              />
+            )}
+          </View>
         </View>
-        {helperText && (
-          <Text $textNeutralHeavy subtext marginT-s1 testID={`${props.testID}.helperText`}>
-            {helperText}
-          </Text>
-        )}
       </View>
     </FieldContext.Provider>
   );

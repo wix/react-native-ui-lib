@@ -151,6 +151,7 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
 
   useImperativeHandle(ref, () => {
     return {
+      isValid: () => textField.current?.isValid(),
       validate: () => textField.current?.validate()
     };
   });
