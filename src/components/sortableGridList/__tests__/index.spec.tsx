@@ -37,4 +37,14 @@ describe('SortableGridlist', () => {
     expect(onOrderChange).toHaveBeenCalledWith(newOrder.map(index => TEST_DATA[index]),
       newOrder.map(index => TEST_DATA[index].id));
   });
+  it('should reorder by swapping', () => {
+    const onOrderChange = jest.fn();
+    const renderTree = render(<TestCase onOrderChange={onOrderChange}/>);
+    const driverItem = useDraggableDriver(useComponentDriver({renderTree, testID: itemsTestId('0')}));
+    driverItem.drag(150);
+    expect(onOrderChange).toHaveBeenCalledTimes(1);
+    const newOrder = [3, 1, 2, 0, 4, 5, 6, 7, 8];
+    expect(onOrderChange).toHaveBeenCalledWith(newOrder.map(index => TEST_DATA[index]),
+      newOrder.map(index => TEST_DATA[index].id));
+  });
 });
