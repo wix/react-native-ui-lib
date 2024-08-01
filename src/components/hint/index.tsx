@@ -614,7 +614,8 @@ const styles = StyleSheet.create({
     elevation: 10
   },
   mockChildrenContainer: {
-    position: 'absolute'
+    position: 'absolute',
+    opacity: 0
   },
   mockChildren: {
     margin: undefined,
