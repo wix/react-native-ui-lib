@@ -546,7 +546,7 @@ class Hint extends Component<HintProps, HintState> {
       };
 
       return (
-        <View style={[styles.mockChildrenContainer, layout, !isBackdropColorPassed && {opacity: 0}]}>
+        <View style={[styles.mockChildrenContainer, layout, !isBackdropColorPassed && styles.hidden]}>
           {React.cloneElement<any>(children, {
             collapsable: false,
             key: 'mock',
@@ -610,6 +610,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute'
   },
+  hidden: {opacity: 0},
   overlayContainer: {
     zIndex: 10,
     elevation: 10
