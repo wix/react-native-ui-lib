@@ -344,7 +344,7 @@ export default class TextFieldScreen extends Component {
       (context?.failingValidatorIndex !== undefined && context?.isMandatory && !context?.hasValue)) {
       color = Colors.$outlineDanger;
     }
-    if (context?.hasValue && context?.isValid) {
+    if (context?.hasValue && context?.isValid && context?.isFocused) {
       color = Colors.$textSuccess;
     }
     if (context?.disabled) {
@@ -481,7 +481,7 @@ export default class TextFieldScreen extends Component {
           topTrailingAccessory={<Icon source={Assets.icons.demo.info} size={16} marginL-s1/>}
           validate={'required'}
           validationMessage={'This field is required'}
-          validateOnBlur
+          validateOnChange
           validationMessagePosition={errorPosition}
           preset={preset}
         />
