@@ -15,10 +15,13 @@ import {
   SegmentedControl,
   Icon
 } from 'react-native-ui-lib';
-const {loadDemoConfigurations} = require('../../../src/configurations.js');
 const {KeyboardAwareInsetsView} = Keyboard;
-const priceFormatter = Intl.NumberFormat('en-US');
+
+const {loadDemoConfigurations} = require('../../../src/configurations.js');
 loadDemoConfigurations();
+
+const priceFormatter = Intl.NumberFormat('en-US');
+
 export default class TextFieldScreen extends Component {
   input = React.createRef<TextFieldRef>();
   input2 = React.createRef<TextFieldRef>();
@@ -32,7 +35,8 @@ export default class TextFieldScreen extends Component {
     value: 'Initial Value',
     isSearching: false,
     preset: undefined,
-    price: ''
+    price: '',
+    editable: false
   };
 
   componentDidMount() {
@@ -62,13 +66,32 @@ export default class TextFieldScreen extends Component {
           <Text h3>
             Presets
           </Text>
-          <View row centerV>
-            <Text marginR-s4 $textPrimary>Preset:</Text>
+          <View row marginT-s2>
             <SegmentedControl segments={[{label: 'Underline'}, {label: 'Outline'}]} onChangeIndex={this.onChangeIndexFieldStyle}/>
           </View>
         </View>
 
         <TextField ref={this.input} placeholder="Enter full name" preset={this.state.preset}/>
+      </>
+    );
+  }
+
+  renderReadonlyExample() {
+    const {editable, preset} = this.state;
+    
+    return (
+      <>
+        <View marginV-s3>
+          <Text h3>
+            Disabled vs Readonly
+          </Text>
+
+          <View row marginT-s2>
+            <SegmentedControl segments={[{label: 'Disabled'}, {label: 'Readonly'}]} onChangeIndex={this.onChangeIndexEditable}/>
+          </View>
+        </View>
+
+        <TextField ref={this.input} label={'Name'} placeholder="Enter full name" readonly={editable} editable={editable} preset={preset}/>
       </>
     );
   }
@@ -97,6 +120,35 @@ export default class TextFieldScreen extends Component {
             placeholder="Placeholder"
             containerStyle={{flex: 1, marginLeft: Spacings.s6}}
             preset={this.state.preset}
+          />
+        </View>
+      </>
+    );
+  }
+
+  renderHintExample() {
+    return (
+      <>
+        <Text h3 marginT-s4>
+          Hint vs HelperText
+        </Text>
+
+        <View row top>
+          <TextField
+            hint="1-6 numbers"
+            placeholder="Enter code"
+            floatingPlaceholder
+            floatOnFocus
+            preset={this.state.preset}
+            containerStyle={{flex: 1}}
+          />
+          <TextField
+            helperText="1-6 numbers"
+            placeholder="Enter code"
+            floatingPlaceholder
+            floatOnFocus
+            preset={this.state.preset}
+            containerStyle={{flex: 1, marginLeft: Spacings.s6}}
           />
         </View>
       </>
@@ -237,7 +289,8 @@ export default class TextFieldScreen extends Component {
     
     switch (index) {
       case 0:
-        // this.input3.current?.clear();
+        this.input3.current?.blur();
+        this.input3.current?.clear();
         break;
       case 1:
         this.input3.current?.focus();
@@ -274,21 +327,28 @@ export default class TextFieldScreen extends Component {
 
         <TextField
           ref={this.input3}
-          label="Email"
+          readonly={isReadonly}
+          editable={!isDisabled}
+          validate={'required'}
+          validateOnChange={false}
+          validateOnBlur={false}
+          preset={preset}
+          label="Color"
           labelColor={{
             default: Colors.purple10,
             focus: Colors.green40,
-            error: Colors.orange40,
-            readonly: Colors.purple50,
-            disabled: Colors.cyan60
+            error: Colors.red30,
+            readonly: Colors.purple40,
+            disabled: Colors.cyan40
           }}
-          placeholder="Enter valid email"
-          validationMessage="Email is invalid"
-          validate={'email'}
-          validateOnChange
-          readonly={isReadonly}
-          editable={!isDisabled}
-          preset={preset}
+          placeholder="Color change by state"
+          placeholderTextColor={{
+            default: Colors.purple70,
+            focus: Colors.green70,
+            error: Colors.red70,
+            readonly: Colors.purple70,
+            disabled: Colors.cyan70
+          }}
         />
       </>
     );
@@ -298,30 +358,35 @@ export default class TextFieldScreen extends Component {
     this.setState({preset: index === 0 ? 'underline' : 'outline'});
   };
 
+  onChangeIndexEditable = (index: number) => {
+    this.setState({editable: index === 1});
+  };
+
   getDynamicFieldStyle = (context: FieldContextType, props: TextFieldProps) => {
     let color = Colors.$outlineNeutral;
     
     if (context?.isFocused) {
       color = Colors.$outlinePrimary;
     }
-    if (context?.hasValue && context?.isValid === false) {
+    if ((context?.hasValue && context?.isValid === false) || 
+      (context?.failingValidatorIndex !== undefined && context?.isMandatory && !context?.hasValue)) {
       color = Colors.$outlineDanger;
     }
-    if (context?.hasValue && context?.isValid) {
+    if (context?.hasValue && context?.isValid && context?.isFocused) {
       color = Colors.$textSuccess;
     }
     if (context?.disabled) {
-      color = Colors.$outlineDefault;
+      color = Colors.$outlineDisabled;
     }
     if (context?.readonly) {
-      color = Colors.$outlineDisabled;
+      color = Colors.$outlineNeutralHeavy;
     }
 
     return props?.preset === TextField.presets.UNDERLINE ? {borderBottomColor: color} : {borderColor: color};
   };
 
   renderDynamicFieldExample() {
-    const {preset, isDisabled, isReadonly} = this.state;
+    const {preset} = this.state;
 
     return (
       <>
@@ -330,14 +395,12 @@ export default class TextFieldScreen extends Component {
         </Text>
 
         <TextField
-          label="Email"
-          placeholder="Enter valid email"
-          validate={'email'}
+          label="Required"
+          placeholder="Enter some value"
+          validate={'required'}
           validateOnChange
-          validationMessage="Email is invalid"
+          validationMessage="This field is required"
           preset={preset}
-          editable={!isDisabled}
-          readonly={isReadonly}
           dynamicFieldStyle={this.getDynamicFieldStyle}
         />
       </>
@@ -386,24 +449,6 @@ export default class TextFieldScreen extends Component {
     );
   }
 
-  renderHintExample() {
-    return (
-      <>
-        <Text h3 marginT-s4>
-          Hint
-        </Text>
-
-        <TextField
-          placeholder="Enter password"
-          floatingPlaceholder
-          floatOnFocus
-          hint="1-6 chars including numeric chars"
-          preset={this.state.preset}
-        />
-      </>
-    );
-  }
-
   renderFormatterExample() {
     const {price, preset} = this.state;
 
@@ -446,7 +491,7 @@ export default class TextFieldScreen extends Component {
           topTrailingAccessory={<Icon source={Assets.icons.demo.info} size={16} marginL-s1/>}
           validate={'required'}
           validationMessage={'This field is required'}
-          validateOnBlur
+          validateOnChange
           validationMessagePosition={errorPosition}
           preset={preset}
         />
@@ -475,9 +520,10 @@ export default class TextFieldScreen extends Component {
 
           {this.renderDefaultExample()}
           {this.renderPresetExample()}
+          {this.renderReadonlyExample()}
           {this.renderPlaceholdersExample()}
-          {this.renderValidationExample()}
           {this.renderHintExample()}
+          {this.renderValidationExample()}
           {this.renderClearButtonExample()}
           {this.renderCharCounterExample()}
           {this.renderAccessoriesExample()}
