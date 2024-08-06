@@ -126,6 +126,35 @@ export default class TextFieldScreen extends Component {
     );
   }
 
+  renderHintExample() {
+    return (
+      <>
+        <Text h3 marginT-s4>
+          Hint vs HelperText
+        </Text>
+
+        <View row top>
+          <TextField
+            hint="1-6 numbers"
+            placeholder="Enter code"
+            floatingPlaceholder
+            floatOnFocus
+            preset={this.state.preset}
+            containerStyle={{flex: 1}}
+          />
+          <TextField
+            helperText="1-6 numbers"
+            placeholder="Enter code"
+            floatingPlaceholder
+            floatOnFocus
+            preset={this.state.preset}
+            containerStyle={{flex: 1, marginLeft: Spacings.s6}}
+          />
+        </View>
+      </>
+    );
+  }
+
   renderTrailingAccessory() {
     const {isSearching} = this.state;
     
@@ -420,24 +449,6 @@ export default class TextFieldScreen extends Component {
     );
   }
 
-  renderHintExample() {
-    return (
-      <>
-        <Text h3 marginT-s4>
-          Hint
-        </Text>
-
-        <TextField
-          placeholder="Enter password"
-          floatingPlaceholder
-          floatOnFocus
-          hint="1-6 chars including numeric chars"
-          preset={this.state.preset}
-        />
-      </>
-    );
-  }
-
   renderFormatterExample() {
     const {price, preset} = this.state;
 
@@ -511,8 +522,8 @@ export default class TextFieldScreen extends Component {
           {this.renderPresetExample()}
           {this.renderReadonlyExample()}
           {this.renderPlaceholdersExample()}
-          {this.renderValidationExample()}
           {this.renderHintExample()}
+          {this.renderValidationExample()}
           {this.renderClearButtonExample()}
           {this.renderCharCounterExample()}
           {this.renderAccessoriesExample()}
