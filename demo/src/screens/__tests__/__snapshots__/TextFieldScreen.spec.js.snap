@@ -1520,6 +1520,7 @@ exports[`TextField Screen renders screen 1`] = `
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
+                placeholder="FloatingPlaceholder"
                 placeholderTextColor="transparent"
                 style={
                   [
@@ -3113,6 +3114,7 @@ exports[`TextField Screen renders screen 1`] = `
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
+              placeholder="Enter password"
               placeholderTextColor="transparent"
               style={
                 [
