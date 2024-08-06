@@ -1097,7 +1097,44 @@ exports[`TextField Screen renders screen 1`] = `
               undefined,
             ]
           }
-        />
+        >
+          <Text
+            color="#D2D6D8"
+            fsTagName="unmask"
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                {
+                  "color": "#D2D6D8",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "minHeight": 20,
+                  },
+                  [
+                    undefined,
+                    undefined,
+                  ],
+                  undefined,
+                ],
+              ]
+            }
+            testID="undefined.label"
+          >
+            Name
+          </Text>
+        </View>
         <View
           centerV={true}
           row={true}
@@ -6507,6 +6544,7 @@ exports[`TextField Screen renders screen 1`] = `
               underlineColorAndroid="transparent"
               validate="required"
               validateOnBlur={true}
+              validateOnChange={true}
               validationMessage="This field is required"
             />
           </View>
