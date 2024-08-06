@@ -92,7 +92,7 @@ export default class TextFieldScreen extends Component {
           </View>
         </View>
 
-        <TextField ref={this.input} placeholder="Enter full name" readonly={editable} editable={editable} preset={preset}/>
+        <TextField ref={this.input} label={'Name'} placeholder="Enter full name" readonly={editable} editable={editable} preset={preset}/>
       </>
     );
   }
