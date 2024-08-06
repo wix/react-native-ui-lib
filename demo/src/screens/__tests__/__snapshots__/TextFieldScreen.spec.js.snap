@@ -306,7 +306,7 @@ exports[`TextField Screen renders screen 1`] = `
           Presets
         </Text>
         <View
-          centerV={true}
+          marginT-s2={true}
           row={true}
           style={
             [
@@ -316,43 +316,16 @@ exports[`TextField Screen renders screen 1`] = `
               undefined,
               undefined,
               {},
-              {},
               {
-                "alignItems": "center",
+                "marginTop": 8,
+              },
+              {
                 "flexDirection": "row",
               },
               undefined,
             ]
           }
         >
-          <Text
-            $textPrimary={true}
-            marginR-s4={true}
-            style={
-              [
-                {
-                  "backgroundColor": "transparent",
-                  "color": "#20303C",
-                  "writingDirection": "ltr",
-                },
-                undefined,
-                {
-                  "color": "#5A48F5",
-                },
-                undefined,
-                undefined,
-                {
-                  "marginRight": 16,
-                },
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-              ]
-            }
-          >
-            Preset:
-          </Text>
           <View
             style={
               [

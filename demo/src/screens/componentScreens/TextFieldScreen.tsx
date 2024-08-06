@@ -66,8 +66,7 @@ export default class TextFieldScreen extends Component {
           <Text h3>
             Presets
           </Text>
-          <View row centerV>
-            <Text marginR-s4 $textPrimary>Preset:</Text>
+          <View row marginT-s2>
             <SegmentedControl segments={[{label: 'Underline'}, {label: 'Outline'}]} onChangeIndex={this.onChangeIndexFieldStyle}/>
           </View>
         </View>
