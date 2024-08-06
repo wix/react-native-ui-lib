@@ -70,7 +70,7 @@ const TextField = (props: InternalTextFieldProps) => {
     labelStyle,
     labelProps,
     // Accessory Buttons
-    leadingAccessory,
+    leadingAccessory: propsLeadingAccessory,
     trailingAccessory,
     topTrailingAccessory,
     bottomAccessory,
@@ -107,12 +107,16 @@ const TextField = (props: InternalTextFieldProps) => {
   }, [fieldState, others.editable, readonly, validateField, checkValidity]);
 
   const leadingAccessoryClone = useMemo(() => {
-    if (leadingAccessory) {
-      return React.cloneElement(leadingAccessory, {
+    if (propsLeadingAccessory) {
+      return React.cloneElement(propsLeadingAccessory, {
         ref: leadingAccessoryRef
       });
     }
-  }, [leadingAccessory]);
+  }, [propsLeadingAccessory]);
+
+  const leadingAccessory = useMemo(() => {
+    return floatingPlaceholder ? leadingAccessoryClone : propsLeadingAccessory;
+  }, [floatingPlaceholder, leadingAccessoryClone, propsLeadingAccessory]);
 
   const {margins, paddings, typography, positionStyle, color} = modifiers;
   const typographyStyle = useMemo(() => omit(typography, 'lineHeight'), [typography]);
@@ -161,7 +165,7 @@ const TextField = (props: InternalTextFieldProps) => {
         </View>
         <View style={[paddings, fieldStyle]} row centerV centerH={centered}>
           {/* <View row centerV> */}
-          {leadingAccessoryClone}
+          {leadingAccessory}
 
           {/* Note: We're passing flexG to the View to support properly inline behavior - so the input will be rendered correctly in a row container.
             Known Issue: This slightly push the trailing accessory and clear button when entering a long text
