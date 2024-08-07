@@ -43,8 +43,8 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
   const {
     visible = false,
     headerProps,
-    showClose,
-    closeProps,
+    showCloseButton,
+    closeButtonProps,
     containerStyle: propsContainerStyle,
     containerProps: propsContainerProps,
     width,
@@ -128,9 +128,9 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
   }, []);
 
   const {DialogContent, containerProps, containerStyle} = useDialogCloseButton({
-    showClose,
+    showCloseButton,
     close,
-    closeProps,
+    closeButtonProps,
     containerStyle: propsContainerStyle,
     containerProps: propsContainerProps
   });

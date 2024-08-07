@@ -2,7 +2,7 @@ import {PropsWithChildren, ReactElement} from 'react';
 import {StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {AlignmentModifiers} from '../../commons/modifiers';
 import {DialogProps as DialogPropsOld} from '../../components/dialog';
-import {IconProps} from '../../components/icon';
+import {ButtonProps} from '../../components/button';
 import {ModalProps} from '../../components/modal';
 import {PanningDirections, PanningDirectionsEnum} from '../panView';
 import {TextProps} from '../../components/text';
@@ -70,21 +70,6 @@ export interface DialogHeaderProps extends ViewProps {
   onPress?: () => void;
 }
 
-export interface DialogCloseButton {
-  /**
-   * Change the default close button text
-   */
-  closeText?: string;
-  /**
-   * The text props
-   */
-  textProps?: TextProps;
-  /**
-   *  The close icon props
-   */
-  iconProps?: IconProps;
-}
-
 export interface DialogCloseButtonProps {
   /**
    * The Dialog`s container style (it is set to {position: 'absolute'})
@@ -97,11 +82,11 @@ export interface DialogCloseButtonProps {
   /**
    * Whether to show the close button or not
    */
-  showClose?: boolean;
+  showCloseButton?: boolean;
   /**
    * The close button props
    */
-  closeProps?: DialogCloseButton;
+  closeButtonProps?: Pick<ButtonProps, 'label' | 'labelProps' | 'iconProps'>;
 }
 
 export interface DialogContentProps {

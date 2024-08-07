@@ -15,37 +15,37 @@ interface InternalDialogCloseButtonProps extends DialogCloseButtonProps {
 
 const useDialogCloseButton = (props: InternalDialogCloseButtonProps) => {
   const {
-    showClose,
+    showCloseButton,
     close,
-    closeProps,
+    closeButtonProps,
     containerStyle: propsContainerStyle,
     containerProps: propsContainerProps
   } = props;
 
   const DialogCloseButton = useMemo(() => {
-    if (!showClose) {
+    if (!showCloseButton) {
       return null;
     }
 
     return (
       <View left centerV pointerEvents={'box-none'}>
         <TouchableOpacity paddingB-s2 row onPress={close}>
-          <Icon source={Assets.icons.xMedium} tintColor={Colors.white} {...closeProps?.iconProps}/>
-          <Text recorderTag={'unmask'} text70BO white {...closeProps?.textProps}>
-            {closeProps?.closeText || 'Close'}
+          <Icon source={Assets.icons.xMedium} tintColor={Colors.white} {...closeButtonProps?.iconProps}/>
+          <Text recorderTag={'unmask'} text70BO white {...closeButtonProps?.labelProps}>
+            {closeButtonProps?.label || 'Close'}
           </Text>
         </TouchableOpacity>
       </View>
     );
-  }, [showClose, close, closeProps]);
+  }, [showCloseButton, close, closeButtonProps]);
 
   const containerProps = useMemo((): DialogCloseButtonProps['containerProps'] => {
-    return showClose ? {...propsContainerProps, pointerEvents: 'box-none'} : propsContainerProps;
-  }, [showClose, propsContainerProps]);
+    return showCloseButton ? {...propsContainerProps, pointerEvents: 'box-none'} : propsContainerProps;
+  }, [showCloseButton, propsContainerProps]);
 
   const containerStyle = useMemo(() => {
-    return showClose ? [propsContainerStyle, styles.transparent] : propsContainerStyle;
-  }, [showClose, propsContainerStyle]);
+    return showCloseButton ? [propsContainerStyle, styles.transparent] : propsContainerStyle;
+  }, [showCloseButton, propsContainerStyle]);
 
   const DialogContent = (props: PropsWithChildren<DialogContentProps>) => {
     const {headerProps, children} = props;
