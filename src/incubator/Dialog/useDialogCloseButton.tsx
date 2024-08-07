@@ -1,6 +1,6 @@
 import React, {PropsWithChildren, useMemo} from 'react';
 import {BorderRadiuses, Colors} from '../../style';
-import {DialogCloseButtonProps, DialogContentProps} from './types';
+import {DialogCloseButtonProps} from './types';
 import {StyleSheet} from 'react-native';
 import Assets from '../../assets';
 import DialogHeader from './DialogHeader';
@@ -9,7 +9,7 @@ import Text from '../../components/text';
 import TouchableOpacity from '../../components/touchableOpacity';
 import View from '../../components/view';
 
-interface InternalDialogCloseButtonProps extends DialogCloseButtonProps {
+interface InternalDialogCloseButtonProps extends PropsWithChildren<DialogCloseButtonProps> {
   close: () => void;
 }
 
@@ -19,7 +19,9 @@ const useDialogCloseButton = (props: InternalDialogCloseButtonProps) => {
     close,
     closeButtonProps,
     containerStyle: propsContainerStyle,
-    containerProps: propsContainerProps
+    containerProps: propsContainerProps,
+    headerProps,
+    children
   } = props;
 
   const DialogCloseButton = useMemo(() => {
@@ -47,25 +49,23 @@ const useDialogCloseButton = (props: InternalDialogCloseButtonProps) => {
     return showCloseButton ? [propsContainerStyle, styles.transparent] : propsContainerStyle;
   }, [showCloseButton, propsContainerStyle]);
 
-  const DialogContent = (props: PropsWithChildren<DialogContentProps>) => {
-    const {headerProps, children} = props;
+  const DialogContent = () => {
+    const DialogContent = (
+      <>
+        {headerProps && <DialogHeader {...headerProps}/>}
+        {children}
+      </>
+    );
+
     if (DialogCloseButton) {
       return (
         <>
           {DialogCloseButton}
-          <View style={styles.dialogContentContainer}>
-            {headerProps && <DialogHeader {...headerProps}/>}
-            {children}
-          </View>
+          <View style={styles.dialogContentContainer}>{DialogContent}</View>
         </>
       );
     } else {
-      return (
-        <>
-          {headerProps && <DialogHeader {...headerProps}/>}
-          {children}
-        </>
-      );
+      return DialogContent;
     }
   };
 

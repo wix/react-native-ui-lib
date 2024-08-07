@@ -72,6 +72,10 @@ export interface DialogHeaderProps extends ViewProps {
 
 export interface DialogCloseButtonProps {
   /**
+   * The Dialog's header (title, subtitle etc)
+   */
+  headerProps?: DialogHeaderProps;
+  /**
    * The Dialog`s container style (it is set to {position: 'absolute'})
    */
   containerStyle?: StyleProp<ViewStyle>;
@@ -89,18 +93,7 @@ export interface DialogCloseButtonProps {
   closeButtonProps?: Pick<ButtonProps, 'label' | 'labelProps' | 'iconProps'>;
 }
 
-export interface DialogContentProps {
-  /**
-   * The Dialog's header (title, subtitle etc)
-   */
-  headerProps?: DialogHeaderProps;
-}
-
-export interface _DialogProps
-  extends AlignmentModifiers,
-    Pick<ViewProps, 'useSafeArea'>,
-    DialogContentProps,
-    DialogCloseButtonProps {
+export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSafeArea'>, DialogCloseButtonProps {
   /**
    * The visibility of the dialog.
    */

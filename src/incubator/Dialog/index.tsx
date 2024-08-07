@@ -132,7 +132,9 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     close,
     closeButtonProps,
     containerStyle: propsContainerStyle,
-    containerProps: propsContainerProps
+    containerProps: propsContainerProps,
+    headerProps,
+    children
   });
 
   // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
@@ -213,7 +215,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     <GestureDetector gesture={panGesture}>
       {/* @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881) */}
       <View {...containerProps} reanimated style={style} onLayout={onLayout} ref={setRef} testID={testID}>
-        <DialogContent headerProps={headerProps} children={children}/>
+        <DialogContent/>
       </View>
     </GestureDetector>
   );
