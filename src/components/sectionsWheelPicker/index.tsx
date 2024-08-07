@@ -4,7 +4,6 @@ import {TextStyle, StyleSheet} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Constants} from '../../commons/new';
 import {useThemeProps} from '../../hooks';
-import View from '../view';
 import WheelPicker, {WheelPickerProps, WheelPickerItemValue} from '../WheelPicker';
 
 export type SectionsWheelPickerProps<T = WheelPickerItemValue> = PropsWithChildren<{
@@ -74,7 +73,6 @@ const SectionsWheelPicker = <T extends WheelPickerItemValue>(props: SectionsWhee
       );
     });
 
-  // wrap with GestureHandlerRootView
   return (
     <GestureHandlerRootView style={[styles.container, shouldDisableRTL && styles.disableRTL]} testID={testID}>
       {renderSections()}
