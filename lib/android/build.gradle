@@ -9,6 +9,7 @@ project.ext {
 }
 
 android {
+    namespace "com.wix.reactnativeuilib"
     compileSdkVersion project.ext.compileSdkVersion
     buildToolsVersion project.ext.buildToolsVersion
 

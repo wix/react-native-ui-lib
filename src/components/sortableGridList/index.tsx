@@ -17,7 +17,7 @@ function generateItemsOrder(data: SortableGridListProps['data']) {
 }
 
 function SortableGridList<T = any>(props: SortableGridListProps<T>) {
-  const {renderItem, onOrderChange, flexMigration, ...others} = props;
+  const {renderItem, onOrderChange, flexMigration, orderByIndex = false, ...others} = props;
 
   const {itemContainerStyle, numberOfColumns, listStyle, listContentStyle, listColumnWrapperStyle} =
     useGridLayout(props);
@@ -60,13 +60,14 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
         itemsOrder={itemsOrder}
         id={item.id}
         onChange={onChange}
+        orderByIndex={orderByIndex}
       >
         {/* @ts-expect-error */}
         {renderItem({item, index})}
       </SortableItem>
     );
   },
-  [data, itemContainerStyle, onChange, renderItem]);
+  [data, itemContainerStyle, onChange, renderItem, orderByIndex]);
 
   return (
     <GestureHandlerRootView style={flexMigration ? styles.container : undefined}>
