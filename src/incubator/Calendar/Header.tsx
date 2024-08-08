@@ -58,6 +58,7 @@ const Header = (props: HeaderProps) => {
       return <Text style={styles.title}>{title}</Text>;
     }
     return (
+      //@ts-expect-error - hack to animate the title text change
       <AnimatedTextInput 
         value={getTitle(selectedDate.value)} // setting initial value
         {...{animatedProps}}
