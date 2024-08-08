@@ -22,7 +22,6 @@ const ClearButton = ({testID, onClear, onChangeText}: Pick<TextFieldProps, 'onCl
   const animatedValue = useSharedValue(hasValue ? VISIBLE_POSITION : NON_VISIBLE_POSITION);
   const animatedOpacity = useSharedValue(hasValue ? 1 : 0);
 
-  // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [{translateY: animatedValue.value}, {translateX: 0}],
@@ -49,7 +48,6 @@ const ClearButton = ({testID, onClear, onChangeText}: Pick<TextFieldProps, 'onCl
   };
 
   return (
-    //@ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
     <View reanimated style={style} testID={`${testID}.container`}>
       <Button
         link

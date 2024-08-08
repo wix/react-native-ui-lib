@@ -58,11 +58,11 @@ const Header = (props: HeaderProps) => {
       return <Text style={styles.title}>{title}</Text>;
     }
     return (
+      //@ts-expect-error - hack to animate the title text change
       <AnimatedTextInput 
         value={getTitle(selectedDate.value)} // setting initial value
         {...{animatedProps}}
         editable={false}
-        // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
         style={styles.title}
       />);
   };

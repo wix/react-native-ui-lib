@@ -171,7 +171,6 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
       }
     });
 
-  // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
   const animatedStyle = useAnimatedStyle(() => {
     const scale = withSpring(isDragging.value ? 1.1 : 1);
     const zIndex = isDragging.value ? 100 : withTiming(0, animationConfig);
@@ -183,7 +182,6 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
   });
 
   return (
-    // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
     <View reanimated style={[style, animatedStyle]} onLayout={onLayout}>
       <GestureDetector gesture={dragOnLongPressGesture}>
         <View>{props.children}</View>

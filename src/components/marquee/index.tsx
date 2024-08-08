@@ -76,7 +76,6 @@ function Marquee(props: MarqueeProps) {
     }
   }, [viewLayout, textLayout]);
 
-  // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
   const translateStyle = useAnimatedStyle(() => {
     if (offset.value) {
       return {
@@ -90,7 +89,6 @@ function Marquee(props: MarqueeProps) {
 
   return (
     <View style={[styles.container, containerStyle]} onLayout={onLayoutView}>
-      {/* @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881) */}
       <View reanimated style={[translateStyle]}>
         <Text style={[styles.text, labelStyle]} onLayout={onLayoutText}>
           {label}

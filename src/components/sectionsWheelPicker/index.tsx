@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import React, {PropsWithChildren, useMemo} from 'react';
 import {TextStyle, StyleSheet} from 'react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Constants} from '../../commons/new';
 import {useThemeProps} from '../../hooks';
-import View from '../view';
 import WheelPicker, {WheelPickerProps, WheelPickerItemValue} from '../WheelPicker';
 
 export type SectionsWheelPickerProps<T = WheelPickerItemValue> = PropsWithChildren<{
@@ -74,9 +74,9 @@ const SectionsWheelPicker = <T extends WheelPickerItemValue>(props: SectionsWhee
     });
 
   return (
-    <View row centerH style={shouldDisableRTL && styles.disableRTL} testID={testID}>
+    <GestureHandlerRootView style={[styles.container, shouldDisableRTL && styles.disableRTL]} testID={testID}>
       {renderSections()}
-    </View>
+    </GestureHandlerRootView>
   );
 };
 
@@ -85,6 +85,11 @@ SectionsWheelPicker.displayName = 'SectionsWheelPicker';
 export default SectionsWheelPicker;
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   disableRTL: {
     flexDirection: 'row-reverse'
   }
