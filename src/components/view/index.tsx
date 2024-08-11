@@ -82,7 +82,7 @@ function View(props: ViewProps, ref: any) {
     reanimated,
     children,
     backgroundColor: backgroundColorProps,
-    recorderTag,
+    // recorderTag,
     ...others
   } = themeProps;
   const {
