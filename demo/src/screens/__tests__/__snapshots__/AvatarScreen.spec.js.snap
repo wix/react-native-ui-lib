@@ -3125,8 +3125,8 @@ exports[`AvatarScreen renders screen 1`] = `
           >
             <Text
               allowFontScaling={false}
-              fsTagName="unmask"
               numberOfLines={1}
+              recorderTag="unmask"
               style={
                 [
                   {

@@ -471,7 +471,6 @@ exports[`TextField Screen renders screen 1`] = `
                 testID="undefined.0"
               >
                 <Text
-                  fsTagName="unmasked"
                   numberOfLines={1}
                   style={
                     [
@@ -536,7 +535,6 @@ exports[`TextField Screen renders screen 1`] = `
                 testID="undefined.1"
               >
                 <Text
-                  fsTagName="unmasked"
                   numberOfLines={1}
                   style={
                     [
@@ -879,7 +877,7 @@ exports[`TextField Screen renders screen 1`] = `
           >
             <Text
               color="#20303C"
-              fsTagName="unmask"
+              recorderTag="unmask"
               style={
                 [
                   {
@@ -992,9 +990,9 @@ exports[`TextField Screen renders screen 1`] = `
                   animated={true}
                   collapsable={false}
                   color="#6E7881"
-                  fsTagName="unmask"
                   numberOfLines={1}
                   onLayout={[Function]}
+                  recorderTag="unmask"
                   style={
                     {
                       "backgroundColor": "transparent",
@@ -1581,7 +1579,6 @@ exports[`TextField Screen renders screen 1`] = `
                 testID="undefined.0"
               >
                 <Text
-                  fsTagName="unmasked"
                   numberOfLines={1}
                   style={
                     [
@@ -1646,7 +1643,6 @@ exports[`TextField Screen renders screen 1`] = `
                 testID="undefined.1"
               >
                 <Text
-                  fsTagName="unmasked"
                   numberOfLines={1}
                   style={
                     [
@@ -1713,7 +1709,7 @@ exports[`TextField Screen renders screen 1`] = `
         >
           <Text
             color="#20303C"
-            fsTagName="unmask"
+            recorderTag="unmask"
             style={
               [
                 {
@@ -2014,7 +2010,7 @@ exports[`TextField Screen renders screen 1`] = `
           >
             <Text
               color="#20303C"
-              fsTagName="unmask"
+              recorderTag="unmask"
               style={
                 [
                   {
@@ -2272,7 +2268,7 @@ exports[`TextField Screen renders screen 1`] = `
             >
               <Text
                 $textNeutral={true}
-                fsTagName="unmask"
+                recorderTag="unmask"
                 style={
                   [
                     {
@@ -2354,8 +2350,8 @@ exports[`TextField Screen renders screen 1`] = `
           }
         >
           <Text
-            fsTagName="unmask"
             numberOfLines={1}
+            recorderTag="unmask"
             style={
               [
                 {
@@ -2473,7 +2469,7 @@ exports[`TextField Screen renders screen 1`] = `
         >
           <Text
             color="#20303C"
-            fsTagName="unmask"
+            recorderTag="unmask"
             style={
               [
                 {
@@ -2586,9 +2582,9 @@ exports[`TextField Screen renders screen 1`] = `
                 animated={true}
                 collapsable={false}
                 color="#20303C"
-                fsTagName="unmask"
                 numberOfLines={1}
                 onLayout={[Function]}
+                recorderTag="unmask"
                 style={
                   {
                     "backgroundColor": "transparent",
@@ -2810,7 +2806,7 @@ exports[`TextField Screen renders screen 1`] = `
         >
           <Text
             color="#20303C"
-            fsTagName="unmask"
+            recorderTag="unmask"
             style={
               [
                 {
@@ -3232,7 +3228,7 @@ exports[`TextField Screen renders screen 1`] = `
         >
           <Text
             color="#20303C"
-            fsTagName="unmask"
+            recorderTag="unmask"
             style={
               [
                 {
@@ -3453,7 +3449,7 @@ exports[`TextField Screen renders screen 1`] = `
           >
             <Text
               $textNeutral={true}
-              fsTagName="unmask"
+              recorderTag="unmask"
               style={
                 [
                   {
@@ -4569,7 +4565,6 @@ exports[`TextField Screen renders screen 1`] = `
                 testID="undefined.0"
               >
                 <Text
-                  fsTagName="unmasked"
                   numberOfLines={1}
                   style={
                     [
@@ -4634,7 +4629,6 @@ exports[`TextField Screen renders screen 1`] = `
                 testID="undefined.1"
               >
                 <Text
-                  fsTagName="unmasked"
                   numberOfLines={1}
                   style={
                     [
@@ -4699,7 +4693,6 @@ exports[`TextField Screen renders screen 1`] = `
                 testID="undefined.2"
               >
                 <Text
-                  fsTagName="unmasked"
                   numberOfLines={1}
                   style={
                     [
@@ -4764,7 +4757,6 @@ exports[`TextField Screen renders screen 1`] = `
                 testID="undefined.3"
               >
                 <Text
-                  fsTagName="unmasked"
                   numberOfLines={1}
                   style={
                     [
@@ -4829,7 +4821,6 @@ exports[`TextField Screen renders screen 1`] = `
                 testID="undefined.4"
               >
                 <Text
-                  fsTagName="unmasked"
                   numberOfLines={1}
                   style={
                     [
@@ -4896,7 +4887,7 @@ exports[`TextField Screen renders screen 1`] = `
         >
           <Text
             color="#791c96"
-            fsTagName="unmask"
+            recorderTag="unmask"
             style={
               [
                 {
@@ -5189,7 +5180,7 @@ exports[`TextField Screen renders screen 1`] = `
         >
           <Text
             color="#20303C"
-            fsTagName="unmask"
+            recorderTag="unmask"
             style={
               [
                 {
@@ -5486,7 +5477,7 @@ exports[`TextField Screen renders screen 1`] = `
         >
           <Text
             color="#20303C"
-            fsTagName="unmask"
+            recorderTag="unmask"
             style={
               [
                 {
@@ -5839,7 +5830,7 @@ exports[`TextField Screen renders screen 1`] = `
         >
           <Text
             color="#20303C"
-            fsTagName="unmask"
+            recorderTag="unmask"
             style={
               [
                 {
