@@ -34,7 +34,7 @@ const Input = ({
   formatter,
   useGestureHandlerInput,
   readonly,
-  recorderTag,
+  // recorderTag,
   pointerEvents,
   showMandatoryIndication,
   ...props
@@ -61,7 +61,7 @@ const Input = ({
 
   return (
     <TextInput
-      fsTagName={recorderTag}
+      /* fsTagName={recorderTag} */
       style={[styles.input, !!inputColor && {color: inputColor}, style, Constants.isWeb && styles.webStyle]}
       {...props}
       editable={!disabled}

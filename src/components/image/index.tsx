@@ -200,8 +200,8 @@ class Image extends PureComponent<Props, State> {
   };
 
   renderSvg = () => {
-    const {source, recorderTag, ...others} = this.props;
-    return <SvgImage data={source} fsTagName={recorderTag} {...others}/>;
+    const {source, /* recorderTag, */ ...others} = this.props;
+    return <SvgImage data={source} /* fsTagName={recorderTag} */ {...others}/>;
   };
 
   renderImageWithContainer = () => {

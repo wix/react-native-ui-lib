@@ -159,7 +159,7 @@ class Text extends PureComponent<PropsTypes> {
       underline,
       children,
       forwardedRef,
-      recorderTag,
+      // recorderTag,
       ...others
     } = this.props;
     const color = this.props.color || modifiers.color;
@@ -180,7 +180,7 @@ class Text extends PureComponent<PropsTypes> {
     const TextContainer = this.TextContainer;
 
     return (
-      <TextContainer fsTagName={recorderTag} {...others} style={textStyle} ref={forwardedRef}>
+      <TextContainer /* fsTagName={recorderTag} */ {...others} style={textStyle} ref={forwardedRef}>
         {this.renderText(children)}
       </TextContainer>
     );

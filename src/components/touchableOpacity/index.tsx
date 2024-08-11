@@ -138,18 +138,18 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
   }
 
   render() {
-    const {useNative, activeScale, style, modifiers, forwardedRef, recorderTag, ...others} = this.props;
+    const {useNative, activeScale, style, modifiers, forwardedRef, /*  recorderTag, */ ...others} = this.props;
     const {borderRadius, paddings, margins, alignments, flexStyle} = modifiers;
 
     if (useNative || !_.isUndefined(activeScale)) {
       // @ts-ignore
-      return <IncubatorTouchableOpacity fsTagName={recorderTag} {...this.props}/>;
+      return <IncubatorTouchableOpacity /* fsTagName={recorderTag} */ {...this.props}/>;
     }
 
     return (
       // @ts-ignore
       <RNTouchableOpacity
-        fsTagName={recorderTag}
+        // fsTagName={recorderTag}
         {...this.getAccessibilityInfo()}
         {...others}
         onPress={this.onPress}

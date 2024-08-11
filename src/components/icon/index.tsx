@@ -59,7 +59,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
     assetGroup,
     assetName,
     modifiers,
-    recorderTag,
+    // recorderTag,
     badgeProps,
     ...others
   } = props;
@@ -90,7 +90,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
     <Image
       accessible={false}
       accessibilityRole={'image'}
-      fsTagName={recorderTag}
+      // fsTagName={recorderTag}
       {...others}
       ref={ref}
       source={iconSource}
@@ -98,7 +98,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
     />
   );
 
-  const renderSvg = () => <SvgImage fsTagName={recorderTag} data={source} {...iconSize} {...props}/>;
+  const renderSvg = () => <SvgImage /* fsTagName={recorderTag} */ data={source} {...iconSize} {...props}/>;
 
   if (typeof source === 'string' && isBase64ImageContent(source) && Constants.isWeb) {
     return renderImage();
