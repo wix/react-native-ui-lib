@@ -1,6 +1,6 @@
 import {useCallback} from 'react';
-import {PanGestureHandlerEventPayload, Gesture} from 'react-native-gesture-handler';
 import {useSharedValue, withSpring, withTiming, runOnJS} from 'react-native-reanimated';
+import {PanGestureHandlerEventPayload, Gesture} from 'react-native-gesture-handler';
 import {
   PanningDirections,
   PanningDirectionsEnum,
