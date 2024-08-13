@@ -45,7 +45,7 @@ export interface ModalProps extends RNModalProps {
    */
   accessibilityLabel?: string;
   /**
-   * Should add a GestureHandlerRootView (Android only)
+   * Should add a GestureHandlerRootView
    */
   useGestureHandlerRootView?: boolean;
   /**
