@@ -1,3 +1,5 @@
+import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
+
 export function registerScreens(registrar) {
 
   registrar('unicorn.components.ActionSheetScreen', () => require('./ActionSheetScreen').default);
@@ -41,7 +43,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.ProgressiveImageScreen', () => require('./ProgressiveImageScreen').default);
   registrar('unicorn.components.RadioButtonScreen', () => require('./RadioButtonScreen').default);
   registrar('unicorn.components.ScrollBarScreen', () => require('./ScrollBarScreen').default);
-  registrar('unicorn.components.SectionsWheelPickerScreen', () => require('./SectionsWheelPickerScreen').default);
+  registrar('unicorn.components.SectionsWheelPickerScreen', () => gestureHandlerRootHOC(require('./SectionsWheelPickerScreen').default));
   registrar('unicorn.components.SegmentedControlScreen', () => require('./SegmentedControlScreen').default);
   registrar('unicorn.components.SharedTransitionScreen', () => require('./SharedTransitionScreen').default);
   registrar('unicorn.components.SkeletonViewScreen', () => require('./SkeletonViewScreen').default);
@@ -60,7 +62,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.TourScreen', () => require('./TourScreen').default);
   registrar('unicorn.components.ViewScreen', () => require('./ViewScreen').default);
   registrar('unicorn.components.WizardScreen', () => require('./WizardScreen').default);
-  registrar('unicorn.components.WheelPickerScreen', () => require('./WheelPickerScreen').default);
+  registrar('unicorn.components.WheelPickerScreen', () => gestureHandlerRootHOC(require('./WheelPickerScreen').default));
   // List Components
   registrar('unicorn.lists.BasicListScreen', () => require('./BasicListScreen').default);
   registrar('unicorn.lists.ContactsListScreen', () => require('./ContactsListScreen').default);
