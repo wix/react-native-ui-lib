@@ -106,7 +106,7 @@
     "react-dom": "^18.2.0",
     "react-native": "0.71.12",
     "react-native-fs": "^2.20.0",
-    "react-native-gesture-handler": "2.16.0",
+    "react-native-gesture-handler": "2.14.1",
     "react-native-haptic-feedback": "^1.11.0",
     "react-native-linear-gradient": "2.6.2",
     "react-native-mmkv": "2.11.0",
