@@ -106,18 +106,20 @@ class Button extends PureComponent<Props, ButtonState> {
     const {linkColor, outline, outlineColor, disabled, color: propsColor, backgroundColor, modifiers} = this.props;
     const {color: modifiersColor} = modifiers;
     const isLink = this.isLink;
+    const contentColor = Colors.getRelativeColor(this.getBackgroundColor());
 
-    let color: string | undefined = Colors.$textDefaultLight;
+    let color: string | undefined = contentColor;
+
     if (isLink) {
-      color = linkColor || Colors.$textPrimary;
+      color = linkColor || contentColor || Colors.$textPrimary;
     } else if (outline) {
-      color = outlineColor || Colors.$textPrimary;
+      color = outlineColor || contentColor || Colors.$textPrimary;
     } else if (this.isIconButton) {
-      color = backgroundColor === 'transparent' ? undefined : Colors.$iconDefaultLight;
+      color = backgroundColor === 'transparent' ? undefined : contentColor || Colors.$textPrimary;
     }
 
-    if (disabled && (isLink || outline)) {
-      return Colors.$textDisabled;
+    if (disabled) {
+      return isLink || outline ? Colors.$textDisabled : Colors.white;
     }
 
     color = propsColor || modifiersColor || color;

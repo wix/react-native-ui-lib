@@ -341,6 +341,11 @@ export class Colors {
   isDesignToken(color?: DesignToken) {
     return !!(color?.semantic || color?.resource_paths);
   }
+  getRelativeColor(backgroundColor: string) {
+    if (!!backgroundColor && backgroundColor !== 'transparent') {
+      return this.isDark(backgroundColor) ? colorsPalette.white : colorsPalette.grey1;
+    }
+  }
 }
 
 function colorStringValue(color: string | object) {
