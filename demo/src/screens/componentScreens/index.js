@@ -1,5 +1,3 @@
-import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
-
 export function registerScreens(registrar) {
 
   registrar('unicorn.components.ActionSheetScreen', () => require('./ActionSheetScreen').default);
@@ -62,7 +60,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.TourScreen', () => require('./TourScreen').default);
   registrar('unicorn.components.ViewScreen', () => require('./ViewScreen').default);
   registrar('unicorn.components.WizardScreen', () => require('./WizardScreen').default);
-  registrar('unicorn.components.WheelPickerScreen', () => gestureHandlerRootHOC(require('./WheelPickerScreen').default));
+  registrar('unicorn.components.WheelPickerScreen', () => require('./WheelPickerScreen').default);
   // List Components
   registrar('unicorn.lists.BasicListScreen', () => require('./BasicListScreen').default);
   registrar('unicorn.lists.ContactsListScreen', () => require('./ContactsListScreen').default);
