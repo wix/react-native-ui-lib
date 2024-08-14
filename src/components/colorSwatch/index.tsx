@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, Easing, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import Assets from '../../assets';
 import {BorderRadiuses, Colors} from '../../style';
-import {Constants} from '../../commons/new';
+import {asBaseComponent, BaseComponentInjectedProps, Constants, ColorsModifiers} from '../../commons/new';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
@@ -50,7 +50,7 @@ interface Props {
    */
   size?: number;
 }
-export type ColorSwatchProps = Props;
+export type ColorSwatchProps = Props & ColorsModifiers;
 
 const transparentImage = require('./assets/transparentSwatch/TransparentSwatch.png');
 const DEFAULT_SIZE = Constants.isTablet ? 44 : 36;
@@ -62,7 +62,7 @@ export const SWATCH_SIZE = DEFAULT_SIZE;
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ColorPickerScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ColorPalette/ColorPalette.gif?raw=true
  */
-class ColorSwatch extends PureComponent<Props> {
+class ColorSwatch extends PureComponent<Props & BaseComponentInjectedProps> {
   static displayName = 'ColorSwatch';
 
   state = {
@@ -71,7 +71,7 @@ class ColorSwatch extends PureComponent<Props> {
     animatedScale: new Animated.Value(0.5)
   };
 
-  styles = createStyles(this.props);
+  styles = createStyles({...this.props, color: this.color});
   layout = {x: 0, y: 0};
 
   componentDidMount() {
@@ -83,6 +83,11 @@ class ColorSwatch extends PureComponent<Props> {
     if (prevProps.selected !== this.props.selected) {
       this.animateCheckmark(this.props.selected);
     }
+  }
+
+  get color() {
+    const {color, modifiers} = this.props;
+    return color || modifiers?.color;
   }
 
   animateSwatch(newValue: number) {
@@ -118,7 +123,8 @@ class ColorSwatch extends PureComponent<Props> {
   }
 
   onPress = () => {
-    const {color = '', value, index} = this.props;
+    const {value, index} = this.props;
+    const color = this.color ?? '';
     const tintColor = this.getTintColor(value);
     const result = value || color;
     const hexString = Colors.getHexString(result);
@@ -135,7 +141,7 @@ class ColorSwatch extends PureComponent<Props> {
   }
 
   getAccessibilityInfo() {
-    const {color} = this.props;
+    const color = this.color;
 
     return {
       accessibilityLabel: color && Colors.getColorName(color),
@@ -152,7 +158,8 @@ class ColorSwatch extends PureComponent<Props> {
   };
 
   renderContent() {
-    const {style, color, onPress, unavailable, size = DEFAULT_SIZE, ...others} = this.props;
+    const {style, onPress, unavailable, size = DEFAULT_SIZE, ...others} = this.props;
+    const color = this.color;
     const {isSelected} = this.state;
     const Container = onPress ? TouchableOpacity : View;
     const tintColor = this.getTintColor(color);
@@ -213,7 +220,7 @@ class ColorSwatch extends PureComponent<Props> {
   }
 }
 
-export default ColorSwatch;
+export default asBaseComponent<ColorSwatchProps>(ColorSwatch);
 
 function createStyles({color = Colors.grey30}) {
   return StyleSheet.create({
