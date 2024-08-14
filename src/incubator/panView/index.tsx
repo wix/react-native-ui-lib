@@ -1,11 +1,12 @@
+import {isEmpty} from 'lodash';
 import React from 'react';
 import {StyleProp, View as RNView, ViewStyle} from 'react-native';
 import {useAnimatedStyle} from 'react-native-reanimated';
-import {GestureDetector} from 'react-native-gesture-handler';
+import {PanGestureHandler} from 'react-native-gesture-handler';
 import {asBaseComponent} from '../../commons/new';
 import View, {ViewProps} from '../../components/view';
-import useHiddenLocation from '../hooks/useHiddenLocation';
 import {PanningDirections, PanningDirectionsEnum} from './panningUtil';
+import useHiddenLocation from '../hooks/useHiddenLocation';
 import usePanGesture, {
   PanGestureProps,
   PanViewDirections,
@@ -14,7 +15,6 @@ import usePanGesture, {
   DEFAULT_DIRECTIONS,
   DEFAULT_ANIMATION_CONFIG
 } from './usePanGesture';
-
 export {
   PanningDirections,
   PanningDirectionsEnum,
@@ -50,7 +50,7 @@ const PanView = (props: Props) => {
   } = props;
 
   const {setRef, onLayout, hiddenLocation} = useHiddenLocation<RNView>();
-  const {translation, gesture} = usePanGesture({
+  const {translation, panGestureEvent} = usePanGesture({
     directions,
     dismissible,
     animateToOrigin,
@@ -68,11 +68,11 @@ const PanView = (props: Props) => {
 
   return (
     <View ref={setRef} style={containerStyle} onLayout={onLayout}>
-      <GestureDetector gesture={gesture}>
+      <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : panGestureEvent}>
         <View reanimated style={animatedStyle}>
           <View {...others}>{children}</View>
         </View>
-      </GestureDetector>
+      </PanGestureHandler>
     </View>
   );
 };

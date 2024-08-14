@@ -1,6 +1,7 @@
 import React, {PropsWithChildren, useCallback, useMemo} from 'react';
 import {LayoutChangeEvent} from 'react-native';
 import Reanimated, {
+  useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
@@ -103,41 +104,35 @@ function TouchableOpacity(props: Props) {
     isActive.value = withTiming(value, {duration: 200});
   };
 
-  const tapGestureHandler = ({nativeEvent: {state}}: any) => {
-    switch (state) {
-      case State.BEGAN:
-        toggleActive(1);
-        break;
-      case State.CANCELLED:
-      case State.END:
+  const tapGestureHandler = useAnimatedGestureHandler({
+    onStart: () => {
+      toggleActive(1);
+    },
+    onEnd: () => {
+      toggleActive(0);
+      runOnJS(onPress)();
+    },
+    onFail: () => {
+      if (!isLongPressed.value) {
         toggleActive(0);
-        runOnJS(onPress)();
-        break;
-      case State.FAILED:
-        if (!isLongPressed.value) {
-          toggleActive(0);
-        }
-        break;
+      }
     }
-  };
+  });
 
-  const longPressGestureHandler = ({nativeEvent: {state}}: any) => {
-    switch (state) {
-      case State.ACTIVE:
-        if (!isLongPressed.value) {
-          isLongPressed.value = true;
-          runOnJS(onLongPress)();
-        }
-        break;
-      case State.CANCELLED:
-      case State.END:
-      case State.FAILED:
-        toggleActive(0);
-        isLongPressed.value = false;
-        break;
+  const longPressGestureHandler = useAnimatedGestureHandler({
+    onActive: () => {
+      if (!isLongPressed.value) {
+        isLongPressed.value = true;
+        runOnJS(onLongPress)();
+      }
+    },
+    onFinish: () => {
+      toggleActive(0);
+      isLongPressed.value = false;
     }
-  };
+  });
 
+  // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
   const animatedStyle = useAnimatedStyle(() => {
     const activeColor = feedbackColor || backgroundColor;
     const opacity = interpolate(isActive.value, [0, 1], [1, activeOpacity]);
@@ -156,12 +151,12 @@ function TouchableOpacity(props: Props) {
 
   return (
     <TapGestureHandler
-      onHandlerStateChange={tapGestureHandler}
+      onGestureEvent={tapGestureHandler}
       shouldCancelWhenOutside
       enabled={!disabled}
     >
       <Reanimated.View>
-        <Container onHandlerStateChange={longPressGestureHandler} shouldCancelWhenOutside>
+        <Container onGestureEvent={longPressGestureHandler} shouldCancelWhenOutside>
           <Reanimated.View
             {...others}
             ref={forwardedRef}
