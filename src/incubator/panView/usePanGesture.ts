@@ -113,12 +113,15 @@ const usePanGesture = (props: PanGestureProps) => {
   }, [animateToOrigin]);
 
   const onGestureEvent = useAnimatedGestureHandler({
+    //@ts-expect-error
     onStart: (_event: PanGestureHandlerEventPayload, context: {initialTranslation: Frame}) => {
       context.initialTranslation = {x: translationX.value, y: translationY.value};
     },
+    //@ts-expect-error
     onActive: (event: PanGestureHandlerEventPayload, context: {initialTranslation: Frame}) => {
       setTranslation(event, context.initialTranslation);
     },
+    //@ts-expect-error
     onEnd: (event: PanGestureHandlerEventPayload) => {
       if (dismissible) {
         const velocity = getDismissVelocity(event, directions, getTranslationOptions(), threshold);

@@ -132,7 +132,6 @@ function TouchableOpacity(props: Props) {
     }
   });
 
-  // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
   const animatedStyle = useAnimatedStyle(() => {
     const activeColor = feedbackColor || backgroundColor;
     const opacity = interpolate(isActive.value, [0, 1], [1, activeOpacity]);
@@ -151,12 +150,17 @@ function TouchableOpacity(props: Props) {
 
   return (
     <TapGestureHandler
+      //@ts-expect-error
       onGestureEvent={tapGestureHandler}
       shouldCancelWhenOutside
       enabled={!disabled}
     >
       <Reanimated.View>
-        <Container onGestureEvent={longPressGestureHandler} shouldCancelWhenOutside>
+        <Container 
+          //@ts-expect-error
+          onGestureEvent={longPressGestureHandler}
+          shouldCancelWhenOutside
+        >
           <Reanimated.View
             {...others}
             ref={forwardedRef}
