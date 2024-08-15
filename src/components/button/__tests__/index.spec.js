@@ -253,6 +253,14 @@ describe('Button', () => {
     it('should include custom iconStyle provided as a prop', () => {
       expect(renderer.create(<Button iconSource={12} iconStyle={{marginRight: 9, tintColor: 'red'}}/>).toJSON()).toMatchSnapshot();
     });
+
+    it('should apply the right icon color', () => {
+      expect(renderer.create(<Button iconSource={12} iconProps={{tintColor: 'red'}}/>).toJSON()).toMatchSnapshot();
+      expect(renderer.create(<Button iconSource={12} iconStyle={{tintColor: '#ffee22'}}/>).toJSON()).toMatchSnapshot();
+      expect(renderer
+        .create(<Button iconSource={12} iconProps={{tintColor: 'red'}} iconStyle={{tintColor: '#ffee22'}}/>)
+        .toJSON()).toMatchSnapshot();
+    });
   });
 });
 

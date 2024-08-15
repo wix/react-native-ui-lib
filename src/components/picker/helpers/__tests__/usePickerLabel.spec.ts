@@ -68,8 +68,8 @@ describe('usePickerLabel hook tests', () => {
     expect(sut.result.current.label).toEqual('Red');
   });
 
-  it('expect label to equal value when no items passed', () => {
+  it('expect label to equal empty string when no items passed', () => {
     const sut = makeSUT({items: undefined, value: 'Some string', getLabel: undefined});
-    expect(sut.result.current.label).toEqual('Some string');
+    expect(sut.result.current.label).toEqual('');
   });
 });

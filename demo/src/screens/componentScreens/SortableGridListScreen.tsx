@@ -14,16 +14,18 @@ import {
 } from 'react-native-ui-lib';
 import _ from 'lodash';
 import products from '../../data/products';
+import {renderBooleanOption} from '../ExampleScreenPresenter';
 
-const productsWithIds = products.map((product) => ({...product}));
-type Item = typeof productsWithIds[0];
+const productsWithIds = products.map(product => ({...product}));
+type Item = (typeof productsWithIds)[0];
 
 class SortableGridListScreen extends Component {
   state = {
     orientation: Constants.orientation,
     selectedItemId: undefined,
     items: productsWithIds,
-    removedItems: [] as Item[]
+    removedItems: [] as Item[],
+    shouldOrderByIndex: false
   };
   itemsOrdered = this.state.items;
 
@@ -44,7 +46,7 @@ class SortableGridListScreen extends Component {
   removeSelectedItem = () => {
     const {selectedItemId, removedItems} = this.state;
     if (!_.isUndefined(selectedItemId)) {
-      const newItems = [...this.itemsOrdered];    
+      const newItems = [...this.itemsOrdered];
       const removed = _.remove(newItems, item => item.id === selectedItemId);
       removedItems.push(removed[0]);
       this.setState({items: newItems, selectedItemId: undefined, removedItems});
@@ -83,7 +85,7 @@ class SortableGridListScreen extends Component {
   };
 
   render() {
-    const {items, removedItems, selectedItemId} = this.state;
+    const {items, removedItems, selectedItemId, shouldOrderByIndex} = this.state;
     return (
       <View flex>
         <Text h1 margin-s5>
@@ -98,6 +100,9 @@ class SortableGridListScreen extends Component {
           />
           <Button label="Remove Item" size={Button.sizes.xSmall} marginL-s3 onPress={this.removeSelectedItem}/>
         </View>
+        <View paddingH-s5>
+          {renderBooleanOption.call(this, 'Order by index', 'shouldOrderByIndex')}
+        </View>
         <View flex>
           <SortableGridList
             flexMigration
@@ -110,6 +115,7 @@ class SortableGridListScreen extends Component {
             listPadding={Spacings.s5}
             // keepItemSize
             contentContainerStyle={styles.list}
+            orderByIndex={shouldOrderByIndex}
             onOrderChange={this.onOrderChange}
             extraData={selectedItemId}
           />

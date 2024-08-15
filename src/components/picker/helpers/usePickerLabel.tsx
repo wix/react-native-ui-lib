@@ -29,14 +29,8 @@ const usePickerLabel = (props: UsePickerLabelProps) => {
       return getLabelsFromArray(value);
     }
 
-    if (!_.isEmpty(items)) {
-      const selectedItem = _.find(items, {value});
-      return _.get(selectedItem, 'label');
-    }
-
-    if (typeof value === 'string') {
-      return value;
-    }
+    const selectedItem = _.find(items, {value});
+    return _.get(selectedItem, 'label');
   }, [getLabel, getLabelsFromArray, items]);
 
   const accessibilityInfo = useMemo(() => {

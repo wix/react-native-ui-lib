@@ -95,8 +95,8 @@ export default class PickerScreen extends Component {
     wheelPickerValue: 'java',
     dialogPickerValue: 'java',
     customModalValues: [],
-    filter: filters[0].value,
-    scheme: schemes[0].value,
+    filter: undefined,
+    scheme: undefined,
     contact: 0
   };
 
@@ -266,6 +266,7 @@ export default class PickerScreen extends Component {
           <Picker
             value={this.state.filter}
             onChange={value => this.setState({filter: value})}
+            label="Your Posts: "
             placeholder="Filter posts"
             fieldType={Picker.fieldTypes.filter}
             marginB-s3
@@ -275,7 +276,7 @@ export default class PickerScreen extends Component {
             value={this.state.scheme}
             onChange={value => this.setState({scheme: value})}
             label="Color Scheme"
-            placeholder="Filter posts"
+            placeholder="Select scheme"
             fieldType={Picker.fieldTypes.settings}
             items={schemes}
           />
