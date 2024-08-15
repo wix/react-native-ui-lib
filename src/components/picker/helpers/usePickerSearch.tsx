@@ -9,19 +9,21 @@ const usePickerSearch = (props: UsePickerSearchProps) => {
   const {showSearch, onSearchChange, children, getItemLabel: getItemLabelPickerProp, items} = props;
   const [searchValue, setSearchValue] = useState('');
 
-  const filterItems = (items: any) => {
+  const filterItems = useCallback((items: any) => {
     if (showSearch && !_.isEmpty(searchValue)) {
       return _.filter(items, item => {
-        //item.props is from children
         const {label, value, getItemLabel} = item.props || item;
         const itemLabel = getItemLabelPresenter(label, value, getItemLabel || getItemLabelPickerProp);
         return !shouldFilterOut(searchValue, itemLabel);
       });
     }
     return items;
-  };
+  },
+  [showSearch, searchValue, getItemLabelPickerProp]);
 
-  const filteredItems = useMemo(() => filterItems(children || items), [showSearch, searchValue, items, children]);
+  const filteredItems = useMemo(() => {
+    return filterItems(children || items);
+  }, [filterItems, items, children]);
 
   const _onSearchChange = useCallback((searchValue: string) => {
     setSearchValue(searchValue);
