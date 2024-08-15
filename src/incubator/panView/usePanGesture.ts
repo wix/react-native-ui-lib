@@ -1,6 +1,6 @@
 import {useCallback} from 'react';
-import {useSharedValue, withSpring, withTiming, runOnJS, useAnimatedGestureHandler} from 'react-native-reanimated';
-import {PanGestureHandlerEventPayload} from 'react-native-gesture-handler';
+import {useSharedValue, withSpring, withTiming, runOnJS} from 'react-native-reanimated';
+import {PanGestureHandlerEventPayload, Gesture} from 'react-native-gesture-handler';
 import {
   PanningDirections,
   PanningDirectionsEnum,
@@ -69,6 +69,7 @@ const usePanGesture = (props: PanGestureProps) => {
   const waitingForDismiss = useSharedValue<boolean>(false);
   const translationX = useSharedValue<number>(0);
   const translationY = useSharedValue<number>(0);
+  const initialTranslation = useSharedValue<Frame>({x: 0, y: 0});
 
   const getTranslationOptions = () => {
     'worklet';
@@ -112,14 +113,14 @@ const usePanGesture = (props: PanGestureProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [animateToOrigin]);
 
-  const onGestureEvent = useAnimatedGestureHandler({
-    onStart: (_event: PanGestureHandlerEventPayload, context: {initialTranslation: Frame}) => {
-      context.initialTranslation = {x: translationX.value, y: translationY.value};
-    },
-    onActive: (event: PanGestureHandlerEventPayload, context: {initialTranslation: Frame}) => {
-      setTranslation(event, context.initialTranslation);
-    },
-    onEnd: (event: PanGestureHandlerEventPayload) => {
+  const panGesture = Gesture.Pan()
+    .onBegin(() => {
+      initialTranslation.value = {x: translationX.value, y: translationY.value};
+    })
+    .onStart((event: PanGestureHandlerEventPayload) => {
+      setTranslation(event, initialTranslation.value);
+    })
+    .onEnd((event: PanGestureHandlerEventPayload) => {
       if (dismissible) {
         const velocity = getDismissVelocity(event, directions, getTranslationOptions(), threshold);
         if (velocity) {
@@ -141,10 +142,9 @@ const usePanGesture = (props: PanGestureProps) => {
       } else {
         returnToOrigin();
       }
-    }
-  }, [directions, dismissible, setTranslation, returnToOrigin]);
+    });
 
-  return {translation: {x: translationX, y: translationY}, panGestureEvent: onGestureEvent, reset};
+  return {translation: {x: translationX, y: translationY}, gesture: panGesture, reset};
 };
 
 export default usePanGesture;
