@@ -50,7 +50,7 @@ const PanView = (props: Props) => {
   } = props;
 
   const {setRef, onLayout, hiddenLocation} = useHiddenLocation<RNView>();
-  const {translation, panGestureEvent} = usePanGesture({
+  const {translation, panSomeGestureEvent} = usePanGesture({
     directions,
     dismissible,
     animateToOrigin,
@@ -68,7 +68,7 @@ const PanView = (props: Props) => {
 
   return (
     <View ref={setRef} style={containerStyle} onLayout={onLayout}>
-      <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : panGestureEvent}>
+      <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : panSomeGestureEvent}>
         <View reanimated style={animatedStyle}>
           <View {...others}>{children}</View>
         </View>

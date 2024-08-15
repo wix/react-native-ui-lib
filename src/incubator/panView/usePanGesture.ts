@@ -55,7 +55,7 @@ const DEFAULT_ANIMATION_VELOCITY = 300;
 export const DEFAULT_ANIMATION_CONFIG = {velocity: DEFAULT_ANIMATION_VELOCITY, damping: 18, stiffness: 100, mass: 0.4};
 const SPRING_BACK_ANIMATION_CONFIG = {velocity: DEFAULT_ANIMATION_VELOCITY, damping: 20, stiffness: 300, mass: 0.8};
 
-const usePanGesture = (props: PanGestureProps) => {
+const useSomePanGesture = (props: PanGestureProps) => {
   const {
     directions = DEFAULT_DIRECTIONS,
     dismissible,
@@ -113,15 +113,12 @@ const usePanGesture = (props: PanGestureProps) => {
   }, [animateToOrigin]);
 
   const onGestureEvent = useAnimatedGestureHandler({
-    //@ts-expect-error
     onStart: (_event: PanGestureHandlerEventPayload, context: {initialTranslation: Frame}) => {
       context.initialTranslation = {x: translationX.value, y: translationY.value};
     },
-    //@ts-expect-error
     onActive: (event: PanGestureHandlerEventPayload, context: {initialTranslation: Frame}) => {
       setTranslation(event, context.initialTranslation);
     },
-    //@ts-expect-error
     onEnd: (event: PanGestureHandlerEventPayload) => {
       if (dismissible) {
         const velocity = getDismissVelocity(event, directions, getTranslationOptions(), threshold);
@@ -147,7 +144,7 @@ const usePanGesture = (props: PanGestureProps) => {
     }
   }, [directions, dismissible, setTranslation, returnToOrigin]);
 
-  return {translation: {x: translationX, y: translationY}, panGestureEvent: onGestureEvent, reset};
+  return {translation: {x: translationX, y: translationY}, panSomeGestureEvent: onGestureEvent, reset};
 };
 
-export default usePanGesture;
+export default useSomePanGesture;

@@ -54,9 +54,7 @@ export function validateValues(props: SliderProps) {
       !inRange(initialMinimumValue, minimumValue, maximumValue) ||
       !inRange(initialMaximumValue, minimumValue, maximumValue)
     ) {
-      console.error(
-        'Your passed values are invalid. Please check that they are in range of the minimum and maximum values'
-      );
+      console.error('Your passed values are invalid. Please check that they are in range of the minimum and maximum values');
     }
   }
 }
