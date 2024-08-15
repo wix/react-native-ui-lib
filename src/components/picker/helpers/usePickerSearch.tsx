@@ -6,21 +6,22 @@ import {getItemLabel as getItemLabelPresenter, shouldFilterOut} from '../PickerP
 type UsePickerSearchProps = Pick<PickerProps, 'showSearch' | 'onSearchChange' | 'children' | 'getItemLabel' | 'items'>;
 
 const usePickerSearch = (props: UsePickerSearchProps) => {
-  const {showSearch, onSearchChange, children, getItemLabel, items} = props;
+  const {showSearch, onSearchChange, children, getItemLabel: getItemLabelPickerProp, items} = props;
   const [searchValue, setSearchValue] = useState('');
 
-  const filterItems = (items: any, getItemLabelFunction: any) => {
+  const filterItems = (items: any) => {
     if (showSearch && !_.isEmpty(searchValue)) {
       return _.filter(items, item => {
+        //item.props is from children
         const {label, value, getItemLabel} = item.props || item;
-        const itemLabel = getItemLabelPresenter(label, value, getItemLabel || getItemLabelFunction);
+        const itemLabel = getItemLabelPresenter(label, value, getItemLabel || getItemLabelPickerProp);
         return !shouldFilterOut(searchValue, itemLabel);
       });
     }
     return items;
   };
 
-  const filteredItems = useMemo(() => filterItems(children || items, getItemLabel), [showSearch, searchValue, items, children]);
+  const filteredItems = useMemo(() => filterItems(children || items), [showSearch, searchValue, items, children]);
 
   const _onSearchChange = useCallback((searchValue: string) => {
     setSearchValue(searchValue);
