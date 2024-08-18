@@ -32,6 +32,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     useSafeArea,
     useDialog,
     mode,
+    backgroundColor = Colors.$backgroundDefault,
     testID
   } = props;
   const context = useContext(PickerContext);
@@ -41,9 +42,16 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   const wrapperContainerStyle = useMemo(() => {
     // const shouldFlex = Constants.isWeb ? 1 : useDialog ? 1 : 1;
     const shouldFlex = true;
-    const style = {flex: shouldFlex ? 1 : 0, maxHeight: Constants.isWeb ? Constants.windowHeight * 0.75 : undefined};
+    const style = {
+      flex: shouldFlex ? 1 : 0,
+      maxHeight: Constants.isWeb ? Constants.windowHeight * 0.75 : undefined,
+      backgroundColor
+    };
     return style;
-  }, [/* useDialog */]);
+  }, [
+    backgroundColor
+    /* useDialog */
+  ]);
 
   const renderSearchInput = () => {
     if (showSearch) {
@@ -168,7 +176,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   };
 
   return (
-    <View bg-$backgroundDefault style={wrapperContainerStyle} useSafeArea={useSafeArea}>
+    <View style={wrapperContainerStyle} useSafeArea={useSafeArea}>
       {renderPickerHeader()}
       {renderContent()}
     </View>

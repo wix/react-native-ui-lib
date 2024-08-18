@@ -141,6 +141,10 @@ type PickerListProps = PickerSearchProps & {
    * Add safe area in the Picker modal view
    */
   useSafeArea?: boolean;
+  /**
+   * Color of the list background
+   */
+  backgroundColor?: string;
 };
 
 type PickerExpandableOverlayProps = {
@@ -314,6 +318,7 @@ export type PickerItemsListProps = Pick<
   | 'useDialog'
   | 'mode'
   | 'testID'
+  | 'backgroundColor'
 > & {
   //TODO: after finish Picker props migration, items should be taken from PickerProps
   items?: {value: any; label: any}[];
