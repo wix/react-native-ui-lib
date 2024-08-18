@@ -29,6 +29,11 @@
       "description": "The direction from which and to which the dialog is animating \\ panning (default down).",
       "default": "down"
     },
+    {
+      "name": "showClose",
+      "type": "boolean",
+      "description": "Show the close button"
+    },
     {"name": "ignoreBackgroundPress", "type": "boolean", "description": "Whether or not to ignore background press."},
     {"name": "modalProps", "type": "ModalProps", "description": "Pass props to the dialog modal"},
     {
