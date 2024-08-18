@@ -213,7 +213,12 @@ class GridListItem extends Component<GridListItemProps> {
         accessible={renderCustomItem ? true : undefined}
         {...Modifiers.extractAccessibilityProps(this.props)}
       >
-        {imageProps && <Image style={itemSize} {...imageProps} customOverlayContent={children}/>}
+        {imageProps && (
+          <View style={[{borderRadius: imageProps?.borderRadius}, itemSize]}>
+            <Image {...imageProps} style={[itemSize, imageProps?.style]}/>
+            {children}
+          </View>
+        )}
         {!_.isNil(renderCustomItem) && <View style={{width}}>{renderCustomItem()}</View>}
         {renderOverlay && <View style={[styles.overlay, itemSize]}>{renderOverlay()}</View>}
         <TextContainer {...textContainerStyle}>
