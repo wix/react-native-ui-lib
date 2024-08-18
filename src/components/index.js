@@ -134,6 +134,9 @@ export default {
   get ProgressBar() {
     return require('./progressBar').default;
   },
+  get ProgressiveImage() {
+    return require('./progressiveImage').default;
+  },
   get StateScreen() {
     return require('./stateScreen').default;
   },

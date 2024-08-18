@@ -14,6 +14,7 @@ import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Segment, {SegmentedControlItemProps} from './segment';
 import useSegmentedControlPreset from './useSegmentedControlPreset';
+import Text, {TextProps} from '../text';
 
 const CONTAINER_BORDER_WIDTH = 1;
 const TIMING_CONFIG = {
@@ -94,6 +95,14 @@ export type SegmentedControlProps = {
    * Preset type
    */
   preset?: Presets | `${Presets}`;
+  /**
+   * SegmentedControl label
+   */
+  label?: string;
+  /**
+   * Pass props for the SegmentedControl label
+   */
+  labelProps?: TextProps;
 };
 
 const nonAreUndefined = <T, >(array: Array<T | undefined>): array is Array<T> => {
@@ -130,7 +139,9 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     testID,
     iconTintColor,
     segmentDividerWidth,
-    segmentDividerColor
+    segmentDividerColor,
+    label,
+    labelProps
   } = useSegmentedControlPreset(props);
   const animatedSelectedIndex = useSharedValue(initialIndex);
   const segmentsStyle = useSharedValue([] as {x: number; width: number}[]);
@@ -233,6 +244,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     });
   return (
     <View style={containerStyle} testID={testID}>
+      {label && <Text bodySmall $textNeutralHeavy marginB-s1 {...labelProps}>{label}</Text>}
       <View row center onLayout={containerOnLayout} style={[styles.container, style, {borderRadius, backgroundColor}]}>
         <View
           reanimated

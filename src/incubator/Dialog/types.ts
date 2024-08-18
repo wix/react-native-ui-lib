@@ -2,10 +2,11 @@ import {PropsWithChildren, ReactElement} from 'react';
 import {StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {AlignmentModifiers} from '../../commons/modifiers';
 import {DialogProps as DialogPropsOld} from '../../components/dialog';
+import {ButtonProps} from '../../components/button';
 import {ModalProps} from '../../components/modal';
-import {ViewProps} from '../../components/view';
-import {TextProps} from '../../components/text';
 import {PanningDirections, PanningDirectionsEnum} from '../panView';
+import {TextProps} from '../../components/text';
+import {ViewProps} from '../../components/view';
 type DialogDirections = PanningDirections;
 const DialogDirectionsEnum = PanningDirectionsEnum;
 export {DialogDirections, DialogDirectionsEnum};
@@ -69,11 +70,7 @@ export interface DialogHeaderProps extends ViewProps {
   onPress?: () => void;
 }
 
-export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSafeArea'> {
-  /**
-   * The visibility of the dialog.
-   */
-  visible?: boolean;
+export interface DialogCloseButtonProps {
   /**
    * The Dialog's header (title, subtitle etc)
    */
@@ -86,6 +83,21 @@ export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSa
    * Extra props for the container
    */
   containerProps?: Omit<ViewProps, 'reanimated' | 'animated' | 'style' | 'onLayout' | 'ref' | 'testID'>;
+  /**
+   * Whether to show the close button or not
+   */
+  showCloseButton?: boolean;
+  /**
+   * The close button props
+   */
+  closeButtonProps?: Pick<ButtonProps, 'label' | 'labelProps' | 'iconProps'>;
+}
+
+export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSafeArea'>, DialogCloseButtonProps {
+  /**
+   * The visibility of the dialog.
+   */
+  visible?: boolean;
   /**
    * The dialog width.
    */
