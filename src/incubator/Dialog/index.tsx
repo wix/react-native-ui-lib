@@ -24,7 +24,7 @@ import Modal from '../../components/modal';
 import {extractAlignmentsValues} from '../../commons/modifiers';
 import useHiddenLocation from '../hooks/useHiddenLocation';
 import DialogHeader from './DialogHeader';
-import useDialogCloseButton from './useDialogCloseButton';
+import useDialogContent from './useDialogContent';
 import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps, DialogMigrationProps} from './types';
 export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps, DialogMigrationProps};
 
@@ -127,7 +127,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const {DialogContent, containerProps, containerStyle} = useDialogCloseButton({
+  const {DialogContent, containerProps, containerStyle} = useDialogContent({
     showCloseButton,
     close,
     closeButtonProps,

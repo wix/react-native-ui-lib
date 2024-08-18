@@ -13,7 +13,7 @@ interface InternalDialogCloseButtonProps extends PropsWithChildren<DialogCloseBu
   close: () => void;
 }
 
-const useDialogCloseButton = (props: InternalDialogCloseButtonProps) => {
+const useDialogContent = (props: InternalDialogCloseButtonProps) => {
   const {
     showCloseButton,
     close,
@@ -72,7 +72,7 @@ const useDialogCloseButton = (props: InternalDialogCloseButtonProps) => {
   return {DialogContent, containerStyle, containerProps};
 };
 
-export default useDialogCloseButton;
+export default useDialogContent;
 
 const styles = StyleSheet.create({
   transparent: {
