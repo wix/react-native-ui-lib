@@ -5,15 +5,15 @@ export default class PlaygroundScreen extends Component {
   render() {
     return (
       <View bg-grey80 flex padding-20>
-        <View marginT-20>
-          <TextField migrate placeholder="Placeholder"/>
-        </View>
-        <Card height={100} center padding-20>
-          <Text text50>Playground Screen</Text>
-        </Card>
-        <View flex center>
-          <Button marginV-20 label="Button"/>
-        </View>
+        <Text
+          testID="my-test"
+          highlightString={[
+            {string: 'An', style: {color: 'green'}},
+            {string: 'This', style: {color: 'red'}}
+          ]}
+        >
+          {['Is ', 'An ', 'Array ', 'Of ', 'This ', 'Strings']}
+        </Text>
       </View>
     );
   }
