@@ -114,10 +114,10 @@ const usePanGesture = (props: PanGestureProps) => {
   }, [animateToOrigin]);
 
   const panGesture = Gesture.Pan()
-    .onBegin(() => {
+    .onStart(() => {
       initialTranslation.value = {x: translationX.value, y: translationY.value};
     })
-    .onStart((event: PanGestureHandlerEventPayload) => {
+    .onUpdate((event: PanGestureHandlerEventPayload) => {
       setTranslation(event, initialTranslation.value);
     })
     .onEnd((event: PanGestureHandlerEventPayload) => {
