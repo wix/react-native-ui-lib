@@ -227,7 +227,7 @@ class Button extends PureComponent<Props, ButtonState> {
     let outlineStyle;
     if ((outline || outlineColor) && !this.isLink) {
       outlineStyle = {
-        borderWidth: outlineWidth || 1,
+        borderWidth: outlineWidth ?? 1,
         borderColor: outlineColor || Colors.$outlinePrimary
       };
 
