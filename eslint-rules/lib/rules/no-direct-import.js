@@ -1,4 +1,3 @@
-const { isRequired } = require('deprecated-react-native-prop-types/DeprecatedColorPropType');
 const {handleError} = require('../utils');
 
 const RULE_ID = 'no-direct-import';
