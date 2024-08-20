@@ -23,12 +23,17 @@ const ruleTester = new RuleTester();
 
 const validExample1 = `import {Component} from 'another-module';`;
 const validExample2 = `import {Component} from 'new-module';`;
+const validExample3 = `const {Component} = require('another-module');`;
 
 const invalidExample1 = `import {Component} from 'some-module';`;
 const invalidExample2 = `import {Component} from 'old-module';`;
+const invalidExample3 = `const {Component} = require('some-module');`;
+const invalidExample4 = `const {Component} = require('old-module');`;
 
 const error1 = `Do not import directly from 'some-module'. Please use 'another-module' (autofix available).`;
 const error2 = `Do not import directly from 'old-module'. Please use 'new-module' (autofix available).`;
+const requireError1 = `Do not require directly from 'some-module'. Please use 'another-module' (autofix available).`;
+const requireError2 = `Do not require directly from 'old-module'. Please use 'new-module' (autofix available).`;
 
 ruleTester.run('no-direct-import', rule, {
   valid: [
@@ -37,12 +42,20 @@ ruleTester.run('no-direct-import', rule, {
       code: validExample1 
     },
     {
+      options: ruleOptions,
+      code: validExample3
+    },
+    {
       options: ruleOptionsArray,
       code: validExample1
     },
     {
       options: ruleOptionsArray,
       code: validExample2 
+    },
+    {
+      options: ruleOptionsArray,
+      code: validExample3
     }
   ],
   invalid: [
@@ -68,6 +81,20 @@ ruleTester.run('no-direct-import', rule, {
       output: `import {Component} from 'new-module';`,
       errors: [
         {message: error2}
+      ]
+    },
+    {
+      options: ruleOptions,
+      code: invalidExample3,
+      errors: [
+        {message: requireError1}
+      ]
+    },
+    {
+      options: ruleOptionsArray,
+      code: invalidExample4,
+      errors: [
+        {message: requireError2}
       ]
     }
   ]

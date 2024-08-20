@@ -1,3 +1,4 @@
+const { isRequired } = require('deprecated-react-native-prop-types/DeprecatedColorPropType');
 const {handleError} = require('../utils');
 
 const RULE_ID = 'no-direct-import';
@@ -85,8 +86,46 @@ module.exports = {
       }
     }
 
+    function reportDirectRequire(node, rule) {
+      try {
+        const {origin, destination, applyAutofix} = rule;
+      const autofixMessage = applyAutofix ? ' (autofix available)' : '';
+      const message = `Do not require directly from '${origin}'. Please use '${destination}'${autofixMessage}.`;
+      context.report({
+        node,
+        message,
+        fix(fixer) {
+          if (node && applyAutofix && destination) {
+            return fixer.replaceText(node.arguments[0], `${destination}`);
+          }
+        }
+      });
+      } catch (err) {
+        handleError(RULE_ID, err, context.getFilename());
+      }
+    };
+
+    function isRequireFunction(node) {
+      return node.callee.type === 'Identifier' &&
+                    node.callee.name === 'require' &&
+                    node.arguments.length > 0 &&
+                    node.arguments[0].type === 'Literal'
+    }
+
+    function checkRequireDeclaration(node) {
+      const isRequire = isRequireFunction(node);
+      if (isRequire) {
+        const source = node.arguments[0].value;
+        const rules = getRules().find(rule => rule.origin === source);
+        if (rules) {
+          reportDirectRequire(node, rules);
+        }
+      }
+    }
+
     return {
-      ImportDeclaration: checkImportDeclaration
+      ImportDeclaration: checkImportDeclaration,
+      CallExpression: checkRequireDeclaration
     };
   }
 };
