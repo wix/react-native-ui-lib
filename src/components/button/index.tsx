@@ -62,8 +62,8 @@ class Button extends PureComponent<Props, ButtonState> {
   };
 
   get isOutline() {
-    const {outline, outlineColor} = this.props;
-    return Boolean(outline || outlineColor);
+    const {outline, outlineColor, outlineWidth} = this.props;
+    return Boolean(outline || outlineColor || outlineWidth);
   }
 
   get isLink() {
@@ -149,57 +149,38 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getContainerSizeStyle() {
-    const {
-      outline,
-      avoidMinWidth,
-      avoidInnerPadding,
-      round,
-      size: propsSize,
-      outlineWidth: propsOutlineWidth
-    } = this.props;
+    const {avoidMinWidth, avoidInnerPadding, round, size: propsSize} = this.props;
     const size = propsSize || DEFAULT_SIZE;
-    const outlineWidth = propsOutlineWidth || 1;
 
     const CONTAINER_STYLE_BY_SIZE: Dictionary<any> = {};
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = round
-      ? {height: this.state.size, width: this.state.size, padding: PADDINGS.XSMALL}
-      : {
-        paddingVertical: PADDINGS.XSMALL,
-        paddingHorizontal: HORIZONTAL_PADDINGS.XSMALL,
-        minWidth: MIN_WIDTH.XSMALL
-      };
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = round
-      ? {height: this.state.size, width: this.state.size, padding: PADDINGS.SMALL}
-      : {
-        paddingVertical: PADDINGS.SMALL,
-        paddingHorizontal: HORIZONTAL_PADDINGS.SMALL,
-        minWidth: MIN_WIDTH.SMALL
-      };
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = round
-      ? {height: this.state.size, width: this.state.size, padding: PADDINGS.MEDIUM}
-      : {
-        paddingVertical: PADDINGS.MEDIUM,
-        paddingHorizontal: HORIZONTAL_PADDINGS.MEDIUM,
-        minWidth: MIN_WIDTH.MEDIUM
-      };
-    CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = round
-      ? {height: this.state.size, width: this.state.size, padding: PADDINGS.LARGE}
-      : {
-        paddingVertical: PADDINGS.LARGE,
-        paddingHorizontal: HORIZONTAL_PADDINGS.LARGE,
-        minWidth: MIN_WIDTH.LARGE
-      };
-
-    if (outline) {
-      _.forEach(CONTAINER_STYLE_BY_SIZE, style => {
-        if (round) {
-          style.padding -= outlineWidth; // eslint-disable-line
-        } else {
-          style.paddingVertical -= outlineWidth; // eslint-disable-line
-          style.paddingHorizontal -= outlineWidth; // eslint-disable-line
-        }
-      });
-    }
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = {
+      height: round && this.state.size,
+      width: round && this.state.size,
+      paddingVertical: PADDINGS.XSMALL,
+      paddingHorizontal: HORIZONTAL_PADDINGS.XSMALL,
+      minWidth: MIN_WIDTH.XSMALL
+    };
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.small] = {
+      height: round && this.state.size,
+      width: round && this.state.size,
+      paddingVertical: PADDINGS.SMALL,
+      paddingHorizontal: HORIZONTAL_PADDINGS.SMALL,
+      minWidth: MIN_WIDTH.SMALL
+    };
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.medium] = {
+      height: round && this.state.size,
+      width: round && this.state.size,
+      paddingVertical: PADDINGS.MEDIUM,
+      paddingHorizontal: HORIZONTAL_PADDINGS.MEDIUM,
+      minWidth: MIN_WIDTH.MEDIUM
+    };
+    CONTAINER_STYLE_BY_SIZE[Button.sizes.large] = {
+      height: round && this.state.size,
+      width: round && this.state.size,
+      paddingVertical: PADDINGS.LARGE,
+      paddingHorizontal: HORIZONTAL_PADDINGS.LARGE,
+      minWidth: MIN_WIDTH.LARGE
+    };
 
     const containerSizeStyle = CONTAINER_STYLE_BY_SIZE[size];
 
