@@ -86,6 +86,7 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleOptions,
       code: invalidExample3,
+      output: `const {Component} = require('another-module');`,
       errors: [
         {message: requireError1}
       ]
@@ -93,6 +94,7 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleOptionsArray,
       code: invalidExample4,
+      output: `const {Component} = require('new-module');`,
       errors: [
         {message: requireError2}
       ]

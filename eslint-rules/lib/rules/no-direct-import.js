@@ -89,17 +89,17 @@ module.exports = {
     function reportDirectRequire(node, rule) {
       try {
         const {origin, destination, applyAutofix} = rule;
-      const autofixMessage = applyAutofix ? ' (autofix available)' : '';
-      const message = `Do not require directly from '${origin}'. Please use '${destination}'${autofixMessage}.`;
-      context.report({
-        node,
-        message,
-        fix(fixer) {
-          if (node && applyAutofix && destination) {
-            return fixer.replaceText(node.arguments[0], `${destination}`);
+        const autofixMessage = applyAutofix ? ' (autofix available)' : '';
+        const message = `Do not require directly from '${origin}'. Please use '${destination}'${autofixMessage}.`;
+        context.report({
+          node,
+          message,
+          fix(fixer) {
+            if (node && applyAutofix && destination) {
+              return fixer.replaceText(node.arguments[0], `'${destination}'`);
+            }
           }
-        }
-      });
+        });
       } catch (err) {
         handleError(RULE_ID, err, context.getFilename());
       }
