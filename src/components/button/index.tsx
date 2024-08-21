@@ -149,14 +149,7 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getContainerSizeStyle() {
-    const {
-      outline,
-      avoidMinWidth,
-      avoidInnerPadding,
-      round,
-      size: propsSize,
-      outlineWidth: propsOutlineWidth
-    } = this.props;
+    const {avoidMinWidth, avoidInnerPadding, round, size: propsSize, outlineWidth: propsOutlineWidth} = this.props;
     const size = propsSize || DEFAULT_SIZE;
     const outlineWidth = propsOutlineWidth || 1;
 
@@ -190,14 +183,9 @@ class Button extends PureComponent<Props, ButtonState> {
         minWidth: MIN_WIDTH.LARGE
       };
 
-    if (outline) {
+    if (round) {
       _.forEach(CONTAINER_STYLE_BY_SIZE, style => {
-        if (round) {
-          style.padding -= outlineWidth; // eslint-disable-line
-        } else {
-          style.paddingVertical -= outlineWidth; // eslint-disable-line
-          style.paddingHorizontal -= outlineWidth; // eslint-disable-line
-        }
+        style.padding -= outlineWidth;
       });
     }
 

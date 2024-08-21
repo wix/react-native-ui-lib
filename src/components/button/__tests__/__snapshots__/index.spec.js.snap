@@ -482,8 +482,8 @@ exports[`Button backgroundColor should return undefined if this button is outlin
       "justifyContent": "center",
       "minWidth": 90,
       "opacity": 1,
-      "paddingHorizontal": 19,
-      "paddingVertical": 8.5,
+      "paddingHorizontal": 20,
+      "paddingVertical": 9.5,
     }
   }
 >
@@ -1230,8 +1230,8 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
       "justifyContent": "center",
       "minWidth": 90,
       "opacity": 1,
-      "paddingHorizontal": 18,
-      "paddingVertical": 7.5,
+      "paddingHorizontal": 20,
+      "paddingVertical": 9.5,
     }
   }
 >
@@ -1408,8 +1408,8 @@ exports[`Button container size should return style for large button 2`] = `
       "justifyContent": "center",
       "minWidth": 90,
       "opacity": 1,
-      "paddingHorizontal": 19,
-      "paddingVertical": 8.5,
+      "paddingHorizontal": 20,
+      "paddingVertical": 9.5,
     }
   }
 >
@@ -1591,8 +1591,8 @@ exports[`Button container size should return style for medium button 2`] = `
       "justifyContent": "center",
       "minWidth": 77,
       "opacity": 1,
-      "paddingHorizontal": 15,
-      "paddingVertical": 5.5,
+      "paddingHorizontal": 16,
+      "paddingVertical": 6.5,
     }
   }
 >
@@ -1684,7 +1684,7 @@ exports[`Button container size should return style for round button 1`] = `
       "height": undefined,
       "justifyContent": "center",
       "opacity": 1,
-      "padding": 9.5,
+      "padding": 8.5,
       "width": undefined,
     }
   }
@@ -1867,8 +1867,8 @@ exports[`Button container size should return style for small button 2`] = `
       "justifyContent": "center",
       "minWidth": 70,
       "opacity": 1,
-      "paddingHorizontal": 13,
-      "paddingVertical": 3.5,
+      "paddingHorizontal": 14,
+      "paddingVertical": 4.5,
     }
   }
 >
@@ -2055,8 +2055,8 @@ exports[`Button container size should return style for xSmall button 2`] = `
       "justifyContent": "center",
       "minWidth": 66,
       "opacity": 1,
-      "paddingHorizontal": 10,
-      "paddingVertical": 2,
+      "paddingHorizontal": 11,
+      "paddingVertical": 3,
     }
   }
 >
@@ -4191,8 +4191,8 @@ exports[`Button outline should render button with an outline 1`] = `
       "justifyContent": "center",
       "minWidth": 90,
       "opacity": 1,
-      "paddingHorizontal": 19,
-      "paddingVertical": 8.5,
+      "paddingHorizontal": 20,
+      "paddingVertical": 9.5,
     }
   }
 >
@@ -4371,8 +4371,8 @@ exports[`Button outline should render button with outline and outlineColor 1`] =
       "justifyContent": "center",
       "minWidth": 90,
       "opacity": 1,
-      "paddingHorizontal": 19,
-      "paddingVertical": 8.5,
+      "paddingHorizontal": 20,
+      "paddingVertical": 9.5,
     }
   }
 >
@@ -4461,8 +4461,8 @@ exports[`Button outline should return custom borderWidth according to outlineWid
       "justifyContent": "center",
       "minWidth": 90,
       "opacity": 1,
-      "paddingHorizontal": 17,
-      "paddingVertical": 6.5,
+      "paddingHorizontal": 20,
+      "paddingVertical": 9.5,
     }
   }
 >
@@ -4551,8 +4551,8 @@ exports[`Button outline should return disabled color for outline if button is di
       "justifyContent": "center",
       "minWidth": 90,
       "opacity": 1,
-      "paddingHorizontal": 19,
-      "paddingVertical": 8.5,
+      "paddingHorizontal": 20,
+      "paddingVertical": 9.5,
     }
   }
 >
