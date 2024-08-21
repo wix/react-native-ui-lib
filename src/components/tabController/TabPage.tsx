@@ -25,6 +25,10 @@ export interface TabControllerPageProps {
    * Used as a testing identifier
    */
   testID?: string;
+  /**
+   * Add this prop if tab page is nested in a ScrollView
+   */
+  nestedInScrollView?: boolean;
 }
 
 /**
@@ -36,6 +40,7 @@ export default function TabPage({
   index,
   lazy,
   renderLoading,
+  nestedInScrollView,
   lazyLoadTime = 100,
   ...props
 }: PropsWithChildren<TabControllerPageProps>) {
@@ -81,9 +86,11 @@ export default function TabPage({
     };
   });
 
+  const nestedInScrollViewStyle = useMemo(() => {return nestedInScrollView ? {flex: 1, position: 'relative'} : null}, [nestedInScrollView]);
+
   const style = useMemo(() => {
-    return [!asCarousel && styles.page, animatedPageStyle, {width: asCarousel ? containerWidth : undefined}];
-  }, [asCarousel, animatedPageStyle, containerWidth]);
+    return [!asCarousel && styles.page, animatedPageStyle, {width: asCarousel ? containerWidth : undefined}, nestedInScrollViewStyle];
+  }, [asCarousel, animatedPageStyle, containerWidth, nestedInScrollViewStyle]);
 
   return (
     <Reanimated.View style={style} testID={testID}>
