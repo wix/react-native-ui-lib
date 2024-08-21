@@ -2049,6 +2049,8 @@ exports[`AvatarScreen renders screen 1`] = `
                   {
                     "backgroundColor": "#FFC50D",
                     "flex": 1,
+                    "height": 14,
+                    "width": 14,
                   },
                   false,
                 ]

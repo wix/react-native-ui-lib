@@ -224,8 +224,9 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   renderIcon() {
-    const {icon, iconStyle, iconProps, borderColor, label} = this.props;
+    const {icon, iconStyle, iconProps, borderColor, label, size} = this.props;
     const flex = label ? 0 : 1;
+    const iconSize = {width: size, height: size};
     return (
       icon && (
         <Image
@@ -237,6 +238,7 @@ class Badge extends PureComponent<BadgeProps> {
           {...iconProps}
           style={{
             flex,
+            ...iconSize,
             ...iconStyle
           }}
         />
