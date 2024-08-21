@@ -86,10 +86,17 @@ export default function TabPage({
     };
   });
 
-  const nestedInScrollViewStyle = useMemo(() => {return nestedInScrollView ? {flex: 1, position: 'relative'} : null}, [nestedInScrollView]);
+  const nestedInScrollViewStyle = useMemo(() => {
+    return {flex: 1, position: 'relative'};
+  }, []);
 
   const style = useMemo(() => {
-    return [!asCarousel && styles.page, animatedPageStyle, {width: asCarousel ? containerWidth : undefined}, nestedInScrollViewStyle];
+    return [
+      !asCarousel && styles.page,
+      animatedPageStyle,
+      {width: asCarousel ? containerWidth : undefined},
+      nestedInScrollView && nestedInScrollViewStyle
+    ];
   }, [asCarousel, animatedPageStyle, containerWidth, nestedInScrollViewStyle]);
 
   return (
