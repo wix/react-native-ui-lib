@@ -65,7 +65,7 @@ export type BadgeProps = ViewProps &
     /**
      * Additional styles for the badge label
      */
-    labelStyle?: TextStyle;
+    labelStyle?: StyleProp<TextStyle>;
     /**
      * Receives a number from 1 to 4, representing the label's max digit length.
      * Beyond the max number for that digit length, a "+" will show at the end.
