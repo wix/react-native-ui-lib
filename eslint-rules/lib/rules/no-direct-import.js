@@ -50,13 +50,15 @@ module.exports = {
     schema: [MAP_SCHEMA]
   },
   create(context) {
+    function getErrorMessage(rule, type) {
+      const {origin, destination, applyAutofix, customMessage} = rule;
+      const autofixMessage = applyAutofix ? ' (autofix available)' : '';
+      return customMessage || `Do not ${type} directly from '${origin}'. Please use '${destination}'${autofixMessage}.`;
+    }
     function reportDirectImport(node, rule) {
       try {
-        const origin = rule.origin;
-        const destination = rule.destination;
-        const applyAutofix = rule.applyAutofix;
-        const autofixMessage = applyAutofix ? ' (autofix available)' : '';
-        const message = `Do not import directly from '${origin}'. Please use '${destination}'${autofixMessage}.`;
+        const {applyAutofix, destination} = rule;
+        const message = getErrorMessage(rule, 'import');
         context.report({
           node,
           message,
@@ -87,9 +89,8 @@ module.exports = {
 
     function reportDirectRequire(node, rule) {
       try {
-        const {origin, destination, applyAutofix} = rule;
-        const autofixMessage = applyAutofix ? ' (autofix available)' : '';
-        const message = `Do not require directly from '${origin}'. Please use '${destination}'${autofixMessage}.`;
+        const {applyAutofix, destination} = rule;
+        const message = getErrorMessage(rule, 'require');
         context.report({
           node,
           message,

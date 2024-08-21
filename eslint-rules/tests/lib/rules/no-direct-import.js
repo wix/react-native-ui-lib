@@ -14,6 +14,11 @@ const ruleOptionsArray = [
   }
 ];
 
+customErrorMessage = 'This is a custom message';
+const ruleWithCustomMessage = [
+  {origin: 'some-module', destination: 'another-module', applyAutofix: true, customMessage: customErrorMessage}
+]
+
 RuleTester.setDefaultConfig({
   parser: 'babel-eslint',
   parserOptions: {ecmaVersion: 6, ecmaFeatures: {jsx: true}}
@@ -97,6 +102,20 @@ ruleTester.run('no-direct-import', rule, {
       output: `const {Component} = require('new-module');`,
       errors: [
         {message: requireError2}
+      ]
+    },
+    {
+      options: ruleWithCustomMessage,
+      code: invalidExample1,
+      errors: [
+        {message: customErrorMessage}
+      ]
+    },
+    {
+      options: ruleWithCustomMessage,
+      code: invalidExample3,
+      errors: [
+        {message: customErrorMessage}
       ]
     }
   ]
