@@ -1684,7 +1684,7 @@ exports[`Button container size should return style for round button 1`] = `
       "height": undefined,
       "justifyContent": "center",
       "opacity": 1,
-      "padding": 8.5,
+      "padding": 9.5,
       "width": undefined,
     }
   }
