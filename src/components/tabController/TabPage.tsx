@@ -1,5 +1,5 @@
 import React, {PropsWithChildren, useCallback, useContext, useState, useMemo} from 'react';
-import {StyleSheet} from 'react-native';
+import {type StyleProp, StyleSheet, type ViewStyle} from 'react-native';
 import Reanimated, {useAnimatedStyle, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
 // import {Freeze} from 'react-freeze';
 import TabBarContext from './TabBarContext';
@@ -26,9 +26,9 @@ export interface TabControllerPageProps {
    */
   testID?: string;
   /**
-   * Add this prop if tab page is nested in a ScrollView
+   * add style properties to tab page
    */
-  nestedInScrollView?: boolean;
+  tabPageStyle?: StyleProp<ViewStyle>;
 }
 
 /**
@@ -40,7 +40,7 @@ export default function TabPage({
   index,
   lazy,
   renderLoading,
-  nestedInScrollView,
+  tabPageStyle,
   lazyLoadTime = 100,
   ...props
 }: PropsWithChildren<TabControllerPageProps>) {
@@ -86,18 +86,14 @@ export default function TabPage({
     };
   });
 
-  const nestedInScrollViewStyle = useMemo(() => {
-    return {flex: 1, position: 'relative'};
-  }, []);
-
   const style = useMemo(() => {
     return [
       !asCarousel && styles.page,
       animatedPageStyle,
       {width: asCarousel ? containerWidth : undefined},
-      nestedInScrollView && nestedInScrollViewStyle
+      tabPageStyle && tabPageStyle
     ];
-  }, [asCarousel, animatedPageStyle, containerWidth, nestedInScrollViewStyle]);
+  }, [asCarousel, animatedPageStyle, containerWidth, tabPageStyle]);
 
   return (
     <Reanimated.View style={style} testID={testID}>
