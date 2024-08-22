@@ -28,7 +28,7 @@ export interface TabControllerPageProps {
   /**
    * add style properties to tab page
    */
-  tabPageStyle?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
 }
 
 /**
@@ -40,7 +40,7 @@ export default function TabPage({
   index,
   lazy,
   renderLoading,
-  tabPageStyle,
+  style,
   lazyLoadTime = 100,
   ...props
 }: PropsWithChildren<TabControllerPageProps>) {
@@ -86,17 +86,17 @@ export default function TabPage({
     };
   });
 
-  const style = useMemo(() => {
+  const _style = useMemo(() => {
     return [
       !asCarousel && styles.page,
       animatedPageStyle,
       {width: asCarousel ? containerWidth : undefined},
-      tabPageStyle && tabPageStyle
+      style
     ];
-  }, [asCarousel, animatedPageStyle, containerWidth, tabPageStyle]);
+  }, [asCarousel, animatedPageStyle, containerWidth, style]);
 
   return (
-    <Reanimated.View style={style} testID={testID}>
+    <Reanimated.View style={_style} testID={testID}>
       {!shouldLoad && renderLoading?.()}
       {shouldLoad && props.children}
       {/* <Freeze freeze={!shouldLoad || !focused}>{props.children}</Freeze> */}
