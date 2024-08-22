@@ -149,9 +149,8 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getContainerSizeStyle() {
-    const {avoidMinWidth, avoidInnerPadding, round, size: propsSize, outlineWidth: propsOutlineWidth} = this.props;
+    const {avoidMinWidth, avoidInnerPadding, round, size: propsSize} = this.props;
     const size = propsSize || DEFAULT_SIZE;
-    const outlineWidth = propsOutlineWidth || 1;
 
     const CONTAINER_STYLE_BY_SIZE: Dictionary<any> = {};
     CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = round
@@ -182,12 +181,6 @@ class Button extends PureComponent<Props, ButtonState> {
         paddingHorizontal: HORIZONTAL_PADDINGS.LARGE,
         minWidth: MIN_WIDTH.LARGE
       };
-
-    if (round) {
-      _.forEach(CONTAINER_STYLE_BY_SIZE, style => {
-        style.padding -= outlineWidth;
-      });
-    }
 
     const containerSizeStyle = CONTAINER_STYLE_BY_SIZE[size];
 
