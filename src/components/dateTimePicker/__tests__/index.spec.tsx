@@ -14,17 +14,9 @@ const TestCase = props => {
 };
 
 describe('DateTimePicker', () => {
-  it('should not invoke onChange when value is not changed - mode time', () => {
+  test.each(['time', 'date'])('should not invoke onChange when value is not changed - mode %s', mode => {
     const onChange = jest.fn();
-    const renderTree = render(<TestCase onChange={onChange} mode="time"/>);
-    expect(onChange).not.toHaveBeenCalled();
-    fireEvent.press(renderTree.getByTestId(testID));
-    fireEvent.press(renderTree.getByTestId(`${testID}.done`));
-    expect(onChange).not.toHaveBeenCalled();
-  });
-  it('should not invoke onChange when value is not changed - mode date', () => {
-    const onChange = jest.fn();
-    const renderTree = render(<TestCase onChange={onChange} mode="date"/>);
+    const renderTree = render(<TestCase onChange={onChange} mode={mode}/>);
     expect(onChange).not.toHaveBeenCalled();
     fireEvent.press(renderTree.getByTestId(testID));
     fireEvent.press(renderTree.getByTestId(`${testID}.done`));
