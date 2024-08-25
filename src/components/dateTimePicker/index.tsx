@@ -203,16 +203,30 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
     expandable.current?.toggleExpandable?.();
   }, []);
 
+  const isValueChanged = useCallback(() => {
+    if (mode === 'time') {
+      return (
+        chosenDate.current?.getHours() !== value?.getHours() || chosenDate.current?.getMinutes() !== value?.getMinutes()
+      );
+    }
+    return (
+      chosenDate.current?.getFullYear() !== value?.getFullYear() ||
+      chosenDate.current?.getMonth() !== value?.getMonth() ||
+      chosenDate.current?.getDate() !== value?.getDate()
+    );
+  }, [mode, value]);
+
   const onDonePressed = useCallback(() => {
     toggleExpandableOverlay();
     if (Constants.isIOS && !chosenDate.current) {
       // since handleChange() is not called on iOS when there is no actual change
       chosenDate.current = new Date();
     }
-
-    onChange?.(chosenDate.current!);
+    if (isValueChanged() && chosenDate.current) {
+      onChange?.(chosenDate?.current);
+    }
     setValue(chosenDate.current);
-  }, [toggleExpandableOverlay, onChange]);
+  }, [toggleExpandableOverlay, onChange, isValueChanged]);
 
   const handleChange = useCallback((event: any = {}, date: Date) => {
     // NOTE: will be called on Android even when there was no actual change
