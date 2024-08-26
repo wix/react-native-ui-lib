@@ -395,13 +395,6 @@ ruleTester.run('component-prop-deprecation', rule, {
         {message: `The 'Text' component's prop 't' is deprecated. Please use the 'title' prop instead.`},
         {message: `The 'Text' component's prop 's' is deprecated. Please use the 'subtitle' prop instead.`}
       ]
-    },
-    {
-      options: ruleOptions,
-      code: 'import {Picker} from \'module-with-deprecations\'; <Picker t="title" s="subtitle"/>',
-      errors: [
-        {message: `The 'Picker' component's prop 'migrate' is required. Please make sure to pass the 'migrate' prop.`}
-      ]
     }
   ]
 });

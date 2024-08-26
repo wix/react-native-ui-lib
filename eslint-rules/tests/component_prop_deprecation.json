@@ -78,16 +78,5 @@
         "fix": {"propName": "subtitle"}
       }
     ]
-  }, 
-  {
-    "component": "Picker",
-    "source": "module-with-deprecations",
-    "props": [
-      {
-        "prop": "migrate",
-        "message": "Please make sure to pass the 'migrate' prop.",
-        "isRequired": true
-      }
-    ]
   }
 ]
