@@ -76,6 +76,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     accessibilityLabel,
     accessibilityHint,
     items: propItems,
+    showLoader,
+    customLoaderElement,
     ...others
   } = themeProps;
   const {preset, placeholder, style, trailingAccessory, label: propsLabel} = others;
@@ -242,6 +244,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         renderHeader={renderHeader}
         listProps={listProps}
         useSafeArea={useSafeArea}
+        showLoader={showLoader}
+        customLoaderElement={customLoaderElement}
       >
         {filteredChildren}
       </PickerItemsList>
@@ -265,7 +269,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     filteredChildren,
     useSafeArea,
     useWheelPicker,
-    items
+    items,
+    showLoader
   ]);
 
   return (

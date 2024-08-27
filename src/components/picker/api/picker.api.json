@@ -92,7 +92,9 @@
     },
     {"name": "pickerModalProps", "type": "ModalProps", "description": "Pass props to the picker modal"},
     {"name": "useSafeArea", "type": "boolean", "description": "Add safe area in the Picker modal view"},
-    {"name": "items", "type": "{label: string, value: string | number}[]", "description": "Data source for Picker"}
+    {"name": "items", "type": "{label: string, value: string | number}[]", "description": "Data source for Picker"},
+    {"name": "showLoader", "type": "boolean", "description": "Show a loader (while items are loading/fetching)"},
+    {"name": "customLoaderElement", "type": "ReactNode", "description": "Custom loader element"}
   ],
   "snippet": [
     "<Picker",

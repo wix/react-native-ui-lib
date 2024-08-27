@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {useCallback, useContext, useState, useMemo} from 'react';
-import {StyleSheet, FlatList, TextInput, ListRenderItemInfo} from 'react-native';
+import {StyleSheet, FlatList, TextInput, ListRenderItemInfo, ActivityIndicator} from 'react-native';
 import {Typography, Colors} from '../../style';
 import Assets from '../../assets';
 import Modal from '../modal';
@@ -32,7 +32,9 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     useSafeArea,
     useDialog,
     mode,
-    testID
+    testID,
+    showLoader,
+    customLoaderElement
   } = props;
   const context = useContext(PickerContext);
 
@@ -156,6 +158,16 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     );
   };
 
+  const renderLoader = () => {
+    return (
+      customLoaderElement || (
+        <View flex centerV useSafeArea>
+          <ActivityIndicator/>
+        </View>
+      )
+    );
+  };
+
   const renderContent = () => {
     return useWheelPicker ? (
       renderWheel()
@@ -170,7 +182,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   return (
     <View bg-$backgroundDefault style={wrapperContainerStyle} useSafeArea={useSafeArea}>
       {renderPickerHeader()}
-      {renderContent()}
+      {showLoader ? renderLoader() : renderContent()}
     </View>
   );
 };

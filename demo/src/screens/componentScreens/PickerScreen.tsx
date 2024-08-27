@@ -97,8 +97,16 @@ export default class PickerScreen extends Component {
     customModalValues: [],
     filter: undefined,
     scheme: undefined,
-    contact: 0
+    contact: 0,
+    showLoader: true
   };
+
+  toggleLoader() {
+    this.setState({showLoader: true});
+    setTimeout(() => {
+      this.setState({showLoader: false});
+    }, 2000);
+  }
 
   renderDialog: PickerProps['renderOverlay'] = (modalProps: RenderCustomModalProps) => {
     const {visible, children, toggleModal, onDone} = modalProps;
@@ -136,6 +144,7 @@ export default class PickerScreen extends Component {
             value={this.state.language}
             enableModalBlur={false}
             onChange={item => this.setState({language: item})}
+            onPress={() => this.toggleLoader()}
             topBarProps={{title: 'Languages'}}
             // style={{color: Colors.red20}}
             showSearch
@@ -143,6 +152,7 @@ export default class PickerScreen extends Component {
             searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.grey50}}
             // onSearchChange={value => console.warn('value', value)}
             items={longOptions}
+            showLoader={this.state.showLoader}
           />
 
           <Picker
@@ -182,6 +192,7 @@ export default class PickerScreen extends Component {
             mode={Picker.modes.MULTI}
             value={this.state.option}
             enableModalBlur={false}
+            onPress={() => this.toggleLoader()}
             onChange={item => this.setState({option: item})}
             topBarProps={{title: 'Languages'}}
             useDialog
@@ -195,6 +206,7 @@ export default class PickerScreen extends Component {
             showSearch
             searchPlaceholder={'Search a language'}
             items={dialogOptions}
+            showLoader={this.state.showLoader}
           />
           
           <Text marginB-10 text70 $textDefault>
