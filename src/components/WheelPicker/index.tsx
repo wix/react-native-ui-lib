@@ -349,6 +349,7 @@ const WheelPicker = <T extends WheelPickerItemValue>(props: WheelPickerProps<T>)
 
   return (
     <View testID={testID} bg-$backgroundDefault style={style}>
+      {separators}
       <View row centerH>
         <View flexG>
           <AnimatedFlatList
@@ -383,7 +384,6 @@ const WheelPicker = <T extends WheelPickerItemValue>(props: WheelPickerProps<T>)
       {label && labelContainer}
       {fader(FaderPosition.BOTTOM)}
       {fader(FaderPosition.TOP)}
-      {separators}
     </View>
   );
 };
