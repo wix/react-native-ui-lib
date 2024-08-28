@@ -143,6 +143,10 @@ export interface SliderProps extends AccessibilityProps {
    * Control the throttle time of the onValueChange and onRangeChange callbacks
    */
   throttleTime?: number;
+  /**
+   * Use worklet change handler
+   */
+  useWorkletHandlers?: boolean;
 }
 
 type Props = SliderProps & ForwardRefInjectedProps<SliderRef>;
@@ -193,7 +197,8 @@ const Slider = React.memo((props: Props) => {
     accessible = true,
     testID,
     enableThumbShadow = true,
-    throttleTime = 200
+    throttleTime = 200,
+    useWorkletHandlers = false
   } = themeProps;
 
   const accessibilityProps = useMemo(() => {
@@ -300,9 +305,11 @@ const Slider = React.memo((props: Props) => {
           minimumValue,
           maximumValue,
           stepXValue.value);
-        runOnJS(onRangeChangeThrottled)(value, maxValue);
+        useWorkletHandlers
+          ? onRangeChange?.({min: value, max: maxValue})
+          : runOnJS(onRangeChangeThrottled)(value, maxValue);
       } else if (prevOffset) { // don't invoke onChange when setting the slider
-        runOnJS(onValueChangeThrottled)(value);
+        useWorkletHandlers ? onValueChange?.(value) : runOnJS(onValueChangeThrottled)(value);
       }
     }
   });

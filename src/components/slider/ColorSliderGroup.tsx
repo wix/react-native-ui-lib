@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {useState, useCallback, useMemo} from 'react';
+import React, {useState, useCallback, useMemo, useEffect, useRef} from 'react';
 import {Colors} from '../../style';
 import {useThemeProps} from '../../hooks';
 import View from '../view';
@@ -7,6 +7,10 @@ import Text from '../text';
 import {ColorSliderGroupProps, HSLA, GradientSliderTypes} from './types';
 import SliderContext from './SliderContext';
 import GradientSlider from './GradientSlider';
+import Slider from '../slider';
+import {Slider as NewSlider} from '../../incubator';
+import Gradient, {GradientTypes} from '../gradient';
+import {useAnimatedReaction, useSharedValue, useWorkletCallback} from 'react-native-reanimated';
 
 /**
  * @description: A Gradient Slider component
@@ -16,32 +20,85 @@ import GradientSlider from './GradientSlider';
 const ColorSliderGroup = <T extends string | HSLA = string>(props: ColorSliderGroupProps<T>) => {
   const themeProps = useThemeProps(props, 'ColorSliderGroup');
   const {
-    initialColor,
+    initialColor: initialColorProp,
     onValueChange,
     containerStyle,
     sliderContainerStyle,
-    showLabels,
+    showLabels = true,
     labels = {hue: 'Hue', lightness: 'Lightness', saturation: 'Saturation', default: ''},
     labelsStyle,
     accessible,
     migrate
   } = themeProps;
+
+  const previousInitialColor = useRef(initialColorProp);
+  const value = useSharedValue<HSLA>(typeof initialColorProp === 'string' ? Colors.getHSL(initialColorProp) : initialColorProp);
+
+  useAnimatedReaction(() => value.value, (previousValue, newValue) => {
+    if (newValue && previousValue !== newValue) {
+      onValueChange?.(newValue as T);
+    }
+  });
+
+  if (previousInitialColor.current !== initialColorProp) {
+    value.value = typeof initialColorProp === 'string' ? Colors.getHSL(initialColorProp) : initialColorProp;
+    previousInitialColor.current = initialColorProp;
+  }
+
+  const onChangeHue = useWorkletCallback((_value: number) => {
+    value.value.h = _value;
+  }, []);
+  const onChangeSaturation = useWorkletCallback((_value: number) => {
+    value.value.s = _value;
+  }, []);
+  const onChangeLightness = useWorkletCallback((_value: number) => {
+    value.value.l = _value;
+  }, []);
+
+
+  const createTypeMapping = <H, S, L>(hValue: H, sValue: S, lValue: L) => {
+    return {
+      [GradientTypes.HUE]: hValue,
+      [GradientTypes.SATURATION]: sValue,
+      [GradientTypes.LIGHTNESS]: lValue
+    };
+  };
+
+  const getHandlerByType = (type: GradientTypes) => {
+    return createTypeMapping(onChangeHue, onChangeSaturation, onChangeLightness)[type];
+  };
+
+  const getRangeByType = (type: GradientTypes) => {
+    return createTypeMapping([0, 360], [0, 1], [0, 1])[type];
+  };
+  const getValueByType = (type: GradientTypes) => {
+    return createTypeMapping(value.value.h, value.value.s, value.value.l)[type];
+  };
   
-  const _initialColor = useMemo<HSLA>(() => {
-    return _.isString(initialColor) ? Colors.getHSL(initialColor) : initialColor;
-  }, [initialColor]);
+  const hueColor = {
+    h: Colors.getHSL(Colors.$backgroundInverted).h,
+    s: 1,
+    l: 0.5,
+    a: 1
+  };
 
-  const [value, setValue] = useState(_initialColor);
+  const renderHueTrack = useCallback(() => {
+    return <Gradient type={GradientTypes.HUE} numberOfSteps={360}/>;
+  }, []);
+  const renderSaturationTrack = useCallback(() => {
+    return <Gradient type={GradientTypes.SATURATION} color={hueColor} numberOfSteps={120}/>;
+  }, []);
+  const renderLightnessTrack = useCallback(() => {
+    return <Gradient type={GradientTypes.LIGHTNESS} color={hueColor} numberOfSteps={120}/>;
+  }, []);
 
-  const _setValue = useCallback((value: HSLA) => {
-    setValue(value);
-    const newValue = _.isString(initialColor) ? Colors.getHexString(value) : value;
-    onValueChange?.(newValue as T);
-  }, [initialColor, onValueChange]);
-    
-  const contextProviderValue = useMemo(() => ({value, setValue: _setValue}), [value, _setValue]);
+  const getTrackRendererByType = (type: GradientTypes) => {
+    return createTypeMapping(renderHueTrack, renderSaturationTrack, renderLightnessTrack)[type];
+  };
 
-  const renderSlider = (type: GradientSliderTypes) => {
+
+  const renderSlider = (type: GradientTypes) => {
+    const [minRange, maxRange] = getRangeByType(type);
     return (
       <>
         {showLabels && labels && (
@@ -49,11 +106,14 @@ const ColorSliderGroup = <T extends string | HSLA = string>(props: ColorSliderGr
             {labels[type]}
           </Text>
         )}
-        <GradientSlider
-          type={type}
-          containerStyle={sliderContainerStyle}
+        <NewSlider
+          renderTrack={getTrackRendererByType(type)}
+          value={getValueByType(type)}
           accessible={accessible}
-          migrate={migrate}
+          containerStyle={sliderContainerStyle}
+          onValueChange={getHandlerByType(type)}
+          minimumValue={minRange}
+          maximumValue={maxRange}
         />
       </>
     );
@@ -61,11 +121,9 @@ const ColorSliderGroup = <T extends string | HSLA = string>(props: ColorSliderGr
 
   return (
     <View style={containerStyle}>
-      <SliderContext.Provider value={contextProviderValue}>
-        {renderSlider(GradientSlider.types.HUE)}
-        {renderSlider(GradientSlider.types.SATURATION)}
-        {renderSlider(GradientSlider.types.LIGHTNESS)}
-      </SliderContext.Provider>
+      {renderSlider(GradientTypes.HUE)}
+      {renderSlider(GradientTypes.SATURATION)}
+      {renderSlider(GradientTypes.LIGHTNESS)}
     </View>
   );
 };
