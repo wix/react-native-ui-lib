@@ -316,7 +316,9 @@ export type PickerItemsListProps = Pick<
   | 'testID'
 > & {
   //TODO: after finish Picker props migration, items should be taken from PickerProps
+  //Remove the migrateDialog prop when the dialog migration finished in v8
   items?: {value: any; label: any}[];
+  migrateDialog?: boolean;
 };
 
 export type PickerMethods = TextFieldMethods & ExpandableOverlayMethods;

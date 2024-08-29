@@ -185,18 +185,12 @@ export default class PickerScreen extends Component {
             onChange={item => this.setState({option: item})}
             topBarProps={{title: 'Languages'}}
             useDialog
-            renderHeader={({onDone, onCancel}) => (
-              <View padding-s5 row spread>
-                <Button link label="Cancel" onPress={onCancel}/>
-                <Button link label="Done" onPress={onDone}/>
-              </View>
-            )}
-            customPickerProps={{migrateDialog: true, dialogProps: {bottom: true, width: '100%', height: '45%'}}}
+            customPickerProps={{migrateDialog: true, dialogProps: {headerProps: {title: 'Languages'}}}}
             showSearch
             searchPlaceholder={'Search a language'}
             items={dialogOptions}
           />
-          
+
           <Text marginB-10 text70 $textDefault>
             Custom Picker:
           </Text>
