@@ -31,28 +31,19 @@ const ColorSliderGroup = <T extends string | HSLA = string>(props: ColorSliderGr
     migrate
   } = themeProps;
 
-  const previousInitialColor = useRef(initialColorProp);
   const value = useSharedValue<HSLA>(typeof initialColorProp === 'string' ? Colors.getHSL(initialColorProp) : initialColorProp);
 
-  useAnimatedReaction(() => value.value, (previousValue, newValue) => {
-    if (newValue && previousValue !== newValue) {
-      onValueChange?.(newValue as T);
-    }
-  });
-
-  if (previousInitialColor.current !== initialColorProp) {
-    value.value = typeof initialColorProp === 'string' ? Colors.getHSL(initialColorProp) : initialColorProp;
-    previousInitialColor.current = initialColorProp;
-  }
-
   const onChangeHue = useWorkletCallback((_value: number) => {
-    value.value.h = _value;
+    value.value = {...value.value, h: _value};
+    onValueChange?.({...value.value, h: _value} as T);
   }, []);
   const onChangeSaturation = useWorkletCallback((_value: number) => {
-    value.value.s = _value;
+    value.value = {...value.value, s: _value};
+    onValueChange?.({...value.value, s: _value} as T);
   }, []);
   const onChangeLightness = useWorkletCallback((_value: number) => {
-    value.value.l = _value;
+    value.value = {...value.value, l: _value};
+    onValueChange?.({...value.value, l: _value} as T);
   }, []);
 
 
@@ -114,6 +105,7 @@ const ColorSliderGroup = <T extends string | HSLA = string>(props: ColorSliderGr
           onValueChange={getHandlerByType(type)}
           minimumValue={minRange}
           maximumValue={maxRange}
+          useWorkletHandlers
         />
       </>
     );
