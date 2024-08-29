@@ -158,7 +158,7 @@ describe('Picker', () => {
   });
 
   describe('Dialog', () => {
-    const dialogProps = {useDialog: true, customPickerProps: {migrateDialog: true}};
+    const dialogProps = {useDialog: true};
     
     describe('Test value', () => {
       it('Get correct value of a single item', () => {
@@ -258,7 +258,7 @@ describe('Picker', () => {
   describe('Picker field types', () => {
     describe('Test filter field type', () => {
       const placeholderText = 'Select a Filter';
-      
+
       it('should render a filter picker', () => {
         const driver = getDriver({fieldType: 'filter', placeholder: placeholderText});
         expect(driver.isOpen()).toBeFalsy();
@@ -267,11 +267,11 @@ describe('Picker', () => {
         expect(label.props.children).toEqual(placeholderText);
       });
     });
-    
+
     describe('Test settings field type', () => {
       const labelText = 'Settings';
       const placeholderText = 'Select a setting';
-      
+
       it('should render a settings picker with label', async () => {
         const driver = getDriver({fieldType: 'settings', label: labelText, placeholder: placeholderText});
         const label = screen.getByTestId(`${testID}.settings.type.label`);

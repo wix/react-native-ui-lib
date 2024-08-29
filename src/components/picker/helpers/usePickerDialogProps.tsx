@@ -16,14 +16,20 @@ const NEW_DIALOG_PROPS = {
 };
 
 const usePickerDialogProps = (props: PickerProps, onDone: any) => {
-  const {customPickerProps, mode} = props;
+  const {customPickerProps, mode, testID} = props;
   const migrateDialog = customPickerProps?.migrateDialog;
   const defaultProps = migrateDialog ? NEW_DIALOG_PROPS : DIALOG_PROPS;
 
   const modifiedHeaderProps = migrateDialog && {
     headerProps: {
       trailingAccessory: (
-        <Button label="Save" link style={{height: 30}} onPress={mode === PickerModes.MULTI ? onDone : undefined}/>
+        <Button
+          label="Save"
+          link
+          style={{height: 30}}
+          onPress={mode === PickerModes.MULTI ? onDone : undefined}
+          testID={`${testID}.dialog.header.save`}
+        />
       ),
       ...customPickerProps?.dialogProps?.headerProps
     }
