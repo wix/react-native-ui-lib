@@ -270,11 +270,9 @@ const Slider = React.memo((props: Props) => {
   }, [value, setInitialPositions]);
 
   useEffect(() => {
-    if (!thumbStyle) {
-      _thumbStyle.value = StyleUtils.unpackStyle(defaultThumbStyle, {flatten: true});
-    }
+    _thumbStyle.value = StyleUtils.unpackStyle(thumbStyle ? customThumbStyle : defaultThumbStyle, {flatten: true});
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultThumbStyle, thumbStyle]);
+  }, [defaultThumbStyle, customThumbStyle, thumbStyle]);
 
   const onValueChangeThrottled = useCallback(_.throttle(value => {
     if (!didValueUpdate.current) { // NOTE: don't invoke onValueChange when slider's value prop updated programmatically
