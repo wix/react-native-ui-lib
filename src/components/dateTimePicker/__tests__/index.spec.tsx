@@ -45,6 +45,7 @@ describe('DateTimePicker', () => {
       'onChange',
       {type: 'set'},
       mode === 'time' ? someDateNextHour : someDateNextDay);
+    expect(onChange).not.toHaveBeenCalled();
     fireEvent.press(renderTree.getByTestId(`${testID}.done`));
     expect(onChange).toHaveBeenCalled();
   });
