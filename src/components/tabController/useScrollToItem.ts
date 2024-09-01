@@ -150,7 +150,10 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     // Update shared values
     itemsWidthsAnimated.modify((value) => {
       'worklet';
-      return value.map((_, index) => widths[index]);
+      value.forEach((_, index) => {
+        value[index] = widths[index];
+      });
+      return value;
     });
 
     itemsOffsetsAnimated.modify((value) => {
