@@ -146,9 +146,8 @@ class PanViewScreen extends Component {
 
   render() {
     const {showToast, showDialog} = this.state;
-    const Container = showDialog ? View : GestureHandlerRootView;
     return (
-      <Container style={styles.root}>
+      <GestureHandlerRootView style={styles.root}>
         <View marginL-page height={50} centerV>
           <Text text50>New Pan View</Text>
         </View>
@@ -164,7 +163,7 @@ class PanViewScreen extends Component {
         </ScrollView>
         {showToast && this.renderToast()}
         {showDialog && this.renderDialog()}
-      </Container>
+      </GestureHandlerRootView>
     );
   }
 }
