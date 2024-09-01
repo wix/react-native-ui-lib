@@ -1,7 +1,7 @@
 import React from 'react';
-import {fireEvent, render} from '@testing-library/react-native';
+import {render} from '@testing-library/react-native';
 import DateTimePicker, {DateTimePickerProps} from '../index';
-import {act} from 'react-test-renderer';
+import {DateTimePickerDriver} from '../DateTimePicker.driver';
 
 const testID = 'dateTimePicker';
 const TestCase = (props: Partial<Omit<DateTimePickerProps, 'dialogProps'>>) => {
@@ -30,23 +30,20 @@ describe('DateTimePicker', () => {
     const onChange = jest.fn();
     const renderTree = render(<TestCase onChange={onChange} mode={mode}/>);
     expect(onChange).not.toHaveBeenCalled();
-    fireEvent.press(renderTree.getByTestId(`${testID}.overlay`));
-    fireEvent.press(renderTree.getByTestId(`${testID}.done`));
+    const driver = DateTimePickerDriver({renderTree, testID});
+    driver.openPicker();
+    driver.submitSelection();
     expect(onChange).not.toHaveBeenCalled();
   });
   test.each(['time', 'date'] as const)('should invoke onChange when value is changed - mode %s', async mode => {
     const onChange = jest.fn();
     const renderTree = render(<TestCase onChange={onChange} mode={mode} value={someDate}/>);
     expect(onChange).not.toHaveBeenCalled();
-    act(() => {
-      fireEvent.press(renderTree.getByTestId(`${testID}.overlay`));
-    });
-    fireEvent(renderTree.getByTestId(`${testID}.picker`),
-      'onChange',
-      {type: 'set'},
-      mode === 'time' ? someDateNextHour : someDateNextDay);
+    const driver = DateTimePickerDriver({renderTree, testID});
+    driver.openPicker();
+    driver.changeDateTo(mode === 'time' ? someDateNextHour : someDateNextDay);
     expect(onChange).not.toHaveBeenCalled();
-    fireEvent.press(renderTree.getByTestId(`${testID}.done`));
+    driver.submitSelection();
     expect(onChange).toHaveBeenCalled();
   });
 });
