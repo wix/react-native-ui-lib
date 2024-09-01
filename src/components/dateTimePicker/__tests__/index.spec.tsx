@@ -26,15 +26,6 @@ jest.mock('../../../optionalDependencies', () => {
 });
 
 describe('DateTimePicker', () => {
-  test.each(['time', 'date'] as const)('should not invoke onChange when value is not changed - mode %s', mode => {
-    const onChange = jest.fn();
-    const renderTree = render(<TestCase onChange={onChange} mode={mode}/>);
-    expect(onChange).not.toHaveBeenCalled();
-    const driver = DateTimePickerDriver({renderTree, testID});
-    driver.openPicker();
-    driver.submitSelection();
-    expect(onChange).not.toHaveBeenCalled();
-  });
   test.each(['time', 'date'] as const)('should invoke onChange when value is changed - mode %s', async mode => {
     const onChange = jest.fn();
     const renderTree = render(<TestCase onChange={onChange} mode={mode} value={someDate}/>);
@@ -45,5 +36,14 @@ describe('DateTimePicker', () => {
     expect(onChange).not.toHaveBeenCalled();
     driver.submitSelection();
     expect(onChange).toHaveBeenCalled();
+  });
+  test.each(['time', 'date'] as const)('should not invoke onChange when value is not changed - mode %s', mode => {
+    const onChange = jest.fn();
+    const renderTree = render(<TestCase onChange={onChange} mode={mode}/>);
+    expect(onChange).not.toHaveBeenCalled();
+    const driver = DateTimePickerDriver({renderTree, testID});
+    driver.openPicker();
+    driver.submitSelection();
+    expect(onChange).not.toHaveBeenCalled();
   });
 });
