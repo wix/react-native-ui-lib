@@ -21,6 +21,7 @@ import View from '../view';
 import Button, {ButtonProps} from '../button';
 import ExpandableOverlay, {ExpandableOverlayMethods, RenderCustomOverlayProps} from '../../incubator/expandableOverlay';
 import useOldApi, {OldApiProps} from './useOldApi';
+import {isSameDate, isSameHourAndMinute} from '../../utils/dateUtils';
 
 export type DateTimePickerMode = 'date' | 'time';
 
@@ -204,16 +205,7 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
   }, []);
 
   const isValueChanged = useCallback(() => {
-    if (mode === 'time') {
-      return (
-        chosenDate.current?.getHours() !== value?.getHours() || chosenDate.current?.getMinutes() !== value?.getMinutes()
-      );
-    }
-    return (
-      chosenDate.current?.getFullYear() !== value?.getFullYear() ||
-      chosenDate.current?.getMonth() !== value?.getMonth() ||
-      chosenDate.current?.getDate() !== value?.getDate()
-    );
+    return mode === 'time' ? !isSameHourAndMinute(chosenDate.current, value) : !isSameDate(chosenDate.current, value);
   }, [mode, value]);
 
   const onDonePressed = useCallback(() => {
