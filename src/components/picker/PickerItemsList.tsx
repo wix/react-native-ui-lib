@@ -180,7 +180,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   };
 
   return (
-    <View bg-$backgroundDefault style={wrapperContainerStyle} useSafeArea={useSafeArea}>
+    <View style={wrapperContainerStyle} useSafeArea={useSafeArea}>
       {renderPickerHeader()}
       {showLoader ? renderLoader() : renderContent()}
     </View>
