@@ -31,10 +31,10 @@ describe('DateTimePicker', () => {
     const renderTree = render(<TestCase onChange={onChange} mode={mode} value={someDate}/>);
     expect(onChange).not.toHaveBeenCalled();
     const driver = DateTimePickerDriver({renderTree, testID});
-    driver.openPicker();
+    driver.open();
     driver.changeDateTo(mode === 'time' ? someDateNextHour : someDateNextDay);
     expect(onChange).not.toHaveBeenCalled();
-    driver.submitSelection();
+    driver.select();
     expect(onChange).toHaveBeenCalled();
   });
   test.each(['time', 'date'] as const)('should not invoke onChange when value is not changed - mode %s', mode => {
@@ -42,8 +42,8 @@ describe('DateTimePicker', () => {
     const renderTree = render(<TestCase onChange={onChange} mode={mode}/>);
     expect(onChange).not.toHaveBeenCalled();
     const driver = DateTimePickerDriver({renderTree, testID});
-    driver.openPicker();
-    driver.submitSelection();
+    driver.open();
+    driver.select();
     expect(onChange).not.toHaveBeenCalled();
   });
 });

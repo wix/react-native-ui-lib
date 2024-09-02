@@ -8,13 +8,13 @@ import {
 export const DateTimePickerDriver = (props: ComponentProps) => {
   const {renderTree, testID} = props;
   const expandableOverlayDriver = ExpandableOverlayDriver({...props, testID: `${testID}.overlay`});
-  const openPicker = () => {
+  const open = () => {
     expandableOverlayDriver.open();
   };
-  const discardPicker = () => {
+  const close = () => {
     ButtonDriver({...props, testID: `${testID}.cancel`}).press();
   };
-  const submitSelection = () => {
+  const select = () => {
     ButtonDriver({...props, testID: `${testID}.done`}).press();
   };
   const changeDateTo = (date: Date) => {
@@ -23,9 +23,9 @@ export const DateTimePickerDriver = (props: ComponentProps) => {
   };
 
   return {
-    openPicker,
-    discardPicker,
-    submitSelection,
+    open,
+    close,
+    select,
     changeDateTo
   };
 };
