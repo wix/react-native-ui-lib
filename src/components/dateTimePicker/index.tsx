@@ -214,7 +214,7 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
       // since handleChange() is not called on iOS when there is no actual change
       chosenDate.current = new Date();
     }
-    if (isValueChanged() && chosenDate.current) {
+    if (chosenDate.current && isValueChanged()) {
       onChange?.(chosenDate?.current);
     }
     setValue(chosenDate.current);
