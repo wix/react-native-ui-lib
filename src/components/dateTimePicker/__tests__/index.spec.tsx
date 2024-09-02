@@ -32,10 +32,11 @@ describe('DateTimePicker', () => {
     expect(onChange).not.toHaveBeenCalled();
     const driver = DateTimePickerDriver({renderTree, testID});
     driver.open();
-    driver.changeDateTo(mode === 'time' ? someDateNextHour : someDateNextDay);
+    const dateToChangeTo = mode === 'time' ? someDateNextHour : someDateNextDay;
+    driver.changeDateTo(dateToChangeTo);
     expect(onChange).not.toHaveBeenCalled();
     driver.select();
-    expect(onChange).toHaveBeenCalled();
+    expect(onChange).toHaveBeenCalledWith(dateToChangeTo);
   });
   test.each(['time', 'date'] as const)('should not invoke onChange when value is not changed - mode %s', mode => {
     const onChange = jest.fn();
