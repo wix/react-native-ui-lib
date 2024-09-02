@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, ColorValue} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
 import Assets from '../../assets';
 import {Colors} from '../../style';
@@ -41,7 +41,7 @@ interface Props extends ColorPickerDialogProps, Pick<ColorPaletteProps, 'onValue
   /**
    * The ColorPicker's background color
    */
-  backgroundColor?: string;
+  backgroundColor?: ColorValue;
 }
 export type ColorPickerProps = Props;
 

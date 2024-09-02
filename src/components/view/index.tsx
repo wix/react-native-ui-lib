@@ -1,6 +1,6 @@
 import {useModifiers, useThemeProps} from 'hooks';
 import React, {useEffect, useMemo, useState} from 'react';
-import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, StyleProp, ViewStyle} from 'react-native';
+import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, StyleProp, ViewStyle, ColorValue} from 'react-native';
 import type {AnimateProps as RNReanimatedProps} from 'react-native-reanimated';
 import {Constants, ContainerModifiers} from '../../commons/new';
 import type {RecorderProps} from '../../typings/recorderTypes';
@@ -42,7 +42,7 @@ export interface ViewProps extends Omit<RNViewProps, 'style'>, ReanimatedProps, 
   /**
    * Set background color
    */
-  backgroundColor?: string;
+  backgroundColor?: ColorValue;
   style?: StyleProp<ViewStyle | Animated.AnimatedProps<ViewStyle>>;
 }
 

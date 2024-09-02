@@ -8,7 +8,8 @@ import {
   ImageBackground,
   ImageBackgroundProps,
   NativeSyntheticEvent,
-  ImageErrorEventData
+  ImageErrorEventData,
+  ColorValue
 } from 'react-native';
 import {
   Constants,
@@ -46,7 +47,7 @@ export type ImageProps = Omit<RNImageProps, 'source'> &
     /**
      * the asset tint
      */
-    tintColor?: string;
+    tintColor?: ColorValue;
     /**
      * whether the image should flip horizontally on RTL locals
      */
@@ -71,7 +72,7 @@ export type ImageProps = Omit<RNImageProps, 'source'> &
     /**
      * Pass a custom color for the overlay
      */
-    overlayColor?: string;
+    overlayColor?: ColorValue;
     /**
      * Render an overlay with custom content
      */

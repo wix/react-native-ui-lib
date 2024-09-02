@@ -1,6 +1,6 @@
 import {isUndefined} from 'lodash';
 import React, {PureComponent} from 'react';
-import {StyleSheet, Image, ImageProps, ImageSourcePropType} from 'react-native';
+import {StyleSheet, Image, ImageProps, ImageSourcePropType, ColorValue} from 'react-native';
 import {Colors} from '../../style';
 import View from '../view';
 
@@ -35,7 +35,7 @@ export type OverlayTypes = Pick<ImageProps, 'borderRadius'> & {
   /**
    * The overlay color
    */
-  color?: string;
+  color?: ColorValue;
   /**
    * Custom overlay content to be rendered on top of the image
    */

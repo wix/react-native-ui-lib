@@ -1,5 +1,5 @@
 import React, {PropsWithChildren, useCallback, useMemo} from 'react';
-import {LayoutChangeEvent} from 'react-native';
+import {LayoutChangeEvent, ColorValue} from 'react-native';
 import Reanimated, {
   useAnimatedStyle,
   useSharedValue,
@@ -17,11 +17,11 @@ export type TouchableOpacityProps = {
   /**
    * Background color
    */
-  backgroundColor?: string;
+  backgroundColor?: ColorValue;
   /**
    * Background color when actively pressing the touchable
    */
-  feedbackColor?: string;
+  feedbackColor?: ColorValue;
   /**
    * Opacity value when actively pressing the touchable
    */
@@ -155,11 +155,7 @@ function TouchableOpacity(props: Props) {
   const Container = props.onLongPress ? LongPressGestureHandler : View;
 
   return (
-    <TapGestureHandler
-      onHandlerStateChange={tapGestureHandler}
-      shouldCancelWhenOutside
-      enabled={!disabled}
-    >
+    <TapGestureHandler onHandlerStateChange={tapGestureHandler} shouldCancelWhenOutside enabled={!disabled}>
       <Reanimated.View>
         <Container onHandlerStateChange={longPressGestureHandler} shouldCancelWhenOutside>
           <Reanimated.View

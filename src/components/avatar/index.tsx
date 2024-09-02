@@ -8,7 +8,8 @@ import {
   ImagePropsBase,
   ImageStyle,
   TextStyle,
-  AccessibilityProps
+  AccessibilityProps,
+  ColorValue
 } from 'react-native';
 import {Colors, BorderRadiuses} from '../../style';
 import {extractAccessibilityProps} from '../../commons/modifiers';
@@ -55,7 +56,7 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> &
     /**
      * Background color for Avatar
      */
-    backgroundColor?: string;
+    backgroundColor?: ColorValue;
     /**
      * Badge location on Avatar
      */

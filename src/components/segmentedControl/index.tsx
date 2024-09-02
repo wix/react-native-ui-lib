@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {useRef, useCallback, useEffect} from 'react';
-import {StyleSheet, StyleProp, ViewStyle, TextStyle, LayoutChangeEvent} from 'react-native';
+import {StyleSheet, StyleProp, ViewStyle, TextStyle, LayoutChangeEvent, ColorValue} from 'react-native';
 import {
   Easing,
   useAnimatedReaction,
@@ -56,11 +56,11 @@ export type SegmentedControlProps = {
   /**
    * The background color of the inactive segments
    */
-  backgroundColor?: string;
+  backgroundColor?: ColorValue;
   /**
    * The background color of the active segment
    */
-  activeBackgroundColor?: string;
+  activeBackgroundColor?: ColorValue;
   /**
    * The color of the active segment outline
    */
@@ -191,9 +191,14 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   [initialIndex, segments.length]);
 
-  const containerOnLayout = useCallback(({nativeEvent: {layout: {height}}} : LayoutChangeEvent) => {
+  const containerOnLayout = useCallback(({
+    nativeEvent: {
+      layout: {height}
+    }
+  }: LayoutChangeEvent) => {
     containerHeight.value = height;
-  }, [containerHeight]);
+  },
+  [containerHeight]);
 
   const animatedStyle = useAnimatedStyle(() => {
     const {value} = segmentsStyle;
@@ -244,7 +249,11 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     });
   return (
     <View style={containerStyle} testID={testID}>
-      {label && <Text bodySmall $textNeutralHeavy marginB-s1 {...labelProps}>{label}</Text>}
+      {label && (
+        <Text bodySmall $textNeutralHeavy marginB-s1 {...labelProps}>
+          {label}
+        </Text>
+      )}
       <View row center onLayout={containerOnLayout} style={[styles.container, style, {borderRadius, backgroundColor}]}>
         <View
           reanimated

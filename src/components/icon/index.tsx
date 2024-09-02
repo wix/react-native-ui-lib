@@ -1,6 +1,6 @@
 import isUndefined from 'lodash/isUndefined';
 import React, {useMemo, forwardRef} from 'react';
-import {Image, ImageProps as RNImageProps, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {Image, ImageProps as RNImageProps, StyleSheet, StyleProp, ViewStyle, ColorValue} from 'react-native';
 import {asBaseComponent, BaseComponentInjectedProps, MarginModifiers, Constants} from '../../commons/new';
 import {ComponentStatics} from '../../typings/common';
 import {getAsset, isSvg, isBase64ImageContent} from '../../utils/imageUtils';
@@ -27,7 +27,7 @@ export type IconProps = Omit<RNImageProps, 'source'> &
     /**
      * the icon tint
      */
-    tintColor?: string | null;
+    tintColor?: ColorValue | null;
     /**
      * the icon size
      */

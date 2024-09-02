@@ -1,6 +1,15 @@
 import _ from 'lodash';
 import React, {useCallback} from 'react';
-import {StyleSheet, StyleProp, ViewStyle, ViewProps, ImageStyle, TextStyle, ImageSourcePropType} from 'react-native';
+import {
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  ViewProps,
+  ImageStyle,
+  TextStyle,
+  ImageSourcePropType,
+  ColorValue
+} from 'react-native';
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
 import {BorderRadiuses, Spacings, Colors} from 'style';
@@ -25,7 +34,7 @@ export type ChipProps = ViewProps &
     /**
      * Chip's background color
      */
-    backgroundColor?: string;
+    backgroundColor?: ColorValue;
     /**
      * The Chip borderRadius
      */

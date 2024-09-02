@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import memoize from 'memoize-one';
 import React, {PureComponent} from 'react';
-import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, StyleProp, ViewStyle, ColorValue} from 'react-native';
 import {Colors} from '../../style';
 import {Constants} from '../../commons/new';
 import View from '../view';
@@ -56,7 +56,7 @@ interface Props {
   /**
    * The ColorPalette's background color
    */
-  backgroundColor?: string;
+  backgroundColor?: ColorValue;
 }
 export type ColorPaletteProps = Props;
 

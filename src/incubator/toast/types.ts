@@ -1,5 +1,5 @@
 import {ReactElement, ReactNode} from 'react';
-import {ImageSourcePropType, StyleProp, TextStyle, ViewStyle} from 'react-native';
+import {ImageSourcePropType, StyleProp, TextStyle, ViewStyle, ColorValue} from 'react-native';
 import {ButtonProps} from '../../components/button';
 import {TextProps} from '../../components/text';
 
@@ -109,6 +109,6 @@ export interface ToastProps {
   /**
    * The background color of the toast
    */
-  backgroundColor?: string;
+  backgroundColor?: ColorValue;
   children?: ReactNode;
 }

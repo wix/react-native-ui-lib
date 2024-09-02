@@ -6,7 +6,8 @@ import {
   ImageSourcePropType,
   NativeSyntheticEvent,
   NativeScrollEvent,
-  LayoutChangeEvent
+  LayoutChangeEvent,
+  ColorValue
 } from 'react-native';
 import {ScrollView, FlatList} from 'react-native-gesture-handler';
 import {Colors} from '../../style';
@@ -47,7 +48,7 @@ export interface ScrollBarProps extends FlatListProps<any> {
   /**
    * The gradient's tint color
    */
-  gradientColor?: string;
+  gradientColor?: ColorValue;
   /**
    * The gradient's image, instead of the default image.
    * NOTE: pass an image for the right-hand side and it will be flipped to match the left-hand side

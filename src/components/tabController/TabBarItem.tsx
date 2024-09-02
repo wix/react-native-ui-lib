@@ -1,6 +1,6 @@
 // TODO: support commented props
 import React, {useCallback, useContext, useEffect, useRef, useMemo, ReactElement} from 'react';
-import {StyleSheet, TextStyle, LayoutChangeEvent, StyleProp, ViewStyle, TextProps} from 'react-native';
+import {StyleSheet, TextStyle, LayoutChangeEvent, StyleProp, ViewStyle, TextProps, ColorValue} from 'react-native';
 import _ from 'lodash';
 import Reanimated, {runOnJS, useAnimatedStyle, useSharedValue} from 'react-native-reanimated';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
@@ -26,7 +26,7 @@ export interface TabControllerItemProps extends Pick<TabControllerBarProps, 'spr
   /**
    * Extra label props to pass to label Text element
    */
-  labelProps?: Omit<TextProps, 'style'> ;
+  labelProps?: Omit<TextProps, 'style'>;
   /**
    * custom selected label style
    */
@@ -86,12 +86,12 @@ export interface TabControllerItemProps extends Pick<TabControllerBarProps, 'spr
   /**
    * Apply background color for the tab bar item
    */
-  backgroundColor?: string;
+  backgroundColor?: ColorValue;
   /**
    * TODO: rename to feedbackColor
    * Apply background color on press for TouchableOpacity
    */
-  activeBackgroundColor?: string;
+  activeBackgroundColor?: ColorValue;
   /**
    * Pass custom style
    */

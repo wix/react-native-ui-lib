@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, ViewStyle} from 'react-native';
+import {StyleSheet, ViewStyle, ColorValue} from 'react-native';
 import {Colors, Shadows} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import View from '../view';
@@ -14,7 +14,7 @@ export type ActionBarProps = {
   /**
    * action bar background color
    */
-  backgroundColor?: string;
+  backgroundColor?: ColorValue;
   /**
    * actions for the action bar
    */

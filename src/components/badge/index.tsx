@@ -8,7 +8,8 @@ import {
   TextStyle,
   TouchableOpacityProps,
   ViewStyle,
-  ViewProps
+  ViewProps,
+  ColorValue
 } from 'react-native';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {asBaseComponent} from '../../commons/new';
@@ -18,10 +19,9 @@ import Image from '../image';
 import View from '../view';
 import Text from '../text';
 
-
 const LABEL_FORMATTER_VALUES = [1, 2, 3, 4] as const;
 
-type LabelFormatterValues = typeof LABEL_FORMATTER_VALUES[number];
+type LabelFormatterValues = (typeof LABEL_FORMATTER_VALUES)[number];
 
 export type BadgeProps = ViewProps &
   TouchableOpacityProps & {
@@ -33,7 +33,7 @@ export type BadgeProps = ViewProps &
     /**
      * Color of the badge background
      */
-    backgroundColor?: string;
+    backgroundColor?: ColorValue;
     /**
      * the badge size
      */
@@ -100,7 +100,7 @@ export type BadgeProps = ViewProps &
  */
 class Badge extends PureComponent<BadgeProps> {
   static displayName = 'Badge';
-  
+
   styles: ReturnType<typeof createStyles>;
 
   constructor(props: BadgeProps) {
