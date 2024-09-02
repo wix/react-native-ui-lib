@@ -26,7 +26,7 @@ jest.mock('../../../optionalDependencies', () => {
 });
 
 describe('DateTimePicker', () => {
-  test.each(['time', 'date'] as const)('should invoke onChange when value is changed - mode %s', async mode => {
+  test.each(['time', 'date'] as const)('should invoke onChange when value is changed - mode %s', mode => {
     const onChange = jest.fn();
     const renderTree = render(<TestCase onChange={onChange} mode={mode} value={someDate}/>);
     expect(onChange).not.toHaveBeenCalled();
