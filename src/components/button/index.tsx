@@ -151,16 +151,8 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getContainerSizeStyle() {
-    const {
-      outline,
-      avoidMinWidth,
-      avoidInnerPadding,
-      round,
-      size: propsSize,
-      outlineWidth: propsOutlineWidth
-    } = this.props;
+    const {avoidMinWidth, avoidInnerPadding, round, size: propsSize} = this.props;
     const size = propsSize || DEFAULT_SIZE;
-    const outlineWidth = propsOutlineWidth || 1;
 
     const CONTAINER_STYLE_BY_SIZE: Dictionary<any> = {};
     CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = round
@@ -192,17 +184,6 @@ class Button extends PureComponent<Props, ButtonState> {
         minWidth: MIN_WIDTH.LARGE
       };
 
-    if (outline) {
-      _.forEach(CONTAINER_STYLE_BY_SIZE, style => {
-        if (round) {
-          style.padding -= outlineWidth; // eslint-disable-line
-        } else {
-          style.paddingVertical -= outlineWidth; // eslint-disable-line
-          style.paddingHorizontal -= outlineWidth; // eslint-disable-line
-        }
-      });
-    }
-
     const containerSizeStyle = CONTAINER_STYLE_BY_SIZE[size];
 
     if (this.isLink || (this.isIconButton && !round)) {
@@ -229,7 +210,7 @@ class Button extends PureComponent<Props, ButtonState> {
     let outlineStyle;
     if ((outline || outlineColor) && !this.isLink) {
       outlineStyle = {
-        borderWidth: outlineWidth || 1,
+        borderWidth: outlineWidth ?? 1,
         borderColor: outlineColor || Colors.$outlinePrimary
       };
 

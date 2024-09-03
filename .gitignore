@@ -66,6 +66,7 @@ dist
 dist-ts
 package-lock.json
 docs/components/**
+scripts/token.js
 
 # Ruby / CocoaPods
 /ios/Pods/

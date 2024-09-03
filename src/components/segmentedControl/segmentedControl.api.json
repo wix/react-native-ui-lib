@@ -20,7 +20,9 @@
     {"name": "containerStyle", "type": "ViewStyle", "description": "Additional spacing styles for the container"},
     {"name": "style", "type": "ViewStyle", "description": "Custom style to inner container"},
     {"name": "segmentLabelStyle", "type": "TextStyle", "description": "Segment label style"},
-    {"name": "testID", "type": "string", "description": "Component test id"}
+    {"name": "testID", "type": "string", "description": "Component test id"},
+    {"name": "label", "type": "string", "description": "SegmentedControl label"},
+    {"name": "labelProps", "type": "TextProps", "description": "Pass props for the SegmentedControl label"}
   ],
   "snippet": [
     "<SegmentedControl segments={[{label: '1st'}, {label: '2nd'}]$1}/>"

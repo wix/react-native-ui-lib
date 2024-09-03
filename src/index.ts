@@ -124,6 +124,7 @@ export {
   PickerMethods
 } from './components/picker';
 export {default as ProgressBar, ProgressBarProps} from './components/progressBar';
+export {default as ProgressiveImage, ProgressiveImageProps} from './components/progressiveImage';
 export {default as RadioButton, RadioButtonProps} from './components/radioButton';
 export {default as RadioGroup, RadioGroupProps} from './components/radioGroup';
 export type {RecorderProps} from './typings/recorderTypes';

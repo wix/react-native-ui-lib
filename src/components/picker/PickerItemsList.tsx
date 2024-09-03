@@ -36,7 +36,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   } = props;
   const context = useContext(PickerContext);
 
-  const [wheelPickerValue, setWheelPickerValue] = useState<PickerSingleValue>(context.value ?? items?.[0].value);
+  const [wheelPickerValue, setWheelPickerValue] = useState<PickerSingleValue>(context.value ?? items?.[0]?.value);
   // TODO: Might not need this memoized style, instead we can move it to a stylesheet
   const wrapperContainerStyle = useMemo(() => {
     // const shouldFlex = Constants.isWeb ? 1 : useDialog ? 1 : 1;
@@ -168,7 +168,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   };
 
   return (
-    <View bg-$backgroundDefault style={wrapperContainerStyle} useSafeArea={useSafeArea}>
+    <View style={wrapperContainerStyle} useSafeArea={useSafeArea}>
       {renderPickerHeader()}
       {renderContent()}
     </View>

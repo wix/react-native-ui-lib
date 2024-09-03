@@ -3521,8 +3521,8 @@ exports[`TextField Screen renders screen 1`] = `
               "marginLeft": 20,
               "minWidth": 66,
               "opacity": 1,
-              "paddingHorizontal": 10,
-              "paddingVertical": 2,
+              "paddingHorizontal": 11,
+              "paddingVertical": 3,
             }
           }
         >
