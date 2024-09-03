@@ -1,12 +1,11 @@
-import {isEmpty} from 'lodash';
 import React from 'react';
 import {StyleProp, View as RNView, ViewStyle} from 'react-native';
 import {useAnimatedStyle} from 'react-native-reanimated';
-import {PanGestureHandler} from 'react-native-gesture-handler';
+import {GestureDetector} from 'react-native-gesture-handler';
 import {asBaseComponent} from '../../commons/new';
 import View, {ViewProps} from '../../components/view';
-import {PanningDirections, PanningDirectionsEnum} from './panningUtil';
 import useHiddenLocation from '../hooks/useHiddenLocation';
+import {PanningDirections, PanningDirectionsEnum} from './panningUtil';
 import usePanGesture, {
   PanGestureProps,
   PanViewDirections,
@@ -15,6 +14,7 @@ import usePanGesture, {
   DEFAULT_DIRECTIONS,
   DEFAULT_ANIMATION_CONFIG
 } from './usePanGesture';
+
 export {
   PanningDirections,
   PanningDirectionsEnum,
@@ -50,7 +50,7 @@ const PanView = (props: Props) => {
   } = props;
 
   const {setRef, onLayout, hiddenLocation} = useHiddenLocation<RNView>();
-  const {translation, panGestureEvent} = usePanGesture({
+  const {translation, gesture} = usePanGesture({
     directions,
     dismissible,
     animateToOrigin,
@@ -60,7 +60,6 @@ const PanView = (props: Props) => {
     hiddenLocation
   });
 
-  // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [{translateX: translation.x.value}, {translateY: translation.y.value}]
@@ -69,12 +68,11 @@ const PanView = (props: Props) => {
 
   return (
     <View ref={setRef} style={containerStyle} onLayout={onLayout}>
-      <PanGestureHandler onGestureEvent={isEmpty(directions) ? undefined : panGestureEvent}>
-        {/* @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881) */}
+      <GestureDetector gesture={gesture}>
         <View reanimated style={animatedStyle}>
           <View {...others}>{children}</View>
         </View>
-      </PanGestureHandler>
+      </GestureDetector>
     </View>
   );
 };
