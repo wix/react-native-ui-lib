@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
-import {View, Text, Card, Image, TabController} from 'react-native-ui-lib';
+import {View, Text, Card, Image, TabController, Keyboard} from 'react-native-ui-lib';
 import _ from 'lodash';
 
 const IMAGE_URL =
@@ -21,15 +21,18 @@ export default class TabControllerWithStickyHeaderScreen extends Component {
 
   renderTab1 = () => {
     return (
-      <View bg-green80 paddingT-s5>
-        {_.times(7, i => {
-          return (
-            <Card key={i} height={100} marginB-s5 marginH-s5 center>
-              <Text text40>item {i}</Text>
-            </Card>
-          );
-        })}
-      </View>
+      <>
+        <View bg-green80 paddingT-s5>
+          {_.times(7, i => {
+            return (
+              <Card key={i} height={100} marginB-s5 marginH-s5 center>
+                <Text text40>item {i}</Text>
+              </Card>
+            );
+          })}
+        </View>
+        <Keyboard.KeyboardAwareInsetsView />
+      </>
     );
   };
 
