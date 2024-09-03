@@ -103,7 +103,16 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getLabelColor() {
-    const {linkColor, outline, outlineColor, disabled, color: propsColor, backgroundColor, modifiers} = this.props;
+    const {
+      linkColor,
+      fullWidth,
+      outline,
+      outlineColor,
+      disabled,
+      color: propsColor,
+      backgroundColor,
+      modifiers
+    } = this.props;
     const {color: modifiersColor} = modifiers;
     const isLink = this.isLink;
     const contentColor = Colors.getRelativeColor(this.getBackgroundColor());
@@ -119,7 +128,7 @@ class Button extends PureComponent<Props, ButtonState> {
     }
 
     if (disabled) {
-      return isLink || outline ? Colors.$textDisabled : Colors.white;
+      return isLink || outline || fullWidth ? Colors.$textDisabled : Colors.white;
     }
 
     color = propsColor || modifiersColor || color;
