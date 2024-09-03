@@ -52,7 +52,7 @@ export default class TabControllerWithStickyHeaderScreen extends Component {
       <TabController items={items} nestedInScrollView>
         <ScrollView
           // stickyHeaderHiddenOnScroll
-          stickyHeaderIndices={[0, 1]}
+          stickyHeaderIndices={[1]}
         >
           {this.renderHeader()}
           <TabController.TabBar/>
