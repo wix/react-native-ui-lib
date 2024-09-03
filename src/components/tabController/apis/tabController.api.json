@@ -19,6 +19,13 @@
       "description": "When using TabController.PageCarousel this should be turned on",
       "default": "false"
     },
+    {
+      "name": "nestedInScrollView",
+      "type": "boolean",
+      "description": "Pass when TabController is render inside a ScrollView (with a header)",
+      "note": "Does not work with asCarousel",
+      "default": "false"
+    },
     {"name": "carouselPageWidth;", "type": "number", "description": "Pass for custom carousel page width"}
   ],
   "snippet": [

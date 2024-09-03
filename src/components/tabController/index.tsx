@@ -38,6 +38,10 @@ export interface TabControllerProps {
    */
   asCarousel?: boolean;
   /**
+   * Pass when TabController is render inside a ScrollView (with a header)
+   */
+  nestedInScrollView?: boolean;
+  /**
    * Pass for custom carousel page width
    */
   carouselPageWidth?: number;
@@ -65,6 +69,7 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
   const {
     initialIndex = 0,
     asCarousel = false,
+    nestedInScrollView = false,
     items,
     onChangeIndex = _.noop,
     carouselPageWidth,
@@ -123,6 +128,7 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
       initialIndex,
       asCarousel,
       pageWidth,
+      nestedInScrollView,
       /* Items */
       items,
       ignoredItems,
@@ -135,7 +141,7 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
       onChangeIndex,
       setCurrentIndex
     };
-  }, [initialIndex, asCarousel, items, onChangeIndex, screenWidth]);
+  }, [initialIndex, asCarousel, items, onChangeIndex, screenWidth, nestedInScrollView]);
 
   return <TabBarContext.Provider value={context}>{children}</TabBarContext.Provider>;
 });
