@@ -21,32 +21,32 @@ export default class TabControllerWithStickyHeaderScreen extends Component {
 
   renderTab1 = () => {
     return (
-      <>
-        <View bg-green80 paddingT-s5>
-          {_.times(7, i => {
-            return (
-              <Card key={i} height={100} marginB-s5 marginH-s5 center>
-                <Text text40>item {i}</Text>
-              </Card>
-            );
-          })}
-        </View>
-        <Keyboard.KeyboardAwareInsetsView />
-      </>
+      <View bg-green80 paddingT-s5>
+        {_.times(7, i => {
+          return (
+            <Card key={i} height={100} marginB-s5 marginH-s5 center>
+              <Text text40>item {i}</Text>
+            </Card>
+          );
+        })}
+      </View>
     );
   };
 
   renderTab2 = () => {
     return (
-      <View bg-orange40 paddingT-s5>
-        {_.times(15, i => {
-          return (
-            <View key={i} height={100} marginB-s5 marginH-s5 center bg-orange60>
-              <Text text40> item {i}</Text>
-            </View>
-          );
-        })}
-      </View>
+      <>
+        <View bg-orange40 paddingT-s5>
+          {_.times(15, i => {
+            return (
+              <View key={i} height={100} marginB-s5 marginH-s5 center bg-orange60>
+                <Text text40> item {i}</Text>
+              </View>
+            );
+          })}
+        </View>
+        <Keyboard.KeyboardAwareInsetsView />
+      </>
     );
   };
 
