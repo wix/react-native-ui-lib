@@ -158,10 +158,32 @@ type PickerExpandableOverlayProps = {
   enableModalBlur?: boolean;
 };
 
+type PickerSelectionOptions = Pick<
+  TextFieldProps,
+  'validateOnStart' | 'onChangeValidity' | 'validationMessage' | 'validationMessageStyle'
+> & {
+  /**
+   * Callback for when field validated and failed
+   */
+  onValidationFailed?: (value: PickerValue) => void;
+};
+
+type PickerSelectionValidation = {
+  /**
+   * Callback for when selection was made
+   */
+  selectionValidation?: (value: PickerValue) => boolean;
+  /**
+   * Selection validation options
+   */
+  selectionOptions?: PickerSelectionOptions;
+};
+
 export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
   PickerPropsDeprecation &
   PickerExpandableOverlayProps &
-  PickerListProps & {
+  PickerListProps &
+  PickerSelectionValidation & {
     /* ...TextField.propTypes, */
     /**
      * Use dialog instead of modal picker
@@ -317,6 +339,8 @@ export type PickerItemsListProps = Pick<
 > & {
   //TODO: after finish Picker props migration, items should be taken from PickerProps
   items?: {value: any; label: any}[];
+  //Remove the migrateDialog prop when the dialog migration finished in v8
+  migrateDialog?: boolean;
 };
 
 export type PickerMethods = TextFieldMethods & ExpandableOverlayMethods;

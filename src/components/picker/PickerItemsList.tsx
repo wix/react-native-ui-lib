@@ -32,7 +32,8 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     useSafeArea,
     useDialog,
     mode,
-    testID
+    testID,
+    migrateDialog
   } = props;
   const context = useContext(PickerContext);
 
@@ -138,7 +139,8 @@ const PickerItemsList = (props: PickerItemsListProps) => {
           </Text>
         </View>
       );
-    } else if (!useDialog || mode === PickerModes.MULTI) {
+      //} else if (!migrateDialog && (!useDialog || mode === PickerModes.MULTI)) {
+    } else if (!migrateDialog && (!useDialog || mode === PickerModes.MULTI)) {
       return <Modal.TopBar testID={`${props.testID}.topBar`} {...topBarProps}/>;
     }
   };
