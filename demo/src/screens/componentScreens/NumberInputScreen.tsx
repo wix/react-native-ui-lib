@@ -111,6 +111,7 @@ const NumberInputScreen = () => {
     if (currentData.current?.type === 'valid') {
       return currentData.current.number > MINIMUM_PRICE;
     }
+    return false;
   }, []);
 
   const isWithinDiscountPercentage = useCallback(() => {
@@ -119,6 +120,7 @@ const NumberInputScreen = () => {
         currentData.current.number >= DISCOUNT_PERCENTAGE.min && currentData.current.number <= DISCOUNT_PERCENTAGE.max
       );
     }
+    return false;
   }, []);
 
   const validate = useMemo((): Incubator.TextFieldProps['validate'] => {

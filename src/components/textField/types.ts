@@ -37,7 +37,7 @@ export enum Presets {
 
 export type ValidationMessagePositionType = `${ValidationMessagePosition}` | ValidationMessagePosition;
 
-export type Validator = ((value: string) => boolean) | keyof typeof formValidators;
+export type Validator = ((value?: string) => boolean) | keyof typeof formValidators;
 
 export interface FieldStateProps extends InputProps {
   validateOnStart?: boolean;
