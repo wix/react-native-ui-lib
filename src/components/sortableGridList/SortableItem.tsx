@@ -26,7 +26,8 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
     getOrderByPosition,
     getIdByItemOrder,
     getTranslationByOrderChange,
-    updateItemLayout
+    updateItemLayout,
+    orderByIndex = false
   } = props;
   const initialIndex = useSharedValue(_.map(data, 'id').indexOf(id));
   const currIndex = useSharedValue(initialIndex.value);
@@ -112,7 +113,6 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
     .activateAfterLongPress(250)
     .onStart(() => {
       isDragging.value = true;
-
       const translation = getTranslationByOrderChange(currIndex.value, initialIndex.value);
       translateX.value = translation.x;
       translateY.value = translation.y;
@@ -134,8 +134,23 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
 
         if (itemIdToSwap !== undefined) {
           const newItemsOrder = [...itemsOrder.value];
-          newItemsOrder[newOrder] = id;
-          newItemsOrder[oldOrder] = itemIdToSwap;
+          if (orderByIndex) {
+            const shouldMoveOthersDown = newOrder > oldOrder;
+            if (shouldMoveOthersDown) {
+              for (let i = oldOrder; i < newOrder; i++) {
+                newItemsOrder[i] = itemsOrder.value[i + 1];
+              }
+            } else {
+              for (let i = oldOrder; i > newOrder; i--) {
+                newItemsOrder[i] = itemsOrder.value[i - 1];
+              }
+            }
+            newItemsOrder[newOrder] = id;
+          } else {
+            newItemsOrder[newOrder] = id;
+            newItemsOrder[oldOrder] = itemIdToSwap;
+          }
+
           itemsOrder.value = newItemsOrder;
         }
       }
@@ -156,7 +171,6 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
       }
     });
 
-  // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
   const animatedStyle = useAnimatedStyle(() => {
     const scale = withSpring(isDragging.value ? 1.1 : 1);
     const zIndex = isDragging.value ? 100 : withTiming(0, animationConfig);
@@ -168,7 +182,6 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
   });
 
   return (
-    // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
     <View reanimated style={[style, animatedStyle]} onLayout={onLayout}>
       <GestureDetector gesture={dragOnLongPressGesture}>
         <View>{props.children}</View>

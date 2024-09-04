@@ -15,46 +15,46 @@ const buttonStartValue = 0.8;
 const icon = require('./assets/arrow-down.png');
 
 export type StackAggregatorProps = ViewProps & {
-   /**
-     * The initial state of the stack
-     */
-    collapsed?: boolean;
-    /**
-     * Component Children
-     */
-    children: JSX.Element | JSX.Element[]
-    /**
-     * The container style
-     */
-    containerStyle?: StyleProp<ViewStyle>;
-    /**
-     * The content container style
-     */
-    contentContainerStyle?: StyleProp<ViewStyle>;
-    /**
-     * The items border radius
-     */
-    itemBorderRadius?: number;
-    /**
-     * Props passed to the 'show less' button
-     */
-    buttonProps?: ButtonProps;
-    /**
-     * A callback for item press
-     */
-    onItemPress?: (index: number) => void;
-    /**
-     * A callback for collapse state will change (value is future collapsed state)
-     */
-    onCollapseWillChange?: (changed: boolean) => void;
-    /**
-     * A callback for collapse state change (value is collapsed state)
-     */
-    onCollapseChanged?: (changed: boolean) => void;
-    /**
-     * A setting that disables the cards' onPress
-     */
-    disablePresses?: boolean;
+  /**
+   * The initial state of the stack
+   */
+  collapsed?: boolean;
+  /**
+   * Component Children
+   */
+  children: JSX.Element | JSX.Element[];
+  /**
+   * The container style
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * The content container style
+   */
+  contentContainerStyle?: StyleProp<ViewStyle>;
+  /**
+   * The items border radius
+   */
+  itemBorderRadius?: number;
+  /**
+   * Props passed to the 'show less' button
+   */
+  buttonProps?: ButtonProps;
+  /**
+   * A callback for item press
+   */
+  onItemPress?: (index: number) => void;
+  /**
+   * A callback for collapse state will change (value is future collapsed state)
+   */
+  onCollapseWillChange?: (changed: boolean) => void;
+  /**
+   * A callback for collapse state change (value is collapsed state)
+   */
+  onCollapseChanged?: (changed: boolean) => void;
+  /**
+   * A setting that disables the cards' onPress
+   */
+  disablePresses?: boolean;
 };
 
 /**
@@ -90,14 +90,14 @@ const StackAggregator = (props: StackAggregatorProps) => {
   }, [isCollapsed, onCollapseWillChange, onCollapseChanged]);
 
   /** Animations */
-  
+
   const animatedScale = new Animated.Value(isCollapsed ? buttonStartValue : 1);
   const animatedOpacity = new Animated.Value(isCollapsed ? buttonStartValue : 1);
   const animatedContentOpacity = useMemo(() => {
     return new Animated.Value(isCollapsed ? 0 : 1);
   }, [isCollapsed]);
   const easeOut = Easing.bezier(0, 0, 0.58, 1);
-  
+
   const getItemScale = useCallback((index: number) => {
     if (isCollapsed) {
       if (index === itemsCount - 2) {
@@ -108,7 +108,8 @@ const StackAggregator = (props: StackAggregatorProps) => {
       }
     }
     return 1;
-  }, [isCollapsed, itemsCount]);
+  },
+  [isCollapsed, itemsCount]);
 
   const getAnimatedScales = useCallback(() => {
     return React.Children.map(children, (_item, index) => {
@@ -126,7 +127,7 @@ const StackAggregator = (props: StackAggregatorProps) => {
 
   const animateValues = () => {
     const newValue = isCollapsed ? buttonStartValue : 1;
-    
+
     return new Promise(resolve => {
       Animated.parallel([
         Animated.timing(animatedOpacity, {
@@ -255,12 +256,7 @@ const StackAggregator = (props: StackAggregatorProps) => {
         ]}
         collapsable={false}
       >
-        <Card
-          style={styles.card}
-          onPress={() => _onItemPress(index)}
-          borderRadius={itemBorderRadius}
-          elevation={5}
-        >
+        <Card style={styles.card} onPress={() => _onItemPress(index)} borderRadius={itemBorderRadius} elevation={5}>
           <Animated.View style={index !== 0 ? {opacity: animatedContentOpacity} : undefined} collapsable={false}>
             {item}
           </Animated.View>
@@ -297,13 +293,7 @@ const StackAggregator = (props: StackAggregatorProps) => {
           return renderItem(item as JSX.Element | JSX.Element[], index);
         })}
 
-        {isCollapsed && (
-          <TouchableOpacity
-            onPress={open}
-            activeOpacity={1}
-            style={touchableOpacityStyle}
-          />
-        )}
+        {isCollapsed && <TouchableOpacity onPress={open} activeOpacity={1} style={touchableOpacityStyle}/>}
       </View>
     </View>
   );

@@ -17,6 +17,7 @@ import TouchableOpacity from '../touchableOpacity';
 import Text, {TextProps} from '../text';
 import View from '../view';
 import Icon from '../icon';
+import Constants from '../../commons/Constants';
 
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = Colors.$backgroundPrimaryHeavy;
@@ -287,7 +288,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     const {label, labelStyle, containerStyle, labelProps, testID} = this.props;
     
     return label ? (
-      <View row centerV style={containerStyle}>
+      <View row centerV style={containerStyle} collapsable={!Constants.isAndroid}>
         {this.renderCheckbox()}
         <Text flexS style={[this.styles.checkboxLabel, this.getLabelStyle(), labelStyle]} recorderTag={'unmask'} {...labelProps} onPress={this.onPress} testID={`${testID}.label`}>
           {label}

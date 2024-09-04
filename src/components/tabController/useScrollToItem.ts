@@ -128,13 +128,6 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     const rightOffsets = [];
     rightOffsets.push(-containerWidth + widths[0] + outerSpacing + innerSpacing);
     while (index < itemsCount) {
-      /* map animated widths and offsets */
-      itemsWidthsAnimated.value[index] = widths[index];
-      if (index > 0) {
-        itemsOffsetsAnimated.value[index] =
-            itemsOffsetsAnimated.value[index - 1] + itemsWidthsAnimated.value[index - 1];
-      }
-
       /* calc center, left and right offsets */
       centeredOffsets[index] = currentCenterOffset - screenCenter + widths[index] / 2;
       ++index;
@@ -154,9 +147,24 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
 
     setOffsets({CENTER: centeredOffsets, LEFT: leftOffsets, RIGHT: rightOffsets}); // default for DYNAMIC is CENTER
 
-    // trigger value change
-    itemsWidthsAnimated.value = [...itemsWidthsAnimated.value];
-    itemsOffsetsAnimated.value = [...itemsOffsetsAnimated.value];
+    // Update shared values
+    itemsWidthsAnimated.modify((value) => {
+      'worklet';
+      value.forEach((_, index) => {
+        value[index] = widths[index];
+      });
+      return value;
+    });
+
+    itemsOffsetsAnimated.modify((value) => {
+      'worklet';
+      value.forEach((_, index) => {
+        if (index > 0) {
+          value[index] = value[index - 1] + widths[index - 1];
+        }
+      });
+      return value;
+    });
   },
   [itemsCount, outerSpacing, innerSpacing, addOffsetMargin, containerWidth]);
 

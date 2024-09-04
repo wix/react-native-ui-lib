@@ -17,7 +17,7 @@ export type ChipProps = ViewProps &
     /**
      * Chip's size. Number or a width and height object.
      */
-    size?: number | {width: number; height: number};
+    size?: number | Partial<{width: number; height: number}>;
     /**
      * On Chip press callback
      */

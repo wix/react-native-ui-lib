@@ -1,5 +1,6 @@
 /* ===== General Stuff ===== */
 export {default as Assets} from './assets';
+export type {emojis as EmojisAssetsType} from './assets/emojis';
 export * from './style';
 export * from './services';
 export * from '../lib/components';
@@ -123,6 +124,7 @@ export {
   PickerMethods
 } from './components/picker';
 export {default as ProgressBar, ProgressBarProps} from './components/progressBar';
+export {default as ProgressiveImage, ProgressiveImageProps} from './components/progressiveImage';
 export {default as RadioButton, RadioButtonProps} from './components/radioButton';
 export {default as RadioGroup, RadioGroupProps} from './components/radioGroup';
 export type {RecorderProps} from './typings/recorderTypes';

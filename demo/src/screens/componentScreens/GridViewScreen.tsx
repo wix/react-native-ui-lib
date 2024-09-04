@@ -12,6 +12,7 @@ class GridViewScreen extends Component {
         _.map(contacts, contact => ({
           imageProps: {source: {uri: contact.thumbnail}, borderRadius: 999, style: {backgroundColor: Colors.grey60}},
           title: _.split(contact.name, ' ')[0],
+          titleLines: 1,
           onPress: () => Alert.alert('My name is ' + contact.name)
         })))(conversations),
     products: _.flow(products => _.take(products, 8),
@@ -174,7 +175,7 @@ class GridViewScreen extends Component {
           <GridView items={pairs} numColumns={2}/>
           <Text marginV-s5 text60BO>
             Dynamic itemSize
-            <Text text90>  (Using maxItemWidth)</Text>
+            <Text text90> (Using maxItemWidth)</Text>
           </Text>
           <GridView items={dynamicLayout} maxItemWidth={120}/>
           <Text marginV-s5 text60BO>

@@ -39,7 +39,7 @@ const ValidationMessage = ({
   if (validationIcon?.source) {
     return (
       <View row>
-        {showValidationMessage &&
+        {showValidationMessage && validationMessage &&
           <Icon tintColor={Colors.$textDangerLight} size={14} marginR-s1 {...validationIcon} testID={`${testID}.icon`}/>}
         {renderMessage()}
       </View>

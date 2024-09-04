@@ -215,6 +215,10 @@ export default class ButtonsScreen extends Component {
             </View>
 
             <Button style={{marginBottom: ButtonSpace}} size={Button.sizes.small} iconSource={plusIcon} label="Icon"/>
+            
+            <Button marginB-s5 iconSource={plusIcon} iconProps={{tintColor: 'red'}} label="Custom icon color"/>
+
+            <Button marginB-s5 iconSource={plusIcon} iconStyle={{tintColor: 'pink'}} label="Custom icon style"/>
 
             <Button style={{marginBottom: ButtonSpace}} outline iconSource={plusIcon} label="Icon"/>
 
@@ -234,15 +238,16 @@ export default class ButtonsScreen extends Component {
               style={{marginBottom: ButtonSpace}}
               iconSource={iconStyle => (
                 <View
-                  style={{
-                    width: 20,
-                    height: 20,
-                    // @ts-expect-error
-                    backgroundColor: iconStyle[0]?.tintColor,
-                    borderRadius: 10,
-                    // @ts-expect-error
-                    marginRight: iconStyle[0]?.marginRight
-                  }}
+                  style={[
+                    iconStyle,
+                    {
+                      width: 20,
+                      height: 20,
+                      // @ts-expect-error
+                      backgroundColor: iconStyle[0]?.tintColor,
+                      borderRadius: 10
+                    }
+                  ]}
                 />
               )}
             />

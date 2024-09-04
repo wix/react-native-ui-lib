@@ -1,12 +1,11 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, TextStyle} from 'react-native';
+import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, TextStyle, StyleProp} from 'react-native';
 import {asBaseComponent, forwardRef, Constants} from '../../commons/new';
 import {Colors, Typography, BorderRadiuses} from 'style';
 import TouchableOpacity from '../touchableOpacity';
 import type {Dictionary, ComponentStatics} from '../../typings/common';
 import Text from '../text';
-import Image from '../image';
 import Icon from '../icon';
 import {
   ButtonSize,
@@ -125,6 +124,17 @@ class Button extends PureComponent<Props, ButtonState> {
     return color;
   }
 
+  getIconColor(): string | undefined {
+    const {disabled} = this.props;
+    let tintColor = this.getLabelColor();
+
+    if (disabled && !this.isFilled) {
+      tintColor = Colors.$iconDisabled;
+    }
+
+    return tintColor;
+  }
+
   getLabelSizeStyle() {
     const size = this.props.size || DEFAULT_SIZE;
 
@@ -139,16 +149,8 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getContainerSizeStyle() {
-    const {
-      outline,
-      avoidMinWidth,
-      avoidInnerPadding,
-      round,
-      size: propsSize,
-      outlineWidth: propsOutlineWidth
-    } = this.props;
+    const {avoidMinWidth, avoidInnerPadding, round, size: propsSize} = this.props;
     const size = propsSize || DEFAULT_SIZE;
-    const outlineWidth = propsOutlineWidth || 1;
 
     const CONTAINER_STYLE_BY_SIZE: Dictionary<any> = {};
     CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = round
@@ -180,17 +182,6 @@ class Button extends PureComponent<Props, ButtonState> {
         minWidth: MIN_WIDTH.LARGE
       };
 
-    if (outline) {
-      _.forEach(CONTAINER_STYLE_BY_SIZE, style => {
-        if (round) {
-          style.padding -= outlineWidth; // eslint-disable-line
-        } else {
-          style.paddingVertical -= outlineWidth; // eslint-disable-line
-          style.paddingHorizontal -= outlineWidth; // eslint-disable-line
-        }
-      });
-    }
-
     const containerSizeStyle = CONTAINER_STYLE_BY_SIZE[size];
 
     if (this.isLink || (this.isIconButton && !round)) {
@@ -217,7 +208,7 @@ class Button extends PureComponent<Props, ButtonState> {
     let outlineStyle;
     if ((outline || outlineColor) && !this.isLink) {
       outlineStyle = {
-        borderWidth: outlineWidth || 1,
+        borderWidth: outlineWidth ?? 1,
         borderColor: outlineColor || Colors.$outlinePrimary
       };
 
@@ -249,12 +240,10 @@ class Button extends PureComponent<Props, ButtonState> {
     }
   }
 
-  getIconStyle() {
-    const {disabled, iconStyle: propsIconStyle, iconOnRight, size: propsSize, link} = this.props;
+  getIconStyle(): [ImageStyle, StyleProp<ImageStyle>] {
+    const {iconStyle: propsIconStyle, iconOnRight, size: propsSize, link} = this.props;
     const size = propsSize || DEFAULT_SIZE;
-    const iconStyle: ImageStyle = {
-      tintColor: this.getLabelColor()
-    };
+    const iconStyle: ImageStyle = {};
     const marginSide = link
       ? 4
       : ([Button.sizes.large, Button.sizes.medium] as ButtonSizeProp[]).includes(size)
@@ -267,10 +256,6 @@ class Button extends PureComponent<Props, ButtonState> {
       } else {
         iconStyle.marginRight = marginSide;
       }
-    }
-
-    if (disabled && !this.isFilled) {
-      iconStyle.tintColor = Colors.$iconDisabled;
     }
 
     return [iconStyle, propsIconStyle];
@@ -298,31 +283,34 @@ class Button extends PureComponent<Props, ButtonState> {
     const {iconSource, supportRTL, testID, iconProps} = this.props;
 
     if (iconSource) {
+      const iconColor = this.getIconColor();
       const iconStyle = this.getIconStyle();
 
       if (typeof iconSource === 'function') {
-        return iconSource(iconStyle);
+        return iconSource([{tintColor: iconColor}, this.getIconStyle()]);
       } else {
-        if (Constants.isWeb) {
-          return (
-            <Icon
-              style={iconStyle}
-              tintColor={Colors.$iconDefault}
-              source={iconSource}
-              testID={`${testID}.icon`}
-              {...iconProps}
-            />
-          );
-        }
+        // if (Constants.isWeb) {
         return (
-          <Image
+          <Icon
+            style={iconStyle}
             source={iconSource}
             supportRTL={supportRTL}
-            style={iconStyle}
             testID={`${testID}.icon`}
+            // Note: Passing tintColor as prop is required for Web
+            tintColor={iconColor}
             {...iconProps}
           />
         );
+        // }
+        // return (
+        //   <Image
+        //     source={iconSource}
+        //     supportRTL={supportRTL}
+        //     style={iconStyle}
+        //     testID={`${testID}.icon`}
+        //     {...iconProps}
+        //   />
+        // );
       }
     }
     return null;

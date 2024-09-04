@@ -82,6 +82,7 @@ const dialogOptions = [
   {label: 'Option 7', value: 6},
   {label: 'Option 8', value: 6}
 ];
+
 export default class PickerScreen extends Component {
   picker = React.createRef<PickerMethods>();
   state = {
@@ -94,8 +95,8 @@ export default class PickerScreen extends Component {
     wheelPickerValue: 'java',
     dialogPickerValue: 'java',
     customModalValues: [],
-    filter: filters[0].value,
-    scheme: schemes[0].value,
+    filter: undefined,
+    scheme: undefined,
     contact: 0
   };
 
@@ -128,6 +129,7 @@ export default class PickerScreen extends Component {
           <Text text40 $textDefault>
             Picker
           </Text>
+          
           <Picker
             placeholder="Favorite Language"
             floatingPlaceholder
@@ -194,6 +196,7 @@ export default class PickerScreen extends Component {
             searchPlaceholder={'Search a language'}
             items={dialogOptions}
           />
+          
           <Text marginB-10 text70 $textDefault>
             Custom Picker:
           </Text>
@@ -216,6 +219,7 @@ export default class PickerScreen extends Component {
             }}
             items={filters}
           />
+
           <Text marginT-20 marginB-10 text70 $textDefault>
             Custom Picker Items:
           </Text>
@@ -252,6 +256,7 @@ export default class PickerScreen extends Component {
             style={{alignSelf: 'flex-start'}}
             onPress={() => this.picker.current?.openExpandable?.()}
           />
+          
           <Text text60 marginT-s5>
             Different Field Types
           </Text>
@@ -261,6 +266,7 @@ export default class PickerScreen extends Component {
           <Picker
             value={this.state.filter}
             onChange={value => this.setState({filter: value})}
+            label="Your Posts: "
             placeholder="Filter posts"
             fieldType={Picker.fieldTypes.filter}
             marginB-s3
@@ -270,7 +276,7 @@ export default class PickerScreen extends Component {
             value={this.state.scheme}
             onChange={value => this.setState({scheme: value})}
             label="Color Scheme"
-            placeholder="Filter posts"
+            placeholder="Select scheme"
             fieldType={Picker.fieldTypes.settings}
             items={schemes}
           />

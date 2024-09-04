@@ -18,7 +18,8 @@ const segments: Record<string, Array<SegmentedControlItemProps>> = {
   fifth: [{label: 'Full'}, {label: 'Width'}],
   sixth: [{label: 'Full'}, {label: 'Width'}, {label: 'With'}, {label: 'A'}, {label: 'Very Long Segment'}],
   seventh: [{label: '$'}, {label: '%'}],
-  eighth: [{label: 'Plus', iconSource: Assets.icons.plusSmall}, {label: 'Minus', iconSource: Assets.icons.minusSmall}, {label: 'Check', iconSource: Assets.icons.checkSmall}]
+  eighth: [{label: 'Plus', iconSource: Assets.icons.plusSmall}, {label: 'Minus', iconSource: Assets.icons.minusSmall}, {label: 'Check', iconSource: Assets.icons.checkSmall}],
+  ninth: [{label: 'with'}, {label: 'a'}, {label: 'label'}]
 };
 
 const SegmentedControlScreen = () => {
@@ -86,6 +87,15 @@ const SegmentedControlScreen = () => {
           inactiveColor={Colors.$textDisabled}
           style={styles.customStyle}
           segmentsStyle={styles.customSegmentsStyle}
+        />
+        <Text marginT-s4 center>
+          With a label
+        </Text>
+        <SegmentedControl
+          containerStyle={styles.container}
+          segments={segments.ninth}
+          preset={screenPreset}
+          label="Control label"
         />
       </View>
     </View>
