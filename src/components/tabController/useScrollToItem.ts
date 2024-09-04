@@ -100,8 +100,8 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     innerSpacing = 0
   } = props;
   const itemsWidths = useRef<(number | null)[]>(_.times(itemsCount, () => null));
-  const itemsWidthsAnimated = useSharedValue(_.times(itemsCount, () => 0));
-  const itemsOffsetsAnimated = useSharedValue(_.times(itemsCount, () => 0));
+  const itemsWidthsAnimated = useSharedValue<number[]>(_.times(itemsCount, () => 0));
+  const itemsOffsetsAnimated = useSharedValue<number[]>(_.times(itemsCount, () => 0));
   const currentIndex = useRef<number>(selectedIndex || 0);
   const [offsets, setOffsets] = useState<Offsets>({CENTER: [], LEFT: [], RIGHT: []});
   const {scrollViewRef, scrollTo, onContentSizeChange, onLayout} = useScrollTo<T>({scrollViewRef: propsScrollViewRef});
@@ -148,12 +148,10 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     setOffsets({CENTER: centeredOffsets, LEFT: leftOffsets, RIGHT: rightOffsets}); // default for DYNAMIC is CENTER
 
     // Update shared values
+    // @ts-expect-error pretty sure this is a bug in reanimated since itemsWidthsAnimated is defined as SharedValue<number[]>
     itemsWidthsAnimated.modify((value) => {
       'worklet';
-      value.forEach((_, index) => {
-        value[index] = widths[index];
-      });
-      return value;
+      return value.map((_, index) => widths[index]);
     });
 
     itemsOffsetsAnimated.modify((value) => {
