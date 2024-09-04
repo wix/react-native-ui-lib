@@ -270,11 +270,9 @@ const Slider = React.memo((props: Props) => {
   }, [value, setInitialPositions]);
 
   useEffect(() => {
-    if (!thumbStyle) {
-      _thumbStyle.value = StyleUtils.unpackStyle(defaultThumbStyle, {flatten: true});
-    }
+    _thumbStyle.value = StyleUtils.unpackStyle(thumbStyle ? customThumbStyle : defaultThumbStyle, {flatten: true});
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultThumbStyle, thumbStyle]);
+  }, [defaultThumbStyle, customThumbStyle, thumbStyle]);
 
   const onValueChangeThrottled = useCallback(_.throttle(value => {
     if (!didValueUpdate.current) { // NOTE: don't invoke onValueChange when slider's value prop updated programmatically
@@ -375,7 +373,6 @@ const Slider = React.memo((props: Props) => {
     }
   };
 
-  // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
   const trackAnimatedStyles = useAnimatedStyle(() => {
     if (useRange) {
       return {

@@ -33,8 +33,7 @@
     {
       "name": "useGestureHandlerRootView",
       "type": "boolean",
-      "description": "Should add a GestureHandlerRootView",
-      "note": "Android only"
+      "description": "Should add a GestureHandlerRootView"
     }
   ],
   "snippet": [

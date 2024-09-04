@@ -1,5 +1,5 @@
 import React, {PropsWithChildren, useCallback, useContext, useState, useMemo} from 'react';
-import {StyleSheet} from 'react-native';
+import {type StyleProp, StyleSheet, type ViewStyle} from 'react-native';
 import Reanimated, {useAnimatedStyle, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
 // import {Freeze} from 'react-freeze';
 import TabBarContext from './TabBarContext';
@@ -25,6 +25,10 @@ export interface TabControllerPageProps {
    * Used as a testing identifier
    */
   testID?: string;
+  /**
+   * add style properties to tab page
+   */
+  style?: StyleProp<ViewStyle>;
 }
 
 /**
@@ -36,10 +40,11 @@ export default function TabPage({
   index,
   lazy,
   renderLoading,
+  style,
   lazyLoadTime = 100,
   ...props
 }: PropsWithChildren<TabControllerPageProps>) {
-  const {currentPage, asCarousel, containerWidth} = useContext(TabBarContext);
+  const {currentPage, asCarousel, nestedInScrollView, containerWidth} = useContext(TabBarContext);
   const [shouldLoad, setLoaded] = useState(!lazy);
   // const [focused, setFocused] = useState(false);
 
@@ -75,18 +80,26 @@ export default function TabPage({
 
   const animatedPageStyle = useAnimatedStyle(() => {
     const isActive = Math.round(currentPage.value) === index;
-    return {
+
+    // TODO: Fix to proper animated style once Reanimated export AnimatedStyleProp
+    const style: any = {
       opacity: isActive || asCarousel ? 1 : 0,
       zIndex: isActive || asCarousel ? 1 : 0
     };
+
+    if (nestedInScrollView) {
+      style.position = isActive ? 'relative' : 'absolute';
+    }
+
+    return style;
   });
 
-  const style = useMemo(() => {
-    return [!asCarousel && styles.page, animatedPageStyle, {width: asCarousel ? containerWidth : undefined}];
-  }, [asCarousel, animatedPageStyle, containerWidth]);
+  const _style = useMemo(() => {
+    return [!asCarousel && styles.page, animatedPageStyle, {width: asCarousel ? containerWidth : undefined}, style];
+  }, [asCarousel, animatedPageStyle, containerWidth, style]);
 
   return (
-    <Reanimated.View style={style} testID={testID}>
+    <Reanimated.View style={_style} testID={testID}>
       {!shouldLoad && renderLoading?.()}
       {shouldLoad && props.children}
       {/* <Freeze freeze={!shouldLoad || !focused}>{props.children}</Freeze> */}

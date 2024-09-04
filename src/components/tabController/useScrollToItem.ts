@@ -100,8 +100,8 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     innerSpacing = 0
   } = props;
   const itemsWidths = useRef<(number | null)[]>(_.times(itemsCount, () => null));
-  const itemsWidthsAnimated = useSharedValue(_.times(itemsCount, () => 0));
-  const itemsOffsetsAnimated = useSharedValue(_.times(itemsCount, () => 0));
+  const itemsWidthsAnimated = useSharedValue<number[]>(_.times(itemsCount, () => 0));
+  const itemsOffsetsAnimated = useSharedValue<number[]>(_.times(itemsCount, () => 0));
   const currentIndex = useRef<number>(selectedIndex || 0);
   const [offsets, setOffsets] = useState<Offsets>({CENTER: [], LEFT: [], RIGHT: []});
   const {scrollViewRef, scrollTo, onContentSizeChange, onLayout} = useScrollTo<T>({scrollViewRef: propsScrollViewRef});
@@ -128,13 +128,6 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     const rightOffsets = [];
     rightOffsets.push(-containerWidth + widths[0] + outerSpacing + innerSpacing);
     while (index < itemsCount) {
-      /* map animated widths and offsets */
-      itemsWidthsAnimated.value[index] = widths[index];
-      if (index > 0) {
-        itemsOffsetsAnimated.value[index] =
-            itemsOffsetsAnimated.value[index - 1] + itemsWidthsAnimated.value[index - 1];
-      }
-
       /* calc center, left and right offsets */
       centeredOffsets[index] = currentCenterOffset - screenCenter + widths[index] / 2;
       ++index;
@@ -154,9 +147,22 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
 
     setOffsets({CENTER: centeredOffsets, LEFT: leftOffsets, RIGHT: rightOffsets}); // default for DYNAMIC is CENTER
 
-    // trigger value change
-    itemsWidthsAnimated.value = [...itemsWidthsAnimated.value];
-    itemsOffsetsAnimated.value = [...itemsOffsetsAnimated.value];
+    // Update shared values
+    // @ts-expect-error pretty sure this is a bug in reanimated since itemsWidthsAnimated is defined as SharedValue<number[]>
+    itemsWidthsAnimated.modify((value) => {
+      'worklet';
+      return value.map((_, index) => widths[index]);
+    });
+
+    itemsOffsetsAnimated.modify((value) => {
+      'worklet';
+      value.forEach((_, index) => {
+        if (index > 0) {
+          value[index] = value[index - 1] + widths[index - 1];
+        }
+      });
+      return value;
+    });
   },
   [itemsCount, outerSpacing, innerSpacing, addOffsetMargin, containerWidth]);
 
