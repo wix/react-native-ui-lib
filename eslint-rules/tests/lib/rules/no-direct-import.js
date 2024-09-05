@@ -46,7 +46,7 @@ ruleTester.run('no-direct-import', rule, {
   valid: [
     {
       options: ruleOptions,
-      code: validExample1 
+      code: validExample1
     },
     {
       options: ruleOptions,
@@ -58,7 +58,7 @@ ruleTester.run('no-direct-import', rule, {
     },
     {
       options: ruleOptionsArray,
-      code: validExample2 
+      code: validExample2
     },
     {
       options: ruleOptionsArray,
@@ -124,13 +124,13 @@ ruleTester.run('no-direct-import', rule, {
         {message: customErrorMessage}
       ]
     },
-    {
-      options: ruleOptions,
-      code: invalidExample5,
-      output: 'const test = require(\'another-module\').test;',
-      errors: [
-        {message: requireError1}
-      ]
-    }
+      {
+        options: ruleOptions,
+        code: invalidExample5,
+        output: 'const test = require(\'another-module\').test;',
+        errors: [
+          {message: requireError1}
+        ]
+      }
   ]
 });

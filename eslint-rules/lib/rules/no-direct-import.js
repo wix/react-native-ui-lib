@@ -1,4 +1,4 @@
-const {handleError} = require('../utils');
+const {handleError, addToImports} = require('../utils');
 
 const RULE_ID = 'no-direct-import';
 const MAP_SCHEMA = {
@@ -91,12 +91,13 @@ module.exports = {
       try {
         const {applyAutofix, destination} = rule;
         const message = getErrorMessage(rule, 'require');
+        const moduleImported = (node.init.object ? node.init.object.arguments : node.init.arguments)[0];
         context.report({
           node,
           message,
           fix(fixer) {
             if (node && applyAutofix && destination) {
-              return fixer.replaceText(node.arguments[0], `'${destination}'`);
+              return fixer.replaceText(moduleImported, `'${destination}'`);
             }
           }
         });
@@ -105,27 +106,26 @@ module.exports = {
       }
     };
 
-    function isRequireFunction(node) {
-      return node.callee.type === 'Identifier' &&
-                    node.callee.name === 'require' &&
-                    node.arguments.length > 0 &&
-                    node.arguments[0].type === 'Literal'
+    function collectModulesFromImports(imports) {
+      const collection = [];
+      imports.forEach((moduleImports) => {
+        collection.push(...Object.keys(moduleImports));
+      });
+      return collection;
     }
-
-    function checkRequireDeclaration(node) {
-      const isRequire = isRequireFunction(node);
-      if (isRequire) {
-        const source = node.arguments[0].value;
-        const rules = getRules().find(rule => rule.origin === source);
-        if (rules) {
-          reportDirectRequire(node, rules);
-        }
+    function checkRequires(node) {
+      const imports = [];
+      addToImports(node, imports);
+      const modules = new Set(collectModulesFromImports(imports));
+      const rule = getRules().find((rule) => modules.has(rule.origin));
+      if (rule) {
+        rule.applyAutofix = false;
+        reportDirectRequire(node, {...rule, applyAutofix: true});
       }
     }
-
     return {
       ImportDeclaration: checkImportDeclaration,
-      CallExpression: checkRequireDeclaration
+      VariableDeclarator: checkRequires,
     };
   }
 };
