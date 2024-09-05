@@ -351,7 +351,7 @@ const WheelPicker = <T extends WheelPickerItemValue>(props: WheelPickerProps<T>)
     <View testID={testID} bg-$backgroundDefault style={style}>
       {separators}
       <View row centerH>
-        <GestureHandlerRootView style={{flexGrow: 1}}>
+        <GestureHandlerRootView style={styles.gestureContainer}>
           <AnimatedFlatList
             {...androidFlatListProps}
             {...flatListProps}
@@ -393,6 +393,9 @@ export default WheelPicker;
 export {WheelPickerItemProps};
 
 const styles = StyleSheet.create({
+  gestureContainer: {
+    flexGrow: 1
+  },
   separators: {
     borderTopWidth: 1,
     borderBottomWidth: 1,
