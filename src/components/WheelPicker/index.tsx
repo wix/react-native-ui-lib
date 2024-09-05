@@ -11,7 +11,7 @@ import {
   FlatListProps
 } from 'react-native';
 import Animated, {useSharedValue, useAnimatedScrollHandler} from 'react-native-reanimated';
-import {FlatList} from 'react-native-gesture-handler';
+import {FlatList, GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Colors, Spacings} from '../../style';
 import {Constants} from '../../commons/new';
 import {useThemeProps} from '../../hooks';
@@ -351,7 +351,7 @@ const WheelPicker = <T extends WheelPickerItemValue>(props: WheelPickerProps<T>)
     <View testID={testID} bg-$backgroundDefault style={style}>
       {separators}
       <View row centerH>
-        <View flexG>
+        <GestureHandlerRootView style={{flexGrow: 1}}>
           <AnimatedFlatList
             {...androidFlatListProps}
             {...flatListProps}
@@ -379,7 +379,7 @@ const WheelPicker = <T extends WheelPickerItemValue>(props: WheelPickerProps<T>)
             /* This fixes an issue with RTL when centering flatlist content using alignSelf */
             centerContent={align === 'center' && Constants.isRTL}
           />
-        </View>
+        </GestureHandlerRootView>
       </View>
       {label && labelContainer}
       {fader(FaderPosition.BOTTOM)}
