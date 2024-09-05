@@ -4,18 +4,18 @@ import DateTimePicker, {DateTimePickerProps} from '../index';
 import {DateTimePickerDriver} from '../DateTimePicker.driver';
 
 const testID = 'dateTimePicker';
+const someDate = new Date('2021-04-04T00:00:00Z');
+const someDateNextDay = new Date(someDate.getTime() + 24 * 60 * 60 * 1000);
+const someDateNextHour = new Date(someDate.getTime() + 60 * 60 * 1000);
 const TestCase = (props: Partial<Omit<DateTimePickerProps, 'dialogProps'>>) => {
   const defaultProps: DateTimePickerProps = {
-    value: new Date('2021-04-04T00:00:00Z'),
+    value: someDate,
     migrateDialog: true,
     testID
   };
   return <DateTimePicker {...defaultProps} {...props}/>;
 };
 
-const someDate = new Date('2021-04-04T00:00:00Z');
-const someDateNextDay = new Date(someDate.getTime() + 24 * 60 * 60 * 1000);
-const someDateNextHour = new Date(someDate.getTime() + 60 * 60 * 1000);
 
 describe('DateTimePicker', () => {
   test.each(['time', 'date'] as const)('should invoke onChange when value is changed - mode %s', mode => {
