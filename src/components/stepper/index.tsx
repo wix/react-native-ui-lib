@@ -1,7 +1,7 @@
 import {isUndefined} from 'lodash';
 import React, {PureComponent} from 'react';
 import {StyleSheet, AccessibilityInfo, AccessibilityProps, AccessibilityActionEvent} from 'react-native';
-import {Typography, Spacings} from '../../style';
+import {Typography, Spacings, Colors, Shadows, BorderRadiuses} from '../../style';
 import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Text from '../text';
@@ -11,13 +11,22 @@ enum ActionType {
   MINUS = 'minus',
   PLUS = 'plus'
 }
+
+export type StepperType = 'default' | 'floating';
+
 const minusOutline = require('./assets/minusOutline.png');
 const minusOutlineSmall = require('./assets/minusOutlineSmall.png');
 const plusOutline = require('./assets/plusOutline.png');
 const plusOutlineSmall = require('./assets/plusOutlineSmall.png');
+const plusSmall = require('./assets/plusSmall.png');
+const minusSmall = require('./assets/minusSmall.png');
 const DEFAULT_STEP = 1;
 
 interface Props {
+  /**
+   * Stepper style type
+   */
+  type?: StepperType;
   /**
    * Stepper value.
    */
@@ -169,15 +178,16 @@ class Stepper extends PureComponent<Props, State> {
   }
 
   renderButton(actionType: ActionType) {
-    const {disabled, small, testID} = this.props;
+    const {type, disabled, small, testID} = this.props;
     const allowStepChange = this.allowStepChange(actionType);
-    const minusButton = small ? minusOutlineSmall : minusOutline;
-    const plusButton = small ? plusOutlineSmall : plusOutline;
+    const isFloatingStepper = type === 'floating';
+    const minusButton = isFloatingStepper ? minusSmall : small ? minusOutlineSmall : minusOutline;
+    const plusButton = isFloatingStepper ? plusSmall : small ? plusOutlineSmall : plusOutline;
 
     return (
       <Button
         link
-        throttleTime={0}
+        color={isFloatingStepper ? Colors.$iconDefault : undefined}
         iconSource={actionType === ActionType.MINUS ? minusButton : plusButton}
         disabled={disabled || !allowStepChange}
         onPress={() => this.handleStepChange(actionType)}
@@ -187,16 +197,16 @@ class Stepper extends PureComponent<Props, State> {
   }
 
   render() {
-    const {testID, disabled} = this.props;
+    const {type, disabled, testID} = this.props;
     const {currentValue} = this.state;
 
     return (
-      <View row centerV {...this.getAccessibilityProps()}>
+      <View row centerV {...this.getAccessibilityProps()} style={type === 'floating' && styles.containerFloating}>
         {this.renderButton(ActionType.MINUS)}
         <Text
           $textDefault
           $textDisabled={disabled}
-          style={[Typography.text70M, styles.text]}
+          style={[Typography.text70M, type === 'floating' ? styles.textFloating : styles.textDefault]}
           testID={`${testID}.currentValue`}
           recorderTag={'unmask'}
         >
@@ -209,8 +219,22 @@ class Stepper extends PureComponent<Props, State> {
 }
 
 const styles = StyleSheet.create({
-  text: {
+  containerFloating: {
+    borderRadius: BorderRadiuses.br100,
+    backgroundColor: Colors.$backgroundElevated,
+    borderWidth: 1,
+    borderColor: Colors.$outlineDefault,
+    paddingHorizontal: Spacings.s3,
+    paddingVertical: Spacings.s1,
+    ...Shadows.sh10.bottom
+  },
+  textDefault: {
     marginHorizontal: Spacings.s5
+  },
+  textFloating: {
+    marginHorizontal: Spacings.s2,
+    minWidth: Spacings.s6,
+    textAlign: 'center'
   }
 });
 

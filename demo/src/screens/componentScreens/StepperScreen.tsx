@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
-import {View, Text, Stepper} from 'react-native-ui-lib'; //eslint-disable-line
+import {View, Text, Stepper, type StepperType} from 'react-native-ui-lib'; //eslint-disable-line
+import {renderMultipleSegmentOptions} from '../ExampleScreenPresenter';
 
 export default class StepperScreen extends Component {
   state = {
-    stepperValue: 1
+    stepperValue: 1,
+    stepperType: 'default' as StepperType
   };
 
   stepperProps = {
@@ -17,41 +19,46 @@ export default class StepperScreen extends Component {
   };
 
   render() {
-    const {stepperValue} = this.state;
+    const {stepperValue, stepperType} = this.state;
 
     return (
       <View padding-page>
-        <Text text40 $textDefault marginB-20>
+        <Text text40 $textDefault>
           Stepper
         </Text>
 
-        <View centerV>
+        {renderMultipleSegmentOptions.call(this, 'Stepper Type', 'stepperType', [
+          {label: 'Default', value: 'default'},
+          {label: 'Floating', value: 'floating'}
+        ])}
+
+        <View centerV marginT-s3>
           <View row spread centerV>
             <Text text70 $textDefault>
               Default
             </Text>
-            <Stepper/>
+            <Stepper type={stepperType}/>
           </View>
 
           <View row spread centerV marginT-30>
             <Text text70 $textDefault>
               Disabled
             </Text>
-            <Stepper disabled/>
+            <Stepper disabled type={stepperType}/>
           </View>
 
           <View row spread marginT-30>
             <Text text70 $textDefault>
               Step (0.5)
             </Text>
-            <Stepper step={0.5}/>
+            <Stepper step={0.5} type={stepperType}/>
           </View>
 
           <View row spread marginT-30>
             <Text text70 $textDefault>
               Small
             </Text>
-            <Stepper small/>
+            <Stepper small type={stepperType}/>
           </View>
 
           <View marginT-30>
@@ -60,6 +67,7 @@ export default class StepperScreen extends Component {
                 Custom
               </Text>
               <Stepper
+                type={stepperType}
                 onValueChange={this.onValueChange}
                 maxValue={this.stepperProps.maxValue}
                 minValue={this.stepperProps.minValue}
