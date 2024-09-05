@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleProp, View as RNView, ViewStyle} from 'react-native';
 import {useAnimatedStyle} from 'react-native-reanimated';
-import {GestureDetector} from 'react-native-gesture-handler';
+import {GestureDetector, gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {asBaseComponent} from '../../commons/new';
 import View, {ViewProps} from '../../components/view';
 import useHiddenLocation from '../hooks/useHiddenLocation';
@@ -80,4 +80,4 @@ const PanView = (props: Props) => {
 PanView.displayName = 'PanView';
 PanView.directions = PanViewDirectionsEnum;
 
-export default asBaseComponent<PanViewProps, typeof PanView>(PanView);
+export default asBaseComponent<PanViewProps, typeof PanView>(gestureHandlerRootHOC(PanView));
