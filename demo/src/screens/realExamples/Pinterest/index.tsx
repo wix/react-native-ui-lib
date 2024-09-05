@@ -93,7 +93,7 @@ class Pinterest extends Component<{}, State> {
         activeScale={0.98}
         activeOpacity={1}
       >
-        <Image style={[styles.image, {aspectRatio: image.aspectRatio}]} source={{uri: image.uri}} width={COLUMN_SIZE}/>
+        <Image style={[styles.image, {aspectRatio: image?.aspectRatio}]} source={{uri: image.uri}} width={COLUMN_SIZE}/>
         <View absF bottom right pointerEvents="none" padding-s2>
           <Button
             iconSource={Assets.icons.demo.plus}
