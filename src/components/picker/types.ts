@@ -232,7 +232,7 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
     /**
      * Custom loader element
      */
-    customLoaderElement?: ReactNode;
+    customLoaderElement?: JSX.Element;
   };
 
 export type PickerPropsWithSingle = PickerBaseProps & {
