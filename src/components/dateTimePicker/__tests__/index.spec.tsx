@@ -16,14 +16,6 @@ const TestCase = (props: Partial<Omit<DateTimePickerProps, 'dialogProps'>>) => {
 const someDate = new Date('2021-04-04T00:00:00Z');
 const someDateNextDay = new Date(someDate.getTime() + 24 * 60 * 60 * 1000);
 const someDateNextHour = new Date(someDate.getTime() + 60 * 60 * 1000);
-jest.mock('../../../optionalDependencies', () => {
-  const actualOptional = jest.requireActual('../../../optionalDependencies');
-  const view = jest.requireActual('../../view').default;
-  return {
-    ...actualOptional,
-    DateTimePickerPackage: view
-  };
-});
 
 describe('DateTimePicker', () => {
   test.each(['time', 'date'] as const)('should invoke onChange when value is changed - mode %s', mode => {
