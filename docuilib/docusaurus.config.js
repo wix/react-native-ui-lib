@@ -62,7 +62,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
           {
             name: 'description',
             content:
-              'A comprehensive design system for react native with rich components library, supports for dark mode, RTL and accessibility features.'
+              'A comprehensive design system for react native with rich components library, supports dark mode, RTL and accessibility features.'
           },
           {name: 'robots', content: 'index, follow'}
         ],
