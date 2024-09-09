@@ -31,11 +31,16 @@
       "default": "Picker.fieldTypes.FORM"
     },
     {"name": "selectionLimit", "type": "number", "description": "Limit the number of selected items"},
-    {"name": "enableModalBlur", "type": "boolean", "description": "Adds blur effect to picker modal", "note": "iOS only"},
+    {
+      "name": "enableModalBlur",
+      "type": "boolean",
+      "description": "Adds blur effect to picker modal",
+      "note": "iOS only"
+    },
     {
       "name": "renderPicker",
       "type": "(selectedItem, itemLabel) => void",
-      "description": "Render custom picker - input will be value (see above)\\Example:\\renderPicker = (selectedItem) => {...}"
+      "description": "Render custom picker - input will be value (see above)\\Example:\\renderPicker = \\(selectedItem) => \\{...\\}\\"
     },
     {
       "name": "renderItem",
@@ -106,4 +111,3 @@
     "</Picker>"
   ]
 }
-   
