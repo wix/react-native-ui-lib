@@ -14,22 +14,22 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@docusaurus/core": "2.3",
-    "@docusaurus/preset-classic": "2.3",
-    "@mdx-js/react": "^1.6.21",
+    "@docusaurus/core": "^3.5.2",
+    "@docusaurus/preset-classic": "^3.5.2",
+    "@mdx-js/mdx": "^3.0.1",
     "@svgr/webpack": "^5.5.0",
     "classnames": "^2.3.1",
     "clsx": "^1.1.1",
     "docusaurus-plugin-sass": "^0.2.1",
     "file-loader": "^6.2.0",
     "prism-react-renderer": "^1.2.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "sass": "^1.39.0",
     "url-loader": "^4.1.1"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "2.3",
+    "@docusaurus/module-type-aliases": "^3.5.2",
     "@tsconfig/docusaurus": "^1.0.4",
     "@types/react": "^17.0.14",
     "@types/react-helmet": "^6.1.2",
