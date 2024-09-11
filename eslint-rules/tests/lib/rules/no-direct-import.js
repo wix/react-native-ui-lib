@@ -124,13 +124,13 @@ ruleTester.run('no-direct-import', rule, {
         {message: customErrorMessage}
       ]
     },
-      {
-        options: ruleOptions,
-        code: invalidExample5,
-        output: 'const test = require(\'another-module\').test;',
-        errors: [
-          {message: requireError1}
-        ]
-      }
+    {
+      options: ruleOptions,
+      code: invalidExample5,
+      output: 'const test = require(\'another-module\').test;',
+      errors: [
+        {message: requireError1}
+      ]
+    }
   ]
 });
