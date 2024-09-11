@@ -101,6 +101,18 @@ export type SliderProps = Omit<ThumbProps, 'ref'> & {
    * Whether to use the new Slider implementation using Reanimated
    */
   migrate?: boolean;
+   /**
+   * Whether the thumb will have a shadow. default is true. (only when migrate = true)
+   */
+  enableThumbShadow?: boolean;
+   /**
+    * Disabled thumb tint color (only when migrate = true)
+    */
+  disabledThumbTintColor?: string;
+   /** 
+    * Control the throttle time of the onValueChange and onRangeChange callbacks (only when migrate = true)
+    */
+  throttleTime?: number;
 };
 
 export enum GradientSliderTypes {
