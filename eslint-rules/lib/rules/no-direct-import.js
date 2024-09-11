@@ -55,16 +55,24 @@ module.exports = {
       const autofixMessage = applyAutofix ? ' (autofix available)' : '';
       return customMessage || `Do not ${type} directly from '${origin}'. Please use '${destination}'${autofixMessage}.`;
     }
-    function reportDirectImport(node, rule) {
+
+    function checkAndReport(node, type, importedModuleNameToReplace) {
+      const imports = [];
+      addToImports(node, imports);
+      const modules = new Set(collectModulesFromImports(imports));
+      const rule = getRules().find((rule) => modules.has(rule.origin));
+      if (!rule) {
+        return;
+      }
       try {
         const {applyAutofix, destination} = rule;
-        const message = getErrorMessage(rule, 'import');
+        const message = getErrorMessage(rule, type);
         context.report({
           node,
           message,
           fix(fixer) {
             if (node && applyAutofix && destination) {
-              return fixer.replaceText(node.source, `'${destination}'`);
+              return fixer.replaceText(importedModuleNameToReplace, `'${destination}'`);
             }
           }
         });
@@ -78,34 +86,6 @@ module.exports = {
       return context.options[0].rules || [context.options[0]];
     }
 
-    function checkImportDeclaration(node) {
-      const source = node.source.value;
-      const rule = getRules().find((rule) => rule.origin === source);
-      
-      if (rule) {
-        reportDirectImport(node, rule);
-      }
-    }
-
-    function reportDirectRequire(node, rule) {
-      try {
-        const {applyAutofix, destination} = rule;
-        const message = getErrorMessage(rule, 'require');
-        const moduleImported = (node.init.object ? node.init.object.arguments : node.init.arguments)[0];
-        context.report({
-          node,
-          message,
-          fix(fixer) {
-            if (node && applyAutofix && destination) {
-              return fixer.replaceText(moduleImported, `'${destination}'`);
-            }
-          }
-        });
-      } catch (err) {
-        handleError(RULE_ID, err, context.getFilename());
-      }
-    };
-
     function collectModulesFromImports(imports) {
       const collection = [];
       imports.forEach((moduleImports) => {
@@ -113,18 +93,18 @@ module.exports = {
       });
       return collection;
     }
-    function checkRequires(node) {
-      const imports = [];
-      addToImports(node, imports);
-      const modules = new Set(collectModulesFromImports(imports));
-      const rule = getRules().find((rule) => modules.has(rule.origin));
-      if (rule) {
-        reportDirectRequire(node, rule);
-      }
+
+    function getModuleNameFromRequire(node) {
+      return (node.init.object ? node.init.object.arguments : node.init.arguments)[0]
     }
+
+    function getModuleNameFromImport(node) {
+      return node.source;
+    }
+
     return {
-      ImportDeclaration: checkImportDeclaration,
-      VariableDeclarator: checkRequires,
+      ImportDeclaration: (node) => checkAndReport(node, 'import', getModuleNameFromImport(node)),
+      VariableDeclarator: (node) => checkAndReport(node, 'require', getModuleNameFromRequire(node)),
     };
   }
 };
