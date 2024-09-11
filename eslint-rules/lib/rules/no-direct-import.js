@@ -119,8 +119,7 @@ module.exports = {
       const modules = new Set(collectModulesFromImports(imports));
       const rule = getRules().find((rule) => modules.has(rule.origin));
       if (rule) {
-        rule.applyAutofix = false;
-        reportDirectRequire(node, {...rule, applyAutofix: true});
+        reportDirectRequire(node, rule);
       }
     }
     return {
