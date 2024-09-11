@@ -2,12 +2,12 @@ import _ from 'lodash';
 import React, {ReactElement, useImperativeHandle, useCallback, useMemo, useEffect, useRef} from 'react';
 import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle, GestureResponderEvent, LayoutChangeEvent, ViewProps, AccessibilityProps} from 'react-native';
 import {useSharedValue, useAnimatedStyle, runOnJS, useAnimatedReaction, withTiming} from 'react-native-reanimated';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors, Spacings} from '../../style';
 import {StyleUtils} from 'utils';
 import {useThemeProps, useDidUpdate} from '../../hooks';
-import View from '../../components/view';
 import {ComponentStatics} from '../../typings/common';
 import {
   validateValues,
@@ -270,11 +270,9 @@ const Slider = React.memo((props: Props) => {
   }, [value, setInitialPositions]);
 
   useEffect(() => {
-    if (!thumbStyle) {
-      _thumbStyle.value = StyleUtils.unpackStyle(defaultThumbStyle, {flatten: true});
-    }
+    _thumbStyle.value = StyleUtils.unpackStyle(thumbStyle ? customThumbStyle : defaultThumbStyle, {flatten: true});
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultThumbStyle, thumbStyle]);
+  }, [defaultThumbStyle, customThumbStyle, thumbStyle]);
 
   const onValueChangeThrottled = useCallback(_.throttle(value => {
     if (!didValueUpdate.current) { // NOTE: don't invoke onValueChange when slider's value prop updated programmatically
@@ -375,7 +373,6 @@ const Slider = React.memo((props: Props) => {
     }
   };
 
-  // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
   const trackAnimatedStyles = useAnimatedStyle(() => {
     if (useRange) {
       return {
@@ -429,7 +426,7 @@ const Slider = React.memo((props: Props) => {
   };
 
   return (
-    <View
+    <GestureHandlerRootView
       style={[styles.container, containerStyle, shouldDisableRTL && styles.disableRTL]}
       testID={testID}
       {...accessibilityProps}
@@ -437,7 +434,7 @@ const Slider = React.memo((props: Props) => {
       {_renderTrack()}
       {renderThumb(ThumbType.DEFAULT)}
       {useRange && renderThumb(ThumbType.RANGE)}
-    </View>
+    </GestureHandlerRootView>
   );
 });
 

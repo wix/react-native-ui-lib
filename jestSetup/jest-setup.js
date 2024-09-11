@@ -143,3 +143,12 @@ if (typeof String.prototype.replaceAll === 'undefined') {
     return this.split(match).join(replace);
   };
 }
+
+jest.mock('../src/optionalDependencies', () => {
+  const actualOptional = jest.requireActual('../src/optionalDependencies');
+  const view = jest.requireActual('../src/components/view').default;
+  return {
+    ...actualOptional,
+    DateTimePickerPackage: view
+  };
+});

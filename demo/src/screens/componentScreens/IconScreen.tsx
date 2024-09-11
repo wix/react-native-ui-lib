@@ -38,7 +38,7 @@ const IconScreen = () => {
       </View>
 
       {renderBooleanOption('Custom Size', 'customSize', {spread: false, state: customSize, setState: setCustomSize})}
-      <Slider maximumValue={100} value={24} step={1} onValueChange={setSize}/>
+      <Slider migrate maximumValue={100} value={24} step={1} onValueChange={setSize}/>
       <Text marginB-50 marginT-s2>
         Custom size: {size}
       </Text>
@@ -48,7 +48,7 @@ const IconScreen = () => {
         state: customBadgeSize,
         setState: setCustomBadgeSize
       })}
-      <Slider maximumValue={100} value={20} step={1} onValueChange={setBadgeSize}/>
+      <Slider migrate maximumValue={100} value={20} step={1} onValueChange={setBadgeSize}/>
       <Text marginB-50 marginT-s2>
         Custom badge size: {badgeSize}
       </Text>

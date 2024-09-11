@@ -71,7 +71,7 @@ type State = {
 
 export type SwipeableProps = Props;
 
-export default class Swipeable extends Component<Props, State> {
+class Swipeable extends Component<Props, State> {
   static displayName = 'IGNORE';
   static defaultProps = {
     friction: 1,
@@ -533,6 +533,8 @@ export default class Swipeable extends Component<Props, State> {
     );
   }
 }
+
+export default Swipeable;
 
 const styles = StyleSheet.create({
   container: {

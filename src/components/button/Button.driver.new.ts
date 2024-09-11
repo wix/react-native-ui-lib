@@ -1,3 +1,4 @@
+import {StyleSheet} from 'react-native';
 import {useComponentDriver, ComponentProps, usePressableDriver, TextDriver, ImageDriver} from '../../testkit';
 
 export const ButtonDriver = (props: ComponentProps) => {
@@ -17,9 +18,17 @@ export const ButtonDriver = (props: ComponentProps) => {
     return labelDriver;
   };
 
+  const getLabelStyle = () => {
+    return labelDriver?.getStyle();
+  };
+
   const getIcon = () => {
     return iconDriver;
   };
 
-  return {getLabel, getIcon, ...driver};
+  const getIconStyle = () => {
+    return StyleSheet.flatten(iconDriver?.getElement().props.style);
+  };
+
+  return {getLabel, getLabelStyle, getIconStyle, getIcon, ...driver};
 };

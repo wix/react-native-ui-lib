@@ -1,7 +1,6 @@
 const fs = require('fs');
 const _ = require('lodash');
 const childProcess = require('child_process');
-const fetch = require('node-fetch');
 const readline = require('readline');
 
 function fetchLatestReleaseDate(tagPrefix, version) {
@@ -31,36 +30,35 @@ function parsePR(prContent) {
   return PRInfo;
 }
 
-async function fetchMergedPRs(postMergedDate, repo, githubToken) {
+async function fetchMergedPRs(postMergedDate) {
   console.log('Find all merged PRs since - ', postMergedDate);
-  const page = 1;
   // process.stderr.write(`Loading page ${page}..`);
-  const url = `https://api.github.com/repos/${repo}/pulls?state=closed&base=master&page=${page}&per_page=100`;
-  const headers = {Authorization: `token ${githubToken}`};
-  const response = await fetch(url, {headers});
-  const PRs = await response.json();
+  const str = childProcess.execSync('gh pr list --json headRefName,body,title,number,mergedAt,url --limit 100 --state merged --search "base:master"', {
+    encoding: 'utf8'
+  });
+  
+  const PRs = JSON.parse(str);
 
   if (PRs.message) {
     console.log('\x1b[31m', 'Something went wrong', PRs.message);
     return;
   }
 
-  const relevantPRs = _.flow(prs => _.filter(prs, pr => !!pr.merged_at && new Date(pr.merged_at) > postMergedDate),
-    prs => _.sortBy(prs, 'merged_at'),
+  const relevantPRs = _.flow(prs => _.filter(prs, pr => !!pr.mergedAt && new Date(pr.mergedAt) > postMergedDate),
+    prs => _.sortBy(prs, 'mergedAt'),
     prs =>
       _.map(prs, pr => {
         try {
           return {
-            state: pr.state,
-            merged_at: pr.merged_at,
-            html_url: pr.html_url,
-            branch: pr.head.ref,
+            mergedAt: pr.mergedAt,
+            url: pr.url,
+            branch: pr.headRefName,
             number: pr.number,
             title: pr.title,
             info: parsePR(pr.body)
           };
         } catch {
-          console.error('Failed parsing PR: ', pr.html_url);
+          console.error('Failed parsing PR: ', pr.url);
         }
       }))(PRs);
 
@@ -154,14 +152,13 @@ function getReleaseNotesForType(PRs, title) {
 
 async function _generateReleaseNotes(latestVersion,
   newVersion,
-  githubToken,
   fileNamePrefix,
   repo,
   header,
   tagPrefix,
   categories) {
   const latestReleaseDate = fetchLatestReleaseDate(tagPrefix, latestVersion);
-  const PRs = await fetchMergedPRs(latestReleaseDate, repo, githubToken);
+  const PRs = await fetchMergedPRs(latestReleaseDate, repo);
   if (!PRs) {
     return;
   }
@@ -202,7 +199,6 @@ async function _generateReleaseNotes(latestVersion,
 
 async function generateReleaseNotes(latestVersion,
   newVersion,
-  githubToken,
   fileNamePrefix,
   repo,
   header = '',
@@ -225,7 +221,7 @@ async function generateReleaseNotes(latestVersion,
   rl.on('close', () => {
     console.info(`Current latest version is v${latestVer}`);
     console.info(`Generating release notes out or PRs for v${newVer}`);
-    _generateReleaseNotes(latestVer, newVer, githubToken, fileNamePrefix, repo, header, tagPrefix, categories);
+    _generateReleaseNotes(latestVer, newVer, fileNamePrefix, repo, header, tagPrefix, categories);
   });
 }
 

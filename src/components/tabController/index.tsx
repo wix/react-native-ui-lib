@@ -38,6 +38,10 @@ export interface TabControllerProps {
    */
   asCarousel?: boolean;
   /**
+   * Pass when TabController is render inside a ScrollView (with a header)
+   */
+  nestedInScrollView?: boolean;
+  /**
    * Pass for custom carousel page width
    */
   carouselPageWidth?: number;
@@ -57,7 +61,6 @@ const getScreenWidth = (useSafeArea: boolean) => {
  * @description: A performant solution for a tab controller with lazy load mechanism
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
  * @notes: This component is based on react-native-gesture-handler
- * @important: On Android, if using react-native-navigation, make sure to wrap your screen with gestureHandlerRootHOC
  * @importantLink: https://kmagiera.github.io/react-native-gesture-handler/docs/getting-started.html#with-wix-react-native-navigation-https-githubcom-wix-react-native-navigation
  */
 const TabController = React.forwardRef((props: PropsWithChildren<TabControllerProps>, ref: React.Ref<any>) => {
@@ -65,6 +68,7 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
   const {
     initialIndex = 0,
     asCarousel = false,
+    nestedInScrollView = false,
     items,
     onChangeIndex = _.noop,
     carouselPageWidth,
@@ -123,6 +127,7 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
       initialIndex,
       asCarousel,
       pageWidth,
+      nestedInScrollView,
       /* Items */
       items,
       ignoredItems,
@@ -135,7 +140,7 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
       onChangeIndex,
       setCurrentIndex
     };
-  }, [initialIndex, asCarousel, items, onChangeIndex, screenWidth]);
+  }, [initialIndex, asCarousel, items, onChangeIndex, screenWidth, nestedInScrollView]);
 
   return <TabBarContext.Provider value={context}>{children}</TabBarContext.Provider>;
 });
