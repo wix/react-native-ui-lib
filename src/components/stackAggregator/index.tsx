@@ -248,7 +248,7 @@ const StackAggregator = (props: StackAggregatorProps) => {
       <Animated.View
         onLayout={index === 0 ? onLayout : undefined}
         style={[
-          Constants.isIOS && styles.containerShadow,
+          Constants.isIOS && (index === 0 || index === 1 || index === 2 || !isCollapsed) && styles.containerShadow,
           contentContainerStyle,
           //@ts-expect-error 'position' doesn't match AnimatedInterpolation type
           getItemStyle(index),
