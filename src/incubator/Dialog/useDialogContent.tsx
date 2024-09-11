@@ -49,7 +49,7 @@ const useDialogContent = (props: InternalDialogCloseButtonProps) => {
     return showCloseButton ? [propsContainerStyle, styles.transparent] : propsContainerStyle;
   }, [showCloseButton, propsContainerStyle]);
 
-  const DialogContent = () => {
+  const renderDialogContent = () => {
     const DialogContent = (
       <>
         {headerProps && <DialogHeader {...headerProps}/>}
@@ -69,7 +69,7 @@ const useDialogContent = (props: InternalDialogCloseButtonProps) => {
     }
   };
 
-  return {DialogContent, containerStyle, containerProps};
+  return {renderDialogContent, containerStyle, containerProps};
 };
 
 export default useDialogContent;

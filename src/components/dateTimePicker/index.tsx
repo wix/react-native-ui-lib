@@ -21,6 +21,7 @@ import View from '../view';
 import Button, {ButtonProps} from '../button';
 import ExpandableOverlay, {ExpandableOverlayMethods, RenderCustomOverlayProps} from '../../incubator/expandableOverlay';
 import useOldApi, {OldApiProps} from './useOldApi';
+import {isSameDate, isSameHourAndMinute} from '../../utils/dateUtils';
 
 export type DateTimePickerMode = 'date' | 'time';
 
@@ -203,16 +204,21 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
     expandable.current?.toggleExpandable?.();
   }, []);
 
+  const isValueChanged = useCallback(() => {
+    return mode === 'time' ? !isSameHourAndMinute(chosenDate.current, value) : !isSameDate(chosenDate.current, value);
+  }, [mode, value]);
+
   const onDonePressed = useCallback(() => {
     toggleExpandableOverlay();
     if (Constants.isIOS && !chosenDate.current) {
       // since handleChange() is not called on iOS when there is no actual change
       chosenDate.current = new Date();
     }
-
-    onChange?.(chosenDate.current!);
+    if (chosenDate.current && isValueChanged()) {
+      onChange?.(chosenDate?.current);
+    }
     setValue(chosenDate.current);
-  }, [toggleExpandableOverlay, onChange]);
+  }, [toggleExpandableOverlay, onChange, isValueChanged]);
 
   const handleChange = useCallback((event: any = {}, date: Date) => {
     // NOTE: will be called on Android even when there was no actual change

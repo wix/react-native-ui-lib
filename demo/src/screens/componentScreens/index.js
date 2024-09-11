@@ -1,7 +1,4 @@
-import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
-
 export function registerScreens(registrar) {
-
   registrar('unicorn.components.ActionSheetScreen', () => require('./ActionSheetScreen').default);
   registrar('unicorn.components.ActionBarScreen', () => require('./ActionBarScreen').default);
   registrar('unicorn.components.AvatarsScreen', () => require('./AvatarsScreen').default);
@@ -55,6 +52,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.StepperScreen', () => require('./StepperScreen').default);
   registrar('unicorn.components.SwitchScreen', () => require('./SwitchScreen').default);
   registrar('unicorn.components.TabControllerScreen', () => require('./TabControllerScreen').default);
+  registrar('unicorn.components.TabControllerWithStickyHeaderScreen', () => require('./TabControllerWithStickyHeaderScreen').default);
   registrar('unicorn.components.TextFieldScreen', () => require('./TextFieldScreen').default);
   registrar('unicorn.components.TextScreen', () => require('./TextScreen').default);
   registrar('unicorn.components.ToastsScreen', () => require('./ToastsScreen').default);
@@ -62,7 +60,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.TourScreen', () => require('./TourScreen').default);
   registrar('unicorn.components.ViewScreen', () => require('./ViewScreen').default);
   registrar('unicorn.components.WizardScreen', () => require('./WizardScreen').default);
-  registrar('unicorn.components.WheelPickerScreen', () => gestureHandlerRootHOC(require('./WheelPickerScreen').default));
+  registrar('unicorn.components.WheelPickerScreen', () => require('./WheelPickerScreen').default);
   // List Components
   registrar('unicorn.lists.BasicListScreen', () => require('./BasicListScreen').default);
   registrar('unicorn.lists.ContactsListScreen', () => require('./ContactsListScreen').default);
@@ -77,4 +75,3 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.WithScrollEnablerScreen', () => require('./WithScrollEnablerScreen').default);
   registrar('unicorn.components.WithScrollReachedScreen', () => require('./WithScrollReachedScreen').default);
 }
-

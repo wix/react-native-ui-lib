@@ -52,6 +52,20 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
     themeConfig:
       /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
       ({
+        metadata: [
+          {name: 'title', content: 'React Native UI Lib'},
+
+          {
+            name: 'keywords',
+            content: 'design system, react native, react, mobile, web, ui library, components library'
+          },
+          {
+            name: 'description',
+            content:
+              'A comprehensive design system for react native with rich components library, supports dark mode, RTL and accessibility features.'
+          },
+          {name: 'robots', content: 'index, follow'}
+        ],
         algolia: {
           // If Algolia did not provide you any appId, use 'BH4D9OD16A'
           appId: 'BWQFOHCCF3',

@@ -2,10 +2,8 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, {Component, PureComponent} from 'react';
 import {StyleSheet, Alert, FlatList} from 'react-native';
-import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {Colors, ListItem, Text, Avatar, AvatarHelper, Drawer, Button} from 'react-native-ui-lib'; //eslint-disable-line
 import conversations from '../../data/conversations';
-
 
 const collectionsIcon = require('../../assets/icons/collections.png');
 const starIcon = require('../../assets/icons/star.png');
@@ -47,7 +45,7 @@ class ConversationListScreen extends Component {
           icon: collectionsIcon,
           background: Colors.blue30,
           onPress: () => Alert.alert(`Archive button pressed for item #${item.name}`)
-        },
+        }
       ];
       const leftButton = {
         text: 'Read',
@@ -94,19 +92,19 @@ class ConversationListScreen extends Component {
 
   addRef = (ref, index) => {
     this.refArray[index] = ref;
-  }
+  };
 
   onEndReached = () => {
     this.getNewItems();
-  }
+  };
 
   onSwipeableWillOpen = (props) => {
     this.closeLast(props.index);
-  }
+  };
 
   renderItem = ({item, index}) => {
-    return <ContactItem item={item} index={index} addRef={this.addRef} onSwipeableWillOpen={this.onSwipeableWillOpen}/>
-  }
+    return <ContactItem item={item} index={index} addRef={this.addRef} onSwipeableWillOpen={this.onSwipeableWillOpen}/>;
+  };
 
   keyExtractor = (item, index) => `${item.name}-${index}`;
 
@@ -128,7 +126,7 @@ class ContactItem extends PureComponent {
     index: PropTypes.number,
     addRef: PropTypes.func,
     onSwipeableWillOpen: PropTypes.func
-  }
+  };
 
   render() {
     const {item, index, addRef, onSwipeableWillOpen} = this.props;
@@ -192,4 +190,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default gestureHandlerRootHOC(ConversationListScreen);
+export default ConversationListScreen;

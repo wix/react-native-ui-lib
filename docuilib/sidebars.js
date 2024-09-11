@@ -20,9 +20,9 @@ const componentsCategories = {
   media: 'Media',
   lists: 'Lists',
   form: 'Form',
-  dateTime: 'Date & Time',
+  // dateTime: 'Date & Time',
   overlays: 'Overlays',
-  charts: 'Charts',
+  // charts: 'Charts',
   incubator: 'Incubator',
   infra: 'Infra'
 };

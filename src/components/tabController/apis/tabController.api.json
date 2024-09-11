@@ -3,7 +3,6 @@
   "category": "navigation",
   "description": "A performant solution for a tab controller with lazy load mechanism",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx",
-  "note": "This component is based on react-native-gesture-handler.\nOn Android, when using react-native-navigation, make sure to wrap your screen with gestureHandlerRootHOC",
   "images": [],
   "props": [
     {"name": "items", "type": "TabControllerItemProps[]", "description": "The list of tab bar items"},
@@ -17,6 +16,13 @@
       "name": "asCarousel",
       "type": "boolean",
       "description": "When using TabController.PageCarousel this should be turned on",
+      "default": "false"
+    },
+    {
+      "name": "nestedInScrollView",
+      "type": "boolean",
+      "description": "Pass when TabController is render inside a ScrollView (with a header)",
+      "note": "Does not work with asCarousel",
       "default": "false"
     },
     {"name": "carouselPageWidth;", "type": "number", "description": "Pass for custom carousel page width"}

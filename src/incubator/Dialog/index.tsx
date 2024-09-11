@@ -127,7 +127,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const {DialogContent, containerProps, containerStyle} = useDialogContent({
+  const {renderDialogContent, containerProps, containerStyle} = useDialogContent({
     showCloseButton,
     close,
     closeButtonProps,
@@ -137,7 +137,6 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     children
   });
 
-  // @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881)
   const animatedStyle = useAnimatedStyle(() => {
     if (isVertical) {
       return {
@@ -213,9 +212,8 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
 
   const renderDialog = () => (
     <GestureDetector gesture={panGesture}>
-      {/* @ts-expect-error should be fixed in version 3.5 (https://github.com/software-mansion/react-native-reanimated/pull/4881) */}
       <View {...containerProps} reanimated style={style} onLayout={onLayout} ref={setRef} testID={testID}>
-        <DialogContent/>
+        {renderDialogContent()}
       </View>
     </GestureDetector>
   );
