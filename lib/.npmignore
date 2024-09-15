@@ -1,0 +1,7 @@
+# Typescript
+# ignore the .ts files
+*.ts
+*.tsx
+*.d.js
+# include the .d.ts files
+!*.d.ts
