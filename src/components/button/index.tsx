@@ -203,10 +203,10 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getOutlineStyle() {
-    const {outline, outlineColor, outlineWidth, disabled} = this.props;
+    const {fullWidth, outline, outlineColor, outlineWidth, disabled} = this.props;
 
     let outlineStyle;
-    if ((outline || outlineColor) && !this.isLink) {
+    if ((outline || outlineColor) && !this.isLink && !fullWidth) {
       outlineStyle = {
         borderWidth: outlineWidth ?? 1,
         borderColor: outlineColor || Colors.$outlinePrimary
@@ -220,10 +220,10 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getBorderRadiusStyle() {
-    const {fullWidth, borderRadius: propsBorderRadius, modifiers} = this.props;
+    const {borderRadius: propsBorderRadius, modifiers} = this.props;
     const {borderRadius: modifiersBorderRadius} = modifiers;
 
-    if (this.isLink || fullWidth || propsBorderRadius === 0) {
+    if (this.isLink || propsBorderRadius === 0) {
       return {borderRadius: 0};
     }
 
