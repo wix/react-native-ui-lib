@@ -52,7 +52,7 @@ const SortableListItem = (props: Props) => {
   } = useContext(SortableListContext);
   const {getTranslationByIndexChange, getItemIndexById, getIndexByPosition, getIdByItemIndex} = usePresenter();
   const id: string = data[index].id;
-  const locked: boolean = data[index].locked;
+  const locked: boolean = data[index].locked ?? false;
   const initialIndex = useSharedValue<number>(map(data, 'id').indexOf(id));
   const lastSwap = useSharedValue({from: -1, to: -1});
   const currIndex = useSharedValue(initialIndex.value);
@@ -172,7 +172,7 @@ const SortableListItem = (props: Props) => {
       : defaultItemShadow.value;
 
     return {
-      backgroundColor: LIST_ITEM_BACKGROUND, // required for elevation to work in Android
+      backgroundColor: itemProps?.backgroundColor ?? LIST_ITEM_BACKGROUND, // required for elevation to work in Android
       zIndex,
       transform: [horizontal ? {translateX: translation.value} : {translateY: translation.value}, {scale}],
       opacity,
