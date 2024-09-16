@@ -34,25 +34,10 @@ export default class Example extends Component {
 ```
 
 ```jsx live
-function Clock(props) {
-  const [date, setDate] = useState(new Date());
-  useEffect(() => {
-    const timerID = setInterval(() => tick(), 1000);
-
-    return function cleanup() {
-      clearInterval(timerID);
-    };
-  });
-
-  function tick() {
-    setDate(new Date());
-  }
-
+function Example(props) {
   return (
     <div>
-      <h2>It is {date.toLocaleTimeString()}.</h2>
-
-      <View flex paddingH-25 paddingT-120 center>
+      <View flex center>
         <Text blue50 text20 marginB-s5>
           Welcome
         </Text>
@@ -63,9 +48,9 @@ function Clock(props) {
           <TextField preset="outline" placeholder="password" secureTextEntry grey10 />
         </View>
 
-        <View marginT-50 center>
+        <View row marginT-s5 centerV>
+          <Button link text70 orange30 label="Sign Up" marginR-s5 />
           <Button text70 white background-orange30 label="Login" />
-          <Button link text70 orange30 label="Sign Up" marginT-20 />
         </View>
       </View>
     </div>
