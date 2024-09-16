@@ -18,7 +18,6 @@ Object.defineProperties = (obj, props) => {
 
 global._UILIB_TESTING = true;
 
-NativeModules.StatusBarManager = {getHeight: jest.fn()};
 jest.spyOn(AccessibilityInfo, 'isScreenReaderEnabled').mockImplementation(() => Promise.resolve(false));
 
 // mock native modules
@@ -98,6 +97,7 @@ jest.mock('react-native-gesture-handler',
 jest.mock('react-native', () => {
   const reactNative = jest.requireActual('react-native');
   reactNative.NativeModules.KeyboardTrackingViewTempManager = {};
+  reactNative.NativeModules.StatusBarManager = {getHeight: jest.fn()};
   const OriginalModal = reactNative.Modal;
   const React = jest.requireActual('react');
   const useDidUpdate = require('./useDidUpdate').default;
