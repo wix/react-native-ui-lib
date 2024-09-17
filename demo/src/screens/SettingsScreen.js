@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {StyleSheet, I18nManager} from 'react-native';
 import {Colors, View, Text, Picker, Incubator, Switch} from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
-import Storage, {DEFAULT_SCREEN, IS_RTL} from '../storage';
+import Storage, {DEFAULT_SCREEN, IS_RTL, AUTO_SET_DEFAULT} from '../storage';
 
 const none = {label: '[None]', value: ''};
 
@@ -28,6 +28,7 @@ class SettingsScreen extends Component {
 
     this.state = {
       showRefreshMessage: false,
+      autoSetDefault: Storage.getBoolean(AUTO_SET_DEFAULT) ?? true,
       isRTL: false,
       screens
     };
@@ -61,8 +62,15 @@ class SettingsScreen extends Component {
     }, 1000);
   };
 
+  setAutoSetDefault = value => {
+    Storage.set(AUTO_SET_DEFAULT, value);
+    this.setState({
+      autoSetDefault: value
+    });
+  };
+
   render() {
-    const {defaultScreen, showRefreshMessage, isRTL, screens} = this.state;
+    const {defaultScreen, showRefreshMessage, autoSetDefault, isRTL, screens} = this.state;
     const {extraSettingsUI} = this.props;
     const filteredScreens = _.filter(screens, screen => !_.isUndefined(screen.value));
 
@@ -82,6 +90,11 @@ class SettingsScreen extends Component {
             onChange={this.setDefaultScreen}
             items={filteredScreens}
           />
+
+          <View row spread>
+            <Switch value={autoSetDefault} onValueChange={this.setAutoSetDefault}/>
+            <Text>Auto set default screen</Text>
+          </View>
 
           <View style={{borderWidth: 1, borderColor: Colors.grey70, marginTop: 40}}>
             <View style={[{padding: 5, borderBottomWidth: 1}, styles.block]}>
