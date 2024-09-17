@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, Easing, LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native';
 import Assets from '../../assets';
-import {BorderRadiuses, Colors} from '../../style';
+import {Colors} from '../../style';
 import {asBaseComponent, BaseComponentInjectedProps, Constants, ColorsModifiers} from '../../commons/new';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
@@ -228,14 +228,15 @@ function createStyles({color = Colors.grey30}) {
       backgroundColor: color,
       borderWidth: color === 'transparent' ? undefined : 1,
       borderColor: Colors.rgba(Colors.$outlineDisabledHeavy, 0.2),
-      margin: SWATCH_MARGIN
+      margin: SWATCH_MARGIN,
+      overflow: 'hidden'
     },
     transparentImage: {
       ...StyleSheet.absoluteFillObject,
       width: DEFAULT_SIZE,
       height: DEFAULT_SIZE,
       borderWidth: 1,
-      borderRadius: BorderRadiuses.br100,
+      // borderRadius: BorderRadiuses.br100,
       borderColor: Colors.rgba(Colors.$outlineDisabledHeavy, 0.2)
     },
     unavailable: {

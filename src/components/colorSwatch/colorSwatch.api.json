@@ -19,7 +19,6 @@
     {"name": "onPress", "type": "(value: string, colorInfo: ColorInfo) => void", "description": "Callback from press event"},
     {"name": "index", "type": "number", "description": "The index of the Swatch if in array"},
     {"name": "style", "type": "ViewStyle", "description": "Component's style"},
-    {"name": "testID", "type": "string", "description": "The test id for e2e tests"},
     {"name": "unavailable", "type": "boolean", "description": "Is the initial state is unavailable"},
     {"name": "size", "type": "number", "description": "Color Swatch size"}
   ],
