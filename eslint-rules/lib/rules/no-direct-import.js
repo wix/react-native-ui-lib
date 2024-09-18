@@ -61,21 +61,6 @@ module.exports = {
       return context.options[0].rules || [context.options[0]];
     }
 
-    function checkImportDeclaration(node) {
-      const source = node.source.value;
-      const rule = getRules().find((rule) => rule.origin === source);
-
-      if (rule) {
-        report(node, rule, 'import', node.source);
-      }
-    }
-    function isRequireFunction(node) {
-      return node.callee.type === 'Identifier' &&
-                    node.callee.name === 'require' &&
-                    node.arguments.length > 0 &&
-                    node.arguments[0].type === 'Literal'
-    }
-
     function report(node, rule, type, textToReplace) {
       try {
         const {applyAutofix, destination} = rule;
@@ -92,6 +77,22 @@ module.exports = {
       } catch (err) {
         handleError(RULE_ID, err, context.getFilename());
       }
+    }
+
+    function checkImportDeclaration(node) {
+      const source = node.source.value;
+      const rule = getRules().find((rule) => rule.origin === source);
+
+      if (rule) {
+        report(node, rule, 'import', node.source);
+      }
+    }
+
+    function isRequireFunction(node) {
+      return node.callee.type === 'Identifier' &&
+                    node.callee.name === 'require' &&
+                    node.arguments.length > 0 &&
+                    node.arguments[0].type === 'Literal'
     }
 
     function checkRequire(node) {
