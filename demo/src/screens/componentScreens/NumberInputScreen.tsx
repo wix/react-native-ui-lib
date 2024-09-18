@@ -1,6 +1,5 @@
 import React, {useState, useCallback, useRef, useMemo} from 'react';
 import {StyleSheet, TouchableWithoutFeedback, Keyboard as RNKeyboard} from 'react-native';
-import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {
   Text,
   Spacings,
@@ -200,7 +199,7 @@ const NumberInputScreen = () => {
   );
 };
 
-export default gestureHandlerRootHOC(NumberInputScreen);
+export default NumberInputScreen;
 
 const styles = StyleSheet.create({
   containerStyle: {

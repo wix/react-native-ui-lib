@@ -8,7 +8,7 @@ export interface SortableListItemProps {
 }
 
 // Internal
-export type Data<ItemT extends SortableListItemProps> = FlatListProps<ItemT>['data'];
+export type Data<ItemT extends SortableListItemProps> = ArrayLike<ItemT>;
 export type OrderChangeInfo = {from: number, to: number};
 
 export interface SortableListProps<ItemT extends SortableListItemProps>
@@ -31,7 +31,10 @@ export interface SortableListProps<ItemT extends SortableListItemProps>
   /**
    * Extra props for the item
    */
-  itemProps?: {margins?: {marginTop?: number; marginBottom?: number; marginLeft?: number; marginRight?: number}};
+  itemProps?: {
+    backgroundColor?: string; 
+    margins?: {marginTop?: number; marginBottom?: number; marginLeft?: number; marginRight?: number}
+  };
   /**
    * List forwarded ref.
    */

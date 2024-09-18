@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {Assets, Colors, View, Button, Text, Incubator} from 'react-native-ui-lib';
 import {renderMultipleSegmentOptions, renderBooleanOption, renderRadioGroup} from '../ExampleScreenPresenter';
-import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 
 const {Toast} = Incubator;
 
@@ -180,7 +179,7 @@ class ToastsScreen extends Component {
   }
 }
 
-export default gestureHandlerRootHOC(ToastsScreen);
+export default ToastsScreen;
 
 const styles = StyleSheet.create({
   scrollView: {

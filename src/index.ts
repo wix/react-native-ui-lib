@@ -143,7 +143,7 @@ export {default as SortableGridList, SortableGridListProps} from './components/s
 export {default as SortableList, SortableListProps, SortableListItemProps} from './components/sortableList';
 export {default as StackAggregator, StackAggregatorProps} from './components/stackAggregator';
 export {default as StateScreen, StateScreenProps} from './components/stateScreen';
-export {default as Stepper, StepperProps} from './components/stepper';
+export {default as Stepper, StepperProps, StepperType} from './components/stepper';
 export {default as Switch, SwitchProps} from './components/switch';
 export {
   default as TabController,

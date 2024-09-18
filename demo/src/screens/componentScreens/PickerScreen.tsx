@@ -1,21 +1,21 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native';
 import {
-  View,
-  Colors,
-  Icon,
-  Incubator,
-  Text,
-  Picker,
-  Avatar,
   Assets,
-  PanningProvider,
+  Colors,
   Typography,
+  Incubator,
+  View,
+  Text,
+  Button,
+  Icon,
+  Avatar,
+  Picker,
+  PanningProvider,
   PickerProps,
   RenderCustomModalProps,
-  PickerMethods,
-  Button
+  PickerMethods
 } from 'react-native-ui-lib'; //eslint-disable-line
 import contactsData from '../../data/conversations';
 import {longOptions} from './PickerScreenLongOptions';

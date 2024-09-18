@@ -2,12 +2,12 @@ import _ from 'lodash';
 import React, {ReactElement, useImperativeHandle, useCallback, useMemo, useEffect, useRef} from 'react';
 import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle, GestureResponderEvent, LayoutChangeEvent, ViewProps, AccessibilityProps} from 'react-native';
 import {useSharedValue, useAnimatedStyle, runOnJS, useAnimatedReaction, withTiming} from 'react-native-reanimated';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors, Spacings} from '../../style';
 import {StyleUtils} from 'utils';
 import {useThemeProps, useDidUpdate} from '../../hooks';
-import View from '../../components/view';
 import {ComponentStatics} from '../../typings/common';
 import {
   validateValues,
@@ -426,7 +426,7 @@ const Slider = React.memo((props: Props) => {
   };
 
   return (
-    <View
+    <GestureHandlerRootView
       style={[styles.container, containerStyle, shouldDisableRTL && styles.disableRTL]}
       testID={testID}
       {...accessibilityProps}
@@ -434,7 +434,7 @@ const Slider = React.memo((props: Props) => {
       {_renderTrack()}
       {renderThumb(ThumbType.DEFAULT)}
       {useRange && renderThumb(ThumbType.RANGE)}
-    </View>
+    </GestureHandlerRootView>
   );
 });
 

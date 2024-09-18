@@ -6,7 +6,7 @@ import {
   NativeScrollEvent,
   LayoutChangeEvent
 } from 'react-native';
-import {ScrollView as GestureScrollView} from 'react-native-gesture-handler';
+import {ScrollView as GestureScrollView, GestureHandlerRootView} from 'react-native-gesture-handler';
 import Fader, {FaderProps} from '../fader';
 import useScrollEnabler from '../../hooks/useScrollEnabler';
 import useScrollReached from '../../hooks/useScrollReached';
@@ -107,7 +107,7 @@ const FadedScrollView = (props: Props) => {
 
   if (children) {
     return (
-      <>
+      <GestureHandlerRootView>
         <ScrollView
           scrollEventThrottle={16}
           decelerationRate={'fast'}
@@ -132,7 +132,7 @@ const FadedScrollView = (props: Props) => {
           position={horizontal ? Fader.position.END : Fader.position.BOTTOM}
           {...endFaderProps}
         />
-      </>
+      </GestureHandlerRootView>
     );
   }
 
