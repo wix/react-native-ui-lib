@@ -114,6 +114,7 @@ const SortableListScreen = () => {
         <SortableList
           flexMigration
           data={items}
+          // itemProps={{backgroundColor: 'transparent'}}
           renderItem={renderItem}
           keyExtractor={keyExtractor}
           onOrderChange={onOrderChange}

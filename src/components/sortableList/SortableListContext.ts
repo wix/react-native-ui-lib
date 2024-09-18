@@ -1,23 +1,23 @@
 import {createContext} from 'react';
-import {ViewProps} from 'react-native';
+import type {ViewProps, FlatListProps} from 'react-native';
 import {SharedValue} from 'react-native-reanimated';
 import type {Dictionary} from '../../typings/common';
-import {Data, SortableListItemProps} from './types';
+import {Data, OrderChangeInfo, SortableListItemProps, SortableListProps} from './types';
 
 export interface SortableListContextType<ItemT extends SortableListItemProps> {
   data: Data<ItemT>;
   itemsOrder: SharedValue<string[]>;
   lockedIds: SharedValue<Dictionary<boolean>>;
-  onChange: () => void;
+  onChange: (info: OrderChangeInfo) => void;
   itemSize: SharedValue<number>;
-  horizontal?: boolean;
+  horizontal?: FlatListProps<ItemT>['horizontal'];
   onItemLayout: ViewProps['onLayout'];
   enableHaptic?: boolean;
   scale?: number;
-  itemProps?: {margins?: {marginTop?: number; marginBottom?: number; marginLeft?: number; marginRight?: number}};
+  itemProps?: SortableListProps<ItemT>['itemProps'];
 }
 
 // @ts-ignore
-const SortableListContext = createContext<SortableListContextType>({});
+const SortableListContext = createContext<SortableListContextType<SortableListItemProps>>({});
 
 export default SortableListContext;

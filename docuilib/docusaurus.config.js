@@ -20,7 +20,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
       expoSnackLink: 'https://snack.expo.io/@ethanshar/rnuilib_snack',
       stars: '4.7'
     },
-    plugins: ['docusaurus-plugin-sass'],
+    plugins: ['docusaurus-plugin-sass', '@docusaurus/theme-live-codeblock', './plugins/uilib.js'],
     presets: [
       [
         '@docusaurus/preset-classic',
