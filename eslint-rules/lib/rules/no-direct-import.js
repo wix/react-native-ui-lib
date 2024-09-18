@@ -1,4 +1,4 @@
-const {handleError, addToImports} = require('../utils');
+const {handleError} = require('../utils');
 
 const RULE_ID = 'no-direct-import';
 const MAP_SCHEMA = {
@@ -56,14 +56,27 @@ module.exports = {
       return customMessage || `Do not ${type} directly from '${origin}'. Please use '${destination}'${autofixMessage}.`;
     }
 
-    function checkAndReport(node, type, importedModuleNameToReplace) {
-      const imports = [];
-      addToImports(node, imports);
-      const modules = new Set(collectModulesFromImports(imports));
-      const rule = getRules().find((rule) => modules.has(rule.origin));
-      if (!rule) {
-        return;
+    function getRules() {
+      // To support both structures; single rule or array of rules
+      return context.options[0].rules || [context.options[0]];
+    }
+
+    function checkImportDeclaration(node) {
+      const source = node.source.value;
+      const rule = getRules().find((rule) => rule.origin === source);
+
+      if (rule) {
+        report(node, rule, 'import', node.source);
       }
+    }
+    function isRequireFunction(node) {
+      return node.callee.type === 'Identifier' &&
+                    node.callee.name === 'require' &&
+                    node.arguments.length > 0 &&
+                    node.arguments[0].type === 'Literal'
+    }
+
+    function report(node, rule, type, textToReplace) {
       try {
         const {applyAutofix, destination} = rule;
         const message = getErrorMessage(rule, type);
@@ -72,7 +85,7 @@ module.exports = {
           message,
           fix(fixer) {
             if (node && applyAutofix && destination) {
-              return fixer.replaceText(importedModuleNameToReplace, `'${destination}'`);
+              return fixer.replaceText(textToReplace, `'${destination}'`);
             }
           }
         });
@@ -81,30 +94,20 @@ module.exports = {
       }
     }
 
-    function getRules() {
-      // To support both structures; single rule or array of rules
-      return context.options[0].rules || [context.options[0]];
-    }
-
-    function collectModulesFromImports(imports) {
-      const collection = [];
-      imports.forEach((moduleImports) => {
-        collection.push(...Object.keys(moduleImports));
-      });
-      return collection;
-    }
-
-    function getModuleNameFromRequire(node) {
-      return (node.init.object ? node.init.object.arguments : node.init.arguments)[0]
-    }
-
-    function getModuleNameFromImport(node) {
-      return node.source;
+    function checkRequire(node) {
+      if (!isRequireFunction(node)) {
+        return;
+      }
+      const source = node.arguments[0].value;
+      const rule = getRules().find((rule) => rule.origin === source);
+      if (rule) {
+        report(node, rule, 'require', node.arguments[0]);
+      }
     }
 
     return {
-      ImportDeclaration: (node) => checkAndReport(node, 'import', getModuleNameFromImport(node)),
-      VariableDeclarator: (node) => checkAndReport(node, 'require', getModuleNameFromRequire(node)),
+      ImportDeclaration: checkImportDeclaration,
+      CallExpression: checkRequire
     };
   }
 };
