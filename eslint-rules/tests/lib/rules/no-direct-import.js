@@ -31,6 +31,7 @@ const validExample2 = `import {Component} from 'new-module';`;
 const validExample3 = `const {Component} = require('another-module');`;
 const validExample4 = `const test = require('new-module').test;`;
 const validExample5 = `export const credentials = { email: 'test@test.com', password: 'test' };`;
+const validExample6 = `const digits = 'phoneNumber'.split(''); for (const digit of digits) { console.log(digit); };`;
 const validDefault = `import something from 'another-module';`;
 
 const invalidExample1 = `import {Component} from 'some-module';`;
@@ -74,6 +75,10 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleOptionsArray,
       code: validExample5
+    },
+    {
+      options: ruleOptionsArray,
+      code: validExample6
     },
     {
       options: ruleOptions,
