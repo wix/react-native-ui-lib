@@ -30,6 +30,7 @@ const validExample1 = `import {Component} from 'another-module';`;
 const validExample2 = `import {Component} from 'new-module';`;
 const validExample3 = `const {Component} = require('another-module');`;
 const validExample4 = `const test = require('new-module').test;`;
+const validExample5 = `export const credentials = { email: 'test@test.com', password: 'test' };`;
 const validDefault = `import something from 'another-module';`;
 
 const invalidExample1 = `import {Component} from 'some-module';`;
@@ -69,6 +70,10 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleOptionsArray,
       code: validExample4
+    },
+    {
+      options: ruleOptionsArray,
+      code: validExample5
     },
     {
       options: ruleOptions,
