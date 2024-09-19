@@ -20,7 +20,7 @@
     // "declarationDir": "./generatedTypes",
     "baseUrl": ".",
     "paths": {
-      "react-native-ui-lib": ["src/index.ts"],
+      "react-native-ui-lib": ["./src/index.ts"],
       "commons": ["./src/commons"],
       "helpers": ["./src/helpers"],
       "utils": ["./src/utils"],
