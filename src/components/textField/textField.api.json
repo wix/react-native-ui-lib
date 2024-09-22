@@ -15,7 +15,7 @@
     {
       "name": "labelColor",
       "type": "ColorType",
-      "description": "Field label color. Either a string or color by state map ({default, focus, error, disabled, readonly})"
+      "description": "Field label color. Either a string or color by state map \\(\\{default, focus, error, disabled, readonly\\})\\"
     },
     {"name": "labelStyle", "type": "TextStyle", "description": "Custom style for the field label"},
     {"name": "labelProps", "type": "TextProps", "description": "Pass extra props to the label Text element"},
@@ -80,11 +80,15 @@
       "type": "ViewStyle | (context: FieldContextType, props) => ViewStyle",
       "description": "Internal style for the field container to style the field underline, outline and fill color"
     },
-    {"name": "containerProps", "type": "Omit<ViewProps, 'style'>", "description": "Container props of the whole component"},
+    {
+      "name": "containerProps",
+      "type": "Omit<ViewProps, 'style'>",
+      "description": "Container props of the whole component"
+    },
     {"name": "containerStyle", "type": "ViewStyle", "description": "Container style of the whole component"},
     {
       "name": "preset",
-      "type": "Presets | `${Presets}` | null | string",
+      "type": "Presets | `$\\{Presets\\}` | null | string",
       "description": "Predefined preset to use for styling the field"
     },
     {
@@ -124,7 +128,11 @@
       "description": "A UI preset for read only state"
     },
     {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag"},
-    {"name": "showMandatoryIndication", "type": "boolean", "description": "Whether to show a mandatory field indication"}
+    {
+      "name": "showMandatoryIndication",
+      "type": "boolean",
+      "description": "Whether to show a mandatory field indication"
+    }
   ],
   "snippet": [
     "<TextField",

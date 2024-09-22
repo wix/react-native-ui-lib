@@ -4,7 +4,7 @@
   "description": "Component for feature discovery",
   "note": [
     "FeatureHighlight component must be a direct child of the root view returned in render()",
-    "If the element to be highlighted doesn't have a style attribute add 'style={{opacity: 1}}' so the Android OS can detect it",
+    "If the element to be highlighted doesn't have a style attribute add 'style=\\{\\{opacity: 1\\}\\}' so the Android OS can detect it",
     "FeatureHighlight uses a native library. You MUST add and link the native library to both iOS and Android projects. For instruction please see: https://facebook.github.io/react-native/docs/linking-libraries-ios.html"
   ],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FeatureHighlightScreen.tsx",
@@ -16,7 +16,7 @@
     {
       "name": "highlightFrame",
       "type": "HighlightFrame",
-      "description": "Frame of the area to highlight {x, y, width, height}"
+      "description": "Frame of the area to highlight \\{x, y, width, height\\}"
     },
     {
       "name": "getTarget",
