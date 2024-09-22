@@ -52,7 +52,7 @@
     "semver": "^5.5.0",
     "tinycolor2": "^1.4.2",
     "url-parse": "^1.2.0",
-    "wix-react-native-text-size": "~1.0.0"
+    "wix-react-native-text-size": "1.0.9"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.8",
@@ -80,8 +80,8 @@
     "@types/jest": "^29.2.1",
     "@types/lodash": "^4.0.0",
     "@types/prop-types": "^15.5.3",
-    "@types/react": "18.2.6",
-    "@types/react-native": "0.71.2",
+    "@types/react": "18.3.7",
+    "@types/react-native": "0.73.0",
     "@types/tinycolor2": "^1.4.2",
     "@types/url-parse": "^1.4.3",
     "@typescript-eslint/eslint-plugin": "^5.3.1",
