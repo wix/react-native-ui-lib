@@ -126,6 +126,7 @@ const Thumb = forwardRef((props: ThumbProps, ref: any) => {
 
   return (
     <Animated.View
+    // @ts-expect-error
       ref={thumbRef}
       {...others}
       hitSlop={thumbHitSlop}

@@ -73,6 +73,7 @@ function withScrollEnabler<PROPS, STATICS = {}>(WrappedComponent: React.Componen
   ScrollEnabler.propTypes = WrappedComponent.propTypes;
   //@ts-ignore
   ScrollEnabler.defaultProps = WrappedComponent.defaultProps;
+  // @ts-expect-error
   return forwardRef(ScrollEnabler) as any;
 }
 

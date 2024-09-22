@@ -3,7 +3,7 @@
 // TODO: consider deprecating renderCustomModal prop
 import _ from 'lodash';
 import React, {useMemo, useState, useRef, useCallback, useEffect} from 'react';
-import {LayoutChangeEvent} from 'react-native';
+import {DimensionValue, LayoutChangeEvent} from 'react-native';
 import {useThemeProps} from 'hooks';
 import {Constants} from '../../commons/new';
 import ExpandableOverlay, {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
@@ -33,7 +33,7 @@ import {
 
 const DIALOG_PROPS = {
   bottom: true,
-  width: '100%',
+  width: '100%' as DimensionValue,
   height: 250
 };
 
