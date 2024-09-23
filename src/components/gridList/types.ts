@@ -10,7 +10,7 @@ export interface GridListBaseProps extends Pick<FlatListProps<any>, 'style' | 'c
    */
   numColumns?: number;
   /**
-   * Spacing between each item
+   * Spacing between each item (if maxItemWidth is passed this will be the minimum spacing)
    */
   itemSpacing?: number;
   /**

@@ -10,7 +10,7 @@ import SortableItem from './SortableItem';
 import usePresenter from './usePresenter';
 import {ItemsOrder, SortableGridListProps, ItemProps} from './types';
 
-import useGridLayout, {DEFAULT_ITEM_SPACINGS} from '../gridList/useGridLayout';
+import useGridLayout from '../gridList/useGridLayout';
 
 function generateItemsOrder(data: SortableGridListProps['data']) {
   return _.map(data, item => item.id);
@@ -19,9 +19,9 @@ function generateItemsOrder(data: SortableGridListProps['data']) {
 function SortableGridList<T = any>(props: SortableGridListProps<T>) {
   const {renderItem, onOrderChange, flexMigration, orderByIndex = false, ...others} = props;
 
-  const {itemContainerStyle, numberOfColumns, listStyle, listContentStyle, listColumnWrapperStyle} =
+  const {itemContainerStyle, numberOfColumns, itemWidth, itemSpacing, listStyle, listContentStyle, listColumnWrapperStyle} =
     useGridLayout(props);
-  const {itemSpacing = DEFAULT_ITEM_SPACINGS, data} = others;
+  const {data} = others;
   const itemsOrder = useSharedValue<ItemsOrder>(generateItemsOrder(data));
 
   // TODO: Remove once flexMigration migration is completed
@@ -36,7 +36,7 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
     itemsOrder.value = generateItemsOrder(data);
   }, [data]);
 
-  const presenter = usePresenter(numberOfColumns, itemSpacing);
+  const presenter = usePresenter(numberOfColumns, itemWidth, itemSpacing);
 
   const onChange = useCallback(() => {
     const newData: ItemProps<T>[] = [];
