@@ -1,6 +1,5 @@
 import {ReactTestInstance} from 'react-test-renderer';
 import {within} from '@testing-library/react-native';
-
 export interface ComponentProps {
   renderTree: ReturnType<typeof within>; // Note: This changed was asked for integration with amino. This still gives all querying functionality.
   testID: string | RegExp;
@@ -8,6 +7,7 @@ export interface ComponentProps {
 
 export interface ComponentDriverResult {
   getElement: () => ReactTestInstance;
+  queryElement:() => ReactTestInstance | undefined;
   exists: () => boolean;
 }
 
@@ -28,6 +28,15 @@ export const useComponentDriver = (props: ComponentProps): ComponentDriverResult
     }
   };
 
+  const queryElement = (): ReactTestInstance => {
+    const elements = renderTree.queryAllByTestId(testID);
+    if (elements.length > 1) {
+      console.warn(`Found more than one element with testID: ${testID}`);
+    }
+
+    return elements?.[0];
+  };
+
   const exists = (): boolean => {
     try {
       getElement();
@@ -37,7 +46,7 @@ export const useComponentDriver = (props: ComponentProps): ComponentDriverResult
     }
   };
 
-  return {getElement, exists};
+  return {getElement, queryElement, exists};
 };
 
 export const ComponentDriver = (props: ComponentProps): ComponentDriverResult => {

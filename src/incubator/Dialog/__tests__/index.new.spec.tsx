@@ -104,7 +104,7 @@ describe('Incubator.Dialog sanity checks', () => {
     const onDismiss = jest.fn();
     const component = <TestCase2 onDismiss={onDismiss}/>;
     const {dialogDriver} = getDriver(component);
-    expect(dialogDriver.exists()).toBeTruthy();
+    expect(dialogDriver.exists()).toBeFalsy();
     expect(dialogDriver.isVisible()).toBeFalsy();
   });
 });

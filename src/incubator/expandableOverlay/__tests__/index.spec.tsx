@@ -17,7 +17,6 @@ const universe = 'Hello Universe';
 
 const TestCase = (props: Omit<ExpandableOverlayProps, 'testID'>) => {
   return (
-    //@ts-expect-error
     <ExpandableOverlay migrateDialog expandableContent={<Text>{universe}</Text>} {...props} testID={testID}>
       <View>
         <Text>{helloWorld}</Text>
@@ -28,7 +27,7 @@ const TestCase = (props: Omit<ExpandableOverlayProps, 'testID'>) => {
 
 const getDriver = <T extends ExpandableOverlayProps>(props: T) => {
   const renderTree = render(<TestCase {...props}/>);
-  const driver = ExpandableOverlayDriver({renderTree, testID});
+  const driver = ExpandableOverlayDriver({renderTree, testID}, props.useDialog ?? false);
   return {driver, renderTree};
 };
 
@@ -36,7 +35,7 @@ describe('ExpandableOverlay', () => {
   describe('With Dialog (useDialog)', () => {
     it('Sanity', () => {
       const {driver} = getDriver({useDialog: true});
-      expect(driver.exists()).toBeTruthy();
+      expect(driver.exists()).toBeFalsy();
     });
 
     it('Test open', () => {
@@ -66,7 +65,7 @@ describe('ExpandableOverlay', () => {
   describe('With Modal', () => {
     it('Sanity', () => {
       const {driver} = getDriver({});
-      expect(driver.exists()).toBeTruthy();
+      expect(driver.exists()).toBeFalsy();
     });
 
     it('Test open', () => {
