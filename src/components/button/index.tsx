@@ -421,7 +421,6 @@ const modifiersOptions = {
   color: true
 };
 
-// @ts-expect-error class components don't work well with forwardRef HOC
 export default asBaseComponent<ButtonProps, ComponentStatics<typeof Button>, {}>(forwardRef(Button), {
   modifiersOptions
 });

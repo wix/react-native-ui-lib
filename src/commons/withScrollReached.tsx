@@ -96,7 +96,6 @@ function withScrollReached<PROPS, STATICS = {}>(WrappedComponent: React.Componen
   ScrollReachedDetector.propTypes = WrappedComponent.propTypes;
   //@ts-ignore
   ScrollReachedDetector.defaultProps = WrappedComponent.defaultProps;
-  // @ts-expect-error
   return forwardRef<PROPS & PropTypes>(ScrollReachedDetector) as any;
 }
 

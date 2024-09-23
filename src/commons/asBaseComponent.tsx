@@ -1,4 +1,4 @@
-import React, {PropsWithoutRef} from 'react';
+import React from 'react';
 import hoistStatics from 'hoist-non-react-statics';
 import * as Modifiers from './modifiers';
 import {Scheme, SchemeChangeListener, ThemeManager} from '../style';
@@ -23,7 +23,7 @@ const colorScheme = Scheme.getSchemeType();
 
 function asBaseComponent<PROPS, STATICS = {}, RefInterface = any>(WrappedComponent: React.ComponentType<any>,
   options: AsBaseComponentOptions = {}) {
-  class BaseComponent extends UIComponent<PropsWithoutRef<PROPS> & ForwardRefInjectedProps<RefInterface>> {
+  class BaseComponent extends UIComponent<PROPS & ForwardRefInjectedProps<RefInterface>> {
     static displayName: string | undefined;
     static propTypes: any;
     static defaultProps: any;

@@ -226,5 +226,4 @@ const modifiersOptions = {
   flex: true
 };
 
-// @ts-expect-error class components don't work well with forwardRef HOC
 export default asBaseComponent<TextProps>(forwardRef<PropsTypes>(Text), {modifiersOptions});
