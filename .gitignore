@@ -42,8 +42,12 @@ expoDemo/android/gradlew.bat
 #
 node_modules/
 npm-debug.log
+
+# yarn
 yarn-error.log
-.yarn
+.yarn/cache
+.yarn/install-state.gz
+.yarn/yarn.build.json
 
 .vscode
 
@@ -82,3 +86,5 @@ expoDemo/ios/Pods
 
 # testing
 /coverage
+
+
