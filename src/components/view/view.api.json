@@ -24,5 +24,6 @@
     {"name": "backgroundColor", "type": "string", "description": "Set background color"},
     {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag"},
     {"name": "style", "type": "ViewStyle", "description": "Custom style"}
-  ]
+  ],
+  "snippet": ["<View style={{width: 50, height: 50}} bg-orange50/>"]
 }
