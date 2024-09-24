@@ -85,6 +85,7 @@
     "    <div>",
     "      <SortableList",
     "        data={data$1}",
+    "        flexMigration",
     "        // onOrderChange={onOrderChange$2}",
     "        renderItem={renderItem$3}",
     "        keyExtractor={keyExtractor$4}",
