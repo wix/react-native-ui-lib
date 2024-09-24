@@ -4,6 +4,7 @@ import {Button, Image, Text, TouchableOpacity, View} from 'react-native-ui-lib/c
 import ActionBar from 'react-native-ui-lib/actionBar';
 import Checkbox from 'react-native-ui-lib/checkbox';
 import Chip from 'react-native-ui-lib/chip';
+import Incubator from 'react-native-ui-lib/incubator';
 import RadioButton from 'react-native-ui-lib/radioButton';
 import RadioGroup from 'react-native-ui-lib/radioGroup';
 import SegmentedControl from 'react-native-ui-lib/segmentedControl';
@@ -20,6 +21,7 @@ const ReactLiveScope = {
   Chip,
   Colors,
   Image,
+  Incubator,
   RadioButton,
   RadioGroup,
   SegmentedControl,
