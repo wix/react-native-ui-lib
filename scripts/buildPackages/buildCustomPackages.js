@@ -7,6 +7,10 @@ const packages = [
     content: `module.exports = require('./lib/components/Keyboard').default;\n`
   },
   {
+    filename: 'assets.js',
+    content: `module.exports = require('./src/assets').default;\n`
+  },
+  {
     filename: 'config.js',
     content: `module.exports = require('./src/commons/Config').default;\n`
   },
