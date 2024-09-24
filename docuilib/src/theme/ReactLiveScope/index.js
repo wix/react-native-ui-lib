@@ -2,6 +2,7 @@ import React from 'react';
 import {Colors} from 'react-native-ui-lib/style';
 import {Button, Image, Text, TouchableOpacity, View} from 'react-native-ui-lib/core';
 import ActionBar from 'react-native-ui-lib/actionBar';
+import Checkbox from 'react-native-ui-lib/checkbox';
 import TextField from 'react-native-ui-lib/textField';
 import SegmentedControl from 'react-native-ui-lib/segmentedControl';
 
@@ -12,6 +13,7 @@ const ReactLiveScope = {
   /* uilib components */
   ActionBar,
   Button,
+  Checkbox,
   Colors,
   Image,
   SegmentedControl,
