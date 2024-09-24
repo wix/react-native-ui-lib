@@ -1,7 +1,6 @@
 import React from 'react';
-import Text from 'react-native-ui-lib/text';
-import View from 'react-native-ui-lib/view';
-import Button from 'react-native-ui-lib/button';
+import {Colors} from 'react-native-ui-lib/style';
+import {Button, Image, Text, TouchableOpacity, View} from 'react-native-ui-lib/core';
 import TextField from 'react-native-ui-lib/textField';
 import SegmentedControl from 'react-native-ui-lib/segmentedControl';
 
@@ -10,11 +9,14 @@ const ReactLiveScope = {
   React,
   ...React,
   /* uilib components */
-  View,
+  Button,
+  Colors,
+  Image,
+  SegmentedControl,
   Text,
-  Button, 
   TextField,
-  SegmentedControl
+  TouchableOpacity,
+  View
 };
 
 export default ReactLiveScope;

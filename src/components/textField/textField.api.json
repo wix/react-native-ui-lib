@@ -138,12 +138,13 @@
     "<TextField",
     "  placeholder={'Placeholder'$1}",
     "  floatingPlaceholder$2",
-    "  onChangeText={onChangeText$3}",
+    "  onChangeText={text => console.log(text)$3}",
     "  enableErrors$4",
-    "  validate={['required', 'email', (value) => value.length > 6]$5}",
-    "  validationMessage={['Field is required', 'Email is invalid', 'Password is too short']$6}",
-    "  showCharCounter$7",
-    "  maxLength={30$8}",
+    "  validateOnChange$5",
+    "  validate={['required', (value) => value.length > 6]$6}",
+    "  validationMessage={['Field is required', 'Password is too short']$7}",
+    "  showCharCounter$8",
+    "  maxLength={30$9}",
     "/>"
   ]
 }
