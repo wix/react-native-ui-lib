@@ -25,12 +25,14 @@
     {"name": "style", "type": "ViewStyle", "description": "Component's style"}
   ],
   "snippet": [
-    "<ActionBar",
-    "  actions={[",
-    "    {label: 'Delete'$1, onPress: () => console.log('delete')$2},",
-    "    {label: $3, onPress: $4},",
-    "    {label: $5, onPress: $6}",
-    "  ]}",
-    "/>"
+    "<View marginT-40>",
+    "  <ActionBar",
+    "    actions={[",
+    "      {label: 'Delete'$1, onPress: () => console.log('delete')$2},",
+    "      {label: 'Replace Photo'$3, onPress: () => console.log('replace photo')$4},",
+    "      {label: 'Edit'$5, onPress: () => console.log('edit')$6}",
+    "    ]}",
+    "  />",
+    "</View>"
   ]
 }
