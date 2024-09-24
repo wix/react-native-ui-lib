@@ -22,9 +22,16 @@
     }
   ],
   "snippet": [
-    "<RadioGroup initialValue={currentValue$1} onValueChange={onValueChange$2}>",
-    "  <RadioButton value={'yes'$3} label={'Yes'$4}/>",
-    "  <RadioButton value={'no'$5} label={'No'$6}/>",
-    "</RadioGroup>"
+    "function Example(props) {",
+    "  const [currentValue, setCurrentValue] = useState('yes'$1);",
+    "  return (",
+    "    <div>",
+    "      <RadioGroup initialValue={currentValue$2} onValueChange={setCurrentValue$3}>",
+    "        <RadioButton value={'yes'$4} label={'Yes'$5}/>",
+    "        <RadioButton marginT-10 value={'no'$6} label={'No'$7}/>",
+    "      </RadioGroup>",
+    "    </div>",
+    "  );",
+    "}"
   ]
 }
