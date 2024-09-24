@@ -1,8 +1,10 @@
 import React from 'react';
+import products from '../../assets/data/products';
 import {Colors} from 'react-native-ui-lib/style';
-import {Button, Image, Text, TouchableOpacity, View} from 'react-native-ui-lib/core';
+import {BorderRadiuses, Button, Image, Spacings, Text, TouchableOpacity, View} from 'react-native-ui-lib/core';
 import ActionBar from 'react-native-ui-lib/actionBar';
 import Assets from 'react-native-ui-lib/assets';
+import Card from 'react-native-ui-lib/card';
 import Checkbox from 'react-native-ui-lib/checkbox';
 import Chip from 'react-native-ui-lib/chip';
 import Icon from 'react-native-ui-lib/icon';
@@ -10,6 +12,7 @@ import Incubator from 'react-native-ui-lib/incubator';
 import RadioButton from 'react-native-ui-lib/radioButton';
 import RadioGroup from 'react-native-ui-lib/radioGroup';
 import SegmentedControl from 'react-native-ui-lib/segmentedControl';
+import SortableGridList from 'react-native-ui-lib/sortableGridList';
 import SortableList from 'react-native-ui-lib/sortableList';
 import Switch from 'react-native-ui-lib/switch';
 import TextField from 'react-native-ui-lib/textField';
@@ -32,6 +35,8 @@ Assets.loadAssetsGroup('icons.demo', {
   // exclamation: require('../../assets/icons/exclamationFillSmall.png')
 });
 
+Assets.data = {products};
+
 // Add react-live imports you need here
 const ReactLiveScope = {
   React,
@@ -39,7 +44,9 @@ const ReactLiveScope = {
   /* uilib components */
   ActionBar,
   Assets,
+  BorderRadiuses,
   Button,
+  Card,
   Checkbox,
   Chip,
   Colors,
@@ -49,7 +56,9 @@ const ReactLiveScope = {
   RadioButton,
   RadioGroup,
   SegmentedControl,
+  SortableGridList,
   SortableList,
+  Spacings,
   Switch,
   Text,
   TextField,
