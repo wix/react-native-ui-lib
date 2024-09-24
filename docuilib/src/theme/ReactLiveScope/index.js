@@ -9,6 +9,7 @@ import Checkbox from 'react-native-ui-lib/checkbox';
 import Chip from 'react-native-ui-lib/chip';
 import Icon from 'react-native-ui-lib/icon';
 import Incubator from 'react-native-ui-lib/incubator';
+import MaskedInput from 'react-native-ui-lib/maskedInput';
 import RadioButton from 'react-native-ui-lib/radioButton';
 import RadioGroup from 'react-native-ui-lib/radioGroup';
 import SegmentedControl from 'react-native-ui-lib/segmentedControl';
@@ -53,6 +54,7 @@ const ReactLiveScope = {
   Icon,
   Image,
   Incubator,
+  MaskedInput,
   RadioButton,
   RadioGroup,
   SegmentedControl,
