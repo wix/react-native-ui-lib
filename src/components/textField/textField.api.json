@@ -132,6 +132,12 @@
       "name": "showMandatoryIndication",
       "type": "boolean",
       "description": "Whether to show a mandatory field indication"
+    },
+    {
+      "name": "innerFlexBehavior",
+      "type": "boolean",
+      "description": "Set the inner container to use flex behavior to resolve text overflow issues when using leading or trailing accessories",
+      "note": "This may cause flex issues when the field is inside a row container"
     }
   ],
   "snippet": [

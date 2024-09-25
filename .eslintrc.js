@@ -12,6 +12,7 @@ module.exports = {
     // TODO: remove after migration of legacy lifecycle methods
     camelcase: 'off',
     'comma-dangle': ['error', 'never'],
+    complexity: ['warn', {max: 25}],
     'no-mixed-operators': ['off'],
     'no-trailing-spaces': 'off',
     'operator-linebreak': 'off',

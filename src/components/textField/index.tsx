@@ -64,6 +64,7 @@ const TextField = (props: InternalTextFieldProps) => {
     hint,
     helperText,
     validationIcon,
+    innerFlexBehavior,
     // Label
     label,
     labelColor,
@@ -171,7 +172,7 @@ const TextField = (props: InternalTextFieldProps) => {
             Known Issue: This slightly push the trailing accessory and clear button when entering a long text
           */}
           {children || (
-            <View {...(Constants.isWeb ? {flex: true} : {flexG: true})}>
+            <View {...(Constants.isWeb || innerFlexBehavior ? {flex: true} : {flexG: true})}>
               {/* Note: Render dummy placeholder for Android center issues */}
               {Constants.isAndroid && centered && (
                 <Text marginR-s1 style={dummyPlaceholderStyle}>
