@@ -59,6 +59,7 @@
     {"name": "style", "type": "ViewStyle", "description": "Component's style"},
     {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
   ],
+  "usesAnimated": true,
   "snippet": [
     "<Drawer",
     "  rightItems={[{text: 'Read', background: Colors.blue30, onPress: () => console.log('read pressed')}]$1}",
