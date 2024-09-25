@@ -12,8 +12,8 @@ const usePickerSearch = (props: UsePickerSearchProps) => {
   const filterItems = useCallback((items: any) => {
     if (showSearch && !_.isEmpty(searchValue)) {
       return _.filter(items, item => {
-        const {label, value, getItemLabel} = item.props || item;
-        const itemLabel = getItemLabelPresenter(label, value, getItemLabel || getItemLabelPickerProp);
+        const {label, value, getItemLabel: childGetItemLabel} = item.props || item;
+        const itemLabel = getItemLabelPresenter(label, value, getItemLabelPickerProp || childGetItemLabel);
         return !shouldFilterOut(searchValue, itemLabel);
       });
     }
