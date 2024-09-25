@@ -22,21 +22,21 @@ import Switch from 'react-native-ui-lib/switch';
 import TextField from 'react-native-ui-lib/textField';
 
 Assets.loadAssetsGroup('icons.demo', {
-  // chevronDown: require('../../assets/icons/chevronDown.png'),
-  chevronRight: require('../../assets/icons/chevronRight.png'),
-  // add: require('../../assets/icons/add.png'),
-  // camera: require('../../assets/icons/cameraSelected.png'),
-  // close: require('../../assets/icons/close.png'),
-  // dashboard: require('../../assets/icons/dashboard.png'),
-  drag: require('../../assets/icons/drag.png')
-  // image: require('../../assets/icons/image.png'),
-  // plus: require('../../assets/icons/plus.png'),
-  // refresh: require('../../assets/icons/refresh.png'),
-  // search: require('../../assets/icons/search.png'),
-  // settings: require('../../assets/icons/settings.png'),
-  // share: require('../../assets/icons/share.png'),
-  // info: require('../../assets/icons/info.png'),
-  // exclamation: require('../../assets/icons/exclamationFillSmall.png')
+  // chevronDown: require('../../assets/icons/chevronDown.png').default,
+  chevronRight: require('../../assets/icons/chevronRight.png').default,
+  // add: require('../../assets/icons/add.png').default,
+  // camera: require('../../assets/icons/cameraSelected.png').default,
+  // close: require('../../assets/icons/close.png').default,
+  // dashboard: require('../../assets/icons/dashboard.png').default,
+  drag: require('../../assets/icons/drag.png').default
+  // image: require('../../assets/icons/image.png').default,
+  // plus: require('../../assets/icons/plus.png').default,
+  // refresh: require('../../assets/icons/refresh.png').default,
+  // search: require('../../assets/icons/search.png').default,
+  // settings: require('../../assets/icons/settings.png').default,
+  // share: require('../../assets/icons/share.png').default,
+  // info: require('../../assets/icons/info.png').default,
+  // exclamation: require('../../assets/icons/exclamationFillSmall.png').default
 });
 
 Assets.data = {products};
