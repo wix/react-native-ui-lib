@@ -54,7 +54,7 @@
     {
       "name": "getActiveBackgroundColor",
       "type": "(backgroundColor: string, props: any) => string",
-      "description": "callback for getting activeBackgroundColor (e.g. (calculatedBackgroundColor, prop) => {...}). Better set using ThemeManager"
+      "description": "callback for getting activeBackgroundColor \\(e.g. \\(calculatedBackgroundColor, prop) => \\{...\\})\\. Better set using ThemeManager"
     },
     {
       "name": "animateLayout",
@@ -67,7 +67,5 @@
       "description": "the direction of the animation ('left' and 'right' will effect the button's own alignment)"
     }
   ],
-  "snippet": [
-    "<Button label={'Press'$1} size={Button.sizes.medium$2} backgroundColor={Colors.red30$3}/>"
-  ]
+  "snippet": ["<Button label={'Press'$1} size={Button.sizes.medium$2} backgroundColor={Colors.red30$3}/>"]
 }

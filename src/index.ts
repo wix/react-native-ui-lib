@@ -124,6 +124,7 @@ export {
   PickerMethods
 } from './components/picker';
 export {default as ProgressBar, ProgressBarProps} from './components/progressBar';
+export {default as ProgressiveImage, ProgressiveImageProps} from './components/progressiveImage';
 export {default as RadioButton, RadioButtonProps} from './components/radioButton';
 export {default as RadioGroup, RadioGroupProps} from './components/radioGroup';
 export type {RecorderProps} from './typings/recorderTypes';
@@ -142,7 +143,7 @@ export {default as SortableGridList, SortableGridListProps} from './components/s
 export {default as SortableList, SortableListProps, SortableListItemProps} from './components/sortableList';
 export {default as StackAggregator, StackAggregatorProps} from './components/stackAggregator';
 export {default as StateScreen, StateScreenProps} from './components/stateScreen';
-export {default as Stepper, StepperProps} from './components/stepper';
+export {default as Stepper, StepperProps, StepperType} from './components/stepper';
 export {default as Switch, SwitchProps} from './components/switch';
 export {
   default as TabController,

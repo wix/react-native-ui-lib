@@ -3521,8 +3521,8 @@ exports[`TextField Screen renders screen 1`] = `
               "marginLeft": 20,
               "minWidth": 66,
               "opacity": 1,
-              "paddingHorizontal": 10,
-              "paddingVertical": 2,
+              "paddingHorizontal": 11,
+              "paddingVertical": 3,
             }
           }
         >
@@ -7369,6 +7369,290 @@ exports[`TextField Screen renders screen 1`] = `
                 validateOnBlur={true}
               />
             </View>
+          </View>
+          <View
+            row={true}
+            spread={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                },
+                undefined,
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  {},
+                  {},
+                  {},
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                $textDangerLight={true}
+                style={
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "color": "#20303C",
+                      "writingDirection": "ltr",
+                    },
+                    undefined,
+                    {
+                      "color": "#FC3D2F",
+                    },
+                    undefined,
+                    undefined,
+                    {},
+                    undefined,
+                    undefined,
+                    undefined,
+                    [
+                      {
+                        "flexShrink": 1,
+                        "minHeight": 20,
+                      },
+                      [
+                        undefined,
+                        undefined,
+                      ],
+                    ],
+                  ]
+                }
+                testID="undefined.validationMessage"
+              />
+            </View>
+            <View
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                ]
+              }
+            />
+          </View>
+        </View>
+      </View>
+      <Text
+        $textPrimary={true}
+        marginB-s1={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "writingDirection": "ltr",
+            },
+            undefined,
+            {
+              "color": "#5A48F5",
+            },
+            undefined,
+            undefined,
+            {
+              "marginBottom": 4,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        leading/trailing accessory overflow (innerFlexBehavior)
+      </Text>
+      <View
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                {},
+                undefined,
+                undefined,
+                undefined,
+              ],
+            ]
+          }
+        >
+          <View
+            row={true}
+            spread={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                },
+                undefined,
+              ]
+            }
+          />
+          <View
+            centerV={true}
+            row={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+                [
+                  {},
+                  [
+                    [
+                      {
+                        "borderBottomColor": "#E8ECF0",
+                        "borderBottomWidth": 1,
+                        "paddingBottom": 8,
+                      },
+                      undefined,
+                    ],
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  {},
+                  {},
+                  {},
+                  undefined,
+                ]
+              }
+            >
+              <TextInput
+                accessibilityState={
+                  {
+                    "disabled": false,
+                  }
+                }
+                editable={true}
+                onBlur={[Function]}
+                onChangeText={[Function]}
+                onFocus={[Function]}
+                placeholder="Placeholder"
+                placeholderTextColor="#6E7881"
+                style={
+                  [
+                    {
+                      "flexGrow": 1,
+                      "paddingBottom": 0,
+                      "paddingTop": 0,
+                      "textAlign": "left",
+                    },
+                    {
+                      "color": "#20303C",
+                    },
+                    [
+                      {},
+                      undefined,
+                      {
+                        "fontFamily": "System",
+                        "fontSize": 16,
+                        "fontWeight": "400",
+                        "height": 24,
+                        "lineHeight": undefined,
+                      },
+                      undefined,
+                    ],
+                    false,
+                  ]
+                }
+                underlineColorAndroid="transparent"
+                validateOnBlur={true}
+                value="Abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*"
+              />
+            </View>
+            <Image
+              accessibilityRole="image"
+              accessible={false}
+              source={
+                {
+                  "testUri": "../../../demo/src/assets/icons/search.png",
+                }
+              }
+              style={
+                [
+                  undefined,
+                  undefined,
+                  undefined,
+                  false,
+                  undefined,
+                ]
+              }
+            />
           </View>
           <View
             row={true}

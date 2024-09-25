@@ -31,7 +31,7 @@
     {
       "name": "listProps",
       "type": "SkeletonListProps",
-      "description": "Props that are available when using template={SkeletonView.templates.LIST_ITEM}"
+      "description": "Props that are available when using template=\\{SkeletonView.templates.LIST_ITEM\\}"
     },
     {"name": "times", "type": "number", "description": "Generates duplicate skeletons"},
     {"name": "timesKey", "type": "string", "description": "A key prefix for the duplicated SkeletonViews"},

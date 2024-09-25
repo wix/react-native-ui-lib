@@ -8,7 +8,7 @@ import {
   NativeScrollEvent,
   LayoutChangeEvent
 } from 'react-native';
-import {ScrollView, FlatList} from 'react-native-gesture-handler';
+import {ScrollView, FlatList, gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {Colors} from '../../style';
 import {Constants, asBaseComponent, forwardRef, ForwardRefInjectedProps} from '../../commons/new';
 import {ComponentStatics} from '../../typings/common';
@@ -277,4 +277,4 @@ const Item = ({children, index, onLayout}: any) => {
 
 Item.displayName = 'IGNORE';
 ScrollBar.Item = Item;
-export default asBaseComponent<ScrollBarProps, ComponentStatics<typeof ScrollBar>>(forwardRef(ScrollBar));
+export default asBaseComponent<ScrollBarProps, ComponentStatics<typeof ScrollBar>>(forwardRef(gestureHandlerRootHOC(ScrollBar)));

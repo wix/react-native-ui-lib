@@ -37,7 +37,7 @@ export enum Presets {
 
 export type ValidationMessagePositionType = `${ValidationMessagePosition}` | ValidationMessagePosition;
 
-export type Validator = Function | keyof typeof formValidators;
+export type Validator = ((value?: string) => boolean) | keyof typeof formValidators;
 
 export interface FieldStateProps extends InputProps {
   validateOnStart?: boolean;
@@ -282,10 +282,9 @@ export type TextFieldProps = MarginModifiers &
      */
     centered?: boolean;
     /**
-     * @deprecated
-     * Set an alignment fit for inline behavior (when rendered inside a row container)
-     */
-    inline?: boolean;
+     * Set the inner container to use flex behavior to resolve text overflow issues when using leading or trailing accessories
+     * This may cause flex issues when the field is inside a row container */
+    innerFlexBehavior?: boolean;
   };
 
 export type InternalTextFieldProps = PropsWithChildren<

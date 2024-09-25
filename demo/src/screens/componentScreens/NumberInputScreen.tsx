@@ -1,6 +1,5 @@
 import React, {useState, useCallback, useRef, useMemo} from 'react';
 import {StyleSheet, TouchableWithoutFeedback, Keyboard as RNKeyboard} from 'react-native';
-import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {
   Text,
   Spacings,
@@ -111,6 +110,7 @@ const NumberInputScreen = () => {
     if (currentData.current?.type === 'valid') {
       return currentData.current.number > MINIMUM_PRICE;
     }
+    return false;
   }, []);
 
   const isWithinDiscountPercentage = useCallback(() => {
@@ -119,6 +119,7 @@ const NumberInputScreen = () => {
         currentData.current.number >= DISCOUNT_PERCENTAGE.min && currentData.current.number <= DISCOUNT_PERCENTAGE.max
       );
     }
+    return false;
   }, []);
 
   const validate = useMemo((): Incubator.TextFieldProps['validate'] => {
@@ -198,7 +199,7 @@ const NumberInputScreen = () => {
   );
 };
 
-export default gestureHandlerRootHOC(NumberInputScreen);
+export default NumberInputScreen;
 
 const styles = StyleSheet.create({
   containerStyle: {

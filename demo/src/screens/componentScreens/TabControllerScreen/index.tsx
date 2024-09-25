@@ -11,7 +11,6 @@ import {
   TabControllerItemProps,
   TabControllerImperativeMethods
 } from 'react-native-ui-lib';
-import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 
 import Tab1 from './tab1';
 import Tab2 from './tab2';
@@ -224,7 +223,7 @@ class TabControllerScreen extends Component<{}, State> {
   }
 }
 
-export default gestureHandlerRootHOC(TabControllerScreen);
+export default TabControllerScreen;
 
 const styles = StyleSheet.create({
   labelStyle: {

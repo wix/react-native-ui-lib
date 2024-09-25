@@ -1,5 +1,6 @@
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const {themes} = require('prism-react-renderer');
+const lightCodeTheme = themes.github;
+const darkCodeTheme = themes.dracula;
 
 // With JSDoc @type annotations, IDEs can provide config autocompletion
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
@@ -20,7 +21,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
       expoSnackLink: 'https://snack.expo.io/@ethanshar/rnuilib_snack',
       stars: '4.7'
     },
-    plugins: ['docusaurus-plugin-sass'],
+    plugins: ['docusaurus-plugin-sass', '@docusaurus/theme-live-codeblock', './plugins/uilib.js'],
     presets: [
       [
         '@docusaurus/preset-classic',
@@ -31,7 +32,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             path: '../docs',
             // Please change this to your repo.
             editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/',
-            docLayoutComponent: '@site/src/components/CustomLayout'
+            docRootComponent: '@site/src/components/CustomLayout'
           },
           blog: {
             showReadingTime: true,
@@ -52,6 +53,20 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
     themeConfig:
       /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
       ({
+        metadata: [
+          {name: 'title', content: 'React Native UI Lib'},
+
+          {
+            name: 'keywords',
+            content: 'design system, react native, react, mobile, web, ui library, components library'
+          },
+          {
+            name: 'description',
+            content:
+              'A comprehensive design system for react native with rich components library, supports dark mode, RTL and accessibility features.'
+          },
+          {name: 'robots', content: 'index, follow'}
+        ],
         algolia: {
           // If Algolia did not provide you any appId, use 'BH4D9OD16A'
           appId: 'BWQFOHCCF3',

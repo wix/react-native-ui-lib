@@ -26,6 +26,10 @@ export const PickerDriver = (props: ComponentProps) => {
     testID: `${props.testID}.modal.topBar.done`
   });
 
+  const exists = () => {
+    return textFieldDriver.exists();
+  };
+
   const getValue = (): string | undefined => {
     return textFieldDriver.getValue();
   };
@@ -61,6 +65,7 @@ export const PickerDriver = (props: ComponentProps) => {
   };
 
   return {
+    exists,
     getValue,
     open,
     cancel,

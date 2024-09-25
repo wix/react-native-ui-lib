@@ -1,23 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {View, StyleSheet, Animated} from 'react-native';
-import AnimatedImage from '../animatedImage';
+import AnimatedImage, {AnimatedImageProps} from '../animatedImage';
 import {Colors} from '../../style';
 
 /**
- * @description: Image component that loads first a small thumbnail of the images, 
+ * @description: Image component that loads first a small thumbnail of the images,
  *               and fades-in the full-sized image with animation once it's loaded
  * @extends: AnimatedImage
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ProgressiveImageScreen.js
  */
-class ProgressiveImage extends React.Component {
+
+export type ProgressiveImageProps = {
+  /**
+   * small thumbnail source to display while the full-size image is loading
+   */
+  thumbnailSource: AnimatedImageProps['source'];
+};
+
+class ProgressiveImage extends React.Component<ProgressiveImageProps, {}> {
   static displayName = 'ProgressiveImage';
-  static propTypes = {
-    /**
-     * small thumbnail source to display while the full-size image is loading
-     */
-    thumbnailSource: PropTypes.object
-  };
 
   thumbnailAnimated = new Animated.Value(0);
   imageAnimated = new Animated.Value(0);
@@ -25,22 +26,12 @@ class ProgressiveImage extends React.Component {
   getThumbnail = () => {
     const {thumbnailSource, ...props} = this.props;
 
-    return (
-      <AnimatedImage                
-        {...props}
-        source={thumbnailSource}
-        loader={<View style={styles.container}/>}        
-      />
-    );
+    return <AnimatedImage {...props} source={thumbnailSource} loader={<View style={styles.container}/>}/>;
   };
 
-  render() {    
-    return (
-      <AnimatedImage        
-        {...this.props}
-        loader={this.getThumbnail()}
-      />
-    );
+  render() {
+    //@ts-ignore
+    return <AnimatedImage {...this.props} loader={this.getThumbnail()}/>;
   }
 }
 
@@ -49,6 +40,5 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.grey60
   }
 });
-
 
 export default ProgressiveImage;
