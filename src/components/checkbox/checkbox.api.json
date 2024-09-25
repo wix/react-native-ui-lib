@@ -42,6 +42,13 @@
     }
   ],
   "snippet": [
-    "<Checkbox value={false$1} onValueChange={() => console.log('value changed')$2}/>"
+    "function Example(props) {",
+    "  const [value, setValue] = useState(false$1);",
+    "  return (",
+    "    <div>",
+    "      <Checkbox value={value$2} onValueChange={setValue$3}/>",
+    "    </div>",
+    "  );",
+    "}"
   ]
 }

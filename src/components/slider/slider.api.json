@@ -85,13 +85,5 @@
     },
     {"name": "testID", "type": "string", "description": "The component test id"},
     {"name": "migrate", "type": "boolean", "description": "Temporary prop required for migration to the Slider's new implementation"}
-  ],
-  "snippet": [
-    "<Slider",
-    "  value={0$1}",
-    "  minimumValue={0$2}",
-    "  maximumValue={10$3}",
-    "  onValueChange={() => console.log('value changed')$4}",
-    "/>"
   ]
 }
