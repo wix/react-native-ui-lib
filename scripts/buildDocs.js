@@ -73,27 +73,27 @@ components.forEach(component => {
     } else {
       extendsText = _.map(component.extends, generateExtendsLink).join(', ');
     }
-    firstTabContent += `:::info\n`;
+    firstTabContent += ':::info\n';
     firstTabContent += `This component extends **${extendsText}** props.\n`;
-    firstTabContent += `:::\n`;
+    firstTabContent += ':::\n';
   }
 
   if (component.modifiers) {
-    firstTabContent += `:::tip\n`;
+    firstTabContent += ':::tip\n';
     firstTabContent += `This component support **${component.modifiers?.join(', ')}** modifiers.\n`;
-    firstTabContent += `:::\n`;
+    firstTabContent += ':::\n';
   }
 
   if (component.caution) {
-    firstTabContent += `:::caution\n`;
+    firstTabContent += ':::caution\n';
     firstTabContent += `${component.caution}\n`;
-    firstTabContent += `:::\n`;
+    firstTabContent += ':::\n';
   }
 
   if (component.note) {
-    firstTabContent += `:::note\n`;
+    firstTabContent += ':::note\n';
     firstTabContent += `${component.note}\n`;
-    firstTabContent += `:::\n`;
+    firstTabContent += ':::\n';
   }
 
   /* Images */
@@ -106,20 +106,20 @@ components.forEach(component => {
 
   /* Snippet */
   if (component.snippet) {
-    firstTabContent += `### Usage\n`;
+    firstTabContent += '### Usage\n';
     firstTabContent += '``` jsx live\n';
     firstTabContent += component.snippet?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), '')).join('\n');
     firstTabContent += '\n```\n';
   }
 
   /* Props */
-  firstTabContent += `## API\n`;
+  firstTabContent += '## API\n';
   _.sortBy(component.props, p => p.name)?.forEach(prop => {
-    firstTabContent += `### ${prop.name} \n`;
+    firstTabContent += `### ${prop.name}\n`;
     if (prop.note) {
-      firstTabContent += `#### ${prop.note} \n`;
+      firstTabContent += `#### ${prop.note}\n`;
     }
-    firstTabContent += `${prop.description}  \n`;
+    firstTabContent += `${prop.description}\n`;
     // firstTabContent += `<span style={{color: 'grey'}}>${_.escape(prop.type)}</span>\n\n`;
     firstTabContent += `\`${prop.type} \` \n\n`;
   });
@@ -130,14 +130,14 @@ components.forEach(component => {
   let content = '';
 
   /* Markdown Front Matter */
-  content += `---\n`;
+  content += '---\n';
   if (isParentComponent) {
-    content += `sidebar_position: 1\n`;
+    content += 'sidebar_position: 1\n';
   }
   content += `id: ${component.name}\n`;
   content += `title: ${isIncubatorComponent ? 'Incubator.' : ''}${component.name}\n`;
   content += `sidebar_label: ${componentName}\n`;
-  content += `---\n\n`;
+  content += '---\n\n';
 
   content += `import Tabs from '@theme/Tabs';\n`;
   content += `import TabItem from '@theme/TabItem';\n\n`;
@@ -151,9 +151,8 @@ components.forEach(component => {
     <TabItem value="playground" label="Playground">
       Coming soon... 🤹🏻‍♀️
     </TabItem>
-  </Tabs>`;
+  </Tabs>\n`;
 
-  content += '\n\n';
 
   /* Generate files */
   const componentParentDir = componentParentName || isParentComponent ? `/${componentParentName || componentName}` : '';
