@@ -20,6 +20,7 @@ import SortableGridList from 'react-native-ui-lib/sortableGridList';
 import SortableList from 'react-native-ui-lib/sortableList';
 import Switch from 'react-native-ui-lib/switch';
 import TextField from 'react-native-ui-lib/textField';
+import * as Utils from './Utils';
 
 Assets.loadAssetsGroup('icons.demo', {
   // chevronDown: require('../../assets/icons/chevronDown.png').default,
@@ -71,6 +72,7 @@ const ReactLiveScope = {
   Text,
   TextField,
   TouchableOpacity,
+  Utils,
   View
 };
 

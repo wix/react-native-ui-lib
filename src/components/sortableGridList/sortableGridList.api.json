@@ -36,6 +36,7 @@
   ],
   "snippet": [
     "function Example(props) {",
+    "  const [shouldOrderByIndex, setShouldOrderByIndex] = useState(false);",
     "  const data = Assets.data.products.map(product => ({...product}));",
     "",
     "  renderItem = ({item}) => {",
@@ -59,6 +60,7 @@
     "  return (",
     "    <div>",
     "      <View style={{width: 800}}>",
+    "        {Utils.renderBooleanOption('Order by index', 'shouldOrderByIndex', {spread: false, state: shouldOrderByIndex, setState: setShouldOrderByIndex})}",
     "        <SortableGridList",
     "          data={data$1}",
     "          flexMigration",
@@ -68,6 +70,7 @@
     "          itemSpacing={Spacings.s3$5}",
     "          listPadding={Spacings.s5$6}",
     "          containerWidth={800$7}",
+    "          orderByIndex={shouldOrderByIndex$8}",
     "        />",
     "      </View>",
     "    </div>",

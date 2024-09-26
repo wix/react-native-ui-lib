@@ -44,7 +44,7 @@
   ],
   "snippet": [
     "function Example(props) {",
-    "  const data = Array.from({length: 30}, (_, index) => {",
+    "  const data = Array.from({length: 10}, (_, index) => {",
     "    let text = `${index}`;",
     "    if (index === 3) {",
     "      text = 'Locked item';",
