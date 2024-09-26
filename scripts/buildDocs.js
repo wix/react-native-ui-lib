@@ -3,7 +3,23 @@ const childProcess = require('child_process');
 const fs = require('fs');
 
 const COMPONENTS_DOCS_DIR = './docs/components';
-const VALID_CATEGORIES = ['foundation', 'basic', 'assets', 'navigation', 'layout', 'controls', 'status', 'media', 'lists', 'form', 'dateTime', 'overlays', 'charts', 'incubator', 'infra'];
+const VALID_CATEGORIES = [
+  'foundation',
+  'basic',
+  'assets',
+  'navigation',
+  'layout',
+  'controls',
+  'status',
+  'media',
+  'lists',
+  'form',
+  'dateTime',
+  'overlays',
+  'charts',
+  'incubator',
+  'infra'
+];
 
 const result = childProcess.execSync('find ./src ./lib/components -name "*api.json"');
 const apiFiles = result.toString().trim().split('\n');
@@ -42,7 +58,23 @@ components.forEach(component => {
   content += `id: ${component.name}\n`;
   content += `title: ${isIncubatorComponent ? 'Incubator.' : ''}${component.name}\n`;
   content += `sidebar_label: ${componentName}\n`;
-  content += `---\n`;
+  content += `---\n\n`;
+
+  content += `import Tabs from '@theme/Tabs';\n`;
+  content += `import TabItem from '@theme/TabItem';\n\n`;
+  content += `<Tabs>
+  <TabItem value="apple" label="Apple" default>
+    This is an apple 🍎
+  </TabItem>
+  <TabItem value="orange" label="Orange">
+    This is an orange 🍊
+  </TabItem>
+  <TabItem value="banana" label="Banana">
+    This is a banana 🍌
+  </TabItem>
+</Tabs>`;
+
+  content += '\n\n';
 
   /* General */
   content += `${component.description}  \n`;
@@ -89,8 +121,7 @@ components.forEach(component => {
   }
 
   /* Images */
-  content +=
-    `<div style={{display: 'flex', flexDirection: 'row', overflowX: 'auto', maxHeight: '500px', alignItems: 'center'}}>`;
+  content += `<div style={{display: 'flex', flexDirection: 'row', overflowX: 'auto', maxHeight: '500px', alignItems: 'center'}}>`;
   component.images?.forEach(image => {
     content += `<img style={{maxHeight: '420px'}} src={'${image}'}/>`;
     content += '\n\n';
@@ -110,7 +141,7 @@ components.forEach(component => {
   _.sortBy(component.props, p => p.name)?.forEach(prop => {
     content += `### ${prop.name} \n`;
     if (prop.note) {
-      content +=  `#### ${prop.note} \n`;
+      content += `#### ${prop.note} \n`;
     }
     content += `${prop.description}  \n`;
     // content += `<span style={{color: 'grey'}}>${_.escape(prop.type)}</span>\n\n`;
@@ -121,10 +152,10 @@ components.forEach(component => {
   const dirPath = `${COMPONENTS_DOCS_DIR}/${component.category}${componentParentDir}`;
 
   if (!fs.existsSync(dirPath)) {
-    fs.mkdirSync(dirPath, { recursive: true });
+    fs.mkdirSync(dirPath, {recursive: true});
   }
 
-  fs.writeFileSync(`${dirPath}/${component.name}.md`, content, { encoding: 'utf8' });
+  fs.writeFileSync(`${dirPath}/${component.name}.md`, content, {encoding: 'utf8'});
 });
 
 function getComponentNameParts(componentName) {
