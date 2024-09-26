@@ -58,7 +58,15 @@ const useGridLayout = (props: GridListBaseProps) => {
     return [{columnGap: itemSpacing}, columnWrapperStyle];
   }, [itemSpacing, columnWrapperStyle]);
 
-  return {itemContainerStyle, numberOfColumns, listStyle, listContentStyle, listColumnWrapperStyle};
+  return {
+    itemContainerStyle,
+    numberOfColumns,
+    itemWidth,
+    itemSpacing,
+    listStyle,
+    listContentStyle,
+    listColumnWrapperStyle
+  };
 };
 
 export default useGridLayout;
