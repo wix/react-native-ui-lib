@@ -1,16 +1,42 @@
 {
-  "name": "ActionBar",
+  "name": "asfasdfasdf",
   "category": "controls",
   "description": "Quick actions bar, each action support Button component props",
-  "extends": ["basic/View"],
-  "modifiers": ["margin", "padding"],
+  "extends": [
+    "basic/View"
+  ],
+  "modifiers": [
+    "margin",
+    "padding"
+  ],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ActionBarScreen.tsx",
-  "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ActionBar/ActionBar.gif?raw=true"],
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/ActionBar/ActionBar.gif?raw=true"
+  ],
   "props": [
-    {"name": "actions", "type": "ButtonProps[]", "description": "The actions for the action bar", "required": true},
-    {"name": "height", "type": "number", "description": "Height", "default": "48"},
-    {"name": "backgroundColor", "type": "string", "description": "Background color", "default": "Colors.white"},
-    {"name": "centered", "type": "boolean", "description": "Should action be equally centered"},
+    {
+      "name": "actions",
+      "type": "ButtonProps[]",
+      "description": "The actions for the action bar",
+      "required": true
+    },
+    {
+      "name": "height",
+      "type": "number",
+      "description": "Height",
+      "default": "48"
+    },
+    {
+      "name": "backgroundColor",
+      "type": "string",
+      "description": "Background color",
+      "default": "Colors.white"
+    },
+    {
+      "name": "centered",
+      "type": "boolean",
+      "description": "Should action be equally centered"
+    },
     {
       "name": "keepRelative",
       "type": "boolean",
@@ -22,7 +48,11 @@
       "description": "In iOS, use safe area, in case component attached to the bottom",
       "default": "true"
     },
-    {"name": "style", "type": "ViewStyle", "description": "Component's style"}
+    {
+      "name": "style",
+      "type": "ViewStyle",
+      "description": "Component's style"
+    }
   ],
   "snippet": [
     "<View marginT-40>",
