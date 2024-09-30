@@ -3,7 +3,23 @@ const childProcess = require('child_process');
 const fs = require('fs');
 
 const COMPONENTS_DOCS_DIR = './docs/components';
-const VALID_CATEGORIES = ['foundation', 'basic', 'assets', 'navigation', 'layout', 'controls', 'status', 'media', 'lists', 'form', 'dateTime', 'overlays', 'charts', 'incubator', 'infra'];
+const VALID_CATEGORIES = [
+  'foundation',
+  'basic',
+  'assets',
+  'navigation',
+  'layout',
+  'controls',
+  'status',
+  'media',
+  'lists',
+  'form',
+  'dateTime',
+  'overlays',
+  'charts',
+  'incubator',
+  'infra'
+];
 
 const result = childProcess.execSync('find ./src ./lib/components -name "*api.json"');
 const apiFiles = result.toString().trim().split('\n');
@@ -32,19 +48,60 @@ components.forEach(component => {
     console.error(`${componentName} has invalid category "${component.category}"`);
   }
 
-  let content = '';
-
   /* Markdown Front Matter */
-  content += `---\n`;
+  let content = '';
+  content += '---\n';
   if (isParentComponent) {
-    content += `sidebar_position: 1\n`;
+    content += 'sidebar_position: 1\n';
   }
   content += `id: ${component.name}\n`;
   content += `title: ${isIncubatorComponent ? 'Incubator.' : ''}${component.name}\n`;
   content += `sidebar_label: ${componentName}\n`;
-  content += `---\n`;
+  content += '---\n\n';
 
-  /* General */
+  content += `import Tabs from '@theme/Tabs';\n`;
+  content += `import TabItem from '@theme/TabItem';\n\n`;
+  content += `<Tabs>
+    <TabItem value="api" label="API" default>
+      ${getFirstTab(component)}
+    </TabItem>
+    <TabItem value="guidelines" label="Guidelines">
+      Coming soon... 👩🏻‍💻
+    </TabItem>
+    <TabItem value="playground" label="Playground">
+      Coming soon... 🤹🏻‍♀️
+    </TabItem>
+  </Tabs>\n`;
+
+  const componentParentDir = componentParentName || isParentComponent ? `/${componentParentName || componentName}` : '';
+  const dirPath = `${COMPONENTS_DOCS_DIR}/${component.category}${componentParentDir}`;
+
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath, {recursive: true});
+  }
+
+  fs.writeFileSync(`${dirPath}/${component.name}.md`, content, {encoding: 'utf8'});
+});
+
+function getComponentNameParts(componentName) {
+  const parts = componentName.split('.');
+  if (parts.length === 1) {
+    return [parts[0], undefined];
+  } else {
+    return [parts[1], parts[0]];
+  }
+}
+
+function generateExtendsLink(extendsLink) {
+  const extendedComponentName = _.last(_.split(extendsLink, '/')); // Incubator/TextField -> TextField
+  const extendsText = `[${extendedComponentName}](/docs/components/${extendsLink})`;
+  return extendsText;
+}
+
+function getFirstTab(component) {
+  let content = '';
+
+  /* General Info */
   content += `${component.description}  \n`;
   if (typeof component.example === 'string') {
     content += `[(code example)](${component.example})\n`;
@@ -65,32 +122,31 @@ components.forEach(component => {
     } else {
       extendsText = _.map(component.extends, generateExtendsLink).join(', ');
     }
-    content += `:::info\n`;
+    content += ':::info\n';
     content += `This component extends **${extendsText}** props.\n`;
-    content += `:::\n`;
+    content += ':::\n';
   }
 
   if (component.modifiers) {
-    content += `:::tip\n`;
+    content += ':::tip\n';
     content += `This component support **${component.modifiers?.join(', ')}** modifiers.\n`;
-    content += `:::\n`;
+    content += ':::\n';
   }
 
   if (component.caution) {
-    content += `:::caution\n`;
+    content += ':::caution\n';
     content += `${component.caution}\n`;
-    content += `:::\n`;
+    content += ':::\n';
   }
 
   if (component.note) {
-    content += `:::note\n`;
+    content += ':::note\n';
     content += `${component.note}\n`;
-    content += `:::\n`;
+    content += ':::\n';
   }
 
   /* Images */
-  content +=
-    `<div style={{display: 'flex', flexDirection: 'row', overflowX: 'auto', maxHeight: '500px', alignItems: 'center'}}>`;
+  content += `<div style={{display: 'flex', flexDirection: 'row', overflowX: 'auto', maxHeight: '500px', alignItems: 'center'}}>`;
   component.images?.forEach(image => {
     content += `<img style={{maxHeight: '420px'}} src={'${image}'}/>`;
     content += '\n\n';
@@ -113,38 +169,16 @@ components.forEach(component => {
   }
 
   /* Props */
-  content += `## API\n`;
+  content += '## API\n';
   _.sortBy(component.props, p => p.name)?.forEach(prop => {
-    content += `### ${prop.name} \n`;
+    content += `### ${prop.name}\n`;
     if (prop.note) {
-      content +=  `#### ${prop.note} \n`;
+      content += `#### ${prop.note}\n`;
     }
-    content += `${prop.description}  \n`;
+    content += `${prop.description}\n`;
     // content += `<span style={{color: 'grey'}}>${_.escape(prop.type)}</span>\n\n`;
     content += `\`${prop.type} \` \n\n`;
   });
 
-  const componentParentDir = componentParentName || isParentComponent ? `/${componentParentName || componentName}` : '';
-  const dirPath = `${COMPONENTS_DOCS_DIR}/${component.category}${componentParentDir}`;
-
-  if (!fs.existsSync(dirPath)) {
-    fs.mkdirSync(dirPath, { recursive: true });
-  }
-
-  fs.writeFileSync(`${dirPath}/${component.name}.md`, content, { encoding: 'utf8' });
-});
-
-function getComponentNameParts(componentName) {
-  const parts = componentName.split('.');
-  if (parts.length === 1) {
-    return [parts[0], undefined];
-  } else {
-    return [parts[1], parts[0]];
-  }
-}
-
-function generateExtendsLink(extendsLink) {
-  const extendedComponentName = _.last(_.split(extendsLink, '/')); // Incubator/TextField -> TextField
-  const extendsText = `[${extendedComponentName}](/docs/components/${extendsLink})`;
-  return extendsText;
+  return content;
 }

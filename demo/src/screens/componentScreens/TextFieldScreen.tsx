@@ -508,6 +508,18 @@ export default class TextFieldScreen extends Component {
           </Text>
           <TextField placeholder="minutes" preset={preset}/>
         </View>
+
+        <Text marginB-s1 $textPrimary>
+          leading/trailing accessory overflow (innerFlexBehavior)
+        </Text>
+        <View>
+          <TextField
+            placeholder="Placeholder"
+            value="Abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*"
+            trailingAccessory={<Icon source={Assets.icons.demo.search}/>}
+            innerFlexBehavior
+          />
+        </View>
       </>
     );
   }
