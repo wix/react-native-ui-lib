@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
-module.exports = ({siteDir}, options) => {
+module.exports = ({siteDir}, _options) => {
   const baseProjectSource = [
     path.resolve(siteDir, 'src'),
     path.resolve(siteDir, 'node_modules/react-native-web'),
@@ -41,16 +41,15 @@ module.exports = ({siteDir}, options) => {
 
   return {
     name: 'uilib-plugin',
-    configureWebpack(config, isServer, utils) {
+    configureWebpack(_config, _isServer, _utils) {
       return {
         mergeStrategy: {
           'resolve.extensions': 'prepend'
         },
         plugins: [
           new webpack.DefinePlugin({
-            process: {env: {}},
-            __DEV__: 'false',
-            setImmediate: () => {}
+            'process.env': JSON.stringify(process.env),
+            __DEV__: false
           })
         ],
         module: {

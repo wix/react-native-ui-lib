@@ -95,7 +95,7 @@ module.exports = {
     }
 
     function getModuleNameFromRequire(node) {
-      return (node.init.object ? node.init.object.arguments : node.init.arguments)[0]
+      return (node.init?.object ? node.init.object.arguments : node.init?.arguments)?.[0];
     }
 
     function getModuleNameFromImport(node) {
