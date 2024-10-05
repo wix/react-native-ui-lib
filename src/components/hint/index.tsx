@@ -427,10 +427,13 @@ class Hint extends Component<HintProps, HintState> {
             }
           ]}
           pointerEvents="box-none"
-          testID={`${testID}.overlay`}
         >
           {onBackgroundPress && (
-            <TouchableWithoutFeedback style={StyleSheet.absoluteFillObject} onPress={onBackgroundPress}>
+            <TouchableWithoutFeedback
+              style={StyleSheet.absoluteFillObject}
+              onPress={onBackgroundPress}
+              testID={`${testID}.overlay`}
+            >
               <View flex/>
             </TouchableWithoutFeedback>
           )}
@@ -481,7 +484,7 @@ class Hint extends Component<HintProps, HintState> {
         ref={this.hintRef}
       >
         {customContent}
-        {!customContent && icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
+        {!customContent && icon && <Image source={icon} style={[styles.icon, iconStyle]} testID={`${testID}.icon`}/>}
         {!customContent && (
           <Text recorderTag={'unmask'} style={[styles.hintMessage, messageStyle]} testID={`${testID}.message.text`}>
             {message}
@@ -507,9 +510,8 @@ class Hint extends Component<HintProps, HintState> {
             this.getHintAnimatedStyle()
           ]}
           pointerEvents="box-none"
-          testID={testID}
         >
-          <TouchableOpacity activeOpacity={opacity} onPress={onPress}>
+          <TouchableOpacity activeOpacity={opacity} onPress={onPress} testID={testID}>
             {this.renderContent()}
           </TouchableOpacity>
           {this.renderHintTip()}
