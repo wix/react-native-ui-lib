@@ -17,6 +17,7 @@ import usePickerSearch from './helpers/usePickerSearch';
 import useImperativePickerHandle from './helpers/useImperativePickerHandle';
 import useFieldType from './helpers/useFieldType';
 import useNewPickerProps from './helpers/useNewPickerProps';
+import usePickerDialogProps from './helpers/usePickerDialogProps';
 // import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
 import {extractPickerItems} from './PickerPresenter';
 import {
@@ -30,12 +31,6 @@ import {
   PickerItemsListProps,
   PickerMethods
 } from './types';
-
-const DIALOG_PROPS = {
-  bottom: true,
-  width: '100%',
-  height: 250
-};
 
 type PickerStatics = {
   Item: typeof PickerItem;
@@ -76,6 +71,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     accessibilityLabel,
     accessibilityHint,
     items: propItems,
+    selectionValidation,
+    selectionOptions,
     showLoader,
     customLoaderElement,
     ...others
@@ -86,10 +83,10 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   const [items, setItems] = useState<PickerItemProps[]>(propItems || extractPickerItems(themeProps));
   const pickerExpandable = useRef<ExpandableOverlayMethods>(null);
   const pickerRef = useImperativePickerHandle(ref, pickerExpandable);
-  
+
   // TODO: Remove this when migration is completed, starting of v8
   // usePickerMigrationWarnings({children, migrate, getItemLabel, getItemValue});
-  
+
   useEffect(() => {
     if (propItems) {
       setItems(propItems);
@@ -101,17 +98,24 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     setSearchValue,
     onSearchChange: _onSearchChange
   } = usePickerSearch({showSearch, onSearchChange, getItemLabel, children});
-  
-  const {multiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect} = usePickerSelection({
-    migrate,
-    value,
-    onChange,
-    pickerExpandableRef: pickerExpandable,
-    getItemValue,
-    topBarProps,
-    setSearchValue,
-    mode
-  });
+
+  const {multiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect, shouldDisableDoneButton} =
+    usePickerSelection({
+      migrate,
+      value,
+      onChange,
+      pickerExpandableRef: pickerExpandable,
+      getItemValue,
+      topBarProps,
+      setSearchValue,
+      mode,
+      selectionValidation,
+      selectionOptions,
+      useDialog
+    });
+
+  const {dialogProps = {}} = usePickerDialogProps({...themeProps, shouldDisableDoneButton}, () =>
+    onDoneSelecting(multiDraftValue));
 
   const {label, accessibilityInfo} = usePickerLabel({
     value,
@@ -244,6 +248,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         renderHeader={renderHeader}
         listProps={listProps}
         useSafeArea={useSafeArea}
+        migrateDialog={customPickerProps?.migrateDialog}
         showLoader={showLoader}
         customLoaderElement={customLoaderElement}
       >
@@ -276,15 +281,16 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   return (
     <PickerContext.Provider value={contextValue}>
       {
+        //@ts-ignore remove after dialog migration finished
         <ExpandableOverlay
           ref={pickerExpandable}
           useDialog={useDialog || useWheelPicker}
-          dialogProps={DIALOG_PROPS}
           expandableContent={expandableModalContent}
           renderCustomOverlay={renderOverlay ? _renderOverlay : undefined}
           onPress={onPress}
           testID={testID}
           {...customPickerProps}
+          dialogProps={dialogProps}
           disabled={themeProps.editable === false}
         >
           {renderTextField()}

@@ -33,6 +33,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     useDialog,
     mode,
     testID,
+    migrateDialog,
     showLoader,
     customLoaderElement
   } = props;
@@ -140,7 +141,8 @@ const PickerItemsList = (props: PickerItemsListProps) => {
           </Text>
         </View>
       );
-    } else if (!useDialog || mode === PickerModes.MULTI) {
+      //} else if (!migrateDialog && (!useDialog || mode === PickerModes.MULTI)) {
+    } else if (!migrateDialog && (!useDialog || mode === PickerModes.MULTI)) {
       return <Modal.TopBar testID={`${props.testID}.topBar`} {...topBarProps}/>;
     }
   };
