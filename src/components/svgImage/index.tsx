@@ -1,4 +1,5 @@
 import React from 'react';
+import {ColorValue} from 'react-native';
 import {isSvg, isSvgUri} from '../../utils/imageUtils';
 import {SvgPackage} from '../../optionalDependencies';
 
@@ -10,7 +11,7 @@ export interface SvgImageProps {
   /**
    * the asset tint
    */
-  tintColor?: string | null;
+  tintColor?: ColorValue | null;
   data: any; // TODO: I thought this should be string | React.ReactNode but it doesn't work properly
 }
 

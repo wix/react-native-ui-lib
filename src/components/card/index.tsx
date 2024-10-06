@@ -3,7 +3,14 @@ import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, StyleProp, ViewStyle} from 'react-native';
 import {Colors, BorderRadiuses} from '../../style';
 // import {PureBaseComponent} from '../../commons';
-import {Constants, asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps, MarginModifiers} from '../../commons/new';
+import {
+  Constants,
+  asBaseComponent,
+  forwardRef,
+  BaseComponentInjectedProps,
+  ForwardRefInjectedProps,
+  MarginModifiers
+} from '../../commons/new';
 import View, {ViewProps} from '../view';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import Icon from '../icon';
@@ -38,7 +45,8 @@ export interface CardSelectionOptions {
 
 export {CardSectionProps};
 export type CardProps = ViewProps &
-  TouchableOpacityProps & MarginModifiers & {
+  TouchableOpacityProps &
+  MarginModifiers & {
     /**
      * card custom width
      */
@@ -188,7 +196,7 @@ class Card extends PureComponent<PropTypes, State> {
   get backgroundStyle() {
     const {enableBlur, backgroundColor = Colors.$backgroundElevated} = this.props;
 
-    if (Constants.isIOS && enableBlur) {
+    if (Constants.isIOS && enableBlur && typeof backgroundColor === 'string') {
       return {backgroundColor: Colors.rgba(backgroundColor, 0.85)};
     } else {
       return {backgroundColor};
