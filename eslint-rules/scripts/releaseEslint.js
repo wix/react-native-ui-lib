@@ -16,13 +16,16 @@ const cp = require('child_process');
 // const VERSION_INC = 'patch';
 
 function run() {
+  console.log('TEST 0', );
   if (!validateEnv()) {
+    console.log('TEST EXIT', );
     return;
   }
 
+  console.log('TEST 1', );
   const currentPublished = findCurrentPublishedVersion();
   const version = cp.execSync(`buildkite-agent meta-data get version`).toString();
-  console.log('TEST currentPublished: ', currentPublished, ' version: ', version);
+  console.log('TEST 2 currentPublished: ', currentPublished, ' version: ', version);
 
 //   createNpmRc();
 //   versionTagAndPublish();

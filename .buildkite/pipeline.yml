@@ -10,8 +10,8 @@ steps:
     command:
     - "nvm install"
     - "npm install"
+    - "npm run releaseEslint"
     - "npm run test"
     - "npm run build"
-    - "npm run releaseEslint"
     - "[[ $BUILDKITE_PULL_REQUEST == 'false' ]] && npm run release && npm run releaseDemo || true"
     timeout_in_minutes: 15
