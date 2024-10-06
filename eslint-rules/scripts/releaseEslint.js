@@ -24,8 +24,11 @@ function run() {
 
   console.log('TEST 1', );
   const currentPublished = findCurrentPublishedVersion();
-  const version = cp.execSync(`buildkite-agent meta-data get version`).toString();
-  console.log('TEST 2 currentPublished: ', currentPublished, ' version: ', version);
+  console.log('TEST 2 currentPublished: ', currentPublished);
+  const packageJson = require('../package.json');
+  // const version = cp.execSync(`buildkite-agent meta-data get version`).toString();
+  const version = packageJson.version;
+  console.log('TEST 3 version: ', version);
 
 //   createNpmRc();
 //   versionTagAndPublish();
