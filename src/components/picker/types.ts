@@ -247,6 +247,14 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
      * Component test id
      */
     testID?: string;
+    /**
+     * Show a loader (while items are loading/fetching)
+     */
+    showLoader?: boolean;
+    /**
+     * Custom loader element
+     */
+    customLoaderElement?: JSX.Element;
   };
 
 export type PickerPropsWithSingle = PickerBaseProps & {
@@ -326,6 +334,8 @@ export type PickerItemsListProps = Pick<
   | 'listProps'
   | 'renderHeader'
   | 'useSafeArea'
+  | 'showLoader'
+  | 'customLoaderElement'
   | 'showSearch'
   | 'searchStyle'
   | 'searchPlaceholder'

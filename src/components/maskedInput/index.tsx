@@ -1,10 +1,17 @@
-import React, {forwardRef} from 'react';
+import React, {forwardRef, useEffect} from 'react';
 // @ts-expect-error
 import MaskedInputOld from './old';
 import MaskedInputNew, {MaskedInputProps} from './new';
+import {LogService} from 'services';
 
 function MaskedInputMigrator(props: any, refToForward: any) {
   const {migrate, ...others} = props;
+
+  useEffect(() => {
+    if (!migrate) {
+      LogService.warn(`UILib MaskedInput implementation has been updated and now requires manual migration. To proceed, pass the "migrate" prop and check if the functionality works as expected.`);
+    }
+  }, []);
 
   if (migrate) {
     return <MaskedInputNew {...others} ref={refToForward}/>;

@@ -8,7 +8,7 @@
     {
       "name": "content",
       "type": "ContentType[]",
-      "description": "Text content. Example: content={[{text: 'You’re Invited!', text70: true, grey10: true}]}"
+      "description": "Text content. Example: content=\\{[\\{text: 'You’re Invited!', text70: true, grey10: true}\\]}\\"
     },
     {"name": "contentStyle", "type": "ViewStyle", "description": "Component's container style"},
     {"name": "backgroundColor", "type": "string", "description": "Background color"},

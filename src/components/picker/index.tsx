@@ -73,6 +73,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     items: propItems,
     selectionValidation,
     selectionOptions,
+    showLoader,
+    customLoaderElement,
     ...others
   } = themeProps;
   const {preset, placeholder, style, trailingAccessory, label: propsLabel} = others;
@@ -247,6 +249,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         listProps={listProps}
         useSafeArea={useSafeArea}
         migrateDialog={customPickerProps?.migrateDialog}
+        showLoader={showLoader}
+        customLoaderElement={customLoaderElement}
       >
         {filteredChildren}
       </PickerItemsList>
@@ -270,7 +274,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     filteredChildren,
     useSafeArea,
     useWheelPicker,
-    items
+    items,
+    showLoader
   ]);
 
   return (

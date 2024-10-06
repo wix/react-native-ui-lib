@@ -31,11 +31,16 @@
       "default": "Picker.fieldTypes.FORM"
     },
     {"name": "selectionLimit", "type": "number", "description": "Limit the number of selected items"},
-    {"name": "enableModalBlur", "type": "boolean", "description": "Adds blur effect to picker modal", "note": "iOS only"},
+    {
+      "name": "enableModalBlur",
+      "type": "boolean",
+      "description": "Adds blur effect to picker modal",
+      "note": "iOS only"
+    },
     {
       "name": "renderPicker",
       "type": "(selectedItem, itemLabel) => void",
-      "description": "Render custom picker - input will be value (see above)\\Example:\\renderPicker = (selectedItem) => {...}"
+      "description": "Render custom picker - input will be value (see above)\\Example:\\renderPicker = \\(selectedItem) => \\{...\\}\\"
     },
     {
       "name": "renderItem",
@@ -92,7 +97,9 @@
     },
     {"name": "pickerModalProps", "type": "ModalProps", "description": "Pass props to the picker modal"},
     {"name": "useSafeArea", "type": "boolean", "description": "Add safe area in the Picker modal view"},
-    {"name": "items", "type": "{label: string, value: string | number}[]", "description": "Data source for Picker"}
+    {"name": "items", "type": "{label: string, value: string | number}[]", "description": "Data source for Picker"},
+    {"name": "showLoader", "type": "boolean", "description": "Show a loader (while items are loading/fetching)"},
+    {"name": "customLoaderElement", "type": "ReactNode", "description": "Custom loader element"}
   ],
   "snippet": [
     "<Picker",
@@ -106,4 +113,3 @@
     "</Picker>"
   ]
 }
-   

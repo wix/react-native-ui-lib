@@ -18,7 +18,7 @@ function _addToImports_fromImport(node, imports) {
   if (specifiers) {
     const newImports = {};
     specifiers.forEach(specifier => {
-      if (specifier.type === 'ImportSpecifier' || specifier.type === 'ImportNamespaceSpecifier') {
+      if (specifier.type === 'ImportSpecifier' || specifier.type === 'ImportNamespaceSpecifier' || specifier.type === 'ImportDefaultSpecifier') {
         const isNamespace = specifier.type === 'ImportNamespaceSpecifier';
         const value = _.get(specifier, 'imported.name') || _.get(specifier, 'local.name');
         newImports[specifier.local.name] = isNamespace ? {value, isNamespace} : value;
