@@ -36,6 +36,7 @@
     "snippets:build": "node scripts/generateSnippets.js",
     "release": "node ./scripts/release.js",
     "releaseDemo": "./scripts/releaseDemo.sh",
+    "releaseDocs": "./scripts/releaseDocs.sh",
     "releaseEslint": "./scripts/releaseEslint.sh",
     "releaseNative": "./scripts/releaseNative.sh"
   },
