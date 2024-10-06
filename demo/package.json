@@ -12,7 +12,7 @@
     "url": "git+https://github.com/wix/react-native-ui-lib.git"
   },
   "scripts": {
-    "demoRelease": "node ./scripts/demoRelease.js"
+    "releaseDemo": "node ./scripts/releaseDemo.js"
   },
   "dependencies": {
     "light-date": "^1.2.0"
