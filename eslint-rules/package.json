@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-uilib",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "description": "uilib set of eslint rules",
   "keywords": [
     "eslint",
@@ -19,7 +19,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha tests --recursive",
-    "test:watch": "mocha tests --recursive --watch"
+    "test:watch": "mocha tests --recursive --watch",
+    "releaseEslint": "node ./scripts/releaseEslint.js"
   },
   "dependencies": {
     "lodash": "^4.0.0",
@@ -38,7 +39,8 @@
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1",
-    "mocha": "7.1.2"
+    "mocha": "7.1.2",
+    "shell-utils": "^1.0.10"
   },
   "engines": {
     "node": ">=0.10.0"

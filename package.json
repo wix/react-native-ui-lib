@@ -35,7 +35,8 @@
     "calendar:createMocks": "node scripts/createCalendarMockData.js",
     "snippets:build": "node scripts/generateSnippets.js",
     "release": "node ./scripts/release.js",
-    "releaseDemo": "./scripts/releaseDemo.sh"
+    "releaseDemo": "./scripts/releaseDemo.sh",
+    "releaseEslint": "./scripts/releaseEslint.sh"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
