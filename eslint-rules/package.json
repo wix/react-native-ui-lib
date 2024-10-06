@@ -19,7 +19,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha tests --recursive",
-    "test:watch": "mocha tests --recursive --watch"
+    "test:watch": "mocha tests --recursive --watch",
+    "releaseEslint": "node ./scripts/releaseEslint.js"
   },
   "dependencies": {
     "lodash": "^4.0.0",

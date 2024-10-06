@@ -12,5 +12,5 @@ steps:
     - "npm install"
     - "npm run test"
     - "npm run build"
-    - "[[ $BUILDKITE_PULL_REQUEST == 'false' ]] && npm run release && npm run releaseDemo || true"
+    - "[[ $BUILDKITE_PULL_REQUEST == 'false' ]] && npm run release && npm run releaseDemo && npm run releaseEslint || true"
     timeout_in_minutes: 15
