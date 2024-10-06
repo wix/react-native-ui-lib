@@ -35,7 +35,7 @@
     "calendar:createMocks": "node scripts/createCalendarMockData.js",
     "snippets:build": "node scripts/generateSnippets.js",
     "releaseDemo": "./scripts/releaseDemo.sh",
-    "releaseEslint": "node ./scripts/releaseEslint.sh",
+    "releaseEslint": "./scripts/releaseEslint.sh",
     "release": "node ./scripts/release.js"
   },
   "dependencies": {
