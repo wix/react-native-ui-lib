@@ -8,7 +8,7 @@ import Reanimated, {
   interpolateColor,
   runOnJS
 } from 'react-native-reanimated';
-import {TapGestureHandler, LongPressGestureHandler, State} from 'react-native-gesture-handler';
+import {TapGestureHandler, LongPressGestureHandler, State, gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../commons/new';
 import View, {ViewProps} from '../components/view';
 import {Colors} from '../../src/style';
@@ -182,4 +182,4 @@ function TouchableOpacity(props: Props) {
 
 TouchableOpacity.displayName = 'Incubator.TouchableOpacity';
 
-export default asBaseComponent<TouchableOpacityProps>(forwardRef<Props>(TouchableOpacity));
+export default asBaseComponent<TouchableOpacityProps>(forwardRef<Props>(gestureHandlerRootHOC(TouchableOpacity)));

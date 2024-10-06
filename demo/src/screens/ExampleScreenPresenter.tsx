@@ -169,6 +169,7 @@ export function renderSliderOption(title: string,
       </Text>
       <View row centerV>
         <Slider
+          migrate
           testID={key}
           value={initial}
           containerStyle={{flex: 1}}

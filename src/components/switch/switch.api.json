@@ -29,6 +29,13 @@
     {"name": "id", "type": "string", "description": "Component id"}
   ],
   "snippet": [
-    "<Switch value={false$1} onValueChange={() => console.log('value changed')$2}/>"
+    "function Example(props) {",
+    "  const [value, setValue] = useState(false$1);",
+    "  return (",
+    "    <div>",
+    "      <Switch value={value$2} onValueChange={setValue$3}/>",
+    "    </div>",
+    "  );",
+    "}"
   ]
 }

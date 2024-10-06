@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import {StyleSheet, FlatList, SectionList, ScrollView} from 'react-native';
 import {ViewPropTypes} from 'deprecated-react-native-prop-types';
 import {Navigation} from 'react-native-navigation';
-import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {
   Assets,
   Colors,
+  Typography,
   Spacings,
   View,
   Text,
@@ -20,7 +20,7 @@ import {
   Dividers
 } from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
-import Storage, {DEFAULT_SCREEN} from '../storage';
+import Storage, {DEFAULT_SCREEN, RECENT_SCREENS} from '../storage';
 
 const settingsIcon = require('../assets/icons/settings.png');
 const chevronIcon = require('../assets/icons/chevronRight.png');
@@ -53,12 +53,15 @@ class MainScreen extends Component {
   constructor(props) {
     super(props);
 
+    const recentScreens = Storage.getString(RECENT_SCREENS);
+
     const data = props.navigationData || navigationData;
     this.state = {
       currentPage: 0,
       filteredNavigationData: data,
       chipsLabels: _.map(data, section => section.title),
       sectionsData: _.map(data, section => ({title: section.title, data: section.screens})),
+      recentScreens: recentScreens ? JSON.parse(recentScreens) : [],
       selectedSection: 0,
       faderStart: false,
       faderEnd: true
@@ -156,8 +159,21 @@ class MainScreen extends Component {
     this.openScreen({customValue: item});
   };
 
+  updateRecentScreens(screen) {
+    const {recentScreens} = this.state;
+    recentScreens.unshift(screen);
+    const uniqueArr = [...new Set(recentScreens.map(item => JSON.stringify(item)))].map(item => JSON.parse(item));
+
+    Storage.set(RECENT_SCREENS, JSON.stringify(uniqueArr));
+
+    this.setState({
+      recentScreens: uniqueArr
+    });
+  }
+
   openScreen = ({customValue: row}) => {
     this.closeSearchBox();
+    this.updateRecentScreens(row);
 
     setTimeout(() => {
       this.pushScreen(row);
@@ -304,6 +320,34 @@ class MainScreen extends Component {
     return <SectionHeader section={section}/>;
   };
 
+  renderRecentScreens = () => {
+    const {recentScreens} = this.state;
+
+    if (recentScreens.length > 0) {
+      return (
+        <View row paddingV-s2 paddingH-s5 centerV>
+          <Text text90BO marginR-s2>
+            Recent:
+          </Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {recentScreens.map(screen => {
+              return (
+                <Chip
+                  marginR-s2
+                  label={screen.title}
+                  key={screen.title}
+                  onPress={this.openScreen}
+                  customValue={screen}
+                  labelStyle={Typography.text100BO}
+                />
+              );
+            })}
+          </ScrollView>
+        </View>
+      );
+    }
+  };
+
   renderItem = ({item}) => {
     const {renderItem} = this.props;
 
@@ -338,12 +382,10 @@ class MainScreen extends Component {
 
   render() {
     const {containerStyle} = this.props;
-    const {filteredNavigationData, filterText} = this.state;
+    const {filteredNavigationData, filterText, chipsLabels, sectionsData} = this.state;
     const showNoResults = _.isEmpty(filteredNavigationData) && !!filterText;
     const showResults = !_.isEmpty(filteredNavigationData) && !!filterText;
     const showSectionList = !filterText;
-    const chipsLabels = this.state.chipsLabels;
-    const sectionsData = this.state.sectionsData;
 
     return (
       <View testID="demo_main_screen" flex style={containerStyle} useSafeArea>
@@ -366,6 +408,8 @@ class MainScreen extends Component {
             <Fader size={FADER_SIZE} visible={this.state.faderEnd} position={Fader.position.END}/>
           </View>
         )}
+
+        {this.renderRecentScreens()}
 
         {showSectionList && (
           <SectionList
@@ -462,4 +506,4 @@ const styles = StyleSheet.create({
   searchResultsContainer: {paddingTop: 20}
 });
 
-export default gestureHandlerRootHOC(MainScreen);
+export default MainScreen;

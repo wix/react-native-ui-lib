@@ -60,21 +60,25 @@ export default class ColorSwatchScreen extends Component {
 
     return (
       <ScrollView>
-        <View flex center useSafeArea>
+        <View flex center paddingT-s5>
           <Text margin-5 text60>
             Single ColorSwatch
           </Text>
-          <View row>
+          <View row spread gap-15>
             <View>
               <ColorSwatch selected={selected} onPress={this.onPress}/>
             </View>
             <View>
-              <ColorSwatch color={Colors.$backgroundMajorLight}/>
-              <Text text90R>Disabled</Text>
-            </View>
-            <View>
               <ColorSwatch unavailable onPress={this.unavailableOnPress} color={Colors.yellow10}/>
               <Text text90R>Unavailable</Text>
+            </View>
+            <View>
+              <ColorSwatch transparent/>
+              <Text text90R>Transparent</Text>
+            </View>
+            <View center>
+              <ColorSwatch style={{borderRadius: 0}} transparent/>
+              <Text text90R>Square</Text>
             </View>
           </View>
 

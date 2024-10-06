@@ -44,6 +44,13 @@
     {"name": "containerStyle", "type": "ViewStyle", "description": "Additional styling for the container"}
   ],
   "snippet": [
-    "<RadioButton value={null$1} label={'Default'$2}/>"
+    "function Example(props) {",
+    "  const [value, setValue] = useState(false$1);",
+    "  return (",
+    "    <div>",
+    "      <RadioButton label={'Individual Radio Button'} selected={value$2} onPress={() => setValue(!value)$3}/>",
+    "    </div>",
+    "  );",
+    "}"
   ]
 }
