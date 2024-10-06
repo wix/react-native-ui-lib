@@ -6,7 +6,7 @@ steps:
       - text: "VERSION"
         key: "version"
   
-  - label: ":hammer_and_pick: Build"
+  - label: ":hammer_and_pick: Build!"
     command:
     - "nvm install"
     - "npm install"
