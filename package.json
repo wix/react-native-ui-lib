@@ -34,7 +34,7 @@
     "docs:build": "node scripts/buildDocs.js",
     "calendar:createMocks": "node scripts/createCalendarMockData.js",
     "snippets:build": "node scripts/generateSnippets.js",
-    "demo": "./scripts/demo.sh",
+    "releaseDemo": "./scripts/releaseDemo.sh",
     "release": "node ./scripts/release.js"
   },
   "dependencies": {
