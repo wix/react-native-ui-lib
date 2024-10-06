@@ -1,37 +1,19 @@
 const exec = require('shell-utils').exec;
-const semver = require('semver');
-const _ = require('lodash');
 const p = require('path');
-const cp = require('child_process');
-
-// Workaround JS
-
-// const isRelease = process.env.BUILDKITE_MESSAGE.match(/^release$/i);
-// let VERSION;
-// if (isRelease) {
-//   VERSION = cp.execSync(`buildkite-agent meta-data get version`).toString();
-// }
-
-// const VERSION_TAG = isRelease ? 'latest' : 'snapshot';
-// const VERSION_INC = 'patch';
 
 function run() {
-  console.log('TEST 0', );
   if (!validateEnv()) {
-    console.log('TEST EXIT', );
     return;
   }
 
-  console.log('TEST 1', );
   const currentPublished = findCurrentPublishedVersion();
-  console.log('TEST 2 currentPublished: ', currentPublished);
   const packageJson = require('../package.json');
-  // const version = cp.execSync(`buildkite-agent meta-data get version`).toString();
-  const version = packageJson.version;
-  console.log('TEST 3 version: ', version);
+  const newVersion = packageJson.version;
 
-//   createNpmRc();
-//   versionTagAndPublish();
+  if (currentPublished !== newVersion) {
+    createNpmRc();
+    versionTagAndPublish(currentPublished, newVersion);
+  }
 }
 
 function validateEnv() {
@@ -41,48 +23,35 @@ function validateEnv() {
   return true;
 }
 
-// function createNpmRc() {
-//   exec.execSync('rm -f package-lock.json');
-//   const npmrcPath = p.resolve(`${__dirname}/.npmrc`);
-//   exec.execSync(`cp -rf ${npmrcPath} .`);
-// }
+function createNpmRc() {
+  exec.execSync('rm -f package-lock.json');
+  const npmrcPath = p.resolve(`${__dirname}/.npmrc`);
+  exec.execSync(`cp -rf ${npmrcPath} .`);
+}
 
-// function versionTagAndPublish() {
-//   const currentPublished = findCurrentPublishedVersion();
-//   console.log(`current published version: ${currentPublished}`);
-
-//   const version = isRelease ? VERSION : `${currentPublished}-snapshot.${process.env.BUILDKITE_BUILD_NUMBER}`;
-//   console.log(`Publishing version: ${version}`);
-
-//   tryPublishAndTag(version);
-// }
+function versionTagAndPublish(currentPublished, newVersion) {
+  console.log(`current published version: ${currentPublished}`);
+  console.log(`Publishing version: ${newVersion}`);
+  tryPublishAndTag(newVersion);
+}
 
 function findCurrentPublishedVersion() {
   return exec.execSyncRead(`npm view ${process.env.npm_package_name} dist-tags.latest`);
 }
 
-// function tryPublishAndTag(version) {
-//   let theCandidate = version;
-//   for (let retry = 0; retry < 5; retry++) {
-//     try {
-//       tagAndPublish(theCandidate);
-//       console.log(`Released ${theCandidate}`);
-//       return;
-//     } catch (err) {
-//       const alreadyPublished = _.includes(err.toString(), 'You cannot publish over the previously published version');
-//       if (!alreadyPublished) {
-//         throw err;
-//       }
-//       console.log(`previously published. retrying with increased ${VERSION_INC}...`);
-//       theCandidate = semver.inc(theCandidate, VERSION_INC);
-//     }
-//   }
-// }
+function tryPublishAndTag(version) {
+  try {
+    tagAndPublish(version);
+    console.log(`Released ${version}`);
+  } catch (err) {
+    console.log(`Failed to release ${version}`, err);
+  }
+}
 
-// function tagAndPublish(newVersion) {
-//   console.log(`trying to publish ${newVersion}...`);
-//   exec.execSync(`npm --no-git-tag-version version ${newVersion}`);
-//   exec.execSync(`npm publish --tag ${VERSION_TAG}`);
-// }
+function tagAndPublish(newVersion) {
+  console.log(`Trying to publish ${newVersion}...`);
+  exec.execSync(`npm --no-git-tag-version version ${newVersion}`);
+  exec.execSync(`npm publish --tag latest`);
+}
 
 run();
