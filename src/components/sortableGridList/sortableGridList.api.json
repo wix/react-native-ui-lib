@@ -37,7 +37,7 @@
   "snippet": [
     "function Example(props) {",
     "  const [shouldOrderByIndex, setShouldOrderByIndex] = useState(false);",
-    "  const data = Assets.data.products.map(product => ({...product}));",
+    "  const data = Data.products.map(product => ({...product}));",
     "",
     "  renderItem = ({item}) => {",
     "    return (",
@@ -60,7 +60,7 @@
     "  return (",
     "    <div>",
     "      <View style={{width: 800}}>",
-    "        {Utils.renderBooleanOption('Order by index', 'shouldOrderByIndex', {spread: false, state: shouldOrderByIndex, setState: setShouldOrderByIndex})}",
+    "        <Playground.ToggleControl title={'Order by index'} state={shouldOrderByIndex} setState={setShouldOrderByIndex}/>",
     "        <SortableGridList",
     "          data={data$1}",
     "          flexMigration",

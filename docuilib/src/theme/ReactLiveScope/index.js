@@ -20,7 +20,7 @@ import SortableGridList from 'react-native-ui-lib/sortableGridList';
 import SortableList from 'react-native-ui-lib/sortableList';
 import Switch from 'react-native-ui-lib/switch';
 import TextField from 'react-native-ui-lib/textField';
-import * as Utils from './Utils';
+import * as Playground from './Playground';
 
 Assets.loadAssetsGroup('icons.demo', {
   // chevronDown: require('../../assets/icons/chevronDown.png').default,
@@ -40,13 +40,16 @@ Assets.loadAssetsGroup('icons.demo', {
   // exclamation: require('../../assets/icons/exclamationFillSmall.png').default
 });
 
-Assets.data = {products};
+const Data = {products};
 
 // Add react-live imports you need here
 const ReactLiveScope = {
   React,
   ...React,
-  /* uilib components */
+  /* Docs' utils and components */
+  Data,
+  Playground,
+  /* UI Lib's components */
   ActionBar,
   Assets,
   BorderRadiuses,
@@ -72,7 +75,6 @@ const ReactLiveScope = {
   Text,
   TextField,
   TouchableOpacity,
-  Utils,
   View
 };
 
