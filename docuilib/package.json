@@ -1,6 +1,6 @@
 {
   "name": "uilib-docs",
-  "version": "2.2.1",
+  "version": "3.1.2",
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
@@ -14,34 +14,35 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@docusaurus/core": "2.3",
-    "@docusaurus/preset-classic": "2.3",
-    "@docusaurus/theme-live-codeblock": "2.3",
-    "@mdx-js/react": "^1.6.21",
+    "@docusaurus/core": "^3.5.2",
+    "@docusaurus/preset-classic": "^3.5.2",
+    "@docusaurus/theme-live-codeblock": "^3.5.2",
+    "@mdx-js/mdx": "^3.0.1",
     "@svgr/webpack": "^5.5.0",
     "classnames": "^2.3.1",
     "clsx": "^1.1.1",
     "docusaurus-plugin-sass": "^0.2.1",
     "file-loader": "^6.2.0",
-    "prism-react-renderer": "^1.2.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-native-linear-gradient": "2.6.2",
-    "react-native-reanimated": "^3.15.1",
-    "react-native-shimmer-placeholder": "^2.0.9",
-    "react-native-ui-lib": "snapshot",
+    "prism-react-renderer": "^2.1.0",
     "react-native-web": "^0.19.12",
     "sass": "^1.39.0",
     "url-loader": "^4.1.1"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "2.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-native-ui-lib": "snapshot",
+    "react-native-linear-gradient": "2.6.2",
+    "react-native-reanimated": "^3.15.1",
+    "react-native-shimmer-placeholder": "^2.0.9",
+    "@docusaurus/module-type-aliases": "^3.5.2",
+    "@docusaurus/types": "^3.5.2",
     "@tsconfig/docusaurus": "^1.0.4",
     "@types/react": "^17.0.14",
     "@types/react-helmet": "^6.1.2",
     "@types/react-router-dom": "^5.1.8",
     "babel-plugin-react-native-web": "^0.19.12",
-    "typescript": "^4.3.5"
+    "typescript": "~5.2.2"
   },
   "browserslist": {
     "production": [

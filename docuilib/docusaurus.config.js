@@ -1,5 +1,6 @@
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const {themes} = require('prism-react-renderer');
+const lightCodeTheme = themes.github;
+const darkCodeTheme = themes.dracula;
 
 // With JSDoc @type annotations, IDEs can provide config autocompletion
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
@@ -31,7 +32,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             path: '../docs',
             // Please change this to your repo.
             editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/',
-            docLayoutComponent: '@site/src/components/CustomLayout'
+            docRootComponent: '@site/src/components/CustomLayout'
           },
           blog: {
             showReadingTime: true,
