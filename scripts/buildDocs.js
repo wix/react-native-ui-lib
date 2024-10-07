@@ -156,16 +156,11 @@ function getFirstTab(component) {
   /* Snippet */
   if (component.snippet) {
     content += `### Usage\n`;
-    if (component.usesAnimated) {
-      content += `:::note\n`;
-      content += `<div>This component is using \`react-native\`'s \`Animated\`.</div>\n`;
-      content += `<div>Some feature like animation and dragging may not work on web
-                  [(see here)](https://necolas.github.io/react-native-web/docs/animated/).</div>\n`;
-      content += `:::\n`;
-    }
     content += '``` jsx live\n';
     content += component.snippet?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), '')).join('\n');
     content += '\n```\n';
+  } else {
+    console.warn(`${component.name} does not have a snippet`);
   }
 
   /* Props */

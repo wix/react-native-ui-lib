@@ -41,7 +41,6 @@
       "description": "Custom styling for the checkbox and label container"
     }
   ],
-  "usesAnimated": true,
   "snippet": [
     "function Example(props) {",
     "  const [value, setValue] = useState(false$1);",
