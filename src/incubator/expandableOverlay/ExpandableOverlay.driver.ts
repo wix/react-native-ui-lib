@@ -8,9 +8,8 @@ export const ExpandableOverlayDriver = (props: ComponentProps, useDialog: boolea
 
   const driver = usePressableDriver(useComponentDriver({renderTree, testID}));
   // const isUsingDialog = !!renderTree.queryByTestId(`${testID}.overlay.modal`);
-  const isUsingDialog = useDialog;
 
-  const overlayDriver = (isUsingDialog ? DialogDriver : ModalDriver)({
+  const overlayDriver = (useDialog ? DialogDriver : ModalDriver)({
     renderTree,
     testID: `${testID}.overlay`
   });

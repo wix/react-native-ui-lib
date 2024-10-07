@@ -7,7 +7,7 @@ export interface ComponentProps {
 
 export interface ComponentDriverResult {
   getElement: () => ReactTestInstance;
-  queryElement:() => ReactTestInstance | undefined;
+  queryElement: () => ReactTestInstance | undefined;
   exists: () => boolean;
 }
 
