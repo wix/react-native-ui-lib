@@ -157,7 +157,10 @@ function getFirstTab(component) {
   if (component.snippet) {
     content += `### Usage\n`;
     content += '``` jsx live\n';
+    content += '\n';
+    content += '<MobileDeviceWrapper>\n';
     content += component.snippet?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), '')).join('\n');
+    content += '\n</MobileDeviceWrapper>\n';
     content += '\n```\n';
   } else {
     console.warn(`${component.name} does not have a snippet`);
