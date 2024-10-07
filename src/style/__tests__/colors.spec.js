@@ -5,7 +5,6 @@ const SYSTEM_COLORS = ['grey', 'white', 'black'];
 const GetColorsByHexOptions = {validColors: SYSTEM_COLORS};
 
 describe('style/Colors', () => {
-  
   describe('rgba', () => {
     const logServiceSpy = jest.spyOn(LogService, 'error');
 
@@ -20,31 +19,31 @@ describe('style/Colors', () => {
       // expect(uut.rgba(uut.blue20, -2)).toBe(`${uut.blue20}`);
       // expect(uut.rgba(uut.blue20, '12ddsav')).toBe(`${uut.blue20}`);
     });
-  
+
     it('should add alpha to rgb color value', () => {
       expect(uut.rgba(101, 200, 136, 0.7)).toBe('rgba(101, 200, 136, 0.7)');
       expect(uut.rgba(207, 38, 47, 0.7)).toBe('rgba(207, 38, 47, 0.7)');
       expect(uut.rgba(101, 200, 136, 0.25)).toBe('rgba(101, 200, 136, 0.25)');
     });
-  
+
     it('should add alpha to 3 digits hex color value', () => {
       expect(uut.rgba('#333', 0.7)).toBe('rgba(51, 51, 51, 0.7)');
       expect(uut.rgba('#333', 0.1)).toBe('rgba(51, 51, 51, 0.1)');
       expect(uut.rgba('#DEF', 0.25)).toBe('rgba(221, 238, 255, 0.25)');
       expect(uut.rgba('#F24', 1)).toBe('rgba(255, 34, 68, 1)');
     });
-  
+
     it('should handle wrong number of params', () => {
       expect(uut.rgba(101, 136, 0.7)).toBe(undefined);
       expect(uut.rgba(undefined, 0.2)).toBe(undefined);
       expect(logServiceSpy).toHaveBeenNthCalledWith(2, 'Colors.rgba fail due to invalid arguments');
     });
-  
+
     it('should handle invalid rgb code', () => {
       expect(() => uut.rgba(-12, 128, 136, 0.7)).toThrow(new Error('-12 is invalid rgb code, please use number between 0-255'));
       expect(() => uut.rgba(12, 128, 256, 0.7)).toThrow(new Error('256 is invalid rgb code, please use number between 0-255'));
     });
-  
+
     it('should handle invalid hex code', () => {
       expect(() => uut.rgba('#ff22445', 0.7)).toThrow(new Error('#ff22445 is invalid hex color'));
       expect(() => uut.rgba('ff2244', 0.7)).toThrow(new Error('ff2244 is invalid hex color'));
@@ -121,7 +120,16 @@ describe('style/Colors', () => {
     const baseColorLight = '#DCE9F4';
     const tintsLight = ['#1A3851', '#265278', '#326D9F', '#4187C3', '#68A0CF', '#8EB8DC', '#B5D1E8', '#DCE9F4'];
     const saturationLevels = [-10, -10, -20, -20, -25, -25, -25, -25, -20, -10];
-    const tintsSaturationLevels = ['#1E384D', '#2D5271', '#466C8C', '#3F88C5', '#7F9EB8', '#A0B7CB', '#C1D0DD', '#E2E9EE'];
+    const tintsSaturationLevels = [
+      '#1E384D',
+      '#2D5271',
+      '#466C8C',
+      '#3F88C5',
+      '#7F9EB8',
+      '#A0B7CB',
+      '#C1D0DD',
+      '#E2E9EE'
+    ];
     // const tintsSaturationLevelsDarkest = ['#162837', '#223F58', '#385770', '#486E90', '#3F88C5', '#7C9CB6', '#9AB2C6', '#B7C9D7', '#D3DFE9', '#F0F5F9'];
     // const tintsAddDarkestTints = ['#12283B', '#1C405E', '#275881', '#3270A5', '#3F88C5', '#629ED0', '#86B4DA', '#A9CAE5', '#CCDFF0', '#EFF5FA'];
 
@@ -176,7 +184,7 @@ describe('style/Colors', () => {
       expect(palette).toContain(baseColor);
       expect(palette).toEqual(tints);
     });
-  
+
     it('should generateColorPalette with avoidReverseOnDark option true not reverse on light mode', () => {
       const palette = uut.generateColorPalette(baseColor, {avoidReverseOnDark: true});
       expect(palette.length).toBe(8);
@@ -190,7 +198,7 @@ describe('style/Colors', () => {
       expect(palette).toContain(baseColor);
       expect(palette).toEqual(tints);
     });
-  
+
     // it('should generateColorPalette with addDarkestTints option true return 10 tints with 9 lightness increment', () => {
     //   const palette = uut.generateColorPalette(baseColor, {addDarkestTints: true});
     //   expect(palette.length).toBe(10);
@@ -289,6 +297,17 @@ describe('style/Colors', () => {
       expect(uut.getSystemColorByHex('#5A48F5')).toEqual('violet30');
       expect(uut.getSystemColorByHex('#5A48F5', GetColorsByHexOptions)).toEqual(undefined);
       expect(uut.getSystemColorByHex('#5A48F5', {validColors: [...SYSTEM_COLORS, 'anotherViolet']})).toEqual('anotherViolet');
+    });
+  });
+
+  describe('getColor', () => {
+    it('should return the right color depends on the scheme type passed', () => {
+      expect(uut.getColor('$backgroundPrimaryHeavy', 'light')).toBe('#5A48F5');
+      expect(uut.getColor('$backgroundPrimaryHeavy', 'dark')).toBe('#B2ABFF');
+    });
+
+    it('should return the right color based on the default scheme type', () => {
+      expect(uut.getColor('$backgroundPrimaryHeavy')).toBe('#5A48F5');
     });
   });
 });
