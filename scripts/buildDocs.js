@@ -156,8 +156,21 @@ function getFirstTab(component) {
   /* Snippet */
   if (component.snippet) {
     content += '### Usage\n';
-    content += '``` jsx live\n';
-    content += component.snippet?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), '')).join('\n');
+    content += '```jsx live\n';
+
+    content += '\n';
+    content += '<MobileDeviceWrapper>\n';
+    // Map and wrap each snippet, then join them together
+    const wrappedSnippets = component.snippet
+      .map(item => {
+        // Replace placeholders and wrap with MobileDeviceWrapper
+        const cleanedSnippet = _.replace(item, new RegExp(/\$[1-9]/, 'g'), '');
+        return `${cleanedSnippet}`;
+      })
+      .join('\n');
+
+    content += wrappedSnippets;
+    content += '</MobileDeviceWrapper>\n';
     content += '\n```\n';
   }
 
