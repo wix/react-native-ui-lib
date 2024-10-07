@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {View, Text, Colors, Spacings} from 'react-native-ui-lib/core';
-
 import SegmentedControl from 'react-native-ui-lib/segmentedControl';
 
 interface SimulatorSize {
@@ -43,8 +42,8 @@ const MobileDeviceWrapper = ({children}) => {
   };
 
   return (
-    <View gap-s3 center>
-      <View gap-s1 marginV-s1>
+    <View gap-s3>
+      <View gap-s1 marginV-s1 center>
         <Text marginR-s3 style={styles.typesTitle}>
           Choose Type
         </Text>
@@ -54,23 +53,10 @@ const MobileDeviceWrapper = ({children}) => {
           onChangeIndex={index => {
             onPress(simulatorOptions[index].value);
           }}
+          backgroundColor={Colors.$backgroundDefault}
         />
       </View>
-
-      <View
-        style={{
-          ...simulatorSize,
-          alignSelf: 'center',
-          borderRadius: 40,
-          borderWidth: 4,
-          borderColor: Colors.$outlineDisabledHeavy,
-          marginTop: Spacings.s2,
-          marginBottom: Spacings.s2,
-          overflow: 'hidden'
-        }}
-      >
-        {children}
-      </View>
+      <View style={[styles.simulatorWrapper, simulatorSize]}>{children}</View>
     </View>
   );
 };
@@ -81,5 +67,13 @@ const styles = StyleSheet.create({
   typesTitle: {
     fontWeight: 'bold',
     textAlign: 'center'
+  },
+  simulatorWrapper: {
+    alignSelf: 'center',
+    borderRadius: 40,
+    borderWidth: 4,
+    borderColor: Colors.$outlineDisabledHeavy,
+    marginVertical: Spacings.s2,
+    overflow: 'hidden'
   }
 });

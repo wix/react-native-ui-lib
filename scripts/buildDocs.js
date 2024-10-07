@@ -170,7 +170,7 @@ function getFirstTab(component) {
       .join('\n');
 
     content += wrappedSnippets;
-    content += '</MobileDeviceWrapper>\n';
+    content += '\n</MobileDeviceWrapper>\n';
     content += '\n```\n';
   }
 
