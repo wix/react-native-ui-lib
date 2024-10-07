@@ -5982,16 +5982,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-uilib@file:./eslint-rules::locator=react-native-ui-lib%40workspace%3A.":
-  version: 2.2.0
-  resolution: "eslint-plugin-uilib@file:./eslint-rules#./eslint-rules::hash=5b14ae&locator=react-native-ui-lib%40workspace%3A."
-  dependencies:
-    lodash: ^4.0.0
-    requireindex: ~1.1.0
-  checksum: bf137a43e3748ad1e9a1f8e45bed6ed2a003d505129ff90be924738bdd46e0a2aef6fb7e5e2818204836073c1dfeb9cf3c875b97c27b3f4e64a41315a9db496f
-  languageName: node
-  linkType: hard
-
 "eslint-plugin-wix-style-react@npm:^1.0.0":
   version: 1.0.418
   resolution: "eslint-plugin-wix-style-react@npm:1.0.418"
@@ -8422,7 +8412,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:4.17.x, lodash@npm:4.x.x, lodash@npm:^4, lodash@npm:^4.0.0, lodash@npm:^4.17.10, lodash@npm:^4.17.21":
+"lodash@npm:4.17.x, lodash@npm:4.x.x, lodash@npm:^4, lodash@npm:^4.17.10, lodash@npm:^4.17.21":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
@@ -10342,7 +10332,6 @@ __metadata:
     eslint-plugin-react: ^7.24.0
     eslint-plugin-react-hooks: ^4.0.4
     eslint-plugin-react-native: ^4.0.0
-    eslint-plugin-uilib: "file:./eslint-rules"
     hoist-non-react-statics: ^3.0.0
     jest: ^29.6.3
     light-date: ^1.2.0
@@ -10761,13 +10750,6 @@ __metadata:
   version: 0.8.7
   resolution: "require-relative@npm:0.8.7"
   checksum: f1c3be06977823bba43600344d9ea6fbf8a55bdb81ec76533126849ab4024e6c31c6666f37fa4b5cfeda9c41dee89b8e19597cac02bdefaab42255c6708661ab
-  languageName: node
-  linkType: hard
-
-"requireindex@npm:~1.1.0":
-  version: 1.1.0
-  resolution: "requireindex@npm:1.1.0"
-  checksum: 397057d97d7f753a3851abf0d6db94c295bd8254536f71f622b896ba08ea8c0d3e3771c8b009a557e6ce602f4245c0588836cdf59c4ce588fff721a7b855d323
   languageName: node
   linkType: hard
 
