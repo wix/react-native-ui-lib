@@ -155,10 +155,12 @@ function getFirstTab(component) {
 
   /* Snippet */
   if (component.snippet) {
-    content += '### Usage\n';
+    content += `### Usage\n`;
     content += '``` jsx live\n';
     content += component.snippet?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), '')).join('\n');
     content += '\n```\n';
+  } else {
+    console.warn(`${component.name} does not have a snippet`);
   }
 
   /* Props */
