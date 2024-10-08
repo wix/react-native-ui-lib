@@ -25,7 +25,10 @@ import * as Playground from './Playground';
 
 Assets.loadAssetsGroup('icons.demo', {
   // chevronDown: require('../../assets/icons/chevronDown.png').default,
-  chevronRight: require('../../assets/icons/chevronRight.png').default,
+  chevronRight: {
+    source: require('../../assets/icons/chevronRight.png').default,
+    style: {width: 24, height: 24}
+  },
   // add: require('../../assets/icons/add.png').default,
   // camera: require('../../assets/icons/cameraSelected.png').default,
   // close: require('../../assets/icons/close.png').default,
