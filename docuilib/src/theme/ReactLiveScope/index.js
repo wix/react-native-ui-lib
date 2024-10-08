@@ -1,5 +1,6 @@
 import React from 'react';
 import products from '../../assets/data/products';
+require('./configurations');
 import {Colors} from 'react-native-ui-lib/style';
 import {BorderRadiuses, Button, Image, Spacings, Text, TouchableOpacity, View} from 'react-native-ui-lib/core';
 import ActionBar from 'react-native-ui-lib/actionBar';
@@ -29,7 +30,10 @@ Assets.loadAssetsGroup('icons.demo', {
   // camera: require('../../assets/icons/cameraSelected.png').default,
   // close: require('../../assets/icons/close.png').default,
   // dashboard: require('../../assets/icons/dashboard.png').default,
-  drag: require('../../assets/icons/drag.png').default
+  drag: {
+    source: require('../../assets/icons/drag.png').default,
+    style: {width: 10, height: 16}
+  }
   // image: require('../../assets/icons/image.png').default,
   // plus: require('../../assets/icons/plus.png').default,
   // refresh: require('../../assets/icons/refresh.png').default,
