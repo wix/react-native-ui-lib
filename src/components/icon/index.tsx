@@ -9,7 +9,7 @@ import Badge, {BadgeProps} from '../badge';
 import SvgImage from '../svgImage';
 import type {ImageProps} from '../image';
 
-export type IconProps = Omit<RNImageProps, 'source'> &
+export type IconProps = Omit<RNImageProps, 'source' | 'tintColor'> &
   MarginModifiers &
   RecorderProps & {
     /**
