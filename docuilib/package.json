@@ -31,7 +31,7 @@
   "devDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-native-ui-lib": "snapshot",
+    "react-native-ui-lib": "7.32.0-snapshot.5506",
     "react-native-linear-gradient": "2.6.2",
     "react-native-reanimated": "^3.15.1",
     "react-native-shimmer-placeholder": "^2.0.9",
