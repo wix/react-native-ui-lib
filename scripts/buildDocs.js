@@ -38,6 +38,28 @@ fs.mkdirSync(COMPONENTS_DOCS_DIR);
 
 const compoundComponents = components.filter(c => c.name.includes('.'));
 const parentComponents = _.flow(components => _.map(components, c => c.name.split('.')[0]), _.uniq)(compoundComponents);
+const processSnippet = snippet => {
+  //Replace placeholder texts
+  const processedSnippet = snippet.map(item => item.replace(new RegExp(/\$[1-9]/g), ''));
+  //Check if the snippet is a function or plain JSX
+  const isFunction = processedSnippet[0].trim().startsWith('function');
+
+  if (isFunction) {
+    //Check if <div> tag is immediately after return statement
+    const divTagIndex = processedSnippet.findIndex(line =>
+      line.trim().startsWith('return (') && processedSnippet[processedSnippet.indexOf(line) + 1]?.includes('<div>'));
+
+    if (divTagIndex !== -1) {
+      //If <div> tag is found, replace <div> and </div> with <MobileDeviceWrapper> and </MobileDeviceWrapper>
+      return processedSnippet
+        .map(line => line.replace('<div>', '<MobileDeviceWrapper>').replace('</div>', '</MobileDeviceWrapper>'))
+        .join('\n');
+    }
+  } else {
+    //Wrap the snippet with <MobileDeviceWrapper>
+    return ['<MobileDeviceWrapper>', ...processedSnippet, '</MobileDeviceWrapper>'].join('\n');
+  }
+};
 
 components.forEach(component => {
   const [componentName, componentParentName] = getComponentNameParts(component.name);
@@ -158,9 +180,7 @@ function getFirstTab(component) {
     content += `### Usage\n`;
     content += '``` jsx live\n';
     content += '\n';
-    content += '<MobileDeviceWrapper>\n';
-    content += component.snippet?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), '')).join('\n');
-    content += '\n</MobileDeviceWrapper>\n';
+    content += processSnippet(component.snippet);
     content += '\n```\n';
   } else {
     console.warn(`${component.name} does not have a snippet`);

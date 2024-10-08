@@ -61,7 +61,7 @@ export function MobileDeviceWrapper({children}) {
         break;
     }
   }
-  
+
   const onPress = (type: SimulatorTypes) => {
     setType?.(type);
   };
@@ -100,7 +100,7 @@ export function MobileDeviceWrapper({children}) {
       </View>
       <View style={[styles.simulatorWrapper, simulatorSize]} gap-s2>
         {renderHeader()}
-        {children}
+        <div>{children}</div>
       </View>
     </View>
   );
