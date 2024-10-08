@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet} from 'react-native';
-import {Text, View, Colors, Spacings} from 'react-native-ui-lib/core';
+import {Text, View, Colors, Image} from 'react-native-ui-lib/core';
 import Switch from 'react-native-ui-lib/switch';
 import SegmentedControl from 'react-native-ui-lib/segmentedControl';
 
@@ -61,8 +61,26 @@ export function MobileDeviceWrapper({children}) {
         break;
     }
   }
+  
   const onPress = (type: SimulatorTypes) => {
     setType?.(type);
+  };
+
+  const renderHeader = () => {
+    return (
+      <View center padding-s2 row>
+        <Image
+          marginH-s1
+          source={{
+            uri: 'https://user-images.githubusercontent.com/1780255/105469025-56759000-5ca0-11eb-993d-3568c1fd54f4.png'
+          }}
+          style={{width: 40, height: 40}}
+        />
+        <Text text60 marginV-s1>
+          Wix React Native UILIB
+        </Text>
+      </View>
+    );
   };
 
   return (
@@ -80,7 +98,10 @@ export function MobileDeviceWrapper({children}) {
           backgroundColor={Colors.$backgroundDefault}
         />
       </View>
-      <View style={[styles.simulatorWrapper, simulatorSize]}>{children}</View>
+      <View style={[styles.simulatorWrapper, simulatorSize]} gap-s2>
+        {renderHeader()}
+        {children}
+      </View>
     </View>
   );
 }
@@ -95,7 +116,6 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     borderWidth: 4,
     borderColor: Colors.$outlineDisabledHeavy,
-    marginVertical: Spacings.s2,
     overflow: 'hidden'
   }
 });
