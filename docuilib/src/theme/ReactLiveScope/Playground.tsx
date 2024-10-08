@@ -9,6 +9,12 @@ interface ControlBaseProps<S> {
   setState: React.Dispatch<React.SetStateAction<S>>;
 }
 
+interface ToggleControlProps extends ControlBaseProps<boolean> {
+  title: string;
+  key?: string;
+  spread?: boolean;
+}
+
 interface SimulatorSize {
   width: number | undefined;
   height: number | undefined;
@@ -23,12 +29,6 @@ const simulatorOptions = [
   {label: 'Mobile', value: SimulatorTypes.MOBILE},
   {label: 'Tablet', value: SimulatorTypes.TABLET}
 ];
-
-interface ToggleControlProps extends ControlBaseProps<boolean> {
-  title: string;
-  key?: string;
-  spread?: boolean;
-}
 
 export function ToggleControl(props: ToggleControlProps) {
   const {state, setState, title, spread = false, key = 'does not change'} = props;

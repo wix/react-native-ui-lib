@@ -15,6 +15,6 @@
     {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag"}
   ],
   "snippet": [
-    "<Icon source={Assets.icons.demo.drag} style={{width: 10, height: 16}} tintColor={Colors.grey40}/>"
+    "<Icon source={Assets.icons.demo.drag} tintColor={Colors.grey40}/>"
   ]
 }
