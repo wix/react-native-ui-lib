@@ -67,6 +67,7 @@ components.forEach(component => {
     </TabItem>
     <TabItem value="guidelines" label="Guidelines">
       Coming soon... 👩🏻‍💻
+      ${getSecondTab(component)}
     </TabItem>
     <TabItem value="playground" label="Playground">
       Coming soon... 🤹🏻‍♀️
@@ -174,6 +175,88 @@ function getFirstTab(component) {
     // content += `<span style={{color: 'grey'}}>${_.escape(prop.type)}</span>\n\n`;
     content += `\`${prop.type} \` \n\n`;
   });
+
+  return content;
+}
+
+function getTitle(title, description, type) {
+  let content = '';
+  
+  content += `<div> \n`;
+  content += type === 'hero' ? `# ${title} \n` : type === undefined ? `#### ${title} \n` : `## ${title} \n`;
+  content += `${description} \n`;
+  content += `</div> \n`;
+  content += `<div style={{height: 40}}/> \n`;
+  
+  return content;
+}
+
+function getContentItem(item, layout, isLast) {
+  let content = '';
+  
+  content += `${getBasicLayout(item, undefined, layout)}`;
+  if (!isLast) {
+    content += `<div style={{height: 40}}/> \n`;
+  }
+
+  return content;
+}
+
+function getContent(data, type, layout) { // TODO: content types: Image, Figma, Video etc.
+  let content = '';
+  
+  if (type === 'list') {
+    data.forEach((item, index) => {
+      const isLast = index === data.length - 1;
+      content += `${getContentItem(item, layout, isLast)} \n`;
+    });
+  } else {
+    content += `<div style={{backgroundColor: '#E8ECF0', border: '1px'}}> \n`;
+    data.forEach(item => {
+      content += `<div> \n`;
+      content += `<img src={'${item}'}/> \n`;
+      content += `</div> \n`;
+    });
+    content += `</div> \n`;
+  }
+
+  content += `\n`;
+
+  return content;
+}
+
+function getBasicLayout(data, type, layout) {
+  let content = '';
+
+  if (type !== 'list' && layout === 'horizontal') {
+    content += `<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}> \n`;
+  } else {
+    content += `<div> \n`;
+  }
+
+  content += `${getTitle(data.title, data.description, type)}`;
+  content += `${getContent(data.content, type, layout)}`;
+  
+  content += `</div> \n`;
+
+  return content;
+}
+
+function getSecondTab(component) {
+  let content = '';
+
+  /* Docs */
+  if (component.docs) {
+    const divider = `<div style={{height: 3, width: '100%', backgroundColor: '#E8ECF0', margin: '60px 0 60px 0'}}/> \n`;
+    const sections = component.docs.sections;
+
+    if (sections) {
+      sections.forEach(section => {
+        content += `${getBasicLayout(section, section.type, section.layout)}`;
+        content += divider;
+      });
+    }
+  }
 
   return content;
 }

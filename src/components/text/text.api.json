@@ -23,5 +23,78 @@
   ],
   "snippet": [
     "<Text text30$1>Text goes here$2</Text>"
-  ]
+  ],
+  "docs": {
+    "sections": [
+      {
+        "type": "hero",
+        "layout": "horizontal",
+        "title": "Hero",
+        "description": "A wrapper for Text component with extra functionality like modifiers support",
+        "content": [
+          "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
+        ]    
+      },
+      {
+        "type": "section",
+        "title": "Section",
+        "description": "Examples of using the Text component",
+        "content": [
+          "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-veryWide.png?raw=true"
+        ]
+      },
+      {
+        "type": "section",
+        "layout": "horizontal",
+        "title": "Horizontal Section",
+        "description": "Examples of using the Text component",
+        "content": [
+          "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
+        ]
+      },
+      {
+        "type": "list",
+        "title": "List",
+        "description": "Examples of using the Text component",
+        "content": [
+          {
+            "title": "Item #1",
+            "description": "This is item #1",
+            "content": [
+              "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-veryWide.png?raw=true"
+            ]
+          },
+          {
+            "title": "Item #2",
+            "description": "This is item #2",
+            "content": [
+              "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-veryWide.png?raw=true"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "list",
+        "layout": "horizontal",
+        "title": "List Horizontal Items",
+        "description": "Examples of using the Text component",
+        "content": [
+          {
+            "title": "Item #1",
+            "description": "This is item #1",
+            "content": [
+              "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
+            ]
+          },
+          {
+            "title": "Item #2",
+            "description": "This is item #2",
+            "content": [
+              "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }
