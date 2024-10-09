@@ -4044,7 +4044,7 @@ eslint-plugin-react@^7.20.0, eslint-plugin-react@^7.24.0:
     string.prototype.matchall "^4.0.10"
 
 "eslint-plugin-uilib@file:./eslint-rules":
-  version "2.1.7"
+  version "2.2.4"
   dependencies:
     lodash "^4.0.0"
     requireindex "~1.1.0"
@@ -8169,6 +8169,14 @@ uglify-es@^3.1.9:
   dependencies:
     commander "~2.13.0"
     source-map "~0.6.1"
+
+uilib-native@^4.3.2:
+  version "4.3.2"
+  resolved "https://registry.npmjs.org/uilib-native/-/uilib-native-4.3.2.tgz#d0e28d0b4c390411f80ab7f16a26905ed6dcd7d4"
+  integrity sha512-L3NyrO9rHlNZ6D/F4t2G8xLkTe0BDqoj90H4StDUwyoZ9j4Oo9YBuqtiPzG75bSRPlptB2eeRp4UZThnyr++tQ==
+  dependencies:
+    lodash "^4.0.0"
+    prop-types "^15.5.10"
 
 unbox-primitive@^1.0.2:
   version "1.0.2"

@@ -1,4 +1,4 @@
-import {NativeModules, AccessibilityInfo, Animated} from 'react-native';
+import {AccessibilityInfo, Animated} from 'react-native';
 // ========= Mock Object.defineProperty to always allow overriding =========
 const originalDefineProperty = Object.defineProperty;
 Object.defineProperty = (obj, prop, desc) => {
@@ -21,6 +21,17 @@ global._UILIB_TESTING = true;
 jest.spyOn(AccessibilityInfo, 'isScreenReaderEnabled').mockImplementation(() => Promise.resolve(false));
 
 // mock native modules
+jest.mock('uilib-native', () => {
+  return {
+    Keyboard: {
+      KeyboardTrackingView: jest.fn(),
+      KeyboardAwareInsetsView: jest.fn(),
+      KeyboardRegistry: jest.fn(),
+      KeyboardAccessoryView: jest.fn(),
+      KeyboardUtils: jest.fn()
+    }
+  };
+});
 jest.mock('@react-native-community/blur', () => {});
 jest.mock('@react-native-community/netinfo', () => {});
 // TODO: Adding here a todo for package.json: need to remove moduleNameMapper, see this: https://github.com/software-mansion/react-native-reanimated/issues/1196
