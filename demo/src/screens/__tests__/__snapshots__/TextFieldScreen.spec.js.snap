@@ -7744,6 +7744,26 @@ exports[`TextField Screen renders screen 1`] = `
         </View>
       </View>
     </View>
+    <KeyboardTrackingViewTemp
+      pointerEvents="none"
+      scrollToFocusedInput={true}
+      style={
+        [
+          {
+            "backgroundColor": "transparent",
+            "bottom": 0,
+            "height": 0.5,
+            "left": 0,
+            "position": "absolute",
+            "width": 750,
+          },
+          {
+            "height": 0.5,
+          },
+        ]
+      }
+      useSafeArea={false}
+    />
   </View>
 </RCTScrollView>
 `;

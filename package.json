@@ -133,7 +133,7 @@
   "jest": {
     "preset": "react-native",
     "transformIgnorePatterns": [
-      "node_modules/(?!(@react-native|react-native|react-native-reanimated|react-native-redash)/)"
+      "node_modules/(?!(@react-native|react-native|react-native-reanimated|react-native-redash|uilib-native)/)"
     ],
     "testPathIgnorePatterns": [
       "/e2e/",
