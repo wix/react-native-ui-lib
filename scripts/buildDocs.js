@@ -182,11 +182,10 @@ function getFirstTab(component) {
 function getTitle(title, description, type) {
   let content = '';
   
-  content += `<div> \n`;
-  content += type === 'hero' ? `# ${title} \n` : type === undefined ? `#### ${title} \n` : `## ${title} \n`;
+  content += `<div style={{margin: '0 48px 40px 0'}}> \n`;
+  content += type === undefined ? `#### ${title} \n` : type === 'hero' ? `# ${title} \n` : `## ${title} \n`;
   content += `${description} \n`;
   content += `</div> \n`;
-  content += `<div style={{height: 40}}/> \n`;
   
   return content;
 }
@@ -202,40 +201,111 @@ function getContentItem(item, layout, isLast) {
   return content;
 }
 
-function getContent(data, type, layout) { // TODO: content types: Image, Figma, Video etc.
-  let content = '';
+function getTypeColor(type) {
+  let color;
   
-  if (type === 'list') {
-    data.forEach((item, index) => {
-      const isLast = index === data.length - 1;
-      content += `${getContentItem(item, layout, isLast)} \n`;
-    });
-  } else {
-    content += `<div style={{backgroundColor: '#E8ECF0', border: '1px'}}> \n`;
-    data.forEach(item => {
-      content += `<div> \n`;
-      content += `<img src={'${item}'}/> \n`;
-      content += `</div> \n`;
-    });
-    content += `</div> \n`;
+  switch (type) {
+    case 'string':
+      color = '#FFEEB9';
+      break;
+    case 'number':
+      color = '#B3EBDD';
+      break;
+    case 'boolean':
+      color = '#C4DFFF';
+      break;
+    default: 
+      color = '#E8ECF0';
   }
 
-  content += `\n`;
+  return color;
+}
 
+function getTag(label, color) {
+  let content = '';
+  
+  content += `<div style={{display: 'flex', flexDirection: 'row', backgroundColor: '${color}', margin: '4px 12px 4px 0', height: 20, borderRadius: '2px', alignItems: 'center'}}> \n`;
+  content += `<span style={{fontSize: 14, fontWeight: 'bold', margin: '6px'}}>${label}</span> \n`;
+  content += `</div> \n`;
+  
   return content;
 }
 
-function getBasicLayout(data, type, layout) {
+function getPropsList(props) {
+  if (props) {
+    let content = '';
+    
+    _.sortBy(props, p => p.name)?.forEach(prop => {
+      content += `<div style={{display: 'flex', flexDirection: 'row', height: 28, margin: '0 0 12px 0'}}> \n`;
+      content += `### ${prop.name} \n`;
+      content += `${getTag(prop.type, getTypeColor(prop.type))} \n`;
+      if (prop.required) {
+        content += `${getTag('Required', getTypeColor())} \n`;
+      }
+      if (prop.platform) {
+        content += `${getTag(prop.platform, getTypeColor())} \n`;
+      }
+      content += `</div> \n`;
+
+      content += `${prop.description} \n`;
+      if (prop.default) {
+        content += `<span style={{fontSize: 14, fontWeight: 'bold', margin: '0 0 6px 0'}}>Default: ${prop.default}</span> \n`;
+      }
+      // content += `${prop.note} \n`;
+
+      content += `\n`;
+    });
+  
+    return content;
+  }
+}
+
+// function getTable(section) {
+//   let content = '';
+//   return content;
+// }
+
+function getContent(section, component) { // TODO: content types: Image, Figma, Video etc.
+  let content = '';
+  
+  switch (section.type) {
+    // case 'table':
+    //   content += `${getTable(section)} \n`;
+    //   break;
+    case 'props':
+      content += `${getPropsList(component.props)} \n`;
+      break;
+    case 'list':
+      section.content.forEach((item, index) => {
+        const isLast = index === section.length - 1;
+        content += `${getContentItem(item, section.layout, isLast)} \n`;
+      });
+      break;
+    default:
+      content += `<div style={{border: '1px solid #E8ECF0'}}> \n`;
+      section.content.forEach(item => {
+        content += `<div> \n`;
+        content += `<img src={'${item}'}/> \n`;
+        content += `</div> \n`;
+      });
+      content += `</div>`;
+  }
+
+  content += `\n`;
+  return content;
+}
+
+function getBasicLayout(section, component) {
   let content = '';
 
-  if (type !== 'list' && layout === 'horizontal') {
+  if (section.type !== 'list' && section.layout === 'horizontal') {
     content += `<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}> \n`;
   } else {
     content += `<div> \n`;
   }
 
-  content += `${getTitle(data.title, data.description, type)}`;
-  content += `${getContent(data.content, type, layout)}`;
+  content += `${getTitle(section.title, section.description, section.type)}`;
+  content += `${getContent(section, component)}`;
   
   content += `</div> \n`;
 
@@ -252,7 +322,7 @@ function getSecondTab(component) {
 
     if (sections) {
       sections.forEach(section => {
-        content += `${getBasicLayout(section, section.type, section.layout)}`;
+        content += `${getBasicLayout(section, component)}`;
         content += divider;
       });
     }
