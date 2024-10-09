@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 pushd docuilib
-npm install
-npm run releaseDocs
+yarn
+yarn build
+yarn releaseDocs
 popd
