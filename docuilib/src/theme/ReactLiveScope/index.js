@@ -55,7 +55,7 @@ const ReactLiveScope = {
   ...React,
   /* Docs' utils and components */
   Data,
-  Playground,
+  ...Playground,
   /* UI Lib's components */
   ActionBar,
   Assets,
