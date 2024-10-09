@@ -420,6 +420,7 @@ const modifiersOptions = {
   typography: true,
   color: true
 };
+
 export default asBaseComponent<ButtonProps, ComponentStatics<typeof Button>, {}>(forwardRef(Button), {
   modifiersOptions
 });

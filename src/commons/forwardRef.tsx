@@ -13,6 +13,7 @@ export default function forwardRef<P, STATICS = {}, RefInterface = any>(WrappedC
     return <WrappedComponent {...props} forwardedRef={ref}/>;
   }
 
+  // @ts-expect-error
   const ForwardedComponent = React.forwardRef<RefInterface, P>(forwardRef);
 
   hoistStatics(ForwardedComponent, WrappedComponent);

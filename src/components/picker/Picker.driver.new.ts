@@ -3,8 +3,14 @@ import {TextFieldDriver} from '../textField/TextField.driver.new';
 import {ModalDriver} from '../modal/Modal.driver.new';
 import {DialogDriver} from '../../incubator/Dialog/Dialog.driver.new';
 import {ButtonDriver} from '../button/Button.driver.new';
+import {ExpandableOverlayDriver} from '../../incubator/expandableOverlay/ExpandableOverlay.driver';
 
-export const PickerDriver = (props: ComponentProps) => {
+export const PickerDriver = (props: ComponentProps, useDialog: boolean) => {
+  const expandableOverlayDriver = ExpandableOverlayDriver({
+    renderTree: props.renderTree,
+    testID: props.testID
+  }, useDialog);
+
   const textFieldDriver = TextFieldDriver({
     renderTree: props.renderTree,
     testID: `${props.testID}.input`
@@ -27,7 +33,7 @@ export const PickerDriver = (props: ComponentProps) => {
   });
 
   const exists = () => {
-    return textFieldDriver.exists();
+    return expandableOverlayDriver.exists();
   };
 
   const getValue = (): string | undefined => {
@@ -35,7 +41,7 @@ export const PickerDriver = (props: ComponentProps) => {
   };
 
   const open = (): void => {
-    textFieldDriver.press();
+    expandableOverlayDriver.open();
   };
 
   const cancel = (): void => {
