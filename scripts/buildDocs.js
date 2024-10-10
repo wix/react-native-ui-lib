@@ -59,19 +59,14 @@ components.forEach(component => {
   content += `sidebar_label: ${componentName}\n`;
   content += '---\n\n';
 
-  content += `import Tabs from '@theme/Tabs';\n`;
-  content += `import TabItem from '@theme/TabItem';\n\n`;
-  content += `<Tabs>
-    <TabItem value="api" label="API" default>
-      ${getFirstTab(component)}
-    </TabItem>
-    <TabItem value="guidelines" label="Guidelines">
-      Coming soon... 👩🏻‍💻
-    </TabItem>
-    <TabItem value="playground" label="Playground">
-      Coming soon... 🤹🏻‍♀️
-    </TabItem>
-  </Tabs>\n`;
+  if (component.docs) {
+    content += `import Tabs from '@theme/Tabs';\n`;
+    content += `import TabItem from '@theme/TabItem';\n\n`;
+    content += `${buildHero(component)}\n`;
+    content += `${buildTabs(component)}\n`;
+  } else {
+    content += `${buildOldDocs(component)}\n`;
+  }
 
   const componentParentDir = componentParentName || isParentComponent ? `/${componentParentName || componentName}` : '';
   const dirPath = `${COMPONENTS_DOCS_DIR}/${component.category}${componentParentDir}`;
@@ -98,7 +93,7 @@ function generateExtendsLink(extendsLink) {
   return extendsText;
 }
 
-function getFirstTab(component) {
+function buildOldDocs(component) {
   let content = '';
 
   /* General Info */
@@ -176,4 +171,297 @@ function getFirstTab(component) {
   });
 
   return content;
+}
+
+function getTitle(title, description, type) {
+  let content = '';
+  content += `<div style={{margin: '0 48px 40px 0'}}> \n`;
+  if (title) {
+    content += type === undefined ? `#### ${title} \n` : type === 'hero' ? `# ${title} \n` : `## ${title} \n`;
+  }
+  if (description) {
+    content += `${description} \n`;
+  }
+  content += `</div> \n`;
+  return content;
+}
+
+function getContentItem(item, layout, isLast) {
+  let content = '';
+  content += `${getBasicLayout(item, undefined, layout)}`;
+  if (!isLast) {
+    content += `<div style={{height: 40}}/> \n`;
+  }
+  return content;
+}
+
+function getTypeColor(type) {
+  let color;
+  switch (type) {
+    case 'string':
+      color = '#FFEEB9';
+      break;
+    case 'number':
+      color = '#B3EBDD';
+      break;
+    case 'boolean':
+      color = '#C4DFFF';
+      break;
+    default: 
+      color = '#E8ECF0';
+  }
+  return color;
+}
+
+function getTag(label, color) {
+  let content = '';
+  content += `<div style={{display: 'flex', flexDirection: 'row', backgroundColor: '${color}', margin: '4px 12px 4px 0', height: 20, borderRadius: '2px', alignItems: 'center'}}> \n`;
+  content += `<span style={{fontSize: 14, fontWeight: 'bold', margin: '6px'}}>${label}</span> \n`;
+  content += `</div> \n`;
+  return content;
+}
+
+function getPropsList(props) {
+  if (props) {
+    let content = '';
+    _.sortBy(props, p => p.name)?.forEach(prop => {
+      content += `<div style={{display: 'flex', flexDirection: 'row', height: 28, margin: '0 0 12px 0'}}> \n`;
+      content += `### ${prop.name} \n`;
+      content += `${getTag(prop.type, getTypeColor(prop.type))} \n`;
+      if (prop.required) {
+        content += `${getTag('Required', getTypeColor())} \n`;
+      }
+      if (prop.platform) {
+        content += `${getTag(prop.platform, getTypeColor())} \n`;
+      }
+      content += `</div> \n`;
+
+      content += `${prop.description} \n`;
+      // TODO: Add default value and note
+      // if (prop.default) {
+      //   content += `<span style={{fontSize: 14, fontWeight: 'bold', margin: '0 0 6px 0'}}>Default: ${prop.default}</span> \n`;
+      // }
+      // content += `${prop.note} \n`;
+
+      content += `\n`;
+    });
+    return content;
+  }
+}
+
+function getTable(section) {
+  const columns = section.columns;
+  const rows = section.content;
+  const numberOfColumns = columns.length;
+  const cellWidth = 100 / numberOfColumns;
+
+  let content = '';
+  content += `#### ${section.name} \n`;
+  
+  content += `<table> \n`;
+  /** Headers */
+  content += `<tr> \n`;
+  columns.forEach(column => {
+    content += `<th style={{backgroundColor: '#F8F9FA', width: '${cellWidth}%'}}> \n`;
+    content += `<span style={{fontSize: 16, fontWeight: 'bold', margin: '8px'}}>${column}</span> \n`;
+    content += `</th> \n`;
+  }); 
+  content += `</tr> \n`;
+  /** Rows */
+  rows.forEach(row => {
+    content += `<tr> \n`;
+    content += `<td style={{backgroundColor: 'white', margin: '20px 12px 20px 12px', alignContent: 'start'}}> \n`;
+    content += `<span style={{fontSize: 16, fontWeight: '500'}}>${row.title}</span> \n`;
+    content += `<br /> \n`;
+    content += `<span style={{fontSize: 16, fontWeight: '400'}}>${row.description}</span> \n`;
+    content += `</td> \n`;
+
+    row.content.forEach((item, index) => { // TODO: content types: Image, Figma, Video etc.
+      if (index < numberOfColumns - 1) {
+        content += `<td style={{backgroundColor: 'white', padding: '8px 12px 8px 12px'}}> \n`;
+        content += `<img src={'${item}'}/> \n`;
+        content += `</td> \n`;
+      }
+    });
+    content += `</tr> \n`;
+  }); 
+  content += `</table> \n`;
+
+  return content;
+}
+
+function getSnippet(component) {
+  if (component.snippet) {
+    let content = '';
+    content += `### Usage\n`;
+    content += '``` jsx live\n';
+    content += component.snippet?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), '')).join('\n');
+    content += '\n```\n';
+    return content;
+  }
+}
+
+function getInfo(component) {
+  if (component.extends) {
+    let extendsText = component.extends?.join(', ');
+    if (component.extendsLink) {
+      extendsText = `[${extendsText}](${component.extendsLink})`;
+    } else {
+      extendsText = _.map(component.extends, generateExtendsLink).join(', ');
+    }
+
+    let content = '';
+    content += ':::info\n';
+    content += `This component extends **${extendsText}** props.\n`;
+    content += ':::\n';
+    return content;
+  }
+}
+
+function getTip(component) {
+  if (component.modifiers) {
+    let content = '';
+    content += ':::tip\n';
+    content += `This component support **${component.modifiers?.join(', ')}** modifiers.\n`;
+    content += ':::\n';
+    return content;
+  }
+}
+
+// function getCaution(component) {
+//   if (component.caution) {
+//     let content = '';
+//     content += ':::caution\n';
+//     content += `${component.caution}\n`;
+//     content += ':::\n';
+//     return content;
+//   }
+// }
+
+// function getNote(component) {
+//   if (component.note) {
+//     let content = '';
+//     content += ':::note\n';
+//     content += `${component.note}\n`;
+//     content += ':::\n';
+//     return content;
+//   }
+// }
+
+function getContent(section, component) { // TODO: content types: Image, Figma, Video etc.
+  let content = '';
+  switch (section.type) {
+    case 'usage':
+      content += `${getSnippet(component)} \n`;
+      break;
+    case 'info':
+      content += `${getInfo(component)} \n`;
+      break;
+    case 'tip':
+      content += `${getTip(component)} \n`;
+      break;
+    // case 'note':
+    //   content += `${getNote(component)} \n`;
+    //   break;
+    // case 'caution':
+    //   content += `${getCaution(component)} \n`;
+    //   break;
+    case 'table':
+      content += `${getTable(section)} \n`;
+      break;
+    case 'props':
+      content += `${getPropsList(component.props)} \n`;
+      break;
+    case 'list':
+      section.content.forEach((item, index) => {
+        const isLast = index === section.length - 1;
+        content += `${getContentItem(item, section.layout, isLast)} \n`;
+      });
+      break;
+    default:
+      content += `<div style={{border: '1px solid #E8ECF0'}}> \n`;
+      section.content.forEach(item => {
+        content += `<div> \n`;
+        content += `<img src={'${item}'}/> \n`; // TODO: stretch image to fit container
+        content += `</div> \n`;
+      });
+      content += `</div>`;
+  }
+  content += `\n`;
+  return content;
+}
+
+function getBasicLayout(section, component) {
+  let content = '';
+  if (section.type !== 'list' && section.layout === 'horizontal') {
+    content += `<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}> \n`;
+  } else {
+    content += `<div> \n`;
+  }
+
+  if (section.title) {
+    content += `${getTitle(section.title, section.description, section.type)}`;
+  }
+  content += `${getContent(section, component)}`;
+  
+  content += `</div> \n`;
+  return content;
+}
+
+function getDivider(section) {
+  let content = '';
+  if (section.type === 'table' || section.type === 'list') {
+    content += `<div style={{height: 1, width: '100%', backgroundColor: '#E8ECF0', margin: '60px 0 60px 0'}}/> \n`;
+  } else {
+    content += `<div style={{height: 60}}/> \n`;
+  }
+  return content;
+}
+
+function buildDocsSections(tab, component) {
+  const sections = tab.sections;
+  let content = '';
+  if (sections) {
+    sections.forEach(section => {
+      content += `${getBasicLayout(section, component)}`;
+      content += `${getDivider(section)}`;
+    });
+  }
+  return content;
+}
+
+function buildTabs(component) {
+  const tabs = component.docs?.tabs;
+  if (tabs) {
+    let content = '';
+    content += `<Tabs>\n`; //TODO: style tabs
+    tabs.forEach((tab, index) => {
+      content += `<TabItem value="${index}" label="${tab.title}">\n`;
+      if (tab.sections) {
+        content += `${buildDocsSections(tab, component)}\n`;
+      } else {
+        content += `Coming soon... 👩🏻‍💻\n`;
+      }
+      content += `</TabItem>\n`;
+    });
+    content += `</Tabs>\n`;
+    return content;
+  }
+}
+
+function buildHero(component) {
+  const hero = component.docs?.header;
+  
+  if (hero) {
+    const section = {
+      title: component.name,
+      layout: 'horizontal',
+      ...hero,
+      type: 'hero'
+    };
+    
+    let content = '';
+    content += `${getBasicLayout(section, component)}`;
+    return content;
+  }
 }
