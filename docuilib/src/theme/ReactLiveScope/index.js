@@ -23,6 +23,7 @@ import Switch from 'react-native-ui-lib/switch';
 import TextField from 'react-native-ui-lib/textField';
 import * as Playground from './Playground';
 import ColorsTable from './ColorsTable';
+import ColorsPalette from './ColorsPalette';
 
 Assets.loadAssetsGroup('icons.demo', {
   // chevronDown: require('../../assets/icons/chevronDown.png').default,
@@ -58,6 +59,7 @@ const ReactLiveScope = {
   Data,
   Playground,
   ColorsTable,
+  ColorsPalette,
   /* UI Lib's components */
   ActionBar,
   Assets,

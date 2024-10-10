@@ -72,6 +72,11 @@ This method will update all the `primary` tokens to be based on your app primary
 ### System Colors
 
 The System Colors are all the colors we use in our design system. (red30, grey10 and so on).
+
+```jsx live
+<ColorsPalette />
+```
+
 </TabItem>
 <TabItem value="accessibility" label="Accessibility">
 </TabItem>
