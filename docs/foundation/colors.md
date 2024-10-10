@@ -4,22 +4,23 @@ sidebar_label: Colors
 title: 'Colors'
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 ## Colors
 
 Our default library Colors object is using **System Colors** and **Design Tokens**.
 
-### System Colors
-
-The System Colors are all the colors we use in our design system. (red30, grey10 and so on).
-
-```jsx live
-<ColorsTable />
-```
-
+<Tabs>
+<TabItem value="design_tokens" label="Design Tokens" default>
 ### Design Tokens
 
 Design Tokens are contextual colors based on the system colors.  
 The design token name structure is "$[property]-[semantic]-[weight]". (e.g $backgroundPrimaryHeavy, $textSuccessLight)
+
+```jsx live
+<ColorsTable />
+```
 
 - **Property** - The property we use this token for. The properties are:
 
@@ -65,6 +66,17 @@ Colors.loadDesignTokens({primaryColor: <your primary color>});
 ```
 
 This method will update all the `primary` tokens to be based on your app primary color, both in light and dark mode.
+</TabItem>
+<TabItem value="system_colors" label="System Colors">
+
+### System Colors
+
+The System Colors are all the colors we use in our design system. (red30, grey10 and so on).
+</TabItem>
+<TabItem value="accessibility" label="Accessibility">
+</TabItem>
+
+<TabItem value="dev" label="Dev">
 
 ### loadColors
 
@@ -166,3 +178,6 @@ import {Colors} from 'react-native-ui-lib';
 Colors.isDark(Colors.grey10); // true
 Colors.isDark(Colors.grey80); // false
 ```
+
+</TabItem>
+</Tabs>
