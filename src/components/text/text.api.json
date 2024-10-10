@@ -75,6 +75,30 @@
                 ]
               }
             ]
+          },
+          {
+            "type": "table",
+            "title": "",
+            "description": "",
+            "name": "Table Name",
+            "columns": ["Item", "Content[0]", "Content[1]"],
+            "content": [
+              {
+                "title": "Item #1",
+                "description": "Item #1 Subtitle",
+                "content": [
+                  "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true",
+                  "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
+                ]
+              },
+              {
+                "title": "Item #2",
+                "description": "Item #2 Subtitle",
+                "content": [
+                  "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
+                ]
+              }
+            ]
           }
         ]
       },
@@ -95,6 +119,7 @@
             "title": "Horizontal Section",
             "description": "Examples of using the Text component",
             "content": [
+              "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true",
               "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
             ]
           },
@@ -146,6 +171,15 @@
       {
         "title": "Code",
         "sections": [
+          {
+            "type": "usage"
+          },
+          {
+            "type": "info"
+          },
+          {
+            "type": "tip"
+          },
           {
             "type": "props",
             "title": "API",

@@ -59,10 +59,14 @@ components.forEach(component => {
   content += `sidebar_label: ${componentName}\n`;
   content += '---\n\n';
 
-  content += `import Tabs from '@theme/Tabs';\n`;
-  content += `import TabItem from '@theme/TabItem';\n\n`;
-  content += `${buildHero(component)}\n`;
-  content += `${buildTabs(component)}\n`;
+  if (component.docs) {
+    content += `import Tabs from '@theme/Tabs';\n`;
+    content += `import TabItem from '@theme/TabItem';\n\n`;
+    content += `${buildHero(component)}\n`;
+    content += `${buildTabs(component)}\n`;
+  } else {
+    content += `${buildOldDocs(component)}\n`;
+  }
 
   const componentParentDir = componentParentName || isParentComponent ? `/${componentParentName || componentName}` : '';
   const dirPath = `${COMPONENTS_DOCS_DIR}/${component.category}${componentParentDir}`;
@@ -172,8 +176,12 @@ function buildOldDocs(component) {
 function getTitle(title, description, type) {
   let content = '';
   content += `<div style={{margin: '0 48px 40px 0'}}> \n`;
-  content += type === undefined ? `#### ${title} \n` : type === 'hero' ? `# ${title} \n` : `## ${title} \n`;
-  content += `${description} \n`;
+  if (title) {
+    content += type === undefined ? `#### ${title} \n` : type === 'hero' ? `# ${title} \n` : `## ${title} \n`;
+  }
+  if (description) {
+    content += `${description} \n`;
+  }
   content += `</div> \n`;
   return content;
 }
@@ -268,7 +276,7 @@ function getTable(section) {
     content += `<span style={{fontSize: 16, fontWeight: '400'}}>${row.description}</span> \n`;
     content += `</td> \n`;
 
-    row.content.forEach((item, index) => {
+    row.content.forEach((item, index) => { // TODO: content types: Image, Figma, Video etc.
       if (index < numberOfColumns - 1) {
         content += `<td style={{backgroundColor: 'white', padding: '8px 12px 8px 12px'}}> \n`;
         content += `<img src={'${item}'}/> \n`;
@@ -282,9 +290,82 @@ function getTable(section) {
   return content;
 }
 
+function getSnippet(component) {
+  if (component.snippet) {
+    let content = '';
+    content += `### Usage\n`;
+    content += '``` jsx live\n';
+    content += component.snippet?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), '')).join('\n');
+    content += '\n```\n';
+    return content;
+  }
+}
+
+function getInfo(component) {
+  if (component.extends) {
+    let extendsText = component.extends?.join(', ');
+    if (component.extendsLink) {
+      extendsText = `[${extendsText}](${component.extendsLink})`;
+    } else {
+      extendsText = _.map(component.extends, generateExtendsLink).join(', ');
+    }
+
+    let content = '';
+    content += ':::info\n';
+    content += `This component extends **${extendsText}** props.\n`;
+    content += ':::\n';
+    return content;
+  }
+}
+
+function getTip(component) {
+  if (component.modifiers) {
+    let content = '';
+    content += ':::tip\n';
+    content += `This component support **${component.modifiers?.join(', ')}** modifiers.\n`;
+    content += ':::\n';
+    return content;
+  }
+}
+
+// function getCaution(component) {
+//   if (component.caution) {
+//     let content = '';
+//     content += ':::caution\n';
+//     content += `${component.caution}\n`;
+//     content += ':::\n';
+//     return content;
+//   }
+// }
+
+// function getNote(component) {
+//   if (component.note) {
+//     let content = '';
+//     content += ':::note\n';
+//     content += `${component.note}\n`;
+//     content += ':::\n';
+//     return content;
+//   }
+// }
+
 function getContent(section, component) { // TODO: content types: Image, Figma, Video etc.
   let content = '';
   switch (section.type) {
+    case 'usage':
+      content += `${getSnippet(component)} \n`;
+      break;
+    case 'info':
+      content += `${getInfo(component)} \n`;
+      break;
+    case 'tip':
+      content += `${getTip(component)} \n`;
+      break;
+    // case 'note':
+    //   content += `${getNote(component)} \n`;
+    //   break;
+    // case 'caution':
+    //   content += `${getCaution(component)} \n`;
+    //   break;
     case 'table':
       content += `${getTable(section)} \n`;
       break;
@@ -301,7 +382,7 @@ function getContent(section, component) { // TODO: content types: Image, Figma, 
       content += `<div style={{border: '1px solid #E8ECF0'}}> \n`;
       section.content.forEach(item => {
         content += `<div> \n`;
-        content += `<img src={'${item}'}/> \n`;
+        content += `<img src={'${item}'}/> \n`; // TODO: stretch image to fit container
         content += `</div> \n`;
       });
       content += `</div>`;
@@ -318,10 +399,22 @@ function getBasicLayout(section, component) {
     content += `<div> \n`;
   }
 
-  content += `${getTitle(section.title, section.description, section.type)}`;
+  if (section.title) {
+    content += `${getTitle(section.title, section.description, section.type)}`;
+  }
   content += `${getContent(section, component)}`;
   
   content += `</div> \n`;
+  return content;
+}
+
+function getDivider(section) {
+  let content = '';
+  if (section.type === 'table' || section.type === 'list') {
+    content += `<div style={{height: 1, width: '100%', backgroundColor: '#E8ECF0', margin: '60px 0 60px 0'}}/> \n`;
+  } else {
+    content += `<div style={{height: 60}}/> \n`;
+  }
   return content;
 }
 
@@ -331,7 +424,7 @@ function buildDocsSections(tab, component) {
   if (sections) {
     sections.forEach(section => {
       content += `${getBasicLayout(section, component)}`;
-      content += `<div style={{height: 3, width: '100%', backgroundColor: '#E8ECF0', margin: '60px 0 60px 0'}}/> \n`;
+      content += `${getDivider(section)}`;
     });
   }
   return content;
@@ -341,7 +434,7 @@ function buildTabs(component) {
   const tabs = component.docs?.tabs;
   if (tabs) {
     let content = '';
-    content += `<Tabs>\n`;
+    content += `<Tabs>\n`; //TODO: style tabs
     tabs.forEach((tab, index) => {
       content += `<TabItem value="${index}" label="${tab.title}">\n`;
       if (tab.sections) {
