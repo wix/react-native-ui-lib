@@ -181,29 +181,24 @@ function getFirstTab(component) {
 
 function getTitle(title, description, type) {
   let content = '';
-  
   content += `<div style={{margin: '0 48px 40px 0'}}> \n`;
   content += type === undefined ? `#### ${title} \n` : type === 'hero' ? `# ${title} \n` : `## ${title} \n`;
   content += `${description} \n`;
   content += `</div> \n`;
-  
   return content;
 }
 
 function getContentItem(item, layout, isLast) {
   let content = '';
-  
   content += `${getBasicLayout(item, undefined, layout)}`;
   if (!isLast) {
     content += `<div style={{height: 40}}/> \n`;
   }
-
   return content;
 }
 
 function getTypeColor(type) {
   let color;
-  
   switch (type) {
     case 'string':
       color = '#FFEEB9';
@@ -217,24 +212,20 @@ function getTypeColor(type) {
     default: 
       color = '#E8ECF0';
   }
-
   return color;
 }
 
 function getTag(label, color) {
   let content = '';
-  
   content += `<div style={{display: 'flex', flexDirection: 'row', backgroundColor: '${color}', margin: '4px 12px 4px 0', height: 20, borderRadius: '2px', alignItems: 'center'}}> \n`;
   content += `<span style={{fontSize: 14, fontWeight: 'bold', margin: '6px'}}>${label}</span> \n`;
   content += `</div> \n`;
-  
   return content;
 }
 
 function getPropsList(props) {
   if (props) {
     let content = '';
-    
     _.sortBy(props, p => p.name)?.forEach(prop => {
       content += `<div style={{display: 'flex', flexDirection: 'row', height: 28, margin: '0 0 12px 0'}}> \n`;
       content += `### ${prop.name} \n`;
@@ -248,30 +239,65 @@ function getPropsList(props) {
       content += `</div> \n`;
 
       content += `${prop.description} \n`;
-      if (prop.default) {
-        content += `<span style={{fontSize: 14, fontWeight: 'bold', margin: '0 0 6px 0'}}>Default: ${prop.default}</span> \n`;
-      }
+      // TODO: Add default value and note
+      // if (prop.default) {
+      //   content += `<span style={{fontSize: 14, fontWeight: 'bold', margin: '0 0 6px 0'}}>Default: ${prop.default}</span> \n`;
+      // }
       // content += `${prop.note} \n`;
 
       content += `\n`;
     });
-  
     return content;
   }
 }
 
-// function getTable(section) {
-//   let content = '';
-//   return content;
-// }
+function getTable(section) {
+  const columns = section.columns;
+  const rows = section.content;
+  const numberOfColumns = columns.length;
+  const cellWidth = 100 / numberOfColumns;
+
+  let content = '';
+  content += `#### ${section.name} \n`;
+  
+  content += `<table> \n`;
+  /** Headers */
+  content += `<tr> \n`;
+  columns.forEach(column => {
+    content += `<th style={{backgroundColor: '#F8F9FA', width: '${cellWidth}%'}}> \n`;
+    content += `<span style={{fontSize: 16, fontWeight: 'bold', margin: '8px'}}>${column}</span> \n`;
+    content += `</th> \n`;
+  }); 
+  content += `</tr> \n`;
+  /** Rows */
+  rows.forEach(row => {
+    content += `<tr> \n`;
+    content += `<td style={{backgroundColor: 'white', margin: '20px 12px 20px 12px', alignContent: 'start'}}> \n`;
+    content += `<span style={{fontSize: 16, fontWeight: '500'}}>${row.title}</span> \n`;
+    content += `<br /> \n`;
+    content += `<span style={{fontSize: 16, fontWeight: '400'}}>${row.description}</span> \n`;
+    content += `</td> \n`;
+
+    row.content.forEach((item, index) => {
+      if (index < numberOfColumns - 1) {
+        content += `<td style={{backgroundColor: 'white', padding: '8px 12px 8px 12px'}}> \n`;
+        content += `<img src={'${item}'}/> \n`;
+        content += `</td> \n`;
+      }
+    });
+    content += `</tr> \n`;
+  }); 
+  content += `</table> \n`;
+
+  return content;
+}
 
 function getContent(section, component) { // TODO: content types: Image, Figma, Video etc.
   let content = '';
-  
   switch (section.type) {
-    // case 'table':
-    //   content += `${getTable(section)} \n`;
-    //   break;
+    case 'table':
+      content += `${getTable(section)} \n`;
+      break;
     case 'props':
       content += `${getPropsList(component.props)} \n`;
       break;
@@ -290,14 +316,12 @@ function getContent(section, component) { // TODO: content types: Image, Figma, 
       });
       content += `</div>`;
   }
-
   content += `\n`;
   return content;
 }
 
 function getBasicLayout(section, component) {
   let content = '';
-
   if (section.type !== 'list' && section.layout === 'horizontal') {
     content += `<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}> \n`;
   } else {
@@ -308,13 +332,11 @@ function getBasicLayout(section, component) {
   content += `${getContent(section, component)}`;
   
   content += `</div> \n`;
-
   return content;
 }
 
 function getSecondTab(component) {
   let content = '';
-
   /* Docs */
   if (component.docs) {
     const divider = `<div style={{height: 3, width: '100%', backgroundColor: '#E8ECF0', margin: '60px 0 60px 0'}}/> \n`;
@@ -327,6 +349,5 @@ function getSecondTab(component) {
       });
     }
   }
-
   return content;
 }

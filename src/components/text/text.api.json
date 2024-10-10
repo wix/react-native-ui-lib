@@ -104,21 +104,30 @@
         "type": "table",
         "title": "Table",
         "description": "Examples of using the Text component",
-        "name": "Table Title",
-        "columns": ["Property", "Variant A", "Variant B"],
+        "name": "Table Name",
+        "columns": ["Item", "Content[0]", "Content[1]"],
         "content": [
           {
             "title": "Item #1",
-            "description": "This is item #1",
+            "description": "Item #1 Subtitle",
             "content": [
-              "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-veryWide.png?raw=true"
+              "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true",
+              "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
             ]
           },
           {
             "title": "Item #2",
-            "description": "This is item #2",
+            "description": "Item #2 Subtitle",
             "content": [
-              "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-veryWide.png?raw=true"
+              "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
+            ]
+          },
+          {
+            "title": "Item #3",
+            "description": "Item #3 Subtitle",
+            "content": [
+              "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true",
+              "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
             ]
           }
         ]
