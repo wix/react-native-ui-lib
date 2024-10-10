@@ -4,16 +4,14 @@ import {ItemLayout, ItemsOrder} from './types';
 
 export const WINDOW_WIDTH = Constants.windowWidth;
 export const DEFAULT_NO_OF_COLUMNS = 3;
-export const getItemSize = (numOfColumns: number, viewWidth: number) => viewWidth / numOfColumns;
 
 export const animationConfig = {
   easing: Easing.inOut(Easing.ease),
   duration: 350
 };
 
-const usePresenter = (numOfColumns: number, itemSpacing: number) => {
+const usePresenter = (numOfColumns: number, itemSize: number, itemSpacing: number) => {
   const itemLayout = useSharedValue<ItemLayout>(undefined);
-  const itemSize = getItemSize(numOfColumns, Constants.screenWidth);
 
   return {
     updateItemLayout: (layout: {width: number; height: number}) => {
