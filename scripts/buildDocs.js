@@ -61,18 +61,8 @@ components.forEach(component => {
 
   content += `import Tabs from '@theme/Tabs';\n`;
   content += `import TabItem from '@theme/TabItem';\n\n`;
-  content += `<Tabs>
-    <TabItem value="api" label="API" default>
-      ${getFirstTab(component)}
-    </TabItem>
-    <TabItem value="guidelines" label="Guidelines">
-      Coming soon... 👩🏻‍💻
-      ${getSecondTab(component)}
-    </TabItem>
-    <TabItem value="playground" label="Playground">
-      Coming soon... 🤹🏻‍♀️
-    </TabItem>
-  </Tabs>\n`;
+  content += `${buildHero(component)}\n`;
+  content += `${buildTabs(component)}\n`;
 
   const componentParentDir = componentParentName || isParentComponent ? `/${componentParentName || componentName}` : '';
   const dirPath = `${COMPONENTS_DOCS_DIR}/${component.category}${componentParentDir}`;
@@ -99,7 +89,7 @@ function generateExtendsLink(extendsLink) {
   return extendsText;
 }
 
-function getFirstTab(component) {
+function buildOldDocs(component) {
   let content = '';
 
   /* General Info */
@@ -335,19 +325,50 @@ function getBasicLayout(section, component) {
   return content;
 }
 
-function getSecondTab(component) {
+function buildDocsSections(tab, component) {
+  const sections = tab.sections;
   let content = '';
-  /* Docs */
-  if (component.docs) {
-    const divider = `<div style={{height: 3, width: '100%', backgroundColor: '#E8ECF0', margin: '60px 0 60px 0'}}/> \n`;
-    const sections = component.docs.sections;
-
-    if (sections) {
-      sections.forEach(section => {
-        content += `${getBasicLayout(section, component)}`;
-        content += divider;
-      });
-    }
+  if (sections) {
+    sections.forEach(section => {
+      content += `${getBasicLayout(section, component)}`;
+      content += `<div style={{height: 3, width: '100%', backgroundColor: '#E8ECF0', margin: '60px 0 60px 0'}}/> \n`;
+    });
   }
   return content;
+}
+
+function buildTabs(component) {
+  const tabs = component.docs?.tabs;
+  if (tabs) {
+    let content = '';
+    content += `<Tabs>\n`;
+    tabs.forEach((tab, index) => {
+      content += `<TabItem value="${index}" label="${tab.title}">\n`;
+      if (tab.sections) {
+        content += `${buildDocsSections(tab, component)}\n`;
+      } else {
+        content += `Coming soon... 👩🏻‍💻\n`;
+      }
+      content += `</TabItem>\n`;
+    });
+    content += `</Tabs>\n`;
+    return content;
+  }
+}
+
+function buildHero(component) {
+  const hero = component.docs?.header;
+  
+  if (hero) {
+    const section = {
+      title: component.name,
+      layout: 'horizontal',
+      ...hero,
+      type: 'hero'
+    };
+    
+    let content = '';
+    content += `${getBasicLayout(section, component)}`;
+    return content;
+  }
 }
