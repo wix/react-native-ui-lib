@@ -172,6 +172,7 @@
         "title": "Code",
         "sections": [
           {
+            "title": "Usage",
             "type": "usage"
           },
           {

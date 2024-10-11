@@ -62,6 +62,7 @@ components.forEach(component => {
   if (component.docs) {
     content += `import Tabs from '@theme/Tabs';\n`;
     content += `import TabItem from '@theme/TabItem';\n\n`;
+
     content += `${buildHero(component)}\n`;
     content += `${buildTabs(component)}\n`;
   } else {
@@ -173,11 +174,37 @@ function buildOldDocs(component) {
   return content;
 }
 
+function getTitleStyle(type) {
+  switch (type) {
+    case 'hero':
+      return {
+        fontSize: 48,
+        fontWeight: '700',
+        margin: '0 0 16px 0'
+      };
+    case 'item':
+      return {
+        fontSize: 16,
+        fontWeight: '400'
+      };
+    default:
+      return {
+        fontSize: 32,
+        fontWeight: '700',
+        margin: '0 0 16px 0',
+        color: 'red'
+      };
+  }
+}
+
 function getTitle(title, description, type) {
   let content = '';
   content += `<div style={{margin: '0 48px 40px 0'}}> \n`;
   if (title) {
-    content += type === undefined ? `#### ${title} \n` : type === 'hero' ? `# ${title} \n` : `## ${title} \n`;
+    // const style = getTitleStyle(type);
+    // content += `<span style={{margin: '0 0 16px 0', fontSize: '${style.fontSize}'}}>${title}</span> \n`;
+    // content += `<br /> \n`;
+    content += type === 'item' ? `#### ${title} \n` : type === 'hero' ? `# ${title} \n` : `## ${title} \n`;
   }
   if (description) {
     content += `${description} \n`;
@@ -186,9 +213,13 @@ function getTitle(title, description, type) {
   return content;
 }
 
-function getContentItem(item, layout, isLast) {
+function getContentItem(item, isLast) {
+  const data = {
+    ...item,
+    type: 'item'
+  };
   let content = '';
-  content += `${getBasicLayout(item, undefined, layout)}`;
+  content += `${getBasicLayout(data)}`;
   if (!isLast) {
     content += `<div style={{height: 40}}/> \n`;
   }
@@ -256,8 +287,9 @@ function getTable(section) {
   const cellWidth = 100 / numberOfColumns;
 
   let content = '';
-  content += `#### ${section.name} \n`;
-  
+  content += `<span style={{fontSize: 20, fontWeight: '700', display: 'block'}}>${section.name}</span> \n`;
+  content += `<br /> \n`;
+
   content += `<table> \n`;
   /** Headers */
   content += `<tr> \n`;
@@ -293,7 +325,6 @@ function getTable(section) {
 function getSnippet(component) {
   if (component.snippet) {
     let content = '';
-    content += `### Usage\n`;
     content += '``` jsx live\n';
     content += component.snippet?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), '')).join('\n');
     content += '\n```\n';
@@ -374,8 +405,8 @@ function getContent(section, component) { // TODO: content types: Image, Figma, 
       break;
     case 'list':
       section.content.forEach((item, index) => {
-        const isLast = index === section.length - 1;
-        content += `${getContentItem(item, section.layout, isLast)} \n`;
+        const isLast = index === section.content.length - 1;
+        content += `${getContentItem(item, isLast)} \n`;
       });
       break;
     default:
@@ -434,7 +465,7 @@ function buildTabs(component) {
   const tabs = component.docs?.tabs;
   if (tabs) {
     let content = '';
-    content += `<Tabs>\n`; //TODO: style tabs
+    content += `<Tabs>\n`; //TODO: style tabs (bottom margin: 40px, color, underline color)
     tabs.forEach((tab, index) => {
       content += `<TabItem value="${index}" label="${tab.title}">\n`;
       if (tab.sections) {
