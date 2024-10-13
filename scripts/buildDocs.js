@@ -311,7 +311,7 @@ function getTable(section) {
     row.content.forEach((item, index) => { // TODO: content types: Image, Figma, Video etc.
       if (index < numberOfColumns - 1) {
         content += `<td style={{backgroundColor: 'white', padding: '8px 12px 8px 12px'}}> \n`;
-        content += `<img src={'${item}'}/> \n`;
+        content += `<img src={'${item}'} style={{display: 'block'}}/> \n`;
         content += `</td> \n`;
       }
     });
@@ -410,10 +410,12 @@ function getContent(section, component) { // TODO: content types: Image, Figma, 
       });
       break;
     default:
-      content += `<div style={{border: '1px solid #E8ECF0'}}> \n`;
-      section.content.forEach(item => {
+      content += `<div> \n`;
+      section.content.forEach((item, index) => {
+        const isLast = index === section.content.length - 1;
+        const margin = isLast ? '0' : '0 0 40px 0';
         content += `<div> \n`;
-        content += `<img src={'${item}'}/> \n`; // TODO: stretch image to fit container
+        content += `<img src={'${item}'} style={{display: 'block', margin: '${margin}'}}/> \n`;
         content += `</div> \n`;
       });
       content += `</div>`;
@@ -430,9 +432,7 @@ function getBasicLayout(section, component) {
     content += `<div> \n`;
   }
 
-  if (section.title) {
-    content += `${getTitle(section.title, section.description, section.type)}`;
-  }
+  content += `${getTitle(section.title, section.description, section.type)}`;
   content += `${getContent(section, component)}`;
   
   content += `</div> \n`;
@@ -484,10 +484,10 @@ function buildHero(component) {
   const hero = component.docs?.header;
   
   if (hero) {
-    const isIncubatorComponent = component.category === 'incubator';
-    const name = isIncubatorComponent ? `Incubator.${component.name}` : component.name;
+    // const isIncubatorComponent = component.category === 'incubator';
+    // const name = isIncubatorComponent ? `Incubator.${component.name}` : component.name;
     const section = {
-      title: name,
+      // title: name,
       layout: 'horizontal',
       ...hero,
       type: 'hero'
