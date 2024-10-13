@@ -174,41 +174,41 @@ function buildOldDocs(component) {
   return content;
 }
 
-function getTitleStyle(type) {
+function getTitleSize(type) {
   switch (type) {
     case 'hero':
-      return {
-        fontSize: 48,
-        fontWeight: '700',
-        margin: '0 0 16px 0'
-      };
+      return 48;
     case 'item':
-      return {
-        fontSize: 16,
-        fontWeight: '400'
-      };
+      return 16;
     default:
-      return {
-        fontSize: 32,
-        fontWeight: '700',
-        margin: '0 0 16px 0',
-        color: 'red'
-      };
+      return 32;
+  }
+}
+
+function getTitleWeight(type) {
+  switch (type) {
+    case 'item':
+      return '400';
+    default:
+      return '700';
   }
 }
 
 function getTitle(title, description, type) {
   let content = '';
-  content += `<div style={{margin: '0 48px 40px 0'}}> \n`;
+  content += `<div style={{alignContent: 'start'}}> \n`;
+  
   if (title) {
-    // const style = getTitleStyle(type);
-    // content += `<span style={{margin: '0 0 16px 0', fontSize: '${style.fontSize}'}}>${title}</span> \n`;
-    // content += `<br /> \n`;
-    content += type === 'item' ? `#### ${title} \n` : type === 'hero' ? `# ${title} \n` : `## ${title} \n`;
+    const size = getTitleSize(type);
+    const weight = getTitleWeight(type);
+    content += `<span style={{display: 'block', lineHeight: '${size}px', fontSize: ${size}, fontWeight: ${weight}}}>${title}</span> \n`;
+    content += `<br /> \n`;
   }
+
   if (description) {
     content += `${description} \n`;
   }
+
   content += `</div> \n`;
   return content;
 }
@@ -484,8 +484,10 @@ function buildHero(component) {
   const hero = component.docs?.header;
   
   if (hero) {
+    const isIncubatorComponent = component.category === 'incubator';
+    const name = isIncubatorComponent ? `Incubator.${component.name}` : component.name;
     const section = {
-      title: component.name,
+      title: name,
       layout: 'horizontal',
       ...hero,
       type: 'hero'
