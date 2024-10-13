@@ -194,6 +194,15 @@ function getTitleWeight(type) {
   }
 }
 
+function getDescriptionColor(type) {
+  switch (type) {
+    case 'item':
+      return '#6E7881';
+    default:
+      return '#495059';
+  }
+}
+
 function getCodeExample(component) {
   let content = '';
   content += `<a style={{fontSize: '16px', fontWeight: '700', textDecoration: 'underline'}}>[Code Example](${component.example})</a> \n`;
@@ -204,7 +213,7 @@ function getTitle(type, title) {
   const size = getTitleSize(type);
   const weight = getTitleWeight(type);
   let content = '';
-  content += `<span style={{lineHeight: '${size}px', fontSize: ${size}, fontWeight: ${weight}}}>${title}</span> \n`;
+  content += `<span style={{lineHeight: '${size}px', fontSize: ${size}, fontWeight: ${weight}, margin: '0 0 16px 0'}}>${title}</span> \n`;
   content += `<br /> \n`;
   return content;
 }
@@ -214,7 +223,7 @@ function getHeader(title, description, type, component) {
   
   switch (type) {
     case 'usage':
-      content += `<div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', margin: '0 0 28px 0'}}> \n`;
+      content += `<div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', margin: '0 0 12px 0'}}> \n`;
       content += `${getTitle(type, title)} \n`;
       content += `${getCodeExample(component)} \n`;
       content += `</div> \n`;
@@ -225,7 +234,8 @@ function getHeader(title, description, type, component) {
         content += `${getTitle(type, title)} \n`;
       }
       if (description) {
-        content += `${description} \n`;
+        const color = getDescriptionColor(type);
+        content += `<span style={{display: 'block', margin: '0 0 40px 0', fontSize: '16px', fontWeight: '400', color: '${color}'}}>${description}</span> \n`;
       }
       content += `</div> \n`;
       break;
@@ -274,6 +284,8 @@ function getTag(label, color) {
 
 function getPropsList(props) {
   if (props) {
+    const color = getDescriptionColor('item');
+
     let content = '';
     _.sortBy(props, p => p.name)?.forEach(prop => {
       content += `<div style={{display: 'flex', flexDirection: 'row', height: 28, margin: '0 0 12px 0'}}> \n`;
@@ -287,7 +299,7 @@ function getPropsList(props) {
       }
       content += `</div> \n`;
 
-      content += `${prop.description} \n`;
+      content += `<span style={{display: 'block', margin: '0 0 28px 0', fontSize: '16px', fontWeight: '400', color: '${color}'}}>${prop.description}</span> \n`;
       // TODO: Add default value and note
       // if (prop.default) {
       //   content += `<span style={{fontSize: 14, fontWeight: 'bold', margin: '0 0 6px 0'}}>Default: ${prop.default}</span> \n`;
@@ -325,7 +337,7 @@ function getTable(section) {
     content += `<td style={{backgroundColor: 'white', margin: '20px 12px 20px 12px', alignContent: 'start'}}> \n`;
     content += `<span style={{fontSize: 16, fontWeight: '500'}}>${row.title}</span> \n`;
     content += `<br /> \n`;
-    content += `<span style={{fontSize: 16, fontWeight: '400'}}>${row.description}</span> \n`;
+    content += `<span style={{fontSize: 16, fontWeight: '400', color: '#6E7881'}}>${row.description}</span> \n`;
     content += `</td> \n`;
 
     row.content.forEach((item, index) => { // TODO: content types: Image, Figma, Video etc.
