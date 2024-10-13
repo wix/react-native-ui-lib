@@ -8,6 +8,8 @@ import SegmentedControl from 'react-native-ui-lib/segmentedControl';
 import Incubator from 'react-native-ui-lib/incubator';
 
 const {Toast} = Incubator;
+const SYSTEM_COLORS = ['grey', 'violet', 'blue', 'green', 'red', 'yellow', 'orange'];
+const BASE_PALETTE = [1, 5, 10, 20, 30, 40, 50, 60, 70, 80];
 const TOKENS_CATEGORIES = ['Background', 'Text', 'Icon', 'Outline', 'System'];
 const TOKENS_ARRAYS = {};
 
@@ -92,7 +94,20 @@ export function ColorsTable() {
     return <View style={vertical ? styles.verticalDivider : styles.horizontalDivider} bg-$outlineDefault/>;
   };
 
-  const renderToken = (token, index) => {
+  const renderTokenBox = (token, index, mode) => (
+    <TouchableOpacity onPress={() => onTokenPress(Colors.getColor(token, mode))} flex marginV-s1>
+      <View key={`${token}-${index}-${mode}`} center row marginB-3>
+        <View
+          br40
+          key={`${token}-${index}-${mode}`}
+          backgroundColor={Colors.getColor(token, mode)}
+          style={styles.tokenContainerStyle}
+        />
+      </View>
+    </TouchableOpacity>
+  );
+
+  const renderTokenRow = (token, index) => {
     return (
       <>
         <View key={`${token}-${index}`} marginH-s3 row>
@@ -102,31 +117,9 @@ export function ColorsTable() {
             </Text>
           </View>
           {renderDivider(true)}
-          <TouchableOpacity onPress={() => onTokenPress(Colors[token])} flex marginV-s1>
-            <View key={`${token}-${index}`} center row marginB-3>
-              <View
-                br40
-                marginR-10
-                key={`${token}-${index}-light`}
-                marginL-10
-                backgroundColor={Colors[token]}
-                style={styles.tokenContainerStyle}
-              />
-            </View>
-          </TouchableOpacity>
+          {renderTokenBox(token, index, 'light')}
           {renderDivider(true)}
-          <TouchableOpacity onPress={() => onTokenPress(Colors.getColor(token, 'dark'))} flex marginV-s1>
-            <View key={`${token}-${index}`} center row marginB-3>
-              <View
-                br40
-                marginR-10
-                key={`${token}-${index}-dark`}
-                marginL-10
-                backgroundColor={Colors.getColor(token, 'dark')}
-                style={styles.tokenContainerStyle}
-              />
-            </View>
-          </TouchableOpacity>
+          {renderTokenBox(token, index, 'dark')}
         </View>
         {renderDivider()}
       </>
@@ -156,7 +149,7 @@ export function ColorsTable() {
         {renderTableHeader(['Token', 'Light', 'Dark'])}
         <ScrollView style={{height: 700}} ref={scrollViewRef}>
           {TOKENS_ARRAYS[category].map((token, index) => {
-            return renderToken(token, index);
+            return renderTokenRow(token, index);
           })}
         </ScrollView>
       </View>
@@ -188,9 +181,6 @@ export function ColorsTable() {
 }
 
 export function ColorsPalette() {
-  const SYSTEM_COLORS = ['grey', 'violet', 'blue', 'green', 'red', 'yellow', 'orange'];
-  const BASE_PALETTE = [1, 5, 10, 20, 30, 40, 50, 60, 70, 80];
-
   const renderTints = color => {
     const colorName = color.charAt(0).toUpperCase() + color.slice(1);
     return (
@@ -256,7 +246,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 100,
     borderWidth: 3,
-    borderColor: Colors.grey70
+    borderColor: Colors.grey60
   },
   horizontalDivider: {
     width: '100%',
