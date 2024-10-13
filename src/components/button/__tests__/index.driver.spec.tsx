@@ -2,10 +2,9 @@ import React, {useState} from 'react';
 import {waitFor, render} from '@testing-library/react-native';
 import View from '../../view';
 import Text from '../../text';
-import Button from '../index';
-import {ImageSourcePropType} from 'react-native';
-import {ButtonDriver} from '../Button.driver.new';
 import {TextDriver} from '../../text/Text.driver.new';
+import {ButtonDriver} from '../Button.driver.new';
+import Button, {ButtonProps} from '../index';
 
 const BUTTON_ID = 'button_test_id';
 const CHILDREN_TEXT_ID = 'children_test_id';
@@ -17,6 +16,18 @@ describe('Button', () => {
     const renderTree = render(<WrapperScreenWithButton/>);
     const buttonDriver = ButtonDriver({renderTree, testID: 'button_test_id'});
     expect(await buttonDriver.exists()).toBeTruthy();
+  });
+
+  describe('style', () => { 
+    it('should render a button with custom style', async () => {
+      const style = {borderWidth: 2, borderColor: 'green'};
+      const renderTree = render(<WrapperScreenWithButton style={style}/>);
+      const buttonDriver = ButtonDriver({renderTree, testID: 'button_test_id'});
+      
+      expect(buttonDriver.exists()).toBeTruthy();
+      expect(await buttonDriver.getStyle().borderWidth).toEqual(style.borderWidth);
+      expect(await buttonDriver.getStyle().borderColor).toEqual(style.borderColor);
+    });
   });
 
   describe('custom button', () => {
@@ -35,7 +46,7 @@ describe('Button', () => {
     });
   });
 
-  describe('OnPress', () => {
+  describe('onPress', () => {
     let onPressCallback: jest.Mock;
     beforeEach(() => (onPressCallback = jest.fn()));
     afterEach(() => onPressCallback.mockClear());
@@ -100,7 +111,7 @@ describe('Button', () => {
   describe('more complicated screen', () => {
     //todo take it out of this file. to the demo screens maybe
     it('should change text values according to state changes from buttons pressing', async () => {
-      const renderTree = render(StatefulScreenWithTextsAndButtonss());
+      const renderTree = render(StatefulScreen());
       const text1Driver = TextDriver({testID: `text_1`, renderTree});
       const text2Driver = TextDriver({testID: `text_2`, renderTree});
       const button2Driver = ButtonDriver({testID: `${BUTTON_ID}2`, renderTree});
@@ -119,16 +130,10 @@ describe('Button', () => {
   });
 });
 
-function WrapperScreenWithButton(buttonProps: {
-    onPress?: () => void;
-    label?: string;
-    iconSource?: ImageSourcePropType;
-    disabled?: boolean;
-  } = {}) {
-  const {onPress, label, iconSource, disabled} = buttonProps;
+function WrapperScreenWithButton(buttonProps: ButtonProps = {}) {
   return (
     <View testID={'wrapper_screen_test_id'}>
-      <Button testID={BUTTON_ID} onPress={onPress} label={label} iconSource={iconSource} disabled={disabled}/>
+      <Button {...buttonProps} testID={BUTTON_ID}/>
     </View>
   );
 }
@@ -144,7 +149,7 @@ function WrapperScreenWithCustomButton(buttonProps: {onPress?: () => void} = {})
   );
 }
 
-const StatefulScreenWithTextsAndButtonss = () => <StatefulScreenWithTextsAndButtons/>;
+const StatefulScreen = () => <StatefulScreenWithTextsAndButtons/>;
 
 const StatefulScreenWithTextsAndButtons = () => {
   const [count1, setCount1] = useState(0);

@@ -100,8 +100,8 @@ class Scheme {
   /**
    * Retrieve scheme by current scheme type
    */
-  getScheme() {
-    return this.schemes[this.getSchemeType()];
+  getScheme(schemeType = this.getSchemeType()) {
+    return this.schemes[schemeType];
   }
 
   /**

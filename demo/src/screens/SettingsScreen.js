@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, I18nManager} from 'react-native';
-import {Colors, View, Text, Picker, Incubator, Switch} from 'react-native-ui-lib'; //eslint-disable-line
+import {Colors, View, Text, Picker, Incubator, Switch, Spacings} from 'react-native-ui-lib'; //eslint-disable-line
 import {navigationData} from './MenuStructure';
 import Storage, {DEFAULT_SCREEN, IS_RTL} from '../storage';
 
@@ -66,10 +66,15 @@ class SettingsScreen extends Component {
     const {extraSettingsUI} = this.props;
     const filteredScreens = _.filter(screens, screen => !_.isUndefined(screen.value));
 
+    const _extraSettingsUI = extraSettingsUI?.();
+
     return (
       <View flex padding-25 bg-grey80>
-        <View flex>
-          <Text text60>Default Screen</Text>
+        <Text text40 marginB-s5>
+          Settings
+        </Text>
+
+        <View style={styles.block}>
           <Text text70 marginB-20>
             Set default screen to open on app startup
           </Text>
@@ -82,31 +87,27 @@ class SettingsScreen extends Component {
             onChange={this.setDefaultScreen}
             items={filteredScreens}
           />
-
-          <View style={{borderWidth: 1, borderColor: Colors.grey70, marginTop: 40}}>
-            <View style={[{padding: 5, borderBottomWidth: 1}, styles.block]}>
-              <Text text80 grey20>
-                Current layout direction
-              </Text>
-            </View>
-            <View center margin-5 padding-10>
-              <Text text70>{isRTL ? 'RIGHT to LEFT' : 'LEFT to RIGHT'}</Text>
-            </View>
-
-            <View row spread centerV style={[{padding: 12, borderTopWidth: 1}, styles.block]}>
-              <Switch value={isRTL} onValueChange={this.onDirectionChange}/>
-              <Text text80 grey20>
-                Force RTL
-              </Text>
-            </View>
-          </View>
-
-          {extraSettingsUI?.()}
         </View>
 
-        <Text text30 grey10>
-          Settings
-        </Text>
+        <View style={styles.block} marginT-s4>
+          <View row spread centerV>
+            <Text text80 grey20>
+              Force RTL
+            </Text>
+            <Switch value={isRTL} onValueChange={this.onDirectionChange}/>
+          </View>
+
+          <View center marginT-5>
+            <Text text70>{isRTL ? 'RIGHT to LEFT' : 'LEFT to RIGHT'}</Text>
+          </View>
+        </View>
+
+        {_extraSettingsUI && (
+          <View marginT-s4 style={styles.block}>
+            {_extraSettingsUI}
+          </View>
+        )}
+
         <Incubator.Toast
           visible={showRefreshMessage}
           message={`Default screen set to: ${defaultScreen?.label}. Please refresh the app.`}
@@ -118,8 +119,10 @@ class SettingsScreen extends Component {
 
 const styles = StyleSheet.create({
   block: {
-    borderColor: Colors.grey70,
-    backgroundColor: Colors.grey80
+    borderWidth: 1,
+    borderColor: Colors.$outlineNeutral,
+    backgroundColor: Colors.grey80,
+    padding: Spacings.s3
   }
 });
 

@@ -42,8 +42,12 @@
     }
   ],
   "snippet": [
-    "<Card flex center onPress={() => console.log('pressed')}$1>",
-    " <Card.Image source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/images/card-example.jpg'$2}}/>",
+    "<Card  width={70} height={70} onPress={() => console.log('pressed')}$1>",
+    " <Card.Image",
+    "   width={70}",
+    "   height={70}",
+    "   source={{uri: 'https://images.pexels.com/photos/248412/pexels-photo-248412.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=200'$2}}",
+    " />",
     "</Card>"
   ]
 }

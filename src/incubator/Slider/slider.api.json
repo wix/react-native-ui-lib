@@ -103,7 +103,7 @@
     "  value={0$1}",
     "  minimumValue={0$2}",
     "  maximumValue={10$3}",
-    "  onValueChange={() => console.log('value changed')$4}",
+    "  onValueChange={value => console.log(`value changed: ${value}`)$4}",
     "/>"
   ]
 }
