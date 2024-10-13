@@ -288,6 +288,8 @@ function getPropsList(props) {
 
     let content = '';
     _.sortBy(props, p => p.name)?.forEach(prop => {
+      const defaultValue = prop.default ? `. Default is ${prop.default}` : '';
+
       content += `<div style={{display: 'flex', flexDirection: 'row', height: 28, margin: '0 0 12px 0'}}> \n`;
       content += `### ${prop.name} \n`;
       content += `${getTag(prop.type, getTypeColor(prop.type))} \n`;
@@ -299,11 +301,8 @@ function getPropsList(props) {
       }
       content += `</div> \n`;
 
-      content += `<span style={{display: 'block', margin: '0 0 28px 0', fontSize: '16px', fontWeight: '400', color: '${color}'}}>${prop.description}</span> \n`;
-      // TODO: Add default value and note
-      // if (prop.default) {
-      //   content += `<span style={{fontSize: 14, fontWeight: 'bold', margin: '0 0 6px 0'}}>Default: ${prop.default}</span> \n`;
-      // }
+      content += `<span style={{display: 'block', margin: '0 0 28px 0', fontSize: '16px', fontWeight: '400', color: '${color}'}}>${prop.description}${defaultValue}</span> \n`;
+      // TODO: Add note
       // content += `${prop.note} \n`;
 
       content += `\n`;
