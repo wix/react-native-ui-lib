@@ -465,9 +465,9 @@ function buildTabs(component) {
   const tabs = component.docs?.tabs;
   if (tabs) {
     let content = '';
-    content += `<Tabs>\n`; //TODO: style tabs (bottom margin: 40px, color, underline color)
+    content += `<Tabs className="main-tabs">\n`;
     tabs.forEach((tab, index) => {
-      content += `<TabItem value="${index}" label="${tab.title}">\n`;
+      content += `<TabItem value="${index}" label="${tab.title}" attributes={{className: "single-tab"}}>\n`;
       if (tab.sections) {
         content += `${buildDocsSections(tab, component)}\n`;
       } else {
