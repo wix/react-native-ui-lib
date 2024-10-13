@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, {useState, useRef} from 'react';
-import {ScrollView, StyleSheet, Clipboard} from 'react-native';
+import Clipboard from '@react-native-clipboard/clipboard';
+import {ScrollView, StyleSheet} from 'react-native';
 import {Colors, Spacings} from 'react-native-ui-lib/style';
 import {View, Text, TouchableOpacity} from 'react-native-ui-lib/core';
 import SegmentedControl from 'react-native-ui-lib/segmentedControl';
@@ -188,7 +189,7 @@ export function ColorsTable() {
 
 export function ColorsPalette() {
   const SYSTEM_COLORS = ['grey', 'violet', 'blue', 'green', 'red', 'yellow', 'orange'];
-  const BASE_PALETTE = ['1', '5', '10', '20', '30', '40', '50', '60', '70', '80'];
+  const BASE_PALETTE = [1, 5, 10, 20, 30, 40, 50, 60, 70, 80];
 
   const renderTints = color => {
     const colorName = color.charAt(0).toUpperCase() + color.slice(1);
