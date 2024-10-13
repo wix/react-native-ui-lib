@@ -235,7 +235,7 @@ function getHeader(title, description, type, component) {
       }
       if (description) {
         const color = getDescriptionColor(type);
-        content += `<span style={{display: 'block', margin: '0 0 40px 0', fontSize: '16px', fontWeight: '400', color: '${color}'}}>${description}</span> \n`;
+        content += `<span style={{display: 'block', margin: '0 40px 40px 0', fontSize: '16px', fontWeight: '400', color: '${color}'}}>${description}</span> \n`;
       }
       content += `</div> \n`;
       break;
