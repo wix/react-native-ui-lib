@@ -194,22 +194,42 @@ function getTitleWeight(type) {
   }
 }
 
-function getTitle(title, description, type) {
+function getCodeExample(component) {
   let content = '';
-  content += `<div style={{alignContent: 'start'}}> \n`;
+  content += `<a style={{fontSize: '16px', fontWeight: '700', textDecoration: 'underline'}}>[Code Example](${component.example})</a> \n`;
+  return content;
+}
+
+function getTitle(type, title) {
+  const size = getTitleSize(type);
+  const weight = getTitleWeight(type);
+  let content = '';
+  content += `<span style={{lineHeight: '${size}px', fontSize: ${size}, fontWeight: ${weight}}}>${title}</span> \n`;
+  content += `<br /> \n`;
+  return content;
+}
+
+function getHeader(title, description, type, component) {
+  let content = '';
   
-  if (title) {
-    const size = getTitleSize(type);
-    const weight = getTitleWeight(type);
-    content += `<span style={{display: 'block', lineHeight: '${size}px', fontSize: ${size}, fontWeight: ${weight}}}>${title}</span> \n`;
-    content += `<br /> \n`;
+  switch (type) {
+    case 'usage':
+      content += `<div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', margin: '0 0 28px 0'}}> \n`;
+      content += `${getTitle(type, title)} \n`;
+      content += `${getCodeExample(component)} \n`;
+      content += `</div> \n`;
+      break;
+    default:
+      content += `<div style={{alignContent: 'start'}}> \n`;
+      if (title) {
+        content += `${getTitle(type, title)} \n`;
+      }
+      if (description) {
+        content += `${description} \n`;
+      }
+      content += `</div> \n`;
+      break;
   }
-
-  if (description) {
-    content += `${description} \n`;
-  }
-
-  content += `</div> \n`;
   return content;
 }
 
@@ -432,7 +452,7 @@ function getBasicLayout(section, component) {
     content += `<div> \n`;
   }
 
-  content += `${getTitle(section.title, section.description, section.type)}`;
+  content += `${getHeader(section.title, section.description, section.type, component)}`;
   content += `${getContent(section, component)}`;
   
   content += `</div> \n`;
