@@ -46,6 +46,8 @@ export function MobileDeviceWrapper({children}) {
     </View>
   );
 
+  const findSelectedIndex = () => simulatorOptions.findIndex(option => option.value === type);
+
   const wrapperStyle = useMemo(() => [styles.simulatorWrapper, simulatorSize], [simulatorSize]);
 
   return (
@@ -55,7 +57,7 @@ export function MobileDeviceWrapper({children}) {
           Choose Type
         </Text>
         <SegmentedControl
-          initialIndex={0}
+          initialIndex={findSelectedIndex()}
           segments={simulatorOptions}
           onChangeIndex={index => setType(simulatorOptions[index].value)}
           backgroundColor={Colors.$backgroundDefault}
