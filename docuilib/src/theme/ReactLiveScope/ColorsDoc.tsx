@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {useState, useRef} from 'react';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {ScrollView, StyleSheet} from 'react-native';
@@ -11,7 +10,36 @@ const {Toast} = Incubator;
 const SYSTEM_COLORS = ['grey', 'violet', 'blue', 'green', 'red', 'yellow', 'orange'];
 const BASE_PALETTE = [1, 5, 10, 20, 30, 40, 50, 60, 70, 80];
 const TOKENS_CATEGORIES = ['Background', 'Text', 'Icon', 'Outline', 'System'];
-const TOKENS_ARRAYS = {};
+
+const categorizeTokens = tokens => {
+  const categories = {
+    Background: [],
+    Text: [],
+    Icon: [],
+    Outline: [],
+    System: []
+  };
+
+  for (const key in tokens) {
+    if (key.startsWith('$background')) {
+      categories.Background.push(key);
+    } else if (key.startsWith('$text')) {
+      categories.Text.push(key);
+    } else if (key.startsWith('$icon')) {
+      categories.Icon.push(key);
+    } else if (key.startsWith('$outline')) {
+      categories.Outline.push(key);
+    } else if (key.startsWith('$black') || key.startsWith('$white')) {
+      categories.System.push(key);
+    }
+  }
+
+  return categories;
+};
+
+const Divider = ({vertical = false}) => (
+  <View style={vertical ? styles.verticalDivider : styles.horizontalDivider} bg-$outlineDefault/>
+);
 
 export function ColorsTable() {
   const [selectedCategory, setSelectedCategory] = useState('Background');
@@ -21,45 +49,23 @@ export function ColorsTable() {
 
   const scrollViewRef = useRef();
 
+  const TOKENS_ARRAYS = categorizeTokens(Colors);
+
   const scrollToTop = () => {
     if (scrollViewRef.current) {
-      // @ts-ignore
-      scrollViewRef.current?.scrollTo({x: 0, y: 0, animated: true});
+      //@ts-ignore
+      scrollViewRef.current.scrollTo({x: 0, y: 0, animated: true});
     }
   };
 
-  const CategoriesSegments = [];
-  TOKENS_CATEGORIES.map((category, index) => {
-    CategoriesSegments.push({
-      label: category,
-      onPress: () => {
-        scrollToTop();
-        setSelectedCategory(category);
-        setSelectedSegment(index);
-      }
-    });
-    return (TOKENS_ARRAYS[category] = []);
-  });
-
-  for (const key in Colors) {
-    // TODO: ts-expect-error is added since the category is already defined in TOKENS_CATEGORIES, remove it once the issue is resolved
-    if (key.startsWith('$background')) {
-      //@ts-expect-error
-      TOKENS_ARRAYS.Background.push(key);
-    } else if (key.startsWith('$text')) {
-      //@ts-expect-error
-      TOKENS_ARRAYS.Text.push(key);
-    } else if (key.startsWith('$icon')) {
-      //@ts-expect-error
-      TOKENS_ARRAYS.Icon.push(key);
-    } else if (key.startsWith('$outline')) {
-      //@ts-expect-error
-      TOKENS_ARRAYS.Outline.push(key);
-    } else if (key.startsWith('$black') || key.startsWith('$white')) {
-      //@ts-expect-error
-      TOKENS_ARRAYS.System.push(key);
+  const CategoriesSegments = TOKENS_CATEGORIES.map((category, index) => ({
+    label: category,
+    onPress: () => {
+      scrollToTop();
+      setSelectedCategory(category);
+      setSelectedSegment(index);
     }
-  }
+  }));
 
   const onTokenPress = value => {
     Clipboard.setString(value);
@@ -76,30 +82,12 @@ export function ColorsTable() {
     setShowToast(false);
   };
 
-  const renderToast = () => {
-    return (
-      <Toast
-        key={`${showToast}-${message}`}
-        visible={showToast}
-        position={'bottom'}
-        message={message}
-        swipeable
-        onDismiss={dismissToast}
-        autoDismiss={3000}
-      />
-    );
-  };
-
-  const renderDivider = (vertical?: boolean) => {
-    return <View style={vertical ? styles.verticalDivider : styles.horizontalDivider} bg-$outlineDefault/>;
-  };
-
-  const renderTokenBox = (token, index, mode) => (
-    <TouchableOpacity onPress={() => onTokenPress(Colors.getColor(token, mode))} flex marginV-s1>
-      <View key={`${token}-${index}-${mode}`} center row marginB-3>
+  const TokenBox = ({token, index, mode, onPress}) => (
+    <TouchableOpacity onPress={() => onPress(Colors.getColor(token, mode))} flex marginV-s1>
+      <View key={`${token}-${index}-${mode}-container`} center row marginB-3>
         <View
-          br40
           key={`${token}-${index}-${mode}`}
+          br40
           backgroundColor={Colors.getColor(token, mode)}
           style={styles.tokenContainerStyle}
         />
@@ -107,54 +95,48 @@ export function ColorsTable() {
     </TouchableOpacity>
   );
 
-  const renderTokenRow = (token, index) => {
-    return (
-      <>
-        <View key={`${token}-${index}`} marginH-s3 row>
-          <View key={`${token}-${index}`} flex center row marginB-3>
-            <Text flexG $textDefault text70R>
-              {token}
-            </Text>
-          </View>
-          {renderDivider(true)}
-          {renderTokenBox(token, index, 'light')}
-          {renderDivider(true)}
-          {renderTokenBox(token, index, 'dark')}
+  const TokenRow = ({token, index, onTokenPress}) => (
+    <>
+      <View marginH-s3 row>
+        <View flex center row marginB-3>
+          <Text flexG $textDefault text70R>
+            {token}
+          </Text>
         </View>
-        {renderDivider()}
-      </>
-    );
-  };
+        <Divider vertical/>
+        <TokenBox token={token} index={index} mode="light" onPress={onTokenPress}/>
+        <Divider vertical/>
+        <TokenBox token={token} index={index} mode="dark" onPress={onTokenPress}/>
+      </View>
+      <Divider/>
+    </>
+  );
 
-  const renderTableHeader = columns => {
-    return (
-      <View row spread>
-        {_.map(columns, column => (
-          <View bg-grey70 flex center>
-            <Text text70BL marginL-10>
-              {column}
-            </Text>
-          </View>
+  const TableHeader = ({columns}) => (
+    <View row spread>
+      {columns.map(column => (
+        <View bg-grey70 flex center key={column}>
+          <Text text70BL marginL-10>
+            {column}
+          </Text>
+        </View>
+      ))}
+    </View>
+  );
+
+  const CategoryToken = ({category, tokensArray, onTokenPress, scrollViewRef}) => (
+    <View>
+      <Text text60 marginT-10 marginB-10 marginL-10>
+        {category}
+      </Text>
+      <TableHeader columns={['Token', 'Light', 'Dark']}/>
+      <ScrollView style={{height: 700}} ref={scrollViewRef}>
+        {tokensArray[category].map((token, index) => (
+          <TokenRow key={token} token={token} index={index} onTokenPress={onTokenPress}/>
         ))}
-      </View>
-    );
-  };
-
-  const renderCategoryToken = category => {
-    return (
-      <View key={category}>
-        <Text text60 marginT-10 marginB-10 marginL-10>
-          {category}
-        </Text>
-        {renderTableHeader(['Token', 'Light', 'Dark'])}
-        <ScrollView style={{height: 700}} ref={scrollViewRef}>
-          {TOKENS_ARRAYS[category].map((token, index) => {
-            return renderTokenRow(token, index);
-          })}
-        </ScrollView>
-      </View>
-    );
-  };
+      </ScrollView>
+    </View>
+  );
 
   return (
     <View bg-grey80 flex padding-20 bg-$backgroundDefault>
@@ -166,69 +148,82 @@ export function ColorsTable() {
           segments={CategoriesSegments}
           initialIndex={selectedSegment}
         />
-        {renderToast()}
+        <Toast
+          key={`${showToast}-${message}`}
+          visible={showToast}
+          message={message}
+          swipeable
+          onDismiss={dismissToast}
+          autoDismiss={3000}
+        />
       </View>
       <View marginL-10 marginT-10 style={{width: '80%'}}>
-        {TOKENS_CATEGORIES.map(category => {
-          if (category === selectedCategory) {
-            return renderCategoryToken(category);
-          }
-          return undefined;
-        })}
+        {TOKENS_CATEGORIES.map(category =>
+          category === selectedCategory ? (
+            <CategoryToken
+              key={category}
+              category={category}
+              tokensArray={TOKENS_ARRAYS}
+              onTokenPress={onTokenPress}
+              scrollViewRef={scrollViewRef}
+            />
+          ) : null)}
       </View>
     </View>
   );
 }
 
 export function ColorsPalette() {
-  const renderTints = color => {
+  const ColorBox = ({color, colorKey, colorName}) => {
+    const colorProp = {[`bg-${color}${colorKey}`]: true};
+    const textColor = colorKey < 40 ? Colors.white : Colors.black;
+
+    return (
+      <View>
+        <View center style={styles.colorContainer} {...colorProp}>
+          <Text style={{color: textColor}}>{'AAA'}</Text>
+        </View>
+        <View>
+          <Text $textDisabled text80R>
+            {`${colorName} ${colorKey}`}
+          </Text>
+          <Text $textDisabled text80R>
+            {Colors[`${color}${colorKey}`]}
+          </Text>
+        </View>
+      </View>
+    );
+  };
+
+  const ColorTints = ({color}) => {
     const colorName = color.charAt(0).toUpperCase() + color.slice(1);
+
     return (
       <View row spread marginB-20>
-        {BASE_PALETTE.map((colorKey, index) => {
-          const colorProp = {[`bg-${color}${colorKey}`]: true};
-          const textColor = colorKey < 40 ? Colors.white : Colors.black;
-          return (
-            <View key={`${colorKey}-${index}`}>
-              <View key={`${colorKey}-${index}`} center style={styles.colorContainer} {...colorProp}>
-                <Text style={{color: textColor}}>{'AAA'}</Text>
-              </View>
-              <View>
-                <Text $textDisabled text80R>
-                  {colorName + ' ' + colorKey}
-                </Text>
-                <Text $textDisabled text80R>
-                  {Colors[`${color}${colorKey}`]}
-                </Text>
-              </View>
-            </View>
-          );
-        })}
+        {BASE_PALETTE.map((colorKey, index) => (
+          <ColorBox key={`${colorKey}-${index}`} color={color} colorKey={colorKey} colorName={colorName}/>
+        ))}
       </View>
     );
   };
 
-  const renderColors = (colors, title) => {
-    return (
-      <View padding-page>
-        <Text text50 marginB-20>
-          {title}
-        </Text>
+  const ColorSection = ({colors, title}) => (
+    <View padding-page>
+      <Text text50 marginB-20>
+        {title}
+      </Text>
 
-        {_.map(colors, (color, index) => {
-          return (
-            <View key={`${color}-${index}`} center>
-              {renderTints(color)}
-            </View>
-          );
-        })}
-      </View>
-    );
-  };
+      {colors.map((color, index) => (
+        <View key={`${color}-${index}`} center>
+          <ColorTints color={color}/>
+        </View>
+      ))}
+    </View>
+  );
 
   return (
     <View bg-grey80 flex padding-20 bg-$backgroundDefault>
-      {renderColors(SYSTEM_COLORS, 'SYSTEM COLORS')}
+      <ColorSection colors={SYSTEM_COLORS} title="SYSTEM COLORS"/>
     </View>
   );
 }
