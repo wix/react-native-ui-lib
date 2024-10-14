@@ -342,10 +342,11 @@ function getTable(section) {
     content += `</td> \n`;
 
     row.content.forEach((item, index) => { 
+      const value = item.value;
       if (index < numberOfColumns - 1) {
         content += `<td style={{backgroundColor: 'white', padding: '8px 12px 8px 12px'}}> \n`;
-        // content += `<img src={'${item}'} style={{display: 'block'}}/> \n`;
-        content += getTypedContent(item); // TODO: content types: Image, Figma, Video etc.
+        content += `<img src={'${value}'} style={{display: 'block'}}/> \n`;
+        // content += getContentItem(value); // TODO: content types: Image, Figma, Video etc.
         content += `</td> \n`;
       }
     });
@@ -413,26 +414,35 @@ function getTip(component) {
 //   }
 // }
 
-function getFigmaEmbed(item, height = 450) {
+function getFigmaEmbed(item) {
+  const value = item.value;
+  const height = item.height || 450;
+
   let content = '';
-  content += `<iframe width={'100%'} height={${height}} src={'${item}'} allowfullscreen></iframe> \n`;
+  content += `<iframe width={'100%'} height={${height}} src={'${value}'} allowfullscreen></iframe> \n`;
   return content;
 }
 
-function getImage(item) {
+function getImage(value) {
   let content = '';
-  content += `<img src={'${item}'} style={{display: 'block'}}/> \n`;
+  content += `<img src={'${value}'} style={{display: 'block'}}/> \n`;
   return content;
 }
 
-function getTypedContent(item) {
-  let content = '';
-  if (typeof item === 'string' && item.includes('www.figma.com')) {
-    content += getFigmaEmbed(item);
-  } else {
-    content += getImage(item);
+function getContentItem(item) {
+  if (item.value) {
+    const value = item.value;
+  
+    let content = '';
+    if (typeof value === 'string') {
+      if (value.includes('www.figma.com')) {
+        content += getFigmaEmbed(item);
+      } else {
+        content += getImage(value);
+      }
+    }
+    return content;
   }
-  return content;
 }
 
 function getContent(section, component) { // TODO: content types: Image, Figma, Video etc.
@@ -471,7 +481,7 @@ function getContent(section, component) { // TODO: content types: Image, Figma, 
         const isLast = index === section.content.length - 1;
         const margin = isLast ? '0' : '0 0 40px 0';
         content += `<div style={{border: '1px solid #F8F9FA', margin: '${margin}'}}> \n`;
-        content += getTypedContent(item);
+        content += getContentItem(item);
         content += `</div> \n`;
       });
       content += `</div>`;
