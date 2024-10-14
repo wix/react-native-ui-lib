@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {ScrollView, StyleSheet} from 'react-native';
 import {Colors, Spacings} from 'react-native-ui-lib/style';
@@ -151,14 +151,6 @@ export function ColorsTable() {
           segments={CategoriesSegments}
           initialIndex={selectedSegment}
         />
-        <Toast
-          key={`${showToast}-${message}`}
-          visible={showToast}
-          message={message}
-          swipeable
-          onDismiss={dismissToast}
-          autoDismiss={3000}
-        />
       </View>
       <View>
         {TOKENS_CATEGORIES.map(category =>
@@ -172,6 +164,14 @@ export function ColorsTable() {
             />
           ) : null)}
       </View>
+      <Toast
+        key={`${showToast}-${message}`}
+        visible={showToast}
+        message={message}
+        swipeable
+        onDismiss={dismissToast}
+        autoDismiss={3000}
+      />
     </View>
   );
 }
@@ -183,7 +183,7 @@ export function ColorsPalette() {
 
     return (
       <View>
-        <View style={styles.colorContainer} {...colorProp}>
+        <View center style={styles.colorContainer} {...colorProp}>
           <Text style={{color: textColor}}>{'AAA'}</Text>
         </View>
         <View>
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     width: 90
   },
   scrollViewContainer: {
-    maxHeight: 690
+    height: 690
   },
   segmentedControlContainer: {
     width: '50%',
