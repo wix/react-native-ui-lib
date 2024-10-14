@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef} from 'react';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {ScrollView, StyleSheet} from 'react-native';
 import {Colors, Spacings} from 'react-native-ui-lib/style';
@@ -7,12 +7,14 @@ import SegmentedControl from 'react-native-ui-lib/segmentedControl';
 import Incubator from 'react-native-ui-lib/incubator';
 
 const {Toast} = Incubator;
+const SOLID_COLORS = ['black', 'white', 'dark'];
 const SYSTEM_COLORS = ['grey', 'violet', 'blue', 'green', 'red', 'yellow', 'orange'];
+const TOKENS_CATEGORIES = ['All', 'Background', 'Text', 'Icon', 'Outline', 'System'];
 const BASE_PALETTE = [1, 5, 10, 20, 30, 40, 50, 60, 70, 80];
-const TOKENS_CATEGORIES = ['Background', 'Text', 'Icon', 'Outline', 'System'];
 
 const categorizeTokens = tokens => {
   const categories = {
+    All: [],
     Background: [],
     Text: [],
     Icon: [],
@@ -33,6 +35,14 @@ const categorizeTokens = tokens => {
       categories.System.push(key);
     }
   }
+
+  categories.All = [
+    ...categories.Background,
+    ...categories.Text,
+    ...categories.Icon,
+    ...categories.Outline,
+    ...categories.System
+  ];
 
   return categories;
 };
@@ -129,10 +139,7 @@ export function ColorsTable() {
 
   const CategoryToken = ({category, tokensArray, onTokenPress, scrollViewRef}) => (
     <View>
-      <Text text60 marginV-s2>
-        {category}
-      </Text>
-      <TableHeader columns={['Token', 'Light', 'Dark']}/>
+      <TableHeader columns={['Token', 'Light Mode', 'Dark Mode']}/>
       <ScrollView style={styles.scrollViewContainer} ref={scrollViewRef}>
         {tokensArray[category].map((token, index) => (
           <TokenRow key={token} token={token} index={index} onTokenPress={onTokenPress}/>
@@ -145,6 +152,9 @@ export function ColorsTable() {
   return (
     <View flex>
       <View>
+        <Text $textNeutralHeavy bodySmall>
+          Property
+        </Text>
         <SegmentedControl
           preset="form"
           containerStyle={styles.segmentedControlContainer}
@@ -178,20 +188,26 @@ export function ColorsTable() {
 
 export function ColorsPalette() {
   const ColorBox = ({color, colorKey, colorName}) => {
-    const colorProp = {[`bg-${color}${colorKey}`]: true};
-    const textColor = colorKey < 40 ? Colors.white : Colors.black;
+    const isSolidColor = SOLID_COLORS.includes(colorName);
+    const colorKeyString = colorKey !== undefined ? colorKey.toString() : '';
+    const colorProp = {[`bg-${color}${colorKeyString}`]: true};
+    const textColor = (isSolidColor ? Colors.isDark(color) : colorKey < 40) ? Colors.white : Colors.black;
 
     return (
       <View>
-        <View center style={styles.colorContainer} {...colorProp}>
+        <View
+          center
+          style={[styles.colorContainer, isSolidColor && {borderWidth: 1, borderColor: Colors.$outlineDefault}]}
+          {...colorProp}
+        >
           <Text style={{color: textColor}}>{'AAA'}</Text>
         </View>
         <View>
-          <Text $textDisabled text80R>
-            {`${colorName} ${colorKey}`}
+          <Text $textNeutralHeavy text80R>
+            {`${colorName} ${colorKeyString}`}
           </Text>
-          <Text $textDisabled text80R>
-            {Colors[`${color}${colorKey}`]}
+          <Text $textNeutralHeavy text80R>
+            {Colors[`${color}${colorKeyString}`]}
           </Text>
         </View>
       </View>
@@ -200,9 +216,8 @@ export function ColorsPalette() {
 
   const ColorTints = ({color}) => {
     const colorName = color.charAt(0).toUpperCase() + color.slice(1);
-
     return (
-      <View row marginB-20>
+      <View row marginB-20 padding-page>
         {BASE_PALETTE.map((colorKey, index) => (
           <ColorBox key={`${colorKey}-${index}`} color={color} colorKey={colorKey} colorName={colorName}/>
         ))}
@@ -211,17 +226,25 @@ export function ColorsPalette() {
   };
 
   const ColorSection = ({colors}) => (
-    <View>
+    <View bg-$backgroundNeutralLight padding-20>
       {colors.map((color, index) => (
         <View key={`${color}-${index}`}>
           <ColorTints color={color}/>
         </View>
       ))}
+      <View key={`black-white-dark`} row marginB-20>
+        {SOLID_COLORS.map(color => (
+          <ColorBox key={color} color={color} colorName={color}/>
+        ))}
+      </View>
     </View>
   );
 
   return (
     <View flex>
+      <Text body marginB-s4>
+        Base Palette
+      </Text>
       <ColorSection colors={SYSTEM_COLORS}/>
     </View>
   );
@@ -237,7 +260,8 @@ const styles = StyleSheet.create({
   },
   segmentedControlContainer: {
     width: '50%',
-    marginVertical: Spacings.s2
+    marginTop: Spacings.s1,
+    marginBottom: Spacings.s4
   },
   tokenContainerStyle: {
     height: 50,
