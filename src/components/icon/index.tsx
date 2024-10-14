@@ -56,7 +56,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
     style,
     supportRTL,
     source,
-    assetGroup,
+    assetGroup = 'icons',
     assetName,
     modifiers,
     recorderTag,

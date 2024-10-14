@@ -47,7 +47,7 @@ type PickerStatics = {
 const Picker = React.forwardRef((props: PickerProps, ref) => {
   const themeProps = useThemeProps(props, 'Picker');
   const {
-    mode,
+    mode = PickerModes.SINGLE,
     fieldType = PickerFieldTypes.form,
     selectionLimit,
     showSearch,
@@ -86,10 +86,10 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   const [items, setItems] = useState<PickerItemProps[]>(propItems || extractPickerItems(themeProps));
   const pickerExpandable = useRef<ExpandableOverlayMethods>(null);
   const pickerRef = useImperativePickerHandle(ref, pickerExpandable);
-  
+
   // TODO: Remove this when migration is completed, starting of v8
   // usePickerMigrationWarnings({children, migrate, getItemLabel, getItemValue});
-  
+
   useEffect(() => {
     if (propItems) {
       setItems(propItems);
@@ -295,9 +295,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
 
 // @ts-expect-error
 Picker.Item = PickerItem;
-Picker.defaultProps = {
-  mode: PickerModes.SINGLE
-};
+
 Picker.displayName = 'Picker';
 // @ts-expect-error
 Picker.modes = PickerModes;
