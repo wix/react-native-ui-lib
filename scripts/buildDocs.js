@@ -289,6 +289,7 @@ function getPropsList(props) {
     let content = '';
     _.sortBy(props, p => p.name)?.forEach(prop => {
       const defaultValue = prop.default ? `. Default is ${prop.default}` : '';
+      const descriptionMargin = prop.note ? '0 0 12px 0' : '0 0 28px 0';
 
       content += `<div style={{display: 'flex', flexDirection: 'row', height: 28, margin: '0 0 12px 0'}}> \n`;
       content += `### ${prop.name} \n`;
@@ -301,10 +302,11 @@ function getPropsList(props) {
       }
       content += `</div> \n`;
 
-      content += `<span style={{display: 'block', margin: '0 0 28px 0', fontSize: '16px', fontWeight: '400', color: '${color}'}}>${prop.description}${defaultValue}</span> \n`;
-      // TODO: Add note
-      // content += `${prop.note} \n`;
-
+      content += `<span style={{display: 'block', margin: '${descriptionMargin}', fontSize: '16px', fontWeight: '400', color: '${color}'}}>${prop.description}${defaultValue}</span> \n`;
+      
+      if (prop.note) {
+        content += `<span style={{display: 'block', margin: '0 0 28px 0', fontSize: '16px', fontWeight: '700'}}>${prop.note}</span> \n`;
+      }
       content += `\n`;
     });
     return content;
@@ -339,10 +341,11 @@ function getTable(section) {
     content += `<span style={{fontSize: 16, fontWeight: '400', color: '#6E7881'}}>${row.description}</span> \n`;
     content += `</td> \n`;
 
-    row.content.forEach((item, index) => { // TODO: content types: Image, Figma, Video etc.
+    row.content.forEach((item, index) => { 
       if (index < numberOfColumns - 1) {
         content += `<td style={{backgroundColor: 'white', padding: '8px 12px 8px 12px'}}> \n`;
-        content += `<img src={'${item}'} style={{display: 'block'}}/> \n`;
+        // content += `<img src={'${item}'} style={{display: 'block'}}/> \n`;
+        content += getTypedContent(item); // TODO: content types: Image, Figma, Video etc.
         content += `</td> \n`;
       }
     });
@@ -410,6 +413,28 @@ function getTip(component) {
 //   }
 // }
 
+function getFigmaEmbed(item, height = 450) {
+  let content = '';
+  content += `<iframe width={'100%'} height={${height}} src={'${item}'} allowfullscreen></iframe> \n`;
+  return content;
+}
+
+function getImage(item) {
+  let content = '';
+  content += `<img src={'${item}'} style={{display: 'block'}}/> \n`;
+  return content;
+}
+
+function getTypedContent(item) {
+  let content = '';
+  if (typeof item === 'string' && item.includes('www.figma.com')) {
+    content += getFigmaEmbed(item);
+  } else {
+    content += getImage(item);
+  }
+  return content;
+}
+
 function getContent(section, component) { // TODO: content types: Image, Figma, Video etc.
   let content = '';
   switch (section.type) {
@@ -445,8 +470,8 @@ function getContent(section, component) { // TODO: content types: Image, Figma, 
       section.content.forEach((item, index) => {
         const isLast = index === section.content.length - 1;
         const margin = isLast ? '0' : '0 0 40px 0';
-        content += `<div> \n`;
-        content += `<img src={'${item}'} style={{display: 'block', margin: '${margin}'}}/> \n`;
+        content += `<div style={{border: '1px solid #F8F9FA', margin: '${margin}'}}> \n`;
+        content += getTypedContent(item);
         content += `</div> \n`;
       });
       content += `</div>`;

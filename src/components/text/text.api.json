@@ -18,7 +18,8 @@
       "description": "Color of the text",
       "default": "Black",
       "required": "true",
-      "platform": "iOS"
+      "platform": "iOS",
+      "note": "This is an important information"
     },
     {"name": "center", "type": "boolean", "description": "Whether to center the text (using textAlign)"},
     {"name": "uppercase", "type": "boolean", "description": "Whether to change the text to uppercase"},
@@ -120,7 +121,7 @@
             "description": "Examples of using the Text component",
             "content": [
               "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true",
-              "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
+              "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2FKrv1pLl7kq2L52vMRwd498%2FMADS-Guidelines%3Fnode-id%3D22898-858566%26t%3D1FnW55XGiZ6Bc9Cr-1"             
             ]
           },
           {
