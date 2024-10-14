@@ -229,7 +229,7 @@ function getHeader(title, description, type, component) {
       content += `</div> \n`;
       break;
     default:
-      content += `<div style={{alignContent: 'start'}}> \n`;
+      content += `<div style={{alignContent: 'start', width: '100%'}}> \n`;
       if (title) {
         content += `${getTitle(type, title)} \n`;
       }
@@ -243,10 +243,11 @@ function getHeader(title, description, type, component) {
   return content;
 }
 
-function getContentItem(item, isLast) {
+function getListItem(item, isLast, layout) {
   const data = {
     ...item,
-    type: 'item'
+    type: 'item',
+    layout
   };
   let content = '';
   content += `${getBasicLayout(data)}`;
@@ -472,7 +473,7 @@ function getContent(section, component) { // TODO: content types: Image, Figma, 
     case 'list':
       section.content.forEach((item, index) => {
         const isLast = index === section.content.length - 1;
-        content += `${getContentItem(item, isLast)} \n`;
+        content += `${getListItem(item, isLast, section.layout)} \n`;
       });
       break;
     default:
@@ -493,7 +494,7 @@ function getContent(section, component) { // TODO: content types: Image, Figma, 
 function getBasicLayout(section, component) {
   let content = '';
   if (section.type !== 'list' && section.layout === 'horizontal') {
-    content += `<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}> \n`;
+    content += `<div style={{display: 'flex', flexDirection: 'row'}}> \n`;
   } else {
     content += `<div> \n`;
   }
