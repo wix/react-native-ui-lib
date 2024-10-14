@@ -96,26 +96,29 @@ export function ColorsTable() {
   );
 
   const TokenRow = ({token, index, onTokenPress}) => (
-    <>
-      <View marginH-s3 row>
-        <View flex center row marginB-3>
-          <Text flexG $textDefault text70R>
-            {token}
-          </Text>
-        </View>
-        <Divider vertical/>
-        <TokenBox token={token} index={index} mode="light" onPress={onTokenPress}/>
-        <Divider vertical/>
-        <TokenBox token={token} index={index} mode="dark" onPress={onTokenPress}/>
+    <View
+      row
+      style={{
+        borderWidth: 1,
+        borderColor: Colors.$outlineDefault
+      }}
+    >
+      <View flex centerV row marginH-s2>
+        <Text $textDefault text70R>
+          {token}
+        </Text>
       </View>
-      <Divider/>
-    </>
+      <Divider vertical/>
+      <TokenBox token={token} index={index} mode="light" onPress={onTokenPress}/>
+      <Divider vertical/>
+      <TokenBox token={token} index={index} mode="dark" onPress={onTokenPress}/>
+    </View>
   );
 
   const TableHeader = ({columns}) => (
-    <View row spread>
+    <View row>
       {columns.map(column => (
-        <View bg-grey70 flex center key={column}>
+        <View center bg-grey70 flex key={column}>
           <Text text70BL marginL-10>
             {column}
           </Text>
@@ -126,22 +129,22 @@ export function ColorsTable() {
 
   const CategoryToken = ({category, tokensArray, onTokenPress, scrollViewRef}) => (
     <View>
-      <Text text60 marginT-10 marginB-10 marginL-10>
+      <Text text60 marginV-s2>
         {category}
       </Text>
       <TableHeader columns={['Token', 'Light', 'Dark']}/>
-      <ScrollView style={{height: 700}} ref={scrollViewRef}>
+      <ScrollView style={styles.scrollViewContainer} ref={scrollViewRef}>
         {tokensArray[category].map((token, index) => (
           <TokenRow key={token} token={token} index={index} onTokenPress={onTokenPress}/>
         ))}
       </ScrollView>
+      <Divider/>
     </View>
   );
 
   return (
-    <View bg-grey80 flex padding-20 bg-$backgroundDefault>
+    <View flex>
       <View>
-        <Text text50>DESIGN TOKENS</Text>
         <SegmentedControl
           preset="form"
           containerStyle={styles.segmentedControlContainer}
@@ -157,7 +160,7 @@ export function ColorsTable() {
           autoDismiss={3000}
         />
       </View>
-      <View marginL-10 marginT-10 style={{width: '80%'}}>
+      <View>
         {TOKENS_CATEGORIES.map(category =>
           category === selectedCategory ? (
             <CategoryToken
@@ -180,7 +183,7 @@ export function ColorsPalette() {
 
     return (
       <View>
-        <View center style={styles.colorContainer} {...colorProp}>
+        <View style={styles.colorContainer} {...colorProp}>
           <Text style={{color: textColor}}>{'AAA'}</Text>
         </View>
         <View>
@@ -199,7 +202,7 @@ export function ColorsPalette() {
     const colorName = color.charAt(0).toUpperCase() + color.slice(1);
 
     return (
-      <View row spread marginB-20>
+      <View row marginB-20>
         {BASE_PALETTE.map((colorKey, index) => (
           <ColorBox key={`${colorKey}-${index}`} color={color} colorKey={colorKey} colorName={colorName}/>
         ))}
@@ -207,14 +210,10 @@ export function ColorsPalette() {
     );
   };
 
-  const ColorSection = ({colors, title}) => (
-    <View padding-page>
-      <Text text50 marginB-20>
-        {title}
-      </Text>
-
+  const ColorSection = ({colors}) => (
+    <View>
       {colors.map((color, index) => (
-        <View key={`${color}-${index}`} center>
+        <View key={`${color}-${index}`}>
           <ColorTints color={color}/>
         </View>
       ))}
@@ -222,8 +221,8 @@ export function ColorsPalette() {
   );
 
   return (
-    <View bg-grey80 flex padding-20 bg-$backgroundDefault>
-      <ColorSection colors={SYSTEM_COLORS} title="SYSTEM COLORS"/>
+    <View flex>
+      <ColorSection colors={SYSTEM_COLORS}/>
     </View>
   );
 }
@@ -232,6 +231,9 @@ const styles = StyleSheet.create({
   colorContainer: {
     height: 90,
     width: 90
+  },
+  scrollViewContainer: {
+    maxHeight: 690
   },
   segmentedControlContainer: {
     width: '50%',
@@ -245,10 +247,10 @@ const styles = StyleSheet.create({
   },
   horizontalDivider: {
     width: '100%',
-    height: 2
+    height: 0.5
   },
   verticalDivider: {
     height: '100%',
-    width: 2
+    width: 1
   }
 });

@@ -6,6 +6,7 @@ title: 'Colors'
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import {ColorsTable, ColorsPalette} from '@site/src/components/ColorsSection'
 
 ## Colors
 
@@ -18,9 +19,7 @@ Our default library Colors object is using **System Colors** and **Design Tokens
 Design Tokens are contextual colors based on the system colors.  
 The design token name structure is "$[property]-[semantic]-[weight]". (e.g $backgroundPrimaryHeavy, $textSuccessLight)
 
-```jsx live
 <ColorsTable />
-```
 
 - **Property** - The property we use this token for. The properties are:
 
@@ -73,9 +72,7 @@ This method will update all the `primary` tokens to be based on your app primary
 
 The System Colors are all the colors we use in our design system. (red30, grey10 and so on).
 
-```jsx live
 <ColorsPalette />
-```
 
 </TabItem>
 <TabItem value="accessibility" label="Accessibility">
