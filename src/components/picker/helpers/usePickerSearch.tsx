@@ -13,7 +13,7 @@ const usePickerSearch = (props: UsePickerSearchProps) => {
     if (showSearch && !_.isEmpty(searchValue)) {
       return _.filter(items, item => {
         const {label, value, getItemLabel: childGetItemLabel} = item.props || item;
-        const itemLabel = getItemLabelPresenter(label, value, getItemLabel || childGetItemLabel);
+        const itemLabel = getItemLabelPresenter(label, value, childGetItemLabel || getItemLabel);
         return !shouldFilterOut(searchValue, itemLabel);
       });
     }
