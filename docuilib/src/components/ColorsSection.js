@@ -47,9 +47,7 @@ const categorizeTokens = tokens => {
   return categories;
 };
 
-const Divider = ({vertical = false}) => (
-  <View style={vertical ? styles.verticalDivider : styles.horizontalDivider} bg-$outlineDefault/>
-);
+const VerticalDivider = () => <View style={styles.verticalDivider} bg-$outlineDefault/>;
 
 export function ColorsTable() {
   const [selectedCategory, setSelectedCategory] = useState('Background');
@@ -106,21 +104,15 @@ export function ColorsTable() {
   );
 
   const TokenRow = ({token, index, onTokenPress}) => (
-    <View
-      row
-      style={{
-        borderWidth: 1,
-        borderColor: Colors.$outlineDefault
-      }}
-    >
+    <View row style={styles.colorContainerBorder}>
       <View flex centerV row marginH-s2>
         <Text $textDefault text70R>
           {token}
         </Text>
       </View>
-      <Divider vertical/>
+      <VerticalDivider/>
       <TokenBox token={token} index={index} mode="light" onPress={onTokenPress}/>
-      <Divider vertical/>
+      <VerticalDivider/>
       <TokenBox token={token} index={index} mode="dark" onPress={onTokenPress}/>
     </View>
   );
@@ -145,7 +137,6 @@ export function ColorsTable() {
           <TokenRow key={token} token={token} index={index} onTokenPress={onTokenPress}/>
         ))}
       </ScrollView>
-      <Divider/>
     </View>
   );
 
@@ -195,11 +186,7 @@ export function ColorsPalette() {
 
     return (
       <View>
-        <View
-          center
-          style={[styles.colorContainer, isSolidColor && {borderWidth: 1, borderColor: Colors.$outlineDefault}]}
-          {...colorProp}
-        >
+        <View center style={[styles.colorContainer, isSolidColor && styles.colorContainerBorder]} {...colorProp}>
           <Text style={{color: textColor}}>{'AAA'}</Text>
         </View>
         <View>
@@ -255,8 +242,12 @@ const styles = StyleSheet.create({
     height: 90,
     width: 90
   },
+  colorContainerBorder: {
+    borderWidth: 1,
+    borderColor: Colors.$outlineDefault
+  },
   scrollViewContainer: {
-    height: 690
+    maxHeight: 700
   },
   segmentedControlContainer: {
     width: '50%',
@@ -269,12 +260,8 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: Colors.grey60
   },
-  horizontalDivider: {
-    width: '100%',
-    height: 0.5
-  },
   verticalDivider: {
-    height: '100%',
+    height: 'auto',
     width: 1
   }
 });
