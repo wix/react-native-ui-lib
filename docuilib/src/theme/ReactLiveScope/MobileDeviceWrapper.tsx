@@ -18,7 +18,7 @@ const SimulatorSizes = {
   [SimulatorTypes.TABLET]: {width: 900, height: 754}
 };
 
-const simulatorOptions = [
+const simulatorSegments = [
   {label: 'Mobile', value: SimulatorTypes.MOBILE},
   {label: 'Tablet', value: SimulatorTypes.TABLET}
 ];
@@ -41,12 +41,12 @@ export function MobileDeviceWrapper({children}) {
         style={styles.uilibLogo}
       />
       <Text text60 marginV-s1>
-        Wix React Native UILIB
+        React Native UILIB
       </Text>
     </View>
   );
 
-  const findSelectedIndex = () => simulatorOptions.findIndex(option => option.value === type);
+  const getSelectedIndex = () => simulatorSegments.findIndex(option => option.value === type);
 
   const wrapperStyle = useMemo(() => [styles.simulatorWrapper, simulatorSize], [simulatorSize]);
 
@@ -57,9 +57,9 @@ export function MobileDeviceWrapper({children}) {
           Choose Type
         </Text>
         <SegmentedControl
-          initialIndex={findSelectedIndex()}
-          segments={simulatorOptions}
-          onChangeIndex={index => setType(simulatorOptions[index].value)}
+          initialIndex={getSelectedIndex()}
+          segments={simulatorSegments}
+          onChangeIndex={index => setType(simulatorSegments[index].value)}
           backgroundColor={Colors.$backgroundDefault}
         />
       </View>
