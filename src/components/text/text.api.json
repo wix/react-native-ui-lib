@@ -81,7 +81,6 @@
             "type": "table",
             "title": "",
             "description": "",
-            "name": "Table Name",
             "columns": ["Item", "Content[0]", "Content[1]"],
             "content": [
               {

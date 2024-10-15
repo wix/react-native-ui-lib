@@ -2,11 +2,10 @@ import _ from 'lodash';
 import React from 'react';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
 
-
-export default function ComponentPage({component, text}) {
-
-  const getTitleSize = (type) => {
+export default function ComponentPage({component}) {
+  const getTitleSize = type => {
     switch (type) {
       case 'hero':
         return 48;
@@ -16,8 +15,8 @@ export default function ComponentPage({component, text}) {
         return 32;
     }
   };
-  
-  const getTitleWeight = (type) => {
+
+  const getTitleWeight = type => {
     switch (type) {
       case 'item':
         return '400';
@@ -25,8 +24,8 @@ export default function ComponentPage({component, text}) {
         return '700';
     }
   };
-  
-  const getDescriptionColor = (type) => {
+
+  const getDescriptionColor = type => {
     switch (type) {
       case 'item':
         return '#6E7881';
@@ -43,226 +42,255 @@ export default function ComponentPage({component, text}) {
         return '#B3EBDD';
       case 'boolean':
         return '#C4DFFF';
-      default: 
+      default:
         return '#E8ECF0';
     }
   };
-  
+
   const getCodeExample = () => {
-    return <a style={{fontSize: '16px', fontWeight: '700', textDecoration: 'underline'}}>[Code Example](${component.example})</a>;
+    return <a href={component.example} style={{fontSize: '16px', fontWeight: '700', lineHeight: '18px', borderBottom: '1px solid'}}>Code Example</a>;
   };
-  
+
   const getTitle = (type, title) => {
     const size = getTitleSize(type);
     const weight = getTitleWeight(type);
-
-    return <span style={{lineHeight: size, fontSize: size, fontWeight: weight, margin: '0 0 16px 0'}}>${title}</span>;
+    return <span style={{fontSize: size, fontWeight: weight}}>{title}</span>;
   };
-  
-  const getHeader = (title, description, type) => {   
+
+  const getHeader = (title, description, type) => {
     const desColor = getDescriptionColor(type);
- 
+
+    if (!title && !description) {
+      return;
+    }
+
     switch (type) {
       case 'usage':
         return (
-          <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', margin: '0 0 12px 0'}}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              margin: '0 0 12px 0'
+            }}
+          >
             {getTitle(type, title)}
             {getCodeExample()}
           </div>
         );
       default:
         return (
-          <div style={{alignContent: 'start', width: '100%'}}>
+          <div style={{display: 'flex', flexDirection: 'column', flex: 1, alignContent: 'start', margin: '0 40px 40px 0'}}>
             {title && getTitle(type, title)}
-            {description && <span style={{display: 'block', margin: '0 40px 40px 0', fontSize: '16px', fontWeight: '400', color: desColor}}>${description}</span>}
+            {description && <span style={{fontSize: '16px', fontWeight: '400', color: desColor}}>{description}</span>}
           </div>
         );
     }
   };
-  
-  const getListItem = (item, isLast, layout) => {
-    const data = {
-      ...item,
-      type: 'item',
-      layout
-    };
 
-    return (
-      <div>
-        {getBasicLayout(data)}
-        {!isLast && <div style={{height: 40}}/>}
-      </div>
-    );
-  };
-  
   const getTag = (label, color) => {
     return (
-      <div style={{display: 'flex', flexDirection: 'row', backgroundColor: color, margin: '4px 12px 4px 0', height: 20, borderRadius: '2px', alignItems: 'center'}}>
-        <span style={{fontSize: 14, fontWeight: 'bold', margin: '6px'}}>${label}</span>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          backgroundColor: color,
+          margin: '4px 12px 4px 0',
+          height: 20,
+          borderRadius: '2px',
+          alignItems: 'center'
+        }}
+      >
+        <span style={{fontSize: 14, fontWeight: 'bold', margin: '6px'}}>{label}</span>
       </div>
     );
   };
-  
+
   const getPropsList = () => {
     const props = component.props;
 
     if (props) {
       const descColor = getDescriptionColor('item');
-  
-      _.sortBy(props, p => p.name)?.forEach(prop => {
+      const sorted = _.sortBy(props, p => p.name);
+
+      return _.map(sorted, prop => {
         const defaultValue = prop.default ? `. Default is ${prop.default}` : '';
         const descMargin = prop.note ? '0 0 12px 0' : '0 0 28px 0';
-  
+
         return (
-          <div style={{display: 'flex', flexDirection: 'row', height: 28, margin: '0 0 12px 0'}}>
-            <a style={{fontSize: 16, fontWeight: '500', margin: '0 12px 0 0'}}>{prop.name}</a>
-            {getTag(prop.type, getTypeColor(prop.type))}
-            {prop.required && getTag('Required', getTypeColor())}
-            {prop.platform && getTag(prop.platform, getTypeColor())}
-            <span style={{display: 'block', margin: descMargin, fontSize: '16px', fontWeight: '400', color: descColor}}>${prop.description}${defaultValue}</span>
-            <span style={{display: 'block', margin: '0 0 28px 0', fontSize: '16px', fontWeight: '700'}}>${prop.note}</span>
+          <div style={{display: 'flex', flexDirection: 'column'}}>
+            <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 12px 0'}}>
+              <div style={{fontSize: 16, fontWeight: '700', margin: '0 12px 0 0'}}>{prop.name}</div>
+              {getTag(prop.type, getTypeColor(prop.type))}
+              {prop.required && getTag('Required', getTypeColor())}
+              {prop.platform && getTag(prop.platform, getTypeColor())}
+            </div>
+            <span style={{display: 'block', margin: descMargin, fontSize: '16px', fontWeight: '400', color: descColor}}>
+              {prop.description}
+              {defaultValue}
+            </span>
+            {prop.note && <span style={{display: 'block', margin: '0 0 28px 0', fontSize: '16px', fontWeight: '700'}}>{prop.note}</span>}
           </div>
         );
       });
     }
   };
 
-  const getTableHeaders = (columns) => {
+  const getTableHeaders = columns => {
     const numberOfColumns = columns.length;
     const cellWidth = 100 / numberOfColumns;
-
-    return columns.forEach(column => {
-      <th style={{backgroundColor: '#F8F9FA', width: cellWidth}}>
-        <span style={{fontSize: 16, fontWeight: 'bold', margin: '8px'}}>${column}</span>
-      </th>;
-    }); 
+    
+    return _.map(columns, column => {
+      return (
+        <th style={{backgroundColor: '#F8F9FA', width: `${cellWidth}%`}}>
+          <span style={{fontSize: 16, fontWeight: 'bold', margin: '8px'}}>{column}</span>
+        </th>
+      );
+    });
   };
 
-  const getTableRowsContent = (content, numberOfColumns) => { // content += getContentItem(value); // TODO: content types: Image, Figma, Video etc.
-    return (
-      content.forEach((item, index) => { 
-        const value = item.value;
-        
-        if (index < numberOfColumns - 1) {
+  const getTableRowsContent = (content, numberOfColumns) => {
+    // content += getContentItem(value); // TODO: content types: Image, Figma, Video etc.
+    return _.map(content, (item, index: number) => {
+      const value = item.value;
+
+      if (index < numberOfColumns - 1) {
+        return (
           <td style={{backgroundColor: 'white', padding: '8px 12px 8px 12px'}}>
-            <img src={value} style={{display: 'block'}}/> 
-          </td>;
-        }
-      })
-    );
+            <img src={value} style={{display: 'block'}}/>
+          </td>
+        );
+      }
+    });
   };
 
   const getTableRows = (rows, numberOfColumns) => {
-    return (
-      rows.forEach(row => {
+    return _.map(rows, row => {
+      return (
         <tr>
           <td style={{backgroundColor: 'white', margin: '20px 12px 20px 12px', alignContent: 'start'}}>
-            <span style={{fontSize: 16, fontWeight: '500'}}>${row.title}</span>
+            <span style={{fontSize: 16, fontWeight: '500'}}>{row.title}</span>
             <br/>
-            <span style={{fontSize: 16, fontWeight: '400', color: '#6E7881'}}>${row.description}</span>
+            <span style={{fontSize: 16, fontWeight: '400', color: '#6E7881'}}>{row.description}</span>
           </td>
           {getTableRowsContent(row.content, numberOfColumns)}
-        </tr>;
-      })
-    );
+        </tr>
+      );
+    });
   };
-  
-  const getTable = (section) => {
+
+  const getTable = section => {
     const columns = section.columns;
     const rows = section.content;
     const numberOfColumns = columns.length;
-  
+
     return (
       <div>
-        <span style={{fontSize: 20, fontWeight: '700', display: 'block'}}>${section.name}</span>
+        {section.name && <div style={{fontSize: 20, fontWeight: '700', margin: '0 0 16px 0'}}>{section.name}</div>}
         <table>
           <tr>
-            {getTableHeaders(columns)} 
+            {getTableHeaders(columns)}
           </tr>
           {getTableRows(rows, numberOfColumns)}
         </table>
       </div>
     );
   };
-  
-  const getSnippet = () => {
+
+  const getUsage = () => {
     if (component.snippet) {
-      let content = '';
-      content += '``` jsx live\n';
-      content += component.snippet?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), '')).join('\n');
-      content += '\n```\n';
-      return content;
+      return (
+        <div>
+          <CodeBlock language="jsx">
+            {component.snippet?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), '')).join('\n')}
+          </CodeBlock>
+        </div>
+      );
     }
   };
 
-  const generateExtendsLink = (extendsLink) => {
-    const extendedComponentName = _.last(_.split(extendsLink, '/')); // Incubator/TextField -> TextField
-    const extendsText = `[${extendedComponentName}](/docs/components/${extendsLink})`;
-    return extendsText;
+  const buildMassageBox = (color, icon, title, description) => {
+    return (
+      <div style={{display: 'flex', flexDirection: 'row', backgroundColor: color, padding: '16px 20px 16px 22px', alignItems: 'center'}}>
+        <img src={icon} width={20} height={20} style={{border: '1px solid', margin: '0 14px 0 0'}}/>
+        <div style={{display: 'flex', flexDirection: 'column'}}>
+          <div style={{fontSize: 16, fontWeight: '700'}}>{title}</div>
+          {description}
+        </div>
+      </div>
+    );
   };
-  
+
+  const getExtendsLinks = () => {
+    const components = component.extends;
+    const links = component.extendsLink;
+    
+    return _.map(components, (component, index: number) => {
+      return <a href={links[index]} style={{fontSize: '16px', fontWeight: '700', lineHeight: '18px', borderBottom: '1px solid'}}>{component}</a>;
+    });
+  };
+
   const getInfo = () => {
     if (component.extends) {
-      let extendsText = component.extends?.join(', ');
-      
-      if (component.extendsLink) {
-        extendsText = `[${extendsText}](${component.extendsLink})`;
-      } else {
-        extendsText = _.map(component.extends, generateExtendsLink).join(', ');
-      }
-  
-      let content = '';
-      content += ':::info\n';
-      content += `This component extends **${extendsText}** props.\n`;
-      content += ':::\n';
-      return content;
+      const links = getExtendsLinks(); //TODO: separate links with comma
+      const title = 'INFO';
+      const text = <span style={{fontWeight: 'bold'}}>{links}</span>;
+      const description = <div>This component extends the {text} props.</div>;
+      const icon = undefined; //TODO: add info icon
+      return buildMassageBox('#E9F3FF', icon, title, description);
     }
   };
-  
+
   const getTip = () => {
     if (component.modifiers) {
-      let content = '';
-      content += ':::tip\n';
-      content += `This component support **${component.modifiers?.join(', ')}** modifiers.\n`;
-      content += ':::\n';
-      return content;
+      const title = 'TIP';
+      const text = <span style={{fontWeight: 'bold'}}>{component.modifiers?.join(', ')}</span>;
+      const description = <div>This component support {text} modifiers.</div>;
+      const icon = undefined; //TODO: add insights icon
+      return buildMassageBox('#E3F7F2', icon, title, description);
     }
   };
-  
-  // const getCaution = () => {
-  //   if (component.caution) {
-  //     let content = '';
-  //     content += ':::caution\n';
-  //     content += `${component.caution}\n`;
-  //     content += ':::\n';
-  //     return content;
-  //   }
-  // };
-  
-  // const getNote = () => {
-  //   if (component.note) {
-  //     let content = '';
-  //     content += ':::note\n';
-  //     content += `${component.note}\n`;
-  //     content += ':::\n';
-  //     return content;
-  //   }
-  // };
-  
-  const getFigmaEmbed = (item) => {
+
+  const getListItem = (item, isLast, layout) => {
+    const data = {
+      ...item,
+      type: 'item',
+      layout
+    };
+    const itemMargin = isLast ? '0' : '0 0 40px 0';
+
+    return (
+      <div style={{display: 'flex', flexDirection: 'column', margin: itemMargin}}>
+        {getBasicLayout(data)}
+      </div>
+    );
+  };
+
+  const getList = section => {
+    const content = section.content;
+
+    return _.map(content, (item, index: number) => {
+      const isLast = index === content.length - 1;
+      return getListItem(item, isLast, section.layout);
+    });
+  };
+
+  const getFigmaEmbed = item => {
     const value = item.value;
     const height = item.height || 450;
-  
+
     return <iframe width={'100%'} height={height} src={value}/>;
   };
-  
-  const getImage = (value) => {
+
+  const getImage = value => {
     return <img src={value} style={{display: 'block'}}/>;
   };
-  
+
   const getContentItem = (item) => {
     const value = item.value;
-    
+
     if (value) {
       if (typeof value === 'string') {
         if (value.includes('www.figma.com')) {
@@ -273,46 +301,47 @@ export default function ComponentPage({component, text}) {
       }
     }
   };
-  
-  const getContent = (section) => { // TODO: content types: Image, Figma, Video etc.
+
+  const getSectionContent = content => {
+    return (
+      <div style={{display: 'flex', flexDirection: 'column'}}>
+        {_.map(content, (item, index: number) => {
+          const isLast = index === content.length - 1;
+          const itemMargin = isLast ? '0' : '0 0 40px 0';
+
+          return (
+            <div style={{margin: itemMargin, border: '1px solid #F8F9FA'}}>
+              {getContentItem(item)}
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  const getContent = section => {
+    //TODO: Add generic type for massageBox to pass title, description, icon and bgColor
     switch (section.type) {
       case 'usage':
-        return getSnippet();
+        return getUsage();
       case 'info':
         return getInfo();
       case 'tip':
         return getTip();
-      // case 'note':
-      //   return getNote();
-      // case 'caution':
-      //   return getCaution();
-      case 'table':
-        return getTable(section);
       case 'props':
         return getPropsList();
+      case 'table':
+        return getTable(section);
       case 'list':
-        return section.content.forEach((item, index) => {
-          const isLast = index === section.content.length - 1;
-          
-          return getListItem(item, isLast, section.layout);
-        });
+        return getList(section);
       default:
-        return section.content.forEach((item, index) => {
-          const isLast = index === section.content.length - 1;
-          const margin = isLast ? '0' : '0 0 40px 0';
-          
-          return (
-            <div style={{border: '1px solid #F8F9FA', margin}}>
-              {getContentItem(item)}
-            </div>
-          );
-        });
+        return getSectionContent(section.content);
     }
   };
 
-  const getBasicLayout = (section) => {
+  const getBasicLayout = section => {
     const direction = section.type !== 'list' && section.layout === 'horizontal' ? 'row' : 'column';
-    
+
     return (
       <div style={{display: 'flex', flexDirection: direction}}>
         {getHeader(section.title, section.description, section.type)}
@@ -321,17 +350,17 @@ export default function ComponentPage({component, text}) {
     );
   };
 
-  const getDivider = (section) => {
+  const getDivider = section => {
     if (section.type === 'table' || section.type === 'list') {
       return <div style={{height: 1, width: '100%', backgroundColor: '#E8ECF0', margin: '60px 0 60px 0'}}/>;
     } else {
       return <div style={{height: 60}}/>;
     }
   };
-  
-  const buildDocsSections = (sections) => {
+
+  const buildDocsSections = sections => {
     if (sections) {
-      sections.forEach(section => {
+      return _.map(sections, section => {
         return (
           <div>
             {getBasicLayout(section)}
@@ -344,28 +373,27 @@ export default function ComponentPage({component, text}) {
     }
   };
 
+  const getTabItems = tabs => {
+    return _.map(tabs, (tab, index) => {
+      return (
+        <TabItem value={index} label={tab.title} attributes={{className: 'single-tab'}}>
+          {buildDocsSections(tab.sections)}
+        </TabItem>
+      );
+    });
+  };
+
   const buildTabs = () => {
     const tabs = component.docs?.tabs;
 
     if (tabs) {
-      return (
-        <Tabs className="main-tabs">
-          {tabs.forEach((tab, index) => {
-            const sections = tab.sections;
-            return (
-              <TabItem value={index} label={tab.title} attributes={{className: 'single-tab'}}>
-                {buildDocsSections(sections)}
-              </TabItem>
-            );
-          })}
-        </Tabs>
-      );
+      return <Tabs className="main-tabs">{getTabItems(tabs)}</Tabs>;
     }
   };
 
   const buildHero = () => {
     const hero = component.docs?.header;
-    
+
     if (hero) {
       // const isIncubatorComponent = component.category === 'incubator';
       // const name = isIncubatorComponent ? `Incubator.${component.name}` : component.name;
@@ -375,16 +403,15 @@ export default function ComponentPage({component, text}) {
         ...hero,
         type: 'hero'
       };
-      
+
       return getBasicLayout(section);
     }
   };
 
   return (
     <div>
-      <p>{text.value}</p>
-      {/* {buildHero()} */}
-      {/* {buildTabs()} */}
+      {buildHero()}
+      {buildTabs()}
     </div>
   );
 }

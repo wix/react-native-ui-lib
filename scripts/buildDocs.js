@@ -60,11 +60,14 @@ components.forEach(component => {
   content += '---\n\n';
 
   if (component.docs) {
-    content += `import Tabs from '@theme/Tabs';\n`;
-    content += `import TabItem from '@theme/TabItem';\n\n`;
+    content += `import ComponentPage from '@site/src/components/ComponentPage';\n\n`;
+    const componentObject = JSON.stringify(component);
+    content += `<ComponentPage component={${componentObject}}/>\n`;
 
-    content += `${buildHero(component)}\n`;
-    content += `${buildTabs(component)}\n`;
+    // content += `import Tabs from '@theme/Tabs';\n`;
+    // content += `import TabItem from '@theme/TabItem';\n\n`;
+    // content += `${buildHero(component)}\n`;
+    // content += `${buildTabs(component)}\n`;
   } else {
     content += `${buildOldDocs(component)}\n`;
   }
