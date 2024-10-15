@@ -77,7 +77,8 @@ export function ColorsTable() {
 
   const onTokenPress = value => {
     Clipboard.setString(value);
-    const message = `Copied ${value} to clipboard`;
+    const systemColorName = Colors.getSystemColorByHex(value);
+    const message = `Copied ${value} to clipboard\n System color: ${systemColorName}`;
     setMessage(message);
     toggleToastVisibility();
   };
