@@ -213,7 +213,7 @@ export default function ComponentPage({component}) {
 
   const buildMassageBox = (color, icon, title, description) => {
     return (
-      <div className="row" style={{backgroundColor: color, padding: '16px 20px 16px 22px', alignItems: 'center'}}>
+      <div className="row" style={{backgroundColor: color, marginBottom: 20, padding: '16px 20px 16px 22px', alignItems: 'center'}}>
         <img src={icon} width={20} height={20} style={{border: '1px solid', marginRight: 14}}/>
         <div className="column">
           <div style={{fontSize: '16px', fontWeight: '700'}}>{title}</div>
@@ -232,25 +232,33 @@ export default function ComponentPage({component}) {
     });
   };
 
-  const getInfo = () => {
-    if (component.extends) {
+  const getInfo = (section) => {
+    const icon = undefined; //TODO: add info icon
+    const title = section.title || 'INFO';
+    let description = section.massage;
+    if (!description && component.extends) {
       const links = getExtendsLinks(); //TODO: separate links with comma
-      const title = 'INFO';
       const text = <span style={{fontWeight: 'bold'}}>{links}</span>;
-      const description = <div>This component extends the {text} props.</div>;
-      const icon = undefined; //TODO: add info icon
-      return buildMassageBox('#E9F3FF', icon, title, description);
+      description = <div>This component extends the {text} props.</div>;
     }
+    
+    return description && buildMassageBox('#E9F3FF', icon, title, description);
   };
 
-  const getTip = () => {
-    if (component.modifiers) {
-      const title = 'TIP';
+  const getTip = (section) => {
+    const icon = undefined; //TODO: add insights icon
+    const title = section.title || 'TIP';
+    let description = section.massage;
+    if (!description && component.modifiers) {
       const text = <span style={{fontWeight: 'bold'}}>{component.modifiers?.join(', ')}</span>;
-      const description = <div>This component support {text} modifiers.</div>;
-      const icon = undefined; //TODO: add insights icon
-      return buildMassageBox('#E3F7F2', icon, title, description);
+      description = <div>This component support {text} modifiers.</div>;
     }
+
+    return description && buildMassageBox('#E3F7F2', icon, title, description);
+  };
+
+  const getMassage = (section) => {
+    return buildMassageBox(section.color, section.icon, section.title, section.description);
   };
 
   const getListItem = (item, isLast, layout) => {
@@ -320,20 +328,18 @@ export default function ComponentPage({component}) {
   const getContent = section => {
     //TODO: Add generic type for massageBox to pass title, description, icon and bgColor
     switch (section.type) {
-      case 'usage':
-        return getUsage();
-      case 'info':
-        return getInfo();
-      case 'tip':
-        return getTip();
       case 'props':
         return getPropsList();
       case 'table':
         return getTable(section);
       case 'list':
         return getList(section);
-      default:
+      case 'hero':
+      case 'item':
+      case 'section':
         return getSectionContent(section.content);
+      default:
+        return;
     }
   };
 
@@ -359,12 +365,23 @@ export default function ComponentPage({component}) {
   const buildDocsSections = sections => {
     if (sections) {
       return _.map(sections, section => {
-        return (
-          <div>
-            {getBasicLayout(section)}
-            {getDivider(section)}
-          </div>
-        );
+        switch (section.type) {
+          case 'usage':
+            return getUsage();
+          case 'info':
+            return getInfo(section);
+          case 'tip':
+            return getTip(section);
+          case 'massage':
+            return getMassage(section);
+          default:
+            return (
+              <div>
+                {getBasicLayout(section)}
+                {getDivider(section)}
+              </div>
+            );
+        }
       });
     } else {
       return <p>Coming soon... 👩🏻‍💻</p>;

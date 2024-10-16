@@ -182,6 +182,12 @@
             "type": "tip"
           },
           {
+            "type": "massage",
+            "title": "MASSAGE",
+            "description": "This is some massage to the user",
+            "color": "pink"
+          },
+          {
             "type": "props",
             "title": "API",
             "description": "This is the list of additional props for the Text component"
