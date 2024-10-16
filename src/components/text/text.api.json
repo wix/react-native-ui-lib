@@ -57,7 +57,7 @@
                 "description": "Item #1 Subtitle",
                 "content": [
                   {"value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"},
-                  {"value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"}
+                  {"height" : 170, "value": "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2FKrv1pLl7kq2L52vMRwd498%2FMADS-Guidelines%3Fnode-id%3D22898-858566%26t%3D1FnW55XGiZ6Bc9Cr-1"}
                 ]
               },
               {

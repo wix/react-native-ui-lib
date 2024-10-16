@@ -152,14 +152,11 @@ export default function ComponentPage({component}) {
   };
 
   const getTableRowsContent = (content, numberOfColumns) => {
-    // content += getContentItem(value); // TODO: content types: Image, Figma, Video etc.
     return _.map(content, (item, index: number) => {
-      const value = item.value;
-
       if (index < numberOfColumns - 1) {
         return (
           <td style={{backgroundColor: 'white', padding: '8px 12px 8px 12px'}}>
-            <img src={value} style={{display: 'block'}}/>
+            {getContentItem(item)}
           </td>
         );
       }
@@ -326,7 +323,6 @@ export default function ComponentPage({component}) {
   };
 
   const getContent = section => {
-    //TODO: Add generic type for massageBox to pass title, description, icon and bgColor
     switch (section.type) {
       case 'props':
         return getPropsList();
@@ -401,6 +397,7 @@ export default function ComponentPage({component}) {
   const buildTabs = () => {
     const tabs = component.docs?.tabs;
 
+    // TODO: align Tabs bottom border with TabItem's selected indication line
     if (tabs) {
       return <Tabs className="main-tabs">{getTabItems(tabs)}</Tabs>;
     }
@@ -410,6 +407,7 @@ export default function ComponentPage({component}) {
     const hero = component.docs?.hero;
 
     if (hero) {
+      // TODO: align hero's image to page title
       // const isIncubatorComponent = component.category === 'incubator';
       // const name = isIncubatorComponent ? `Incubator.${component.name}` : component.name;
       const section = {
