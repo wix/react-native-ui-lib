@@ -180,7 +180,7 @@ export default function ComponentPage({component}) {
 
   const getTable = section => {
     const columns = section.columns;
-    const rows = section.content;
+    const rows = section.items;
     const numberOfColumns = columns.length;
 
     return (
@@ -273,10 +273,10 @@ export default function ComponentPage({component}) {
   };
 
   const getList = section => {
-    const content = section.content;
+    const items = section.items;
 
-    return _.map(content, (item, index: number) => {
-      const isLast = index === content.length - 1;
+    return _.map(items, (item, index: number) => {
+      const isLast = index === items.length - 1;
       return getListItem(item, isLast, section.layout);
     });
   };

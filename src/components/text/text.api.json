@@ -51,7 +51,7 @@
             "description": "Examples of using the Text component",
             "name": "Table Name",
             "columns": ["Item", "Content[0]", "Content[1]"],
-            "content": [
+            "items": [
               {
                 "title": "Item #1",
                 "description": "Item #1 Subtitle",
@@ -82,7 +82,7 @@
             "title": "",
             "description": "",
             "columns": ["Item", "Content[0]", "Content[1]"],
-            "content": [
+            "items": [
               {
                 "title": "Item #1",
                 "description": "Item #1 Subtitle",
@@ -127,7 +127,7 @@
             "type": "list",
             "title": "List",
             "description": "Examples of using the Text component",
-            "content": [
+            "items": [
               {
                 "title": "Item #1",
                 "description": "This is item #1",
@@ -149,7 +149,7 @@
             "layout": "horizontal",
             "title": "List Horizontal Items",
             "description": "Examples of using the Text component",
-            "content": [
+            "items": [
               {
                 "title": "Item #1",
                 "description": "This is item #1",
