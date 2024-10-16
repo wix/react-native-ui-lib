@@ -1,0 +1,16 @@
+@import 'src/css/constants';
+
+.column {
+  display: 'flex';
+  flex-direction: 'column';
+}
+
+.row {
+  display: 'flex';
+  flex-direction: 'row';
+}
+
+.boldText { // not working in className
+  font-size: '16px';
+  font-weight: '700';
+}

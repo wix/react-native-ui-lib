@@ -3,16 +3,17 @@ import React from 'react';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import CodeBlock from '@theme/CodeBlock';
+import './ComponentPage.module.scss';
 
 export default function ComponentPage({component}) {
   const getTitleSize = type => {
     switch (type) {
       case 'hero':
-        return 48;
+        return '48px';
       case 'item':
-        return 16;
+        return '16px';
       default:
-        return 32;
+        return '32px';
     }
   };
 
@@ -96,14 +97,14 @@ export default function ComponentPage({component}) {
         style={{
           display: 'flex',
           flexDirection: 'row',
-          backgroundColor: color,
+          alignItems: 'center',
           margin: '4px 12px 4px 0',
-          height: 20,
           borderRadius: '2px',
-          alignItems: 'center'
+          height: 20,
+          backgroundColor: color
         }}
       >
-        <span style={{fontSize: 14, fontWeight: 'bold', margin: '6px'}}>{label}</span>
+        <span style={{fontSize: '14px', fontWeight: '700', margin: '6px'}}>{label}</span>
       </div>
     );
   };
@@ -119,9 +120,9 @@ export default function ComponentPage({component}) {
         const defaultValue = prop.default ? `. Default is ${prop.default}` : '';
 
         return (
-          <div style={{display: 'flex', flexDirection: 'column'}}>
-            <div style={{display: 'flex', flexDirection: 'row', marginBottom: 12}}>
-              <div style={{fontSize: 16, fontWeight: '700', marginRight: 12}}>{prop.name}</div>
+          <div className="column">
+            <div className="row" style={{marginBottom: 12}}>
+              <div style={{fontSize: '16px', fontWeight: '700', marginRight: 12}}>{prop.name}</div>
               {getTag(prop.type, getTypeColor(prop.type))}
               {prop.required && getTag('Required', getTypeColor())}
               {prop.platform && getTag(prop.platform, getTypeColor())}
@@ -144,7 +145,7 @@ export default function ComponentPage({component}) {
     return _.map(columns, column => {
       return (
         <th style={{backgroundColor: '#F8F9FA', width: `${cellWidth}%`}}>
-          <span style={{fontSize: 16, fontWeight: 'bold', margin: '8px'}}>{column}</span>
+          <span style={{fontSize: '16px', fontWeight: '700', margin: '8px'}}>{column}</span>
         </th>
       );
     });
@@ -170,9 +171,9 @@ export default function ComponentPage({component}) {
       return (
         <tr>
           <td style={{backgroundColor: 'white', margin: '20px 12px 20px 12px', alignContent: 'start'}}>
-            <span style={{fontSize: 16, fontWeight: '500'}}>{row.title}</span>
+            <span style={{fontSize: '16px', fontWeight: '500'}}>{row.title}</span>
             <br/>
-            <span style={{fontSize: 16, fontWeight: '400', color: '#6E7881'}}>{row.description}</span>
+            <span style={{fontSize: '16px', fontWeight: '400', color: '#6E7881'}}>{row.description}</span>
           </td>
           {getTableRowsContent(row.content, numberOfColumns)}
         </tr>
@@ -187,7 +188,7 @@ export default function ComponentPage({component}) {
 
     return (
       <div>
-        {section.name && <div style={{fontSize: 20, fontWeight: '700', marginBottom: 16}}>{section.name}</div>}
+        {section.name && <div style={{fontSize: '20px', fontWeight: '700', marginBottom: 16}}>{section.name}</div>}
         <table>
           <tr>
             {getTableHeaders(columns)}
@@ -212,10 +213,10 @@ export default function ComponentPage({component}) {
 
   const buildMassageBox = (color, icon, title, description) => {
     return (
-      <div style={{display: 'flex', flexDirection: 'row', backgroundColor: color, padding: '16px 20px 16px 22px', alignItems: 'center'}}>
+      <div className="row" style={{backgroundColor: color, padding: '16px 20px 16px 22px', alignItems: 'center'}}>
         <img src={icon} width={20} height={20} style={{border: '1px solid', marginRight: 14}}/>
-        <div style={{display: 'flex', flexDirection: 'column'}}>
-          <div style={{fontSize: 16, fontWeight: '700'}}>{title}</div>
+        <div className="column">
+          <div style={{fontSize: '16px', fontWeight: '700'}}>{title}</div>
           {description}
         </div>
       </div>
@@ -260,7 +261,7 @@ export default function ComponentPage({component}) {
     };
 
     return (
-      <div style={{display: 'flex', flexDirection: 'column', marginBottom: isLast ? 0 : 40}}>
+      <div className="column" style={{marginBottom: isLast ? 0 : 40}}>
         {getBasicLayout(data)}
       </div>
     );
@@ -302,7 +303,7 @@ export default function ComponentPage({component}) {
 
   const getSectionContent = content => {
     return (
-      <div style={{display: 'flex', flexDirection: 'column'}}>
+      <div className="column">
         {_.map(content, (item, index: number) => {
           const isLast = index === content.length - 1;
 
