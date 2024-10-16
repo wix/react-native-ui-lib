@@ -225,7 +225,9 @@ export default function ComponentPage({component}) {
     const links = component.extendsLink;
     
     return _.map(components, (component, index: number) => {
-      return <a href={links[index]} target="_blank" rel="noreferrer" style={{fontSize: '16px', fontWeight: '700', lineHeight: '18px', borderBottom: '1px solid'}}>{component}</a>;
+      const isLast = index === components.length - 1;
+      const comma = isLast ? '' : ', ';
+      return <a href={links[index]} target="_blank" rel="noreferrer" style={{fontSize: '16px', fontWeight: '700', lineHeight: '18px', borderBottom: '1px solid'}}>{component}{comma}</a>;
     });
   };
 
@@ -234,7 +236,7 @@ export default function ComponentPage({component}) {
     const title = section.title || 'INFO';
     let description = section.massage;
     if (!description && component.extends) {
-      const links = getExtendsLinks(); //TODO: separate links with comma
+      const links = getExtendsLinks();
       const text = <span style={{fontWeight: 'bold'}}>{links}</span>;
       description = <div>This component extends the {text} props.</div>;
     }
