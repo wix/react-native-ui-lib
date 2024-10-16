@@ -48,7 +48,7 @@ export default function ComponentPage({component}) {
   };
 
   const getCodeExample = () => {
-    return <a href={component.example} style={{fontSize: '16px', fontWeight: '700', lineHeight: '18px', borderBottom: '1px solid'}}>Code Example</a>;
+    return <a href={component.example} target="_blank" rel="noreferrer" style={{fontSize: '16px', fontWeight: '700', lineHeight: '18px', borderBottom: '1px solid'}}>Code Example</a>;
   };
 
   const getTitle = (type, title) => {
@@ -227,7 +227,7 @@ export default function ComponentPage({component}) {
     const links = component.extendsLink;
     
     return _.map(components, (component, index: number) => {
-      return <a href={links[index]} style={{fontSize: '16px', fontWeight: '700', lineHeight: '18px', borderBottom: '1px solid'}}>{component}</a>;
+      return <a href={links[index]} target="_blank" rel="noreferrer" style={{fontSize: '16px', fontWeight: '700', lineHeight: '18px', borderBottom: '1px solid'}}>{component}</a>;
     });
   };
 
