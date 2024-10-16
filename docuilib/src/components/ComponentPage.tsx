@@ -390,7 +390,7 @@ export default function ComponentPage({component}) {
   };
 
   const buildHero = () => {
-    const hero = component.docs?.header;
+    const hero = component.docs?.hero;
 
     if (hero) {
       // const isIncubatorComponent = component.category === 'incubator';

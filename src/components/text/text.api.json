@@ -35,7 +35,7 @@
   ],
   "snippet": ["<Text text30$1>Text goes here$2</Text>"],
   "docs": {
-    "header": {
+    "hero": {
       "description": "A wrapper for Text component with extra functionality like modifiers support",
       "content": [
         {"value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"}
