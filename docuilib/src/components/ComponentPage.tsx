@@ -73,7 +73,7 @@ export default function ComponentPage({component}) {
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-between',
-              margin: '0 0 12px 0'
+              marginBottom: 12
             }}
           >
             {getTitle(type, title)}
@@ -117,21 +117,20 @@ export default function ComponentPage({component}) {
 
       return _.map(sorted, prop => {
         const defaultValue = prop.default ? `. Default is ${prop.default}` : '';
-        const descMargin = prop.note ? '0 0 12px 0' : '0 0 28px 0';
 
         return (
           <div style={{display: 'flex', flexDirection: 'column'}}>
-            <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 12px 0'}}>
-              <div style={{fontSize: 16, fontWeight: '700', margin: '0 12px 0 0'}}>{prop.name}</div>
+            <div style={{display: 'flex', flexDirection: 'row', marginBottom: 12}}>
+              <div style={{fontSize: 16, fontWeight: '700', marginRight: 12}}>{prop.name}</div>
               {getTag(prop.type, getTypeColor(prop.type))}
               {prop.required && getTag('Required', getTypeColor())}
               {prop.platform && getTag(prop.platform, getTypeColor())}
             </div>
-            <span style={{display: 'block', margin: descMargin, fontSize: '16px', fontWeight: '400', color: descColor}}>
+            <span style={{display: 'block', marginBottom: prop.note ? 12 : 28, fontSize: '16px', fontWeight: '400', color: descColor}}>
               {prop.description}
               {defaultValue}
             </span>
-            {prop.note && <span style={{display: 'block', margin: '0 0 28px 0', fontSize: '16px', fontWeight: '700'}}>{prop.note}</span>}
+            {prop.note && <span style={{display: 'block', marginBottom: 28, fontSize: '16px', fontWeight: '700'}}>{prop.note}</span>}
           </div>
         );
       });
@@ -188,7 +187,7 @@ export default function ComponentPage({component}) {
 
     return (
       <div>
-        {section.name && <div style={{fontSize: 20, fontWeight: '700', margin: '0 0 16px 0'}}>{section.name}</div>}
+        {section.name && <div style={{fontSize: 20, fontWeight: '700', marginBottom: 16}}>{section.name}</div>}
         <table>
           <tr>
             {getTableHeaders(columns)}
@@ -214,7 +213,7 @@ export default function ComponentPage({component}) {
   const buildMassageBox = (color, icon, title, description) => {
     return (
       <div style={{display: 'flex', flexDirection: 'row', backgroundColor: color, padding: '16px 20px 16px 22px', alignItems: 'center'}}>
-        <img src={icon} width={20} height={20} style={{border: '1px solid', margin: '0 14px 0 0'}}/>
+        <img src={icon} width={20} height={20} style={{border: '1px solid', marginRight: 14}}/>
         <div style={{display: 'flex', flexDirection: 'column'}}>
           <div style={{fontSize: 16, fontWeight: '700'}}>{title}</div>
           {description}
@@ -259,10 +258,9 @@ export default function ComponentPage({component}) {
       type: 'item',
       layout
     };
-    const itemMargin = isLast ? '0' : '0 0 40px 0';
 
     return (
-      <div style={{display: 'flex', flexDirection: 'column', margin: itemMargin}}>
+      <div style={{display: 'flex', flexDirection: 'column', marginBottom: isLast ? 0 : 40}}>
         {getBasicLayout(data)}
       </div>
     );
@@ -307,10 +305,9 @@ export default function ComponentPage({component}) {
       <div style={{display: 'flex', flexDirection: 'column'}}>
         {_.map(content, (item, index: number) => {
           const isLast = index === content.length - 1;
-          const itemMargin = isLast ? '0' : '0 0 40px 0';
 
           return (
-            <div style={{margin: itemMargin, border: '1px solid #F8F9FA'}}>
+            <div style={{marginBottom: isLast ? 0 : 40, border: '1px solid #F8F9FA'}}>
               {getContentItem(item)}
             </div>
           );
