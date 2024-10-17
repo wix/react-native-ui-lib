@@ -1,6 +1,6 @@
 import React from 'react';
 
-const useCombinedRefs = (...refs: React.Ref<any>[]) => {
+const useCombinedRefs = <T>(...refs: React.Ref<any>[]) => {
   const targetRef = React.useRef();
 
   React.useEffect(() => {
@@ -17,7 +17,7 @@ const useCombinedRefs = (...refs: React.Ref<any>[]) => {
     });
   }, [refs]);
 
-  return targetRef;
+  return targetRef as T;
 };
 
 export default useCombinedRefs;

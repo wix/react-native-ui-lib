@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
+import {type DimensionValue, StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import memoize from 'memoize-one';
 import * as Modifiers from '../../commons/modifiers';
 import {Spacings} from 'style';
@@ -274,6 +274,6 @@ const styles = StyleSheet.create({
 export default GridListItem;
 
 interface ImageSize {
-  width?: number | string;
-  height?: number | string;
+  width?: DimensionValue;
+  height?: DimensionValue;
 }

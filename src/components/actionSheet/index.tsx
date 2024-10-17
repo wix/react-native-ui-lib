@@ -255,7 +255,6 @@ class ActionSheet extends Component<ActionSheetProps> {
     }
 
     return (
-      // @ts-expect-error height might be null here
       <IncubatorDialog
         bottom
         centerH

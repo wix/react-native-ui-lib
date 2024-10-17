@@ -225,4 +225,5 @@ const modifiersOptions = {
   backgroundColor: true,
   flex: true
 };
+
 export default asBaseComponent<TextProps>(forwardRef<PropsTypes>(Text), {modifiersOptions});

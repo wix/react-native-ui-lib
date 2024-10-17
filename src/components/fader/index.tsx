@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {useMemo} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, StyleProp, ImageStyle} from 'react-native';
 import View from '../view';
 import Image, {ImageProps} from '../image';
 import {Colors} from 'style';
@@ -47,7 +47,7 @@ function Fader(props: FaderProps) {
   } = props;
 
   const styles = useMemo(() => {
-    let containerStyle, imageStyle, imageSource;
+    let containerStyle, imageStyle: StyleProp<ImageStyle>, imageSource;
     switch (position) {
       case FaderPosition.START:
         containerStyle = {...staticStyles.containerLeft, width: size};

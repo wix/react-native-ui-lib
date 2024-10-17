@@ -7,7 +7,7 @@ import {
 
 export const DateTimePickerDriver = (props: ComponentProps) => {
   const {renderTree, testID} = props;
-  const expandableOverlayDriver = ExpandableOverlayDriver({...props, testID: `${testID}.overlay`});
+  const expandableOverlayDriver = ExpandableOverlayDriver({...props, testID: `${testID}.overlay`}, true);
   const open = () => {
     expandableOverlayDriver.open();
   };
