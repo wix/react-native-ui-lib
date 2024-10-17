@@ -19,7 +19,7 @@ export default function ComponentPage({component}) {
         return '#E8ECF0';
     }
   };
-  
+
   const getMassageIcon = type => {
     switch (type) {
       case 'tip':
@@ -301,6 +301,8 @@ export default function ComponentPage({component}) {
 
   const getContent = section => {
     switch (section.type) {
+      case 'usage':
+        return getUsage();
       case 'props':
         return getPropsList();
       case 'table':
@@ -415,8 +417,6 @@ export default function ComponentPage({component}) {
     if (sections) {
       return _.map(sections, section => {
         switch (section.type) {
-          case 'usage':
-            return getUsage();
           case 'info':
           case 'tip':
           case 'massage':
