@@ -155,7 +155,7 @@ export default function ComponentPage({component}) {
         return (
           <div className="column">
             <div className="row" style={{marginBottom: 12}}>
-              <div style={{fontSize: '16px', fontWeight: '700', marginRight: 12}}>{prop.name}</div>
+              <div style={{fontSize: '16px', fontWeight: '700', marginRight: 12, marginLeft: 16}}>{prop.name}</div>
               {getTag(prop.type, getTypeColor(prop.type))}
               {prop.required && getTag('Required', getTypeColor())}
               {prop.platform && getTag(prop.platform, getTypeColor())}
