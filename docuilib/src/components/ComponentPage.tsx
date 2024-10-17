@@ -6,34 +6,76 @@ import CodeBlock from '@theme/CodeBlock';
 import './ComponentPage.module.scss';
 
 export default function ComponentPage({component}) {
-  const getTitleSize = type => {
-    switch (type) {
-      case 'hero':
-        return '48px';
-      case 'item':
-        return '16px';
-      default:
-        return '32px';
+
+  /** Massage */
+
+  const buildMassageBox = (color, icon, title, description) => {
+    return (
+      <div className="row" style={{backgroundColor: color, marginBottom: 20, padding: '16px 20px 16px 22px', alignItems: 'center'}}>
+        <img src={icon} width={20} height={20} style={{border: '1px solid', marginRight: 14}}/>
+        <div className="column">
+          <div style={{fontSize: '16px', fontWeight: '700'}}>{title}</div>
+          {description}
+        </div>
+      </div>
+    );
+  };
+
+  const getExtendsLinks = () => {
+    const components = component.extends;
+    const links = component.extendsLink;
+    
+    return _.map(components, (component, index: number) => {
+      const isLast = index === components.length - 1;
+      const comma = isLast ? '' : ', ';
+      return <a href={links[index]} target="_blank" rel="noreferrer" style={{fontSize: '16px', fontWeight: '700', lineHeight: '18px', borderBottom: '1px solid'}}>{component}{comma}</a>;
+    });
+  };
+
+  const getInfo = (section) => {
+    const icon = undefined; //TODO: add info icon
+    const title = section.title || 'INFO';
+    let description = section.massage;
+    if (!description && component.extends) {
+      const links = getExtendsLinks();
+      const text = <span style={{fontWeight: 'bold'}}>{links}</span>;
+      description = <div>This component extends the {text} props.</div>;
+    }
+    
+    return description && buildMassageBox('#E9F3FF', icon, title, description);
+  };
+
+  const getTip = (section) => {
+    const icon = undefined; //TODO: add insights icon
+    const title = section.title || 'TIP';
+    let description = section.massage;
+    if (!description && component.modifiers) {
+      const text = <span style={{fontWeight: 'bold'}}>{component.modifiers?.join(', ')}</span>;
+      description = <div>This component support {text} modifiers.</div>;
+    }
+
+    return description && buildMassageBox('#E3F7F2', icon, title, description);
+  };
+
+  const getMassage = (section) => {
+    return buildMassageBox(section.color, section.icon, section.title, section.description);
+  };
+
+  /** Usage */
+
+  const getUsage = () => {
+    if (component.snippet) {
+      return (
+        <div>
+          <CodeBlock language="jsx">
+            {component.snippet?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), '')).join('\n')}
+          </CodeBlock>
+        </div>
+      );
     }
   };
 
-  const getTitleWeight = type => {
-    switch (type) {
-      case 'item':
-        return '400';
-      default:
-        return '700';
-    }
-  };
-
-  const getDescriptionColor = type => {
-    switch (type) {
-      case 'item':
-        return '#6E7881';
-      default:
-        return '#495059';
-    }
-  };
+  /** PropsList */
 
   const getTypeColor = (type?: string) => {
     switch (type) {
@@ -47,50 +89,7 @@ export default function ComponentPage({component}) {
         return '#E8ECF0';
     }
   };
-
-  const getCodeExample = () => {
-    return <a href={component.example} target="_blank" rel="noreferrer" style={{fontSize: '16px', fontWeight: '700', lineHeight: '18px', borderBottom: '1px solid'}}>Code Example</a>;
-  };
-
-  const getTitle = (type, title) => {
-    const size = getTitleSize(type);
-    const weight = getTitleWeight(type);
-    return <span style={{fontSize: size, fontWeight: weight}}>{title}</span>;
-  };
-
-  const getHeader = (title, description, type) => {
-    const desColor = getDescriptionColor(type);
-
-    if (!title && !description) {
-      return;
-    }
-
-    switch (type) {
-      case 'usage':
-        return (
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: 12
-            }}
-          >
-            {getTitle(type, title)}
-            {getCodeExample()}
-          </div>
-        );
-      default:
-        return (
-          <div style={{display: 'flex', flexDirection: 'column', flex: 1, alignContent: 'start', margin: '0 40px 40px 0'}}>
-            {title && getTitle(type, title)}
-            {description && <span style={{fontSize: '16px', fontWeight: '400', color: desColor}}>{description}</span>}
-          </div>
-        );
-    }
-  };
-
+  
   const getTag = (label, color) => {
     return (
       <div
@@ -137,6 +136,8 @@ export default function ComponentPage({component}) {
       });
     }
   };
+
+  /** Table */
 
   const getTableHeaders = columns => {
     const numberOfColumns = columns.length;
@@ -196,69 +197,7 @@ export default function ComponentPage({component}) {
     );
   };
 
-  const getUsage = () => {
-    if (component.snippet) {
-      return (
-        <div>
-          <CodeBlock language="jsx">
-            {component.snippet?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), '')).join('\n')}
-          </CodeBlock>
-        </div>
-      );
-    }
-  };
-
-  const buildMassageBox = (color, icon, title, description) => {
-    return (
-      <div className="row" style={{backgroundColor: color, marginBottom: 20, padding: '16px 20px 16px 22px', alignItems: 'center'}}>
-        <img src={icon} width={20} height={20} style={{border: '1px solid', marginRight: 14}}/>
-        <div className="column">
-          <div style={{fontSize: '16px', fontWeight: '700'}}>{title}</div>
-          {description}
-        </div>
-      </div>
-    );
-  };
-
-  const getExtendsLinks = () => {
-    const components = component.extends;
-    const links = component.extendsLink;
-    
-    return _.map(components, (component, index: number) => {
-      const isLast = index === components.length - 1;
-      const comma = isLast ? '' : ', ';
-      return <a href={links[index]} target="_blank" rel="noreferrer" style={{fontSize: '16px', fontWeight: '700', lineHeight: '18px', borderBottom: '1px solid'}}>{component}{comma}</a>;
-    });
-  };
-
-  const getInfo = (section) => {
-    const icon = undefined; //TODO: add info icon
-    const title = section.title || 'INFO';
-    let description = section.massage;
-    if (!description && component.extends) {
-      const links = getExtendsLinks();
-      const text = <span style={{fontWeight: 'bold'}}>{links}</span>;
-      description = <div>This component extends the {text} props.</div>;
-    }
-    
-    return description && buildMassageBox('#E9F3FF', icon, title, description);
-  };
-
-  const getTip = (section) => {
-    const icon = undefined; //TODO: add insights icon
-    const title = section.title || 'TIP';
-    let description = section.massage;
-    if (!description && component.modifiers) {
-      const text = <span style={{fontWeight: 'bold'}}>{component.modifiers?.join(', ')}</span>;
-      description = <div>This component support {text} modifiers.</div>;
-    }
-
-    return description && buildMassageBox('#E3F7F2', icon, title, description);
-  };
-
-  const getMassage = (section) => {
-    return buildMassageBox(section.color, section.icon, section.title, section.description);
-  };
+  /** List */
 
   const getListItem = (item, isLast, layout) => {
     const data = {
@@ -282,6 +221,8 @@ export default function ComponentPage({component}) {
       return getListItem(item, isLast, section.layout);
     });
   };
+
+  /** Section Content */
 
   const getFigmaEmbed = item => {
     const value = item.value;
@@ -341,6 +282,82 @@ export default function ComponentPage({component}) {
     }
   };
 
+  /** Section Header */
+
+  const getTitleSize = type => {
+    switch (type) {
+      case 'hero':
+        return '48px';
+      case 'item':
+        return '16px';
+      default:
+        return '32px';
+    }
+  };
+
+  const getTitleWeight = type => {
+    switch (type) {
+      case 'item':
+        return '400';
+      default:
+        return '700';
+    }
+  };
+
+  const getDescriptionColor = type => {
+    switch (type) {
+      case 'item':
+        return '#6E7881';
+      default:
+        return '#495059';
+    }
+  };
+
+  const getCodeExample = () => {
+    return <a href={component.example} target="_blank" rel="noreferrer" style={{fontSize: '16px', fontWeight: '700', lineHeight: '18px', borderBottom: '1px solid'}}>Code Example</a>;
+  };
+
+  const getTitle = (type, title) => {
+    const size = getTitleSize(type);
+    const weight = getTitleWeight(type);
+    return <span style={{fontSize: size, fontWeight: weight}}>{title}</span>;
+  };
+
+  const getHeader = (title, description, type) => {
+    const desColor = getDescriptionColor(type);
+
+    if (!title && !description) {
+      return;
+    }
+
+    switch (type) {
+      case 'usage':
+        return (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: 12
+            }}
+          >
+            {getTitle(type, title)}
+            {getCodeExample()}
+          </div>
+        );
+      default:
+        return (
+          <div style={{display: 'flex', flexDirection: 'column', flex: 1, alignContent: 'start', margin: '0 40px 40px 0'}}>
+            {title && getTitle(type, title)}
+            {description && <span style={{fontSize: '16px', fontWeight: '400', color: desColor}}>{description}</span>}
+          </div>
+        );
+    }
+  };
+
+  /** Sections */
+
   const getBasicLayout = section => {
     const direction = section.type !== 'list' && section.layout === 'horizontal' ? 'row' : 'column';
 
@@ -386,6 +403,8 @@ export default function ComponentPage({component}) {
     }
   };
 
+  /** Tabs */
+
   const getTabItems = tabs => {
     return _.map(tabs, (tab, index) => {
       return (
@@ -404,6 +423,8 @@ export default function ComponentPage({component}) {
       return <Tabs className="main-tabs">{getTabItems(tabs)}</Tabs>;
     }
   };
+
+  /** Hero */
 
   const buildHero = () => {
     const hero = component.docs?.hero;
