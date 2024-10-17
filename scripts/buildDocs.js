@@ -59,19 +59,13 @@ components.forEach(component => {
   content += `sidebar_label: ${componentName}\n`;
   content += '---\n\n';
 
-  content += `import Tabs from '@theme/Tabs';\n`;
-  content += `import TabItem from '@theme/TabItem';\n\n`;
-  content += `<Tabs>
-    <TabItem value="api" label="API" default>
-      ${getFirstTab(component)}
-    </TabItem>
-    <TabItem value="guidelines" label="Guidelines">
-      Coming soon... 👩🏻‍💻
-    </TabItem>
-    <TabItem value="playground" label="Playground">
-      Coming soon... 🤹🏻‍♀️
-    </TabItem>
-  </Tabs>\n`;
+  if (component.docs) {
+    content += `import ComponentPage from '@site/src/components/ComponentPage';\n\n`;
+    const componentObject = JSON.stringify(component);
+    content += `<ComponentPage component={${componentObject}}/>\n`;
+  } else {
+    content += `${buildOldDocs(component)}\n`;
+  }
 
   const componentParentDir = componentParentName || isParentComponent ? `/${componentParentName || componentName}` : '';
   const dirPath = `${COMPONENTS_DOCS_DIR}/${component.category}${componentParentDir}`;
@@ -98,7 +92,7 @@ function generateExtendsLink(extendsLink) {
   return extendsText;
 }
 
-function getFirstTab(component) {
+function buildOldDocs(component) {
   let content = '';
 
   /* General Info */
