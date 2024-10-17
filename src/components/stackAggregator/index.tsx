@@ -68,10 +68,10 @@ const StackAggregator = (props: StackAggregatorProps) => {
     containerStyle,
     buttonProps,
     collapsed = true,
-    disablePresses,
+    disablePresses = false,
     onItemPress,
     contentContainerStyle,
-    itemBorderRadius,
+    itemBorderRadius = 0,
     onCollapseWillChange,
     onCollapseChanged
   } = props;
@@ -301,11 +301,6 @@ const StackAggregator = (props: StackAggregatorProps) => {
 
 export default asBaseComponent<StackAggregatorProps>(StackAggregator);
 StackAggregator.displayName = 'StackAggregator';
-StackAggregator.defaultProps = {
-  collapsed: true,
-  disablePresses: false,
-  itemBorderRadius: 0
-};
 
 const styles = StyleSheet.create({
   subContainer: {

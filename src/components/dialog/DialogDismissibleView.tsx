@@ -57,7 +57,14 @@ interface LocationProps {
 const DEFAULT_DIRECTION = PanningProvider.Directions.DOWN;
 
 const DialogDismissibleView = (props: Props) => {
-  const {direction = DEFAULT_DIRECTION, visible: propsVisible, containerStyle, style, children, onDismiss} = props;
+  const {
+    direction = DEFAULT_DIRECTION,
+    visible: propsVisible,
+    containerStyle,
+    style,
+    children,
+    onDismiss = () => {}
+  } = props;
   // @ts-expect-error
   const {isPanning, dragDeltas, swipeDirections} = useContext<PanContextProps>(PanningContext);
 
@@ -245,10 +252,6 @@ const DialogDismissibleView = (props: Props) => {
 };
 
 DialogDismissibleView.displayName = 'IGNORE';
-DialogDismissibleView.defaultProps = {
-  direction: DEFAULT_DIRECTION,
-  onDismiss: () => {}
-};
 
 export default DialogDismissibleView;
 
