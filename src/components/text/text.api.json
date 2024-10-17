@@ -183,9 +183,15 @@
           },
           {
             "type": "massage",
+            "title": "NOTE",
+            "description": "This is an interesting information"
+          },
+          {
+            "type": "massage",
             "title": "MASSAGE",
             "description": "This is some massage to the user",
-            "color": "pink"
+            "color": "pink",
+            "icon": ""
           },
           {
             "type": "props",

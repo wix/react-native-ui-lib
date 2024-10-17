@@ -9,13 +9,61 @@ export default function ComponentPage({component}) {
 
   /** Massage */
 
-  const buildMassageBox = (color, icon, title, description) => {
+  const getMassageColor = (type) => {
+    switch (type) {
+      case 'tip':
+        return '#E3F7F2';
+      case 'info':
+        return '#E9F3FF';
+      default:
+        return '#E8ECF0';
+    }
+  };
+  
+  const getMassageIcon = type => {
+    switch (type) {
+      case 'tip':
+        return 'https://github.com/wix/react-native-ui-lib/blob/2155a91386f884db816c4d45d97e47bed6024d98/docuilib/src/assets/icons/insights.png?raw=true';
+      default:
+        return 'https://github.com/wix/react-native-ui-lib/blob/2155a91386f884db816c4d45d97e47bed6024d98/docuilib/src/assets/icons/infoOutline.png?raw=true';
+    }
+  };
+
+  const getMassageTitle = type => {
+    switch (type) {
+      case 'tip':
+        return 'TIP';
+      case 'info':
+        return 'INFO';
+      default:
+        return 'NOTE';
+    }
+  };
+
+  const getMassageDescription = type => {
+    switch (type) {
+      case 'tip':
+        return getExtends();
+      case 'info':
+        return getModifiers();
+      default:
+        return;
+    }
+  };
+
+  const buildMassageBox = (section) => {
+    const {title, description, color, icon, type} = section;
+    const _color = color || getMassageColor(type);
+    const _icon = icon || getMassageIcon(type);
+    const _title = title || getMassageTitle(type);
+    const _description = description || getMassageDescription(type);
+
     return (
-      <div className="row" style={{backgroundColor: color, marginBottom: 20, padding: '16px 20px 16px 22px', alignItems: 'center'}}>
-        <img src={icon} width={20} height={20} style={{border: '1px solid', marginRight: 14}}/>
+      <div className="row" style={{backgroundColor: _color, marginBottom: 20, padding: '16px 20px 16px 22px', alignItems: 'center'}}>
+        <img src={_icon} width={20} height={20} style={{marginRight: 14}}/>
         <div className="column">
-          <div style={{fontSize: '16px', fontWeight: '700'}}>{title}</div>
-          {description}
+          <div style={{fontSize: '16px', fontWeight: '700'}}>{_title}</div>
+          {_description}
         </div>
       </div>
     );
@@ -32,33 +80,19 @@ export default function ComponentPage({component}) {
     });
   };
 
-  const getInfo = (section) => {
-    const icon = undefined; //TODO: add info icon
-    const title = section.title || 'INFO';
-    let description = section.massage;
-    if (!description && component.extends) {
+  const getExtends = () => {
+    if (component.extends) {
       const links = getExtendsLinks();
       const text = <span style={{fontWeight: 'bold'}}>{links}</span>;
-      description = <div>This component extends the {text} props.</div>;
+      return <div>This component extends the {text} props.</div>;
     }
-    
-    return description && buildMassageBox('#E9F3FF', icon, title, description);
   };
 
-  const getTip = (section) => {
-    const icon = undefined; //TODO: add insights icon
-    const title = section.title || 'TIP';
-    let description = section.massage;
-    if (!description && component.modifiers) {
+  const getModifiers = () => {
+    if (component.modifiers) {
       const text = <span style={{fontWeight: 'bold'}}>{component.modifiers?.join(', ')}</span>;
-      description = <div>This component support {text} modifiers.</div>;
+      return <div>This component support {text} modifiers.</div>;
     }
-
-    return description && buildMassageBox('#E3F7F2', icon, title, description);
-  };
-
-  const getMassage = (section) => {
-    return buildMassageBox(section.color, section.icon, section.title, section.description);
   };
 
   /** Usage */
@@ -384,11 +418,9 @@ export default function ComponentPage({component}) {
           case 'usage':
             return getUsage();
           case 'info':
-            return getInfo(section);
           case 'tip':
-            return getTip(section);
           case 'massage':
-            return getMassage(section);
+            return buildMassageBox(section);
           default:
             return (
               <div>
