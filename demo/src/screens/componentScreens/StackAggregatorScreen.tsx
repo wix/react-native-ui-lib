@@ -68,7 +68,7 @@ export default class StackAggregatorScreen extends Component {
           containerStyle={{marginTop: 12}}
           onItemPress={this.onItemPress}
           collapsed={false}
-          contentContainerStyle={{backgroundColor: Colors.red70}}
+          backgroundColor={Colors.red70}
           // itemBorderRadius={10}
           // buttonProps={{color: Colors.green30, labelStyle: {...Typography.text80, fontWeight: '500'}}}
         >
