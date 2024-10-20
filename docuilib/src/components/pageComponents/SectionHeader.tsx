@@ -16,21 +16,11 @@ export const SectionHeader = ({section, component}) => {
   };
 
   const getTitleWeight = type => {
-    switch (type) {
-      case 'item':
-        return '400';
-      default:
-        return '700';
-    }
+    return type === 'item' ? '400' : '700';
   };
 
   const getDescriptionColor = type => {
-    switch (type) {
-      case 'item':
-        return '#6E7881';
-      default:
-        return '#495059';
-    }
+    return type === 'item' ? '#6E7881' : '#495059';
   };
 
   const getCodeExampleLink = () => {
