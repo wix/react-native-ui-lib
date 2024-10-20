@@ -349,7 +349,7 @@ export default function ComponentPage({component}) {
     }
   };
 
-  const getCodeExample = () => {
+  const getCodeExampleLink = () => {
     return <a href={component.example} target="_blank" rel="noreferrer" style={{fontSize: '16px', fontWeight: '700', lineHeight: '18px', borderBottom: '1px solid'}}>Code Example</a>;
   };
 
@@ -379,7 +379,7 @@ export default function ComponentPage({component}) {
             }}
           >
             {getTitle(type, title)}
-            {getCodeExample()}
+            {getCodeExampleLink()}
           </div>
         );
       default:
@@ -463,8 +463,7 @@ export default function ComponentPage({component}) {
 
     if (hero) {
       // TODO: align hero's image to page title
-      // const isIncubatorComponent = component.category === 'incubator';
-      // const name = isIncubatorComponent ? `Incubator.${component.name}` : component.name;
+      // const name = component.category === 'incubator' ? `Incubator.${component.name}` : component.name;
       const section = {
         // title: name,
         layout: 'horizontal',
