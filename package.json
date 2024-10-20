@@ -121,7 +121,8 @@
     "react-test-renderer": "18.2.0",
     "reassure": "^0.4.1",
     "shell-utils": "^1.0.10",
-    "typescript": "4.9.5"
+    "typescript": "4.9.5",
+    "uilib-native": "^4.3.2"
   },
   "peerDependencies": {
     "react": ">=17.0.1",
@@ -132,7 +133,7 @@
   "jest": {
     "preset": "react-native",
     "transformIgnorePatterns": [
-      "node_modules/(?!(@react-native|react-native|react-native-reanimated|react-native-redash)/)"
+      "node_modules/(?!(@react-native|react-native|react-native-reanimated|react-native-redash|uilib-native)/)"
     ],
     "testPathIgnorePatterns": [
       "/e2e/",
