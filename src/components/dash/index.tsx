@@ -12,16 +12,16 @@ export type Layout = {
 
 export interface DashProps extends ViewProps {
   vertical?: boolean;
-  gap: number;
-  length: number;
-  thickness: number;
+  gap?: number;
+  length?: number;
+  thickness?: number;
   color?: string;
   style?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
 }
 
 const Dash = (props: DashProps) => {
-  const {containerStyle, vertical, gap, length, thickness, color, style, testID} = props;
+  const {containerStyle, vertical, gap = 6, length = 6, thickness = 2, color, style, testID} = props;
   const [measurements, setMeasurements] = useState<Layout | undefined>();
 
   const onDashLayout = useCallback((event: LayoutChangeEvent) => {
@@ -52,7 +52,7 @@ const Dash = (props: DashProps) => {
     const _length = (vertical ? measurements?.height : measurements?.width) || 0;
     const n = Math.ceil(_length / (gap + length));
     const dash = [];
-    
+
     for (let i = 0; i < n; i++) {
       dash.push(<View key={i} bg-$outlineDefault backgroundColor={color} style={dashStyle}/>);
     }
@@ -68,11 +68,6 @@ const Dash = (props: DashProps) => {
 };
 
 export default Dash;
-Dash.defaultProps = {
-  gap: 6,
-  length: 6,
-  thickness: 2
-};
 
 const styles = StyleSheet.create({
   row: {
