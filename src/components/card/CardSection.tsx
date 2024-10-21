@@ -1,12 +1,11 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {StyleSheet, ViewStyle, ImageStyle, ImageSourcePropType, StyleProp} from 'react-native';
+import {StyleSheet, ViewStyle, ImageStyle, ImageSourcePropType, StyleProp, ColorValue} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
 import View, {ViewProps} from '../view';
 import Text, {TextProps} from '../text';
 import Image, {ImageProps} from '../image';
 import asCardChild, {asCardChildProps} from './asCardChild';
-
 
 type ContentType = TextProps & {text?: string};
 
@@ -23,7 +22,7 @@ export type CardSectionProps = ViewProps & {
   /**
    * Give the section a background color
    */
-  backgroundColor?: string;
+  backgroundColor?: ColorValue;
   /**
    * Image props for a leading icon to render before the text
    */

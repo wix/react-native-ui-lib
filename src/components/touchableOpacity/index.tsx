@@ -3,7 +3,8 @@ import React, {PureComponent} from 'react';
 import {
   GestureResponderEvent,
   TouchableOpacity as RNTouchableOpacity,
-  TouchableOpacityProps as RNTouchableOpacityProps
+  TouchableOpacityProps as RNTouchableOpacityProps,
+  ColorValue
 } from 'react-native';
 import {
   asBaseComponent,
@@ -25,7 +26,7 @@ export interface TouchableOpacityProps
   /**
    * background color for TouchableOpacity
    */
-  backgroundColor?: string;
+  backgroundColor?: ColorValue;
   /**
    * throttle time in MS for onPress callback
    */
@@ -37,7 +38,7 @@ export interface TouchableOpacityProps
   /**
    * Apply background color on TouchableOpacity when active (press is on)
    */
-  activeBackgroundColor?: string;
+  activeBackgroundColor?: ColorValue;
   /**
    * Will apply scale press feedback. This will enforce the useNative prop
    */

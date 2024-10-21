@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, StyleProp, ViewStyle, ModalPropsIOS, AccessibilityProps} from 'react-native';
+import {StyleSheet, StyleProp, ViewStyle, ModalPropsIOS, AccessibilityProps, ColorValue} from 'react-native';
 import {Colors} from '../../style';
 import {AlignmentModifiers, extractAlignmentsValues} from '../../commons/modifiers';
 import {Constants, asBaseComponent} from '../../commons/new';
@@ -38,7 +38,7 @@ export interface DialogProps extends AlignmentModifiers, RNPartialProps {
   /**
    * The color of the overlay background
    */
-  overlayBackgroundColor?: string;
+  overlayBackgroundColor?: ColorValue;
   /**
    * The dialog width (default: 90%)
    */
