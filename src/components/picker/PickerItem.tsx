@@ -44,7 +44,7 @@ const PickerItem = (props: PickerItemProps) => {
 
   const isItemDisabled = useMemo(() => {
     return !!(disabled || (!isSelected && context.selectionLimit && context.selectionLimit === selectedCounter));
-  }, [selectedCounter]);
+  }, [selectedCounter, disabled]);
 
   useEffect(() => {
     if (_.isPlainObject(value)) {

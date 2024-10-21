@@ -5,7 +5,8 @@ import {Constants} from '../../../commons/new';
 
 describe('SortableGridList presenter tests', () => {
   const makeSUT = ({numOfColumns = DEFAULT_NUM_COLUMNS, itemSpacing = DEFAULT_ITEM_SPACINGS}) => {
-    return renderHook(() => usePresenter(numOfColumns, itemSpacing));
+    const itemSize = Constants.screenWidth / numOfColumns;
+    return renderHook(() => usePresenter(numOfColumns, itemSize, itemSpacing));
   };
 
   describe('ltr', () => {
