@@ -8170,14 +8170,6 @@ uglify-es@^3.1.9:
     commander "~2.13.0"
     source-map "~0.6.1"
 
-uilib-native@^4.3.2:
-  version "4.3.2"
-  resolved "https://registry.npmjs.org/uilib-native/-/uilib-native-4.3.2.tgz#d0e28d0b4c390411f80ab7f16a26905ed6dcd7d4"
-  integrity sha512-L3NyrO9rHlNZ6D/F4t2G8xLkTe0BDqoj90H4StDUwyoZ9j4Oo9YBuqtiPzG75bSRPlptB2eeRp4UZThnyr++tQ==
-  dependencies:
-    lodash "^4.0.0"
-    prop-types "^15.5.10"
-
 unbox-primitive@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/unbox-primitive/-/unbox-primitive-1.0.2.tgz#29032021057d5e6cdbd08c5129c226dff8ed6f9e"

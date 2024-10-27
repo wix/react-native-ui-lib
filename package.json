@@ -121,8 +121,7 @@
     "react-test-renderer": "18.2.0",
     "reassure": "^0.4.1",
     "shell-utils": "^1.0.10",
-    "typescript": "4.9.5",
-    "uilib-native": "^4.3.2"
+    "typescript": "4.9.5"
   },
   "peerDependencies": {
     "react": ">=17.0.1",
