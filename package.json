@@ -35,7 +35,10 @@
     "calendar:createMocks": "node scripts/createCalendarMockData.js",
     "snippets:build": "node scripts/generateSnippets.js",
     "release": "node ./scripts/release.js",
-    "releaseDemo": "./scripts/demo.sh"
+    "releaseDemo": "./scripts/releaseDemo.sh",
+    "releaseDocs": "./scripts/releaseDocs.sh",
+    "releaseEslint": "./scripts/releaseEslint.sh",
+    "releaseNative": "./scripts/releaseNative.sh"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
@@ -156,5 +159,26 @@
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "yarn@3.4.1"
+  "packageManager": "yarn@3.4.1",
+  "files": [
+    "*.js",
+    "*.d.ts",
+    "!scripts",
+    "scripts/prReleaseNotesCommon.js",
+    "src",
+    "testkit",
+    "ReactNativeUILib.podspec",
+    "!src/**/*.ts",
+    "src/**/*.d.ts",
+    "!src/**/*.tsx",
+    "!src/**/__tests__",
+    "!**/.DS_Store",
+    "lib/components",
+    "lib/ios",
+    "lib/android",
+    "!lib/android/build",
+    "!lib/scripts",
+    "lib/package.json",
+    "lib/ReactNativeUILib.podspec"
+  ]
 }

@@ -7,6 +7,10 @@ const packages = [
     content: `module.exports = require('./lib/components/Keyboard').default;\n`
   },
   {
+    filename: 'assets.js',
+    content: `module.exports = require('./src/assets').default;\n`
+  },
+  {
     filename: 'config.js',
     content: `module.exports = require('./src/commons/Config').default;\n`
   },
@@ -26,6 +30,10 @@ const packages = [
       'ThemeManager',
       'Scheme'
     ]
+  },
+  {
+    filename: 'incubator.js',
+    incubatorComponents: ['Dialog', 'ExpandableOverlay', 'Slider', 'Toast']
   },
   {
     filename: 'style.js',
@@ -56,11 +64,19 @@ packages.forEach((package) => {
   let content = package.content || '';
   let typings = '';
 
-  if (package.components || package.styleComponents) {
+  if (package.components || package.incubatorComponents || package.styleComponents) {
     content += 'module.exports = {\n';
     _.forEach(package.components, (component) => {
       content += `get ${component}() {\n`;
       content += `return require('./src/components/${_.camelCase(component)}').default;`;
+      content += `},\n`;
+
+      typings = addTyping(typings, component);
+    });
+
+    _.forEach(package.incubatorComponents, (component) => {
+      content += `get ${component}() {\n`;
+      content += `return require('./src/incubator/${_.camelCase(component)}').default;`;
       content += `},\n`;
 
       typings = addTyping(typings, component);

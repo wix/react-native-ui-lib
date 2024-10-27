@@ -4,12 +4,17 @@
   "homepage": "https://github.com/wix/react-native-ui-lib",
   "description": "uilib native components (separated from js components)",
   "main": "components/index.js",
-  "scripts": {},
+  "scripts": {
+    "releaseNative": "node ./scripts/releaseNative.js"
+  },
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.0.0",
     "prop-types": "^15.5.10"
+  },
+  "devDependencies": {
+    "shell-utils": "^1.0.10"
   },
   "peerDependencies": {
     "react": "^16.0.0",

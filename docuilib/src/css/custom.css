@@ -29,3 +29,16 @@
 html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+.main-tabs {
+  margin: 40px 0 60px 0;
+  border-bottom: 2px solid #F0F2F5;
+}
+.single-tab {
+  font-size: 20px;
+  color: #6E7881;
+}
+.single-tab[aria-selected='true'] {
+  border-bottom-color: #20303C;
+  color: #20303C;
+}

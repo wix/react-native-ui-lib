@@ -58,15 +58,5 @@
     },
     {"name": "style", "type": "ViewStyle", "description": "Component's style"},
     {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
-  ],
-  "snippet": [
-    "<Drawer",
-    "  rightItems={[{text: 'Read', background: Colors.blue30, onPress: () => console.log('read pressed')}]$1}",
-    "  leftItem={{text: 'Delete', background: Colors.red30, onPress: () => console.log('delete pressed')}$2}",
-    ">",
-    "  <View centerV padding-s4 bg-white style={{height: 60}}>",
-    "    <Text text70>Item</Text>",
-    "  </View>",
-    "</Drawer>"
   ]
 }

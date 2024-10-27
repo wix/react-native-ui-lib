@@ -104,7 +104,7 @@ const SortableList = <ItemT extends SortableListItemProps>(props: SortableListPr
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flexGrow: 1
   }
 });
 

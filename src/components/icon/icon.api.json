@@ -15,6 +15,6 @@
     {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag"}
   ],
   "snippet": [
-    "<Icon source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/icons/delete.png'}$1} size={24$2} tintColor={Colors.grey40$3}/>"
+    "<Icon source={Assets.icons.demo.drag} tintColor={Colors.grey40}/>"
   ]
 }
