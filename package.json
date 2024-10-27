@@ -151,5 +151,26 @@
     "fakeTimers": {
       "legacyFakeTimers": true
     }
-  }
+  },
+  "files": [
+    "*.js",
+    "*.d.ts",
+    "!scripts",
+    "scripts/prReleaseNotesCommon.js",
+    "src",
+    "testkit",
+    "ReactNativeUILib.podspec",
+    "!src/**/*.ts",
+    "src/**/*.d.ts",
+    "!src/**/*.tsx",
+    "!src/**/__tests__",
+    "!**/.DS_Store",
+    "lib/components",
+    "lib/ios",
+    "lib/android",
+    "!lib/android/build",
+    "!lib/scripts",
+    "lib/package.json",
+    "lib/ReactNativeUILib.podspec"
+  ]
 }
