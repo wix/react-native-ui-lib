@@ -117,8 +117,9 @@ const ColorPicker = (props: Props) => {
 };
 
 ColorPicker.displayName = 'ColorPicker';
+ColorPicker.Dialog = ColorPickerDialog;
 
-export default asBaseComponent<Props>(ColorPicker);
+export default asBaseComponent<Props, {Dialog: typeof ColorPickerDialog}>(ColorPicker);
 
 const plusButtonContainerWidth = SWATCH_SIZE + 20 + 12;
 const plusButtonContainerHeight = 92 - 2 * SWATCH_MARGIN;
