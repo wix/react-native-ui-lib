@@ -3320,7 +3320,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@svgr/core@npm:^8.0.0":
+"@svgr/core@npm:^8.1.0":
   version: 8.1.0
   resolution: "@svgr/core@npm:8.1.0"
   dependencies:
@@ -3343,7 +3343,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@svgr/plugin-jsx@npm:^8.0.1":
+"@svgr/plugin-jsx@npm:^8.1.0":
   version: 8.1.0
   resolution: "@svgr/plugin-jsx@npm:8.1.0"
   dependencies:
@@ -3357,7 +3357,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@svgr/plugin-svgo@npm:^8.0.1":
+"@svgr/plugin-svgo@npm:^8.1.0":
   version: 8.1.0
   resolution: "@svgr/plugin-svgo@npm:8.1.0"
   dependencies:
@@ -10254,18 +10254,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-svg-transformer@npm:1.1.0":
-  version: 1.1.0
-  resolution: "react-native-svg-transformer@npm:1.1.0"
+"react-native-svg-transformer@npm:1.5.0":
+  version: 1.5.0
+  resolution: "react-native-svg-transformer@npm:1.5.0"
   dependencies:
-    "@svgr/core": ^8.0.0
-    "@svgr/plugin-jsx": ^8.0.1
-    "@svgr/plugin-svgo": ^8.0.1
+    "@svgr/core": ^8.1.0
+    "@svgr/plugin-jsx": ^8.1.0
+    "@svgr/plugin-svgo": ^8.1.0
     path-dirname: ^1.0.2
   peerDependencies:
     react-native: ">=0.59.0"
     react-native-svg: ">=12.0.0"
-  checksum: 5c1295c3e6a934af8cdd204215abc1e8689b1fd0c860d660f17e58f7e1d4af69c848914c975bc93ad79776bf4a745fa0be01c3a7ad4cce9f389cec5084e807e0
+  checksum: 6c2544ef095b098de68c45a1698bc79acea10935391009c6322699e0df96a48953949b75309fc6fc7bba32ce5e8c7df632f817b116dd05456e26a5938108a8e6
   languageName: node
   linkType: hard
 
@@ -10360,7 +10360,7 @@ __metadata:
     react-native-redash: ^12.0.3
     react-native-shimmer-placeholder: ^2.0.6
     react-native-svg: ^13.7.0
-    react-native-svg-transformer: 1.1.0
+    react-native-svg-transformer: 1.5.0
     react-test-renderer: 18.2.0
     reassure: ^0.4.1
     semver: ^5.5.0
