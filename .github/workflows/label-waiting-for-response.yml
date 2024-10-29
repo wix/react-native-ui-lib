@@ -1,0 +1,44 @@
+name: Label Issues Awaiting User Response
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  label-waiting-response:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if commenter is a maintainer
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issue = context.issue;
+            const commentAuthor = context.payload.comment.user.login;
+
+            // Get all repository collaborators with 'maintain' or higher permissions
+            const collaborators = await github.repos.listCollaborators({
+              owner: issue.owner,
+              repo: issue.repo,
+              affiliation: 'direct',
+            });
+
+            // Check if the comment author is a collaborator with maintainer permissions
+            const isMaintainer = collaborators.data.some(collab => 
+              collab.login === commentAuthor && (collab.permissions.maintain || collab.permissions.admin)
+            );
+
+            if (isMaintainer) {
+              // Apply 'waiting-for-response' label if not already present
+              const labels = await github.issues.listLabelsOnIssue({
+                ...issue,
+              });
+              const hasLabel = labels.data.some(label => label.name === 'waiting-for-response');
+              
+              if (!hasLabel) {
+                await github.issues.addLabels({
+                  ...issue,
+                  labels: ['waiting-for-response'],
+                });
+              }
+            }
