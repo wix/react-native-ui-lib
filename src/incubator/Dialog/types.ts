@@ -105,7 +105,7 @@ export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSa
   /**
    * The dialog height.
    */
-  height?: string | number;
+  height?: string | number | null;
 
   /**
    * Callback that is called after the dialog's dismiss (after the animation has ended).
