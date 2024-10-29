@@ -1,11 +1,4 @@
-import {
-  Platform,
-  Dimensions,
-  NativeModules,
-  I18nManager,
-  AccessibilityInfo,
-  AccessibilityChangeEvent
-} from 'react-native';
+import {Platform, Dimensions, I18nManager, AccessibilityInfo, AccessibilityChangeEvent, StatusBar} from 'react-native';
 
 export enum orientations {
   PORTRAIT = 'portrait',
@@ -34,17 +27,11 @@ let breakpoints: Breakpoint[];
 let defaultMargin = 0;
 
 const isSubWindow = windowWidth < screenWidth;
-//@ts-ignore
-isTablet = Platform.isPad || (getAspectRatio() < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
+isTablet =
+  (Platform.OS === 'ios' && Platform.isPad) || (getAspectRatio() < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
 
 function setStatusBarHeight() {
-  const {StatusBarManager} = NativeModules;
-  statusBarHeight = StatusBarManager?.HEIGHT || 0; // So there will be a value for any case
-  
-  if (isIOS) {
-    // override guesstimate height with the actual height from StatusBarManager
-    StatusBarManager.getHeight((data:{height:number}) => (statusBarHeight = data.height));
-  }
+  statusBarHeight = StatusBar.currentHeight || 0; // So there will be a value for any case
 }
 
 function getAspectRatio() {
@@ -125,7 +112,7 @@ const constants = {
     return screenHeight <= 600;
   },
   get isWideScreen() {
-    return isTablet && !isSubWindow || this.isLandscape;
+    return (isTablet && !isSubWindow) || this.isLandscape;
   },
   get screenAspectRatio() {
     return getAspectRatio();

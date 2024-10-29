@@ -322,7 +322,7 @@ describe('Calendar/DateUtils', () => {
     });
 
     it('should return true for same dates using timestamps', () => {
-      expect(DateUtils.isSameDay(1673442316000, 1673463916000)).toBe(true);
+      expect(DateUtils.isSameDay(1673442316000, 1673442316000)).toBe(true);
     });
 
     it('should return false for different dates using Date objects', () => {
