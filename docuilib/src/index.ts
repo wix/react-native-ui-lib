@@ -1,2 +1,3 @@
 export {default as ReactLiveScope} from './theme/ReactLiveScope';
-export * as PageComponents from './components/pageComponents';
+import {Banner, ListSection, PropsList, Section, TableSection, Usage} from './components/pageComponents';
+export {Banner, ListSection, PropsList, Section, TableSection, Usage};

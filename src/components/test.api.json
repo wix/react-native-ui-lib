@@ -165,6 +165,16 @@
                 ]
               }
             ]
+          },
+          {
+            "type": "section",
+            "title": "Markdown support",
+            "description": "markdown:##Title\n\nThis is a markdown content\n\n With a list:\n- item 1\n- item 2"
+          },
+          {
+            "type": "section",
+            "title": "HTML support",
+            "description": "html:<h2>Title</h2><p>This is a html content</p><ul><li>item 1</li><li>item 2</li></ul>"
           }
         ]
       },
