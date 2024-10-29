@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {useCallback, useContext, useState, useMemo} from 'react';
+import React, {useCallback, useContext, useState} from 'react';
 import {StyleSheet, FlatList, TextInput, ListRenderItemInfo, ActivityIndicator} from 'react-native';
 import {Typography, Colors} from '../../style';
 import Assets from '../../assets';
@@ -39,13 +39,6 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   const context = useContext(PickerContext);
 
   const [wheelPickerValue, setWheelPickerValue] = useState<PickerSingleValue>(context.value ?? items?.[0]?.value);
-  // TODO: Might not need this memoized style, instead we can move it to a stylesheet
-  const wrapperContainerStyle = useMemo(() => {
-    // const shouldFlex = Constants.isWeb ? 1 : useDialog ? 1 : 1;
-    const shouldFlex = true;
-    const style = {flex: shouldFlex ? 1 : 0, maxHeight: Constants.isWeb ? Constants.windowHeight * 0.75 : undefined};
-    return style;
-  }, [/* useDialog */]);
 
   const renderSearchInput = () => {
     if (showSearch) {
@@ -180,7 +173,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   };
 
   return (
-    <View style={wrapperContainerStyle} useSafeArea={useSafeArea}>
+    <View style={styles.container} useSafeArea={useSafeArea}>
       {renderPickerHeader()}
       {showLoader ? renderLoader() : renderContent()}
     </View>
@@ -189,6 +182,11 @@ const PickerItemsList = (props: PickerItemsListProps) => {
 
 const styles = StyleSheet.create({
   modalBody: {},
+  container: {
+    minHeight: 250,
+    flexShrink: 1,
+    maxHeight: Constants.isWeb ? Constants.windowHeight * 0.75 : undefined
+  },
   searchInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
