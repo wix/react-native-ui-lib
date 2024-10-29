@@ -182,13 +182,13 @@
             "type": "tip"
           },
           {
-            "type": "massage",
+            "type": "banner",
             "title": "NOTE",
             "description": "This is an interesting information"
           },
           {
-            "type": "massage",
-            "title": "MASSAGE",
+            "type": "banner",
+            "title": "Banner",
             "description": "This is some massage to the user",
             "color": "pink",
             "icon": ""
