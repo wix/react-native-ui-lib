@@ -47,7 +47,7 @@ type PickerStatics = {
 const Picker = React.forwardRef((props: PickerProps, ref) => {
   const themeProps = useThemeProps(props, 'Picker');
   const {
-    mode,
+    mode = PickerModes.SINGLE,
     fieldType = PickerFieldTypes.form,
     selectionLimit,
     showSearch,
@@ -86,10 +86,10 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   const [items, setItems] = useState<PickerItemProps[]>(propItems || extractPickerItems(themeProps));
   const pickerExpandable = useRef<ExpandableOverlayMethods>(null);
   const pickerRef = useImperativePickerHandle(ref, pickerExpandable);
-  
+
   // TODO: Remove this when migration is completed, starting of v8
   // usePickerMigrationWarnings({children, migrate, getItemLabel, getItemValue});
-  
+
   useEffect(() => {
     if (propItems) {
       setItems(propItems);
@@ -97,11 +97,10 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   }, [propItems]);
 
   const {
-    filteredChildren,
+    filteredItems,
     setSearchValue,
     onSearchChange: _onSearchChange
-  } = usePickerSearch({showSearch, onSearchChange, getItemLabel, children});
-  
+  } = usePickerSearch({showSearch, onSearchChange, getItemLabel, children, items});
   const {multiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect} = usePickerSelection({
     migrate,
     value,
@@ -230,7 +229,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         useWheelPicker={useWheelPicker}
         mode={mode}
         useDialog={useDialog}
-        items={useItems ? items : undefined}
+        items={useItems ? filteredItems : undefined}
         topBarProps={{
           ...topBarProps,
           onCancel: cancelSelect,
@@ -247,7 +246,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         showLoader={showLoader}
         customLoaderElement={customLoaderElement}
       >
-        {filteredChildren}
+        {filteredItems}
       </PickerItemsList>
     );
   }, [
@@ -266,7 +265,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     renderCustomSearch,
     renderHeader,
     listProps,
-    filteredChildren,
+    filteredItems,
     useSafeArea,
     useWheelPicker,
     items,
@@ -296,9 +295,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
 
 // @ts-expect-error
 Picker.Item = PickerItem;
-Picker.defaultProps = {
-  mode: PickerModes.SINGLE
-};
+
 Picker.displayName = 'Picker';
 // @ts-expect-error
 Picker.modes = PickerModes;
