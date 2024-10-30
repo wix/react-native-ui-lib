@@ -7,7 +7,7 @@ module.exports = {
       //   podspecPath: './lib/ReactNativeUiLib.podspec'
       // },
       android: {
-        sourceDir: './android/',
+        sourceDir: './lib/android/',
         packageImportPath: `import com.wix.reactnativeuilib.dynamicfont.DynamicFontPackage;
 import com.wix.reactnativeuilib.highlighterview.HighlighterViewPackage;
 import com.wix.reactnativeuilib.keyboardinput.KeyboardInputPackage;
