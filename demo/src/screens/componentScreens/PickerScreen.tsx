@@ -191,7 +191,6 @@ export default class PickerScreen extends Component {
                 <Button link label="Done" onPress={onDone}/>
               </View>
             )}
-            customPickerProps={{migrateDialog: true, dialogProps: {bottom: true, width: '100%', height: '45%'}}}
             showSearch
             searchPlaceholder={'Search a language'}
             items={dialogOptions}

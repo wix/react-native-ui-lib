@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import '../ComponentPage.module.scss';
+import showdownMarkdown from 'showdown';
+import ReactHtmlParser from 'react-html-parser';
 
 export const SectionHeader = ({section, component}) => {
   const {title, description, type} = section;
@@ -44,6 +46,20 @@ export const SectionHeader = ({section, component}) => {
 
   const desColor = getDescriptionColor(type);
 
+  const markdownConverter = useMemo(() => {
+    return new showdownMarkdown.Converter();
+  }, []);
+
+  const _description = useMemo(() => {
+    if (description?.startsWith('markdown:')) {
+      return ReactHtmlParser(markdownConverter.makeHtml(description.replace('markdown:', '')));
+    } else if (description?.startsWith('html:')) {
+      return ReactHtmlParser(description.replace('html:', ''));
+    } else {
+      return description;
+    }
+  }, [markdownConverter, description]);
+
   if (!title && !description) {
     return;
   }
@@ -70,7 +86,7 @@ export const SectionHeader = ({section, component}) => {
           style={{display: 'flex', flexDirection: 'column', flex: 2, alignContent: 'start', margin: '0 40px 40px 0'}}
         >
           {title && getTitle(type, title)}
-          {description && <span style={{fontSize: '16px', fontWeight: '400', color: desColor}}>{description}</span>}
+          {description && <span style={{fontSize: '16px', fontWeight: '400', color: desColor}}>{_description}</span>}
         </div>
       );
   }
