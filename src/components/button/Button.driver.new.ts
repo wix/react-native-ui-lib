@@ -30,5 +30,9 @@ export const ButtonDriver = (props: ComponentProps) => {
     return StyleSheet.flatten(iconDriver?.getElement().props.style);
   };
 
-  return {getLabel, getLabelStyle, getIconStyle, getIcon, ...driver};
+  const getStyle = () => {
+    return StyleSheet.flatten(driver.getElement().props.style);
+  };
+
+  return {getStyle, getLabel, getLabelStyle, getIconStyle, getIcon, ...driver};
 };

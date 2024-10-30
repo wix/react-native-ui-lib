@@ -106,7 +106,6 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
   const renderDialog = () => {
     const Dialog = migrateDialog ? DialogNew : DialogOld;
     return (
-      // @ts-expect-error
       <Dialog testID={`${testID}.overlay`} {...dialogProps} visible={visible} onDismiss={closeExpandable}>
         {expandableContent}
       </Dialog>

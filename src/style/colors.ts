@@ -157,6 +157,10 @@ export class Colors {
     }
   }
 
+  getColor(colorKey: string, schemeType?: Exclude<SchemeType, 'default'>) {
+    return Scheme.getScheme(schemeType)[colorKey];
+  }
+
   getColorName(colorValue: string) {
     const color = colorStringValue(colorValue);
     return ColorName.name(color)[1];

@@ -7,6 +7,10 @@ const packages = [
     content: `module.exports = require('./lib/components/Keyboard').default;\n`
   },
   {
+    filename: 'assets.js',
+    content: `module.exports = require('./src/assets').default;\n`
+  },
+  {
     filename: 'config.js',
     content: `module.exports = require('./src/commons/Config').default;\n`
   },
@@ -26,6 +30,10 @@ const packages = [
       'ThemeManager',
       'Scheme'
     ]
+  },
+  {
+    filename: 'incubator.js',
+    incubatorComponents: ['Dialog', 'ExpandableOverlay', 'Slider', 'Toast']
   },
   {
     filename: 'style.js',
@@ -76,6 +84,18 @@ packages.forEach((package) => {
     content += '};\n';
     typings += '}';
     typings = `import ${typings} from './src';\nexport ${typings};\n`;
+  } else if (package.incubatorComponents) {
+    content = 'module.exports = {\n';
+    _.forEach(package.incubatorComponents, (component) => {
+      content += `get ${component}() {\n`;
+      content += `return require('./src/incubator/${_.camelCase(component)}').default;`;
+      content += `},\n`;
+    });
+
+    content += '};\n';
+
+    typings = `import {Dialog, ExpandableOverlay, Slider, Toast} from './src/incubator';\n`;
+    typings += `export {Dialog, ExpandableOverlay, Slider, Toast};\n`;
   }
 
   fs.writeFileSync(package.filename, content);

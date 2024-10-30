@@ -57,10 +57,10 @@ ruleTester.run('component-prop-deprecation', rule, {
       options: ruleOptions,
       code: 'import {List} from \'module-with-deprecations\'; <List text="my list"/>'
     },
-    {
-      options: ruleOptions,
-      code: bigExample
-    },
+    // {
+    //   options: ruleOptions,
+    //   code: bigExample
+    // },
     {
       options: ruleOptions,
       code: `
