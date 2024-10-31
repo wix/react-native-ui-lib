@@ -27,10 +27,15 @@ export default function UILivePreview({code: codeProp}) {
   return (
     <View row gap-s2 style={styles.liveCodeWrapper}>
       <LiveProvider code={code} scope={ReactLiveScope}>
-        <View flex>
-          <div className="grid grid-cols-2 gap-4" style={{overflow: 'auto', maxHeight: 700}}>
-            <LiveEditor className="font-mono" onChange={setCode} style={{overflow: 'hidden', height: '800px'}}/>
-          </div>
+        <View flex style={{maxHeight: 700, padding: 10, borderRadius: 20, overflow: 'hidden'}}>
+          <LiveEditor
+            className="font-mono"
+            onChange={setCode}
+            style={{
+              overflowY: 'scroll',
+              scrollbarWidth: 'none' // For Firefox
+            }}
+          />
         </View>
         <View
           bg-$backgroundDefault
@@ -60,7 +65,7 @@ export default function UILivePreview({code: codeProp}) {
 const styles = StyleSheet.create({
   liveCodeWrapper: {
     borderRadius: 20,
-    borderWidth: 4,
+    borderWidth: 1,
     backgroundColor: '#011627',
     height: 725,
     width: 900
