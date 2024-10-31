@@ -8022,7 +8022,7 @@ react-json-view-lite@^1.2.0:
   resolved "https://registry.npmjs.org/react-json-view-lite/-/react-json-view-lite-1.5.0.tgz#377cc302821717ac79a1b6d099e1891df54c8662"
   integrity sha512-nWqA1E4jKPklL2jvHWs6s+7Na0qNgw9HCP6xehdQJeg6nPBTFZgGwyko9Q0oj+jQWKTTVRS30u0toM5wiuL3iw==
 
-react-live@^4.1.6:
+react-live@^4.1.6, react-live@^4.1.7:
   version "4.1.7"
   resolved "https://registry.npmjs.org/react-live/-/react-live-4.1.7.tgz#a451054bee78e6c9b4410dfc3940b318d9bc7880"
   integrity sha512-NTzl0POOAW3dkp7+QL30duOrIu2Vzf2LHdx4TaQ0BqOAtQcSTKEXujfm9jR2VoCHko0oi35PYp38yKQBXz4mrg==

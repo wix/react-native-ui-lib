@@ -22,7 +22,6 @@ import SortableList from 'react-native-ui-lib/sortableList';
 import Switch from 'react-native-ui-lib/switch';
 import TextField from 'react-native-ui-lib/textField';
 import * as Playground from './Playground';
-import {MobileDeviceWrapper} from './MobileDeviceWrapper';
 
 Assets.loadAssetsGroup('icons.demo', {
   // chevronDown: require('../../assets/icons/chevronDown.png').default,
@@ -57,7 +56,6 @@ const ReactLiveScope = {
   /* Docs' utils and components */
   Data,
   Playground,
-  MobileDeviceWrapper,
   /* UI Lib's components */
   ActionBar,
   Assets,

@@ -110,31 +110,9 @@ function generateExtendsLink(extendsLink) {
   return extendsText;
 }
 
-const processSnippet = snippet => {
-  //Replace placeholder texts
-  const processedSnippet = snippet.map(item => item.replace(new RegExp(/\$[1-9]/g), ''));
-  //Check if the snippet is a function or plain JSX
-  const isFunction = processedSnippet[0].trim().startsWith('function');
-
-  if (isFunction) {
-    //Check if <div> tag is immediately after return statement
-    const divTagIndex = processedSnippet.findIndex(line =>
-      line.trim().startsWith('return (') && processedSnippet[processedSnippet.indexOf(line) + 1]?.includes('<div>'));
-
-    if (divTagIndex !== -1) {
-      //If <div> tag is found, replace <div> and </div> with <MobileDeviceWrapper> and </MobileDeviceWrapper>
-      return processedSnippet
-        .map(line => line.replace('<div>', '<MobileDeviceWrapper>').replace('</div>', '</MobileDeviceWrapper>'))
-        .join('\n');
-    }
-  } else {
-    //Wrap the snippet with <MobileDeviceWrapper>
-    return ['<MobileDeviceWrapper>', ...processedSnippet, '</MobileDeviceWrapper>'].join('\n');
-  }
-};
-
 function buildOldDocs(component) {
   let content = '';
+  content += `import UILivePreview from '@site/src/components/UILivePreview';\n\n`;
 
   /* General Info */
   content += `${component.description}  \n`;
@@ -191,10 +169,10 @@ function buildOldDocs(component) {
   /* Snippet */
   if (component.snippet) {
     content += `### Usage\n`;
-    content += '``` jsx live\n';
-    content += '\n';
-    content += processSnippet(component.snippet);
-    content += '\n```\n';
+    content += `<UILivePreview code={\`${component.snippet
+      ?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), ''))
+      .join('\n')
+      .toString()}\`}/>\n\n`;
   } else {
     console.warn(`${component.name} does not have a snippet`);
   }
