@@ -51,7 +51,7 @@ export default function UILivePreview({code: codeProp}) {
         >
           <iframe
             ref={iframeRef}
-            style={{padding: 10, height: 720, width: 300}}
+            style={{padding: 10, height: 720, width: 320}}
             src="http://localhost:3000/react-native-ui-lib/livePreview"
             title="Simulator"
             onLoad={() => setIframeLoaded(true)}
