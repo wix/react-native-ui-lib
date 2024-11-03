@@ -27,7 +27,7 @@ export default function UILivePreview({code: codeProp}) {
   return (
     <View row gap-s2 style={styles.liveCodeWrapper}>
       <LiveProvider code={code} scope={ReactLiveScope}>
-        <View flex style={{maxHeight: 700, padding: 10, borderRadius: 20, overflow: 'hidden'}}>
+        <View flex style={styles.editorWrapper}>
           <LiveEditor
             className="font-mono"
             onChange={setCode}
@@ -37,21 +37,10 @@ export default function UILivePreview({code: codeProp}) {
             }}
           />
         </View>
-        <View
-          bg-$backgroundDefault
-          margin-s2
-          style={{
-            alignSelf: 'center',
-            borderRadius: 40,
-            borderWidth: 4,
-            borderColor: Colors.$outlineDisabledHeavy,
-            width: 320,
-            height: 700
-          }}
-        >
+        <View bg-$backgroundDefault margin-s2 style={styles.iframeWrapper}>
           <iframe
             ref={iframeRef}
-            style={{padding: 10, height: 720, width: 320}}
+            style={styles.iframe}
             src="http://localhost:3000/react-native-ui-lib/livePreview"
             title="Simulator"
             onLoad={() => setIframeLoaded(true)}
@@ -69,5 +58,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#011627',
     height: 725,
     width: 900
+  },
+  editorWrapper: {maxHeight: 700, padding: 10, borderRadius: 20, overflow: 'hidden'},
+  iframeWrapper: {
+    alignSelf: 'center',
+    overflow: 'hidden',
+    borderRadius: 40,
+    borderWidth: 4,
+    borderColor: Colors.$outlineDisabledHeavy,
+    width: 320,
+    height: 700
+  },
+  iframe: {
+    width: 335, // Slightly wider to hide scrollbar
+    height: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    border: 0,
+    padding: 10,
+    background: 'transparent'
   }
 });
