@@ -59,7 +59,7 @@
     "",
     "  return (",
     "    <div>",
-    "      <View style={{width: 800}}>",
+    "      <View style={{width: 300}}>",
     "        <Playground.ToggleControl title={'Order by index'} state={shouldOrderByIndex} setState={setShouldOrderByIndex}/>",
     "        <SortableGridList",
     "          data={data$1}",
