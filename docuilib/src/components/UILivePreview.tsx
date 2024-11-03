@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {LiveProvider, LiveEditor} from 'react-live';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import {View, Colors} from 'react-native-ui-lib/core';
 import ReactLiveScope from '../theme/ReactLiveScope';
 
@@ -9,7 +10,9 @@ const messageType = 'LIVE_PREVIEW_CODE_UPDATE_MESSAGE';
 export default function UILivePreview({code: codeProp}) {
   const [code, setCode] = useState(codeProp);
   const [iframeLoaded, setIframeLoaded] = useState(false);
+  const {siteConfig} = useDocusaurusContext();
   const iframeRef = useRef(null);
+  const iframeSource = siteConfig?.customFields?.livePreviewSource as string;
 
   useEffect(() => {
     if (iframeRef.current && iframeLoaded) {
@@ -41,7 +44,7 @@ export default function UILivePreview({code: codeProp}) {
           <iframe
             ref={iframeRef}
             style={styles.iframe}
-            src="http://localhost:3000/react-native-ui-lib/livePreview"
+            src={iframeSource}
             title="Simulator"
             onLoad={() => setIframeLoaded(true)}
           />

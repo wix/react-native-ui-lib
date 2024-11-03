@@ -10,9 +10,8 @@ export default function UILivePreview() {
   useEffect(() => {
     window.addEventListener('message', (e: MessageEvent) => {
       if (e.data.type === messageType) {
-        console.log(e.data.code);
+        setCode(e.data.code);
       }
-      setCode(e.data.code);
     });
   }, []);
 
