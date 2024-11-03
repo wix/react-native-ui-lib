@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {LiveProvider, LiveEditor} from 'react-live';
 import {View, Colors} from 'react-native-ui-lib/core';
-import ReactLiveScope from '../../theme/ReactLiveScope';
+import ReactLiveScope from '../theme/ReactLiveScope';
 
 const messageType = 'LIVE_PREVIEW_CODE_UPDATE_MESSAGE';
 
