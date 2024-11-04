@@ -1,11 +1,11 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import {LiveProvider, LiveEditor} from 'react-live';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import {View, Colors} from 'react-native-ui-lib/core';
 import ReactLiveScope from '../theme/ReactLiveScope';
 
-const messageType = 'LIVE_PREVIEW_CODE_UPDATE_MESSAGE';
+export const IFRAME_MESSAGE_TYPE = 'LIVE_PREVIEW_CODE_UPDATE_MESSAGE';
 
 export default function UILivePreview({code: codeProp}) {
   const [code, setCode] = useState(codeProp);
@@ -15,17 +15,19 @@ export default function UILivePreview({code: codeProp}) {
   const iframeSource = siteConfig?.customFields?.livePreviewSource as string;
 
   useEffect(() => {
-    if (iframeRef.current && iframeLoaded) {
-      setTimeout(() => {
-        sendMessageToIframe(code);
-      }, 100);
+    if (iframeLoaded) {
+      sendMessageToIframe(code);
     }
-  }, [iframeRef, iframeLoaded, code]);
+  }, [iframeLoaded, code]);
 
   const sendMessageToIframe = code => {
-    const message = {type: messageType, code};
-    iframeRef.current.contentWindow.postMessage(message, '*');
+    const message = {type: IFRAME_MESSAGE_TYPE, code};
+    iframeRef.current?.contentWindow.postMessage(message, '*');
   };
+
+  const liveEditorStyle = useMemo(() => {
+    return {overflowY: 'scroll', scrollbarWidth: 'none'};
+  }, []);
 
   return (
     <View row gap-s2 style={styles.liveCodeWrapper}>
@@ -34,10 +36,8 @@ export default function UILivePreview({code: codeProp}) {
           <LiveEditor
             className="font-mono"
             onChange={setCode}
-            style={{
-              overflowY: 'scroll',
-              scrollbarWidth: 'none' // For Firefox
-            }}
+            //@ts-ignore
+            style={liveEditorStyle}
           />
         </View>
         <View bg-$backgroundDefault margin-s2 style={styles.iframeWrapper}>

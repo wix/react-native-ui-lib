@@ -13,24 +13,22 @@ For detailed information please go over the other sections: [Style](../foundatio
 <!-- ![basic showcase](basic-showcase.png). -->
 
 <UILivePreview code={`function Example(props) {
-return (
-
-<div>
-<View flex center>
- <Text blue50 text20 marginB-s5>
-          Welcome
-        </Text>
-<SegmentedControl segments={[{label: 'Register'}, {label: 'Login'}]} />
-<View marginT-s5>
-<TextField preset="outline" placeholder="username" />
-<TextField preset="outline" placeholder="password" secureTextEntry grey10 />
-</View>
-<View row marginT-s5 centerV>
-<Button link text70 orange30 label="Sign Up" marginR-s5 />
-<Button text70 white background-orange30 label="Login" />
-</View>
-</View>
-
-</div>
-);
+    return (
+      <div>
+        <View flex center>
+          <Text blue50 text20 marginB-s5>
+            Welcome
+          </Text>
+          <SegmentedControl segments={[{label: 'Register'}, {label: 'Login'}]}/>
+          <View marginT-s5>
+            <TextField preset="outline" placeholder="username" />
+            <TextField preset="outline" placeholder="password" secureTextEntry grey10 />
+          </View>
+          <View row marginT-s5 centerV>
+            <Button link text70 orange30 label="Sign Up" marginR-s5 />
+            <Button text70 white background-orange30 label="Login" />
+          </View>
+        </View>
+      </div>
+    );
 }`}/>

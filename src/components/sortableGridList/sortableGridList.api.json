@@ -58,8 +58,7 @@
     "  };",
     "",
     "  return (",
-    "    <div>",
-    "      <View>",
+    "      <View flex>",
     "        <Playground.ToggleControl title={'Order by index'} state={shouldOrderByIndex} setState={setShouldOrderByIndex}/>",
     "        <SortableGridList",
     "          data={data$1}",
@@ -72,7 +71,6 @@
     "          orderByIndex={shouldOrderByIndex$8}",
     "        />",
     "      </View>",
-    "    </div>",
     "  );",
     "}"
   ]
