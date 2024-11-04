@@ -55,6 +55,7 @@
     "semver": "^5.5.0",
     "tinycolor2": "^1.4.2",
     "url-parse": "^1.2.0",
+    "uilib-native": "^4.3.2",
     "wix-react-native-text-size": "~1.0.0"
   },
   "devDependencies": {
@@ -132,7 +133,7 @@
   "jest": {
     "preset": "react-native",
     "transformIgnorePatterns": [
-      "node_modules/(?!(@react-native|react-native|react-native-reanimated|react-native-redash)/)"
+      "node_modules/(?!(@react-native|react-native|react-native-reanimated|react-native-redash|uilib-native)/)"
     ],
     "testPathIgnorePatterns": [
       "/e2e/",
