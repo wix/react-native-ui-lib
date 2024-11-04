@@ -83,7 +83,7 @@ export const SectionHeader = ({section, component}) => {
     default:
       return (
         <div
-          style={{display: 'flex', flexDirection: 'column', flex: 2, alignContent: 'start', margin: '0 40px 40px 0'}}
+          style={{display: 'flex', flexDirection: 'column', flex: 4, alignContent: 'start', margin: '0 40px 40px 0'}}
         >
           {title && getTitle(type, title)}
           {description && <span style={{fontSize: '16px', fontWeight: '400', color: desColor}}>{_description}</span>}
