@@ -140,11 +140,110 @@
             "items": [
               {
                 "title": "Default",
-                "description": "Description"
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Checkbox/checkbox_overview_style_default.png"
+                  }
+                ]
               },
               {
                 "title": "Light",
-                "description": "Description"
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Checkbox/checkbox_overview_style_light.png"
+                  }
+                ]
+              }
+            ],
+            "title": "Styles",
+            "description": "Description"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Property",
+              "Component"
+            ],
+            "items": [
+              {
+                "title": "Un-Checked",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Checkbox/checkbox_overview_states_unchecked.png"
+                  }
+                ]
+              },
+              {
+                "title": "Checked",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Checkbox/checkbox_overview_states_checked.png"
+                  }
+                ]
+              },
+              {
+                "title": "Indeterminate",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Checkbox/checkbox_overview_states_indeterminate.png"
+                  }
+                ]
+              },
+              {
+                "title": "Validation Error",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Checkbox/checkbox_overview_states_validation_error.png"
+                  }
+                ]
+              },
+              {
+                "title": "Disabled",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Checkbox/checkbox_overview_states_disabled.png"
+                  }
+                ]
+              }
+            ],
+            "title": "States",
+            "description": "Description"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Property",
+              "Component"
+            ],
+            "items": [
+              {
+                "title": "Label",
+                "description": "A label can be displayed next to the Checkbox.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Checkbox/checkbox_overview_props_label.png"
+                  }
+                ]
+              }
+            ],
+            "title": "Accessories",
+            "description": "Description"
+          },
+          {
+            "type": "section",
+            "layout": "horizontal",
+            "title": "Spec",
+            "description": "markdown: \n### Size\nThe checkbox comes only in one size, and cannot be resized.\nSize: 24x24",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Checkbox/checkbox_overview_spec.png"
               }
             ]
           }
