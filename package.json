@@ -165,6 +165,7 @@
     "*.d.ts",
     "!scripts",
     "scripts/prReleaseNotesCommon.js",
+    "scripts/buildDocsCommon.js",
     "src",
     "testkit",
     "ReactNativeUILib.podspec",

@@ -4,8 +4,8 @@ const childProcess = require('child_process');
 const readline = require('readline');
 
 function fetchLatestReleaseDate(tagPrefix, version) {
-  const relesae = childProcess.execSync(`gh release view ${tagPrefix}${version}`).toString();
-  const releaseMetaData = relesae.split('--')[0];
+  const release = childProcess.execSync(`gh release view ${tagPrefix}${version}`).toString();
+  const releaseMetaData = release.split('--')[0];
   const createDate = _.flow(data => _.split(data, '\n'),
     linesData => _.find(linesData, l => l.startsWith('created')),
     createdData => _.split(createdData, '\t'),
@@ -33,10 +33,11 @@ function parsePR(prContent) {
 async function fetchMergedPRs(postMergedDate) {
   console.log('Find all merged PRs since - ', postMergedDate);
   // process.stderr.write(`Loading page ${page}..`);
-  const str = childProcess.execSync('gh pr list --json headRefName,body,title,number,mergedAt,url --limit 100 --state merged --search "base:master"', {
-    encoding: 'utf8'
-  });
-  
+  const str = childProcess.execSync('gh pr list --json headRefName,body,title,number,mergedAt,url --limit 100 --state merged --search "base:master"',
+    {
+      encoding: 'utf8'
+    });
+
   const PRs = JSON.parse(str);
 
   if (PRs.message) {
@@ -150,13 +151,7 @@ function getReleaseNotesForType(PRs, title) {
   return releaseNotes;
 }
 
-async function _generateReleaseNotes(latestVersion,
-  newVersion,
-  fileNamePrefix,
-  repo,
-  header,
-  tagPrefix,
-  categories) {
+async function _generateReleaseNotes(latestVersion, newVersion, fileNamePrefix, repo, header, tagPrefix, categories) {
   const latestReleaseDate = fetchLatestReleaseDate(tagPrefix, latestVersion);
   const PRs = await fetchMergedPRs(latestReleaseDate, repo);
   if (!PRs) {

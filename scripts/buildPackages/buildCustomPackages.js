@@ -64,19 +64,11 @@ packages.forEach((package) => {
   let content = package.content || '';
   let typings = '';
 
-  if (package.components || package.incubatorComponents || package.styleComponents) {
+  if (package.components || package.styleComponents) {
     content += 'module.exports = {\n';
     _.forEach(package.components, (component) => {
       content += `get ${component}() {\n`;
       content += `return require('./src/components/${_.camelCase(component)}').default;`;
-      content += `},\n`;
-
-      typings = addTyping(typings, component);
-    });
-
-    _.forEach(package.incubatorComponents, (component) => {
-      content += `get ${component}() {\n`;
-      content += `return require('./src/incubator/${_.camelCase(component)}').default;`;
       content += `},\n`;
 
       typings = addTyping(typings, component);
@@ -92,6 +84,18 @@ packages.forEach((package) => {
     content += '};\n';
     typings += '}';
     typings = `import ${typings} from './src';\nexport ${typings};\n`;
+  } else if (package.incubatorComponents) {
+    content = 'module.exports = {\n';
+    _.forEach(package.incubatorComponents, (component) => {
+      content += `get ${component}() {\n`;
+      content += `return require('./src/incubator/${_.camelCase(component)}').default;`;
+      content += `},\n`;
+    });
+
+    content += '};\n';
+
+    typings = `import {Dialog, ExpandableOverlay, Slider, Toast} from './src/incubator';\n`;
+    typings += `export {Dialog, ExpandableOverlay, Slider, Toast};\n`;
   }
 
   fs.writeFileSync(package.filename, content);

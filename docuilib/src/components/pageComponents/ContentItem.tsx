@@ -9,8 +9,8 @@ export const ContentItem = ({item}) => {
     return <iframe width={'100%'} height={height} src={value}/>;
   };
 
-  const getImage = value => {
-    return <img src={value} style={{display: 'block'}}/>;
+  const getImage = (value, style = undefined) => {
+    return <img src={value} style={{display: 'block', ...style}}/>;
   };
 
   const value = item.value;
@@ -22,6 +22,8 @@ export const ContentItem = ({item}) => {
       } else {
         return getImage(value);
       }
+    } else if (typeof value === 'object' && value.source) {
+      return getImage(value.source, value.style);
     }
   }
 };

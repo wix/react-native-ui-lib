@@ -1,0 +1,138 @@
+name: Auto Label Issues
+
+on:
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      label-all-issues:
+        description: 'Add label to all open issues'
+        type: boolean
+        default: false
+        required: false
+
+jobs:
+  add-label-single:
+    runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'issue_comment' && 
+      github.event.issue.user.login != github.event.comment.user.login
+    
+    steps:
+      - name: Check if commenter is maintainer
+        id: check-maintainer
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const response = await github.rest.repos.getCollaboratorPermissionLevel({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              username: context.payload.comment.user.login
+            });
+            
+            const isMaintianer = ['admin', 'write'].includes(response.data.permission);
+            return isMaintianer;
+            
+      - name: Add waiting-for-response label
+        if: steps.check-maintainer.outputs.result == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ['waiting-for-response']
+            });
+
+  add-label-all:
+    runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'workflow_dispatch' && 
+      github.event.inputs.label-all-issues == 'true'
+    
+    steps:
+      - name: Process all open issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            async function isMaintianer(username) {
+              try {
+                const response = await github.rest.repos.getCollaboratorPermissionLevel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  username: username
+                });
+                return ['admin', 'write'].includes(response.data.permission);
+              } catch (error) {
+                console.error(`Error checking permissions for ${username}:`, error);
+                return false;
+              }
+            }
+
+            async function getLastComment(issueNumber) {
+              try {
+                const comments = await github.paginate(github.rest.issues.listComments, {
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issueNumber,
+                  per_page: 100
+                });
+                
+                // Return the most recent comment, or null if no comments
+                return comments.length > 0 ? comments[comments.length - 1] : null;
+              } catch (error) {
+                console.error(`Error fetching comments for issue #${issueNumber}:`, error);
+                return null;
+              }
+            }
+
+            // Get all open issues
+            const issues = await github.paginate(github.rest.issues.listForRepo, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              per_page: 100
+            });
+            
+            for (const issue of issues) {
+              try {
+                console.log(`Processing issue #${issue.number}...`);
+                
+                // Get the last comment
+                const lastComment = await getLastComment(issue.number);
+                
+                // Skip if no comments
+                if (!lastComment) {
+                  console.log(`No comments found on issue #${issue.number}, skipping`);
+                  continue;
+                }
+                
+                // Check if last commenter is a maintainer
+                const lastCommenterIsMaintainer = await isMaintianer(lastComment.user.login);
+                
+                // Skip if last commenter is not a maintainer
+                if (!lastCommenterIsMaintainer) {
+                  console.log(`Last comment on issue #${issue.number} is not from a maintainer, skipping`);
+                  continue;
+                }
+                
+                // Skip if last commenter is the issue author
+                if (lastComment.user.login === issue.user.login) {
+                  console.log(`Last comment on issue #${issue.number} is from the issue author, skipping`);
+                  continue;
+                }
+
+                // Add the label
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  labels: ['waiting-for-response']
+                });
+                
+                console.log(`Added label to issue #${issue.number}`);
+              } catch (error) {
+                console.error(`Error processing issue #${issue.number}:`, error);
+              }
+            }

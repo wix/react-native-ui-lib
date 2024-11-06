@@ -1,6 +1,6 @@
 {
   "name": "uilib-docs",
-  "version": "3.1.4",
+  "version": "3.2.0",
   "main": "./src/index.ts",
   "scripts": {
     "docusaurus": "docusaurus",
@@ -27,8 +27,10 @@
     "docusaurus-plugin-sass": "^0.2.1",
     "file-loader": "^6.2.0",
     "prism-react-renderer": "^2.1.0",
+    "react-html-parser": "^2.0.2",
     "react-native-web": "^0.19.12",
     "sass": "^1.39.0",
+    "showdown": "^2.1.0",
     "url-loader": "^4.1.1"
   },
   "devDependencies": {
