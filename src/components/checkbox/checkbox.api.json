@@ -130,6 +130,23 @@
                 "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Checkbox/checkbox_overview_usage.png"
               }
             ]
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Property",
+              "Component"
+            ],
+            "items": [
+              {
+                "title": "Default",
+                "description": "Description"
+              },
+              {
+                "title": "Light",
+                "description": "Description"
+              }
+            ]
           }
         ]
       }
