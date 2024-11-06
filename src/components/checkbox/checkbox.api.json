@@ -130,12 +130,6 @@
                 "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Checkbox/checkbox_overview_usage.png"
               }
             ]
-          },
-          {
-            "type": "section",
-            "title": "test 1 ",
-            "description": "this is a test 1 section",
-            "layout": "horizontal"
           }
         ]
       }
