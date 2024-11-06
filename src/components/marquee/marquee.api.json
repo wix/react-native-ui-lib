@@ -18,7 +18,7 @@
   ],
   "snippet": [
     "<Marquee",
-    "  key={`${index}`$1}",
+    "  key={\\`\\${index}\\`$1}",
     "  label={'Hey there'$2}",
     "  direction={directionHorizontal ? MarqueeDirections.LEFT : MarqueeDirections.RIGHT$3}",
     "  duration={duration$4}",

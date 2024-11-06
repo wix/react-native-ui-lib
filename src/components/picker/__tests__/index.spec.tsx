@@ -24,7 +24,8 @@ const TestCase = (props?: any) => {
 };
 
 const getDriver = (props?: any) => {
-  return PickerDriver({renderTree: render(<TestCase {...props}/>), testID});
+  const renderTree = render(<TestCase {...props}/>);
+  return PickerDriver({renderTree, testID}, props?.useDialog);
 };
 
 const onPress = jest.fn();
@@ -159,7 +160,7 @@ describe('Picker', () => {
 
   describe('Dialog', () => {
     const dialogProps = {useDialog: true, customPickerProps: {migrateDialog: true}};
-    
+
     describe('Test value', () => {
       it('Get correct value of a single item', () => {
         const driver = getDriver({
@@ -201,7 +202,7 @@ describe('Picker', () => {
         act(() => driver.open());
         await waitFor(() => expect(driver.isOpen()).toBeTruthy());
         act(() => driver.dismissDialog());
-        await waitFor(() => expect(driver.dismissDialog()).toBeFalsy());
+        await waitFor(() => expect(driver.isOpen()).toBeFalsy());
       });
     });
 
@@ -212,7 +213,6 @@ describe('Picker', () => {
         act(() => driver.open());
         await waitFor(() => expect(driver.isOpen()).toBeTruthy());
         driver.selectItem(countries[2].label);
-        act(() => driver.dismissDialog());
         await waitFor(() => expect(driver.isOpen()).toBeFalsy());
         expect(driver.getValue()).toEqual(countries[2].label);
       });
@@ -244,7 +244,7 @@ describe('Picker', () => {
       act(() => driver.open());
       await waitFor(() => expect(driver.isOpen()).toBeTruthy());
       act(() => driver.dismissDialog());
-      await waitFor(() => expect(driver.dismissDialog()).toBeFalsy());
+      await waitFor(() => expect(driver.isOpen()).toBeFalsy());
       expect(onDismiss).toHaveBeenCalledTimes(1);
     });
   });
@@ -258,7 +258,7 @@ describe('Picker', () => {
   describe('Picker field types', () => {
     describe('Test filter field type', () => {
       const placeholderText = 'Select a Filter';
-      
+
       it('should render a filter picker', () => {
         const driver = getDriver({fieldType: 'filter', placeholder: placeholderText});
         expect(driver.isOpen()).toBeFalsy();
@@ -267,11 +267,11 @@ describe('Picker', () => {
         expect(label.props.children).toEqual(placeholderText);
       });
     });
-    
+
     describe('Test settings field type', () => {
       const labelText = 'Settings';
       const placeholderText = 'Select a setting';
-      
+
       it('should render a settings picker with label', async () => {
         const driver = getDriver({fieldType: 'settings', label: labelText, placeholder: placeholderText});
         const label = screen.getByTestId(`${testID}.settings.type.label`);

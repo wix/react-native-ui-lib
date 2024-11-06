@@ -100,11 +100,12 @@ describe('Incubator.Dialog sanity checks', () => {
     expect(onDismiss).toHaveBeenCalledTimes(1);
   });
 
-  it('Modal exists even when not visible (WOAUILIB-3606)', () => {
+  // Note: since RN73 modals do not render when not visible
+  it('Modal should not exists even when not visible (WOAUILIB-3606)', () => {
     const onDismiss = jest.fn();
     const component = <TestCase2 onDismiss={onDismiss}/>;
     const {dialogDriver} = getDriver(component);
-    expect(dialogDriver.exists()).toBeTruthy();
+    expect(dialogDriver.exists()).toBeFalsy();
     expect(dialogDriver.isVisible()).toBeFalsy();
   });
 });
