@@ -108,7 +108,7 @@
   "docs": {
     "hero": {
       "title": "Checkbox",
-      "description": "https://bo.wix.com/guineapig/experiments/3621470",
+      "description": "Checkboxes allow the user to select one or more items from a set. They can be used to turn an option on or off, or to indicate approval or verification.",
       "type": "hero",
       "layout": "horizontal",
       "content": [
@@ -237,15 +237,21 @@
             "description": "Description"
           },
           {
-            "type": "section",
+            "type": "list",
+            "items": [
+              {
+                "title": "Size",
+                "description": "The checkbox comes only in one size, and cannot be resized.\nSize: 24x24",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Checkbox/checkbox_overview_spec.png"
+                  }
+                ]
+              }
+            ],
             "layout": "horizontal",
             "title": "Spec",
-            "description": "markdown: \n### Size\nThe checkbox comes only in one size, and cannot be resized.\nSize: 24x24",
-            "content": [
-              {
-                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Checkbox/checkbox_overview_spec.png"
-              }
-            ]
+            "description": "Description"
           }
         ]
       }
