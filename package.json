@@ -14,7 +14,7 @@
     "url": "https://github.com/wix/react-native-ui-lib"
   },
   "scripts": {
-    "start": "watchman watch-del-all && export DEV_MODE=true && react-native start",
+    "start": "watchman watch-del-all && react-native start",
     "start:web": "npm --prefix webDemo run start",
     "ios": "react-native run-ios",
     "android": "react-native run-android",
@@ -55,7 +55,7 @@
     "semver": "^5.5.0",
     "tinycolor2": "^1.4.2",
     "url-parse": "^1.2.0",
-    "wix-react-native-text-size": "~1.0.0"
+    "wix-react-native-text-size": "1.0.9"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.8",
@@ -72,21 +72,26 @@
     "@react-native-community/blur": "4.3.0",
     "@react-native-community/datetimepicker": "^3.4.6",
     "@react-native-community/netinfo": "^5.6.2",
+    "@react-native/babel-preset": "0.73.21",
+    "@react-native/eslint-config": "0.73.2",
+    "@react-native/metro-config": "0.73.5",
+    "@react-native/typescript-config": "0.73.1",
     "@shopify/flash-list": "^1.2.1",
-    "@testing-library/react-hooks": "^7.0.2",
-    "@testing-library/react-native": "^11.5.2",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/react-native": "^11.5.1",
     "@types/hoist-non-react-statics": "^3.3.1",
     "@types/jest": "^29.2.1",
     "@types/lodash": "^4.0.0",
     "@types/prop-types": "^15.5.3",
-    "@types/react": "18.2.72",
-    "@types/react-native": "0.71.2",
+    "@types/react": "18.3.7",
+    "@types/react-native": "0.73.0",
+    "@types/react-test-renderer": "^18.3.0",
     "@types/tinycolor2": "^1.4.2",
     "@types/url-parse": "^1.4.3",
     "@typescript-eslint/eslint-plugin": "^5.3.1",
     "@typescript-eslint/parser": "^5.3.1",
     "@welldone-software/why-did-you-render": "^3.2.1",
-    "babel-jest": "^29.2.1",
+    "babel-jest": "^29.6.3",
     "babel-plugin-lodash": "^3.3.4",
     "babel-plugin-module-resolver": "^5.0.0",
     "eslint": "8.19.0",
@@ -94,8 +99,7 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.0.4",
     "eslint-plugin-react-native": "^4.0.0",
-    "eslint-plugin-uilib": "file:./eslint-rules",
-    "jest": "^29.2.1",
+    "jest": "^29.6.3",
     "light-date": "^1.2.0",
     "metro-react-native-babel-preset": "0.73.10",
     "moment": "^2.24.0",
@@ -107,27 +111,28 @@
     "react": "18.2.0",
     "react-autobind": "^1.0.6",
     "react-dom": "^18.2.0",
-    "react-native": "0.71.12",
+    "react-native": "0.73.9",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "2.14.1",
     "react-native-haptic-feedback": "^1.11.0",
     "react-native-linear-gradient": "2.6.2",
     "react-native-mmkv": "2.11.0",
-    "react-native-navigation": "7.32.1",
+    "react-native-navigation": "7.40.1",
     "react-native-reanimated": "3.8.1",
     "react-native-shimmer-placeholder": "^2.0.6",
     "react-native-svg": "^13.7.0",
-    "react-native-svg-transformer": "1.1.0",
+    "react-native-svg-transformer": "1.5.0",
     "react-test-renderer": "18.2.0",
     "reassure": "^0.4.1",
     "shell-utils": "^1.0.10",
-    "typescript": "4.9.5"
+    "typescript": "5.0.4"
   },
   "peerDependencies": {
     "react": ">=17.0.1",
     "react-native": ">=0.64.1",
     "react-native-gesture-handler": ">=2.5.0",
-    "react-native-reanimated": ">=2.0.0"
+    "react-native-reanimated": ">=2.0.0",
+    "react-native-ui-lib": "*"
   },
   "jest": {
     "preset": "react-native",
@@ -151,6 +156,10 @@
       "legacyFakeTimers": true
     }
   },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "yarn@3.4.1",
   "files": [
     "*.js",
     "*.d.ts",

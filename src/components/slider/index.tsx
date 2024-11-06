@@ -45,9 +45,9 @@ type Measurements = {
   height: number;
 };
 
-type ThumbStyle = {style?: StyleProp<ViewStyle>; left?: StyleProp<number>};
+type ThumbStyle = {style?: StyleProp<ViewStyle>; left?: number};
 
-type MinTrackStyle = {style?: StyleProp<ViewStyle>; width?: StyleProp<number>; left?: StyleProp<number>};
+type MinTrackStyle = {style?: StyleProp<ViewStyle>; width?: number; left?: number};
 
 type MeasuredVariableName = 'containerSize' | 'trackSize' | 'thumbSize';
 
