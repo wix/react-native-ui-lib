@@ -17,6 +17,10 @@ const darkCodeTheme = themes.dracula;
     projectName: 'react-native-ui-lib', // Usually your repo name.
     trailingSlash: false,
     customFields: {
+      livePreviewSource:
+        process.env.NODE_ENV === 'development'
+          ? 'http://localhost:3000/react-native-ui-lib/livePreview'
+          : 'https://wix.github.io/react-native-ui-lib/livePreview',
       docsMainEntry: 'getting-started/setup',
       expoSnackLink: 'https://snack.expo.io/@ethanshar/rnuilib_snack',
       stars: '4.7'
