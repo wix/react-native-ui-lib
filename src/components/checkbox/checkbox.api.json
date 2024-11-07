@@ -252,6 +252,20 @@
             "layout": "horizontal",
             "title": "Spec",
             "description": "Description"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "First column",
+              "New Column",
+              "New Column"
+            ],
+            "items": [
+              {
+                "title": "New Item"
+              }
+            ],
+            "tableTitle": "My title new "
           }
         ]
       }
