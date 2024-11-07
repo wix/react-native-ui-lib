@@ -3,7 +3,9 @@
   "category": "controls",
   "description": "Switch component for toggling boolean value related to some context",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SwitchScreen.tsx",
-  "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Switch/Switch.gif?raw=true"],
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Switch/Switch.gif?raw=true"
+  ],
   "props": [
     {
       "name": "value",
@@ -15,18 +17,66 @@
       "type": "(value: boolean) => void",
       "description": "Invoked with the new value when the value changes"
     },
-    {"name": "disabled", "type": "boolean", "description": "Whether the switch should be disabled"},
-    {"name": "width", "type": "number", "description": "The Switch width"},
-    {"name": "height", "type": "number", "description": "The Switch height"},
-    {"name": "onColor", "type": "string", "description": "The Switch background color when it's turned on"},
-    {"name": "offColor", "type": "string", "description": "The Switch background color when it's turned off"},
-    {"name": "disabledColor", "type": "string", "description": "The Switch background color when it's disabled"},
-    {"name": "thumbColor", "type": "string", "description": "The Switch's thumb color"},
-    {"name": "thumbSize", "type": "number", "description": "The Switch's thumb size (width & height)"},
-    {"name": "thumbStyle", "type": "ViewStyle", "description": "The Switch's thumb style"},
-    {"name": "style", "type": "ViewStyle", "description": "Custom style"},
-    {"name": "testID", "type": "string", "description": "Component test id"},
-    {"name": "id", "type": "string", "description": "Component id"}
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Whether the switch should be disabled"
+    },
+    {
+      "name": "width",
+      "type": "number",
+      "description": "The Switch width"
+    },
+    {
+      "name": "height",
+      "type": "number",
+      "description": "The Switch height"
+    },
+    {
+      "name": "onColor",
+      "type": "string",
+      "description": "The Switch background color when it's turned on"
+    },
+    {
+      "name": "offColor",
+      "type": "string",
+      "description": "The Switch background color when it's turned off"
+    },
+    {
+      "name": "disabledColor",
+      "type": "string",
+      "description": "The Switch background color when it's disabled"
+    },
+    {
+      "name": "thumbColor",
+      "type": "string",
+      "description": "The Switch's thumb color"
+    },
+    {
+      "name": "thumbSize",
+      "type": "number",
+      "description": "The Switch's thumb size (width & height)"
+    },
+    {
+      "name": "thumbStyle",
+      "type": "ViewStyle",
+      "description": "The Switch's thumb style"
+    },
+    {
+      "name": "style",
+      "type": "ViewStyle",
+      "description": "Custom style"
+    },
+    {
+      "name": "testID",
+      "type": "string",
+      "description": "Component test id"
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "description": "Component id"
+    }
   ],
   "snippet": [
     "function Example(props) {",
@@ -37,5 +87,98 @@
     "    </div>",
     "  );",
     "}"
-  ]
+  ],
+  "docs": {
+    "hero": {
+      "title": "Switch",
+      "description": "Use switches to toggle a single option on or off, activate or deactivate, and switch between two different states.  \n\nConsider using switch instead of checkbox, when appropriate. \nConsider using switch instead of radio buttons if there’s only two  options to choose from. ",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_preview.png"
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "table",
+            "columns": [
+              "Property",
+              "Preview"
+            ],
+            "items": [
+              {
+                "title": "Default",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_style_default.png"
+                  }
+                ]
+              },
+              {
+                "title": "Light",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_style_light.png"
+                  }
+                ]
+              }
+            ],
+            "title": "Styles",
+            "description": ""
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Property",
+              "Default Style",
+              "Light Style"
+            ],
+            "items": [
+              {
+                "title": "ON",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_default_on.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_light_on.png"
+                  }
+                ]
+              },
+              {
+                "title": "OFF",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_default_off.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_default_off.png"
+                  }
+                ]
+              },
+              {
+                "title": "Disabled ON",
+                "description": ""
+              },
+              {
+                "title": "Disabled OFF",
+                "description": ""
+              }
+            ],
+            "title": "States",
+            "description": "Description"
+          }
+        ]
+      }
+    ]
+  }
 }
