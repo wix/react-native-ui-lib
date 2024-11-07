@@ -28,9 +28,15 @@
     },
     {"name": "style", "type": "ViewStyle", "description": "Custom style"},
     {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag"},
-    {"name": "onPress", "type": "(props?: TouchableOpacityProps & {event: GestureResponderEvent} | any) => void", "description": "On press callback"}
+    {
+      "name": "onPress",
+      "type": "(props?: TouchableOpacityProps & {event: GestureResponderEvent} | any) => void",
+      "description": "On press callback"
+    }
   ],
   "snippet": [
-    "<TouchableOpacity onPress={() => console.log('pressed')$1}><Text text40>Click Me!</Text></TouchableOpacity>"
+    "<TouchableOpacity onPress={() => console.log('pressed')$1}>",
+    "   <Text text40>Click Me!</Text>",
+    "</TouchableOpacity>"
   ]
 }

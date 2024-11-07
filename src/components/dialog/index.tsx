@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {StyleSheet, StyleProp, ViewStyle, ModalPropsIOS, AccessibilityProps, ColorValue} from 'react-native';
+import {StyleSheet, StyleProp, ViewStyle, ModalPropsIOS, AccessibilityProps, ColorValue, type DimensionValue} from 'react-native';
 import {Colors} from '../../style';
 import {AlignmentModifiers, extractAlignmentsValues} from '../../commons/modifiers';
 import {Constants, asBaseComponent} from '../../commons/new';
@@ -42,11 +42,11 @@ export interface DialogProps extends AlignmentModifiers, RNPartialProps {
   /**
    * The dialog width (default: 90%)
    */
-  width?: string | number;
+  width?: DimensionValue;
   /**
    * The dialog height (default: undefined)
    */
-  height?: string | number | null;
+  height?: DimensionValue;
   /**
    * The direction of the allowed pan (default is DOWN).
    * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###).

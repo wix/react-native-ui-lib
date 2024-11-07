@@ -3,7 +3,7 @@
 // TODO: consider deprecating renderCustomModal prop
 import _ from 'lodash';
 import React, {useMemo, useState, useRef, useCallback, useEffect} from 'react';
-import {LayoutChangeEvent} from 'react-native';
+import {DimensionValue, LayoutChangeEvent} from 'react-native';
 import {useThemeProps} from 'hooks';
 import {Constants} from '../../commons/new';
 import ExpandableOverlay, {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
@@ -30,11 +30,11 @@ import {
   PickerItemsListProps,
   PickerMethods
 } from './types';
+import {DialogProps} from '../../incubator/Dialog';
 
-const DIALOG_PROPS = {
+const DEFAULT_DIALOG_PROPS: DialogProps = {
   bottom: true,
-  width: '100%',
-  height: 250
+  width: '100%' as DimensionValue
 };
 
 type PickerStatics = {
@@ -47,7 +47,7 @@ type PickerStatics = {
 const Picker = React.forwardRef((props: PickerProps, ref) => {
   const themeProps = useThemeProps(props, 'Picker');
   const {
-    mode,
+    mode = PickerModes.SINGLE,
     fieldType = PickerFieldTypes.form,
     selectionLimit,
     showSearch,
@@ -86,10 +86,10 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   const [items, setItems] = useState<PickerItemProps[]>(propItems || extractPickerItems(themeProps));
   const pickerExpandable = useRef<ExpandableOverlayMethods>(null);
   const pickerRef = useImperativePickerHandle(ref, pickerExpandable);
-  
+
   // TODO: Remove this when migration is completed, starting of v8
   // usePickerMigrationWarnings({children, migrate, getItemLabel, getItemValue});
-  
+
   useEffect(() => {
     if (propItems) {
       setItems(propItems);
@@ -278,7 +278,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         <ExpandableOverlay
           ref={pickerExpandable}
           useDialog={useDialog || useWheelPicker}
-          dialogProps={DIALOG_PROPS}
+          dialogProps={DEFAULT_DIALOG_PROPS}
+          migrateDialog
           expandableContent={expandableModalContent}
           renderCustomOverlay={renderOverlay ? _renderOverlay : undefined}
           onPress={onPress}
@@ -295,9 +296,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
 
 // @ts-expect-error
 Picker.Item = PickerItem;
-Picker.defaultProps = {
-  mode: PickerModes.SINGLE
-};
+
 Picker.displayName = 'Picker';
 // @ts-expect-error
 Picker.modes = PickerModes;

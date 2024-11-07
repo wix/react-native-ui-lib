@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {StyleSheet, Animated, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, Animated, StyleProp, ViewStyle, type DimensionValue} from 'react-native';
 import {Colors, BorderRadiuses} from '../../style';
 // import {PureBaseComponent} from '../../commons';
 import {
@@ -50,11 +50,11 @@ export type CardProps = ViewProps &
     /**
      * card custom width
      */
-    width?: number | string;
+    width?: DimensionValue;
     /**
      * card custom height
      */
-    height?: number | string;
+    height?: DimensionValue;
     /**
      * should inner card flow direction be horizontal
      */

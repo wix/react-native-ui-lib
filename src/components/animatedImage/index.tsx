@@ -36,12 +36,13 @@ const AnimatedImage = (props: AnimatedImageProps) => {
     loader,
     style,
     onLoad: propsOnLoad,
+    onLoadStart: propsOnLoadStart,
     animationDuration = 300,
     testID,
     ...others
   } = props;
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const opacity = useSharedValue(0);
 
   useDidUpdate(() => {
@@ -50,16 +51,23 @@ const AnimatedImage = (props: AnimatedImageProps) => {
     }
   }, [loader]);
 
-  const onLoad = useCallback((event: NativeSyntheticEvent<ImageLoadEventData>) => {
-    setIsLoading(false);
-    propsOnLoad?.(event);
-    // did not start the animation already
-    if (opacity.value === 0) {
-      opacity.value = withTiming(1, {duration: animationDuration});
-    }
-  },
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  [setIsLoading, propsOnLoad, animationDuration]);
+  const onLoad = useCallback(
+    (event: NativeSyntheticEvent<ImageLoadEventData>) => {
+      setIsLoading(false);
+      propsOnLoad?.(event);
+      // did not start the animation already
+      if (opacity.value === 0) {
+        opacity.value = withTiming(1, {duration: animationDuration});
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [setIsLoading, propsOnLoad, animationDuration]
+  );
+
+  const onLoadStart = useCallback(() => {
+    setIsLoading(true);
+    propsOnLoadStart?.();
+  }, [setIsLoading, propsOnLoadStart, animationDuration]);
 
   const fadeInStyle = useAnimatedStyle(() => {
     return {opacity: opacity.value};
@@ -75,6 +83,7 @@ const AnimatedImage = (props: AnimatedImageProps) => {
         style={_style}
         source={source}
         onLoad={onLoad}
+        onLoadStart={onLoadStart}
         testID={testID}
         imageStyle={undefined}
       />

@@ -1,6 +1,6 @@
 import {useModifiers, useThemeProps} from 'hooks';
 import React, {useEffect, useMemo, useState} from 'react';
-import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, StyleProp, ViewStyle, ColorValue} from 'react-native';
+import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, type StyleProp, type ViewStyle, type DimensionValue, ColorValue} from 'react-native';
 import type {AnimateProps as RNReanimatedProps} from 'react-native-reanimated';
 import {Constants, ContainerModifiers} from '../../commons/new';
 import type {RecorderProps} from '../../typings/recorderTypes';
@@ -30,11 +30,11 @@ export interface ViewProps extends Omit<RNViewProps, 'style'>, ReanimatedProps, 
   /**
    * TODO: probably isn't needed
    */
-  width?: string | number;
+  width?: DimensionValue;
   /**
    * TODO: probably isn't needed
    */
-  height?: string | number;
+  height?: DimensionValue;
   /**
    * Experimental: Pass time in ms to delay render
    */

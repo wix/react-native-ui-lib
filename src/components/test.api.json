@@ -38,11 +38,13 @@
     "hero": {
       "description": "A wrapper for Text component with extra functionality like modifiers support",
       "content": [
-        {"value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"}
+        {
+          "value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
+        }
       ]
     },
     "tabs": [
-      { 
+      {
         "title": "Overview",
         "sections": [
           {
@@ -56,23 +58,34 @@
                 "title": "Item #1",
                 "description": "Item #1 Subtitle",
                 "content": [
-                  {"value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"},
-                  {"height" : 170, "value": "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2FKrv1pLl7kq2L52vMRwd498%2FMADS-Guidelines%3Fnode-id%3D22898-858566%26t%3D1FnW55XGiZ6Bc9Cr-1"}
+                  {
+                    "value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
+                  },
+                  {
+                    "height": 170,
+                    "value": "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2FKrv1pLl7kq2L52vMRwd498%2FMADS-Guidelines%3Fnode-id%3D22898-858566%26t%3D1FnW55XGiZ6Bc9Cr-1"
+                  }
                 ]
               },
               {
                 "title": "Item #2",
                 "description": "Item #2 Subtitle",
                 "content": [
-                  {"value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"}
+                  {
+                    "value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
+                  }
                 ]
               },
               {
                 "title": "Item #3",
                 "description": "Item #3 Subtitle",
                 "content": [
-                  {"value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"},
-                  {"value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"}
+                  {
+                    "value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
+                  },
+                  {
+                    "value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
+                  }
                 ]
               }
             ]
@@ -87,15 +100,21 @@
                 "title": "Item #1",
                 "description": "Item #1 Subtitle",
                 "content": [
-                  {"value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"},
-                  {"value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"}
+                  {
+                    "value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
+                  },
+                  {
+                    "value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
+                  }
                 ]
               },
               {
                 "title": "Item #2",
                 "description": "Item #2 Subtitle",
                 "content": [
-                  {"value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"}
+                  {
+                    "value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
+                  }
                 ]
               }
             ]
@@ -110,7 +129,9 @@
             "title": "Section",
             "description": "Examples of using the Text component",
             "content": [
-              {"value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-veryWide.png?raw=true"}
+              {
+                "value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-veryWide.png?raw=true"
+              }
             ]
           },
           {
@@ -119,8 +140,12 @@
             "title": "Horizontal Section",
             "description": "Examples of using the Text component",
             "content": [
-              {"value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"},
-              {"value": "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2FKrv1pLl7kq2L52vMRwd498%2FMADS-Guidelines%3Fnode-id%3D22898-858566%26t%3D1FnW55XGiZ6Bc9Cr-1"}
+              {
+                "value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
+              },
+              {
+                "value": "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2FKrv1pLl7kq2L52vMRwd498%2FMADS-Guidelines%3Fnode-id%3D22898-858566%26t%3D1FnW55XGiZ6Bc9Cr-1"
+              }
             ]
           },
           {
@@ -132,14 +157,18 @@
                 "title": "Item #1",
                 "description": "This is item #1",
                 "content": [
-                  {"value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-veryWide.png?raw=true"}
+                  {
+                    "value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-veryWide.png?raw=true"
+                  }
                 ]
               },
               {
                 "title": "Item #2",
                 "description": "This is item #2",
                 "content": [
-                  {"value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-veryWide.png?raw=true"}
+                  {
+                    "value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-veryWide.png?raw=true"
+                  }
                 ]
               }
             ]
@@ -154,17 +183,31 @@
                 "title": "Item #1",
                 "description": "This is item #1",
                 "content": [
-                  {"value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"}
+                  {
+                    "value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
+                  }
                 ]
               },
               {
                 "title": "Item #2",
                 "description": "This is item #2",
                 "content": [
-                  {"value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"}
+                  {
+                    "value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
+                  }
                 ]
               }
             ]
+          },
+          {
+            "type": "section",
+            "title": "Markdown support",
+            "description": "markdown:##Title\n\nThis is a markdown content\n\n With a list:\n- item 1\n- item 2"
+          },
+          {
+            "type": "section",
+            "title": "HTML support",
+            "description": "html:<h2>Title</h2><p>This is a html content</p><ul><li>item 1</li><li>item 2</li></ul>"
           }
         ]
       },
@@ -182,13 +225,13 @@
             "type": "tip"
           },
           {
-            "type": "massage",
+            "type": "banner",
             "title": "NOTE",
             "description": "This is an interesting information"
           },
           {
-            "type": "massage",
-            "title": "MASSAGE",
+            "type": "banner",
+            "title": "Banner",
             "description": "This is some massage to the user",
             "color": "pink",
             "icon": ""

@@ -22,7 +22,7 @@ export default function ComponentPage({component}) {
         switch (section.type) {
           case 'info':
           case 'tip':
-          case 'massage':
+          case 'banner':
             return <Banner section={section} component={component}/>;
           case 'list':
             return (
