@@ -254,6 +254,31 @@
             "description": "Description"
           }
         ]
+      },
+      {
+        "title": "UX Guidelines",
+        "sections": [
+          {
+            "type": "section",
+            "content": [
+              {
+                "value": "<iframe style=\"border: 1px solid rgba(0, 0, 0, 0.1);\" width=\"800\" height=\"450\" src=\"https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Docs-Assets?node-id=61-6739&embed-host=share\" allowfullscreen></iframe>"
+              }
+            ],
+            "title": "Position",
+            "description": "For screens requiring multiple selections, use the Multi-Select List. If a Checkbox is used to indicate approval or verification, place it with a label to its right."
+          },
+          {
+            "type": "section",
+            "title": "Checkbox Group",
+            "description": "Use ListItem component to group multiple options for the user to choose from.",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Checkbox/checkbox_ux_checkbox_group.png"
+              }
+            ]
+          }
+        ]
       }
     ]
   }
