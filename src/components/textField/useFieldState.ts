@@ -1,7 +1,7 @@
 import {useCallback, useState, useEffect, useMemo} from 'react';
 import _ from 'lodash';
 import * as Presenter from './Presenter';
-import {useDidUpdate} from 'hooks';
+import {useDidUpdate, useDebounce} from 'hooks';
 import {FieldStateProps} from './types';
 import {Constants} from '../../commons/new';
 
@@ -10,6 +10,7 @@ export default function useFieldState({
   validationMessage,
   validateOnBlur,
   validateOnChange,
+  timeoutOnChange,
   validateOnStart,
   onValidationFailed,
   onChangeValidity,
@@ -42,12 +43,32 @@ export default function useFieldState({
     }
   }, []);
 
+  const validateField = useCallback((valueToValidate = value) => {
+    const [_isValid, _failingValidatorIndex] = Presenter.validate(valueToValidate, validate);
+
+    setIsValid(_isValid);
+    setFailingValidatorIndex(_failingValidatorIndex);
+
+    if (!_isValid && !_.isUndefined(_failingValidatorIndex)) {
+      onValidationFailed?.(_failingValidatorIndex);
+    }
+
+    return _isValid;
+  },
+  [value, validate, onValidationFailed]);
+
+  const debouncedValidateField = useDebounce(validateField, timeoutOnChange);
+
   useEffect(() => {
     if (propsValue !== value) {
       setValue(propsValue);
 
       if (validateOnChange) {
-        validateField(propsValue);
+        if (timeoutOnChange) {
+          debouncedValidateField(propsValue);
+        } else {
+          validateField(propsValue);
+        }
       }
     }
     /* On purpose listen only to propsValue change */
@@ -64,20 +85,6 @@ export default function useFieldState({
     const [_isValid] = Presenter.validate(valueToValidate, validate);
     return _isValid;
   }, [value, validate]);
-
-  const validateField = useCallback((valueToValidate = value) => {
-    const [_isValid, _failingValidatorIndex] = Presenter.validate(valueToValidate, validate);
-
-    setIsValid(_isValid);
-    setFailingValidatorIndex(_failingValidatorIndex);
-
-    if (!_isValid && !_.isUndefined(_failingValidatorIndex)) {
-      onValidationFailed?.(_failingValidatorIndex);
-    }
-
-    return _isValid;
-  },
-  [value, validate, onValidationFailed]);
 
   const onFocus = useCallback((...args: any) => {
     setIsFocused(true);
@@ -101,10 +108,14 @@ export default function useFieldState({
     props.onChangeText?.(text);
 
     if (validateOnChange) {
-      validateField(text);
+      if (timeoutOnChange) {
+        debouncedValidateField(text);
+      } else {
+        validateField(text);
+      }
     }
   },
-  [props.onChangeText, validateOnChange, validateField]);
+  [props.onChangeText, validateOnChange, debouncedValidateField, validateField]);
 
   const fieldState = useMemo(() => {
     return {

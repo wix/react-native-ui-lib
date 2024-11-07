@@ -64,6 +64,7 @@
     },
     {"name": "validateOnStart", "type": "boolean", "description": "Should validate when the TextField mounts"},
     {"name": "validateOnChange", "type": "boolean", "description": "Should validate when the TextField value changes"},
+    {"name": "timeoutOnChange", "type": "number", "description": "Add a debounce timeout when sending validateOnChange"},
     {"name": "validateOnBlur", "type": "boolean", "description": "Should validate when losing focus of TextField"},
     {
       "name": "onChangeValidity",
