@@ -491,7 +491,9 @@
                 ],
                 "description": "Description"
               }
-            ]
+            ],
+            "title": "Premium",
+            "description": "Description"
           },
           {
             "type": "table",
@@ -636,7 +638,7 @@
           {
             "type": "table",
             "columns": [
-              "First column",
+              "Property",
               "Primary",
               "Secondary"
             ],
@@ -668,6 +670,227 @@
             ],
             "title": "Main",
             "description": "Description"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Property",
+              "Primary",
+              "Secondary"
+            ],
+            "items": [
+              {
+                "title": "Active",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_presets_invertedPrimary.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_states_invertedActiveSecondary.png"
+                  }
+                ]
+              },
+              {
+                "title": "Disabled",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_states_invertedDisabledPrimary.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_states_invertedDisabledSecondary.png"
+                  }
+                ]
+              }
+            ],
+            "title": "Inverted",
+            "description": "Description"
+          },
+          {
+            "type": "section",
+            "title": "Usage Examples",
+            "description": "Description",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_usageExamples.png"
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "title": "Link Button",
+            "description": "Link buttons are typically used for a somewhat minor actions."
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Property",
+              "Component"
+            ],
+            "items": [
+              {
+                "title": "Main",
+                "description": "text style: bodyBold, $textPrimary",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_linkButton_presets_main.png"
+                  }
+                ]
+              },
+              {
+                "title": "Distructive",
+                "description": "text style: bodyBold, $textDangerLight",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_linkButton_presets_distructive.png"
+                  }
+                ]
+              },
+              {
+                "title": "Disabled",
+                "description": "text style: bodyBold, $textDisabled",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_linkButton_presets_disabled.png"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Property",
+              "Component"
+            ],
+            "items": [
+              {
+                "title": "Regular",
+                "description": "Default",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_linkButton_sizes_regular.png"
+                  }
+                ]
+              },
+              {
+                "title": "Small",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_linkButton_sizes_small.png"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Property",
+              "Regular",
+              "Small (bodyBoldSmall)"
+            ],
+            "items": [
+              {
+                "title": "Icon prefix",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_linkButton_props_prefixRegular.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_linkButton_props_prefixSmall.png"
+                  }
+                ]
+              },
+              {
+                "title": "Icon suffix",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_linkButton_props_suffixRegular.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_linkButton_props_suffixRegular.png"
+                  }
+                ]
+              }
+            ],
+            "title": "Props",
+            "description": ""
+          },
+          {
+            "type": "section"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Property",
+              "Component"
+            ],
+            "items": [
+              {
+                "title": "Main",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_fullWidth_presets_main.png"
+                  }
+                ]
+              },
+              {
+                "title": "Distructive ",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_fullWidth_presets_destructive.png"
+                  }
+                ]
+              },
+              {
+                "title": "Premium",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_fullWidth_presets_premium.png"
+                  }
+                ]
+              }
+            ],
+            "title": "Presets",
+            "description": "Description"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "First column",
+              "Component"
+            ],
+            "items": [
+              {
+                "title": "Active",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_fullWidth_states_active.png"
+                  }
+                ]
+              },
+              {
+                "title": "Disabled",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_fullWidth_states_disabled.png"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "section"
           }
         ]
       }
