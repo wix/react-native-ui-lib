@@ -893,6 +893,68 @@
             "type": "section"
           }
         ]
+      },
+      {
+        "title": "UX",
+        "sections": [
+          {
+            "type": "list",
+            "items": [
+              {
+                "title": "Unclear buttons hierarchy",
+                "description": "Have a clear hierarchy of your buttons. Decide which one of the actions in your screen is the main one and use a Primary button for it. All other buttons should be secondary and tertiary in the way they look. Destructive actions should be treated likewise. ",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_UX_dosDonts_hierarchy.png"
+                  }
+                ]
+              },
+              {
+                "title": "Inappropriate buttons layout",
+                "description": "Make sure you’re using a layout that can accommodate actions text. ",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_UX_dosDonts_layout.png"
+                  }
+                ]
+              },
+              {
+                "title": "Action text truncation/ellipsis",
+                "description": "Action text truncation or ellipsis should be avoided at all costs.\nActions should be clear and down to the point.  In case the action is complex, consider displaying an explanatory text outside the actual button component. ",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_UX_dosDonts_truncation.png"
+                  }
+                ]
+              }
+            ],
+            "title": "Do’s & Don'ts",
+            "description": "There are a few things to avoid when implementing buttons in your screen:"
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "title": "Full Width Button",
+                "description": "Medium prominence. Used in management screens for the main action, e.g. ‘Add New’",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_UX_comparison1.png"
+                  }
+                ]
+              },
+              {
+                "title": "Floating Button",
+                "description": "High prominence. Used as the main CTA on the screen, e.g. ‘Join Now’, ‘Create’",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_UX_comparison2.png"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     ]
   }
