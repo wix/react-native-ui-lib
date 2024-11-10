@@ -10,7 +10,7 @@ export default function useFieldState({
   validationMessage,
   validateOnBlur,
   validateOnChange,
-  timeoutOnChange,
+  validationDebounceTime,
   validateOnStart,
   onValidationFailed,
   onChangeValidity,
@@ -57,14 +57,14 @@ export default function useFieldState({
   },
   [value, validate, onValidationFailed]);
 
-  const debouncedValidateField = useDebounce(validateField, timeoutOnChange);
+  const debouncedValidateField = useDebounce(validateField, validationDebounceTime);
 
   useEffect(() => {
     if (propsValue !== value) {
       setValue(propsValue);
 
       if (validateOnChange) {
-        if (timeoutOnChange) {
+        if (validationDebounceTime) {
           debouncedValidateField(propsValue);
         } else {
           validateField(propsValue);
@@ -108,7 +108,7 @@ export default function useFieldState({
     props.onChangeText?.(text);
 
     if (validateOnChange) {
-      if (timeoutOnChange) {
+      if (validationDebounceTime) {
         debouncedValidateField(text);
       } else {
         validateField(text);

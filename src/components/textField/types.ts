@@ -42,7 +42,7 @@ export type Validator = ((value?: string) => boolean) | keyof typeof formValidat
 export interface FieldStateProps extends InputProps {
   validateOnStart?: boolean;
   validateOnChange?: boolean;
-  timeoutOnChange?: number;
+  validationDebounceTime?: number;
   validateOnBlur?: boolean;
   /**
    * Callback for when field validated and failed
@@ -245,7 +245,7 @@ export type TextFieldProps = MarginModifiers &
     /**
      * Add a debounce timeout when sending validateOnChange
      */
-    timeoutOnChange?: number;
+    validationDebounceTime?: number;
     /**
      * Should validate when losing focus of TextField
      */
