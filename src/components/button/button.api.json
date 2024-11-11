@@ -266,7 +266,7 @@
             "items": [
               {
                 "title": "Primary",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_priority_primary.png"
@@ -275,7 +275,7 @@
               },
               {
                 "title": "Secondary",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_priority_secondary.png"
@@ -283,8 +283,9 @@
                 ]
               }
             ],
-            "title": "Priority",
-            "description": "Description"
+            "title": "",
+            "description": "",
+            "name": "Priority"
           },
           {
             "type": "table",
@@ -343,13 +344,14 @@
                 ]
               }
             ],
-            "title": "Presets",
-            "description": "Description"
+            "title": "",
+            "description": "",
+            "name": "Presets"
           },
           {
             "type": "section",
             "title": "States",
-            "description": "Description"
+            "description": ""
           },
           {
             "type": "table",
@@ -361,7 +363,7 @@
             "items": [
               {
                 "title": "Active",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_mainActivePrimary.png"
@@ -373,7 +375,7 @@
               },
               {
                 "title": "Loading",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_mainLoadingPrimary.png"
@@ -385,7 +387,7 @@
               },
               {
                 "title": "Disabled",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_mainDisabledPrimary.png"
@@ -396,8 +398,9 @@
                 ]
               }
             ],
-            "title": "Main",
-            "description": "Description"
+            "title": "",
+            "description": "",
+            "name": "Main"
           },
           {
             "type": "table",
@@ -409,7 +412,7 @@
             "items": [
               {
                 "title": "Active",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_invertedActivePrimary.png"
@@ -421,7 +424,7 @@
               },
               {
                 "title": "Loading",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_invertedLoadingPrimary.png"
@@ -433,7 +436,7 @@
               },
               {
                 "title": "Disabled",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_invertedDisabledPrimary.png"
@@ -444,8 +447,9 @@
                 ]
               }
             ],
-            "title": "Inverted",
-            "description": "Description"
+            "title": "",
+            "description": "",
+            "name": "Inverted"
           },
           {
             "type": "table",
@@ -457,7 +461,7 @@
             "items": [
               {
                 "title": "Active",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_premiumActivePrimary.png"
@@ -469,7 +473,7 @@
               },
               {
                 "title": "Loading",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_premiumLoadingPrimary.png"
@@ -489,11 +493,12 @@
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_premiumDisabledSecondary.png"
                   }
                 ],
-                "description": "Description"
+                "description": ""
               }
             ],
-            "title": "Premium",
-            "description": "Description"
+            "title": "",
+            "description": "",
+            "name": "Premium"
           },
           {
             "type": "table",
@@ -504,7 +509,7 @@
             "items": [
               {
                 "title": "Large",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_sizes_large.png"
@@ -513,7 +518,7 @@
               },
               {
                 "title": "Medium",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_sizes_medium.png"
@@ -522,7 +527,7 @@
               },
               {
                 "title": "Small",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_sizes_small.png"
@@ -531,7 +536,7 @@
               }
             ],
             "title": "Sizes",
-            "description": "Description"
+            "description": ""
           },
           {
             "type": "table",
@@ -542,7 +547,7 @@
             "items": [
               {
                 "title": "Icon prefix",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_accessories_iconPrefix.png"
@@ -556,11 +561,11 @@
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_accessories_iconSuffix.png"
                   }
                 ],
-                "description": "Description"
+                "description": ""
               }
             ],
             "title": "Accessories",
-            "description": "Description"
+            "description": ""
           },
           {
             "type": "section",
@@ -576,7 +581,7 @@
             "items": [
               {
                 "title": "Primary",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_priority_primary.png"
@@ -585,7 +590,7 @@
               },
               {
                 "title": "Secondary",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_priority_secondary.png"
@@ -594,7 +599,7 @@
               }
             ],
             "title": "Priority",
-            "description": "Description"
+            "description": ""
           },
           {
             "type": "table",
@@ -628,12 +633,13 @@
                   }
                 ]
               }
-            ]
+            ],
+            "title": "Presets"
           },
           {
             "type": "section",
             "title": "States",
-            "description": "Description"
+            "description": ""
           },
           {
             "type": "table",
@@ -645,7 +651,7 @@
             "items": [
               {
                 "title": "Active",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_states_mainActivePrimary.png"
@@ -657,7 +663,7 @@
               },
               {
                 "title": "Disabled",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_states_mainDisabledPrimary.png"
@@ -668,8 +674,9 @@
                 ]
               }
             ],
-            "title": "Main",
-            "description": "Description"
+            "title": "",
+            "description": "",
+            "name": "Main"
           },
           {
             "type": "table",
@@ -681,7 +688,7 @@
             "items": [
               {
                 "title": "Active",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_presets_invertedPrimary.png"
@@ -693,7 +700,7 @@
               },
               {
                 "title": "Disabled",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_states_invertedDisabledPrimary.png"
@@ -704,13 +711,14 @@
                 ]
               }
             ],
-            "title": "Inverted",
-            "description": "Description"
+            "title": "",
+            "description": "",
+            "name": "Inverted"
           },
           {
             "type": "section",
             "title": "Usage Examples",
-            "description": "Description",
+            "description": "",
             "content": [
               {
                 "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_usageExamples.png"
@@ -756,7 +764,8 @@
                   }
                 ]
               }
-            ]
+            ],
+            "title": "Presets"
           },
           {
             "type": "table",
@@ -776,14 +785,15 @@
               },
               {
                 "title": "Small",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_linkButton_sizes_small.png"
                   }
                 ]
               }
-            ]
+            ],
+            "title": "Sizes"
           },
           {
             "type": "table",
@@ -795,7 +805,7 @@
             "items": [
               {
                 "title": "Icon prefix",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_linkButton_props_prefixRegular.png"
@@ -807,7 +817,7 @@
               },
               {
                 "title": "Icon suffix",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_linkButton_props_suffixRegular.png"
@@ -818,11 +828,13 @@
                 ]
               }
             ],
-            "title": "Props",
+            "title": "Accessories",
             "description": ""
           },
           {
-            "type": "section"
+            "type": "section",
+            "title": "Full-Width Button",
+            "description": "Full-Width buttons are sticky on the bottom of the screens. They are usually used for primary actions on management screens, e.g. adding a new item to a list.\nThey are great to use on screens with potentially long lists, since they stick to the bottom and are always visible."
           },
           {
             "type": "table",
@@ -833,7 +845,7 @@
             "items": [
               {
                 "title": "Main",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_fullWidth_presets_main.png"
@@ -842,7 +854,7 @@
               },
               {
                 "title": "Distructive ",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_fullWidth_presets_destructive.png"
@@ -851,7 +863,7 @@
               },
               {
                 "title": "Premium",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_fullWidth_presets_premium.png"
@@ -860,18 +872,18 @@
               }
             ],
             "title": "Presets",
-            "description": "Description"
+            "description": ""
           },
           {
             "type": "table",
             "columns": [
-              "First column",
+              "Property",
               "Component"
             ],
             "items": [
               {
                 "title": "Active",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_fullWidth_states_active.png"
@@ -880,17 +892,24 @@
               },
               {
                 "title": "Disabled",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_fullWidth_states_disabled.png"
                   }
                 ]
               }
-            ]
+            ],
+            "title": "States"
           },
           {
-            "type": "section"
+            "type": "section",
+            "title": "Usage Examples",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_fullWidth_usageExamples.png"
+              }
+            ]
           }
         ]
       },
@@ -952,7 +971,10 @@
                   }
                 ]
               }
-            ]
+            ],
+            "title": "Full-Width Vs. Floating Button",
+            "description": "Selecting the right button style for your needs",
+            "layout": "horizontal"
           }
         ]
       }
