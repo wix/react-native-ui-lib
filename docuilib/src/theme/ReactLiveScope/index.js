@@ -21,7 +21,6 @@ import SortableGridList from 'react-native-ui-lib/sortableGridList';
 import SortableList from 'react-native-ui-lib/sortableList';
 import Switch from 'react-native-ui-lib/switch';
 import TextField from 'react-native-ui-lib/textField';
-import UILivePreview from '@site/src/components/UILivePreview';
 import * as Playground from './Playground';
 
 Assets.loadAssetsGroup('icons.demo', {
@@ -57,7 +56,6 @@ const ReactLiveScope = {
   /* Docs' utils and components */
   Data,
   Playground,
-  UILivePreview,
   /* UI Lib's components */
   ActionBar,
   Assets,
