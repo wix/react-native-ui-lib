@@ -134,6 +134,7 @@ export default function TabBarItem({
   ignore,
   style,
   spreadItems,
+  onPress,
   ...props
 }: Props) {
   const {currentPage, setCurrentIndex} = useContext(TabBarContext);
@@ -207,7 +208,7 @@ export default function TabBarItem({
         setCurrentIndex(index);
       }
 
-      props.onPress && runOnJS(props.onPress)(index);
+      onPress && runOnJS(onPress)(index);
     })
     .onFinalize(() => {
       isPressed.value = false;
