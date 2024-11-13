@@ -14,7 +14,7 @@ export const devTab = {
     {
       type: 'props',
       title: 'API',
-      description: 'This is the list of additional props for the Text component'
+      description: 'This is the list of additional props for the component'
     }
   ]
 };
