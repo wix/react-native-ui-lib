@@ -11,18 +11,6 @@ export const devTab = {
     {
       type: 'tip'
     },
-    // {
-    //   type: 'banner',
-    //   title: 'NOTE',
-    //   description: 'This is an interesting information'
-    // },
-    // {
-    //   type: 'banner',
-    //   title: 'Banner',
-    //   description: 'This is some massage to the user',
-    //   color: 'pink',
-    //   icon: ''
-    // },
     {
       type: 'props',
       title: 'API',
