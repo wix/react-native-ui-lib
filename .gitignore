@@ -71,6 +71,7 @@ dist
 dist-ts
 package-lock.json
 docs/components/**
+!scripts/build
 
 # Ruby / CocoaPods
 /ios/Pods/
