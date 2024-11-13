@@ -12,7 +12,7 @@ export default function UILivePreview({code: codeProp}) {
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const {siteConfig} = useDocusaurusContext();
   const iframeRef = useRef(null);
-  const iframeSource = `${window.location.origin}${siteConfig?.baseUrl}livePreview`;
+  const iframeSource = siteConfig?.customFields?.livePreviewSource as string;
 
   useEffect(() => {
     if (iframeLoaded) {
