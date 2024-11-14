@@ -70,8 +70,9 @@ function processComponents(components) {
     if (isParentComponent) {
       content += 'sidebar_position: 1\n';
     }
+    const title = component.docs?.hero ? '""' : `${isIncubatorComponent ? 'Incubator.' : ''}${component.name}`;
     content += `id: ${component.name}\n`;
-    content += `title: ${isIncubatorComponent ? 'Incubator.' : ''}${component.name}\n`;
+    content += `title: ${title}\n`;
     content += `sidebar_label: ${componentName}\n`;
     content += '---\n\n';
 
