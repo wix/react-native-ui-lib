@@ -1,12 +1,10 @@
 let SvgPackage: any;
-let SvgCssUriPackage14Higher;
+let svgCssForPackage14Higher: any;
 try {
   SvgPackage = require('react-native-svg');
-  SvgCssUriPackage14Higher = require('react-native-svg/css').SvgCssUri;
+  svgCssForPackage14Higher = require('react-native-svg/css');
   // Sadly we cannot verify with require('react-native-svg-transformer');
 } catch (error) {}
 
-if (SvgCssUriPackage14Higher) {
-  SvgPackage.SvgCssUri = SvgCssUriPackage14Higher;
-}
+export const SvgCssUri = svgCssForPackage14Higher?.SvgCssUri ?? SvgPackage?.SvgCssUri;
 export default SvgPackage;
