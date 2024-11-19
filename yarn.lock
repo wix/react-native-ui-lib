@@ -10269,16 +10269,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-svg@npm:^13.7.0":
-  version: 13.14.1
-  resolution: "react-native-svg@npm:13.14.1"
+"react-native-svg@npm:^15.2.0":
+  version: 15.9.0
+  resolution: "react-native-svg@npm:15.9.0"
   dependencies:
     css-select: ^5.1.0
     css-tree: ^1.1.3
+    warn-once: 0.1.1
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 273f05f2cceabf09f3909f57108d10f56aeb38981146e5f7b72cdb8595fbfb524af891845d4240a629c2f91ed120ae603d9efd579f7fb88521769aec71811136
+  checksum: a9fa366699d824d1cf43543d37e5d2d36551002b1878dae27618c2bbd7dbaccaad42586c382a32a56ba20df20b564777581a6139da48ed766eaed95c8267b9df
   languageName: node
   linkType: hard
 
@@ -10359,7 +10360,7 @@ __metadata:
     react-native-reanimated: 3.8.1
     react-native-redash: ^12.0.3
     react-native-shimmer-placeholder: ^2.0.6
-    react-native-svg: ^13.7.0
+    react-native-svg: ^15.2.0
     react-native-svg-transformer: 1.5.0
     react-test-renderer: 18.2.0
     reassure: ^0.4.1
@@ -12247,6 +12248,13 @@ __metadata:
   dependencies:
     makeerror: 1.0.12
   checksum: ad7a257ea1e662e57ef2e018f97b3c02a7240ad5093c392186ce0bcf1f1a60bbadd520d073b9beb921ed99f64f065efb63dfc8eec689a80e569f93c1c5d5e16c
+  languageName: node
+  linkType: hard
+
+"warn-once@npm:0.1.1":
+  version: 0.1.1
+  resolution: "warn-once@npm:0.1.1"
+  checksum: e6a5a1f5a8dba7744399743d3cfb571db4c3947897875d4962a7c5b1bf2195ab4518c838cb4cea652e71729f21bba2e98dc75686f5fccde0fabbd894e2ed0c0d
   languageName: node
   linkType: hard
 
