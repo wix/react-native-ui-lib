@@ -48,6 +48,25 @@
         "title": "Overview",
         "sections": [
           {
+            "type": "section",
+            "title": "Rendering uilib component",
+            "description": "Examples of using the Uilib web components",
+            "content": [
+              {
+                "component": "Text",
+                "props": {"children": "\"This is a Text\""}
+              },
+              {
+                "component": "Button",
+                "props": {"label": "\"This is a button\""}
+              },
+              {
+                "component": "Chip",
+                "props": {"label": "\"This is a Chip\""}
+              }
+            ]
+          },
+          {
             "type": "table",
             "title": "Table",
             "description": "Examples of using the Text component",

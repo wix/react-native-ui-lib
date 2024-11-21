@@ -1,7 +1,48 @@
 import React from 'react';
 import '../ComponentPage.module.scss';
+import {LiveProvider, LivePreview} from 'react-live';
+import ReactLiveScope from '../../theme/ReactLiveScope';
 
-export const ContentItem = ({item}) => {
+type UilibComponentItemProps = {
+  componentName: string;
+  props: Record<string, unknown>;
+}
+const UilibComponentItem = (props: UilibComponentItemProps) => {
+  const {componentName, props: componentProps} = props;
+  const isComponentExists = !!ReactLiveScope[componentName];
+  const propString = Object.keys(componentProps).reduce((acc, key) => {
+    const propValue = componentProps[key];
+    if (typeof propValue === 'object') {
+      return `${acc}${key}={${JSON.stringify(propValue)}} `;
+    }
+    return `${acc}${key}={${propValue}} `;
+  }, '');
+
+  const code = isComponentExists ? `<${componentName} ${propString} />` : '<Text>Component Not Found</Text>';
+
+  return (
+    <LiveProvider code={code} scope={ReactLiveScope}>
+      <LivePreview/>
+    </LiveProvider>
+  );
+};
+
+type Item = {
+  component?: string;
+  props?: any;
+  value?: any;
+}
+type ContentItemProps = {
+  item: Item;
+  componentName: string;
+}
+export const ContentItem = ({item, componentName}: ContentItemProps) => {
+  const isComponentItem = !!item.props;
+
+  if (isComponentItem) {
+    return <UilibComponentItem componentName={item.component ?? componentName} props={item.props}/>;
+  }
+
   const getFigmaEmbed = item => {
     const value = item.value;
     const height = item.height || 450;
