@@ -207,7 +207,7 @@
               },
               {
                 "title": "",
-                "description": "### Haptic  \nHaptic is played on tap.\nHaptic preset: [impactMedium]",
+                "description": "markdown: \n### Haptic  \nHaptic is played on tap.\nHaptic preset: [impactMedium]",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_spec_haptic.png"
