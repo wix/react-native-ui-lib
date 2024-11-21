@@ -198,7 +198,7 @@
             "items": [
               {
                 "title": "",
-                "description": "markdown: \n### Size  \nOne size  \n### Colors  \n**ON**  \nBackground color: $backgroundPrimaryHeavy  \nKnob color: $iconDefaultLight  \n**OFF**  \nBackground color: $backgroundNeutralHeavy  \nKnob color: $iconDefaultLight  \n**Disabled**  \nBackground color: $backgroundDisabled  \nKnob color: $iconDefaultLight  ",
+                "description": "markdown: \n### Size  \nOne size ",
                 "content": [
                   {
                     "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Docs-Assets?node-id=52-7459&embed-host=share"
@@ -207,7 +207,7 @@
               },
               {
                 "title": "",
-                "description": "### Haptic  \nHaptic is played on tap.\nHaptic preset: [impactMedium]",
+                "description": "markdown: \n### Haptic  \nHaptic is played on tap.\nHaptic preset: [impactMedium]",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_spec_haptic.png"
