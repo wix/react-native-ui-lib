@@ -3,11 +3,11 @@ import '../ComponentPage.module.scss';
 import {LiveProvider, LivePreview} from 'react-live';
 import ReactLiveScope from '../../theme/ReactLiveScope';
 
-type UilibComponentItemProps = {
+type ComponentItemProps = {
   componentName: string;
   props: Record<string, unknown>;
 }
-const UilibComponentItem = (props: UilibComponentItemProps) => {
+const ComponentItem = (props: ComponentItemProps) => {
   const {componentName, props: componentProps} = props;
   const isComponentExists = !!ReactLiveScope[componentName];
   const propString = Object.keys(componentProps).reduce((acc, key) => {
@@ -37,11 +37,6 @@ type ContentItemProps = {
   componentName: string;
 }
 export const ContentItem = ({item, componentName}: ContentItemProps) => {
-  const isComponentItem = !!item.props;
-
-  if (isComponentItem) {
-    return <UilibComponentItem componentName={item.component ?? componentName} props={item.props}/>;
-  }
 
   const getFigmaEmbed = item => {
     const value = item.value;
@@ -66,5 +61,7 @@ export const ContentItem = ({item, componentName}: ContentItemProps) => {
     } else if (typeof value === 'object' && value.source) {
       return getImage(value.source, value.style);
     }
+  } else if (item.props) {
+    return <ComponentItem componentName={item.component ?? componentName} props={item.props}/>;
   }
 };
