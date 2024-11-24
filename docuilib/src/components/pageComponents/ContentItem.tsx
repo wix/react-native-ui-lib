@@ -53,7 +53,7 @@ export const ContentItem = ({item, componentName}: ContentItemProps) => {
 
   if (value) {
     if (typeof value === 'string') {
-      if (value.includes('www.figma.com')) {
+      if (value.includes('embed.figma.com')) {
         return getFigmaEmbed(item);
       } else {
         return getImage(value);
