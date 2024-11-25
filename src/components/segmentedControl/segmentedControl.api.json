@@ -104,7 +104,12 @@
       "title": "SegmentedControl",
       "description": "A segmented control is a linear set of two or more segments. Segmented control is often used to display and switch between different views.",
       "type": "hero",
-      "layout": "horizontal"
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/SegmentedControl/segmentedControl_cover.png"
+        }
+      ]
     },
     "tabs": [
       {
@@ -128,13 +133,24 @@
             "items": [
               {
                 "title": "Default",
-                "description": "Best suitable as a main feature of the screen, mainly used for filtering or changing views within a screen."
+                "description": "Best suitable as a main feature of the screen, mainly used for filtering or changing views within a screen.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/SegmentedControl/segmentedControl_style_default.png"
+                  }
+                ]
               },
               {
                 "title": "Form",
-                "description": "Suitable for form or settings screens, matches with other related components such as textField, Picker and others."
+                "description": "Suitable for form or settings screens, matches with other related components such as textField, Picker and others.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/SegmentedControl/segmentedControl_style_form.png"
+                  }
+                ]
               }
-            ]
+            ],
+            "title": "Style"
           },
           {
             "type": "table",
@@ -145,11 +161,21 @@
             "items": [
               {
                 "title": "Full width",
-                "description": "The component stretches to the width of the screen."
+                "description": "The component stretches to the width of the screen.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/SegmentedControl/segmentedControl_layout_fullwidth.png"
+                  }
+                ]
               },
               {
                 "title": "Hug content",
-                "description": "The components stretches according to the width of the labels."
+                "description": "The components stretches according to the width of the labels.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/SegmentedControl/segmentedControl_style_form.png"
+                  }
+                ]
               }
             ],
             "title": "Layout"
@@ -157,27 +183,63 @@
           {
             "type": "section",
             "layout": "horizontal",
-            "title": "Segments amount",
-            "description": "Segmented Control has at least 2, and up to 4 values. a single value always have to be selected."
+            "title": "Segments Amount",
+            "description": "Segmented Control has at least 2, and up to 4 values. a single value always have to be selected.",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Docs-Assets?node-id=371-25696&embed-host=share"
+              }
+            ]
           },
           {
             "type": "section",
             "layout": "horizontal",
-            "title": "Content options",
-            "description": "Segmented Control has at least 2, and up to 4 values. a single value always have to be selected."
+            "title": "Content Options",
+            "description": "Segmented Control has at least 2, and up to 4 values. a single value always have to be selected.",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Docs-Assets?node-id=371-25738&embed-host=share"
+              }
+            ]
           },
           {
             "type": "list",
             "items": [
               {
-                "title": "Default style"
+                "title": "Default style",
+                "content": [
+                  {
+                    "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Docs-Assets?node-id=371-25795&embed-host=share"
+                  }
+                ]
               },
               {
-                "title": "Form style"
+                "title": "Form style",
+                "content": [
+                  {
+                    "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Docs-Assets?node-id=371-25831&embed-host=share"
+                  }
+                ]
               }
             ],
             "title": "Spec",
             "layout": "horizontal"
+          }
+        ]
+      },
+      {
+        "title": "UX Guidelines",
+        "sections": [
+          {
+            "type": "section",
+            "layout": "horizontal",
+            "title": "Accessory Label",
+            "description": "Text label is optional and can be enabled when required, yet not recommended in this style.",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/SegmentedControl/segmentedControl_accessoryLabel.png"
+              }
+            ]
           }
         ]
       }
