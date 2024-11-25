@@ -3,7 +3,7 @@ import React from 'react';
 import '../ComponentPage.module.scss';
 import {ContentItem} from './ContentItem';
 
-export const TableSection = ({section}) => {
+export const TableSection = ({section, component}) => {
   const getTableHeaders = columns => {
     const numberOfColumns = columns.length;
     const cellWidth = 100 / numberOfColumns;
@@ -20,7 +20,11 @@ export const TableSection = ({section}) => {
   const getTableRowsContent = (content, numberOfColumns) => {
     return _.map(content, (item, index: number) => {
       if (index < numberOfColumns - 1) {
-        return <td style={{backgroundColor: 'white', padding: '8px 12px 8px 12px'}}><ContentItem item={item}/></td>;
+        return (
+          <td style={{backgroundColor: 'white', padding: '8px 12px 8px 12px'}} align="center">
+            <ContentItem item={item} componentName={component.name}/>
+          </td>
+        );
       }
     });
   };

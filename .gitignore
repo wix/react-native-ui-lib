@@ -45,9 +45,9 @@ npm-debug.log
 
 # yarn
 yarn-error.log
-.yarn/cache
-.yarn/install-state.gz
-.yarn/yarn.build.json
+**/.yarn/cache
+**/.yarn/install-state.gz
+**/.yarn/yarn.build.json
 
 .vscode
 
@@ -71,6 +71,7 @@ dist
 dist-ts
 package-lock.json
 docs/components/**
+!scripts/build
 
 # Ruby / CocoaPods
 /ios/Pods/

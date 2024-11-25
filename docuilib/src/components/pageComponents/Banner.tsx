@@ -1,8 +1,11 @@
 import _ from 'lodash';
 import React from 'react';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import '../ComponentPage.module.scss';
 
 export const Banner = ({section, component}) => {
+  const {siteConfig} = useDocusaurusContext();
+
   const getColor = type => {
     switch (type) {
       case 'tip':
@@ -43,8 +46,7 @@ export const Banner = ({section, component}) => {
       const comma = isLast ? '' : ', ';
       return (
         <a
-          href={links[index]}
-          target="_blank"
+          href={links?.[index] ?? `${siteConfig?.baseUrl}docs/components/${component}`}
           rel="noreferrer"
           style={{fontSize: '16px', fontWeight: '700', lineHeight: '18px', borderBottom: '1px solid'}}
         >
