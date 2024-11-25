@@ -142,7 +142,7 @@
               },
               {
                 "title": "Form",
-                "description": "Suitable for form or settings screens, matches with other related components such as textField, Picker and others.",
+                "description": "markdown:\nSuitable for form or settings screens, matches with other related components such as textField, Picker and others.  \n    preset=\"form\"",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/SegmentedControl/segmentedControl_style_form.png"
@@ -156,7 +156,7 @@
             "type": "table",
             "columns": [
               "Property",
-              "Component"
+              "Preview"
             ],
             "items": [
               {
