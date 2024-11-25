@@ -289,7 +289,7 @@
             "items": [
               {
                 "title": "Inactive (default)",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_inactive.png"
@@ -298,7 +298,7 @@
               },
               {
                 "title": "Focused",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_focused.png"
@@ -307,7 +307,7 @@
               },
               {
                 "title": "Typing",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_typing.png"
@@ -316,7 +316,7 @@
               },
               {
                 "title": "Inactive Full",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_inactiveFull.png"
@@ -325,7 +325,7 @@
               },
               {
                 "title": "Validation Full",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_validationFull.png"
@@ -334,7 +334,7 @@
               },
               {
                 "title": "Warning",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_warning.png"
@@ -343,7 +343,7 @@
               },
               {
                 "title": "Success Validation",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_success.png"
@@ -352,7 +352,7 @@
               },
               {
                 "title": "Disabled",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_disabled.png"
@@ -361,7 +361,7 @@
               },
               {
                 "title": "Read Only",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_readOnly.png"
@@ -370,7 +370,7 @@
               }
             ],
             "title": "States",
-            "description": "Description"
+            "description": ""
           },
           {
             "type": "table",
@@ -378,7 +378,7 @@
             "items": [
               {
                 "title": "Outline (Default)",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_outline.png"
@@ -387,7 +387,7 @@
               },
               {
                 "title": "Underline",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_underline.png"
@@ -396,7 +396,7 @@
               }
             ],
             "title": "Styles",
-            "description": "Description"
+            "description": ""
           },
           {
             "type": "table",
@@ -404,7 +404,7 @@
             "items": [
               {
                 "title": "Leading Accessory (Prefix)",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_leading.png"
@@ -413,7 +413,7 @@
               },
               {
                 "title": "Trailing Accessory (Suffix)",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_trailing.png"
@@ -422,7 +422,7 @@
               },
               {
                 "title": "Top Trailing Accessory",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_trailingTop.png"
@@ -431,7 +431,7 @@
               },
               {
                 "title": "Characters Limit",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_charLimit.png"
@@ -440,7 +440,7 @@
               },
               {
                 "title": "Delete Value Icon",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_deleteIcon.png"
@@ -458,7 +458,7 @@
               }
             ],
             "title": "Spec",
-            "description": "**Label**\nbodySmall, $textNeutralHeavy  \n**Placeholder**\nbody, $textNeutralLight  \n**Value**  \nbody, $textDefault  \n**Helper Text**  \nsubtext, $textNeutralHeavy  \n**Character Count**  \nbodySmall, $textNeutralHeavy  \n**Validation message**  \nMessage - bodySmall, $textDangerLight\nIcon - exclamationFillSmall, $iconDangerLight  \n**Prefix & Suffix**  \nbody, $textNeutral  \n**Clear Button**  \nxFlat, $textNeutralLight  \n**Warning Message**  \nMessage - bodySmall, $textDefault\nIcon - exclamationFillSmall, $iconDefault  \n**Validation Success**  \nIcon - checkmarkFlatSmall, $iconSuccess  \n**Outline - Default/unfocused**  \n1p, $outlineNeutral  \n**Outline - Focused, typing**  \n1p, $outlinePrimary  \n**Outline - Validation**  \n1p, $outlineDanger  \n**Outline - Disabled**  \n1p, $outlineDisabled  \n**Outline - Read only**  \nfill background- $backgroundNeutralLightDescription"
+            "description": "**Label**\nbodySmall, $textNeutralHeavy  \n**Placeholder**\nbody, $textNeutralLight  \n**Value**  \nbody, $textDefault  \n**Helper Text**  \nsubtext, $textNeutralHeavy  \n**Character Count**  \nbodySmall, $textNeutralHeavy  \n**Validation message**  \nMessage - bodySmall, $textDangerLight\nIcon - exclamationFillSmall, $iconDangerLight  \n**Prefix & Suffix**  \nbody, $textNeutral  \n**Clear Button**  \nxFlat, $textNeutralLight  \n**Warning Message**  \nMessage - bodySmall, $textDefault\nIcon - exclamationFillSmall, $iconDefault  \n**Validation Success**  \nIcon - checkmarkFlatSmall, $iconSuccess  \n**Outline - Default/unfocused**  \n1p, $outlineNeutral  \n**Outline - Focused, typing**  \n1p, $outlinePrimary  \n**Outline - Validation**  \n1p, $outlineDanger  \n**Outline - Disabled**  \n1p, $outlineDisabled  \n**Outline - Read only**  \nfill background- $backgroundNeutralLight"
           }
         ]
       },
@@ -469,7 +469,7 @@
             "type": "section",
             "layout": "horizontal",
             "title": "Props Usage",
-            "description": "Description"
+            "description": ""
           },
           {
             "type": "section",

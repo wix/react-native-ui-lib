@@ -51,7 +51,7 @@ export const TableSection = ({section, component}) => {
   return (
     <div>
       {section.name && <div style={{fontSize: '20px', fontWeight: '700', marginBottom: 16}}>{section.name}</div>}
-      <table>
+      <table style={{display: 'table', width: '100%'}}>
         <tr>{getTableHeaders(columns)}</tr>
         {getTableRows(rows, numberOfColumns)}
       </table>

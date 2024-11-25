@@ -21,19 +21,14 @@ export const SectionContent = ({section, component}) => {
 
   switch (section.type) {
     case 'usage':
-      // return getUsage();
       return <Usage component={component}/>;
     case 'props':
-      // return getPropsList();
       if (component.props) {
         return <PropsList props={component.props}/>;
       }
       return;
     case 'table':
-      // return getTable(section);
       return <TableSection section={section} component={component}/>;
-    // case 'list':
-    //   return getList(section);
     case 'hero':
     case 'item':
     case 'section':
