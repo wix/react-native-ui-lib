@@ -20,28 +20,70 @@
       "type": "boolean",
       "description": "When using RadioButton without a RadioGroup, use this prop to toggle selection"
     },
-    {"name": "onPress", "type": "(selected: boolean) => void", "description": "Invoked when pressing the button"},
-    {"name": "disabled", "type": "boolean", "description": "Whether the radio button should be disabled"},
-    {"name": "color", "type": "string", "description": "The color of the radio button", "default": "Colors.$backgroundPrimaryHeavy"},
+    {
+      "name": "onPress",
+      "type": "(selected: boolean) => void",
+      "description": "Invoked when pressing the button"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Whether the radio button should be disabled"
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "description": "The color of the radio button",
+      "default": "Colors.$backgroundPrimaryHeavy"
+    },
     {
       "name": "size",
       "type": "number",
       "description": "The size of the radio button, affect both width & height",
       "default": "24"
     },
-    {"name": "borderRadius", "type": "number", "description": "The radio button border radius", "default": "24"},
-    {"name": "label", "type": "string", "description": "A label for the radio button description"},
-    {"name": "labelStyle", "type": "TextStyle", "description": "Label style"},
-    {"name": "iconSource", "type": "ImageSource", "description": "Icon image source"},
-    {"name": "iconStyle", "type": "ImageStyle", "description": "Icon image style"},
+    {
+      "name": "borderRadius",
+      "type": "number",
+      "description": "The radio button border radius",
+      "default": "24"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "description": "A label for the radio button description"
+    },
+    {
+      "name": "labelStyle",
+      "type": "TextStyle",
+      "description": "Label style"
+    },
+    {
+      "name": "iconSource",
+      "type": "ImageSource",
+      "description": "Icon image source"
+    },
+    {
+      "name": "iconStyle",
+      "type": "ImageStyle",
+      "description": "Icon image style"
+    },
     {
       "name": "iconOnRight",
       "type": "boolean",
       "description": "Should the icon be on the right side of the label",
       "default": "false"
     },
-    {"name": "contentOnLeft", "type": "boolean", "description": "Should the content be rendered left to the button"},
-    {"name": "containerStyle", "type": "ViewStyle", "description": "Additional styling for the container"}
+    {
+      "name": "contentOnLeft",
+      "type": "boolean",
+      "description": "Should the content be rendered left to the button"
+    },
+    {
+      "name": "containerStyle",
+      "type": "ViewStyle",
+      "description": "Additional styling for the container"
+    }
   ],
   "snippet": [
     "function Example(props) {",
@@ -52,5 +94,80 @@
     "    </div>",
     "  );",
     "}"
-  ]
+  ],
+  "docs": {
+    "hero": {
+      "title": "RadioButton",
+      "description": "Description"
+    },
+    "tabs": [
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "section",
+            "title": "Usage Examples"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Property",
+              "Preview"
+            ],
+            "items": [
+              {
+                "title": "Un-Checked"
+              },
+              {
+                "title": "Checked"
+              },
+              {
+                "title": "Disabled - Un-Checked"
+              },
+              {
+                "title": "Disabled - Checked"
+              }
+            ],
+            "title": "States"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Property",
+              "Preview"
+            ],
+            "items": [
+              {
+                "title": "Label",
+                "description": "A label can be displayed next to the RadioButton. Use this style when the user needs to select from a fewer variety of choices. "
+              }
+            ],
+            "title": "Accessories"
+          },
+          {
+            "type": "section",
+            "layout": "horizontal",
+            "title": "Size",
+            "description": "The checkbox comes only in one size, and cannot be resized.   \nSize: 24x24"
+          }
+        ]
+      },
+      {
+        "title": "UX Guidelines",
+        "sections": [
+          {
+            "type": "section",
+            "layout": "horizontal",
+            "title": "RadioGroup",
+            "description": "Use the RadioGroup component to group a list of radio options."
+          },
+          {
+            "type": "section",
+            "title": "Placement & Layout",
+            "description": "When creating a settings screen, display controls on the right side only to keep alignment between various controls like toggleSwitch, radioButton and Checkbox.\nWhen selection is a part of a flow, displaying controls on the left is more appropriate."
+          }
+        ]
+      }
+    ]
+  }
 }
