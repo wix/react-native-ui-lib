@@ -2,8 +2,12 @@
   "name": "Carousel",
   "category": "layout",
   "description": "Carousel for scrolling pages",
-  "extends": ["ScrollView"],
-  "extendsLink": ["https://reactnative.dev/docs/scrollview"],
+  "extends": [
+    "ScrollView"
+  ],
+  "extendsLink": [
+    "https://reactnative.dev/docs/scrollview"
+  ],
   "modifiers": [],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CarouselScreen.tsx",
   "images": [
@@ -11,14 +15,27 @@
     "https://user-images.githubusercontent.com/1780255/107120257-3eebf900-6895-11eb-9800-402e9e0dc692.gif"
   ],
   "props": [
-    {"name": "initialPage", "type": "number", "description": "The initial page to start at", "default": "0"},
+    {
+      "name": "initialPage",
+      "type": "number",
+      "description": "The initial page to start at",
+      "default": "0"
+    },
     {
       "name": "pageWidth",
       "type": "number",
       "description": "The page width (all pages should have the same width). Does not work if passing 'loop' prop"
     },
-    {"name": "pageHeight", "type": "number", "description": "The page height (all pages should have the same height)."},
-    {"name": "itemSpacings", "type": "number", "description": "The spacing between the pages"},
+    {
+      "name": "pageHeight",
+      "type": "number",
+      "description": "The page height (all pages should have the same height)."
+    },
+    {
+      "name": "itemSpacings",
+      "type": "number",
+      "description": "The spacing between the pages"
+    },
     {
       "name": "containerMarginHorizontal",
       "type": "number",
@@ -55,26 +72,42 @@
       "type": "boolean",
       "description": "Should the container be animated (send the animation style via containerStyle)"
     },
-    {"name": "containerStyle", "type": "ViewStyle", "description": "The carousel container style"},
+    {
+      "name": "containerStyle",
+      "type": "ViewStyle",
+      "description": "The carousel container style"
+    },
     {
       "name": "pageControlPosition",
       "type": "PageControlPosition",
       "description": "The position of the PageControl component ['over', 'under'], otherwise it won't display"
     },
-    {"name": "pageControlProps", "type": "PageControlProps", "description": "PageControl component props"},
+    {
+      "name": "pageControlProps",
+      "type": "PageControlProps",
+      "description": "PageControl component props"
+    },
     {
       "name": "showCounter",
       "type": "boolean",
       "description": "Whether to show a page counter (will not work with 'pageWidth' prop)"
     },
-    {"name": "counterTextStyle", "type": "ViewStyle", "description": "The counter's text style"},
+    {
+      "name": "counterTextStyle",
+      "type": "ViewStyle",
+      "description": "The counter's text style"
+    },
     {
       "name": "pagingEnabled",
       "type": "boolean",
       "description": "Will block multiple pages scroll (will not work with 'pageWidth' prop)",
       "default": "true"
     },
-    {"name": "allowAccessibleLayout", "type": "boolean", "description": "Whether to layout Carousel for accessibility"},
+    {
+      "name": "allowAccessibleLayout",
+      "type": "boolean",
+      "description": "Whether to layout Carousel for accessibility"
+    },
     {
       "name": "autoplay",
       "type": "boolean",
@@ -140,5 +173,59 @@
     "    </div>",
     "  );",
     "}"
-  ]
+  ],
+  "docs": {
+    "hero": {
+      "title": "Carousel",
+      "description": "The Carousel component allows users to navigate through a series of content in a linear way by swiping.\n\nUse the Carousel in these cases:\n* Focus on one item at a time: When you have a large set of items but want the user to focus on one at a time.\n* Indicate more content: When you want to subtly hint that additional items are available beyond what is currently visible.\n* Save space: When displaying all items at once isn't practical due to limited space.\n\nAim to prioritize carousel items, so that the ones of most interest to users are shown first. ",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Carousel/carousel_overview_preview.png"
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "list",
+            "items": [
+              {
+                "title": "Cards (default)",
+                "description": "Width can change according to the content- showing minimum S7 ‘hint’ of the next/previous item.\n\nWithin a single carousel, all cards should have the same width. However, card widths can vary between different carousels.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Carousel/carousel_overview_cards.png"
+                  }
+                ]
+              },
+              {
+                "title": "Gallery",
+                "description": "Item Width: Full width.\nItem Height: Adjusts dynamically based on the content. \nSpacing: No spacing between items.\n\nCounter: a counter can be displayed to indicate the current slide number and the total number of slides.\nUpon swiping, the counter remains in place.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Carousel/carousel_overview_gallery.png"
+                  }
+                ]
+              },
+              {
+                "title": "Custom Content",
+                "description": "You can use the Carousel with custom content. (e.g. picking a template for an email campaign)\n\nThe spacing between the items of the carousel can be customized.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Carousel/carousel_overview_customContent.png"
+                  }
+                ]
+              }
+            ],
+            "layout": "horizontal",
+            "title": "Content Types"
+          }
+        ]
+      }
+    ]
+  }
 }
