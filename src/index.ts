@@ -135,7 +135,7 @@ export {
   default as SegmentedControl,
   SegmentedControlProps,
   SegmentedControlItemProps,
-  SegmentedControlPresets
+  SegmentedControlPreset
 } from './components/segmentedControl';
 // @ts-expect-error
 export {default as SharedTransition} from './components/sharedTransition';

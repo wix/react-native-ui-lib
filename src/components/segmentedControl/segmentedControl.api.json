@@ -97,7 +97,7 @@
     },
     {
       "name":"preset",
-      "type": "SegmentedControlPresets",
+      "type": "SegmentedControlPreset",
       "description": "Preset of the SegmentedControl [default, form]"
     }
   ],
