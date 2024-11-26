@@ -22,7 +22,7 @@ const TIMING_CONFIG = {
   easing: Easing.bezier(0.33, 1, 0.68, 1)
 };
 
-export enum Presets {
+export enum SegmentedControlPresets {
   DEFAULT = 'default',
   FORM = 'form'
 }
@@ -94,7 +94,7 @@ export type SegmentedControlProps = {
   /**
    * Preset type
    */
-  preset?: Presets | `${Presets}`;
+  preset?: SegmentedControlPresets | `${SegmentedControlPresets}`;
   /**
    * SegmentedControl label
    */
@@ -290,9 +290,9 @@ const styles = StyleSheet.create({
   }
 });
 interface StaticMembers {
-  presets: typeof Presets;
+  presets: typeof SegmentedControlPresets;
 }
 
 SegmentedControl.displayName = 'SegmentedControl';
-SegmentedControl.presets = Presets;
+SegmentedControl.presets = SegmentedControlPresets;
 export default asBaseComponent<SegmentedControlProps, StaticMembers>(SegmentedControl);

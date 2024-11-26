@@ -1,4 +1,4 @@
-import type {SegmentedControlProps, Presets} from './';
+import type {SegmentedControlProps, SegmentedControlPresets} from './';
 import {BorderRadiuses, Colors} from '../../style/';
 import {SegmentProps} from './segment';
 import type {ColorValue} from 'react-native';
@@ -26,7 +26,7 @@ const useSegmentedControlPreset = (props: SegmentedControlProps): useSegmentedCo
   return presetProps;
 };
 
-const defaultsPresetsProps: Record<`${Presets}`, Omit<useSegmentedControlPresetProps, 'segments'>> = {
+const defaultsPresetsProps: Record<`${SegmentedControlPresets}`, Omit<useSegmentedControlPresetProps, 'segments'>> = {
   default: {
     activeColor: DEFAULT_ACTIVE_COLOR,
     borderRadius: BorderRadiuses.br100,
