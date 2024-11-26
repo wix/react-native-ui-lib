@@ -15,6 +15,9 @@ const ComponentItem = (props: ComponentItemProps) => {
     if (typeof propValue === 'object') {
       return `${acc}${key}={${JSON.stringify(propValue)}} `;
     }
+    if (typeof propValue === 'string') {
+      return `${acc}${key}="${propValue}" `;
+    }
     return `${acc}${key}={${propValue}} `;
   }, '');
 
