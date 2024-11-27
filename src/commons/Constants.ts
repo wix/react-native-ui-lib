@@ -1,4 +1,12 @@
-import {Platform, Dimensions, I18nManager, AccessibilityInfo, AccessibilityChangeEvent, StatusBar} from 'react-native';
+import {
+  Platform,
+  Dimensions,
+  NativeModules,
+  I18nManager,
+  AccessibilityInfo,
+  AccessibilityChangeEvent,
+  StatusBar
+} from 'react-native';
 
 export enum orientations {
   PORTRAIT = 'portrait',
@@ -31,7 +39,13 @@ isTablet =
   (Platform.OS === 'ios' && Platform.isPad) || (getAspectRatio() < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
 
 function setStatusBarHeight() {
-  statusBarHeight = StatusBar.currentHeight || 0; // So there will be a value for any case
+  const {StatusBarManager} = NativeModules;
+  statusBarHeight = (StatusBar.currentHeight ?? StatusBarManager?.HEIGHT) || 0;
+
+  if (isIOS && StatusBarManager) {
+    // override guesstimate height with the actual height from StatusBarManager
+    StatusBarManager.getHeight((data:{height:number}) => (statusBarHeight = data.height));
+  }
 }
 
 function getAspectRatio() {
