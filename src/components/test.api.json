@@ -72,7 +72,7 @@
   ],
   "docs": {
     "hero": {
-      "description": "A wrapper for Text component with extra functionality like modifiers support",
+      "description": "A wrapper for Text component with extra functionality like modifiers sup",
       "content": [
         {
           "value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true",
