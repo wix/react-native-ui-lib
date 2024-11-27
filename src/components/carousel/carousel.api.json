@@ -177,7 +177,7 @@
   "docs": {
     "hero": {
       "title": "Carousel",
-      "description": "The Carousel component allows users to navigate through a series of content in a linear way by swiping.\n\nUse the Carousel in these cases:\n* Focus on one item at a time: When you have a large set of items but want the user to focus on one at a time.\n* Indicate more content: When you want to subtly hint that additional items are available beyond what is currently visible.\n* Save space: When displaying all items at once isn't practical due to limited space.\n\nAim to prioritize carousel items, so that the ones of most interest to users are shown first. ",
+      "description": "The Carousel component allows users to navigate through a series of content in a linear way by swiping.",
       "type": "hero",
       "layout": "horizontal",
       "content": [
@@ -191,20 +191,30 @@
         "title": "Overview",
         "sections": [
           {
+            "type": "section",
+            "title": "Usage",
+            "description": "Carousels are useful when you want users to focus on one item at a time, especially with large content sets. They can hint at more content and save space by showing items without cluttering the layout.\nIt's best to arrange items so the most important ones appear first, making them easy for users to find.",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Carousel/carousel_overview_usage.png"
+              }
+            ]
+          },
+          {
             "type": "list",
             "items": [
               {
-                "title": "Cards (default)",
-                "description": "Width can change according to the content- showing minimum S7 ‘hint’ of the next/previous item.\n\nWithin a single carousel, all cards should have the same width. However, card widths can vary between different carousels.",
+                "title": "Cards",
+                "description": "Card widths can adjust based on their content, keeping at least an S7-sized \"hint\" of the next or previous item visible.\nAll cards in a single carousel should have the same width, but widths can vary between carousels.",
                 "content": [
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Carousel/carousel_overview_cards.png"
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Carousel/carousel_overview_types_card.png"
                   }
                 ]
               },
               {
                 "title": "Gallery",
-                "description": "Item Width: Full width.\nItem Height: Adjusts dynamically based on the content. \nSpacing: No spacing between items.\n\nCounter: a counter can be displayed to indicate the current slide number and the total number of slides.\nUpon swiping, the counter remains in place.",
+                "description": "Item Width: Full width.\nItem Height: Adjusts dynamically based on the content.  \nSpacing: No spacing between items.  \n\nCounter: a counter can be displayed to indicate the current slide number and the total number of slides. Upon swiping, the counter remains in place.",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Carousel/carousel_overview_gallery.png"
@@ -213,7 +223,7 @@
               },
               {
                 "title": "Custom Content",
-                "description": "You can use the Carousel with custom content. (e.g. picking a template for an email campaign)\n\nThe spacing between the items of the carousel can be customized.",
+                "description": "You can use the Carousel with custom content. The spacing between the items of the carousel can be customized.",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Carousel/carousel_overview_customContent.png"
