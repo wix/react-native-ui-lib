@@ -75,8 +75,11 @@
       "description": "A wrapper for Text component with extra functionality like modifiers support",
       "content": [
         {
-          "value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true",
-          "background": "pink"
+          "props": {
+            "stringProp": "yes",
+            "booleanProp": true,
+            "numberProp": 1
+          }
         }
       ],
       "title": "Tests",
