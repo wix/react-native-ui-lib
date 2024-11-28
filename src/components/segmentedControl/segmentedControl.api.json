@@ -94,6 +94,11 @@
       "name": "labelProps",
       "type": "TextProps",
       "description": "Pass props for the SegmentedControl label"
+    },
+    {
+      "name":"preset",
+      "type": "SegmentedControlPreset",
+      "description": "Preset of the SegmentedControl [default, form]"
     }
   ],
   "snippet": [
