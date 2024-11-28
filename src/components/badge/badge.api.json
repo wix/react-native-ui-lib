@@ -97,7 +97,12 @@
       "title": "Badge",
       "description": "Badge is a global component used for pimples, numeric notifications and icon badges. Badge indicates new threads in the child view and creates a “trail” user can follow. \nUse a Pimple Badge to indicate a notification or new activity of an item (e.g. new activity inside a group) or a status (online, unread).\n\nBadges usually appear on or near other components like Icons, Avatars, Chips and Lists.",
       "type": "hero",
-      "layout": "horizontal"
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_cover.png"
+        }
+      ]
     },
     "tabs": [
       {
@@ -111,16 +116,36 @@
             ],
             "items": [
               {
-                "title": "Counter"
+                "title": "Counter",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_types_counter.png"
+                  }
+                ]
               },
               {
-                "title": "Text"
+                "title": "Text",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_types_text.png"
+                  }
+                ]
               },
               {
-                "title": "Pimple"
+                "title": "Pimple",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_types_pimple.png"
+                  }
+                ]
               },
               {
-                "title": "Icon"
+                "title": "Icon",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_types_icon.png"
+                  }
+                ]
               }
             ],
             "title": "Types"
@@ -134,10 +159,26 @@
             ],
             "items": [
               {
-                "title": "Large"
+                "title": "Large",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_size_counter_large.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_size_pimple_large.png"
+                  }
+                ]
               },
               {
-                "title": "Small"
+                "title": "Small",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_size_counter_small.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_size_pimple_small.png"
+                  }
+                ]
               }
             ],
             "title": "Size"
@@ -152,19 +193,51 @@
             "items": [
               {
                 "title": "Red",
-                "description": "Counter Badge"
+                "description": "Used for notifications or new items. ",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_counter_red.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_pimple_red.png"
+                  }
+                ]
               },
               {
                 "title": "Green",
-                "description": "Used for live visitors or an “online” indication. "
+                "description": "Used for live visitors or an “online” indication. ",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_counter_green.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_pimple_green.png"
+                  }
+                ]
               },
               {
                 "title": "Blue",
-                "description": "Used for chat messages."
+                "description": "Used for chat messages.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_counter_blue.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_pimple_blue.png"
+                  }
+                ]
               },
               {
                 "title": "Grey",
-                "description": "Used for passive counters."
+                "description": "Used for passive counters.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_counter_grey.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_pimple_grey.png"
+                  }
+                ]
               }
             ],
             "title": "Style"
@@ -178,7 +251,12 @@
             "items": [
               {
                 "title": "Icon",
-                "description": ""
+                "description": "Icon can be added as an accessory to counter badge, or cover the entire badge",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_accessory_icon.png"
+                  }
+                ]
               }
             ],
             "title": "Accessories"
@@ -188,10 +266,21 @@
             "items": [
               {
                 "title": "Badge size recommendations",
-                "description": "On Icon: Large Pimple or Small Badge\nOn Thumbnail: Large Badge\nOn Avatar: Avatar 3XSmall, XXSmall - Pimple Small Avatar XSmall, Small, Medium - Pimple Large Avatar Large, XLarge - Pimple 14x14"
+                "description": "On Icon: Large Pimple or Small Badge\nOn Thumbnail: Large Badge\nOn Avatar: Avatar 3XSmall, XXSmall - Pimple Small Avatar XSmall, Small, Medium - Pimple Large Avatar Large, XLarge - Pimple 14x14",
+                "content": [
+                  {
+                    "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Docs-Assets?node-id=487-40121&embed-host=share"
+                  }
+                ]
               },
               {
-                "title": "Size"
+                "title": "Size",
+                "description": "Badge basic and minimum shape is a circle. Badge expands horizontally according to value width maintaining fixed padding. ",
+                "content": [
+                  {
+                    "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Docs-Assets?node-id=487-40267&embed-host=share"
+                  }
+                ]
               }
             ],
             "title": "Spec",
