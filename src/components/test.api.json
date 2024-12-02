@@ -102,7 +102,7 @@
               {
                 "component": "Button",
                 "props": {
-                  "label": "This is a button"
+                  "label": "This is a Button"
                 }
               },
               {
