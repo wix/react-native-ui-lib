@@ -95,20 +95,20 @@
               {
                 "component": "Text",
                 "props": {
-                  "children": "\"This is a Text\""
+                  "children": "This is a Text"
                 },
                 "background": "yellow"
               },
               {
                 "component": "Button",
                 "props": {
-                  "label": "\"This is a button\""
+                  "label": "This is a button"
                 }
               },
               {
                 "component": "Chip",
                 "props": {
-                  "label": "\"This is a Chip\""
+                  "label": "This is a Chip"
                 }
               }
             ]

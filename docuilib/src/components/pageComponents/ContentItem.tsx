@@ -15,7 +15,7 @@ const ComponentItem = (props: ComponentItemProps) => {
     if (typeof propValue === 'object') {
       return `${acc}${key}={${JSON.stringify(propValue)}} `;
     }
-    return `${acc}${key}={${propValue}} `;
+    return `${acc}${key}={"${propValue}"} `;
   }, '');
 
   const code = isComponentExists ? `<${componentName} ${propString} />` : '<Text>Component Not Found</Text>';
