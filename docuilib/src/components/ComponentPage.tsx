@@ -79,6 +79,7 @@ export default function ComponentPage({component}) {
         // title: name,
         layout: 'horizontal',
         ...hero,
+        title: component.name,
         type: 'hero'
       };
 

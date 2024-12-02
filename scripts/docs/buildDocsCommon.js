@@ -49,9 +49,18 @@ function resetDocsDir() {
   fs.mkdirSync(COMPONENTS_DOCS_DIR, {recursive: true});
 }
 
+function isCompoundComponent(componentName) {
+  return componentName.includes('.');
+}
+
+function getParentComponent(componentName, components) {
+  const parentComponentName = componentName.split('.')[0];
+  return components.find(c => c.name === parentComponentName);
+}
+
 function processComponents(components) {
   /** Break into compound components (TabController.TabPage) and parent components (TabController) */
-  const compoundComponents = components.filter(c => c.name.includes('.'));
+  const compoundComponents = components.filter(c => isCompoundComponent(c.name));
   const parentComponents = _.flow(components => _.map(components, c => c.name.split('.')[0]),
     _.uniq)(compoundComponents);
 
@@ -59,6 +68,11 @@ function processComponents(components) {
     const [componentName, componentParentName] = getComponentNameParts(component.name);
     const isParentComponent = parentComponents.includes(componentName);
     const isIncubatorComponent = component.category === 'incubator';
+
+    if (isCompoundComponent(component.name)) {
+      const parentComponent = getParentComponent(component.name, components);
+      component.docs = parentComponent.docs;
+    }
 
     if (!VALID_CATEGORIES.includes(component.category)) {
       console.error(`${componentName} has invalid category "${component.category}"`);
