@@ -223,7 +223,7 @@
               },
               {
                 "title": "Custom Content",
-                "description": "You can use the Carousel with custom content. The spacing between the items of the carousel can be customized.",
+                "description": "You can use the Carousel with custom content.The spacing between the items of the carousel can be customized.",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Carousel/carousel_overview_customContent.png"

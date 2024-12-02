@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import {LiveProvider, LiveEditor} from 'react-live';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 import {View, Colors} from 'react-native-ui-lib/core';
 import ReactLiveScope from '../theme/ReactLiveScope';
 
@@ -12,7 +13,6 @@ export default function UILivePreview({code: codeProp}) {
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const {siteConfig} = useDocusaurusContext();
   const iframeRef = useRef(null);
-  const iframeSource = `${window.location.origin}${siteConfig?.baseUrl}livePreview`;
 
   useEffect(() => {
     if (iframeLoaded) {
@@ -30,27 +30,35 @@ export default function UILivePreview({code: codeProp}) {
   }, []);
 
   return (
-    <View row gap-s2 style={styles.liveCodeWrapper}>
-      <LiveProvider code={code} scope={ReactLiveScope}>
-        <View flex style={styles.editorWrapper}>
-          <LiveEditor
-            className="font-mono"
-            onChange={setCode}
-            //@ts-ignore
-            style={liveEditorStyle}
-          />
-        </View>
-        <View bg-$backgroundDefault margin-s2 style={styles.iframeWrapper}>
-          <iframe
-            ref={iframeRef}
-            style={styles.iframe}
-            src={iframeSource}
-            title="Simulator"
-            onLoad={() => setIframeLoaded(true)}
-          />
-        </View>
-      </LiveProvider>
-    </View>
+    <BrowserOnly>
+      {() => {
+        const iframeSource = `${window.location.origin}${siteConfig?.baseUrl}livePreview`;
+
+        return (
+          <View row gap-s2 style={styles.liveCodeWrapper}>
+            <LiveProvider code={code} scope={ReactLiveScope}>
+              <View flex style={styles.editorWrapper}>
+                <LiveEditor
+                  className="font-mono"
+                  onChange={setCode}
+                  //@ts-ignore
+                  style={liveEditorStyle}
+                />
+              </View>
+              <View bg-$backgroundDefault margin-s2 style={styles.iframeWrapper}>
+                <iframe
+                  ref={iframeRef}
+                  style={styles.iframe}
+                  src={iframeSource}
+                  title="Simulator"
+                  onLoad={() => setIframeLoaded(true)}
+                />
+              </View>
+            </LiveProvider>
+          </View>
+        );
+      }}
+    </BrowserOnly>
   );
 }
 
