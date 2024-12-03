@@ -11,15 +11,17 @@ const ComponentItem = (props: ComponentItemProps) => {
   const {componentName, props: componentProps} = props;
   const isComponentExists = !!ReactLiveScope[componentName];
   const propString = Object.keys(componentProps).reduce((acc, key) => {
-    const propValue = componentProps[key];
+    let propValue = componentProps[key];
     switch (typeof propValue) {
       case 'object':
-        return `${acc}${key}={${JSON.stringify(propValue)}} `;
+        propValue = JSON.stringify(propValue);
+        break;
       case 'string':
-        return `${acc}${key}="${propValue}" `;
+        propValue = `"${propValue}"`;
+        break;
       default:
-        return `${acc}${key}={${propValue}} `;
     }
+    return `${acc}${key}={${propValue}} `;
   }, '');
 
   const code = isComponentExists ? `<${componentName} ${propString} />` : '<Text>Component Not Found</Text>';
