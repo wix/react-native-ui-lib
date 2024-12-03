@@ -6,17 +6,22 @@ import ReactLiveScope from '../../theme/ReactLiveScope';
 type ComponentItemProps = {
   componentName: string;
   props: Record<string, unknown>;
-}
+};
 const ComponentItem = (props: ComponentItemProps) => {
   const {componentName, props: componentProps} = props;
   const isComponentExists = !!ReactLiveScope[componentName];
   const propString = Object.keys(componentProps).reduce((acc, key) => {
-    const propValue = componentProps[key];
-    if (typeof propValue === 'object') {
-      return `${acc}${key}={${JSON.stringify(propValue)}} `;
+    let propValue = componentProps[key];
+    switch (typeof propValue) {
+      case 'object':
+        propValue = JSON.stringify(propValue);
+        break;
+      case 'string':
+        propValue = `"${propValue}"`;
+        break;
+      default:
     }
-    const value = typeof propValue === 'string' ? `"${propValue}"` : propValue;
-    return `${acc}${key}={${value}} `;
+    return `${acc}${key}={${propValue}} `;
   }, '');
 
   const code = isComponentExists ? `<${componentName} ${propString} />` : '<Text>Component Not Found</Text>';
@@ -32,13 +37,12 @@ type Item = {
   component?: string;
   props?: any;
   value?: any;
-}
+};
 type ContentItemProps = {
   item: Item;
   componentName: string;
-}
+};
 export const ContentItem = ({item, componentName}: ContentItemProps) => {
-
   const getFigmaEmbed = item => {
     const value = item.value;
     const height = item.height || 450;
