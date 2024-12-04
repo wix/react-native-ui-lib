@@ -119,7 +119,22 @@
                 "title": "Counter",
                 "content": [
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_types_counter.png"
+                    "props": [
+                      {
+                        "label": "1"
+                      },
+                      {
+                        "label": "1002",
+                        "labelFormatterLimit": 3
+                      },
+                      {
+                        "label": "102",
+                        "labelFormatterLimit": 2,
+                        "icon": {
+                          "uri": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/icons/icon%20examples%20for%20docs/notificationsFillSmall.png"
+                        }
+                      }
+                    ]
                   }
                 ]
               },
@@ -127,7 +142,9 @@
                 "title": "Text",
                 "content": [
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_types_text.png"
+                    "props": {
+                      "label": "New"
+                    }
                   }
                 ]
               },
@@ -135,7 +152,9 @@
                 "title": "Pimple",
                 "content": [
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_types_pimple.png"
+                    "props": {
+                      "label": ""
+                    }
                   }
                 ]
               },
@@ -143,7 +162,11 @@
                 "title": "Icon",
                 "content": [
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_types_icon.png"
+                    "props": {
+                      "icon": {
+                        "uri": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/icons/icon%20examples%20for%20docs/socialFacebook.png"
+                      }
+                    }
                   }
                 ]
               }
@@ -154,7 +177,7 @@
             "type": "table",
             "columns": [
               "Property",
-              "Counter Badge",
+              "Counter",
               "Pimple"
             ],
             "items": [
@@ -162,10 +185,14 @@
                 "title": "Large",
                 "content": [
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_size_counter_large.png"
+                    "props": {
+                      "label": "2"
+                    }
                   },
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_size_pimple_large.png"
+                    "props": {
+                      "label": "(undefined)"
+                    }
                   }
                 ]
               },
@@ -173,10 +200,16 @@
                 "title": "Small",
                 "content": [
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_size_counter_small.png"
+                    "props": {
+                      "label": "2",
+                      "backgroundColor": "#00A87E"
+                    }
                   },
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_size_pimple_small.png"
+                    "props": {
+                      "label": "",
+                      "backgroundColor": "#00A87E"
+                    }
                   }
                 ]
               }
@@ -199,7 +232,9 @@
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_counter_red.png"
                   },
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_pimple_red.png"
+                    "props": {
+                      "label": "(undefined)"
+                    }
                   }
                 ]
               },
@@ -211,7 +246,10 @@
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_counter_green.png"
                   },
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_pimple_green.png"
+                    "props": {
+                      "label": "(undefined)",
+                      "backgroundColor": "#00A87E"
+                    }
                   }
                 ]
               },
@@ -223,7 +261,10 @@
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_counter_blue.png"
                   },
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_pimple_blue.png"
+                    "props": {
+                      "label": "(undefined)",
+                      "backgroundColor": "#116DFF"
+                    }
                   }
                 ]
               },
@@ -235,7 +276,10 @@
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_counter_grey.png"
                   },
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_pimple_grey.png"
+                    "props": {
+                      "label": "(undefined)",
+                      "backgroundColor": "#A6ACB1"
+                    }
                   }
                 ]
               }
