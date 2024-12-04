@@ -71,7 +71,9 @@ function processComponents(components) {
 
     if (isCompoundComponent(component.name)) {
       const parentComponent = getParentComponent(component.name, components);
-      component.docs = parentComponent.docs;
+      if (parentComponent) {
+        component.docs = parentComponent.docs;
+      }
     }
 
     if (!VALID_CATEGORIES.includes(component.category)) {

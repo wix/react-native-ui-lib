@@ -73,7 +73,6 @@ export default function ComponentPage({component}) {
     const hero = component.docs?.hero;
 
     if (hero) {
-      // TODO: align hero's image to page title
       // const name = component.category === 'incubator' ? `Incubator.${component.name}` : component.name;
       const section = {
         // title: name,
