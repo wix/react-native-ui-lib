@@ -75,7 +75,6 @@ describe('Sanity checks', () => {
     expect(dismissFn).not.toHaveBeenCalled();
     jest.advanceTimersByTime(threeSeconds / 2);
     expect(dismissFn).toHaveBeenCalledTimes(1);
-    jest.useRealTimers();
   });
 
   it('should not dismiss even after 7 sec when autoDismissed is not passed', async () => {
