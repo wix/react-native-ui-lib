@@ -39,7 +39,7 @@
   ],
   "docs": {
     "hero": {
-      "title": "TabController.TabBar",
+      "title": "TabController",
       "description": "Tabs organize and navigate between related content groups at the same hierarchy level, helping users easily find different information types.\n\nA Tab Bar can start with 2 tabs and accommodate more, with horizontal scrolling if the tabs exceed the screen width.",
       "type": "hero",
       "layout": "horizontal",
