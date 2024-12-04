@@ -3,7 +3,7 @@
 // TODO: consider deprecating renderCustomModal prop
 import _ from 'lodash';
 import React, {useMemo, useState, useRef, useCallback, useEffect} from 'react';
-import {LayoutChangeEvent} from 'react-native';
+import {DimensionValue, LayoutChangeEvent} from 'react-native';
 import {useThemeProps} from 'hooks';
 import {Constants} from '../../commons/new';
 import ExpandableOverlay, {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
@@ -30,11 +30,11 @@ import {
   PickerItemsListProps,
   PickerMethods
 } from './types';
+import {DialogProps} from '../../incubator/Dialog';
 
-const DIALOG_PROPS = {
+const DEFAULT_DIALOG_PROPS: DialogProps = {
   bottom: true,
-  width: '100%',
-  height: 250
+  width: '100%' as DimensionValue
 };
 
 type PickerStatics = {
@@ -278,7 +278,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         <ExpandableOverlay
           ref={pickerExpandable}
           useDialog={useDialog || useWheelPicker}
-          dialogProps={DIALOG_PROPS}
+          dialogProps={DEFAULT_DIALOG_PROPS}
+          migrateDialog
           expandableContent={expandableModalContent}
           renderCustomOverlay={renderOverlay ? _renderOverlay : undefined}
           onPress={onPress}

@@ -8,7 +8,7 @@ import React, {
   forwardRef,
   ForwardedRef
 } from 'react';
-import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
+import {DimensionValue, StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import {DateTimePickerPackage as RNDateTimePicker} from '../../optionalDependencies';
 import {useDidUpdate} from '../../hooks';
 import {Colors} from '../../style';
@@ -170,7 +170,7 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
 
   const _dialogProps = useMemo(() => {
     return {
-      width: '100%',
+      width: '100%' as DimensionValue,
       height: null,
       bottom: true,
       centerH: true,

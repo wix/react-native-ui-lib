@@ -42,7 +42,12 @@ expoDemo/android/gradlew.bat
 #
 node_modules/
 npm-debug.log
+
+# yarn
 yarn-error.log
+**/.yarn/cache
+**/.yarn/install-state.gz
+**/.yarn/yarn.build.json
 
 .vscode
 
@@ -66,6 +71,7 @@ dist
 dist-ts
 package-lock.json
 docs/components/**
+!scripts/build
 
 # Ruby / CocoaPods
 /ios/Pods/
@@ -77,3 +83,9 @@ expoDemo/ios/Pods
 
 # Temporary files created by Metro to check the health of the file watcher
 .metro-health-check*
+
+
+# testing
+/coverage
+
+

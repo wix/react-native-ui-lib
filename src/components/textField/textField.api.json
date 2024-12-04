@@ -10,21 +10,61 @@
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/FloatingPlaceholder.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/Validation.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/ColorByState.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/CharCounter.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/Hint.gif?raw=true"
   ],
   "props": [
-    {"name": "color", "type": "ColorType", "description": "Input color"},
-    {"name": "label", "type": "string", "description": "Field label"},
+    {
+      "name": "color",
+      "type": "ColorType",
+      "description": "Input color"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "description": "Field label"
+    },
     {
       "name": "labelColor",
       "type": "ColorType",
       "description": "Field label color. Either a string or color by state map \\(\\{default, focus, error, disabled, readonly\\})\\"
     },
-    {"name": "labelStyle", "type": "TextStyle", "description": "Custom style for the field label"},
-    {"name": "labelProps", "type": "TextProps", "description": "Pass extra props to the label Text element"},
-    {"name": "hint", "type": "string", "description": "A hint text to display when focusing the field"},
-    {"name": "helperText", "type": "string", "description": "Text to display under the input"},
-    {"name": "placeholder", "type": "string", "description": "The placeholder for the field"},
-    {"name": "placeholderTextColor", "type": "ColorType", "description": "Placeholder text color"},
-    {"name": "floatingPlaceholder", "type": "boolean", "description": "Pass to add floating placeholder support"},
-    {"name": "floatingPlaceholderColor", "type": "ColorType", "description": "The floating placeholder color"},
+    {
+      "name": "labelStyle",
+      "type": "TextStyle",
+      "description": "Custom style for the field label"
+    },
+    {
+      "name": "labelProps",
+      "type": "TextProps",
+      "description": "Pass extra props to the label Text element"
+    },
+    {
+      "name": "hint",
+      "type": "string",
+      "description": "A hint text to display when focusing the field"
+    },
+    {
+      "name": "helperText",
+      "type": "string",
+      "description": "Text to display under the input"
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "description": "The placeholder for the field"
+    },
+    {
+      "name": "placeholderTextColor",
+      "type": "ColorType",
+      "description": "Placeholder text color"
+    },
+    {
+      "name": "floatingPlaceholder",
+      "type": "boolean",
+      "description": "Pass to add floating placeholder support"
+    },
+    {
+      "name": "floatingPlaceholderColor",
+      "type": "ColorType",
+      "description": "The floating placeholder color"
+    },
     {
       "name": "floatingPlaceholderStyle",
       "type": "TextStyle",
@@ -35,10 +75,26 @@
       "type": "boolean",
       "description": "Should placeholder float on focus or when start typing"
     },
-    {"name": "leadingAccessory", "type": "ReactElement", "description": "Pass to render a leading element"},
-    {"name": "trailingAccessory", "type": "ReactElement", "description": "Pass to render a trailing element"},
-    {"name": "topTrailingAccessory", "type": "ReactElement", "description": "Pass to render a top trailing element"},
-    {"name": "enableErrors", "type": "boolean", "description": "Should support showing validation error message"},
+    {
+      "name": "leadingAccessory",
+      "type": "ReactElement",
+      "description": "Pass to render a leading element"
+    },
+    {
+      "name": "trailingAccessory",
+      "type": "ReactElement",
+      "description": "Pass to render a trailing element"
+    },
+    {
+      "name": "topTrailingAccessory",
+      "type": "ReactElement",
+      "description": "Pass to render a top trailing element"
+    },
+    {
+      "name": "enableErrors",
+      "type": "boolean",
+      "description": "Should support showing validation error message"
+    },
     {
       "name": "validate",
       "type": "Validator | Validator[]",
@@ -49,22 +105,47 @@
       "type": "string | string[]",
       "description": "The validation message to display when field is invalid (depends on validate)"
     },
-    {"name": "validationIcon", "type": "IconProps", "description": "Icon left to the validation message"},
+    {
+      "name": "validationIcon",
+      "type": "IconProps",
+      "description": "Icon left to the validation message"
+    },
     {
       "name": "validationMessagePosition",
       "type": "ValidationMessagePosition",
       "description": "The position of the validation message (top/bottom)"
     },
-    {"name": "validationMessageStyle", "type": "TextStyle", "description": "Custom style for the validation message"},
+    {
+      "name": "validationMessageStyle",
+      "type": "TextStyle",
+      "description": "Custom style for the validation message"
+    },
     {
       "name": "retainValidationSpace",
       "type": "boolean",
       "description": "Keep the validation space even if there is no validation message",
       "default": "true"
     },
-    {"name": "validateOnStart", "type": "boolean", "description": "Should validate when the TextField mounts"},
-    {"name": "validateOnChange", "type": "boolean", "description": "Should validate when the TextField value changes"},
-    {"name": "validateOnBlur", "type": "boolean", "description": "Should validate when losing focus of TextField"},
+    {
+      "name": "validateOnStart",
+      "type": "boolean",
+      "description": "Should validate when the TextField mounts"
+    },
+    {
+      "name": "validateOnChange",
+      "type": "boolean",
+      "description": "Should validate when the TextField value changes"
+    },
+    {
+      "name": "validateOnBlur",
+      "type": "boolean",
+      "description": "Should validate when losing focus of TextField"
+    },
+    {
+      "name": "validationDebounceTime",
+      "type": "number",
+      "description": "Add a debounce timeout when sending validateOnChange"
+    },
     {
       "name": "onChangeValidity",
       "type": "(isValid: boolean) => void",
@@ -85,7 +166,11 @@
       "type": "Omit<ViewProps, 'style'>",
       "description": "Container props of the whole component"
     },
-    {"name": "containerStyle", "type": "ViewStyle", "description": "Container style of the whole component"},
+    {
+      "name": "containerStyle",
+      "type": "ViewStyle",
+      "description": "Container style of the whole component"
+    },
     {
       "name": "preset",
       "type": "Presets | `$\\{Presets\\}` | null | string",
@@ -96,7 +181,11 @@
       "type": "boolean",
       "description": "Should show a character counter (works only with maxLength)"
     },
-    {"name": "charCounterStyle", "type": "TextStyle", "description": "Pass custom style to character counter text"},
+    {
+      "name": "charCounterStyle",
+      "type": "TextStyle",
+      "description": "Pass custom style to character counter text"
+    },
     {
       "name": "showClearButton",
       "type": "boolean",
@@ -127,7 +216,11 @@
       "type": "boolean",
       "description": "A UI preset for read only state"
     },
-    {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag"},
+    {
+      "name": "recorderTag",
+      "type": "'mask' | 'unmask'",
+      "description": "Recorder Tag"
+    },
     {
       "name": "showMandatoryIndication",
       "type": "boolean",
@@ -152,5 +245,289 @@
     "  showCharCounter$8",
     "  maxLength={30$9}",
     "/>"
-  ]
+  ],
+  "docs": {
+    "hero": {
+      "title": "TextField",
+      "description": "Text fields allows the user to write or edit text.",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_hero.png"
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "section",
+            "title": "Usage Examples",
+            "description": "Text fields are used primarily in forms to allow users to enter text. Text fields are normally found within a form but can also be part of a settings screen or an interactive flow.",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_section_01.png"
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "layout": "horizontal",
+            "title": "Structure",
+            "description": "1. **Label**\nDescribes the information that the user needs to enter. The label should be short and clear, preferably a noun.  \n2. **Placeholder** (optional)  \nPlaceholders can serve as an assistive text that can provide additional aid or context to the user. Don’t use it to display critical information - as it disappears when the users starts typing.  \n3. **Helper text** (optional)  \nUse this to provide a hint or a disclaimer about the content of the field. For example, “Passwords must contain at least 8 characters”  \n4. **Clear button**  \nLets the user to easily clear the input value. Appears only when value was typed.  \n5. **Character count**  \nShould be used if there is a character limit. Displays the amount of typed characters out of total allowed. If the limit is reached, the counter will become red and further typing is disabled.  \n6. **Validation message**  \nDemonstrates that a required input is missing something or the entry was invalid.",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_section_03.png"
+              }
+            ]
+          },
+          {
+            "type": "table",
+            "columns": ["Property", "Component", "New Column"],
+            "items": [
+              {
+                "title": "Inactive (default)",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_inactive.png"
+                  }
+                ]
+              },
+              {
+                "title": "Focused",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_focused.png"
+                  }
+                ]
+              },
+              {
+                "title": "Typing",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_typing.png"
+                  }
+                ]
+              },
+              {
+                "title": "Inactive Full",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_inactiveFull.png"
+                  }
+                ]
+              },
+              {
+                "title": "Validation Full",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_validationFull.png"
+                  }
+                ]
+              },
+              {
+                "title": "Warning",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_warning.png"
+                  }
+                ]
+              },
+              {
+                "title": "Success Validation",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_success.png"
+                  }
+                ]
+              },
+              {
+                "title": "Disabled",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_disabled.png"
+                  }
+                ]
+              },
+              {
+                "title": "Read Only",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_readOnly.png"
+                  }
+                ]
+              }
+            ],
+            "title": "States",
+            "description": "Description"
+          },
+          {
+            "type": "table",
+            "columns": ["Property", "Component"],
+            "items": [
+              {
+                "title": "Outline (Default)",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_outline.png"
+                  }
+                ]
+              },
+              {
+                "title": "Underline",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_underline.png"
+                  }
+                ]
+              }
+            ],
+            "title": "Styles",
+            "description": "Description"
+          },
+          {
+            "type": "table",
+            "columns": ["Property", "Component"],
+            "items": [
+              {
+                "title": "Leading Accessory (Prefix)",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_leading.png"
+                  }
+                ]
+              },
+              {
+                "title": "Trailing Accessory (Suffix)",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_trailing.png"
+                  }
+                ]
+              },
+              {
+                "title": "Top Trailing Accessory",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_trailingTop.png"
+                  }
+                ]
+              },
+              {
+                "title": "Characters Limit",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_charLimit.png"
+                  }
+                ]
+              },
+              {
+                "title": "Delete Value Icon",
+                "description": "Description",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_deleteIcon.png"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "layout": "horizontal",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_section_spec.png"
+              }
+            ],
+            "title": "Spec",
+            "description": "**Label**\nbodySmall, $textNeutralHeavy  \n**Placeholder**\nbody, $textNeutralLight  \n**Value**  \nbody, $textDefault  \n**Helper Text**  \nsubtext, $textNeutralHeavy  \n**Character Count**  \nbodySmall, $textNeutralHeavy  \n**Validation message**  \nMessage - bodySmall, $textDangerLight\nIcon - exclamationFillSmall, $iconDangerLight  \n**Prefix & Suffix**  \nbody, $textNeutral  \n**Clear Button**  \nxFlat, $textNeutralLight  \n**Warning Message**  \nMessage - bodySmall, $textDefault\nIcon - exclamationFillSmall, $iconDefault  \n**Validation Success**  \nIcon - checkmarkFlatSmall, $iconSuccess  \n**Outline - Default/unfocused**  \n1p, $outlineNeutral  \n**Outline - Focused, typing**  \n1p, $outlinePrimary  \n**Outline - Validation**  \n1p, $outlineDanger  \n**Outline - Disabled**  \n1p, $outlineDisabled  \n**Outline - Read only**  \nfill background- $backgroundNeutralLightDescription"
+          }
+        ]
+      },
+      {
+        "title": "UX Guidelines",
+        "sections": [
+          {
+            "type": "section",
+            "layout": "horizontal",
+            "title": "Props Usage",
+            "description": "Description"
+          },
+          {
+            "type": "section",
+            "title": "Leading Accessory (Prefix)",
+            "description": "Use a leading accessory to display pre-defined value before users input. For example presenting a currency before an entered price.",
+            "layout": "horizontal",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_uxguidelines_section_leading.png"
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "layout": "horizontal",
+            "title": "Trailing Accessory (Suffix) - Text",
+            "description": "Use text as the trailing accessory to indicate the type of value represented by the input. For instance: \"Kg.\", \"Lbs.\", \".com\".",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_uxguidelines_section_trailing.png"
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "layout": "horizontal",
+            "title": "Trailing Accessory (Suffix) - Icon",
+            "description": "Use an icon as the trailing accessory to help users understand or access extra features related to the input.The icon can be placed either in line with the label (top trailing accessory), or as part of the input field.\n\nInclude an information icon for users to access additional details about the required input. When clicked, the icon can activate a Hint component for brief information or a Dialog for more detailed explanations.\n\nIcon suffix can be used to toggle between 2 states, e.g. hiding/showing the input value. Or to indicate a success validation state.",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_uxguidelines_section_trailingIcon.png"
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "title": "Characters Limit",
+            "description": "Display character counter if there is a character limit. If the limit is reached, the counter will become red and more typing is disabled. ",
+            "layout": "horizontal",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_uxguidelines_section_charLimit.png"
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "layout": "horizontal",
+            "title": "Delete Value Icon",
+            "description": "Delete icon appears when there’s a value in the field. Pressing the icon should delete the value and enter focused state, to allow the user to enter a new value. If needed, a field suffix icon can be displayed with the delete value icon.",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_uxguidelines_section_delete.png"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }

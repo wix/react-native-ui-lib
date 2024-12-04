@@ -1,5 +1,5 @@
 import {PropsWithChildren, ReactElement} from 'react';
-import {StyleProp, TextStyle, ViewStyle} from 'react-native';
+import {type DimensionValue, type StyleProp, type TextStyle, type ViewStyle} from 'react-native';
 import {AlignmentModifiers} from '../../commons/modifiers';
 import {DialogProps as DialogPropsOld} from '../../components/dialog';
 import {ButtonProps} from '../../components/button';
@@ -101,12 +101,11 @@ export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSa
   /**
    * The dialog width.
    */
-  width?: string | number;
+  width?: DimensionValue;
   /**
    * The dialog height.
    */
-  height?: string | number;
-
+  height?: DimensionValue;
   /**
    * Callback that is called after the dialog's dismiss (after the animation has ended).
    */

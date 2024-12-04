@@ -8,6 +8,7 @@ import Button from '../button';
 import ColorPalette, {ColorPaletteProps} from '../colorPalette';
 import {SWATCH_MARGIN, SWATCH_SIZE} from '../colorSwatch';
 import ColorPickerDialog, {ColorPickerDialogProps} from './ColorPickerDialog';
+import type {ComponentStatics} from '../../typings/common';
 
 interface Props extends ColorPickerDialogProps, Pick<ColorPaletteProps, 'onValueChange'> {
   /**
@@ -117,8 +118,9 @@ const ColorPicker = (props: Props) => {
 };
 
 ColorPicker.displayName = 'ColorPicker';
+ColorPicker.Dialog = ColorPickerDialog;
 
-export default asBaseComponent<Props>(ColorPicker);
+export default asBaseComponent<Props, ComponentStatics<typeof ColorPicker>>(ColorPicker);
 
 const plusButtonContainerWidth = SWATCH_SIZE + 20 + 12;
 const plusButtonContainerHeight = 92 - 2 * SWATCH_MARGIN;

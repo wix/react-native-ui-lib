@@ -4,7 +4,8 @@ import {
   NativeModules,
   I18nManager,
   AccessibilityInfo,
-  AccessibilityChangeEvent
+  AccessibilityChangeEvent,
+  StatusBar
 } from 'react-native';
 
 export enum orientations {
@@ -34,14 +35,14 @@ let breakpoints: Breakpoint[];
 let defaultMargin = 0;
 
 const isSubWindow = windowWidth < screenWidth;
-//@ts-ignore
-isTablet = Platform.isPad || (getAspectRatio() < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
+isTablet =
+  (Platform.OS === 'ios' && Platform.isPad) || (getAspectRatio() < 1.6 && Math.max(screenWidth, screenHeight) >= 900);
 
 function setStatusBarHeight() {
   const {StatusBarManager} = NativeModules;
-  statusBarHeight = StatusBarManager?.HEIGHT || 0; // So there will be a value for any case
-  
-  if (isIOS) {
+  statusBarHeight = (StatusBar.currentHeight ?? StatusBarManager?.HEIGHT) || 0;
+
+  if (isIOS && StatusBarManager) {
     // override guesstimate height with the actual height from StatusBarManager
     StatusBarManager.getHeight((data:{height:number}) => (statusBarHeight = data.height));
   }
@@ -125,7 +126,7 @@ const constants = {
     return screenHeight <= 600;
   },
   get isWideScreen() {
-    return isTablet && !isSubWindow || this.isLandscape;
+    return (isTablet && !isSubWindow) || this.isLandscape;
   },
   get screenAspectRatio() {
     return getAspectRatio();

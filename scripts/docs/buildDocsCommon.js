@@ -52,10 +52,8 @@ function resetDocsDir() {
 function processComponents(components) {
   /** Break into compound components (TabController.TabPage) and parent components (TabController) */
   const compoundComponents = components.filter(c => c.name.includes('.'));
-  const parentComponents = _.flow(
-    components => _.map(components, c => c.name.split('.')[0]),
-    _.uniq
-  )(compoundComponents);
+  const parentComponents = _.flow(components => _.map(components, c => c.name.split('.')[0]),
+    _.uniq)(compoundComponents);
 
   components.forEach(component => {
     const [componentName, componentParentName] = getComponentNameParts(component.name);
@@ -72,8 +70,9 @@ function processComponents(components) {
     if (isParentComponent) {
       content += 'sidebar_position: 1\n';
     }
+    const title = component.docs?.hero ? '""' : `${isIncubatorComponent ? 'Incubator.' : ''}${component.name}`;
     content += `id: ${component.name}\n`;
-    content += `title: ${isIncubatorComponent ? 'Incubator.' : ''}${component.name}\n`;
+    content += `title: ${title}\n`;
     content += `sidebar_label: ${componentName}\n`;
     content += '---\n\n';
 
@@ -114,6 +113,7 @@ function generateExtendsLink(extendsLink) {
 
 function buildOldDocs(component) {
   let content = '';
+  content += `import UILivePreview from '@site/src/components/UILivePreview';\n\n`;
 
   /* General Info */
   content += `${component.description}  \n`;
@@ -170,9 +170,10 @@ function buildOldDocs(component) {
   /* Snippet */
   if (component.snippet) {
     content += `### Usage\n`;
-    content += '``` jsx live\n';
-    content += component.snippet?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), '')).join('\n');
-    content += '\n```\n';
+    content += `<UILivePreview code={\`${component.snippet
+      ?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), ''))
+      .join('\n')
+      .toString()}\`}/>\n\n`;
   } else {
     console.warn(`${component.name} does not have a snippet`);
   }

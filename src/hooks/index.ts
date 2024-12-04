@@ -9,5 +9,5 @@ export {default as useScrollReached} from './useScrollReached';
 export {default as useScrollToItem} from './useScrollToItem';
 export {default as useScrollTo} from './useScrollTo';
 export {default as useThemeProps} from './useThemeProps';
+export {default as useDebounce} from './useDebounce';
 export * from './useScrollTo';
-
