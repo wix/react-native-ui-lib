@@ -58,56 +58,25 @@
         "title": "Overview",
         "sections": [
           {
-            "type": "list",
-            "items": [
+            "type": "section",
+            "title": "Overview",
+            "description": "The State screen component is composed of a visual, title, subtitle, CTA, link button, and disclaimer. Each element is optional and they all can be combined in various ways to meet different needs.\n\nState screens can occupy a full screen or a portion of it. They can be used in both modals and pushed screens.",
+            "content": [
               {
-                "title": "State Screen with illustration",
-                "description": "Suitable for success messages, empty states and \"pay-attention\" messages.",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/StateScreen/stateScreen_overview_types_illustration.png"
-                  }
-                ]
-              },
-              {
-                "title": "State Screen with Marketing Visual",
-                "description": "Suitable for FTEs and marketing messages.",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/StateScreen/stateScreen_overview_types_visual.png"
-                  }
-                ]
-              },
-              {
-                "title": "State Screen with Cover Image",
-                "description": "Suitable for FTEs and marketing messages.",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/StateScreen/stateScreen_overview_types_cover.png"
-                  }
-                ]
-              },
-              {
-                "title": "State Screen with Text Only",
-                "description": "Suitable for empty states.",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/StateScreen/stateScreen_overview_types_text.png"
-                  }
-                ]
-              },
-              {
-                "title": "Error Screen",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/StateScreen/stateScreen_overview_types_error.png"
-                  }
-                ],
-                "description": "Suitable for showcasing and explaining errors."
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/StateScreen/stateScreen_overview.png"
               }
             ],
-            "layout": "horizontal",
-            "title": "Types"
+            "layout": "horizontal"
+          },
+          {
+            "type": "section",
+            "title": "Visual Types",
+            "description": "The State Screen component can be used with or without a visual. A visual can be an illustration, marketing visual, cover image or an icon. ",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/StateScreen/stateScreen_overview_visualTypes.png"
+              }
+            ]
           },
           {
             "type": "list",
