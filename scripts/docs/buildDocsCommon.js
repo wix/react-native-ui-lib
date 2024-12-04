@@ -53,11 +53,6 @@ function isCompoundComponent(componentName) {
   return componentName.includes('.');
 }
 
-function getParentComponent(componentName, components) {
-  const parentComponentName = componentName.split('.')[0];
-  return components.find(c => c.name === parentComponentName);
-}
-
 function processComponents(components) {
   /** Break into compound components (TabController.TabPage) and parent components (TabController) */
   const compoundComponents = components.filter(c => isCompoundComponent(c.name));
@@ -68,13 +63,6 @@ function processComponents(components) {
     const [componentName, componentParentName] = getComponentNameParts(component.name);
     const isParentComponent = parentComponents.includes(componentName);
     const isIncubatorComponent = component.category === 'incubator';
-
-    if (isCompoundComponent(component.name)) {
-      const parentComponent = getParentComponent(component.name, components);
-      if (parentComponent) {
-        component.docs = parentComponent.docs;
-      }
-    }
 
     if (!VALID_CATEGORIES.includes(component.category)) {
       console.error(`${componentName} has invalid category "${component.category}"`);
