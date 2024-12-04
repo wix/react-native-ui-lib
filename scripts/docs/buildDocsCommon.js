@@ -49,9 +49,13 @@ function resetDocsDir() {
   fs.mkdirSync(COMPONENTS_DOCS_DIR, {recursive: true});
 }
 
+function isCompoundComponent(componentName) {
+  return componentName.includes('.');
+}
+
 function processComponents(components) {
   /** Break into compound components (TabController.TabPage) and parent components (TabController) */
-  const compoundComponents = components.filter(c => c.name.includes('.'));
+  const compoundComponents = components.filter(c => isCompoundComponent(c.name));
   const parentComponents = _.flow(components => _.map(components, c => c.name.split('.')[0]),
     _.uniq)(compoundComponents);
 
