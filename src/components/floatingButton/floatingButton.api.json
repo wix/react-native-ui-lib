@@ -132,7 +132,12 @@
                 "title": "Horizontal",
                 "content": [
                   {
-                    "background": "#E8ECF0"
+                    "props": {
+                      "isVisible": true,
+                      "button": {
+                        "label": "button"
+                      }
+                    }
                   }
                 ]
               },
