@@ -73,7 +73,6 @@ export default function ComponentPage({component}) {
     const hero = component.docs?.hero;
 
     if (hero) {
-      // const name = component.category === 'incubator' ? `Incubator.${component.name}` : component.name;
       const section = {
         // title: name,
         layout: 'horizontal',
