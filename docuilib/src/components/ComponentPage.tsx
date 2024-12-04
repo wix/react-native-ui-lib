@@ -74,7 +74,6 @@ export default function ComponentPage({component}) {
 
     if (hero) {
       const section = {
-        // title: name,
         layout: 'horizontal',
         ...hero,
         title: component.name,
