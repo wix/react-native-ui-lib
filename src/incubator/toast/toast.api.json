@@ -27,8 +27,8 @@
     },
     {
       "name": "autoDismiss",
-      "type": "number | boolean",
-      "description": "Time of milliseconds to automatically invoke the onDismiss callback or boolean, then the timeout will be calculated based on message length"
+      "type": "number",
+      "description": "Time of milliseconds to automatically invoke the onDismiss callback"
     },
     {
       "name": "onAnimationEnd",

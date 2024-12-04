@@ -66,10 +66,9 @@ export interface ToastProps {
    */
   swipeable?: boolean;
   /**
-   * If number is passed. number is the milliseconds to automatically invoke the onDismiss callback.
-   * If boolean is passed, a default auto dismiss time will be calculated based on the message length.
+   * number of milliseconds to automatically invoke the onDismiss callback
    */
-  autoDismiss?: number | boolean;
+  autoDismiss?: number;
   /**
    * callback for end of component animation
    */
