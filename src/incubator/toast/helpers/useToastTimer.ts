@@ -1,7 +1,13 @@
+import clamp from 'lodash/clamp';
 import {useCallback, useRef} from 'react';
 import {ToastProps} from '../types';
 
-export default ({autoDismiss, onDismiss}: Pick<ToastProps, 'autoDismiss' | 'onDismiss'>) => {
+const getDefaultAutoDismiss = (message: string) => {
+  const wordsCount = message.split(' ').length + 1;
+  return clamp((wordsCount / 2) * 1000, 3000, 7000);
+};
+
+export default ({autoDismiss, onDismiss, message}: Pick<ToastProps, 'autoDismiss' | 'onDismiss' | 'message'>) => {
   const timer = useRef<ReturnType<typeof setTimeout>>();
 
   const clearTimer = useCallback(() => {
@@ -13,7 +19,8 @@ export default ({autoDismiss, onDismiss}: Pick<ToastProps, 'autoDismiss' | 'onDi
 
   const setTimer = () => {
     if (autoDismiss && onDismiss) {
-      timer.current = setTimeout(onDismiss, autoDismiss);
+      const timeout = (autoDismiss === true) ? getDefaultAutoDismiss(message || '') : autoDismiss;
+      timer.current = setTimeout(onDismiss, timeout);
     }
   };
 
