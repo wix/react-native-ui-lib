@@ -5,11 +5,10 @@ import ReactLiveScope from '../../theme/ReactLiveScope';
 
 type ComponentItemProps = {
   componentName: string;
-  props: Record<string, unknown>;
+  props: Record<string, unknown> | Record<string, unknown>[];
 };
-const ComponentItem = (props: ComponentItemProps) => {
-  const {componentName, props: componentProps} = props;
-  const isComponentExists = !!ReactLiveScope[componentName];
+
+function generateComponentCodeSnippet(componentName, componentProps) {
   const propString = Object.keys(componentProps).reduce((acc, key) => {
     let propValue = componentProps[key];
     switch (typeof propValue) {
@@ -24,10 +23,26 @@ const ComponentItem = (props: ComponentItemProps) => {
     return `${acc}${key}={${propValue}} `;
   }, '');
 
-  const code = isComponentExists ? `<${componentName} ${propString} />` : '<Text>Component Not Found</Text>';
+  return `<${componentName} ${propString} />`;
+}
+
+const ComponentItem = (props: ComponentItemProps) => {
+  const {componentName, props: componentProps} = props;
+  const isComponentExists = !!ReactLiveScope[componentName];
+
+  let code = '';
+  if (!isComponentExists) {
+    code = '<Text>Component Not Found</Text>';
+  } else if (Array.isArray(componentProps)) {
+    code = componentProps
+      .map(componentPropsItem => generateComponentCodeSnippet(componentName, componentPropsItem))
+      .join(' ');
+  } else {
+    code = generateComponentCodeSnippet(componentName, componentProps);
+  }
 
   return (
-    <LiveProvider code={code} scope={ReactLiveScope}>
+    <LiveProvider code={`<View center gap-s1>${code} </View>`} scope={ReactLiveScope}>
       <LivePreview/>
     </LiveProvider>
   );
