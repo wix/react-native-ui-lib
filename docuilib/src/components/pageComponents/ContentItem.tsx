@@ -6,10 +6,11 @@ import ReactLiveScope from '../../theme/ReactLiveScope';
 type ComponentItemProps = {
   componentName: string;
   props: Record<string, unknown>;
+  isSupported: boolean;
 };
+
 const ComponentItem = (props: ComponentItemProps) => {
-  const {componentName, props: componentProps} = props;
-  const isComponentExists = !!ReactLiveScope[componentName];
+  const {componentName, isSupported, props: componentProps} = props;
   const propString = Object.keys(componentProps).reduce((acc, key) => {
     let propValue = componentProps[key];
     switch (typeof propValue) {
@@ -24,7 +25,7 @@ const ComponentItem = (props: ComponentItemProps) => {
     return `${acc}${key}={${propValue}} `;
   }, '');
 
-  const code = isComponentExists ? `<${componentName} ${propString} />` : '<Text>Component Not Found</Text>';
+  const code = isSupported ? `<${componentName} ${propString}/>` : '<Text red30>Component Not Found</Text>';
 
   return (
     <LiveProvider code={code} scope={ReactLiveScope}>
@@ -55,7 +56,14 @@ export const ContentItem = ({item, componentName}: ContentItemProps) => {
   };
 
   const value = item.value;
+  const name = item.component ?? componentName;
+  const isComponentSupported = !!ReactLiveScope[name];
 
+  if (item.props) {
+    if (isComponentSupported || !value) {
+      return <ComponentItem componentName={name} props={item.props} isSupported={isComponentSupported}/>;
+    }
+  } 
   if (value) {
     if (typeof value === 'string') {
       if (value.includes('embed.figma.com')) {
@@ -66,7 +74,5 @@ export const ContentItem = ({item, componentName}: ContentItemProps) => {
     } else if (typeof value === 'object' && value.source) {
       return getImage(value.source, value.style);
     }
-  } else if (item.props) {
-    return <ComponentItem componentName={item.component ?? componentName} props={item.props}/>;
   }
 };
