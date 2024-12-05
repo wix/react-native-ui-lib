@@ -75,7 +75,7 @@ export const ContentItem = ({item, componentName}: ContentItemProps) => {
     if (isComponentExists) {
       return <ComponentItem componentName={name} props={item.props}/>;
     } else if (!value) {
-      return <div style={{color: 'red'}}>Component Not Found</div>;
+      return <div style={{color: 'red'}}>Component Not Supported</div>;
     }
   }
 
