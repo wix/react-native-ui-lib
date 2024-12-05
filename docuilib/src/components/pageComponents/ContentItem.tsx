@@ -28,12 +28,9 @@ function generateComponentCodeSnippet(componentName, componentProps) {
 
 const ComponentItem = (props: ComponentItemProps) => {
   const {componentName, props: componentProps} = props;
-  const isComponentExists = !!ReactLiveScope[componentName];
 
   let code = '';
-  if (!isComponentExists) {
-    code = '<Text>Component Not Found</Text>';
-  } else if (Array.isArray(componentProps)) {
+  if (Array.isArray(componentProps)) {
     code = componentProps
       .map(componentPropsItem => generateComponentCodeSnippet(componentName, componentPropsItem))
       .join(' ');
@@ -70,6 +67,17 @@ export const ContentItem = ({item, componentName}: ContentItemProps) => {
   };
 
   const value = item.value;
+  
+  if (item.props) {
+    const name = item.component ?? componentName;
+    const isComponentExists = !!ReactLiveScope[name];
+    
+    if (isComponentExists) {
+      return <ComponentItem componentName={name} props={item.props}/>;
+    } else if (!value) {
+      return <div style={{color: 'red'}}>Component Not Supported</div>;
+    }
+  }
 
   if (value) {
     if (typeof value === 'string') {
@@ -81,7 +89,5 @@ export const ContentItem = ({item, componentName}: ContentItemProps) => {
     } else if (typeof value === 'object' && value.source) {
       return getImage(value.source, value.style);
     }
-  } else if (item.props) {
-    return <ComponentItem componentName={item.component ?? componentName} props={item.props}/>;
   }
 };
