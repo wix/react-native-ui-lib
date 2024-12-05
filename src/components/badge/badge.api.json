@@ -95,7 +95,7 @@
   "docs": {
     "hero": {
       "title": "Badge",
-      "description": "Badge is a global component used for pimples, numeric notifications and icon badges. Badge indicates new threads in the child view and creates a “trail” user can follow. \nUse a Pimple Badge to indicate a notification or new activity of an item (e.g. new activity inside a group) or a status (online, unread).\n\nBadges usually appear on or near other components like Icons, Avatars, Chips and Lists.",
+      "description": "markdown:\nBadge is a global component used for pimples, numeric notifications and icon badges. Badge indicates new threads in the child view and creates a “trail” user can follow. \nUse a Pimple Badge to indicate a notification or new activity of an item (e.g. new activity inside a group) or a status (online, unread).\n\nBadges usually appear on or near other components like Icons, Avatars, Chips and Lists.",
       "type": "hero",
       "layout": "horizontal",
       "content": [
@@ -121,15 +121,19 @@
                   {
                     "props": [
                       {
-                        "label": "1"
+                        "label": "1",
+                        "backgroundColor": "#FC3D2F",
+                        "labelFormatterLimit": 2
                       },
                       {
                         "label": "1002",
-                        "labelFormatterLimit": 3
+                        "labelFormatterLimit": 3,
+                        "backgroundColor": "#FC3D2F"
                       },
                       {
                         "label": "102",
                         "labelFormatterLimit": 2,
+                        "backgroundColor": "#FC3D2F",
                         "icon": {
                           "uri": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/icons/icon%20examples%20for%20docs/notificationsFillSmall.png"
                         }
@@ -143,7 +147,8 @@
                 "content": [
                   {
                     "props": {
-                      "label": "New"
+                      "label": "New",
+                      "backgroundColor": "#FC3D2F"
                     }
                   }
                 ]
@@ -153,7 +158,8 @@
                 "content": [
                   {
                     "props": {
-                      "label": ""
+                      "label": "",
+                      "backgroundColor": "#FC3D2F"
                     }
                   }
                 ]
@@ -163,6 +169,7 @@
                 "content": [
                   {
                     "props": {
+                      "backgroundColor": "#FC3D2F",
                       "icon": {
                         "uri": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/icons/icon%20examples%20for%20docs/socialFacebook.png"
                       }
@@ -186,11 +193,16 @@
                 "content": [
                   {
                     "props": {
-                      "label": "2"
+                      "label": "2",
+                      "labelFormatterLimit": 2,
+                      "backgroundColor": "#FC3D2F"
                     }
                   },
                   {
                     "props": {
+                      "label": "",
+                      "backgroundColor": "#FC3D2F",
+                      "size": "small"
                     }
                   }
                 ]
@@ -200,14 +212,16 @@
                 "content": [
                   {
                     "props": {
-                      "label": "2",
-                      "backgroundColor": "#00A87E"
+                      "label": "",
+                      "backgroundColor": "#FC3D2F",
+                      "labelFormatterLimit": 2,
+                      "size": "small"
                     }
                   },
                   {
                     "props": {
                       "label": "",
-                      "backgroundColor": "#00A87E"
+                      "backgroundColor": "#FC3D2F"
                     }
                   }
                 ]
@@ -219,7 +233,7 @@
             "type": "table",
             "columns": [
               "Property",
-              "Counter Badge",
+              "Counter",
               "Pimple"
             ],
             "items": [
@@ -228,11 +242,17 @@
                 "description": "Used for notifications or new items. ",
                 "content": [
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_counter_red.png"
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_counter_red.png",
+                    "props": {
+                      "label": "2",
+                      "labelFormatterLimit": 2,
+                      "backgroundColor": "#FC3D2F"
+                    }
                   },
                   {
                     "props": {
-                      "label": ""
+                      "label": "",
+                      "backgroundColor": "#FC3D2F"
                     }
                   }
                 ]
@@ -242,7 +262,12 @@
                 "description": "Used for live visitors or an “online” indication. ",
                 "content": [
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_counter_green.png"
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_counter_green.png",
+                    "props": {
+                      "label": "2",
+                      "labelFormatterLimit": 2,
+                      "backgroundColor": "#00A87E"
+                    }
                   },
                   {
                     "props": {
@@ -257,12 +282,15 @@
                 "description": "Used for chat messages.",
                 "content": [
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_counter_blue.png"
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_counter_blue.png",
+                    "props": {
+                      "label": "2",
+                      "labelFormatterLimit": 2
+                    }
                   },
                   {
                     "props": {
-                      "label": "",
-                      "backgroundColor": "#116DFF"
+                      "label": ""
                     }
                   }
                 ]
@@ -272,7 +300,12 @@
                 "description": "Used for passive counters.",
                 "content": [
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_counter_grey.png"
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_style_counter_grey.png",
+                    "props": {
+                      "label": "2",
+                      "labelFormatterLimit": 2,
+                      "backgroundColor": "#A6ACB1"
+                    }
                   },
                   {
                     "props": {
@@ -297,7 +330,23 @@
                 "description": "Icon can be added as an accessory to counter badge, or cover the entire badge",
                 "content": [
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_accessory_icon.png"
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Badge/badge_accessory_icon.png",
+                    "props": [
+                      {
+                        "label": "102",
+                        "labelFormatterLimit": 2,
+                        "backgroundColor": "#FC3D2F",
+                        "icon": {
+                          "uri": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/icons/icon%20examples%20for%20docs/notificationsFillSmall.png"
+                        }
+                      },
+                      {
+                        "label": "",
+                        "icon": {
+                          "uri": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/icons/icon%20examples%20for%20docs/socialFacebook.png"
+                        }
+                      }
+                    ]
                   }
                 ]
               }
@@ -309,7 +358,7 @@
             "items": [
               {
                 "title": "Badge size recommendations",
-                "description": "On Icon: Large Pimple or Small Badge\nOn Thumbnail: Large Badge\nOn Avatar: Avatar 3XSmall, XXSmall - Pimple Small Avatar XSmall, Small, Medium - Pimple Large Avatar Large, XLarge - Pimple 14x14",
+                "description": "markdown:\nOn Icon: Large Pimple or Small Badge\n\nOn Thumbnail: Large Badge\n\nOn Avatar: Avatar xxxSmall, xxSmall - Pimple Small Avatar xSmall, Small, Medium - Pimple Large Avatar Large, xLarge - Pimple Large (the badge is positioned using pythagoras)",
                 "content": [
                   {
                     "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Docs-Assets?node-id=487-40121&embed-host=share"
