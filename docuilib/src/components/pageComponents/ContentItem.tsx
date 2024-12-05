@@ -8,7 +8,7 @@ type ComponentItemProps = {
   props: Record<string, unknown> | Record<string, unknown>[];
 };
 
-function GenerateComponentCodeSnippet(componentName, componentProps) {
+function generateComponentCodeSnippet(componentName, componentProps) {
   const propString = Object.keys(componentProps).reduce((acc, key) => {
     let propValue = componentProps[key];
     switch (typeof propValue) {
@@ -35,10 +35,10 @@ const ComponentItem = (props: ComponentItemProps) => {
     code = '<Text>Component Not Found</Text>';
   } else if (Array.isArray(componentProps)) {
     code = componentProps
-      .map(componentPropsItem => GenerateComponentCodeSnippet(componentName, componentPropsItem))
+      .map(componentPropsItem => generateComponentCodeSnippet(componentName, componentPropsItem))
       .join(' ');
   } else {
-    code = GenerateComponentCodeSnippet(componentName, componentProps);
+    code = generateComponentCodeSnippet(componentName, componentProps);
   }
 
   return (

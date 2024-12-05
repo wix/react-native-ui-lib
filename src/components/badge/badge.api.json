@@ -20,7 +20,7 @@
       "name": "label",
       "type": "string",
       "description": "Text to show inside the badge",
-      "note": "Passing a label will present a pimple badge"
+      "note": "Passing a label (undefined) will present a pimple badge"
     },
     {
       "name": "labelStyle",
