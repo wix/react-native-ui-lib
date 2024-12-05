@@ -21,7 +21,7 @@ export const TableSection = ({section, component}) => {
     return _.map(content, (item, index: number) => {
       if (index < numberOfColumns - 1) {
         return (
-          <td style={{backgroundColor: 'white', padding: '8px 12px 8px 12px'}} align="center">
+          <td style={{backgroundColor: item.background || 'white', padding: '8px 12px 8px 12px'}} align="center">
             <ContentItem item={item} componentName={component.name}/>
           </td>
         );
@@ -51,7 +51,7 @@ export const TableSection = ({section, component}) => {
   return (
     <div>
       {section.name && <div style={{fontSize: '20px', fontWeight: '700', marginBottom: 16}}>{section.name}</div>}
-      <table>
+      <table style={{display: 'table', width: '100%'}}>
         <tr>{getTableHeaders(columns)}</tr>
         {getTableRows(rows, numberOfColumns)}
       </table>
