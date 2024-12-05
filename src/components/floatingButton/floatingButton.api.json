@@ -71,7 +71,14 @@
   "docs": {
     "hero": {
       "title": "FloatingButton",
-      "description": "Description"
+      "description": "The Floating Button stays at the bottom of the screen, above other content, with an overlay to improve visibility.\nIt can appear with an animation, such as after a user interacts with a field, and is useful for highlighting key actions like continuing a process or submitting a form.",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/FloatingButton/floatingButton_overview_preview.png"
+        }
+      ]
     },
     "tabs": [
       {
@@ -92,17 +99,17 @@
             "columns": [
               "Property",
               "Default",
-              "markdown:`fullWidth`"
+              "Full Width"
             ],
             "items": [
               {
                 "title": "Main button",
                 "content": [
                   {
-                    "background": "#E8ECF0"
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/FloatingButton/floatingButton_overview_options_mainDefault.png"
                   },
                   {
-                    "background": "#E8ECF0"
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/FloatingButton/floatingButton_overview_options_mainFullWidth.png"
                   }
                 ]
               },
@@ -110,10 +117,10 @@
                 "title": "Main+secondary button",
                 "content": [
                   {
-                    "background": "#E8ECF0"
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/FloatingButton/floatingButton_overview_options_mainSecondaryDefault.png"
                   },
                   {
-                    "background": "#E8ECF0"
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/FloatingButton/floatingButton_overview_options_mainSecondaryFullWidth.png"
                   }
                 ]
               }
@@ -132,12 +139,7 @@
                 "title": "Horizontal",
                 "content": [
                   {
-                    "props": {
-                      "isVisible": true,
-                      "button": {
-                        "label": "button"
-                      }
-                    }
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/FloatingButton/floatingButton_overview_layout_horizontal.png"
                   }
                 ]
               },
@@ -145,7 +147,7 @@
                 "title": "Vertical",
                 "content": [
                   {
-                    "background": "#E8ECF0"
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/FloatingButton/floatingButton_overview_layout_vertical.png"
                   }
                 ]
               }
