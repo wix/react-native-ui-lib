@@ -92,8 +92,14 @@ const darkCodeTheme = themes.dracula;
             {
               type: 'doc',
               docId: 'getting-started/setup',
-              position: 'right',
-              label: 'Docs'
+              position: 'left',
+              label: 'Guides'
+            },
+            {
+              type: 'doc',
+              docId: 'components/basic/View',
+              position: 'left',
+              label: 'Components'
             },
             // {to: '/blog', label: 'Blog', position: 'left'},
             {
