@@ -1,4 +1,4 @@
-import {ImageStyle, TextStyle, StyleProp} from 'react-native';
+import {ImageStyle, TextStyle, StyleProp, ColorValue} from 'react-native';
 import {
   BaseComponentInjectedProps,
   ForwardRefInjectedProps,
@@ -65,11 +65,11 @@ export type ButtonProps = TouchableOpacityProps &
     /**
      * Color of the button background
      */
-    backgroundColor?: string;
+    backgroundColor?: ColorValue;
     /**
      * Color of the disabled button background
      */
-    disabledBackgroundColor?: string;
+    disabledBackgroundColor?: ColorValue;
     /**
      * Size of the button [large, medium, small, xSmall]
      */
@@ -142,7 +142,7 @@ export type ButtonProps = TouchableOpacityProps &
      * callback for getting activeBackgroundColor (e.g. (calculatedBackgroundColor, prop) => {...})
      * better set using ThemeManager
      */
-    getActiveBackgroundColor?: (backgroundColor: string, props: any) => string;
+    getActiveBackgroundColor?: (backgroundColor: ColorValue, props: any) => ColorValue;
     /**
      * should animate layout change
      * Note?: For Android you must set 'setLayoutAnimationEnabledExperimental(true)' via RN's 'UIManager'

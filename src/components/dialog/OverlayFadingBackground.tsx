@@ -1,12 +1,12 @@
 import React, {useRef, useEffect, useCallback, useMemo} from 'react';
 import View from '../view';
-import {Animated} from 'react-native';
+import {Animated, ColorValue} from 'react-native';
 
 interface Props {
   testID?: string;
   dialogVisibility?: boolean;
   modalVisibility?: boolean;
-  overlayBackgroundColor?: string;
+  overlayBackgroundColor?: ColorValue;
   onFadeDone?: () => void;
   fadeOut?: boolean;
 }
@@ -34,7 +34,8 @@ const OverlayFadingBackground = ({
       duration: 400,
       useNativeDriver: true
     }).start(onFadeDone);
-  }, [fadeAnimation, onFadeDone]);
+  },
+  [fadeAnimation, onFadeDone]);
 
   useEffect(() => {
     if (!isAnimating.current && (!dialogVisibility || fadeOut)) {

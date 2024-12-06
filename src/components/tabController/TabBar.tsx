@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {useMemo, useContext, useState, useRef, ReactNode} from 'react';
-import {StyleSheet, Platform, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, Platform, StyleProp, ViewStyle, ColorValue} from 'react-native';
 import Reanimated, {runOnJS, useAnimatedReaction, useAnimatedStyle, interpolate} from 'react-native-reanimated';
 import TabBarContext from './TabBarContext';
 import TabBarItem, {TabControllerItemProps} from './TabBarItem';
@@ -86,11 +86,11 @@ export interface TabControllerBarProps {
    * TODO: rename to feedbackColor
    * Apply background color on press for TouchableOpacity
    */
-  activeBackgroundColor?: string;
+  activeBackgroundColor?: ColorValue;
   /**
    * The TabBar background Color
    */
-  backgroundColor?: string;
+  backgroundColor?: ColorValue;
   /**
    * Props for the start \ end faders
    */
