@@ -86,7 +86,7 @@ class Switch extends Component<SwitchProps> {
     return {
       accessible: true,
       accessibilityRole: 'switch',
-      accessibilityLabel: value ? 'on' : 'off',
+      accessibilityLabel: value ? '1' : '0',
       accessibilityState: {
         disabled,
         checked: value ? 'checked' : 'unchecked'
