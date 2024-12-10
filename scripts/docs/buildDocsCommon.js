@@ -106,7 +106,7 @@ function processComponents(components) {
       fs.mkdirSync(dirPath, {recursive: true});
     }
 
-    fs.writeFileSync(`${dirPath}/${component.name}.md`, content, {encoding: 'utf8'});
+    fs.writeFileSync(`${dirPath}/${component.name.replaceAll(' ', '_')}.md`, content, {encoding: 'utf8'});
   });
 }
 
