@@ -56,7 +56,7 @@ const WheelPickerItem = <T extends WheelPickerItemValue = number>(props: Interna
     disabled
   } = themeProps;
   
-  const selectItem = useCallback(() => onSelect(index), [index]);
+  const selectItem = useCallback(() => !disabled && onSelect(index), [index, disabled, onSelect]);
   const itemOffset = index * itemHeight;
   const _activeColor = useRef(activeColor.toString());
   const _inactiveColor = useRef(inactiveColor.toString());
