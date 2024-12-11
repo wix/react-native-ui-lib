@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import '../ComponentPage.module.scss';
 import {LiveProvider, LivePreview} from 'react-live';
 import ReactLiveScope from '../../theme/ReactLiveScope';
@@ -26,7 +26,7 @@ function generateComponentCodeSnippet(componentName, componentProps) {
   return `<${componentName} ${propString} />`;
 }
 
-const ComponentItem = (props: ComponentItemProps) => {
+function getCode(props) {
   const {componentName, props: componentProps} = props;
 
   let code = '';
@@ -37,11 +37,50 @@ const ComponentItem = (props: ComponentItemProps) => {
   } else {
     code = generateComponentCodeSnippet(componentName, componentProps);
   }
+  return code;
+}
 
+const ComponentItem = (props: ComponentItemProps) => {
   return (
-    <LiveProvider code={`<View center gap-s1>${code} </View>`} scope={ReactLiveScope}>
+    <LiveProvider code={`<div center gap-s1>${getCode(props)}</div>`} scope={ReactLiveScope}>
       <LivePreview/>
     </LiveProvider>
+  );
+};
+
+const Tooltip = (props: ComponentItemProps) => {
+  const code = getCode(props);
+  return (
+    <div style={{position: 'relative', display: 'inline-block'}}>
+      <span 
+        style={{
+          width: '400px',
+          backgroundColor: '#555',
+          color: '#fff',
+          // textAlign: 'center',
+          padding: '5px',
+          borderRadius: '6px',
+          position: 'absolute',
+          zIndex: 1,
+          bottom: '125%',
+          left: '50%',
+          marginLeft: '-60px'
+        }}
+      >
+        {code}
+      </span>
+      <div 
+        style={{
+          position: 'absolute', 
+          top: '100%',
+          left: '50%',
+          marginLeft: '-5px',
+          borderWidth: '5px',
+          borderStyle: 'solid',
+          borderColor: '#555 transparent transparent transparent'
+        }}
+      />
+    </div>
   );
 };
 
@@ -55,6 +94,16 @@ type ContentItemProps = {
   componentName: string;
 };
 export const ContentItem = ({item, componentName}: ContentItemProps) => {
+  const [show, setShow] = useState(false);
+
+  const onHover = () => {
+    setShow(true);
+  };
+
+  const onLeave = () => {
+    setShow(false);
+  };
+
   const getFigmaEmbed = item => {
     const value = item.value;
     const height = item.height || 450;
@@ -73,7 +122,12 @@ export const ContentItem = ({item, componentName}: ContentItemProps) => {
     const isComponentExists = !!ReactLiveScope[name];
     
     if (isComponentExists) {
-      return <ComponentItem componentName={name} props={item.props}/>;
+      return (
+        <div onMouseOver={onHover} onMouseLeave={onLeave} style={{position: 'relative'}}>
+          {show && <Tooltip componentName={name} props={item.props}/>}
+          <ComponentItem componentName={name} props={item.props}/>
+        </div>
+      );
     } else if (!value) {
       return <div style={{color: 'red'}}>Component Not Supported</div>;
     }
