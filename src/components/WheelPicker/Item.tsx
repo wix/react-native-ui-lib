@@ -58,13 +58,10 @@ const WheelPickerItem = <T extends WheelPickerItemValue = number>(props: Interna
   
   const selectItem = useCallback(() => !disabled && onSelect(index), [index, disabled, onSelect]);
   const itemOffset = index * itemHeight;
-  const _activeColor = useRef(activeColor.toString());
+  const _activeColor = useRef(disabled ? disabledColor : activeColor.toString());
   const _inactiveColor = useRef(inactiveColor.toString());
 
   const animatedColorStyle = useAnimatedStyle(() => {
-    if (disabled) {
-      return {color: disabledColor};
-    }
     const color = interpolateColor(offset.value,
       [itemOffset - itemHeight, itemOffset, itemOffset + itemHeight],
       [_inactiveColor.current, _activeColor.current, _inactiveColor.current]);
