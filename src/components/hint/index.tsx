@@ -676,6 +676,7 @@ const styles = StyleSheet.create({
   },
   hint: {
     maxWidth: Math.min(Constants.windowWidth - 2 * Spacings.s4, 400),
+    minWidth: 56,
     borderRadius: BorderRadiuses.br60,
     backgroundColor: DEFAULT_COLOR
   },
