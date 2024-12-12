@@ -356,9 +356,10 @@ class Hint extends Component<HintProps, State> {
       const midScreen = Constants.screenWidth / 2;
       
       if (contentLayout && targetLayout) {
-        if (contentLayout.width < midScreen - Spacings.s4 * 2) {
-          const x = targetLayout.x || 0;
-          const left = x - midScreen || 0;
+        const targetWidth = targetLayout.width || 0;
+        if (contentLayout.width < midScreen - Spacings.s4 * 2 && contentLayout.width > targetWidth) {
+          const targetX = targetLayout.x || 0;
+          const left = targetX - midScreen || 0;
           const modalFix = !this.isUsingModal() ? Spacings.s4 : 0;
           return {left: left + contentLayout.width / 2 - modalFix};
         }
