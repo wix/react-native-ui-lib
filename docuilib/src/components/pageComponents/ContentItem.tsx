@@ -53,7 +53,6 @@ const copy = () => {
   copyText = copyText.replace('&lt;', '<');
   copyText = copyText.replace(' /&gt;', '/>');
   navigator.clipboard.writeText(copyText);
-  console.log('copied: ', copyText); 
 };
 
 const copyIcon = 'https://github.com/wix/react-native-ui-lib/blob/master/docuilib/src/assets/icons/copy.png?raw=true';
