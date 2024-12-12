@@ -125,7 +125,6 @@ dependencies {
     implementation("com.facebook.react:flipper-integration:0.73.9")
 
     implementation project(':react-native-navigation')
-    implementation project(':react-native-ui-lib')
     implementation 'com.facebook.fresco:fresco:2.5.0'
     implementation 'com.facebook.fresco:animated-gif:2.5.0'
 
