@@ -48,17 +48,30 @@ const ComponentItem = (props: ComponentItemProps) => {
   );
 };
 
+const copy = () => {
+  let copyText = document.getElementById('component_code').innerHTML;
+  copyText = copyText.replace('&lt;', '<');
+  copyText = copyText.replace(' /&gt;', '/>');
+  navigator.clipboard.writeText(copyText);
+  console.log('copied: ', copyText); 
+};
+
+// const copyIcon = 'https://github.com/wix/react-native-ui-lib/blob/2155a91386f884db816c4d45d97e47bed6024d98/docuilib/src/assets/icons/copy.png?raw=true';
+const copyIcon = require('../../assets/icons/copy.png');
+
 const Tooltip = (props: ComponentItemProps) => {
   const code = getCode(props);
   return (
-    <div style={{position: 'relative', display: 'inline-block'}}>
+    <div style={{position: 'relative', display: 'inline-block', cursor: 'pointer'}} onClick={copy}>
       <span 
         style={{
-          width: '400px',
+          display: 'flex',
+          flexDirection: 'row',
+          width: '250px',
           backgroundColor: '#555',
           color: '#fff',
-          // textAlign: 'center',
-          padding: '5px',
+          textAlign: 'start',
+          padding: '12px',
           borderRadius: '6px',
           position: 'absolute',
           zIndex: 1,
@@ -67,7 +80,8 @@ const Tooltip = (props: ComponentItemProps) => {
           marginLeft: '-60px'
         }}
       >
-        {code}
+        <div id={'component_code'}>{code}</div>
+        <img src={copyIcon} style={{width: 24, height: 24, alignSelf: 'flex-start', color: '#fff'}}/>
       </span>
       <div 
         style={{
