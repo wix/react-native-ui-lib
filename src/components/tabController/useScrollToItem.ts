@@ -5,6 +5,8 @@ import {useSharedValue} from 'react-native-reanimated';
 import {useScrollTo, ScrollToSupportedViews, ScrollToResultProps} from 'hooks';
 import {Constants} from '../../commons/new';
 
+const FIX_RTL = Constants.isRTL && Constants.isIOS;
+
 export enum OffsetType {
   CENTER = 'CENTER',
   DYNAMIC = 'DYNAMIC',
@@ -178,7 +180,7 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
 
   const focusIndex = useCallback((index: number, animated = true) => {
     if (index >= 0 && offsets.CENTER.length > index) {
-      const rtlIndex = Constants.isRTL && Constants.isIOS ? itemsCount - index - 1 : index;
+      const rtlIndex = FIX_RTL ? itemsCount - index - 1 : index;
       if (offsetType !== OffsetType.DYNAMIC) {
         scrollTo(offsets[offsetType][rtlIndex], animated);
       } else {
