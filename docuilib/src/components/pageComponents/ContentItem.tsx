@@ -56,8 +56,7 @@ const copy = () => {
   console.log('copied: ', copyText); 
 };
 
-// const copyIcon = 'https://github.com/wix/react-native-ui-lib/blob/2155a91386f884db816c4d45d97e47bed6024d98/docuilib/src/assets/icons/copy.png?raw=true';
-const copyIcon = require('../../assets/icons/copy.png');
+const copyIcon = 'https://github.com/wix/react-native-ui-lib/blob/master/docuilib/src/assets/icons/copy.png?raw=true';
 
 const Tooltip = (props: ComponentItemProps) => {
   const code = getCode(props);
@@ -81,7 +80,7 @@ const Tooltip = (props: ComponentItemProps) => {
         }}
       >
         <div id={'component_code'}>{code}</div>
-        <img src={copyIcon} style={{width: 24, height: 24, alignSelf: 'flex-start', color: '#fff'}}/>
+        <img src={copyIcon} style={{width: 24, height: 24, alignSelf: 'flex-start', filter: 'invert(70%)'}}/>
       </span>
       <div 
         style={{
