@@ -1,6 +1,14 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {ActionSheetIOS, StyleSheet, StyleProp, ViewStyle, ImageProps, ImageSourcePropType} from 'react-native';
+import {
+  ActionSheetIOS,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  ImageProps,
+  ImageSourcePropType,
+  ScrollView
+} from 'react-native';
 import {Colors} from '../../style';
 import {asBaseComponent, Constants} from '../../commons/new';
 import Dialog, {DialogProps} from '../dialog';
@@ -73,7 +81,7 @@ type ActionSheetProps = {
    */
   optionsStyle?: StyleProp<ViewStyle>;
   /**
-   * Render custom title
+   * Render custom title, relevant for old Dialog only
    */
   renderTitle?: () => JSX.Element;
   /**
@@ -101,6 +109,10 @@ type ActionSheetProps = {
    * testID for e2e tests
    */
   testID?: string;
+  /**
+   * Whether to use ScrollView as the container
+   */
+  scrollContainer?: boolean;
 };
 
 /**
@@ -211,12 +223,13 @@ class ActionSheet extends Component<ActionSheetProps> {
 
   renderSheet() {
     const {renderTitle} = this.props;
-    const {containerStyle} = this.props;
+    const {containerStyle, migrateDialog, scrollContainer = false} = this.props;
+    const Container = scrollContainer ? ScrollView : View;
     return (
-      <View style={[styles.sheet, containerStyle]}>
-        {_.isFunction(renderTitle) ? renderTitle() : this.renderTitle()}
+      <Container style={[styles.sheet, containerStyle]}>
+        {_.isFunction(renderTitle) ? renderTitle() : !migrateDialog && this.renderTitle()}
         {this.renderActions()}
-      </View>
+      </Container>
     );
   }
 
@@ -266,6 +279,7 @@ class ActionSheet extends Component<ActionSheetProps> {
         containerStyle={[styles.incubatorDialog, dialogStyle]}
         visible={visible}
         onDismiss={onDismiss}
+        headerProps={{title: this.props.title}}
       >
         {this.renderSheet()}
       </IncubatorDialog>
