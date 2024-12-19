@@ -36,6 +36,7 @@ type ActionSheetProps = {
   message?: string;
   /**
    * Index of the option represents the cancel action (to be displayed as the separated bottom bold button)
+   * Relevant for Native IOS ActionSheet only
    */
   cancelButtonIndex?: number;
   /**
