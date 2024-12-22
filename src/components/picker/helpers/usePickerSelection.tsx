@@ -3,15 +3,34 @@ import _ from 'lodash';
 import {PickerProps, PickerValue, PickerSingleValue, PickerMultiValue, PickerModes} from '../types';
 
 interface UsePickerSelectionProps
-  extends Pick<PickerProps, 'migrate' | 'value' | 'onChange' | 'getItemValue' | 'topBarProps' | 'mode'> {
+  extends Pick<
+    PickerProps,
+    'migrate' | 'value' | 'onChange' | 'onItemSelection' | 'getItemValue' | 'topBarProps' | 'mode'
+  > {
   pickerExpandableRef: RefObject<any>;
   setSearchValue: (searchValue: string) => void;
 }
 
 const usePickerSelection = (props: UsePickerSelectionProps) => {
-  const {migrate, value, onChange, topBarProps, pickerExpandableRef, getItemValue, setSearchValue, mode} = props;
+  const {
+    migrate,
+    value,
+    onChange,
+    onItemSelection,
+    topBarProps,
+    pickerExpandableRef,
+    getItemValue,
+    setSearchValue,
+    mode
+  } = props;
   const [multiDraftValue, setMultiDraftValue] = useState(value as PickerMultiValue);
   const [multiFinalValue, setMultiFinalValue] = useState(value as PickerMultiValue);
+
+  useEffect(() => {
+    if (mode === PickerModes.MULTI && multiFinalValue !== multiDraftValue) {
+      onItemSelection?.(multiDraftValue);
+    }
+  }, [multiDraftValue]);
 
   useEffect(() => {
     if (mode === PickerModes.MULTI && multiFinalValue !== value) {
