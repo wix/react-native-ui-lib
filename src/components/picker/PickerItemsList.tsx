@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {useCallback, useContext, useState} from 'react';
 import {StyleSheet, FlatList, TextInput, ListRenderItemInfo, ActivityIndicator} from 'react-native';
-import {Typography, Colors} from '../../style';
+import {Typography, Colors, Dividers} from '../../style';
 import Assets from '../../assets';
 import Modal from '../modal';
 import View from '../view';
@@ -9,6 +9,7 @@ import Text from '../text';
 import Icon from '../icon';
 import Button from '../button';
 import WheelPicker from '../WheelPicker';
+import Checkbox from '../checkbox';
 import {PickerItemProps, PickerItemsListProps, PickerSingleValue, PickerModes} from './types';
 import PickerContext from './PickerContext';
 import PickerItem from './PickerItem';
@@ -34,11 +35,21 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     mode,
     testID,
     showLoader,
-    customLoaderElement
+    customLoaderElement,
+    customSelectAllElement
   } = props;
   const context = useContext(PickerContext);
+  const {isMultiMode, useSelectAll, setValue: setPickerValue} = context;
 
   const [wheelPickerValue, setWheelPickerValue] = useState<PickerSingleValue>(context.value ?? items?.[0]?.value);
+  const [allItemsSelected, setAllItemsSelected] = useState(false);
+
+  const selectAllItems = () => {
+    if (setPickerValue) {
+      allItemsSelected ? setPickerValue([]) : items && setPickerValue(items.map(item => item.value));
+    }
+    setAllItemsSelected(!allItemsSelected);
+  };
 
   const renderSearchInput = () => {
     if (showSearch) {
@@ -85,6 +96,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
         <FlatList
           testID={`${testID}.list`}
           data={items}
+          //@ts-ignore
           renderItem={renderPropItems}
           keyExtractor={keyExtractor}
           {...listProps}
@@ -161,12 +173,33 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     );
   };
 
+  const renderSelectAllElement = () => {
+    if (!useSelectAll || !isMultiMode) {
+      return undefined;
+    } else {
+      return customSelectAllElement ? (
+        customSelectAllElement({value: allItemsSelected, setValue: selectAllItems})
+      ) : (
+        <>
+          <View row paddingH-s3 centerV spread>
+            <Text $textDefault marginR-10>
+              Select All
+            </Text>
+            <Checkbox value={allItemsSelected} onValueChange={selectAllItems}/>
+          </View>
+          <View style={Dividers.d10} marginT-s1/>
+        </>
+      );
+    }
+  };
+
   const renderContent = () => {
     return useWheelPicker ? (
       renderWheel()
     ) : (
       <>
         {renderSearchInput()}
+        {renderSelectAllElement()}
         {renderList()}
       </>
     );

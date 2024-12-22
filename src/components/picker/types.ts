@@ -5,6 +5,11 @@ import {ModalTopBarProps} from '../modal/TopBar';
 import {TextFieldMethods, TextFieldProps} from '../textField';
 import {TouchableOpacityProps} from '../touchableOpacity';
 
+interface SelectAllElementProps {
+  value: boolean;
+  setValue: (value: boolean) => void;
+}
+
 // Note: enum values are uppercase due to legacy
 export enum PickerModes {
   SINGLE = 'SINGLE',
@@ -142,6 +147,14 @@ type PickerListProps = PickerSearchProps & {
    * Add safe area in the Picker modal view
    */
   useSafeArea?: boolean;
+  /**
+   * Custom select All element for multi picker
+   */
+  customSelectAllElement?: (props: SelectAllElementProps) => React.ReactElement;
+  /**
+   * Should show select all element in multi picker
+   */
+  useSelectAll?: boolean;
 };
 
 type PickerExpandableOverlayProps = {
@@ -304,11 +317,15 @@ export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValu
 }
 
 export interface PickerContextProps
-  extends Pick<PickerProps, 'migrate' | 'value' | 'getItemValue' | 'getItemLabel' | 'renderItem' | 'selectionLimit'> {
+  extends Pick<
+    PickerProps,
+    'migrate' | 'value' | 'useSelectAll' | 'getItemValue' | 'getItemLabel' | 'renderItem' | 'selectionLimit'
+  > {
   onPress: (value: PickerSingleValue) => void;
   isMultiMode: boolean;
   onSelectedLayout: (event: any) => any;
   selectionLimit: PickerProps['selectionLimit'];
+  setValue?: React.Dispatch<React.SetStateAction<PickerMultiValue>> | undefined;
 }
 
 export type PickerItemsListProps = Pick<
@@ -319,6 +336,7 @@ export type PickerItemsListProps = Pick<
   | 'useSafeArea'
   | 'showLoader'
   | 'customLoaderElement'
+  | 'customSelectAllElement'
   | 'showSearch'
   | 'searchStyle'
   | 'searchPlaceholder'
