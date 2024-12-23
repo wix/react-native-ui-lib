@@ -83,6 +83,15 @@ const dialogOptions = [
   {label: 'Option 8', value: 6}
 ];
 
+const statusOptions = [
+  {label: 'Overview', value: 'overview'},
+  {label: 'In Progress', value: 'inProgress'},
+  {label: 'Completed', value: 'completed'},
+  {label: 'Pending Review', value: 'pendingReview'},
+  {label: 'Approved', value: 'approved'},
+  {label: 'Rejected', value: 'rejected'}
+];
+
 export default class PickerScreen extends Component {
   picker = React.createRef<PickerMethods>();
   state = {
@@ -96,6 +105,7 @@ export default class PickerScreen extends Component {
     dialogPickerValue: 'java',
     customModalValues: [],
     filter: undefined,
+    statOption: [],
     scheme: undefined,
     contact: 0
   };
@@ -120,6 +130,15 @@ export default class PickerScreen extends Component {
         <ScrollView>{children}</ScrollView>
       </Incubator.Dialog>
     );
+  };
+
+  handleTopElementPress = (allOptionsSelected: boolean, setValue: any) => {
+    if (allOptionsSelected) {
+      setValue([]);
+    } else {
+      const allValues = statusOptions.map(option => option.value);
+      setValue(allValues);
+    }
   };
 
   render() {
@@ -195,7 +214,32 @@ export default class PickerScreen extends Component {
             searchPlaceholder={'Search a language'}
             items={dialogOptions}
           />
-          
+
+          <Text text70 $textDefault>
+            Custom Top Element:
+          </Text>
+          <Picker
+            placeholder="Status"
+            floatingPlaceholder
+            value={this.state.statOption}
+            onChange={items => this.setState({statOption: items})}
+            topBarProps={{title: 'Status'}}
+            mode={Picker.modes.MULTI}
+            items={statusOptions}
+            customTopElement={({value, setValue}) => {
+              const allOptionsSelected = Array.isArray(value) && value.length === statusOptions.length;
+              return (
+                <View margin-s3>
+                  <Button
+                    label={allOptionsSelected ? 'Unselect All' : 'Select All'}
+                    onPress={() => this.handleTopElementPress(allOptionsSelected, setValue)}
+                    size="small"
+                  />
+                </View>
+              );
+            }}
+          />
+
           <Text marginB-10 text70 $textDefault>
             Custom Picker:
           </Text>
