@@ -5,9 +5,15 @@ import {ModalTopBarProps} from '../modal/TopBar';
 import {TextFieldMethods, TextFieldProps} from '../textField';
 import {TouchableOpacityProps} from '../touchableOpacity';
 
-interface SelectAllElementProps {
-  value: boolean;
-  setValue: (value: boolean) => void;
+export interface CustomTopElementProps {
+  /**
+   * The current multi draft value
+   */
+  value: PickerMultiValue;
+  /*
+   * Set the new multi draft value
+   */
+  setValue: (value: PickerMultiValue) => void;
 }
 
 // Note: enum values are uppercase due to legacy
@@ -147,14 +153,6 @@ type PickerListProps = PickerSearchProps & {
    * Add safe area in the Picker modal view
    */
   useSafeArea?: boolean;
-  /**
-   * Custom select All element for multi picker
-   */
-  customSelectAllElement?: (props: SelectAllElementProps) => React.ReactElement;
-  /**
-   * Should show select all element in multi picker
-   */
-  useSelectAll?: boolean;
 };
 
 type PickerExpandableOverlayProps = {
@@ -254,12 +252,20 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
   };
 
 export type PickerPropsWithSingle = PickerBaseProps & {
+  /**
+   * Custom top element
+   */
+  customTopElement?: () => React.ReactElement;
   mode?: PickerModes.SINGLE;
   value?: PickerSingleValue;
   onChange?: (value: PickerSingleValue) => void;
 };
 
 export type PickerPropsWithMulti = PickerBaseProps & {
+  /**
+   * Custom top element, props (vale, setValue) are for multi picker only
+   */
+  customTopElement?: (props: CustomTopElementProps) => React.ReactElement;
   mode?: PickerModes.MULTI;
   value?: PickerMultiValue;
   onChange?: (value: PickerMultiValue) => void;
@@ -317,10 +323,7 @@ export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValu
 }
 
 export interface PickerContextProps
-  extends Pick<
-    PickerProps,
-    'migrate' | 'value' | 'useSelectAll' | 'getItemValue' | 'getItemLabel' | 'renderItem' | 'selectionLimit'
-  > {
+  extends Pick<PickerProps, 'migrate' | 'value' | 'getItemValue' | 'getItemLabel' | 'renderItem' | 'selectionLimit'> {
   onPress: (value: PickerSingleValue) => void;
   isMultiMode: boolean;
   onSelectedLayout: (event: any) => any;
@@ -336,7 +339,7 @@ export type PickerItemsListProps = Pick<
   | 'useSafeArea'
   | 'showLoader'
   | 'customLoaderElement'
-  | 'customSelectAllElement'
+  | 'customTopElement'
   | 'showSearch'
   | 'searchStyle'
   | 'searchPlaceholder'

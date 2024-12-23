@@ -78,9 +78,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     accessibilityHint,
     items: propItems,
     showLoader,
-    useSelectAll,
     customLoaderElement,
-    customSelectAllElement,
+    customTopElement,
     ...others
   } = themeProps;
   const {preset, placeholder, style, trailingAccessory, label: propsLabel} = others;
@@ -156,8 +155,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
       getItemLabel,
       onSelectedLayout: onSelectedItemLayout,
       renderItem,
-      selectionLimit,
-      useSelectAll
+      selectionLimit
     };
   }, [
     migrate,
@@ -170,8 +168,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     selectionLimit,
     onSelectedItemLayout,
     toggleItemSelection,
-    onDoneSelecting,
-    useSelectAll
+    onDoneSelecting
   ]);
 
   const renderPickerItem = useCallback((item: PickerItemProps, index: number): React.ReactElement => {
@@ -252,7 +249,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         useSafeArea={useSafeArea}
         showLoader={showLoader}
         customLoaderElement={customLoaderElement}
-        customSelectAllElement={customSelectAllElement}
+        customTopElement={customTopElement}
       >
         {filteredItems}
       </PickerItemsList>

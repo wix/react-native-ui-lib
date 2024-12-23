@@ -122,6 +122,15 @@ export default class PickerScreen extends Component {
     );
   };
 
+  handleTopElementPress = (allOptionsSelected: boolean, setValue: any) => {
+    if (allOptionsSelected) {
+      setValue([]);
+    } else {
+      const allValues = options.map(option => option.value);
+      setValue(allValues);
+    }
+  };
+
   render() {
     return (
       <ScrollView keyboardShouldPersistTaps="always">
@@ -195,7 +204,33 @@ export default class PickerScreen extends Component {
             searchPlaceholder={'Search a language'}
             items={dialogOptions}
           />
-          
+
+          <Text text70 $textDefault>
+            Custom Top Element:
+          </Text>
+          <Picker
+            placeholder="Favorite Language"
+            floatingPlaceholder
+            value={this.state.language}
+            enableModalBlur={false}
+            onChange={item => this.setState({language: item})}
+            topBarProps={{title: 'Languages'}}
+            mode={Picker.modes.MULTI}
+            items={options}
+            customTopElement={({value, setValue}) => {
+              const allOptionsSelected = Array.isArray(value) && value.length === options.length;
+              return (
+                <View margin-s3>
+                  <Button
+                    label={allOptionsSelected ? 'Unselect All' : 'Select All'}
+                    onPress={() => this.handleTopElementPress(allOptionsSelected, setValue)}
+                    size="small"
+                  />
+                </View>
+              );
+            }}
+          />
+
           <Text marginB-10 text70 $textDefault>
             Custom Picker:
           </Text>
@@ -255,7 +290,7 @@ export default class PickerScreen extends Component {
             style={{alignSelf: 'flex-start'}}
             onPress={() => this.picker.current?.openExpandable?.()}
           />
-          
+
           <Text text60 marginT-s5>
             Different Field Types
           </Text>
