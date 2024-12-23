@@ -302,7 +302,6 @@ class Hint extends Component<HintProps, HintState> {
         return TARGET_POSITIONS.LEFT;
       }
     }
-
     return TARGET_POSITIONS.CENTER;
   }
 
@@ -451,7 +450,7 @@ class Hint extends Component<HintProps, HintState> {
     return <Image tintColor={color} source={source} style={[styles.hintTip, this.getTipPosition(), flipStyle]}/>;
   }
 
-  renderContent() {
+  renderHint() {
     const {
       message,
       messageStyle,
@@ -491,7 +490,7 @@ class Hint extends Component<HintProps, HintState> {
     );
   }
 
-  renderHint() {
+  renderHintContainer() {
     const {onPress, testID} = this.props;
     const opacity = onPress ? 0.9 : 1.0;
 
@@ -510,7 +509,7 @@ class Hint extends Component<HintProps, HintState> {
           testID={testID}
         >
           <TouchableOpacity activeOpacity={opacity} onPress={onPress}>
-            {this.renderContent()}
+            {this.renderHint()}
           </TouchableOpacity>
           {this.renderHintTip()}
         </View>
@@ -518,7 +517,7 @@ class Hint extends Component<HintProps, HintState> {
     }
   }
 
-  renderHintContainer() {
+  renderHintAnchor() {
     const {style, ...others} = this.props;
     return (
       <View
@@ -528,7 +527,7 @@ class Hint extends Component<HintProps, HintState> {
         testID={undefined}
         style={[styles.container, style, this.getContainerPosition(), !this.isUsingModal() && styles.overlayContainer]}
       >
-        {this.renderHint()}
+        {this.renderHintContainer()}
       </View>
     );
   }
@@ -592,13 +591,13 @@ class Hint extends Component<HintProps, HintState> {
             testID={`${testID}.modal`}
           >
             {this.renderMockChildren()}
-            {this.renderHintContainer()}
+            {this.renderHintAnchor()}
           </Modal>
         ) : (
           <>
             {this.renderOverlay()}
             {this.renderMockChildren()}
-            {this.renderHintContainer()}
+            {this.renderHintAnchor()}
           </>
         )}
       </>
