@@ -60,6 +60,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     labelStyle,
     testID,
     onChange,
+    onItemSelection,
     onPress,
     onSearchChange,
     topBarProps,
@@ -78,6 +79,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     items: propItems,
     showLoader,
     customLoaderElement,
+    customTopElement,
     ...others
   } = themeProps;
   const {preset, placeholder, style, trailingAccessory, label: propsLabel} = others;
@@ -101,10 +103,11 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     setSearchValue,
     onSearchChange: _onSearchChange
   } = usePickerSearch({showSearch, onSearchChange, getItemLabel, children, items});
-  const {multiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect} = usePickerSelection({
+  const {multiDraftValue, setMultiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect} = usePickerSelection({
     migrate,
     value,
     onChange,
+    onItemSelection,
     pickerExpandableRef: pickerExpandable,
     getItemValue,
     topBarProps,
@@ -145,6 +148,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     return {
       migrate,
       value: mode === PickerModes.MULTI ? multiDraftValue : pickerValue,
+      setValue: mode === PickerModes.MULTI ? setMultiDraftValue : undefined,
       onPress: mode === PickerModes.MULTI ? toggleItemSelection : onDoneSelecting,
       isMultiMode: mode === PickerModes.MULTI,
       getItemValue,
@@ -245,6 +249,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         useSafeArea={useSafeArea}
         showLoader={showLoader}
         customLoaderElement={customLoaderElement}
+        customTopElement={customTopElement}
       >
         {filteredItems}
       </PickerItemsList>
