@@ -29,7 +29,7 @@ const darkCodeTheme = themes.dracula;
         ({
           docs: {
             sidebarPath: require.resolve('./sidebars.js'),
-            path: '../docs',
+            path: './docs',
             // Please change this to your repo.
             editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/',
             docRootComponent: '@site/src/components/CustomLayout'
