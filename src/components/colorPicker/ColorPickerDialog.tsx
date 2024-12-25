@@ -9,8 +9,9 @@ import {getColorValue, getValidColorString, getTextColor, BORDER_RADIUS, HSLColo
 import ColorPickerDialogHeader from './ColorPickerDialogHeader';
 import ColorPickerPreview from './ColorPickerPreview';
 import ColorPickerDialogSliders from './ColorPickerDialogSliders';
+import {ColorSliderGroupProps} from '../slider/types';
 
-export interface ColorPickerDialogProps extends DialogProps {
+export interface ColorPickerDialogProps extends DialogProps, Pick<ColorSliderGroupProps<HSLColor>, 'sliderProps'> {
   /**
    * The initial color to pass the picker dialog
    */
@@ -64,6 +65,7 @@ const ColorPickerDialog = (props: ColorPickerDialogProps) => {
     accessibilityLabels,
     doneButtonColor,
     previewInputStyle,
+    sliderProps,
     migrate
   } = props;
 
@@ -184,6 +186,7 @@ const ColorPickerDialog = (props: ColorPickerDialogProps) => {
         onChangeText={onChangeText}
       />
       <ColorPickerDialogSliders
+        sliderProps={sliderProps}
         keyboardHeight={keyboardHeight}
         color={color}
         onSliderValueChange={updateColor}

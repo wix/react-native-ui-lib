@@ -188,6 +188,23 @@ export type ColorSliderGroupProps<T> = {
    */
   accessible?: boolean;
   /**
+   * Pass props to the sliders
+   */
+  sliderProps?: Omit<
+    SliderProps,
+    | 'migrate'
+    | 'containerStyle'
+    | 'accessible'
+    | 'onReset'
+    | 'renderTrack'
+    | 'step'
+    | 'maximumValue'
+    | 'value'
+    | 'onValueChange'
+    | 'disabled'
+    | 'useRange'
+  >;
+  /**
    * Whether to use the new Slider implementation using Reanimated
    */
   migrate?: boolean;

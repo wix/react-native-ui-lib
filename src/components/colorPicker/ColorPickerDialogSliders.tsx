@@ -4,15 +4,16 @@ import {Colors} from '../../style';
 import ColorSliderGroup from '../slider/ColorSliderGroup';
 import {HSLColor} from './ColorPickerPresenter';
 import {ColorPickerDialogProps} from './ColorPickerDialog';
+import {ColorSliderGroupProps} from '../slider/types';
 
-type SlidersProps = Pick<ColorPickerDialogProps, 'migrate'> & {
+type SlidersProps = Pick<ColorPickerDialogProps, 'migrate'> & Pick<ColorSliderGroupProps<HSLColor>, 'sliderProps'> & {
   keyboardHeight: number;
   color: HSLColor;
   onSliderValueChange: (value: HSLColor) => void;
 };
 
 const ColorPickerDialogSliders = (props: SlidersProps) => {
-  const {keyboardHeight, color, migrate, onSliderValueChange} = props;
+  const {keyboardHeight, color, migrate, onSliderValueChange, sliderProps} = props;
   const colorValue = color.a === 0 ? Colors.getHSL(Colors.$backgroundInverted) : color;
   
   return (
@@ -25,6 +26,7 @@ const ColorPickerDialogSliders = (props: SlidersProps) => {
       accessible={false}
       migrate={migrate}
       onValueChange={onSliderValueChange}
+      sliderProps={sliderProps}
     />
   );
 };
