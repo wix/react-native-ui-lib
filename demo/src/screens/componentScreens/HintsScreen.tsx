@@ -12,6 +12,7 @@ type HintScreenProps = {};
 export default class HintsScreen extends Component<HintScreenProps> {
   state = {
     showHint: true,
+    showSecondHint: false,
     useShortMessage: false,
     showBottomHint: false,
     showIcon: false,
@@ -26,6 +27,10 @@ export default class HintsScreen extends Component<HintScreenProps> {
 
   toggleHint = () => {
     this.setState({showHint: !this.state.showHint});
+  };
+
+  toggleSecondHint = () => {
+    this.setState({showSecondHint: !this.state.showSecondHint});
   };
 
   toggleHintPosition = () => {
@@ -118,6 +123,7 @@ export default class HintsScreen extends Component<HintScreenProps> {
   render() {
     const {
       showHint,
+      showSecondHint,
       showBottomHint,
       showIcon,
       targetPosition,
@@ -215,6 +221,20 @@ export default class HintsScreen extends Component<HintScreenProps> {
               </View>
             </>
           )}
+
+          <View marginT-100 row center>
+            {targetPosition !== 'flex-start' && <Text marginH-s3>Text pushing button</Text>}
+            <Hint
+              message={'Hint'}
+              visible={showSecondHint}
+              onBackgroundPress={this.toggleSecondHint}
+              useSideTip={false}
+              
+            >
+              <Button label="Button" onPress={this.toggleSecondHint}/>
+            </Hint>
+            {targetPosition === 'flex-start' && <Text marginH-s3>Text pushing button</Text>}
+          </View>
         </View>
 
         {this.renderOptionsFAB()}

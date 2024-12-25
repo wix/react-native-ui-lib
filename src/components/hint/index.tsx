@@ -153,6 +153,7 @@ interface HintState {
   targetLayout?: HintTargetFrame;
   targetLayoutInWindow?: HintTargetFrame;
   hintUnmounted: boolean;
+  hintMessageWidth?: number;
 }
 
 /**
@@ -178,7 +179,8 @@ class Hint extends Component<HintProps, HintState> {
   state = {
     targetLayoutInWindow: undefined as {x: number; y: number; width: number; height: number} | undefined,
     targetLayout: this.props.targetFrame,
-    hintUnmounted: !this.props.visible
+    hintUnmounted: !this.props.visible,
+    hintMessageWidth: undefined
   };
 
   visibleAnimated = new Animated.Value(Number(!!this.props.visible));
@@ -220,6 +222,12 @@ class Hint extends Component<HintProps, HintState> {
   setTargetRef = (ref: ElementRef<typeof RNView>) => {
     this.targetRef = ref;
     this.focusAccessibilityOnHint();
+  };
+
+  setHintLayout = ({nativeEvent: {layout}}: LayoutChangeEvent) => {
+    if (!this.state.hintMessageWidth) {
+      this.setState({hintMessageWidth: layout.width});
+    }
   };
 
   onTargetLayout = ({nativeEvent: {layout}}: LayoutChangeEvent) => {
@@ -290,6 +298,11 @@ class Hint extends Component<HintProps, HintState> {
     }
 
     return this.getTargetPositionOnScreen() !== TARGET_POSITIONS.CENTER;
+  }
+
+  get isShortMessage() {
+    const {hintMessageWidth} = this.state;
+    return hintMessageWidth && hintMessageWidth < Constants.screenWidth / 2;
   }
 
   getTargetPositionOnScreen() {
@@ -404,6 +417,29 @@ class Hint extends Component<HintProps, HintState> {
     return tipPositionStyle;
   }
 
+  getHintOffsetForShortMessage = () => {
+    const {hintMessageWidth = 0} = this.state;
+
+    let hintMessageOffset = 0;
+    if (this.isShortMessage) {
+      const targetPosition = this.getTipPosition();
+      if (targetPosition?.right) {
+        hintMessageOffset = -targetPosition?.right + hintMessageWidth / 2;
+      }
+
+      if (targetPosition?.left) {
+        hintMessageOffset = targetPosition?.left as number;
+        if (this.getTargetPositionOnScreen() === 'center') {
+          hintMessageOffset -= Constants.screenWidth / 2;
+        } else {
+          hintMessageOffset -= hintMessageWidth / 2;
+        }
+      }
+    }
+
+    return hintMessageOffset;
+  };
+
   isUsingModal = () => {
     const {onBackgroundPress, useModal} = this.props;
     return onBackgroundPress && useModal;
@@ -465,6 +501,8 @@ class Hint extends Component<HintProps, HintState> {
       testID
     } = this.props;
 
+    const hintMessageOffset = this.getHintOffsetForShortMessage();
+
     return (
       <View
         testID={`${testID}.message`}
@@ -475,8 +513,10 @@ class Hint extends Component<HintProps, HintState> {
           !removePaddings && styles.hintPaddings,
           visible && enableShadow && styles.containerShadow,
           {backgroundColor: color},
-          !_.isUndefined(borderRadius) && {borderRadius}
+          !_.isUndefined(borderRadius) && {borderRadius},
+          hintMessageOffset ? {left: hintMessageOffset} : undefined
         ]}
+        onLayout={this.setHintLayout}
         ref={this.hintRef}
       >
         {customContent}
