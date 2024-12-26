@@ -1,41 +1,25 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import View from '../view';
 import {colorsPalette} from '../../style/colorsPalette';
+import {useCombinedSegments} from './useCombinedSegments';
 import PartialCircle from './PartialCircle';
-import {Spacings} from 'style';
 
 type PieChartProps = {
   segments: number[];
   monochrome?: boolean;
+  size?: number;
+  colors?: string[];
 };
 
-const SEGMENT_COLORS = (['blue', 'red', 'green', 'purple'] as const).map(color => colorsPalette[`${color}40`]);
+const SEGMENT_COLORS = [colorsPalette.blue40, colorsPalette.red40, colorsPalette.green40, colorsPalette.purple40];
 const DEFAULT_COLOR = colorsPalette.grey40;
-const MONOCHROME_COLORS = ([70, 50, 30, 10] as const).map(colorNumber => colorsPalette[`blue${colorNumber}`]);
+const MONOCHROME_COLORS = [colorsPalette.blue70, colorsPalette.blue50, colorsPalette.blue30, colorsPalette.blue10];
 const DEFAULT_MONOCHROME_COLOR = colorsPalette.blue1;
-const PIE_CHART_RADIUS = 100;
-
-const useCombinedSegments = (segments: number[]) => {
-  const total = segments.reduce((acc, segment) => acc + segment, 0);
-  if (total !== 100) {
-    throw new Error('PieChart segments must sum up to 100');
-  }
-  const combinedSegments = useMemo(() => {
-    const isMoreThan4 = segments.length > 4;
-    if (isMoreThan4) {
-      const combinedSegments = segments.slice(0, 3);
-      const sumOfFirst = combinedSegments.reduce((acc, segment) => acc + segment, 0);
-      combinedSegments.push(100 - sumOfFirst);
-      return combinedSegments;
-    }
-    return segments;
-  }, [segments]);
-  return combinedSegments;
-};
+const DEFAULT_SIZE = 144;
 
 const PieChart = (props: PieChartProps) => {
-  const {segments: propSegments, monochrome = false} = props;
-  const colors = monochrome ? MONOCHROME_COLORS : SEGMENT_COLORS;
+  const {segments: propSegments, monochrome = false, size = DEFAULT_SIZE, colors: propsColor} = props;
+  const colors = propsColor || (monochrome ? MONOCHROME_COLORS : SEGMENT_COLORS);
   const defaultColor = monochrome ? DEFAULT_MONOCHROME_COLOR : DEFAULT_COLOR;
   const segments = useCombinedSegments(propSegments);
 
@@ -51,13 +35,16 @@ const PieChart = (props: PieChartProps) => {
           color={colors[index] || defaultColor}
           startAngle={startAngle}
           percentage={segment}
-          radius={PIE_CHART_RADIUS}
+          radius={size / 2}
         />
       );
     });
   };
   return (
-    <View width={2 * PIE_CHART_RADIUS} height={2 * PIE_CHART_RADIUS}>
+    <View
+      width={size}
+      height={size}
+    >
       {renderPieSegments()}
     </View>
   );
