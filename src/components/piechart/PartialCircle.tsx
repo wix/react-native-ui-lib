@@ -16,7 +16,8 @@ const DEFAULT_DIVIDER_COLOR = '#FFFFFF';
 const DEFAULT_DIVIDER_WIDTH = 4;
 const DEFAULT_PADDING = 0;
 
-const PartialCircle = ({percentage, radius, color, startAngle = 0, padding = DEFAULT_PADDING}: PartialCircleProps) => {
+const PartialCircle = (props: PartialCircleProps) => {
+  const {percentage, radius, color, startAngle = 0, padding = DEFAULT_PADDING} = props;
   const actualRadius = radius - padding;
   const centerXAndY = radius;
   const amountToCover = (percentage / 100) * 360;
