@@ -11,15 +11,15 @@ type PartialCircleProps = {
   // borderColor?: string;
   // borderWidth?: number;
   startAngle?: number;
+  padding?: number
 };
 
 const DEFAULT_BORDER_COLOR = '#FFFFFF';
 const DEFAULT_BORDER_WIDTH = 2;
-const DEFAULT_PADDING = 2;
+const DEFAULT_PADDING = 0;
 
-const PartialCircle = ({percentage, radius, color, startAngle = 0}: PartialCircleProps) => {
-  // Add padding to prevent stroke from being cut
-  const actualRadius = radius - DEFAULT_PADDING;
+const PartialCircle = ({percentage, radius, color, startAngle = 0, padding = DEFAULT_PADDING}: PartialCircleProps) => {
+  const actualRadius = radius - padding;
   const centerXAndY = radius;
   const amountToCover = (percentage / 100) * 360;
   const angleFromTop = startAngle - 90;
@@ -53,7 +53,7 @@ const PartialCircle = ({percentage, radius, color, startAngle = 0}: PartialCircl
       strokeWidth={DEFAULT_BORDER_WIDTH / 2}
     />
   );
-  const totalSize = radius * 2 + DEFAULT_PADDING;
+  const totalSize = radius * 2 + padding;
 
   return (
     <View style={styles.container}>

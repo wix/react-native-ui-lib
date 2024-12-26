@@ -9,6 +9,7 @@ type PieChartProps = {
   monochrome?: boolean;
   size?: number;
   colors?: string[];
+  padding?: number;
 };
 
 const SEGMENT_COLORS = [colorsPalette.blue40, colorsPalette.red40, colorsPalette.green40, colorsPalette.purple40];
@@ -18,7 +19,7 @@ const DEFAULT_MONOCHROME_COLOR = colorsPalette.blue1;
 const DEFAULT_SIZE = 144;
 
 const PieChart = (props: PieChartProps) => {
-  const {segments: propSegments, monochrome = false, size = DEFAULT_SIZE, colors: propsColor} = props;
+  const {segments: propSegments, monochrome = false, size = DEFAULT_SIZE, colors: propsColor, padding} = props;
   const colors = propsColor || (monochrome ? MONOCHROME_COLORS : SEGMENT_COLORS);
   const defaultColor = monochrome ? DEFAULT_MONOCHROME_COLOR : DEFAULT_COLOR;
   const segments = useCombinedSegments(propSegments);
@@ -36,6 +37,7 @@ const PieChart = (props: PieChartProps) => {
           startAngle={startAngle}
           percentage={segment}
           radius={size / 2}
+          padding={padding}
         />
       );
     });
