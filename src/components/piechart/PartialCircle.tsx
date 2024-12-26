@@ -8,14 +8,12 @@ type PartialCircleProps = {
   percentage: number;
   radius: number;
   color: string;
-  // borderColor?: string;
-  // borderWidth?: number;
   startAngle?: number;
   padding?: number
 };
 
-const DEFAULT_BORDER_COLOR = '#FFFFFF';
-const DEFAULT_BORDER_WIDTH = 2;
+const DEFAULT_DIVIDER_COLOR = '#FFFFFF';
+const DEFAULT_DIVIDER_WIDTH = 2;
 const DEFAULT_PADDING = 0;
 
 const PartialCircle = ({percentage, radius, color, startAngle = 0, padding = DEFAULT_PADDING}: PartialCircleProps) => {
@@ -49,8 +47,8 @@ const PartialCircle = ({percentage, radius, color, startAngle = 0, padding = DEF
     <Path
       d={`${startBorderLine} ${endBorderLine}`}
       fill="none"
-      stroke={DEFAULT_BORDER_COLOR}
-      strokeWidth={DEFAULT_BORDER_WIDTH / 2}
+      stroke={DEFAULT_DIVIDER_COLOR}
+      strokeWidth={DEFAULT_DIVIDER_WIDTH / 2}
     />
   );
   const totalSize = radius * 2 + padding;
