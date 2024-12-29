@@ -84,6 +84,11 @@ export const navigationData = {
     title: 'Overlays',
     screens: [
       {title: 'Action Sheet', tags: 'action sheet cross-platform', screen: 'unicorn.components.ActionSheetScreen'},
+      {
+        title: 'Action Sheet (Incubator)',
+        tags: 'action sheet',
+        screen: 'unicorn.components.IncubatorActionSheetScreen'
+      },
       {title: 'Dialog', tags: 'dialog modal popup alert', screen: 'unicorn.components.DialogScreen'},
       {title: 'Feature Highlight', tags: 'feature overlay', screen: 'unicorn.components.FeatureHighlightScreen'},
       {title: 'Floating Button', tags: 'floating button', screen: 'unicorn.components.FloatingButtonScreen'},
@@ -99,7 +104,11 @@ export const navigationData = {
       {title: 'Conversation List', tags: 'list conversation', screen: 'unicorn.lists.ConversationListScreen'},
       {title: 'Drawer', tags: 'drawer', screen: 'unicorn.components.DrawerScreen'},
       {title: 'SortableList', tags: 'sortable list drag', screen: 'unicorn.components.SortableListScreen'},
-      {title: 'HorizontalSortableList', tags: 'sortable horizontal list drag', screen: 'unicorn.components.HorizontalSortableListScreen'},
+      {
+        title: 'HorizontalSortableList',
+        tags: 'sortable horizontal list drag',
+        screen: 'unicorn.components.HorizontalSortableListScreen'
+      },
       {title: 'GridList', tags: 'grid list', screen: 'unicorn.components.GridListScreen'},
       {title: 'SortableGridList', tags: 'sort grid list drag', screen: 'unicorn.components.SortableGridListScreen'}
     ]
@@ -114,7 +123,11 @@ export const navigationData = {
       {title: 'Modal', tags: 'modal topbar screen', screen: 'unicorn.screens.ModalScreen'},
       {title: 'StateScreen', tags: 'empty state screen', screen: 'unicorn.screens.EmptyStateScreen'},
       {title: 'TabController', tags: 'tabbar controller native', screen: 'unicorn.components.TabControllerScreen'},
-      {title: 'TabControllerWithStickyHeader', tags: 'tabbar controller native sticky header', screen: 'unicorn.components.TabControllerWithStickyHeaderScreen'},
+      {
+        title: 'TabControllerWithStickyHeader',
+        tags: 'tabbar controller native sticky header',
+        screen: 'unicorn.components.TabControllerWithStickyHeaderScreen'
+      },
       {title: 'Timeline', tags: 'timeline', screen: 'unicorn.components.TimelineScreen'},
       {
         title: 'withScrollEnabler',
