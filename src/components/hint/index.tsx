@@ -429,7 +429,7 @@ class Hint extends Component<HintProps, HintState> {
 
       if (targetPosition?.left) {
         hintMessageOffset = targetPosition?.left as number;
-        if (this.getTargetPositionOnScreen() === 'center') {
+        if (this.getTargetPositionOnScreen() === TARGET_POSITIONS.CENTER) {
           hintMessageOffset -= Constants.screenWidth / 2;
         } else {
           hintMessageOffset -= hintMessageWidth / 2;
