@@ -34,7 +34,11 @@ export type ActionSheetGridItemProps = ButtonProps & {
   /**
    * Icon's source for the GridItem
    */
-  iconSource?: ImageProps['source'];
+  imageSource?: ImageProps['source'];
+  /**
+   *ImageStyle
+   */
+  imageStyle?: ImageProps['imageStyle'];
   /**
    * Action handler for the GridItem
    */

@@ -5,6 +5,7 @@ import FadedScrollView from '../../components/fadedScrollView';
 import {Dialog} from '../../incubator';
 import {withScrollReached, withScrollEnabler} from '../../commons/new';
 import {Colors} from '../../style';
+import GridOptions from './GridOptions';
 import {
   ActionSheetProps,
   ActionSheetOptionProps,
@@ -22,7 +23,7 @@ type Selection = {
 };
 
 const ActionSheet = (props: ActionSheetProps) => {
-  const {visible: propsVisibility, onDismiss, dialogProps, footerCustomElement, testID, ...others} = props;
+  const {visible: propsVisibility, onDismiss, dialogProps, footerCustomElement, gridOptions, testID, ...others} = props;
 
   const [visible, setVisible] = useState<boolean | undefined>(undefined);
   const selection = useRef<Selection | undefined>();
@@ -133,12 +134,25 @@ const ActionSheet = (props: ActionSheetProps) => {
     );
   };
 
-  const content = () => {
+  const renderList = () => {
     return (
       <View>
         {renderActions()}
         {footerCustomElement}
       </View>
+    );
+  };
+
+  const content = () => {
+    return (
+      <FadedScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="always" {...props}>
+        {gridOptions ? (
+          <GridOptions {...props} /* contentContainerStyle={styles.gridContentContainer} */ onItemPress={onItemPress}/>
+        ) : (
+          renderList()
+        )}
+        {footerCustomElement}
+      </FadedScrollView>
     );
   };
 
@@ -152,12 +166,7 @@ const ActionSheet = (props: ActionSheetProps) => {
       onDismiss={_onDismiss}
       {...others}
     >
-      <FadedScrollView
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="always"
-        {...props}
-        children={content()}
-      />
+      {content()}
     </Dialog>
   );
 };
