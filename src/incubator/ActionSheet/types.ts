@@ -1,7 +1,7 @@
 import {StyleProp, ViewStyle} from 'react-native';
 import {DialogProps} from '../Dialog';
 import {ButtonProps} from '../../components/button';
-import {ImageProps} from '../../components/image';
+import {GridListItemProps} from '../../components/gridListItem';
 import {WithScrollReachedProps, WithScrollEnablerProps} from '../../commons/new';
 
 export enum ActionSheetDismissReason {
@@ -26,28 +26,20 @@ export type ActionSheetOptionProps = ButtonProps & {
   key?: string | number;
 };
 
-export type ActionSheetGridItemProps = ButtonProps & {
-  /**
-   * Title for the GridItem
-   */
-  title?: string;
-  /**
-   * Icon's source for the GridItem
-   */
-  imageSource?: ImageProps['source'];
-  /**
-   *ImageStyle
-   */
-  imageStyle?: ImageProps['imageStyle'];
-  /**
-   * Action handler for the GridItem
-   */
-  onPress?: (selectedOptionProps: ActionSheetGridItemProps, selectedOptionIndex: number) => void;
-  /**
-   * Send true to avoid dismissing the ActionSheet on press
-   */
-  avoidDismiss?: boolean;
-  testID?: string;
+export type ActionSheetGridItemProps = ButtonProps &
+  Omit<GridListItemProps, 'onPress'> & {
+    /**
+     * Action handler for the GridItem
+     */
+    onPress?: (selectedOptionProps: ActionSheetGridItemProps, selectedOptionIndex: number) => void;
+    /**
+     * Send true to avoid dismissing the ActionSheet on press
+     */
+    avoidDismiss?: boolean;
+  };
+
+export type ActionSheetGridProps = Pick<ActionSheetProps, 'gridNumColumns' | 'gridOptions'> & {
+  onItemPress: (props: any) => void;
 };
 
 export interface ActionSheetProps extends Pick<DialogProps, 'visible'> {
