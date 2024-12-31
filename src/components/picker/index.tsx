@@ -30,7 +30,7 @@ import {
   PickerItemsListProps,
   PickerMethods
 } from './types';
-import {DialogProps} from '../../incubator/Dialog';
+import {DialogProps} from '../../incubator/dialog';
 
 const DEFAULT_DIALOG_PROPS: DialogProps = {
   bottom: true,
