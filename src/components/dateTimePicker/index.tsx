@@ -15,7 +15,7 @@ import {Colors} from '../../style';
 import Assets from '../../assets';
 import {Constants, asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
 import TextField, {TextFieldProps, TextFieldMethods} from '../textField';
-import type {DialogMigrationProps} from '../../incubator/Dialog';
+import type {DialogMigrationProps} from '../../incubator/dialog';
 import {DialogProps} from '../dialog';
 import View from '../view';
 import Button, {ButtonProps} from '../button';
