@@ -286,7 +286,7 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   get edgeMargins() {
-    const {edgeMargins = DEFAULT_EDGE_MARGINS} = this.props;
+    const {edgeMargins = this.isUsingModal() ? DEFAULT_EDGE_MARGINS : 0} = this.props;
     return edgeMargins;
   }
 
@@ -309,9 +309,9 @@ class Hint extends Component<HintProps, HintState> {
     if (this.targetLayout?.x !== undefined && this.targetLayout?.width) {
       const targetMidPosition = this.targetLayout.x + this.targetLayout.width / 2;
 
-      if (targetMidPosition > this.containerWidth * (2 / 3)) {
+      if (targetMidPosition > this.containerWidth * (4 / 5)) {
         return TARGET_POSITIONS.RIGHT;
-      } else if (targetMidPosition < this.containerWidth * (1 / 3)) {
+      } else if (targetMidPosition < this.containerWidth * (1 / 5)) {
         return TARGET_POSITIONS.LEFT;
       }
     }
