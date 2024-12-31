@@ -105,9 +105,7 @@
       "description": "The component test id"
     }
   ],
-  "snippet": [
-    "<TabController.TabBar activeBackgroundColor={Colors.blue30$1}/>"
-  ],
+  "snippet": ["<TabController.TabBar activeBackgroundColor={Colors.blue30$1}/>"],
   "docs": {
     "hero": {
       "title": "TabController.TabBar",
@@ -159,10 +157,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Component"
-            ],
+            "columns": ["Property", "Component"],
             "items": [
               {
                 "title": "Counter Badge",

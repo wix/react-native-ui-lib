@@ -134,7 +134,8 @@ export {default as SectionsWheelPicker, SectionsWheelPickerProps} from './compon
 export {
   default as SegmentedControl,
   SegmentedControlProps,
-  SegmentedControlItemProps
+  SegmentedControlItemProps,
+  SegmentedControlPreset
 } from './components/segmentedControl';
 // @ts-expect-error
 export {default as SharedTransition} from './components/sharedTransition';

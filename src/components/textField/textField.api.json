@@ -2,17 +2,9 @@
   "name": "TextField",
   "category": "form",
   "description": "An enhanced customizable TextField with validation support",
-  "extends": [
-    "TextInput"
-  ],
-  "extendsLink": [
-    "https://reactnative.dev/docs/textinput"
-  ],
-  "modifiers": [
-    "margin",
-    "color",
-    "typography"
-  ],
+  "extends": ["TextInput"],
+  "extendsLink": ["https://reactnative.dev/docs/textinput"],
+  "modifiers": ["margin", "color", "typography"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextFieldScreen.tsx",
   "images": [
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/FloatingPlaceholder.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/Validation.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/ColorByState.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/CharCounter.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/Hint.gif?raw=true"
@@ -148,6 +140,11 @@
       "name": "validateOnBlur",
       "type": "boolean",
       "description": "Should validate when losing focus of TextField"
+    },
+    {
+      "name": "validationDebounceTime",
+      "type": "number",
+      "description": "Add a debounce timeout when sending validateOnChange"
     },
     {
       "name": "onChangeValidity",
@@ -288,15 +285,11 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Component",
-              "New Column"
-            ],
+            "columns": ["Property", "Component", "New Column"],
             "items": [
               {
                 "title": "Inactive (default)",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_inactive.png"
@@ -305,7 +298,7 @@
               },
               {
                 "title": "Focused",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_focused.png"
@@ -314,7 +307,7 @@
               },
               {
                 "title": "Typing",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_typing.png"
@@ -323,7 +316,7 @@
               },
               {
                 "title": "Inactive Full",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_inactiveFull.png"
@@ -332,7 +325,7 @@
               },
               {
                 "title": "Validation Full",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_validationFull.png"
@@ -341,7 +334,7 @@
               },
               {
                 "title": "Warning",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_warning.png"
@@ -350,7 +343,7 @@
               },
               {
                 "title": "Success Validation",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_success.png"
@@ -359,7 +352,7 @@
               },
               {
                 "title": "Disabled",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_disabled.png"
@@ -368,7 +361,7 @@
               },
               {
                 "title": "Read Only",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_readOnly.png"
@@ -377,18 +370,15 @@
               }
             ],
             "title": "States",
-            "description": "Description"
+            "description": ""
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Component"
-            ],
+            "columns": ["Property", "Component"],
             "items": [
               {
                 "title": "Outline (Default)",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_outline.png"
@@ -397,7 +387,7 @@
               },
               {
                 "title": "Underline",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_underline.png"
@@ -406,18 +396,15 @@
               }
             ],
             "title": "Styles",
-            "description": "Description"
+            "description": ""
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Component"
-            ],
+            "columns": ["Property", "Component"],
             "items": [
               {
                 "title": "Leading Accessory (Prefix)",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_leading.png"
@@ -426,7 +413,7 @@
               },
               {
                 "title": "Trailing Accessory (Suffix)",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_trailing.png"
@@ -435,7 +422,7 @@
               },
               {
                 "title": "Top Trailing Accessory",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_trailingTop.png"
@@ -444,7 +431,7 @@
               },
               {
                 "title": "Characters Limit",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_charLimit.png"
@@ -453,7 +440,7 @@
               },
               {
                 "title": "Delete Value Icon",
-                "description": "Description",
+                "description": "",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_table_deleteIcon.png"
@@ -471,7 +458,7 @@
               }
             ],
             "title": "Spec",
-            "description": "**Label**\nbodySmall, $textNeutralHeavy  \n**Placeholder**\nbody, $textNeutralLight  \n**Value**  \nbody, $textDefault  \n**Helper Text**  \nsubtext, $textNeutralHeavy  \n**Character Count**  \nbodySmall, $textNeutralHeavy  \n**Validation message**  \nMessage - bodySmall, $textDangerLight\nIcon - exclamationFillSmall, $iconDangerLight  \n**Prefix & Suffix**  \nbody, $textNeutral  \n**Clear Button**  \nxFlat, $textNeutralLight  \n**Warning Message**  \nMessage - bodySmall, $textDefault\nIcon - exclamationFillSmall, $iconDefault  \n**Validation Success**  \nIcon - checkmarkFlatSmall, $iconSuccess  \n**Outline - Default/unfocused**  \n1p, $outlineNeutral  \n**Outline - Focused, typing**  \n1p, $outlinePrimary  \n**Outline - Validation**  \n1p, $outlineDanger  \n**Outline - Disabled**  \n1p, $outlineDisabled  \n**Outline - Read only**  \nfill background- $backgroundNeutralLightDescription"
+            "description": "**Label**\nbodySmall, $textNeutralHeavy  \n**Placeholder**\nbody, $textNeutralLight  \n**Value**  \nbody, $textDefault  \n**Helper Text**  \nsubtext, $textNeutralHeavy  \n**Character Count**  \nbodySmall, $textNeutralHeavy  \n**Validation message**  \nMessage - bodySmall, $textDangerLight\nIcon - exclamationFillSmall, $iconDangerLight  \n**Prefix & Suffix**  \nbody, $textNeutral  \n**Clear Button**  \nxFlat, $textNeutralLight  \n**Warning Message**  \nMessage - bodySmall, $textDefault\nIcon - exclamationFillSmall, $iconDefault  \n**Validation Success**  \nIcon - checkmarkFlatSmall, $iconSuccess  \n**Outline - Default/unfocused**  \n1p, $outlineNeutral  \n**Outline - Focused, typing**  \n1p, $outlinePrimary  \n**Outline - Validation**  \n1p, $outlineDanger  \n**Outline - Disabled**  \n1p, $outlineDisabled  \n**Outline - Read only**  \nfill background- $backgroundNeutralLight"
           }
         ]
       },
@@ -482,7 +469,7 @@
             "type": "section",
             "layout": "horizontal",
             "title": "Props Usage",
-            "description": "Description"
+            "description": ""
           },
           {
             "type": "section",
@@ -510,7 +497,7 @@
             "type": "section",
             "layout": "horizontal",
             "title": "Trailing Accessory (Suffix) - Icon",
-            "description": "Use an icon as the trailing accessory to help users understand or access extra features related to the input. The icon can be placed either in line with the label (top trailing accessory), or as part of the input field.\n\nInclude an information icon for users to access additional details about the required input. When clicked, the icon can activate a Hint component for brief information or a Dialog for more detailed explanations.\n\nIcon suffix can be used to toggle between 2 states, e.g. hiding/showing the input value. Or to indicate a success validation state.",
+            "description": "Use an icon as the trailing accessory to help users understand or access extra features related to the input.The icon can be placed either in line with the label (top trailing accessory), or as part of the input field.\n\nInclude an information icon for users to access additional details about the required input. When clicked, the icon can activate a Hint component for brief information or a Dialog for more detailed explanations.\n\nIcon suffix can be used to toggle between 2 states, e.g. hiding/showing the input value. Or to indicate a success validation state.",
             "content": [
               {
                 "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_uxguidelines_section_trailingIcon.png"

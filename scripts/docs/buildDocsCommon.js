@@ -6,7 +6,9 @@ const childProcess = require('child_process');
 const fs = require('fs');
 
 const COMPONENTS_DOCS_DIR = './docs/components';
-const VALID_CATEGORIES = [
+const SERVICES_DOCS_DIR = './docs/services';
+
+const VALID_COMPONENTS_CATEGORIES = [
   'foundation',
   'basic',
   'assets',
@@ -21,7 +23,9 @@ const VALID_CATEGORIES = [
   'overlays',
   'charts',
   'incubator',
-  'infra'
+  'infra',
+  // non components categories
+  'services'
 ];
 
 function buildDocs(apiFolders, componentsPreProcess) {
@@ -49,9 +53,13 @@ function resetDocsDir() {
   fs.mkdirSync(COMPONENTS_DOCS_DIR, {recursive: true});
 }
 
+function isCompoundComponent(componentName) {
+  return componentName.includes('.');
+}
+
 function processComponents(components) {
   /** Break into compound components (TabController.TabPage) and parent components (TabController) */
-  const compoundComponents = components.filter(c => c.name.includes('.'));
+  const compoundComponents = components.filter(c => isCompoundComponent(c.name));
   const parentComponents = _.flow(components => _.map(components, c => c.name.split('.')[0]),
     _.uniq)(compoundComponents);
 
@@ -60,7 +68,7 @@ function processComponents(components) {
     const isParentComponent = parentComponents.includes(componentName);
     const isIncubatorComponent = component.category === 'incubator';
 
-    if (!VALID_CATEGORIES.includes(component.category)) {
+    if (!VALID_COMPONENTS_CATEGORIES.includes(component.category)) {
       console.error(`${componentName} has invalid category "${component.category}"`);
     }
 
@@ -84,15 +92,21 @@ function processComponents(components) {
       content += `${buildOldDocs(component)}\n`;
     }
 
-    const componentParentDir =
-      componentParentName || isParentComponent ? `/${componentParentName || componentName}` : '';
-    const dirPath = `${COMPONENTS_DOCS_DIR}/${component.category}${componentParentDir}`;
+
+    let dirPath;
+    if (component.category === 'services') {
+      dirPath = `${SERVICES_DOCS_DIR}`;
+    } else {
+      const componentParentDir =
+        componentParentName || isParentComponent ? `/${componentParentName || componentName}` : '';
+      dirPath = `${COMPONENTS_DOCS_DIR}/${component.category}${componentParentDir}`;
+    }
 
     if (!fs.existsSync(dirPath)) {
       fs.mkdirSync(dirPath, {recursive: true});
     }
 
-    fs.writeFileSync(`${dirPath}/${component.name}.md`, content, {encoding: 'utf8'});
+    fs.writeFileSync(`${dirPath}/${component.name.replaceAll(' ', '_')}.md`, content, {encoding: 'utf8'});
   });
 }
 

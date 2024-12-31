@@ -18,7 +18,6 @@ import {FaderProps} from '../fader';
 import useScrollToItem from './useScrollToItem';
 import {useDidUpdate} from 'hooks';
 
-const FIX_RTL = Constants.isRTL && Constants.isAndroid;
 const DEFAULT_HEIGHT = 48;
 
 const DEFAULT_LABEL_STYLE = {
@@ -187,7 +186,7 @@ const TabBar = (props: Props) => {
     // @ts-expect-error TODO: typing bug
     scrollViewRef: tabBar,
     itemsCount,
-    selectedIndex: FIX_RTL ? itemsCount - currentPage.value - 1 : currentPage.value,
+    selectedIndex: currentPage.value,
     containerWidth,
     offsetType: centerSelected ? useScrollToItem.offsetType.CENTER : useScrollToItem.offsetType.DYNAMIC
   });

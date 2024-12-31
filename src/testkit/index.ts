@@ -19,4 +19,5 @@ export {WheelPickerDriver} from '../components/WheelPicker/WheelPicker.driver';
 export {WheelPickerItemDriver} from '../components/WheelPicker/WheelPickerItem.driver';
 export {PickerDriver} from '../components/picker/Picker.driver.new';
 export {ExpandableOverlayDriver} from '../incubator/expandableOverlay/ExpandableOverlay.driver';
+export {ToastDriver} from '../incubator/toast/Toast.driver.new';
 export {DateTimePickerDriver} from '../components/dateTimePicker/DateTimePicker.driver';
