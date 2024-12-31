@@ -50,8 +50,8 @@ const ComponentItem = (props: ComponentItemProps) => {
 
 const copy = () => {
   let copyText = document.getElementById('component_code').innerHTML;
-  copyText = copyText.replace('&lt;', '<');
-  copyText = copyText.replace(' /&gt;', '/>');
+  copyText = copyText.replace(new RegExp('&lt;', 'g'), '<');
+  copyText = copyText.replace(new RegExp(' /&gt;', 'g'), '/>');
   navigator.clipboard.writeText(copyText);
 };
 
@@ -60,25 +60,26 @@ const copyIcon = 'https://github.com/wix/react-native-ui-lib/blob/master/docuili
 const Tooltip = (props: ComponentItemProps) => {
   const code = getCode(props);
   return (
-    <div style={{position: 'relative', display: 'inline-block', cursor: 'pointer'}} onClick={copy}>
+    <div style={{position: 'absolute', left: '66%', cursor: 'pointer'}} onClick={copy}>
       <span 
         style={{
           display: 'flex',
           flexDirection: 'row',
-          width: '250px',
-          backgroundColor: '#555',
-          color: '#fff',
-          textAlign: 'start',
-          padding: '12px',
-          borderRadius: '6px',
           position: 'absolute',
-          zIndex: 1,
           bottom: '125%',
           left: '50%',
-          marginLeft: '-60px'
+          marginLeft: '-60px',
+          textAlign: 'start',
+          justifyContent: 'space-between',
+          zIndex: 1,
+          minWidth: '250px',
+          padding: '16px',
+          backgroundColor: '#555',
+          color: '#fff',
+          borderRadius: '6px'
         }}
       >
-        <div id={'component_code'}>{code}</div>
+        <div id={'component_code'} style={{width: '95%', fontSize: 14}}>{code}</div>
         <img src={copyIcon} style={{width: 24, height: 24, alignSelf: 'flex-start', filter: 'invert(70%)'}}/>
       </span>
       <div 
@@ -108,12 +109,8 @@ type ContentItemProps = {
 export const ContentItem = ({item, componentName}: ContentItemProps) => {
   const [show, setShow] = useState(false);
 
-  const onHover = () => {
-    setShow(true);
-  };
-
-  const onLeave = () => {
-    setShow(false);
+  const toggleCodeTooltip = () => {
+    setShow(!show);
   };
 
   const getFigmaEmbed = item => {
@@ -132,12 +129,14 @@ export const ContentItem = ({item, componentName}: ContentItemProps) => {
   if (item.props) {
     const name = item.component ?? componentName;
     const isComponentExists = !!ReactLiveScope[name];
-    
+    const buttonLabel = show ? 'Hide code' : 'Show code';
+
     if (isComponentExists) {
       return (
-        <div onMouseOver={onHover} onMouseLeave={onLeave} style={{position: 'relative'}}>
-          {show && <Tooltip componentName={name} props={item.props}/>}
+        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
           <ComponentItem componentName={name} props={item.props}/>
+          <div onClick={toggleCodeTooltip} style={{fontSize: 12, color: '#3899ec', cursor: 'pointer'}}>{buttonLabel}</div>
+          {show && <Tooltip componentName={name} props={item.props}/>}
         </div>
       );
     } else if (!value) {
