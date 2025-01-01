@@ -4,15 +4,15 @@ import {View, PieChart, Card, Text, Badge, PieChartSegmentProps, Colors} from 'r
 
 const SEGMENTS: PieChartSegmentProps[] = [
   {
-    percentage: 60,
+    percentage: 40,
     color: Colors.blue30
   },
   {
-    percentage: 20,
+    percentage: 30,
     color: Colors.red30
   },
   {
-    percentage: 10,
+    percentage: 20,
     color: Colors.green30
   },
   {
@@ -23,15 +23,15 @@ const SEGMENTS: PieChartSegmentProps[] = [
 
 const MONOCHROME_SEGMENTS: PieChartSegmentProps[] = [
   {
-    percentage: 60,
+    percentage: 40,
     color: Colors.blue70
   },
   {
-    percentage: 20,
+    percentage: 30,
     color: Colors.blue50
   },
   {
-    percentage: 10,
+    percentage: 20,
     color: Colors.blue30
   },
   {
@@ -54,29 +54,30 @@ const PieChartScreen = () => {
     );
   };
 
-  const renderPieChartCard = (heading: string, segments: PieChartSegmentProps[]) => {
+  const renderPieChartCard = (segments: PieChartSegmentProps[]) => {
     return (
-      <View>
-        <Text text50L marginB-s2>
-          {heading}
-        </Text>
-        <Card row spread paddingL-s2 paddingR-s10 paddingV-s2>
-          <View centerV>
-            <PieChart segments={segments} size={150}/>
-          </View>
-          <View height={'100%'} gap-s1>
-            {segments.map((segment, index) => renderSegmentLabel(segment, `Value ${index + 1}`))}
-          </View>
-        </Card>
-      </View>
+      <Card row spread paddingL-s2 paddingR-s10 paddingV-s2>
+        <View centerV>
+          <PieChart segments={segments} size={150}/>
+        </View>
+        <View height={'100%'} gap-s1>
+          {segments.map((segment, index) => renderSegmentLabel(segment, `Value ${index + 1}`))}
+        </View>
+      </Card>
     );
   };
 
   return (
     <ScrollView>
       <View padding-page gap-s2>
-        {renderPieChartCard('PieChart', SEGMENTS)}
-        {renderPieChartCard('Monochrome colors', MONOCHROME_SEGMENTS)}
+        <Text text50L marginB-s2>
+          PieChart
+        </Text>
+        {renderPieChartCard(SEGMENTS)}
+        <Text text50L marginB-s2>
+          Monochrome colors
+        </Text>
+        {renderPieChartCard(MONOCHROME_SEGMENTS)}
       </View>
     </ScrollView>
   );
