@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {Incubator, View, Text} from 'react-native-ui-lib';
+import {Incubator, View, Text, Card, Colors} from 'react-native-ui-lib';
 import MockServer from './MockServer';
 
 export default class CalendarScreen extends Component {
@@ -41,28 +41,31 @@ export default class CalendarScreen extends Component {
 
   // TODO: Fix type once we export them
   renderEvent = (eventItem: any) => {
+    const makeEventBigger = new Date(eventItem.start).getDay() % 2 === 0;
+    const startTime = new Date(eventItem.start).toLocaleString('en-GB', {
+      // month: 'short',
+      // day: 'numeric',
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    const endTime = new Date(eventItem.end).toLocaleString('en-GB', {hour12: false, hour: '2-digit', minute: '2-digit'});
     return (
-      <View marginH-10 padding-5 bg-blue70>
-        <Text>
-          Item for
-          {new Date(eventItem.start).toLocaleString('en-GB', {
-            month: 'short',
-            day: 'numeric',
-            hour12: false,
-            hour: '2-digit',
-            minute: '2-digit'
-          })}
-          -{new Date(eventItem.end).toLocaleString('en-GB', {hour12: false, hour: '2-digit', minute: '2-digit'})}
+      <Card marginH-s5 marginB-s4 padding-s4 backgroundColor={Colors.yellow70}>
+        <Text text70>Event Title</Text>
+        {makeEventBigger && <Text>Event short description</Text>}
+        <Text marginT-s1 text90>
+          {startTime}-{endTime}
         </Text>
-      </View>
+      </Card>
     );
   };
 
   // TODO: Fix type once we export them
   renderHeader = (headerItem: any) => {
     return (
-      <View centerV flex marginL-5>
-        <Text>{headerItem.header}</Text>
+      <View paddingH-s5 centerV flex marginV-s5>
+        <Text text70BO>{headerItem.header}</Text>
       </View>
     );
   };
