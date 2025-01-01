@@ -10,7 +10,9 @@ import {HeaderProps, DayNamesFormat, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 import WeekDaysNames from './WeekDaysNames';
 
+Reanimated.addWhitelistedNativeProps({text: true});
 
+const ARROWS_THROTTLE_TIME = 0;
 const WEEK_NUMBER_WIDTH = 32;
 const ARROW_NEXT = require('./assets/arrowNext.png');
 const ARROW_BACK = require('./assets/arrowBack.png');
@@ -28,11 +30,13 @@ const Header = (props: HeaderProps) => {
 
   const onLeftArrowPress = useCallback(throttle(() => {
     setDate(getNewDate(-1), UpdateSource.MONTH_ARROW);
-  }, 300), [setDate, getNewDate]);
+  }, ARROWS_THROTTLE_TIME, {leading: false, trailing: true}),
+  [setDate, getNewDate]);
 
   const onRightArrowPress = useCallback(throttle(() => {
     setDate(getNewDate(1), UpdateSource.MONTH_ARROW);
-  }, 300), [setDate, getNewDate]);
+  }, ARROWS_THROTTLE_TIME, {leading: false, trailing: true}),
+  [setDate, getNewDate]);
 
   const getTitle = useCallback((date: number) => {
     'worklet';
@@ -42,7 +46,8 @@ const Header = (props: HeaderProps) => {
     return getMonthForIndex(m) + ` ${y}`;
   }, []);
 
-  const animatedProps = useAnimatedProps(() => { // get called only on value update
+  const animatedProps = useAnimatedProps(() => {
+    // get called only on value update
     return {
       text: getTitle(selectedDate.value)
     };
@@ -50,7 +55,8 @@ const Header = (props: HeaderProps) => {
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     setHeaderHeight?.(event.nativeEvent.layout.height);
-  }, [setHeaderHeight]);
+  },
+  [setHeaderHeight]);
 
   const renderTitle = () => {
     if (!staticHeader) {
@@ -59,23 +65,17 @@ const Header = (props: HeaderProps) => {
     }
     return (
       //@ts-expect-error - hack to animate the title text change
-      <AnimatedTextInput 
+      <AnimatedTextInput
         value={getTitle(selectedDate.value)} // setting initial value
         {...{animatedProps}}
         editable={false}
         style={styles.title}
-      />);
+      />
+    );
   };
 
   const renderArrow = (source: number, onPress: () => void) => {
-    return (
-      <Button
-        link
-        size={Button.sizes.xSmall}
-        iconSource={source}
-        onPress={onPress}
-      />
-    );
+    return <Button link size={Button.sizes.xSmall} iconSource={source} onPress={onPress}/>;
   };
 
   const renderNavigation = () => {
