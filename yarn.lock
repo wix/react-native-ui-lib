@@ -8412,7 +8412,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:4.17.x, lodash@npm:4.x.x, lodash@npm:^4, lodash@npm:^4.17.10, lodash@npm:^4.17.21":
+"lodash@npm:4.17.x, lodash@npm:4.x.x, lodash@npm:^4, lodash@npm:^4.0.0, lodash@npm:^4.17.10, lodash@npm:^4.17.21":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
@@ -10367,6 +10367,7 @@ __metadata:
     shell-utils: ^1.0.10
     tinycolor2: ^1.4.2
     typescript: 5.0.4
+    uilib-native: 4.3.2
     url-parse: ^1.2.0
     wix-react-native-text-size: 1.0.9
   peerDependencies:
@@ -12034,6 +12035,19 @@ __metadata:
   version: 2.6.1
   resolution: "typical@npm:2.6.1"
   checksum: 6af04fefe50d90d3471f058b2cdc0f49b7436bdd605cd00acea7965926ff388a5a7d692ef144f45fccee6f8e896c065702ecc44b69057e2ce88c09e897c7d3a4
+  languageName: node
+  linkType: hard
+
+"uilib-native@npm:4.3.2":
+  version: 4.3.2
+  resolution: "uilib-native@npm:4.3.2"
+  dependencies:
+    lodash: ^4.0.0
+    prop-types: ^15.5.10
+  peerDependencies:
+    react: ^16.0.0
+    react-native: ^0.51.0
+  checksum: 051fbba7a351f5ab098c8471a8b35f05c1b61df55b94b0fbb56d594e2fb856bc4ed1bc0575aedaa0659da5f14c4a0d2b4e6b4d48e5bce6eefab0067b5352b95f
   languageName: node
   linkType: hard
 
