@@ -1,6 +1,7 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
 import {View, Text, Button, ActionSheet} from 'react-native-ui-lib'; //eslint-disable-line
-import _ from 'lodash';
+import {renderBooleanOption} from '../ExampleScreenPresenter';
 
 const useCases = [
   {label: 'Default (Android/iOS)', useNativeIOS: false, icons: false},
@@ -11,13 +12,13 @@ const collectionsIcon = require('../../assets/icons/collections.png');
 const starIcon = require('../../assets/icons/star.png');
 const shareIcon = require('../../assets/icons/share.png');
 
-
 export default class ActionSheetScreen extends Component {
   state = {
     showNative: false,
     showCustom: false,
     showCustomIcons: false,
-    pickedOption: undefined
+    pickedOption: undefined,
+    scrollContainer: false
   };
 
   pickOption(index: string) {
@@ -27,7 +28,7 @@ export default class ActionSheetScreen extends Component {
   }
 
   render() {
-    const {showCustom, showCustomIcons, showNative, pickedOption} = this.state;
+    const {showCustom, showCustomIcons, showNative, pickedOption, scrollContainer} = this.state;
     return (
       <View flex padding-25>
         <Text text30>Action Sheet</Text>
@@ -47,7 +48,8 @@ export default class ActionSheetScreen extends Component {
                     showNative: useCase.useNativeIOS,
                     showCustom: !useCase.useNativeIOS && !useCase.icons,
                     showCustomIcons: !useCase.useNativeIOS && useCase.icons
-                  })}
+                  })
+                }
               />
             );
           })}
@@ -57,7 +59,6 @@ export default class ActionSheetScreen extends Component {
             <Text>User picked {pickedOption}</Text>
           </View>
         )}
-
         <ActionSheet
           title={'Title'}
           message={'Message of action sheet'}
@@ -65,6 +66,7 @@ export default class ActionSheetScreen extends Component {
           destructiveButtonIndex={0}
           useNativeIOS={false}
           migrateDialog
+          scrollContainer={scrollContainer}
           options={[
             {label: 'option 1', onPress: () => this.pickOption('option 1')},
             {label: 'option 2', onPress: () => this.pickOption('option 2')},
@@ -74,13 +76,13 @@ export default class ActionSheetScreen extends Component {
           visible={showCustom}
           onDismiss={() => this.setState({showCustom: false})}
         />
-
         <ActionSheet
           title={'Title'}
           message={'Message of action sheet'}
           cancelButtonIndex={3}
           destructiveButtonIndex={0}
           migrateDialog
+          scrollContainer={scrollContainer}
           options={[
             {label: 'option 1', onPress: () => this.pickOption('option 1'), iconSource: collectionsIcon},
             {label: 'option 2', onPress: () => this.pickOption('option 2'), iconSource: shareIcon},
@@ -91,7 +93,6 @@ export default class ActionSheetScreen extends Component {
           visible={showCustomIcons}
           onDismiss={() => this.setState({showCustomIcons: false})}
         />
-
         <ActionSheet
           title={'Title'}
           message={'Message of action sheet'}
@@ -107,6 +108,9 @@ export default class ActionSheetScreen extends Component {
           useNativeIOS
           onDismiss={() => this.setState({showNative: false})}
         />
+        <View marginT-s2>
+          {renderBooleanOption.call(this, 'Use ScrollView (default ActionSheet):', 'scrollContainer')}
+        </View>
       </View>
     );
   }
