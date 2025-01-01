@@ -44,7 +44,8 @@ export const navigationData = {
         screen: 'unicorn.components.SharedTransitionScreen'
       },
       {title: 'Stack Aggregator', tags: 'stack aggregator', screen: 'unicorn.components.StackAggregatorScreen'},
-      {title: 'Marquee', tags: 'sliding text', screen: 'unicorn.components.MarqueeScreen'}
+      {title: 'Marquee', tags: 'sliding text', screen: 'unicorn.components.MarqueeScreen'},
+      {title: 'PieChart', tags: 'pie chart data', screen: 'unicorn.components.PieChartScreen'}
     ]
   },
   Form: {

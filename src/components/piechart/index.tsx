@@ -1,43 +1,35 @@
-import React from 'react';
+import React, {useMemo} from 'react';
+import _ from 'lodash';
 import View from '../view';
-import {useCombinedSegments} from './useCombinedSegments';
-import PartialCircle from './PartialCircle';
+import PartialCircle, {PartialCircleProps} from './PartialCircle';
+
+export type PieChartSegmentProps = Pick<PartialCircleProps, 'percentage' | 'color'>;
 
 export type PieChartProps = {
-  segments: number[];
-  monochrome?: boolean;
+  segments: PieChartSegmentProps[];
   size?: number;
-  colors?: string[];
   padding?: number;
 };
 
 const DEFAULT_SIZE = 144;
 
 const PieChart = (props: PieChartProps) => {
-  const {segments: propSegments, monochrome = false, size = DEFAULT_SIZE, colors: propsColor, padding} = props;
+  const {segments, size = DEFAULT_SIZE, padding} = props;
 
-  const {segments, colors, defaultColor} = useCombinedSegments({
-    segments: propSegments,
-    monochrome,
-    colors: propsColor
-  });
+  const total = useMemo(() => {
+    return _.sum(segments.map(s => s.percentage));
+  }, [segments]);
+  if (total !== 100) {
+    throw new Error('PieChart segments must sum up to 100');
+  }
 
   const renderPieSegments = () => {
     let currentStartAngle = 0;
 
     return segments.map((segment, index) => {
       const startAngle = currentStartAngle;
-      currentStartAngle += (segment / 100) * 360;
-      return (
-        <PartialCircle
-          key={index}
-          color={colors[index] || defaultColor}
-          startAngle={startAngle}
-          percentage={segment}
-          radius={size / 2}
-          padding={padding}
-        />
-      );
+      currentStartAngle += (segment.percentage / 100) * 360;
+      return <PartialCircle key={index} {...segment} startAngle={startAngle} radius={size / 2} padding={padding}/>;
     });
   };
   return (

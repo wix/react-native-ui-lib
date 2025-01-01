@@ -4,12 +4,12 @@ import View from '../view';
 import {SvgPackage} from '../../optionalDependencies';
 const {Svg, Path} = SvgPackage;
 
-type PartialCircleProps = {
+export type PartialCircleProps = {
   percentage: number;
   radius: number;
   color: string;
   startAngle?: number;
-  padding?: number
+  padding?: number;
 };
 
 const DEFAULT_DIVIDER_COLOR = '#FFFFFF';
@@ -50,6 +50,8 @@ const PartialCircle = (props: PartialCircleProps) => {
       fill="none"
       stroke={DEFAULT_DIVIDER_COLOR}
       strokeWidth={DEFAULT_DIVIDER_WIDTH / 2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   );
   const totalSize = radius * 2 + padding;

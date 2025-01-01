@@ -82,7 +82,7 @@ export {default as HapticService, HapticType} from './services/HapticService';
 export {default as Hint, HintProps} from './components/hint';
 export {default as Icon, IconProps} from './components/icon';
 export {default as Image, ImageProps} from './components/image';
-export {default as PieChart} from './components/piechart';
+export {default as PieChart, PieChartSegmentProps} from './components/piechart';
 // @ts-expect-error
 export {default as KeyboardAwareScrollView} from './components/KeyboardAwareScrollView/KeyboardAwareScrollView';
 // @ts-expect-error
