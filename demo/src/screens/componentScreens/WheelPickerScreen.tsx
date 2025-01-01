@@ -22,6 +22,7 @@ const yearItems = _.times(2050, i => i)
   .reverse()
   .map(item => ({label: `${item}`, value: item}));
 const dayItems = _.times(31, i => i + 1).map(day => ({label: `${day}`, value: day}));
+const items = _.times(50, i => i + 1).map(i => ({label: `${i}`, value: i, disabled: i % 2 === 0}));
 
 export default () => {
   const [showDialog, setShowDialog] = useState(false);
@@ -47,6 +48,8 @@ export default () => {
   return (
     <View flex padding-page>
       <Text h1>Wheel Picker</Text>
+
+      <WheelPicker initialValue={5} items={items}/>
 
       <View row center marginT-30>
         <View center>
