@@ -4,6 +4,7 @@ import {runOnJS, useAnimatedReaction, useSharedValue} from 'react-native-reanima
 import {FlashListPackage} from 'optionalDeps';
 import type {FlashList as FlashListType, ViewToken} from '@shopify/flash-list';
 import {BorderRadiuses, Colors} from 'style';
+import {useDidUpdate} from 'hooks';
 import View from '../../components/view';
 import Text from '../../components/text';
 import {isSameDay, isSameMonth} from './helpers/DateUtils';
@@ -14,15 +15,24 @@ const FlashList = FlashListPackage?.FlashList;
 
 // TODO: Fix initial scrolling
 function Agenda(props: AgendaProps) {
-  const {renderEvent, renderHeader, itemHeight = 50, onEndReached, showLoader} = props;
+  // TODO: Consider removing itemHeight if it's not needed
+  const {renderEvent, renderHeader, itemHeight, onEndReached, showLoader} = props;
   const {data, selectedDate, setDate, updateSource} = useContext(CalendarContext);
   const flashList = useRef<FlashListType<InternalEvent>>(null);
   const closestSectionHeader = useSharedValue<DateSectionHeader | null>(null);
   const scrolledByUser = useSharedValue<boolean>(false);
+  const lastDateBeforeLoadingNewEvents = useRef<number>(0);
 
   /* const keyExtractor = useCallback((item: InternalEvent) => {
     return item.type === 'Event' ? item.id : item.header;
   }, []); */
+
+  useDidUpdate(() => {
+    const result = findClosestDateAfter(lastDateBeforeLoadingNewEvents.current);
+    if (result?.index) {
+      scrollToIndex(result?.index, false);
+    }
+  }, [data]);
 
   const _renderEvent = useCallback((eventItem: Event) => {
     if (renderEvent) {
@@ -146,6 +156,7 @@ function Agenda(props: AgendaProps) {
   }, []);
 
   const _onEndReached = useCallback(() => {
+    lastDateBeforeLoadingNewEvents.current = selectedDate.value;
     onEndReached?.(selectedDate.value);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onEndReached]);
