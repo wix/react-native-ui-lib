@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import {ScrollView} from 'react-native';
 import {View, PieChart, Card, Text, Badge, PieChartSegmentProps, Colors} from 'react-native-ui-lib';
 
 const SEGMENTS: PieChartSegmentProps[] = [
@@ -84,5 +84,3 @@ const PieChartScreen = () => {
 };
 
 export default PieChartScreen;
-
-const styles = StyleSheet.create({});
