@@ -8,13 +8,12 @@ export type PieChartSegmentProps = Pick<PartialCircleProps, 'percentage' | 'colo
 export type PieChartProps = {
   segments: PieChartSegmentProps[];
   size?: number;
-  padding?: number;
 };
 
 const DEFAULT_SIZE = 144;
 
 const PieChart = (props: PieChartProps) => {
-  const {segments, size = DEFAULT_SIZE, padding} = props;
+  const {segments, size = DEFAULT_SIZE} = props;
 
   const total = useMemo(() => {
     return _.sum(segments.map(s => s.percentage));
@@ -29,7 +28,7 @@ const PieChart = (props: PieChartProps) => {
     return segments.map((segment, index) => {
       const startAngle = currentStartAngle;
       currentStartAngle += (segment.percentage / 100) * 360;
-      return <PartialCircle key={index} {...segment} startAngle={startAngle} radius={size / 2} padding={padding}/>;
+      return <PartialCircle key={index} {...segment} startAngle={startAngle} radius={size / 2}/>;
     });
   };
   return (

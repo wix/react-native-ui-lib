@@ -44,7 +44,7 @@ const PieChartScreen = () => {
   const renderSegmentLabel = (segment: PieChartSegmentProps, text: string) => {
     const {percentage, color} = segment;
     return (
-      <View row gap-s1 marginB-s1>
+      <View row gap-s1 marginB-s1 key={text}>
         <Badge size={10} containerStyle={{justifyContent: 'center'}} backgroundColor={color}/>
         <View>
           <Text>{text}</Text>
@@ -74,7 +74,7 @@ const PieChartScreen = () => {
           PieChart
         </Text>
         {renderPieChartCard(SEGMENTS)}
-        <Text text50L marginB-s2>
+        <Text text50L marginV-s2>
           Monochrome colors
         </Text>
         {renderPieChartCard(MONOCHROME_SEGMENTS)}
