@@ -5,6 +5,17 @@ import {ModalTopBarProps} from '../modal/TopBar';
 import {TextFieldMethods, TextFieldProps} from '../textField';
 import {TouchableOpacityProps} from '../touchableOpacity';
 
+export interface CustomTopElementProps {
+  /**
+   * The current multi draft value
+   */
+  value: PickerMultiValue;
+  /*
+   * Set the new multi draft value
+   */
+  setValue: (value: PickerMultiValue) => void;
+}
+
 // Note: enum values are uppercase due to legacy
 export enum PickerModes {
   SINGLE = 'SINGLE',
@@ -181,6 +192,10 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
      */
     onChange?: (value: PickerValue) => void;
     /**
+     * Callback for when picker item is selected (only for multi mode)
+     */
+    onItemSelection?: (value: PickerMultiValue) => void;
+    /**
      * SINGLE or MULTI selection mode
      */
     mode?: PickerModes | `${PickerModes}`;
@@ -237,12 +252,20 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
   };
 
 export type PickerPropsWithSingle = PickerBaseProps & {
+  /**
+   * Custom top element
+   */
+  customTopElement?: () => React.ReactElement;
   mode?: PickerModes.SINGLE;
   value?: PickerSingleValue;
   onChange?: (value: PickerSingleValue) => void;
 };
 
 export type PickerPropsWithMulti = PickerBaseProps & {
+  /**
+   * Custom top element, props (vale, setValue) are for multi picker only
+   */
+  customTopElement?: (props: CustomTopElementProps) => React.ReactElement;
   mode?: PickerModes.MULTI;
   value?: PickerMultiValue;
   onChange?: (value: PickerMultiValue) => void;
@@ -305,6 +328,7 @@ export interface PickerContextProps
   isMultiMode: boolean;
   onSelectedLayout: (event: any) => any;
   selectionLimit: PickerProps['selectionLimit'];
+  setValue?: React.Dispatch<React.SetStateAction<PickerMultiValue>> | undefined;
 }
 
 export type PickerItemsListProps = Pick<
@@ -315,6 +339,7 @@ export type PickerItemsListProps = Pick<
   | 'useSafeArea'
   | 'showLoader'
   | 'customLoaderElement'
+  | 'customTopElement'
   | 'showSearch'
   | 'searchStyle'
   | 'searchPlaceholder'
