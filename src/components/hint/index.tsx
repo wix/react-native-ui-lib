@@ -29,6 +29,7 @@ const middleTip = require('./assets/hintTipMiddle.png');
 const DEFAULT_COLOR = Colors.$backgroundPrimaryHeavy;
 const DEFAULT_HINT_OFFSET = Spacings.s4;
 const DEFAULT_EDGE_MARGINS = Spacings.s5;
+const HINT_MIN_WIDTH = 68;
 
 enum TARGET_POSITIONS {
   LEFT = 'left',
@@ -508,6 +509,7 @@ class Hint extends Component<HintProps, HintState> {
         testID={`${testID}.message`}
         row
         centerV
+        centerH={!!hintMessageOffset}
         style={[
           styles.hint,
           !removePaddings && styles.hintPaddings,
@@ -683,6 +685,7 @@ const styles = StyleSheet.create({
     position: 'absolute'
   },
   hint: {
+    minWidth: HINT_MIN_WIDTH,
     maxWidth: Math.min(Constants.windowWidth - 2 * Spacings.s4, 400),
     borderRadius: BorderRadiuses.br60,
     backgroundColor: DEFAULT_COLOR
