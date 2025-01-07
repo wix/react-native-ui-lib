@@ -95,6 +95,14 @@ export type DateTimePickerProps = OldApiProps &
      */
     display?: string;
     /**
+     * Text color of the wheel picker items
+     */
+    textColor?: string;
+    /**
+     * Background color of the wheel picker
+     */
+    backgroundColor?: string;
+    /**
      * Confirm button props
      */
     confirmButtonProps?: ButtonProps;
@@ -137,6 +145,8 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
     onChange,
     dialogProps,
     migrateDialog,
+    textColor = Colors.$textDefault,
+    backgroundColor = Colors.$backgroundDefault,
     headerStyle,
     testID,
     display = Constants.isIOS ? 'spinner' : undefined,
@@ -185,6 +195,10 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
       ...dialogProps
     };
   }, [dialogProps, testID]);
+
+  const dateTimePickerStyle = useMemo(() => {
+    return {backgroundColor};
+  }, [backgroundColor]);
 
   const {getStringValue: getStringValueOld} = useOldApi({dateFormat, dateFormatter, timeFormat, timeFormatter});
 
@@ -240,6 +254,7 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
         row
         spread
         bg-$backgroundDefault
+        backgroundColor={backgroundColor}
         paddingH-20
         style={[styles.header, headerStyle]}
         testID={`${testID}.header`}
@@ -280,6 +295,8 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
         minuteInterval={minuteInterval}
         timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
         display={display}
+        textColor={textColor}
+        style={dateTimePickerStyle}
         themeVariant={themeVariant}
         testID={`${testID}.picker`}
       />
