@@ -54,7 +54,7 @@
     "react-native-redash": "^12.0.3",
     "semver": "^5.5.0",
     "tinycolor2": "^1.4.2",
-    "uilib-native": "^4.4.0",
+    "uilib-native": "^4.5.0",
     "url-parse": "^1.2.0",
     "wix-react-native-text-size": "1.0.9"
   },
