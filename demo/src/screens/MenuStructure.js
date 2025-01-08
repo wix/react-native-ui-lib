@@ -44,8 +44,7 @@ export const navigationData = {
         screen: 'unicorn.components.SharedTransitionScreen'
       },
       {title: 'Stack Aggregator', tags: 'stack aggregator', screen: 'unicorn.components.StackAggregatorScreen'},
-      {title: 'Marquee', tags: 'sliding text', screen: 'unicorn.components.MarqueeScreen'},
-      {title: 'PieChart', tags: 'pie chart data', screen: 'unicorn.components.PieChartScreen'}
+      {title: 'Marquee', tags: 'sliding text', screen: 'unicorn.components.MarqueeScreen'}
     ]
   },
   Form: {
@@ -103,6 +102,12 @@ export const navigationData = {
       {title: 'HorizontalSortableList', tags: 'sortable horizontal list drag', screen: 'unicorn.components.HorizontalSortableListScreen'},
       {title: 'GridList', tags: 'grid list', screen: 'unicorn.components.GridListScreen'},
       {title: 'SortableGridList', tags: 'sort grid list drag', screen: 'unicorn.components.SortableGridListScreen'}
+    ]
+  },
+  Charts: {
+    title: 'Charts',
+    screens: [
+      {title: 'PieChart', tags: 'pie chart data', screen: 'unicorn.components.PieChartScreen'}
     ]
   },
   LayoutsAndTemplates: {
