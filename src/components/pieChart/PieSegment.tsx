@@ -4,7 +4,7 @@ import View from '../view';
 import {SvgPackage} from '../../optionalDependencies';
 const {Svg, Path} = SvgPackage;
 
-export type PartialCircleProps = {
+export type PieSegmentProps = {
   percentage: number;
   radius: number;
   color: string;
@@ -16,7 +16,7 @@ const DEFAULT_DIVIDER_COLOR = '#FFFFFF';
 const DEFAULT_DIVIDER_WIDTH = 4;
 const DEFAULT_PADDING = 0;
 
-const PartialCircle = (props: PartialCircleProps) => {
+const PartialCircle = (props: PieSegmentProps) => {
   const {percentage, radius, color, startAngle = 0, padding = DEFAULT_PADDING} = props;
   const actualRadius = radius - padding;
   const centerXAndY = radius;

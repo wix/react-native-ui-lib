@@ -1,9 +1,9 @@
 import React, {useMemo} from 'react';
 import _ from 'lodash';
 import View from '../view';
-import PartialCircle, {PartialCircleProps} from './PartialCircle';
+import PartialCircle, {PieSegmentProps} from './PieSegment';
 
-export type PieChartSegmentProps = Pick<PartialCircleProps, 'percentage' | 'color'>;
+export type PieChartSegmentProps = Pick<PieSegmentProps, 'percentage' | 'color'>;
 
 export type PieChartProps = {
   segments: PieChartSegmentProps[];
