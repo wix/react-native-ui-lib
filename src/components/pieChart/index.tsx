@@ -15,10 +15,10 @@ export type PieChartProps = {
   diameter?: number;
 } & Pick<PieSegmentProps, 'dividerWidth' | 'dividerColor'>;
 
-const DEFAULT_SIZE = 144;
+const DEFAULT_DIAMETER = 144;
 
 const PieChart = (props: PieChartProps) => {
-  const {segments, diameter = DEFAULT_SIZE, ...others} = props;
+  const {segments, diameter = DEFAULT_DIAMETER, ...others} = props;
 
   const renderPieSegments = () => {
     let currentStartAngle = 0;
