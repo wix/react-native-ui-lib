@@ -5,14 +5,20 @@ import PartialCircle, {PieSegmentProps} from './PieSegment';
 export type PieChartSegmentProps = Pick<PieSegmentProps, 'percentage' | 'color'>;
 
 export type PieChartProps = {
+  /**
+   * Pie chart segments array
+   */
   segments: PieChartSegmentProps[];
-  size?: number;
+  /**
+   * Pie chart diameter
+   */
+  diameter?: number;
 } & Pick<PieSegmentProps, 'dividerWidth' | 'dividerColor'>;
 
 const DEFAULT_SIZE = 144;
 
 const PieChart = (props: PieChartProps) => {
-  const {segments, size = DEFAULT_SIZE, ...others} = props;
+  const {segments, diameter = DEFAULT_SIZE, ...others} = props;
 
   const renderPieSegments = () => {
     let currentStartAngle = 0;
@@ -21,12 +27,12 @@ const PieChart = (props: PieChartProps) => {
       const startAngle = currentStartAngle;
       currentStartAngle += (segment.percentage / 100) * 360;
       return (
-        <PartialCircle key={index} {...segment} {...others} startAngle={startAngle} radius={size / 2}/>
+        <PartialCircle key={index} {...segment} {...others} startAngle={startAngle} radius={diameter / 2}/>
       );
     });
   };
   return (
-    <View width={size} height={size}>
+    <View width={diameter} height={diameter}>
       {renderPieSegments()}
     </View>
   );

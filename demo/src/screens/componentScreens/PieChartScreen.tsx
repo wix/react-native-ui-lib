@@ -69,7 +69,7 @@ const PieChartScreen = () => {
     return (
       <Card row spread paddingL-s2 paddingR-s10 paddingV-s2>
         <View centerV>
-          <PieChart segments={segments} size={150}/>
+          <PieChart segments={segments} diameter={150}/>
         </View>
         <View height={'100%'} gap-s1>
           {segments.map((segment, index) => renderSegmentLabel(segment, `Value ${index + 1}`))}

@@ -1,0 +1,13 @@
+{
+  "name": "PieChart",
+  "category": "charts",
+  "description": "Pie Chart",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PieChartScreen.tsx",
+  "props": [
+    {"name": "segments", "type": "PieChartSegmentProps[]", "description": "Pie chart segments array"},
+    {"name": "diameter", "type": "number", "description": "Pie chart diameter"}
+  ],
+  "snippet": [
+    "<PieChart segments={[{percentage: 50, color: Colors.blue30}, {percentage: 30, color: Colors.red30}, {percentage: 20, color: Colors.green30}]} diameter={144}/>"
+  ]
+}
