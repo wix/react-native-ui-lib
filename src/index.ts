@@ -82,7 +82,6 @@ export {default as HapticService, HapticType} from './services/HapticService';
 export {default as Hint, HintProps} from './components/hint';
 export {default as Icon, IconProps} from './components/icon';
 export {default as Image, ImageProps} from './components/image';
-export {default as PieChart, PieChartSegmentProps} from './components/piechart';
 // @ts-expect-error
 export {default as KeyboardAwareScrollView} from './components/KeyboardAwareScrollView/KeyboardAwareScrollView';
 // @ts-expect-error
@@ -124,6 +123,7 @@ export {
   PickerItemsListProps,
   PickerMethods
 } from './components/picker';
+export {default as PieChart, PieChartSegmentProps} from './components/pieChart';
 export {default as ProgressBar, ProgressBarProps} from './components/progressBar';
 export {default as ProgressiveImage, ProgressiveImageProps} from './components/progressiveImage';
 export {default as RadioButton, RadioButtonProps} from './components/radioButton';
