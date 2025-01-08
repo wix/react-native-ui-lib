@@ -18,6 +18,9 @@ const DEFAULT_PADDING = 0;
 
 const PieSegment = (props: PieSegmentProps) => {
   const {percentage, radius, color, startAngle = 0, padding = DEFAULT_PADDING} = props;
+  if (!Svg || !Path) {
+    console.error(`RNUILib PieChart requires installing "@react-native-svg" dependency`);
+  }
   const actualRadius = radius - padding;
   const centerXAndY = radius;
   const amountToCover = (percentage / 100) * 360;
