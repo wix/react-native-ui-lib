@@ -1,7 +1,8 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {ColorValue, StyleSheet} from 'react-native';
 import View from '../view';
 import {SvgPackage} from '../../optionalDependencies';
+import {Colors} from '../../style';
 const {Svg, Path} = SvgPackage;
 
 export type PieSegmentProps = {
@@ -10,14 +11,24 @@ export type PieSegmentProps = {
   color: string;
   startAngle?: number;
   padding?: number;
+  dividerWidth?: number;
+  dividerColor?: ColorValue;
 };
 
-const DEFAULT_DIVIDER_COLOR = '#FFFFFF';
+const DEFAULT_DIVIDER_COLOR = Colors.$backgroundDefault;
 const DEFAULT_DIVIDER_WIDTH = 4;
 const DEFAULT_PADDING = 0;
 
 const PieSegment = (props: PieSegmentProps) => {
-  const {percentage, radius, color, startAngle = 0, padding = DEFAULT_PADDING} = props;
+  const {
+    percentage,
+    radius,
+    color,
+    startAngle = 0,
+    padding = DEFAULT_PADDING,
+    dividerWidth = DEFAULT_DIVIDER_WIDTH,
+    dividerColor = DEFAULT_DIVIDER_COLOR
+  } = props;
   if (!Svg || !Path) {
     console.error(`RNUILib PieChart requires installing "@react-native-svg" dependency`);
   }
@@ -51,9 +62,8 @@ const PieSegment = (props: PieSegmentProps) => {
     <Path
       d={`${startBorderLine} ${endBorderLine}`}
       fill="none"
-      stroke={DEFAULT_DIVIDER_COLOR}
-      strokeWidth={DEFAULT_DIVIDER_WIDTH / 2}
-      strokeLinecap="round"
+      stroke={dividerColor}
+      strokeWidth={dividerWidth / 2}
       strokeLinejoin="round"
     />
   );

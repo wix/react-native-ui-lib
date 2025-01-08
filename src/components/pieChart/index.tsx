@@ -7,12 +7,12 @@ export type PieChartSegmentProps = Pick<PieSegmentProps, 'percentage' | 'color'>
 export type PieChartProps = {
   segments: PieChartSegmentProps[];
   size?: number;
-};
+} & Pick<PieSegmentProps, 'dividerWidth' | 'dividerColor'>;
 
 const DEFAULT_SIZE = 144;
 
 const PieChart = (props: PieChartProps) => {
-  const {segments, size = DEFAULT_SIZE} = props;
+  const {segments, size = DEFAULT_SIZE, ...others} = props;
 
   const renderPieSegments = () => {
     let currentStartAngle = 0;
@@ -20,7 +20,9 @@ const PieChart = (props: PieChartProps) => {
     return segments.map((segment, index) => {
       const startAngle = currentStartAngle;
       currentStartAngle += (segment.percentage / 100) * 360;
-      return <PartialCircle key={index} {...segment} startAngle={startAngle} radius={size / 2}/>;
+      return (
+        <PartialCircle key={index} {...segment} {...others} startAngle={startAngle} radius={size / 2}/>
+      );
     });
   };
   return (
