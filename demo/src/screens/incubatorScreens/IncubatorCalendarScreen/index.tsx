@@ -59,7 +59,7 @@ export default class CalendarScreen extends Component {
       minute: '2-digit'
     });
     return (
-      <Card marginH-s5 marginB-s4 padding-s4 backgroundColor={Colors.yellow70}>
+      <Card marginH-s5 marginB-s4 padding-s4 backgroundColor={Colors.$backgroundGeneralLight}>
         <Text text70>Event Title</Text>
         {makeEventBigger && <Text>Event short description</Text>}
         <Text marginT-s1 text90>
