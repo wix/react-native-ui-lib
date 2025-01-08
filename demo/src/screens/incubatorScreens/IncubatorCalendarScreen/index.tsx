@@ -16,14 +16,18 @@ export default class CalendarScreen extends Component {
     this.loadEvents(this.state.date);
   }
 
-  loadEvents = async (date: number) => {
+  // Note: we throttle event loading because initially the Agenda reach end and trigger extra event load
+  loadEvents = _.throttle(async (date: number) => {
+    console.log(`Loading new events`);
     this.setState({showLoader: true});
     // const {events} = this.state;
     const newEvents = await MockServer.getEvents(date);
     this.pageIndex++;
     // this.setState({events: _.uniqBy([...events, ...newEvents], e => e.id), showLoader: false});
     this.setState({events: newEvents, showLoader: false});
-  };
+  },
+  1500,
+  {leading: true, trailing: false});
 
   onChangeDate = (date: number) => {
     console.log('Date change: ', date);
