@@ -40,6 +40,17 @@ const MONOCHROME_SEGMENTS: PieChartSegmentProps[] = [
   }
 ];
 
+const NOT_FULL_PIECHART: PieChartSegmentProps[] = [
+  {
+    percentage: 30,
+    color: Colors.blue30
+  },
+  {
+    percentage: 40,
+    color: Colors.red30
+  }
+];
+
 const PieChartScreen = () => {
   const renderSegmentLabel = (segment: PieChartSegmentProps, text: string) => {
     const {percentage, color} = segment;
@@ -78,6 +89,10 @@ const PieChartScreen = () => {
           Monochrome colors
         </Text>
         {renderPieChartCard(MONOCHROME_SEGMENTS)}
+        <Text text50L marginV-s2>
+          Not Full PieChart
+        </Text>
+        {renderPieChartCard(NOT_FULL_PIECHART)}
       </View>
     </ScrollView>
   );

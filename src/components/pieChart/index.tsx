@@ -1,5 +1,4 @@
-import React, {useMemo} from 'react';
-import _ from 'lodash';
+import React from 'react';
 import View from '../view';
 import PartialCircle, {PieSegmentProps} from './PieSegment';
 
@@ -14,13 +13,6 @@ const DEFAULT_SIZE = 144;
 
 const PieChart = (props: PieChartProps) => {
   const {segments, size = DEFAULT_SIZE} = props;
-
-  const total = useMemo(() => {
-    return _.sum(segments.map(s => s.percentage));
-  }, [segments]);
-  if (total !== 100) {
-    throw new Error('PieChart segments must sum up to 100');
-  }
 
   const renderPieSegments = () => {
     let currentStartAngle = 0;
