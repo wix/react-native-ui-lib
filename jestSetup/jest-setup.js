@@ -1,4 +1,4 @@
-import {NativeModules, AccessibilityInfo, Animated} from 'react-native';
+import {AccessibilityInfo, Animated} from 'react-native';
 // ========= Mock Object.defineProperty to always allow overriding =========
 const originalDefineProperty = Object.defineProperty;
 Object.defineProperty = (obj, prop, desc) => {

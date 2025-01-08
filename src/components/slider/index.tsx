@@ -18,7 +18,7 @@ import {Constants, asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors} from '../../style';
 import View from '../view';
-import IncubatorSlider from '../../incubator/Slider';
+import IncubatorSlider from '../../incubator/slider';
 import {SliderProps} from './types';
 import Thumb from './Thumb';
 

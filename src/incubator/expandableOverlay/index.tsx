@@ -4,7 +4,7 @@ import TouchableOpacity, {TouchableOpacityProps} from '../../components/touchabl
 import View from '../../components/view';
 import Modal, {ModalProps, ModalTopBarProps} from '../../components/modal';
 import DialogOld from '../../components/dialog';
-import DialogNew, {DialogMigrationProps} from '../Dialog';
+import DialogNew, {DialogMigrationProps} from '../dialog';
 import {Colors} from 'style';
 
 export interface ExpandableOverlayMethods {
