@@ -16,7 +16,7 @@ const DEFAULT_DIVIDER_COLOR = '#FFFFFF';
 const DEFAULT_DIVIDER_WIDTH = 4;
 const DEFAULT_PADDING = 0;
 
-const PartialCircle = (props: PieSegmentProps) => {
+const PieSegment = (props: PieSegmentProps) => {
   const {percentage, radius, color, startAngle = 0, padding = DEFAULT_PADDING} = props;
   const actualRadius = radius - padding;
   const centerXAndY = radius;
@@ -66,7 +66,7 @@ const PartialCircle = (props: PieSegmentProps) => {
   );
 };
 
-export default PartialCircle;
+export default PieSegment;
 
 const styles = StyleSheet.create({
   container: {
