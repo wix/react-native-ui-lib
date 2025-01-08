@@ -53,7 +53,11 @@ export default class CalendarScreen extends Component {
       hour: '2-digit',
       minute: '2-digit'
     });
-    const endTime = new Date(eventItem.end).toLocaleString('en-GB', {hour12: false, hour: '2-digit', minute: '2-digit'});
+    const endTime = new Date(eventItem.end).toLocaleString('en-GB', {
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit'
+    });
     return (
       <Card marginH-s5 marginB-s4 padding-s4 backgroundColor={Colors.yellow70}>
         <Text text70>Event Title</Text>
@@ -78,15 +82,18 @@ export default class CalendarScreen extends Component {
     const {date, events, showLoader} = this.state;
 
     return (
-      <Incubator.Calendar data={events} initialDate={date} onChangeDate={this.onChangeDate} staticHeader>
-        <Incubator.Calendar.Agenda
-          renderEvent={this.renderEvent}
-          renderHeader={this.renderHeader}
-          // itemHeight={30}
-          onEndReached={this.onEndReached}
-          showLoader={showLoader}
-        />
-      </Incubator.Calendar>
+      <View flex>
+        <Incubator.Calendar data={events} initialDate={date} onChangeDate={this.onChangeDate} staticHeader>
+          <Incubator.Calendar.Agenda
+            renderEvent={this.renderEvent}
+            renderHeader={this.renderHeader}
+            // itemHeight={30}
+            onEndReached={this.onEndReached}
+            showLoader={showLoader}
+          />
+        </Incubator.Calendar>
+        <Incubator.Toast visible={showLoader} message="Loading events..." preset="general"/>
+      </View>
     );
   }
 }
