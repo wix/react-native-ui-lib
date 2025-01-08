@@ -18,7 +18,7 @@ const FlashList = FlashListPackage?.FlashList;
 const VIEWABILITY_CONFIG = {itemVisiblePercentThreshold: 95, minimumViewTime: 200};
 const YEARS_RANGE = 1;
 const PAGE_RELOAD_THRESHOLD = 3;
-const NOW = Date.now(); // so the 'initialDate' effect won't get called since the now different on every rerender
+const NOW = new Date().setHours(0, 0, 0, 0);
 
 function Calendar(props: PropsWithChildren<CalendarProps>) {
   const {
@@ -47,7 +47,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
   [items]);
 
   const flashListRef = useRef();
-  const current = useSharedValue<number>(initialDate);
+  const current = useSharedValue<number>(new Date(initialDate).setHours(0, 0, 0, 0));
   const initialMonthIndex = useRef(getItemIndex(current.value));
   const lastUpdateSource = useSharedValue<UpdateSource>(UpdateSource.INIT);
   const processedData = useMemo(() => addHeaders(data), [data]);

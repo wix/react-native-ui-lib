@@ -7,7 +7,7 @@ export default class CalendarScreen extends Component {
   pageIndex = 0;
 
   state = {
-    date: new Date().getTime(),
+    date: new Date(/* '2025-01-12' */).getTime(),
     events: [] as any[],
     showLoader: false
   };

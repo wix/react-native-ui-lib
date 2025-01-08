@@ -13,7 +13,6 @@ import CalendarContext from './CalendarContext';
 
 const FlashList = FlashListPackage?.FlashList;
 
-// TODO: Fix initial scrolling
 function Agenda(props: AgendaProps) {
   // TODO: Consider removing itemHeight if it's not needed
   const {renderEvent, renderHeader, itemHeight, onEndReached, showLoader} = props;
@@ -21,7 +20,7 @@ function Agenda(props: AgendaProps) {
   const flashList = useRef<FlashListType<InternalEvent>>(null);
   const closestSectionHeader = useSharedValue<DateSectionHeader | null>(null);
   const scrolledByUser = useSharedValue<boolean>(false);
-  const lastDateBeforeLoadingNewEvents = useRef<number>(0);
+  const lastDateBeforeLoadingNewEvents = useRef<number>(selectedDate.value);
 
   /* const keyExtractor = useCallback((item: InternalEvent) => {
     return item.type === 'Event' ? item.id : item.header;
@@ -30,7 +29,7 @@ function Agenda(props: AgendaProps) {
   useDidUpdate(() => {
     const result = findClosestDateAfter(lastDateBeforeLoadingNewEvents.current);
     if (result?.index) {
-      scrollToIndex(result?.index, false);
+      setTimeout(() => scrollToIndex(result?.index, false), 200);
     }
   }, [data]);
 
