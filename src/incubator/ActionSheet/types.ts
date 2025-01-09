@@ -1,7 +1,8 @@
-import {StyleProp, ViewStyle} from 'react-native';
+import {StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {DialogProps} from '../Dialog';
-import {ButtonProps} from '../../components/button';
 import {GridListItemProps} from '../../components/gridListItem';
+import {GridViewProps} from '../../components/gridView';
+import {IconProps} from '../../components/icon';
 import {WithScrollReachedProps, WithScrollEnablerProps} from '../../commons/new';
 
 export enum ActionSheetDismissReason {
@@ -9,38 +10,68 @@ export enum ActionSheetDismissReason {
   CANCELED = 'canceled'
 }
 
-export type ActionSheetOptionProps = ButtonProps & {
+type BaseActionSheetOptionProps = {
+  /**
+   * Action handler for the GridItem
+   */
+  onPress?: (selectedOptionProps: ActionSheetGridItemProps, selectedOptionIndex: number) => void;
+  /**
+   * Send true to avoid dismissing the ActionSheet on press
+   */
+  avoidDismiss?: boolean;
+};
+
+export type ActionSheetOptionProps = BaseActionSheetOptionProps & {
+  /**
+   * Action title
+   */
+  title?: string;
+  /**
+   * title custom style
+   */
+  titleStyle?: StyleProp<TextStyle>;
+  /**
+   * Action subtitle
+   */
+  subtitle?: string;
+  /**
+   * subtitle custom style
+   */
+  subtitleStyle?: StyleProp<TextStyle>;
+  /**
+   * Icon to display for the action, render before the title
+   */
+  icon?: IconProps;
+  /**
+   * Custom element to be rendered on the Action left side
+   */
+  leftCustomElement?: React.ReactElement;
+  /**
+   * Custom element to be rendered on the Action right side
+   */
+  rightCustomElement?: React.ReactElement;
   /**
    * Is this option a section header
    */
   isSectionHeader?: boolean;
   /**
-   * Send true to avoid dismissing the ActionSheet on press
+   * Section header style
    */
-  avoidDismiss?: boolean;
+  sectionHeaderStyle?: StyleProp<ViewStyle>;
   /**
-   * Set a function to be executed on press
+   * Testing identifier
    */
-  onPress?: (selectedOptionProps: ActionSheetOptionProps, selectedOptionIndex: number) => void;
-
+  testID?: string;
   key?: string | number;
 };
 
-export type ActionSheetGridItemProps = ButtonProps &
-  Omit<GridListItemProps, 'onPress'> & {
-    /**
-     * Action handler for the GridItem
-     */
-    onPress?: (selectedOptionProps: ActionSheetGridItemProps, selectedOptionIndex: number) => void;
-    /**
-     * Send true to avoid dismissing the ActionSheet on press
-     */
-    avoidDismiss?: boolean;
-  };
+export type ActionSheetGridItemProps = Omit<GridListItemProps, 'onPress'> & BaseActionSheetOptionProps;
 
-export type ActionSheetGridProps = Pick<ActionSheetProps, 'gridNumColumns' | 'gridOptions'> & {
-  onItemPress: (props: any) => void;
+export type ActionSheetGridProps = Omit<GridViewProps, 'items' | 'lastItemLabel' | 'lastItemOverlayColor'> & {
+  onItemPress?: (props: any) => void;
 };
+
+export type ActionSheetGridList = ActionSheetGridProps & Pick<ActionSheetProps, 'options'>;
 
 export interface ActionSheetProps extends Pick<DialogProps, 'visible'> {
   dialogProps?: Omit<DialogProps, 'visible' | 'onDismiss'>;
@@ -49,30 +80,13 @@ export interface ActionSheetProps extends Pick<DialogProps, 'visible'> {
    */
   onDismiss?: (reason: ActionSheetDismissReason) => void;
   /**
-   * List of options for the action sheet, follows the Button prop types (supply 'label' string and 'onPress'
-   * function)
+   * List of options for the action sheet
    */
-  options?: ActionSheetOptionProps[];
+  options?: ActionSheetOptionProps[] | ActionSheetGridItemProps[];
   /**
-   * Options for the action sheet (when wanting an ActionSheet with a GridView).
-   *
-   * title - title for the GridItem.
-   * iconSource - icon's source for the GridItem.
-   * onPress - action handler for the GridItem.
-   * avoidDismiss - send true to avoid dismissing the ActionSheet on press.
-   *
-   * Example:
-   * [
-   *     {title: 'action 1', iconSource: Assets.icons.general.bookings, onPress: () => this.selectAction('action 1'), avoidDismiss: true},
-   *     {title: 'action 2', iconSource: Assets.icons.general.forum, onPress: () => this.selectAction('action 2')},
-   *     {title: 'action 3', iconSource: Assets.icons.general.groups, onPress: () => this.selectAction('action 3')},
-   * ]
+   * Grid options for the action sheet
    */
-  gridOptions?: ActionSheetGridItemProps[];
-  /**
-   * The number of columns in the GridView
-   */
-  gridNumColumns?: number;
+  gridOptions?: ActionSheetGridProps;
   /**
    * The options' container style
    */

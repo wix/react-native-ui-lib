@@ -22,7 +22,7 @@ function IncubatorActionSheetScreen() {
 
       <Incubator.ActionSheet
         visible={visible}
-        options={useGrid ? undefined : listItems}
+        options={useGrid ? gridItems : listItems}
         onDismiss={() => {
           console.log(`props onDismiss called!`);
           setVisible(false);
@@ -30,10 +30,10 @@ function IncubatorActionSheetScreen() {
         dialogProps={{
           bottom: true,
           centerH: true,
-          width: '90%',
+          width: '95%',
           headerProps: {title: 'Action Sheet', subtitle: 'sub'}
         }}
-        gridOptions={useGrid ? gridItems : undefined}
+        gridOptions={useGrid ? {numColumns: 3} : undefined}
       />
     </View>
   );

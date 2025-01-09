@@ -10,7 +10,7 @@ const pickOption = (option: string) => {
 
 const renderCustomItem = (imageProps: ImageProps) => {
   return (
-    <View style={styles.gridItemContainerStyle}>
+    <View style={styles.gridItemCustomRenderStyle}>
       <View center style={styles.gridItemCircle}>
         <Image {...imageProps}/>
       </View>
@@ -19,32 +19,34 @@ const renderCustomItem = (imageProps: ImageProps) => {
 };
 
 export const listItems = [
-  {label: 'Open Settings', onPress: () => pickOption('Open Settings')},
-  {label: 'View Notifications', onPress: () => pickOption('View Notifications')},
-  {label: 'Update Profile', onPress: () => pickOption('Update Profile')},
-  {label: 'Log Out', onPress: () => pickOption('Log Out')},
-  {label: 'Share Post', onPress: () => pickOption('Share Post')},
-  {label: 'Send Message', onPress: () => pickOption('Send Message')},
-  {label: 'Take Photo', onPress: () => pickOption('Take Photo')},
-  {label: 'Record Video', onPress: () => pickOption('Record Video')},
-  {label: 'Add to Favorites', onPress: () => pickOption('Add to Favorites')},
-  {label: 'Search', onPress: () => pickOption('Search')},
-  {label: 'Refresh Feed', onPress: () => pickOption('Refresh Feed')},
-  {label: 'Edit Post', onPress: () => pickOption('Edit Post')},
-  {label: 'Report Issue', onPress: () => pickOption('Report Issue')},
-  {label: 'Contact Support', onPress: () => pickOption('Contact Support')},
-  {label: 'View Profile', onPress: () => pickOption('View Profile')},
-  {label: 'Cancel', onPress: () => pickOption('Cancel')}
+  {title: 'Open Settings', onPress: () => pickOption('Open Settings')},
+  {title: 'View Notifications', onPress: () => pickOption('View Notifications')},
+  {title: 'Update Profile', onPress: () => pickOption('Update Profile')},
+  {title: 'Log Out', onPress: () => pickOption('Log Out')},
+  {title: 'Share Post', onPress: () => pickOption('Share Post')},
+  {title: 'Send Message', onPress: () => pickOption('Send Message')},
+  {title: 'Take Photo', onPress: () => pickOption('Take Photo')},
+  {title: 'Record Video', onPress: () => pickOption('Record Video')},
+  {title: 'Add to Favorites', onPress: () => pickOption('Add to Favorites')},
+  {title: 'Search', onPress: () => pickOption('Search')},
+  {title: 'Refresh Feed', onPress: () => pickOption('Refresh Feed')},
+  {title: 'Edit Post', onPress: () => pickOption('Edit Post')},
+  {title: 'Report Issue', onPress: () => pickOption('Report Issue')},
+  {title: 'Contact Support', onPress: () => pickOption('Contact Support')},
+  {title: 'View Profile', onPress: () => pickOption('View Profile')},
+  {title: 'Cancel', onPress: () => pickOption('Cancel')}
 ];
 
 export const gridItems = [
   {
     title: 'Open Settings',
+    subtitle: 'Subtitle',
     onPress: () => pickOption('Open Settings'),
     renderCustomItem: () =>
       renderCustomItem({
         source: Assets.icons.demo.settings
-      })
+      }),
+    containerStyle: {alignItems: 'center', margin: Spacings.s1}
   },
   {
     title: 'View Notifications',
@@ -52,7 +54,8 @@ export const gridItems = [
     renderCustomItem: () =>
       renderCustomItem({
         source: Assets.icons.demo.refresh
-      })
+      }),
+    containerStyle: {alignItems: 'center', margin: Spacings.s1}
   },
   {
     title: 'Update Profile',
@@ -60,7 +63,8 @@ export const gridItems = [
     renderCustomItem: () =>
       renderCustomItem({
         source: Assets.icons.check
-      })
+      }),
+    containerStyle: {alignItems: 'center', margin: Spacings.s1}
   },
   {
     title: 'Log Out',
@@ -68,7 +72,8 @@ export const gridItems = [
     renderCustomItem: () =>
       renderCustomItem({
         source: Assets.icons.x
-      })
+      }),
+    containerStyle: {alignItems: 'center', margin: Spacings.s1}
   },
   {
     title: 'Share Post',
@@ -76,7 +81,8 @@ export const gridItems = [
     renderCustomItem: () =>
       renderCustomItem({
         source: Assets.icons.plusSmall
-      })
+      }),
+    containerStyle: {alignItems: 'center', margin: Spacings.s1}
   },
   {
     title: 'Send Message',
@@ -84,7 +90,8 @@ export const gridItems = [
     renderCustomItem: () =>
       renderCustomItem({
         source: Assets.icons.minusSmall
-      })
+      }),
+    containerStyle: {alignItems: 'center', margin: Spacings.s1}
   },
   {
     title: 'Take Photo',
@@ -92,7 +99,8 @@ export const gridItems = [
     renderCustomItem: () =>
       renderCustomItem({
         source: Assets.icons.demo.camera
-      })
+      }),
+    containerStyle: {alignItems: 'center', margin: Spacings.s1}
   },
   {
     title: 'Record Video',
@@ -100,7 +108,8 @@ export const gridItems = [
     renderCustomItem: () =>
       renderCustomItem({
         source: Assets.icons.demo.camera
-      })
+      }),
+    containerStyle: {alignItems: 'center', margin: Spacings.s1}
   }
 ];
 
@@ -112,8 +121,9 @@ const styles = StyleSheet.create({
     borderRadius: BorderRadiuses.br100,
     borderColor: Colors.$outlineDisabled
   },
-  gridItemContainerStyle: {
-    marginBottom: Spacings.s2
+  gridItemCustomRenderStyle: {
+    marginBottom: Spacings.s2,
+    alignSelf: 'center'
   },
   containerStyle: {marginVertical: Spacings.s2}
 });

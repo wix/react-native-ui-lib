@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import React, {useMemo} from 'react';
-import {Colors} from '../../style';
 import GridView from '../../components/gridView';
-import {ActionSheetGridProps} from './types';
+import {ActionSheetGridList, ActionSheetGridItemProps} from './types';
 
 const GRID_COLUMN_NUMBER = 3;
 
@@ -10,28 +9,26 @@ const defaultProps = {
   gridNumColumns: GRID_COLUMN_NUMBER
 };
 
-const GridOptions = React.memo((props: ActionSheetGridProps) => {
-  const {gridOptions, gridNumColumns, onItemPress} = props;
+const GridOptions = React.memo((props: ActionSheetGridList) => {
+  const {options, onItemPress} = props;
 
   const gridItems = useMemo(() => {
-    return _.map(gridOptions, (option, index) => {
-      const {testID, ...gridOptions} = option;
+    return _.map(options as ActionSheetGridItemProps[], (option, index) => {
       const customValue = {selectedIndex: index, selectedOption: option};
+      console.log(`option:`, option);
       return {
-        testID,
-        titleLines: 2,
-        titleColor: Colors.grey10,
-        titleTypography: 'subtextBold',
-        ...gridOptions,
-        customValue,
-        onPress: onItemPress
+        ...option,
+        onPress: () => {
+          option.onPress?.(option, index);
+          onItemPress?.(customValue);
+        }
       };
     });
-  }, [gridOptions, onItemPress]);
+  }, [options, onItemPress]);
 
   const gridView = useMemo(() => {
-    return <GridView items={gridItems} numColumns={gridNumColumns}/>;
-  }, [gridItems, gridNumColumns]);
+    return <GridView items={gridItems} {...props}/>;
+  }, [gridItems]);
 
   return gridView;
 });
