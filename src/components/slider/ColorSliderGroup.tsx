@@ -24,6 +24,7 @@ const ColorSliderGroup = <T extends string | HSLA = string>(props: ColorSliderGr
     labels = {hue: 'Hue', lightness: 'Lightness', saturation: 'Saturation', default: ''},
     labelsStyle,
     accessible,
+    sliderProps,
     migrate
   } = themeProps;
   
@@ -50,6 +51,8 @@ const ColorSliderGroup = <T extends string | HSLA = string>(props: ColorSliderGr
           </Text>
         )}
         <GradientSlider
+          throttleTime={400}
+          {...sliderProps}
           type={type}
           containerStyle={sliderContainerStyle}
           accessible={accessible}
