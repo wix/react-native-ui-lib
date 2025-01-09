@@ -5,17 +5,6 @@ import {ModalTopBarProps} from '../modal/TopBar';
 import {TextFieldMethods, TextFieldProps} from '../textField';
 import {TouchableOpacityProps} from '../touchableOpacity';
 
-export interface CustomTopElementProps {
-  /**
-   * The current multi draft value
-   */
-  value: PickerMultiValue;
-  /*
-   * Set the new multi draft value
-   */
-  setValue: (value: PickerMultiValue) => void;
-}
-
 // Note: enum values are uppercase due to legacy
 export enum PickerModes {
   SINGLE = 'SINGLE',
@@ -222,6 +211,10 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
       label?: string
     ) => React.ReactElement;
     /**
+     * Custom top element, value prop is relevant for multi picker use cases
+     */
+    renderCustomTopElement?: (value?: PickerValue) => React.ReactElement;
+    /**
      * Add onPress callback for when pressing the picker
      */
     onPress?: () => void;
@@ -252,20 +245,12 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
   };
 
 export type PickerPropsWithSingle = PickerBaseProps & {
-  /**
-   * Custom top element
-   */
-  customTopElement?: () => React.ReactElement;
   mode?: PickerModes.SINGLE;
   value?: PickerSingleValue;
   onChange?: (value: PickerSingleValue) => void;
 };
 
 export type PickerPropsWithMulti = PickerBaseProps & {
-  /**
-   * Custom top element, props (vale, setValue) are for multi picker only
-   */
-  customTopElement?: (props: CustomTopElementProps) => React.ReactElement;
   mode?: PickerModes.MULTI;
   value?: PickerMultiValue;
   onChange?: (value: PickerMultiValue) => void;
@@ -339,7 +324,7 @@ export type PickerItemsListProps = Pick<
   | 'useSafeArea'
   | 'showLoader'
   | 'customLoaderElement'
-  | 'customTopElement'
+  | 'renderCustomTopElement'
   | 'showSearch'
   | 'searchStyle'
   | 'searchPlaceholder'

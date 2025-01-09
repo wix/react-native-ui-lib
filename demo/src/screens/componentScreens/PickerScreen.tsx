@@ -132,12 +132,12 @@ export default class PickerScreen extends Component {
     );
   };
 
-  handleTopElementPress = (allOptionsSelected: boolean, setValue: any) => {
+  onTopElementPress = (allOptionsSelected: boolean) => {
     if (allOptionsSelected) {
-      setValue([]);
+      this.setState({statOption: []});
     } else {
       const allValues = statusOptions.map(option => option.value);
-      setValue(allValues);
+      this.setState({statOption: allValues});
     }
   };
 
@@ -226,13 +226,13 @@ export default class PickerScreen extends Component {
             topBarProps={{title: 'Status'}}
             mode={Picker.modes.MULTI}
             items={statusOptions}
-            customTopElement={({value, setValue}) => {
+            renderCustomTopElement={value => {
               const allOptionsSelected = Array.isArray(value) && value.length === statusOptions.length;
               return (
                 <View margin-s3>
                   <Button
                     label={allOptionsSelected ? 'Unselect All' : 'Select All'}
-                    onPress={() => this.handleTopElementPress(allOptionsSelected, setValue)}
+                    onPress={() => this.onTopElementPress(allOptionsSelected)}
                     size="small"
                   />
                 </View>

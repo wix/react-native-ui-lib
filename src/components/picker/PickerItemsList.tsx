@@ -35,7 +35,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     testID,
     showLoader,
     customLoaderElement,
-    customTopElement
+    renderCustomTopElement
   } = props;
   const context = useContext(PickerContext);
 
@@ -162,26 +162,13 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     );
   };
 
-  const renderCustomTopElement = () => {
-    const {isMultiMode, value, setValue} = context;
-    if (customTopElement) {
-      if (isMultiMode) {
-        console.log(`renderCustomTopElement, isMultiMode!, value:`, value);
-        //@ts-expect-error - PickerWithMultiValue props need to pass the correct props
-        return customTopElement({value, setValue});
-      }
-      //@ts-expect-error - PickerWithSingleValue props
-      return customTopElement();
-    }
-  };
-
   const renderContent = () => {
     return useWheelPicker ? (
       renderWheel()
     ) : (
       <>
         {renderSearchInput()}
-        {renderCustomTopElement()}
+        {!!renderCustomTopElement && renderCustomTopElement(context.value)}
         {renderList()}
       </>
     );

@@ -79,7 +79,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     items: propItems,
     showLoader,
     customLoaderElement,
-    customTopElement,
+    renderCustomTopElement,
     ...others
   } = themeProps;
   const {preset, placeholder, style, trailingAccessory, label: propsLabel} = others;
@@ -249,7 +249,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         useSafeArea={useSafeArea}
         showLoader={showLoader}
         customLoaderElement={customLoaderElement}
-        customTopElement={customTopElement}
+        renderCustomTopElement={renderCustomTopElement}
       >
         {filteredItems}
       </PickerItemsList>
