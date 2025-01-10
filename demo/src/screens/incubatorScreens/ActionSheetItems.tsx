@@ -1,21 +1,41 @@
-import React from 'react';
-import {StyleSheet} from 'react-native';
-import {View, Image, ImageProps, Assets, BorderRadiuses, Colors, Spacings} from 'react-native-ui-lib';
+import {Alert} from 'react-native';
+import {Assets} from 'react-native-ui-lib';
 
-const GRID_ITEM_CIRCLE_SIZE = 52;
+export enum TEXT_LENGTH {
+  NO_TEXT = 'No text',
+  SHORT = 'Short',
+  LONG = 'Long'
+}
 
-const pickOption = (option: string) => {
-  console.log(`picked: ${option}`);
+export enum CUSTOM_TITLE_COMPONENT {
+  NONE = 'None',
+  AVATAR = 'Avatar',
+  ICON = 'Icon',
+  THUMBNAIL = 'Thumbnail'
+}
+
+export enum OPTIONS_TYPE {
+  NONE = 'None',
+  REGULAR = 'Regular',
+  WITH_ICONS = 'With icons',
+  LONG = 'Long',
+  SECTION_HEADERS = 'Section headers',
+  GRID_VIEW = 'Grid view'
+}
+
+export type State = {
+  shouldShowModal: boolean;
+  titleLength: TEXT_LENGTH;
+  titleIsProminent: boolean;
+  titleIsClickable: boolean;
+  subtitleLength: TEXT_LENGTH;
+  showFooter: boolean;
+  optionsType: OPTIONS_TYPE;
+  visible: boolean;
 };
 
-const renderCustomItem = (imageProps: ImageProps) => {
-  return (
-    <View style={styles.gridItemCustomRenderStyle}>
-      <View center style={styles.gridItemCircle}>
-        <Image {...imageProps}/>
-      </View>
-    </View>
-  );
+const pickOption = (option: string) => {
+  Alert.alert(`picked: ${option}`);
 };
 
 export const listItems = [
@@ -40,90 +60,51 @@ export const listItems = [
 export const gridItems = [
   {
     title: 'Open Settings',
-    subtitle: 'Subtitle',
-    onPress: () => pickOption('Open Settings'),
-    renderCustomItem: () =>
-      renderCustomItem({
-        source: Assets.icons.demo.settings
-      }),
-    containerStyle: {alignItems: 'center', margin: Spacings.s1}
+    imageProps: {
+      source: Assets.icons.demo.settings
+    },
+    onPress: () => pickOption('Open Settings')
   },
   {
     title: 'View Notifications',
-    onPress: () => pickOption('View Notifications'),
-    renderCustomItem: () =>
-      renderCustomItem({
-        source: Assets.icons.demo.refresh
-      }),
-    containerStyle: {alignItems: 'center', margin: Spacings.s1}
+    imageProps: {
+      source: Assets.icons.demo.refresh
+    },
+    onPress: () => pickOption('View Notifications')
   },
   {
     title: 'Update Profile',
-    onPress: () => pickOption('Update Profile'),
-    renderCustomItem: () =>
-      renderCustomItem({
-        source: Assets.icons.check
-      }),
-    containerStyle: {alignItems: 'center', margin: Spacings.s1}
+    imageProps: {
+      source: Assets.icons.check
+    },
+    onPress: () => pickOption('Update Profile')
   },
   {
     title: 'Log Out',
-    onPress: () => pickOption('Log Out'),
-    renderCustomItem: () =>
-      renderCustomItem({
-        source: Assets.icons.x
-      }),
-    containerStyle: {alignItems: 'center', margin: Spacings.s1}
+    imageProps: {
+      source: Assets.icons.x
+    },
+    onPress: () => pickOption('Log Out')
   },
   {
     title: 'Share Post',
-    onPress: () => pickOption('Share Post'),
-    renderCustomItem: () =>
-      renderCustomItem({
-        source: Assets.icons.plusSmall
-      }),
-    containerStyle: {alignItems: 'center', margin: Spacings.s1}
-  },
-  {
-    title: 'Send Message',
-    onPress: () => pickOption('Send Message'),
-    renderCustomItem: () =>
-      renderCustomItem({
-        source: Assets.icons.minusSmall
-      }),
-    containerStyle: {alignItems: 'center', margin: Spacings.s1}
+    imageProps: {
+      source: Assets.icons.plusSmall
+    },
+    onPress: () => pickOption('Share Post')
   },
   {
     title: 'Take Photo',
-    onPress: () => pickOption('Take Photo'),
-    renderCustomItem: () =>
-      renderCustomItem({
-        source: Assets.icons.demo.camera
-      }),
-    containerStyle: {alignItems: 'center', margin: Spacings.s1}
+    imageProps: {
+      source: Assets.icons.demo.camera
+    },
+    onPress: () => pickOption('Take Photo')
   },
   {
     title: 'Record Video',
-    onPress: () => pickOption('Record Video'),
-    renderCustomItem: () =>
-      renderCustomItem({
-        source: Assets.icons.demo.camera
-      }),
-    containerStyle: {alignItems: 'center', margin: Spacings.s1}
+    imageProps: {
+      source: Assets.icons.demo.camera
+    },
+    onPress: () => pickOption('Record Video')
   }
 ];
-
-const styles = StyleSheet.create({
-  gridItemCircle: {
-    width: GRID_ITEM_CIRCLE_SIZE,
-    height: GRID_ITEM_CIRCLE_SIZE,
-    borderWidth: 1,
-    borderRadius: BorderRadiuses.br100,
-    borderColor: Colors.$outlineDisabled
-  },
-  gridItemCustomRenderStyle: {
-    marginBottom: Spacings.s2,
-    alignSelf: 'center'
-  },
-  containerStyle: {marginVertical: Spacings.s2}
-});

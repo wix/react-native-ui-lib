@@ -138,12 +138,7 @@ const ActionSheet = (props: ActionSheetProps) => {
   };
 
   const renderList = () => {
-    return (
-      <View>
-        {renderActions()}
-        {footerCustomElement}
-      </View>
-    );
+    return <View>{renderActions()}</View>;
   };
 
   const _gridOptions = useMemo(() => {
