@@ -210,6 +210,7 @@ function IncubatorActionSheetScreen() {
           centerH: true,
           width: '95%',
           height: _.isEmpty(list) && !gridOptions ? 150 : undefined,
+          //@ts-ignore
           headerProps
         }}
         gridOptions={gridOptions}

@@ -1,5 +1,5 @@
 import {StyleProp, TextStyle, ViewStyle} from 'react-native';
-import {DialogProps} from '../Dialog';
+import {DialogProps} from '../dialog';
 import {GridListItemProps} from '../../components/gridListItem';
 import {GridViewProps} from '../../components/gridView';
 import {IconProps} from '../../components/icon';
