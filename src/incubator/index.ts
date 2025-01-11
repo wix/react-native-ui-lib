@@ -1,4 +1,4 @@
-export {default as Calendar} from './Calendar';
+export {default as Calendar} from './calendar';
 export {default as ExpandableOverlay, ExpandableOverlayProps, ExpandableOverlayMethods} from './expandableOverlay';
 // @ts-ignore
 export {
@@ -13,8 +13,8 @@ export {
 export {default as Toast, ToastProps, ToastPresets} from './toast';
 export {default as TouchableOpacity, TouchableOpacityProps} from './TouchableOpacity';
 export {default as PanView, PanViewProps, PanViewDirections, PanViewDismissThreshold} from './panView';
-export {default as Slider, SliderRef} from './Slider';
-export {default as Dialog, DialogProps, DialogHeaderProps, DialogStatics, DialogImperativeMethods} from './Dialog';
+export {default as Slider, SliderRef} from './slider';
+export {default as Dialog, DialogProps, DialogHeaderProps, DialogStatics, DialogImperativeMethods} from './dialog';
 export {
   default as ActionSheet,
   ActionSheetProps,

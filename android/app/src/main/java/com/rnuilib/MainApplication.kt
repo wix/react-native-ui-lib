@@ -22,7 +22,7 @@ class MainApplication : NavigationApplication() {
             PackageList(this).packages.apply {
               // Packages that cannot be autolinked yet can be added manually here, for example:
 //              add(UiLibPackageList(MainApplication.this).getPackageList())
-                addAll(UiLibPackageList(this@MainApplication).getPackageList())
+//              addAll(UiLibPackageList(this@MainApplication).getPackageList())
               // add(MyReactNativePackage())
             }
 
