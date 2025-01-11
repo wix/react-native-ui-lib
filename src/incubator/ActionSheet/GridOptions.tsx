@@ -15,7 +15,6 @@ const GridOptions = React.memo((props: ActionSheetGridList) => {
   const gridItems = useMemo(() => {
     return _.map(options as ActionSheetGridItemProps[], (option, index) => {
       const customValue = {selectedIndex: index, selectedOption: option};
-      console.log(`option:`, option);
       return {
         ...option,
         onPress: () => {

@@ -1,11 +1,10 @@
 import _ from 'lodash';
 import React, {useState} from 'react';
 import {Alert, ScrollView, StyleSheet} from 'react-native';
-import {View, Button, Incubator, Text, Switch, RadioButton, RadioGroup, Typography} from 'react-native-ui-lib';
-import {listItems, gridItems, TEXT_LENGTH, OPTIONS_TYPE, State} from './ActionSheetItems';
+import {View, Button, Incubator, Text, Switch, RadioButton, RadioGroup, Typography, Colors} from 'react-native-ui-lib';
+import {listItems, gridItems, TEXT_LENGTH, OPTIONS_TYPE, State, ICONS} from './ActionSheetItems';
 
 function IncubatorActionSheetScreen() {
-  const gridOptions = {};
   const [actionSheetOptions, setActionSheetOptions] = useState<State>({
     shouldShowModal: false,
     titleLength: TEXT_LENGTH.NO_TEXT,
@@ -102,31 +101,50 @@ function IncubatorActionSheetScreen() {
       titleProps: {accessibilityLabel: 'Custom accessibility label for ActionSheet header'},
       subtitle: getSubtitle(),
       titleStyle,
-
       onPress
     };
   };
 
-  const createGridViewItems = () => {
-    const {optionsType} = actionSheetOptions;
-    const data = optionsType === OPTIONS_TYPE.GRID_VIEW ? gridItems : gridItems.concat(gridItems).concat(gridItems);
-    return _.map(data, (quickAction, index: number) => ({
-      testID: `Option ${index + 1}`,
-      ...quickAction,
-      avoidDismiss: index === 5
-    }));
-  };
-
   const getGridOptions = () => {
     const {optionsType} = actionSheetOptions;
-    if (optionsType !== OPTIONS_TYPE.GRID_VIEW) {
-      return;
-    } else if (gridOptions[optionsType]) {
-      return gridOptions[optionsType];
+    if (optionsType === OPTIONS_TYPE.GRID_VIEW) {
+      return {
+        numColumns: 3
+      };
     }
-    gridOptions[optionsType] = createGridViewItems();
+  };
 
-    return {...gridOptions[optionsType]};
+  const getList = () => {
+    const {optionsType} = actionSheetOptions;
+    switch (optionsType) {
+      case 'None':
+        return [];
+      case 'Regular':
+        return listItems;
+      case 'With icons':
+        return listItems.map((item, index) => ({
+          ...item,
+          icon: {
+            source: ICONS[index % ICONS.length],
+            tintColor: index % ICONS.length === 2 && 'red',
+            style: {marginRight: 10}
+          }
+        }));
+      case 'Grid view':
+        return gridItems.map(item => ({
+          ...item,
+          containerStyle: styles.gridItemsContainer
+        }));
+      case 'Section headers':
+        return listItems.map((item, index) => ({
+          ...item,
+          isSectionHeader: index % 3 === 0,
+          titleStyle: index % 3 === 0 && {...Typography.text65},
+          sectionHeaderStyle: styles.sectionHeaders
+        }));
+      default:
+        return [];
+    }
   };
 
   const renderRadioButton = (key: string, value: string, hasLeftMargin: boolean) => {
@@ -167,15 +185,22 @@ function IncubatorActionSheetScreen() {
 
   const renderActionSheet = () => {
     const {visible, showFooter} = actionSheetOptions;
+    const list = getList();
     const headerProps = getHeaderProps();
     const gridOptions = getGridOptions();
-    const footerCustomElement = showFooter ? <Text red30>Footer</Text> : undefined;
+    const footerCustomElement = showFooter ? (
+      <View style={{height: 50}} flex bg-grey70 center>
+        <Text red30 text70BO>
+          Footer
+        </Text>
+      </View>
+    ) : undefined;
 
     return (
       <Incubator.ActionSheet
         testID={'uilib.actionSheet'}
         visible={visible}
-        options={listItems}
+        options={list}
         onDismiss={() => {
           console.log(`props onDismiss called!`);
           setVisible(false);
@@ -184,6 +209,7 @@ function IncubatorActionSheetScreen() {
           bottom: true,
           centerH: true,
           width: '95%',
+          height: _.isEmpty(list) && !gridOptions ? 150 : undefined,
           headerProps
         }}
         gridOptions={gridOptions}
@@ -204,7 +230,7 @@ function IncubatorActionSheetScreen() {
         {renderRadioGroup('Subtitle', TEXT_LENGTH, actionSheetOptions.subtitleLength, setSubtitleLength)}
         {renderRadioGroup('Options', OPTIONS_TYPE, actionSheetOptions.optionsType, setOptionsType)}
         <View row centerV marginT-10>
-          <Text text65>Add footer:</Text>
+          <Text>Add footer:</Text>
           <Switch value={actionSheetOptions.showFooter} onValueChange={toggleFooter} marginL-10/>
         </View>
 
@@ -221,7 +247,9 @@ const styles = StyleSheet.create({
   },
   scrollViewContainer: {
     paddingBottom: 12
-  }
+  },
+  gridItemsContainer: {margin: 5},
+  sectionHeaders: {backgroundColor: Colors.grey60, padding: 10}
 });
 
 export default IncubatorActionSheetScreen;
