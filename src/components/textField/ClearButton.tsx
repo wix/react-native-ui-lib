@@ -17,7 +17,12 @@ const TIMING_CONFIG = {
   easing: Easing.bezier(0.33, 1, 0.68, 1)
 };
 
-const ClearButton = ({testID, onClear, onChangeText}: Pick<TextFieldProps, 'onClear' | 'testID' | 'onChangeText'>) => {
+const ClearButton = ({
+  testID,
+  onClear,
+  onChangeText,
+  preset
+}: Pick<TextFieldProps, 'onClear' | 'testID' | 'onChangeText' | 'preset'>) => {
   const {hasValue} = useContext(FieldContext);
   const animatedValue = useSharedValue(hasValue ? VISIBLE_POSITION : NON_VISIBLE_POSITION);
   const animatedOpacity = useSharedValue(hasValue ? 1 : 0);
@@ -29,7 +34,8 @@ const ClearButton = ({testID, onClear, onChangeText}: Pick<TextFieldProps, 'onCl
     };
   });
 
-  const style = useMemo(() => [styles.container, animatedStyle], [animatedStyle]);
+  const style = useMemo(() => [styles.container, preset === 'underline' && {marginRight: Spacings.s3}, animatedStyle],
+    [animatedStyle, preset]);
 
   const animate = useCallback(() => {
     const toValue = hasValue ? VISIBLE_POSITION : NON_VISIBLE_POSITION;
@@ -65,7 +71,7 @@ const ClearButton = ({testID, onClear, onChangeText}: Pick<TextFieldProps, 'onCl
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: Spacings.s3
+    marginLeft: Spacings.s3
   },
   clearIcon: {
     tintColor: Colors.$textNeutralLight
