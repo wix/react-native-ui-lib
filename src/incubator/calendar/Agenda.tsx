@@ -1,4 +1,4 @@
-import React, {useContext, useCallback, useRef} from 'react';
+import React, {useContext, useCallback, useRef, useState} from 'react';
 import {ActivityIndicator, StyleSheet} from 'react-native';
 import {runOnJS, useAnimatedReaction, useSharedValue} from 'react-native-reanimated';
 import {FlashListPackage} from 'optionalDeps';
@@ -20,6 +20,7 @@ function Agenda(props: AgendaProps) {
   const flashList = useRef<FlashListType<InternalEvent>>(null);
   const closestSectionHeader = useSharedValue<DateSectionHeader | null>(null);
   const scrolledByUser = useSharedValue<boolean>(false);
+  const [stickyHeaderIndices, setStickyHeaderIndices] = useState<number[]>([]);
   const lastDateBeforeLoadingNewEvents = useRef<number>(selectedDate.value);
 
   /* const keyExtractor = useCallback((item: InternalEvent) => {
@@ -31,6 +32,11 @@ function Agenda(props: AgendaProps) {
     if (result?.index) {
       setTimeout(() => scrollToIndex(result?.index, false), 200);
     }
+
+    const headerIndices = data
+      .map((e, index) => (e.type === 'Header' ? index : undefined))
+      .filter(i => i !== undefined);
+    setStickyHeaderIndices(headerIndices);
   }, [data]);
 
   const _renderEvent = useCallback((eventItem: Event) => {
@@ -66,7 +72,7 @@ function Agenda(props: AgendaProps) {
     }
 
     return (
-      <View bottom marginB-5 marginH-20 height={itemHeight}>
+      <View bg-$backgroundDefault bottom marginB-5 marginH-20 height={itemHeight}>
         <Text>{headerItem.header}</Text>
       </View>
     );
@@ -170,6 +176,7 @@ function Agenda(props: AgendaProps) {
         // keyExtractor={keyExtractor}
         renderItem={renderItem}
         getItemType={getItemType}
+        stickyHeaderIndices={stickyHeaderIndices}
         onViewableItemsChanged={onViewableItemsChanged}
         onMomentumScrollBegin={onMomentumScrollBegin}
         onScrollBeginDrag={onScrollBeginDrag}

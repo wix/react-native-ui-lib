@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import {StyleSheet} from 'react-native';
 import React, {Component} from 'react';
 import {Incubator, View, Text, Card, Colors} from 'react-native-ui-lib';
 import MockServer from './MockServer';
@@ -18,7 +19,6 @@ export default class CalendarScreen extends Component {
 
   // Note: we throttle event loading because initially the Agenda reach end and trigger extra event load
   loadEvents = _.throttle(async (date: number) => {
-    console.log(`Loading new events`);
     this.setState({showLoader: true});
     // const {events} = this.state;
     const newEvents = await MockServer.getEvents(date);
@@ -72,8 +72,10 @@ export default class CalendarScreen extends Component {
   // TODO: Fix type once we export them
   renderHeader = (headerItem: any) => {
     return (
-      <View paddingH-s5 centerV flex marginV-s5>
-        <Text text70BO>{headerItem.header}</Text>
+      <View bg-$backgroundDefault paddingH-s5 centerV flex paddingV-s2 style={styles.sectionHeader}>
+        <Text text70BO>
+          {new Date(headerItem.date).toLocaleString('en-US', {weekday: 'long', day: 'numeric', month: 'short'})}
+        </Text>
       </View>
     );
   };
@@ -97,3 +99,9 @@ export default class CalendarScreen extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  sectionHeader: {
+    opacity: 0.9
+  }
+});
