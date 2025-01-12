@@ -36,6 +36,7 @@ function Agenda(props: AgendaProps) {
     const headerIndices = data
       .map((e, index) => (e.type === 'Header' ? index : undefined))
       .filter(i => i !== undefined);
+    // @ts-expect-error
     setStickyHeaderIndices(headerIndices);
   }, [data]);
 
