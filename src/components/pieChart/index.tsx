@@ -1,6 +1,6 @@
 import React from 'react';
 import View from '../view';
-import PartialCircle, {PieSegmentProps} from './PieSegment';
+import PieSegment, {PieSegmentProps} from './PieSegment';
 
 export type PieChartSegmentProps = Pick<PieSegmentProps, 'percentage' | 'color'>;
 
@@ -27,7 +27,7 @@ const PieChart = (props: PieChartProps) => {
       const startAngle = currentStartAngle;
       currentStartAngle += (segment.percentage / 100) * 360;
       return (
-        <PartialCircle key={index} {...segment} {...others} startAngle={startAngle} radius={diameter / 2}/>
+        <PieSegment key={index} {...segment} {...others} startAngle={startAngle} radius={diameter / 2}/>
       );
     });
   };
