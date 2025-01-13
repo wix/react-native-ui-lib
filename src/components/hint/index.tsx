@@ -15,6 +15,7 @@ import useHintAnimation from './hooks/useHintAnimation';
 import useHintLayout from './hooks/useHintLayout';
 import useHintAccessibility from './hooks/useHintAccessibility';
 import useHintPosition from './hooks/useHintPosition';
+import HintMockChildren from './HintMockChildren';
 
 const sideTip = require('./assets/hintTipSide.png');
 const middleTip = require('./assets/hintTipMiddle.png');
@@ -244,26 +245,14 @@ const NewHint = (props: HintProps) => {
   };
 
   const renderMockChildren = () => {
-    const isBackdropColorPassed = backdropColor !== undefined;
-    if (children && React.isValidElement(children)) {
-      const layout = {
-        ...containerPosition,
-        width: targetLayout?.width,
-        height: targetLayout?.height,
-        right: Constants.isRTL ? targetLayout?.x : undefined,
-        left: Constants.isRTL ? undefined : targetLayout?.x
-      };
-
-      return (
-        <View style={[styles.mockChildrenContainer, layout, !isBackdropColorPassed && styles.hidden]}>
-          {React.cloneElement<any>(children, {
-            collapsable: false,
-            key: 'mock',
-            style: [children.props.style, styles.mockChildren]
-          })}
-        </View>
-      );
-    }
+    return (
+      <HintMockChildren
+        children={children}
+        backdropColor={backdropColor}
+        containerPosition={containerPosition}
+        targetLayout={targetLayout}
+      />
+    );
   };
 
   const renderChildren = () => {
