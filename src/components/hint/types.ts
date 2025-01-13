@@ -1,5 +1,5 @@
 import type {ReactElement} from 'react';
-import type {GestureResponderEvent, StyleProp, ViewStyle} from 'react-native';
+import type {GestureResponderEvent, ImageSourcePropType, ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
 
 export type Position = Pick<ViewStyle, 'top' | 'bottom' | 'left' | 'right'>;
 
