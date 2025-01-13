@@ -1,5 +1,15 @@
 import _ from 'lodash';
-import React, {Component, ReactElement, isValidElement, ElementRef} from 'react';
+import React, {
+  Component,
+  ReactElement,
+  isValidElement,
+  ElementRef,
+  useState,
+  useMemo,
+  useCallback,
+  useRef,
+  useEffect
+} from 'react';
 import {
   Animated,
   StyleSheet,
@@ -13,7 +23,8 @@ import {
   TextStyle,
   ViewStyle,
   LayoutChangeEvent,
-  View as RNView
+  View as RNView,
+  LayoutRectangle
 } from 'react-native';
 import {Typography, Spacings, Colors, BorderRadiuses, Shadows} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';
@@ -22,6 +33,7 @@ import Text from '../text';
 import Image from '../image';
 import Modal from '../modal';
 import TouchableOpacity from '../touchableOpacity';
+import {useDidUpdate} from 'hooks';
 
 const sideTip = require('./assets/hintTipSide.png');
 const middleTip = require('./assets/hintTipMiddle.png');
@@ -30,6 +42,7 @@ const DEFAULT_COLOR = Colors.$backgroundPrimaryHeavy;
 const DEFAULT_HINT_OFFSET = Spacings.s4;
 const DEFAULT_EDGE_MARGINS = Spacings.s5;
 const HINT_MIN_WIDTH = 68;
+const ANIMATION_DURATION = 170;
 
 enum TARGET_POSITIONS {
   LEFT = 'left',
@@ -278,7 +291,7 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   get tipSize() {
-    return this.useSideTip ? {width: 14, height: 7} : {width: 20, height: 7};
+    return this.shouldUseSideTip ? {width: 14, height: 7} : {width: 20, height: 7};
   }
 
   get hintOffset() {
@@ -291,7 +304,7 @@ class Hint extends Component<HintProps, HintState> {
     return edgeMargins;
   }
 
-  get useSideTip() {
+  get shouldUseSideTip() {
     const {useSideTip} = this.props;
 
     if (!_.isUndefined(useSideTip)) {
@@ -352,7 +365,7 @@ class Hint extends Component<HintProps, HintState> {
   getHintPadding() {
     const paddings: Paddings = {paddingVertical: this.hintOffset, paddingHorizontal: this.edgeMargins};
 
-    if (this.useSideTip && this.targetLayout?.x !== undefined) {
+    if (this.shouldUseSideTip && this.targetLayout?.x !== undefined) {
       const targetPositionOnScreen = this.getTargetPositionOnScreen();
       if (targetPositionOnScreen === TARGET_POSITIONS.LEFT) {
         paddings.paddingLeft = this.targetLayout.x;
@@ -384,7 +397,7 @@ class Hint extends Component<HintProps, HintState> {
 
     if (position === HintPositions.TOP) {
       tipPositionStyle.bottom = this.hintOffset - this.tipSize.height;
-      !this.useSideTip ? (tipPositionStyle.bottom += 1) : undefined;
+      !this.shouldUseSideTip ? (tipPositionStyle.bottom += 1) : undefined;
     } else {
       tipPositionStyle.top = this.hintOffset - this.tipSize.height;
     }
@@ -395,8 +408,10 @@ class Hint extends Component<HintProps, HintState> {
       const targetMidWidth = layoutWidth / 2;
       const tipMidWidth = this.tipSize.width / 2;
 
-      const leftPosition = this.useSideTip ? this.targetLayout.x : this.targetLayout.x + targetMidWidth - tipMidWidth;
-      const rightPosition = this.useSideTip
+      const leftPosition = this.shouldUseSideTip
+        ? this.targetLayout.x
+        : this.targetLayout.x + targetMidWidth - tipMidWidth;
+      const rightPosition = this.shouldUseSideTip
         ? this.containerWidth - this.targetLayout.x - layoutWidth
         : this.containerWidth - this.targetLayout.x - targetMidWidth - tipMidWidth;
       const targetPositionOnScreen = this.getTargetPositionOnScreen();
@@ -477,7 +492,7 @@ class Hint extends Component<HintProps, HintState> {
 
   renderHintTip() {
     const {position, color = DEFAULT_COLOR} = this.props;
-    const source = this.useSideTip ? sideTip : middleTip;
+    const source = this.shouldUseSideTip ? sideTip : middleTip;
     const flipVertically = position === HintPositions.TOP;
     const flipHorizontally = this.getTargetPositionOnScreen() === TARGET_POSITIONS.RIGHT;
     const flipStyle = {
@@ -647,6 +662,445 @@ class Hint extends Component<HintProps, HintState> {
   }
 }
 
+function NewHint(props: HintProps) {
+  const {
+    visible,
+    useModal,
+    position,
+    children,
+    message,
+    messageStyle,
+    color = DEFAULT_COLOR,
+    containerWidth = Constants.windowWidth,
+    offset = DEFAULT_HINT_OFFSET,
+    edgeMargins: edgeMarginsProp,
+    icon,
+    iconStyle,
+    borderRadius,
+    customContent,
+    removePaddings,
+    enableShadow,
+    targetFrame,
+    useSideTip,
+    onPress,
+    onBackgroundPress,
+    backdropColor,
+    style,
+    testID,
+    ...others
+  } = props;
+
+  const [hintUnmounted, setHintUnmounted] = useState(!visible);
+  const [targetLayoutState, setTargetLayout] = useState<LayoutRectangle>();
+  const [targetLayoutInWindowState, setTargetLayoutInWindow] = useState<LayoutRectangle>();
+  const [hintMessageWidth, setHintMessageWidth] = useState<number | undefined>();
+  const targetRef = useRef<ElementRef<typeof RNView> | null>(null);
+  const hintRef = useRef<RNView>();
+  const visibleAnimated = useRef(new Animated.Value(Number(!!visible)));
+
+  useEffect(() => {
+    focusAccessibilityOnHint();
+  }, []);
+
+  useDidUpdate(() => {
+    animateHint();
+  }, [visible]);
+
+  const targetLayout = useMemo(() => {
+    if (targetFrame) {
+      return targetFrame;
+    }
+
+    return onBackgroundPress && useModal ? targetLayoutInWindowState : targetLayoutState;
+  }, [onBackgroundPress, useModal, targetLayoutState, targetLayoutInWindowState, targetFrame]);
+
+  const focusAccessibilityOnHint = useCallback(() => {
+    const targetRefTag = findNodeHandle(targetRef.current);
+    const hintRefTag = findNodeHandle(hintRef.current);
+
+    if (targetRefTag && _.isString(message)) {
+      AccessibilityInfo.setAccessibilityFocus(targetRefTag);
+    } else if (hintRefTag) {
+      AccessibilityInfo.setAccessibilityFocus(hintRefTag);
+    }
+  }, [message]);
+
+  const onTargetLayout = useCallback(({nativeEvent: {layout}}: LayoutChangeEvent) => {
+    if (!_.isEqual(targetLayoutState, layout)) {
+      setTargetLayout(layout);
+    }
+
+    if (!targetLayoutInWindowState || onBackgroundPress) {
+      setTimeout(() => {
+        targetRef?.current?.measureInWindow?.((x: number, y: number, width: number, height: number) => {
+          const targetLayoutInWindow = {x, y, width, height};
+          setTargetLayoutInWindow(targetLayoutInWindow);
+        });
+      });
+    }
+  },
+  [targetLayoutState, targetLayoutInWindowState, onBackgroundPress]);
+
+  const setTargetRef = useCallback((ref: ElementRef<typeof RNView>) => {
+    targetRef.current = ref;
+    focusAccessibilityOnHint();
+  }, []);
+
+  const setHintLayout = useCallback(({nativeEvent: {layout}}: LayoutChangeEvent) => {
+    if (!hintMessageWidth) {
+      setHintMessageWidth(layout.width);
+    }
+  },
+  [hintMessageWidth]);
+
+  const toggleAnimationEndedToRemoveHint = useCallback(() => {
+    setHintUnmounted(!visible);
+  }, [visible]);
+
+  const animateHint = useCallback(() => {
+    Animated.timing(visibleAnimated.current, {
+      toValue: Number(!!visible),
+      duration: ANIMATION_DURATION,
+      useNativeDriver: true
+    }).start(toggleAnimationEndedToRemoveHint);
+  }, [visible, toggleAnimationEndedToRemoveHint]);
+
+  const isShortMessage = useCallback((messageWidth: number) => {
+    return messageWidth && messageWidth < Constants.screenWidth / 2;
+  }, []);
+
+  const showHint = !!targetLayout;
+  const isUsingModal = onBackgroundPress && useModal;
+
+  const accessibilityInfo = useMemo(() => {
+    if (visible && _.isString(message)) {
+      return {
+        accessible: true,
+        accessibilityLabel: `hint: ${message}`
+      };
+    }
+  }, [visible, message]);
+
+  const edgeMargins = useMemo(() => {
+    if (edgeMarginsProp !== undefined) {
+      return edgeMarginsProp;
+    }
+    return isUsingModal ? DEFAULT_EDGE_MARGINS : 0;
+  }, [isUsingModal, edgeMarginsProp]);
+
+  const targetPositionOnScreen = useMemo(() => {
+    if (targetLayout?.x !== undefined && targetLayout?.width) {
+      const targetMidPosition = targetLayout.x + targetLayout.width / 2;
+
+      if (targetMidPosition > containerWidth * (4 / 5)) {
+        return TARGET_POSITIONS.RIGHT;
+      } else if (targetMidPosition < containerWidth * (1 / 5)) {
+        return TARGET_POSITIONS.LEFT;
+      }
+    }
+    return TARGET_POSITIONS.CENTER;
+  }, [targetLayout, containerWidth]);
+
+  const shouldUseSideTip = useMemo(() => {
+    if (!_.isUndefined(useSideTip)) {
+      return useSideTip;
+    }
+
+    return targetPositionOnScreen !== TARGET_POSITIONS.CENTER;
+  }, [useSideTip, targetPositionOnScreen]);
+
+  const tipSize = useMemo(() => {
+    return shouldUseSideTip ? {width: 14, height: 7} : {width: 20, height: 7};
+  }, [shouldUseSideTip]);
+
+  const hintPadding = useMemo(() => {
+    const paddings: Paddings = {paddingVertical: offset, paddingHorizontal: edgeMargins};
+
+    if (shouldUseSideTip && targetLayout?.x !== undefined) {
+      if (targetPositionOnScreen === TARGET_POSITIONS.LEFT) {
+        paddings.paddingLeft = targetLayout.x;
+      } else if (targetPositionOnScreen === TARGET_POSITIONS.RIGHT && targetLayout?.width) {
+        paddings.paddingRight = containerWidth - targetLayout.x - targetLayout.width;
+      }
+    }
+
+    return paddings;
+  }, [targetLayout, containerWidth, shouldUseSideTip, targetPositionOnScreen, offset, edgeMargins]);
+
+  const hintPosition = useMemo(() => {
+    const hintPositionStyle: HintPositionStyle = {alignItems: 'center'};
+
+    if (targetLayout?.x !== undefined) {
+      hintPositionStyle.left = -targetLayout.x;
+    }
+
+    if (position === HintPositions.TOP) {
+      hintPositionStyle.bottom = 0;
+    } else if (targetLayout?.height) {
+      hintPositionStyle.top = targetLayout.height;
+    }
+
+    if (targetPositionOnScreen === TARGET_POSITIONS.RIGHT) {
+      hintPositionStyle.alignItems = Constants.isRTL ? 'flex-start' : 'flex-end';
+    } else if (targetPositionOnScreen === TARGET_POSITIONS.LEFT) {
+      hintPositionStyle.alignItems = Constants.isRTL ? 'flex-end' : 'flex-start';
+    }
+
+    return hintPositionStyle;
+  }, [position, targetLayout, targetPositionOnScreen]);
+
+  const containerPosition = useMemo(() => {
+    if (targetLayout) {
+      return {top: targetLayout.y, left: targetLayout.x};
+    }
+  }, [targetLayout]);
+
+  const tipPosition = useMemo(() => {
+    const tipPositionStyle: Position = {};
+
+    if (position === HintPositions.TOP) {
+      tipPositionStyle.bottom = offset - tipSize.height;
+      !shouldUseSideTip ? (tipPositionStyle.bottom += 1) : undefined;
+    } else {
+      tipPositionStyle.top = offset - tipSize.height;
+    }
+
+    const layoutWidth = targetLayout?.width || 0;
+
+    if (targetLayout?.x !== undefined) {
+      const targetMidWidth = layoutWidth / 2;
+      const tipMidWidth = tipSize.width / 2;
+
+      const leftPosition = shouldUseSideTip ? targetLayout.x : targetLayout.x + targetMidWidth - tipMidWidth;
+      const rightPosition = shouldUseSideTip
+        ? containerWidth - targetLayout.x - layoutWidth
+        : containerWidth - targetLayout.x - targetMidWidth - tipMidWidth;
+
+      switch (targetPositionOnScreen) {
+        case TARGET_POSITIONS.LEFT:
+          tipPositionStyle.left = Constants.isRTL ? rightPosition : leftPosition;
+          break;
+        case TARGET_POSITIONS.RIGHT:
+          tipPositionStyle.right = Constants.isRTL ? leftPosition : rightPosition;
+          break;
+        case TARGET_POSITIONS.CENTER:
+        default:
+          tipPositionStyle.left = targetLayout.x + targetMidWidth - tipMidWidth;
+          break;
+      }
+    }
+
+    return tipPositionStyle;
+  }, [targetLayout, containerWidth, position, targetPositionOnScreen, offset, shouldUseSideTip, tipSize]);
+
+  const hintOffsetForShortMessage = useMemo(() => {
+    let hintMessageOffset = 0;
+    if (isShortMessage(hintMessageOffset)) {
+      const _hintMessageWidth = hintMessageWidth ?? 0;
+      const targetPosition = tipPosition;
+      if (targetPosition?.right) {
+        hintMessageOffset = -targetPosition?.right + _hintMessageWidth / 2;
+      }
+
+      if (targetPosition?.left) {
+        hintMessageOffset = targetPosition?.left as number;
+        if (targetPositionOnScreen === TARGET_POSITIONS.CENTER) {
+          hintMessageOffset -= Constants.screenWidth / 2;
+        } else {
+          hintMessageOffset -= _hintMessageWidth / 2;
+        }
+      }
+    }
+
+    return hintMessageOffset;
+  }, [hintMessageWidth, tipPosition, targetPositionOnScreen, isShortMessage]);
+
+  const hintAnimatedStyle = useMemo(() => {
+    const translateY = position === HintPositions.TOP ? -10 : 10;
+
+    return {
+      opacity: visibleAnimated.current,
+      transform: [
+        {
+          translateY: visibleAnimated.current.interpolate({inputRange: [0, 1], outputRange: [translateY, 0]})
+        }
+      ]
+    };
+  }, [position]);
+
+  const renderOverlay = () => {
+    if (targetLayoutInWindowState && containerPosition?.top && containerPosition?.left) {
+      return (
+        <Animated.View
+          style={[
+            styles.overlay,
+            {
+              top: containerPosition.top - targetLayoutInWindowState.y,
+              left: containerPosition.left - targetLayoutInWindowState.x,
+              backgroundColor: backdropColor,
+              opacity: visibleAnimated.current
+            }
+          ]}
+          pointerEvents="box-none"
+          testID={`${testID}.overlay`}
+        >
+          {onBackgroundPress && (
+            <TouchableWithoutFeedback style={StyleSheet.absoluteFillObject} onPress={onBackgroundPress}>
+              <View flex/>
+            </TouchableWithoutFeedback>
+          )}
+        </Animated.View>
+      );
+    }
+  };
+
+  const renderHint = () => {
+    return (
+      <View
+        testID={`${testID}.message`}
+        row
+        centerV
+        centerH={!!hintOffsetForShortMessage}
+        style={[
+          styles.hint,
+          !removePaddings && styles.hintPaddings,
+          visible && enableShadow && styles.containerShadow,
+          {backgroundColor: color},
+          !_.isUndefined(borderRadius) && {borderRadius},
+          hintOffsetForShortMessage ? {left: hintOffsetForShortMessage} : undefined
+        ]}
+        onLayout={setHintLayout}
+        ref={hintRef}
+      >
+        {customContent}
+        {!customContent && icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
+        {!customContent && (
+          <Text recorderTag={'unmask'} style={[styles.hintMessage, messageStyle]} testID={`${testID}.message.text`}>
+            {message}
+          </Text>
+        )}
+      </View>
+    );
+  };
+
+  const renderHintTip = () => {
+    const source = shouldUseSideTip ? sideTip : middleTip;
+    const flipVertically = position === HintPositions.TOP;
+    const flipHorizontally = targetPositionOnScreen === TARGET_POSITIONS.RIGHT;
+    const flipStyle = {
+      transform: [{scaleY: flipVertically ? -1 : 1}, {scaleX: flipHorizontally ? -1 : 1}]
+    };
+
+    return <Image tintColor={color} source={source} style={[styles.hintTip, tipPosition, flipStyle]}/>;
+  };
+
+  const renderHintContainer = () => {
+    const opacity = onPress ? 0.9 : 1.0;
+
+    if (showHint) {
+      return (
+        <View
+          animated
+          style={[{width: containerWidth}, styles.animatedContainer, hintPosition, hintPadding, hintAnimatedStyle]}
+          pointerEvents="box-none"
+          testID={testID}
+        >
+          <TouchableOpacity activeOpacity={opacity} onPress={onPress}>
+            {renderHint()}
+          </TouchableOpacity>
+          {renderHintTip()}
+        </View>
+      );
+    }
+  };
+
+  const renderHintAnchor = () => {
+    return (
+      <View
+        {...others}
+        // this view must be collapsable, don't pass testID or backgroundColor etc'.
+        collapsable
+        testID={undefined}
+        style={[styles.container, style, containerPosition, !isUsingModal && styles.overlayContainer]}
+      >
+        {renderHintContainer()}
+      </View>
+    );
+  };
+
+  const renderMockChildren = () => {
+    const isBackdropColorPassed = backdropColor !== undefined;
+    if (children && React.isValidElement(children)) {
+      const layout = {
+        ...containerPosition,
+        width: targetLayout?.width,
+        height: targetLayout?.height,
+        right: Constants.isRTL ? targetLayout?.x : undefined,
+        left: Constants.isRTL ? undefined : targetLayout?.x
+      };
+
+      return (
+        <View style={[styles.mockChildrenContainer, layout, !isBackdropColorPassed && styles.hidden]}>
+          {React.cloneElement<any>(children, {
+            collapsable: false,
+            key: 'mock',
+            style: [children.props.style, styles.mockChildren]
+          })}
+        </View>
+      );
+    }
+  };
+
+  const renderChildren = () => {
+    if (!targetFrame && isValidElement(children)) {
+      return React.cloneElement<any>(children, {
+        key: 'clone',
+        collapsable: false,
+        onLayout: onTargetLayout,
+        ref: setTargetRef,
+        ...accessibilityInfo
+      });
+    }
+  };
+
+  if (!visible && hintUnmounted) {
+    return children || null;
+  }
+
+  return (
+    <>
+      {renderChildren()}
+      {isUsingModal ? (
+        <Modal
+          visible={showHint}
+          animationType={backdropColor ? 'fade' : 'none'}
+          overlayBackgroundColor={backdropColor}
+          transparent
+          onBackgroundPress={onBackgroundPress}
+          onRequestClose={onBackgroundPress as () => void}
+          testID={`${testID}.modal`}
+        >
+          {renderMockChildren()}
+          {renderHintAnchor()}
+        </Modal>
+      ) : (
+        <>
+          {renderOverlay()}
+          {renderMockChildren()}
+          {renderHintAnchor()}
+        </>
+      )}
+    </>
+  );
+}
+
+NewHint.displayName = 'Hint';
+NewHint.defaultProps = {
+  position: HintPositions.BOTTOM,
+  useModal: true
+};
+NewHint.positions = HintPositions;
+
 const styles = StyleSheet.create({
   container: {
     position: 'absolute'
@@ -709,4 +1163,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export default asBaseComponent<HintProps, typeof Hint>(Hint);
+// export default asBaseComponent<HintProps, typeof Hint>(Hint);
+export default asBaseComponent<HintProps, typeof Hint>(NewHint);
