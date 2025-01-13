@@ -207,7 +207,7 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
       label?: string
     ) => React.ReactElement;
     /**
-     * Custom top element, value prop is relevant for multi picker use cases
+     * Custom top element
      */
     renderCustomTopElement?: (value?: PickerValue) => React.ReactElement;
     /**
@@ -309,7 +309,6 @@ export interface PickerContextProps
   isMultiMode: boolean;
   onSelectedLayout: (event: any) => any;
   selectionLimit: PickerProps['selectionLimit'];
-  setValue?: React.Dispatch<React.SetStateAction<PickerMultiValue>> | undefined;
 }
 
 export type PickerItemsListProps = Pick<

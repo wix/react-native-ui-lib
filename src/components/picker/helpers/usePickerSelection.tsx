@@ -50,7 +50,6 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
 
   return {
     multiDraftValue,
-    setMultiDraftValue,
     onDoneSelecting,
     toggleItemSelection,
     cancelSelect
