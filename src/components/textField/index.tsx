@@ -91,6 +91,7 @@ const TextField = (props: InternalTextFieldProps) => {
     centered,
     readonly = false,
     showMandatoryIndication,
+    clearButtonStyle,
     ...others
   } = usePreset(props);
 
@@ -212,7 +213,7 @@ const TextField = (props: InternalTextFieldProps) => {
               onClear={onClear}
               testID={`${props.testID}.clearButton`}
               onChangeText={onChangeText}
-              preset={props.preset}
+              clearButtonStyle={clearButtonStyle}
             />
           )}
           {trailingAccessory}
