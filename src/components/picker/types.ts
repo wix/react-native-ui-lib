@@ -181,10 +181,6 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
      */
     onChange?: (value: PickerValue) => void;
     /**
-     * Callback for when picker item is selected (only for multi mode)
-     */
-    onItemSelection?: (value: PickerMultiValue) => void;
-    /**
      * SINGLE or MULTI selection mode
      */
     mode?: PickerModes | `${PickerModes}`;
