@@ -1,14 +1,5 @@
 import _ from 'lodash';
-import React, {
-  ReactElement,
-  isValidElement,
-  ElementRef,
-  useState,
-  useMemo,
-  useCallback,
-  useRef,
-  useEffect
-} from 'react';
+import React, {isValidElement, ElementRef, useState, useMemo, useCallback, useRef, useEffect} from 'react';
 import {
   Animated,
   StyleSheet,
@@ -33,6 +24,15 @@ import Image from '../image';
 import Modal from '../modal';
 import TouchableOpacity from '../touchableOpacity';
 import {useDidUpdate} from 'hooks';
+import {
+  ContentType,
+  HintPositions,
+  HintPositionStyle,
+  HintTargetFrame,
+  Paddings,
+  Position,
+  TARGET_POSITIONS
+} from './types';
 
 const sideTip = require('./assets/hintTipSide.png');
 const middleTip = require('./assets/hintTipMiddle.png');
@@ -42,33 +42,6 @@ const DEFAULT_HINT_OFFSET = Spacings.s4;
 const DEFAULT_EDGE_MARGINS = Spacings.s5;
 const HINT_MIN_WIDTH = 68;
 const ANIMATION_DURATION = 170;
-
-enum TARGET_POSITIONS {
-  LEFT = 'left',
-  RIGHT = 'right',
-  CENTER = 'center'
-}
-
-enum HintPositions {
-  TOP = 'top',
-  BOTTOM = 'bottom'
-}
-
-// TODO: unify with FeatureHighlightFrame
-interface HintTargetFrame {
-  x?: number;
-  y?: number;
-  width?: number;
-  height?: number;
-}
-
-type Position = Pick<ViewStyle, 'top' | 'bottom' | 'left' | 'right'>;
-
-type HintPositionStyle = Position & Pick<ViewStyle, 'alignItems'>;
-
-type Paddings = Pick<ViewStyle, 'paddingLeft' | 'paddingRight' | 'paddingVertical' | 'paddingHorizontal'>;
-
-type ContentType = string | ReactElement;
 
 export interface HintProps {
   /**
