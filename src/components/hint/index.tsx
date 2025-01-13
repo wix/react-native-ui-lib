@@ -33,6 +33,7 @@ import {
   Position,
   TARGET_POSITIONS
 } from './types';
+import useHintAnimation from './hooks/useHintAnimation';
 
 const sideTip = require('./assets/hintTipSide.png');
 const middleTip = require('./assets/hintTipMiddle.png');
@@ -41,7 +42,6 @@ const DEFAULT_COLOR = Colors.$backgroundPrimaryHeavy;
 const DEFAULT_HINT_OFFSET = Spacings.s4;
 const DEFAULT_EDGE_MARGINS = Spacings.s5;
 const HINT_MIN_WIDTH = 68;
-const ANIMATION_DURATION = 170;
 
 export interface HintProps {
   /**
@@ -163,13 +163,15 @@ const NewHint = (props: HintProps) => {
     ...others
   } = props;
 
-  const [hintUnmounted, setHintUnmounted] = useState(!visible);
+  // const [hintUnmounted, setHintUnmounted] = useState(!visible);
   const [targetLayoutState, setTargetLayout] = useState<LayoutRectangle>();
   const [targetLayoutInWindowState, setTargetLayoutInWindow] = useState<LayoutRectangle>();
   const [hintMessageWidth, setHintMessageWidth] = useState<number | undefined>();
   const targetRef = useRef<ElementRef<typeof RNView> | null>(null);
   const hintRef = useRef<RNView>(null);
-  const visibleAnimated = useRef(new Animated.Value(Number(!!visible)));
+  // const visibleAnimated = useRef(new Animated.Value(Number(!!visible)));
+
+  const {hintUnmounted, visibleAnimated, animateHint} = useHintAnimation(visible);
 
   useEffect(() => {
     focusAccessibilityOnHint();
@@ -225,18 +227,6 @@ const NewHint = (props: HintProps) => {
     }
   },
   [hintMessageWidth]);
-
-  const toggleAnimationEndedToRemoveHint = useCallback(() => {
-    setHintUnmounted(!visible);
-  }, [visible]);
-
-  const animateHint = useCallback(() => {
-    Animated.timing(visibleAnimated.current, {
-      toValue: Number(!!visible),
-      duration: ANIMATION_DURATION,
-      useNativeDriver: true
-    }).start(toggleAnimationEndedToRemoveHint);
-  }, [visible, toggleAnimationEndedToRemoveHint]);
 
   const isShortMessage = useCallback((messageWidth: number) => {
     return messageWidth && messageWidth < Constants.screenWidth / 2;
@@ -392,10 +382,10 @@ const NewHint = (props: HintProps) => {
     const translateY = position === HintPositions.TOP ? -10 : 10;
 
     return {
-      opacity: visibleAnimated.current,
+      opacity: visibleAnimated,
       transform: [
         {
-          translateY: visibleAnimated.current.interpolate({inputRange: [0, 1], outputRange: [translateY, 0]})
+          translateY: visibleAnimated.interpolate({inputRange: [0, 1], outputRange: [translateY, 0]})
         }
       ]
     };
@@ -411,7 +401,7 @@ const NewHint = (props: HintProps) => {
               top: containerPosition.top - targetLayoutInWindowState.y,
               left: containerPosition.left - targetLayoutInWindowState.x,
               backgroundColor: backdropColor,
-              opacity: visibleAnimated.current
+              opacity: visibleAnimated
             }
           ]}
           pointerEvents="box-none"
