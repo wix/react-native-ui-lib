@@ -1,13 +1,6 @@
 import _ from 'lodash';
 import React, {isValidElement, ElementRef, useMemo, useCallback, useRef, useEffect} from 'react';
-import {
-  Animated,
-  StyleSheet,
-  AccessibilityInfo,
-  findNodeHandle,
-  TouchableWithoutFeedback,
-  View as RNView
-} from 'react-native';
+import {Animated, StyleSheet, TouchableWithoutFeedback, View as RNView} from 'react-native';
 import {Typography, Spacings, Colors, BorderRadiuses, Shadows} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
@@ -20,6 +13,7 @@ import {HintPositions, HintPositionStyle, HintProps, Paddings, Position, TARGET_
 import {useDidUpdate} from 'hooks';
 import useHintAnimation from './hooks/useHintAnimation';
 import useHintLayout from './hooks/useHintLayout';
+import useHintAccessibility from './hooks/useHintAccessibility';
 
 const sideTip = require('./assets/hintTipSide.png');
 const middleTip = require('./assets/hintTipMiddle.png');
@@ -62,9 +56,12 @@ const NewHint = (props: HintProps) => {
   const {hintUnmounted, visibleAnimated, animateHint} = useHintAnimation(visible);
   const {targetLayoutState, targetLayoutInWindowState, hintMessageWidth, targetRef, onTargetLayout, setHintLayout} =
     useHintLayout(!!onBackgroundPress);
+  const {focusAccessibilityOnHint, accessibilityInfo} = useHintAccessibility(message);
 
   useEffect(() => {
-    focusAccessibilityOnHint();
+    if (targetRef.current && hintRef.current) {
+      focusAccessibilityOnHint(targetRef.current, hintRef.current);
+    }
   }, []);
 
   useDidUpdate(() => {
@@ -79,20 +76,11 @@ const NewHint = (props: HintProps) => {
     return onBackgroundPress && useModal ? targetLayoutInWindowState : targetLayoutState;
   }, [onBackgroundPress, useModal, targetLayoutState, targetLayoutInWindowState, targetFrame]);
 
-  const focusAccessibilityOnHint = useCallback(() => {
-    const targetRefTag = findNodeHandle(targetRef.current);
-    const hintRefTag = findNodeHandle(hintRef.current);
-
-    if (targetRefTag && _.isString(message)) {
-      AccessibilityInfo.setAccessibilityFocus(targetRefTag);
-    } else if (hintRefTag) {
-      AccessibilityInfo.setAccessibilityFocus(hintRefTag);
-    }
-  }, [message]);
-
   const setTargetRef = useCallback((ref: ElementRef<typeof RNView>) => {
     targetRef.current = ref;
-    focusAccessibilityOnHint();
+    if (hintRef.current) {
+      focusAccessibilityOnHint(targetRef.current, hintRef.current);
+    }
   }, []);
 
   const isShortMessage = useCallback((messageWidth: number) => {
@@ -101,15 +89,6 @@ const NewHint = (props: HintProps) => {
 
   const showHint = !!targetLayout;
   const isUsingModal = onBackgroundPress && useModal;
-
-  const accessibilityInfo = useMemo(() => {
-    if (visible && _.isString(message)) {
-      return {
-        accessible: true,
-        accessibilityLabel: `hint: ${message}`
-      };
-    }
-  }, [visible, message]);
 
   const edgeMargins = useMemo(() => {
     if (edgeMarginsProp !== undefined) {
