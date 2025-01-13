@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {isValidElement, ElementRef, useState, useMemo, useCallback, useRef, useEffect} from 'react';
+import React, {isValidElement, ElementRef, useMemo, useCallback, useRef, useEffect} from 'react';
 import {
   Animated,
   StyleSheet,
@@ -12,9 +12,7 @@ import {
   StyleProp,
   TextStyle,
   ViewStyle,
-  LayoutChangeEvent,
-  View as RNView,
-  LayoutRectangle
+  View as RNView
 } from 'react-native';
 import {Typography, Spacings, Colors, BorderRadiuses, Shadows} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';
@@ -23,7 +21,6 @@ import Text from '../text';
 import Image from '../image';
 import Modal from '../modal';
 import TouchableOpacity from '../touchableOpacity';
-import {useDidUpdate} from 'hooks';
 import {
   ContentType,
   HintPositions,
@@ -33,7 +30,10 @@ import {
   Position,
   TARGET_POSITIONS
 } from './types';
+
+import {useDidUpdate} from 'hooks';
 import useHintAnimation from './hooks/useHintAnimation';
+import useHintLayout from './hooks/useHintLayout';
 
 const sideTip = require('./assets/hintTipSide.png');
 const middleTip = require('./assets/hintTipMiddle.png');
@@ -164,14 +164,16 @@ const NewHint = (props: HintProps) => {
   } = props;
 
   // const [hintUnmounted, setHintUnmounted] = useState(!visible);
-  const [targetLayoutState, setTargetLayout] = useState<LayoutRectangle>();
-  const [targetLayoutInWindowState, setTargetLayoutInWindow] = useState<LayoutRectangle>();
-  const [hintMessageWidth, setHintMessageWidth] = useState<number | undefined>();
-  const targetRef = useRef<ElementRef<typeof RNView> | null>(null);
+  // const [targetLayoutState, setTargetLayout] = useState<LayoutRectangle>();
+  // const [targetLayoutInWindowState, setTargetLayoutInWindow] = useState<LayoutRectangle>();
+  // const [hintMessageWidth, setHintMessageWidth] = useState<number | undefined>();
+  // const targetRef = useRef<ElementRef<typeof RNView> | null>(null);
   const hintRef = useRef<RNView>(null);
   // const visibleAnimated = useRef(new Animated.Value(Number(!!visible)));
 
   const {hintUnmounted, visibleAnimated, animateHint} = useHintAnimation(visible);
+  const {targetLayoutState, targetLayoutInWindowState, hintMessageWidth, targetRef, onTargetLayout, setHintLayout} =
+    useHintLayout(!!onBackgroundPress);
 
   useEffect(() => {
     focusAccessibilityOnHint();
@@ -200,33 +202,10 @@ const NewHint = (props: HintProps) => {
     }
   }, [message]);
 
-  const onTargetLayout = useCallback(({nativeEvent: {layout}}: LayoutChangeEvent) => {
-    if (!_.isEqual(targetLayoutState, layout)) {
-      setTargetLayout(layout);
-    }
-
-    if (!targetLayoutInWindowState || onBackgroundPress) {
-      setTimeout(() => {
-        targetRef?.current?.measureInWindow?.((x: number, y: number, width: number, height: number) => {
-          const targetLayoutInWindow = {x, y, width, height};
-          setTargetLayoutInWindow(targetLayoutInWindow);
-        });
-      });
-    }
-  },
-  [targetLayoutState, targetLayoutInWindowState, onBackgroundPress]);
-
   const setTargetRef = useCallback((ref: ElementRef<typeof RNView>) => {
     targetRef.current = ref;
     focusAccessibilityOnHint();
   }, []);
-
-  const setHintLayout = useCallback(({nativeEvent: {layout}}: LayoutChangeEvent) => {
-    if (!hintMessageWidth) {
-      setHintMessageWidth(layout.width);
-    }
-  },
-  [hintMessageWidth]);
 
   const isShortMessage = useCallback((messageWidth: number) => {
     return messageWidth && messageWidth < Constants.screenWidth / 2;
