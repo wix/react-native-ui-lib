@@ -168,7 +168,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     ) : (
       <>
         {renderSearchInput()}
-        {!!renderCustomTopElement && renderCustomTopElement(context.value)}
+        {renderCustomTopElement?.(context.value)}
         {renderList()}
       </>
     );
