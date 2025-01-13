@@ -663,4 +663,5 @@ NewHint.defaultProps = {
 };
 NewHint.positions = HintPositions;
 
+// @ts-expect-error
 export default asBaseComponent<HintProps, typeof NewHint>(NewHint);
