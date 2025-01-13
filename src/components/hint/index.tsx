@@ -57,13 +57,7 @@ const NewHint = (props: HintProps) => {
     ...others
   } = props;
 
-  // const [hintUnmounted, setHintUnmounted] = useState(!visible);
-  // const [targetLayoutState, setTargetLayout] = useState<LayoutRectangle>();
-  // const [targetLayoutInWindowState, setTargetLayoutInWindow] = useState<LayoutRectangle>();
-  // const [hintMessageWidth, setHintMessageWidth] = useState<number | undefined>();
-  // const targetRef = useRef<ElementRef<typeof RNView> | null>(null);
   const hintRef = useRef<RNView>(null);
-  // const visibleAnimated = useRef(new Animated.Value(Number(!!visible)));
 
   const {hintUnmounted, visibleAnimated, animateHint} = useHintAnimation(visible);
   const {targetLayoutState, targetLayoutInWindowState, hintMessageWidth, targetRef, onTargetLayout, setHintLayout} =
