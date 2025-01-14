@@ -10,6 +10,7 @@ import {
 import {TouchableOpacityProps} from '../touchableOpacity';
 import {TextProps} from '../text';
 import {ImageProps} from '../image';
+import type {IconProps} from '../icon';
 
 export enum ButtonSize {
   xSmall = 'xSmall',
@@ -53,7 +54,7 @@ export type ButtonProps = TouchableOpacityProps &
     /**
      * Other image props that will be passed to the image
      */
-    iconProps?: Partial<ImageProps>;
+    iconProps?: Partial<IconProps>;
     /**
      * Should the icon be right to the label
      */
