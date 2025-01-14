@@ -24,7 +24,6 @@ export enum OPTIONS_TYPE {
 }
 
 export type State = {
-  shouldShowModal: boolean;
   titleLength: TEXT_LENGTH;
   titleIsProminent: boolean;
   titleIsClickable: boolean;

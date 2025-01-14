@@ -6,7 +6,6 @@ import {listItems, gridItems, TEXT_LENGTH, OPTIONS_TYPE, State, ICONS} from './A
 
 function IncubatorActionSheetScreen() {
   const [actionSheetOptions, setActionSheetOptions] = useState<State>({
-    shouldShowModal: false,
     titleLength: TEXT_LENGTH.NO_TEXT,
     titleIsProminent: false,
     titleIsClickable: false,

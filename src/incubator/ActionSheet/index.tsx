@@ -121,7 +121,7 @@ const ActionSheet = (props: ActionSheetProps) => {
     );
   };
 
-  const renderActions = () => {
+  const renderList = () => {
     const {renderAction} = props;
     return (
       <View>
@@ -137,10 +137,6 @@ const ActionSheet = (props: ActionSheetProps) => {
     );
   };
 
-  const renderList = () => {
-    return <View>{renderActions()}</View>;
-  };
-
   const _gridOptions = useMemo(() => {
     if (gridOptions) {
       return {
@@ -153,7 +149,13 @@ const ActionSheet = (props: ActionSheetProps) => {
 
   const content = () => {
     return (
-      <FadedScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="always" {...props}>
+      <FadedScrollView
+        showsVerticalScrollIndicator={false}
+        showStartFader={false}
+        showEndFader
+        keyboardShouldPersistTaps="always"
+        {...props}
+      >
         {_gridOptions ? <GridOptions {..._gridOptions}/> : renderList()}
         {footerCustomElement}
       </FadedScrollView>

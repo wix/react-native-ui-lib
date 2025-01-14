@@ -307,6 +307,7 @@ const TabBar = (props: Props) => {
         testID={testID}
         onContentSizeChange={onContentSizeChange}
         onLayout={onLayout}
+        isRoot
       >
         <View style={tabBarContainerStyle}>{tabBarItems}</View>
         {itemsCount > 1 && (
