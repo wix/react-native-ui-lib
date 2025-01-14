@@ -1,13 +1,9 @@
-import _ from 'lodash';
 import React, {isValidElement, ElementRef, useMemo, useCallback, useRef, useEffect} from 'react';
 import {Animated, StyleSheet, TouchableWithoutFeedback, View as RNView} from 'react-native';
 import {Typography, Spacings, Colors, BorderRadiuses, Shadows} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
-import Text from '../text';
-import Image from '../image';
 import Modal from '../modal';
-import TouchableOpacity from '../touchableOpacity';
 import {HintPositions, HintProps, TARGET_POSITIONS} from './types';
 
 import {useDidUpdate} from 'hooks';
@@ -16,9 +12,7 @@ import useHintLayout from './hooks/useHintLayout';
 import useHintAccessibility from './hooks/useHintAccessibility';
 import useHintPosition from './hooks/useHintPosition';
 import HintMockChildren from './HintMockChildren';
-
-const sideTip = require('./assets/hintTipSide.png');
-const middleTip = require('./assets/hintTipMiddle.png');
+import HintAnchor from './HintAnchor';
 
 const DEFAULT_COLOR = Colors.$backgroundPrimaryHeavy;
 const DEFAULT_HINT_OFFSET = Spacings.s4;
@@ -32,29 +26,18 @@ const NewHint = (props: HintProps) => {
     position,
     children,
     message,
-    messageStyle,
-    color = DEFAULT_COLOR,
     containerWidth = Constants.windowWidth,
     offset = DEFAULT_HINT_OFFSET,
     edgeMargins: edgeMarginsProp,
-    icon,
-    iconStyle,
-    borderRadius,
-    customContent,
-    removePaddings,
-    enableShadow,
     targetFrame,
     useSideTip,
-    onPress,
     onBackgroundPress,
     backdropColor,
-    style,
-    testID,
-    ...others
+    testID
   } = props;
 
   const hintRef = useRef<RNView>(null);
-  const isUsingModal = onBackgroundPress && useModal;
+  const isUsingModal = Boolean(onBackgroundPress && useModal);
 
   const {hintUnmounted, visibleAnimated, animateHint} = useHintAnimation(visible);
   const {targetLayoutState, targetLayoutInWindowState, hintMessageWidth, targetRef, onTargetLayout, setHintLayout} =
@@ -170,77 +153,24 @@ const NewHint = (props: HintProps) => {
     }
   };
 
-  const renderHint = () => {
-    return (
-      <View
-        testID={`${testID}.message`}
-        row
-        centerV
-        centerH={!!hintOffsetForShortMessage}
-        style={[
-          styles.hint,
-          !removePaddings && styles.hintPaddings,
-          visible && enableShadow && styles.containerShadow,
-          {backgroundColor: color},
-          !_.isUndefined(borderRadius) && {borderRadius},
-          hintOffsetForShortMessage ? {left: hintOffsetForShortMessage} : undefined
-        ]}
-        onLayout={setHintLayout}
-        ref={hintRef}
-      >
-        {customContent}
-        {!customContent && icon && <Image source={icon} style={[styles.icon, iconStyle]}/>}
-        {!customContent && (
-          <Text recorderTag={'unmask'} style={[styles.hintMessage, messageStyle]} testID={`${testID}.message.text`}>
-            {message}
-          </Text>
-        )}
-      </View>
-    );
-  };
-
-  const renderHintTip = () => {
-    const source = shouldUseSideTip ? sideTip : middleTip;
-    const flipVertically = position === HintPositions.TOP;
-    const flipHorizontally = targetPositionOnScreen === TARGET_POSITIONS.RIGHT;
-    const flipStyle = {
-      transform: [{scaleY: flipVertically ? -1 : 1}, {scaleX: flipHorizontally ? -1 : 1}]
-    };
-
-    return <Image tintColor={color} source={source} style={[styles.hintTip, tipPosition, flipStyle]}/>;
-  };
-
-  const renderHintContainer = () => {
-    const opacity = onPress ? 0.9 : 1.0;
-
-    if (showHint) {
-      return (
-        <View
-          animated
-          style={[{width: containerWidth}, styles.animatedContainer, hintPosition, hintPadding, hintAnimatedStyle]}
-          pointerEvents="box-none"
-          testID={testID}
-        >
-          <TouchableOpacity activeOpacity={opacity} onPress={onPress}>
-            {renderHint()}
-          </TouchableOpacity>
-          {renderHintTip()}
-        </View>
-      );
-    }
-  };
-
   const renderHintAnchor = () => {
     return (
-      <View
-        {...others}
-        // this view must be collapsable, don't pass testID or backgroundColor etc'.
-        collapsable
-        testID={undefined}
-        style={[styles.container, style, containerPosition, !isUsingModal && styles.overlayContainer]}
-      >
-        {renderHintContainer()}
-      </View>
+      <HintAnchor
+        {...props}
+        hintRef={hintRef}
+        setHintLayout={setHintLayout}
+        showHint={showHint}
+        containerWidth={containerWidth}
+        hintPosition={hintPosition}
+        hintPadding={hintPadding}
+        hintAnimatedStyle={hintAnimatedStyle}
+        hintOffsetForShortMessage={hintOffsetForShortMessage}
+        shouldUseSideTip={shouldUseSideTip}
+        isUsingModal={isUsingModal}
+        targetPositionOnScreen={targetPositionOnScreen}
+        tipPosition={tipPosition}
+        containerPosition={containerPosition}
+      />
     );
   };
 
