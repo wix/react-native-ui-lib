@@ -27,18 +27,18 @@
     "test:perf": "TEST_RUNNER_ARGS='--testMatch **/*.perf.js' reassure measure",
     "xcode": "xed ios",
     "build:dev": "tsc --p tsconfig.dev.json",
-    "build": "node scripts/build.js",
-    "build:local": "./scripts/createLocalPackage.sh",
+    "build": "node scripts/build/build.js",
+    "build:local": "./scripts/build/createLocalPackage.sh",
     "pre-push": "npm run build:dev && npm run test",
-    "docs:deploy": "./scripts/deployDocs.sh",
-    "docs:build": "node scripts/buildDocs.js",
+    "docs:deploy": "./scripts/docs/deployDocs.sh",
+    "docs:build": "node scripts/docs/buildDocs.js",
     "calendar:createMocks": "node scripts/createCalendarMockData.js",
     "snippets:build": "node scripts/generateSnippets.js",
-    "release": "node ./scripts/release.js",
-    "releaseDemo": "./scripts/releaseDemo.sh",
-    "releaseDocs": "./scripts/releaseDocs.sh",
-    "releaseEslint": "./scripts/releaseEslint.sh",
-    "releaseNative": "./scripts/releaseNative.sh"
+    "release": "node ./scripts/release/release.js",
+    "releaseDemo": "./scripts/release/releaseDemo.sh",
+    "releaseDocs": "./scripts/release/releaseDocs.sh",
+    "releaseEslint": "./scripts/release/releaseEslint.sh",
+    "releaseNative": "./scripts/release/releaseNative.sh"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
@@ -54,6 +54,7 @@
     "react-native-redash": "^12.0.3",
     "semver": "^5.5.0",
     "tinycolor2": "^1.4.2",
+    "uilib-native": "^4.5.0",
     "url-parse": "^1.2.0",
     "wix-react-native-text-size": "1.0.9"
   },
@@ -137,7 +138,7 @@
   "jest": {
     "preset": "react-native",
     "transformIgnorePatterns": [
-      "node_modules/(?!(@react-native|react-native|react-native-reanimated|react-native-redash)/)"
+      "node_modules/(?!(@react-native|react-native|react-native-reanimated|react-native-redash|uilib-native)/)"
     ],
     "testPathIgnorePatterns": [
       "/e2e/",
@@ -164,8 +165,8 @@
     "*.js",
     "*.d.ts",
     "!scripts",
-    "scripts/prReleaseNotesCommon.js",
-    "scripts/buildDocsCommon.js",
+    "scripts/release/prReleaseNotesCommon.js",
+    "scripts/docs/buildDocsCommon.js",
     "src",
     "testkit",
     "ReactNativeUILib.podspec",

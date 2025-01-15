@@ -13,7 +13,7 @@ export const SectionContent = ({section, component}) => {
         {_.map(content, (item, index: number) => {
           const isLast = index === content.length - 1;
 
-          return <div style={{marginBottom: isLast ? 0 : 40, border: '1px solid #F8F9FA'}}><ContentItem item={item}/></div>;
+          return <div style={{marginBottom: isLast ? 0 : 40, border: '1px solid #F8F9FA', background: item.background}}><ContentItem item={item} componentName={component.name}/></div>;
         })}
       </div>
     );
@@ -21,19 +21,14 @@ export const SectionContent = ({section, component}) => {
 
   switch (section.type) {
     case 'usage':
-      // return getUsage();
       return <Usage component={component}/>;
     case 'props':
-      // return getPropsList();
       if (component.props) {
         return <PropsList props={component.props}/>;
       }
       return;
     case 'table':
-      // return getTable(section);
-      return <TableSection section={section}/>;
-    // case 'list':
-    //   return getList(section);
+      return <TableSection section={section} component={component}/>;
     case 'hero':
     case 'item':
     case 'section':

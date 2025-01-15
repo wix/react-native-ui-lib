@@ -1,7 +1,7 @@
 {
   "name": "AnimatedScanner",
   "category": "media",
-  "description": "description",
+  "description": "Animated scanner components",
   "extends": ["Animated.View"],
   "extendsLink": ["https://reactnative.dev/docs/animated"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CardScannerScreen.js",

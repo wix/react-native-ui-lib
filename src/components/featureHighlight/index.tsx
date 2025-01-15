@@ -10,14 +10,13 @@ import {
   TouchableWithoutFeedbackProps,
   LayoutChangeEvent
 } from 'react-native';
+import {HighlighterOverlayView} from 'uilib-native';
 import {Colors, Typography} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Text from '../text';
 import Button, {ButtonProps, ButtonSize} from '../button';
 import PageControl, {PageControlProps} from '../pageControl';
-//@ts-expect-error
-import {HighlighterOverlayView} from '../../nativeComponents';
 
 const defaultOverlayColor = Colors.rgba(Colors.black, 0.82);
 const defaultTextColor = Colors.white;

@@ -3,7 +3,7 @@ export {default as Assets} from './assets';
 export type {emojis as EmojisAssetsType} from './assets/emojis';
 export * from './style';
 export * from './services';
-export * from '../lib/components';
+export * from 'uilib-native';
 export {
   asBaseComponent,
   Config,
@@ -134,7 +134,8 @@ export {default as SectionsWheelPicker, SectionsWheelPickerProps} from './compon
 export {
   default as SegmentedControl,
   SegmentedControlProps,
-  SegmentedControlItemProps
+  SegmentedControlItemProps,
+  SegmentedControlPreset
 } from './components/segmentedControl';
 // @ts-expect-error
 export {default as SharedTransition} from './components/sharedTransition';

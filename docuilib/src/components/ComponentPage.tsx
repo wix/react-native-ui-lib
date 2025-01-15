@@ -6,6 +6,7 @@ import './ComponentPage.module.scss';
 import {ListSection} from './pageComponents/ListSection';
 import {Section} from './pageComponents/Section';
 import {Banner} from './pageComponents/Banner';
+import {devTab} from './pageComponents/DefaultTabs';
 
 export default function ComponentPage({component}) {
   const Divider = section => {
@@ -62,7 +63,7 @@ export default function ComponentPage({component}) {
 
     // TODO: align Tabs bottom border with TabItem's selected indication line
     if (tabs) {
-      return <Tabs className="main-tabs">{getTabItems(tabs)}</Tabs>;
+      return <Tabs className="main-tabs">{getTabItems([...tabs, devTab])}</Tabs>;
     }
   };
 
@@ -72,12 +73,10 @@ export default function ComponentPage({component}) {
     const hero = component.docs?.hero;
 
     if (hero) {
-      // TODO: align hero's image to page title
-      // const name = component.category === 'incubator' ? `Incubator.${component.name}` : component.name;
       const section = {
-        // title: name,
         layout: 'horizontal',
         ...hero,
+        title: component.name,
         type: 'hero'
       };
 
