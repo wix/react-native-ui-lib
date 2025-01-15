@@ -36,19 +36,15 @@ export type PieSegmentProps = {
   dividerColor?: ColorValue;
 };
 
-const DEFAULT_DIVIDER_COLOR = Colors.$backgroundDefault;
-const DEFAULT_DIVIDER_WIDTH = 4;
-const DEFAULT_PADDING = 0;
-
 const PieSegment = (props: PieSegmentProps) => {
   const {
     percentage,
     radius,
     color,
     startAngle = 0,
-    padding = DEFAULT_PADDING,
-    dividerWidth = DEFAULT_DIVIDER_WIDTH,
-    dividerColor = DEFAULT_DIVIDER_COLOR
+    padding = 0,
+    dividerWidth = 4,
+    dividerColor = Colors.$backgroundDefault
   } = props;
   if (!Svg || !Path) {
     console.error(`RNUILib PieChart requires installing "@react-native-svg" dependency`);
