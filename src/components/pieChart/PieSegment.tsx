@@ -46,9 +46,7 @@ const PieSegment = (props: PieSegmentProps) => {
     dividerWidth = 4,
     dividerColor = Colors.$backgroundDefault
   } = props;
-  if (!Svg || !Path) {
-    console.error(`RNUILib PieChart requires installing "@react-native-svg" dependency`);
-  }
+
   const actualRadius = radius - padding;
   const centerXAndY = radius;
   const amountToCover = (percentage / 100) * 360;
