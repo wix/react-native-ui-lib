@@ -128,7 +128,7 @@ const NewHint = (props: HintProps) => {
   }, [position, visibleAnimated]);
 
   const renderOverlay = () => {
-    if (targetLayoutInWindowState && containerPosition?.top && containerPosition?.left) {
+    if (targetLayoutInWindowState && containerPosition?.top !== undefined && containerPosition?.left !== undefined) {
       return (
         <Animated.View
           style={[
