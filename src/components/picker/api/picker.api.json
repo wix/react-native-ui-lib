@@ -48,6 +48,11 @@
       "description": "Render custom picker item"
     },
     {
+      "name": "renderCustomTopElement",
+      "type": "(value?: PickerValue) => React.ReactElement",
+      "description": "Render custom top element"
+    },
+    {
       "name": "renderCustomModal",
       "type": "({visible, children, toggleModal}) => void)",
       "description": "Render custom picker modal"

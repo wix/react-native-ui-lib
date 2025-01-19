@@ -207,7 +207,7 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
       label?: string
     ) => React.ReactElement;
     /**
-     * Custom top element
+     * Render custom top element
      */
     renderCustomTopElement?: (value?: PickerValue) => React.ReactElement;
     /**
