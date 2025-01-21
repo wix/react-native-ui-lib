@@ -6,12 +6,12 @@ import {HintPositions, LayoutStyle, PositionStyle, PaddingsStyle, TargetAlignmen
 
 interface UseHintPositionProps extends Pick<HintProps, 'position' | 'useSideTip'> {
   isUsingModal: boolean;
-  offset: number;
   targetLayout?: LayoutRectangle;
   targetLayoutState?: LayoutRectangle;
   targetLayoutInWindowState?: LayoutRectangle;
   containerWidth: number;
   edgeMargins: number;
+  offset: number;
   hintMessageWidth?: number;
 }
 
@@ -27,6 +27,17 @@ export default function useHintPosition({
   edgeMargins,
   hintMessageWidth
 }: UseHintPositionProps) {
+  const targetMidPosition = useMemo(() => {
+    if (targetLayoutInWindowState?.x !== undefined && targetLayoutInWindowState?.width) {
+      return targetLayoutInWindowState?.x + targetLayoutInWindowState?.width / 2;
+    }
+  }, [targetLayoutInWindowState]);
+
+  const tipSize = useMemo(() => {
+    return useSideTip ? {width: 14, height: 7} : {width: 20, height: 7};
+  }, [useSideTip]);
+
+  // Calculate target's horizontal position on screen (left, center, right)
   const targetAlignmentOnScreen = useMemo(() => {
     const _containerWidth = containerWidth - edgeMargins * 2;
     if (targetLayout?.x !== undefined && targetLayout?.width) {
@@ -41,10 +52,7 @@ export default function useHintPosition({
     return TargetAlignments.CENTER;
   }, [targetLayout, containerWidth, edgeMargins]);
 
-  const tipSize = useMemo(() => {
-    return useSideTip ? {width: 14, height: 7} : {width: 20, height: 7};
-  }, [useSideTip]);
-
+  // Calc the hint container - a full width rectangle that contains the hint bubble message
   const hintContainerLayout = useMemo(() => {
     const containerStyle: LayoutStyle = {alignItems: 'flex-start'};
 
@@ -61,6 +69,17 @@ export default function useHintPosition({
     return containerStyle;
   }, [position, targetLayoutInWindowState]);
 
+  const hintPositionStyle = useMemo(() => {
+    const positionStyle = {left: 0};
+    if (targetMidPosition !== undefined && hintMessageWidth !== undefined) {
+      positionStyle.left = targetMidPosition;
+      positionStyle.left -= hintMessageWidth / 2;
+      positionStyle.left = _.clamp(positionStyle.left, edgeMargins, containerWidth - edgeMargins - hintMessageWidth);
+    }
+
+    return positionStyle;
+  }, [hintMessageWidth, edgeMargins, containerWidth, targetMidPosition]);
+
   const tipPosition = useMemo(() => {
     const tipPositionStyle: PositionStyle = {};
     const _containerWidth = containerWidth - (isUsingModal ? 0 : edgeMargins);
@@ -72,15 +91,24 @@ export default function useHintPosition({
       tipPositionStyle.top = offset - tipSize.height;
     }
 
-    if (targetLayoutInWindowState?.x !== undefined && targetLayoutInWindowState?.width) {
-      const layoutWidth = targetLayout?.width || 0;
+    if (
+      targetMidPosition !== undefined &&
+      targetLayoutInWindowState?.x !== undefined &&
+      targetLayoutInWindowState?.width &&
+      hintMessageWidth !== undefined
+    ) {
+      const layoutWidth = targetLayoutInWindowState?.width || 0;
       const targetMidWidth = layoutWidth / 2;
-      const targetMidPosition = targetLayoutInWindowState?.x + targetLayoutInWindowState?.width / 2;
       const tipMidWidth = tipSize.width / 2;
 
-      let sideTipPosition = targetLayoutInWindowState.x;
-      if (targetAlignmentOnScreen === TargetAlignments.RIGHT) {
-        sideTipPosition += targetLayoutInWindowState.width - edgeMargins;
+      let sideTipPosition = 0;
+
+      if (targetAlignmentOnScreen === TargetAlignments.LEFT) {
+        sideTipPosition = Math.max(hintPositionStyle.left, targetLayoutInWindowState.x);
+      } else if (targetAlignmentOnScreen === TargetAlignments.RIGHT) {
+        sideTipPosition =
+          Math.min(hintPositionStyle.left + hintMessageWidth,
+            targetLayoutInWindowState.x + targetLayoutInWindowState.width) - edgeMargins;
       }
 
       const leftPosition = useSideTip ? sideTipPosition : targetMidPosition - tipMidWidth;
@@ -93,8 +121,10 @@ export default function useHintPosition({
 
     return tipPositionStyle;
   }, [
+    targetMidPosition,
     targetLayoutInWindowState,
-    targetLayout,
+    hintMessageWidth,
+    hintPositionStyle,
     containerWidth,
     position,
     targetAlignmentOnScreen,
@@ -119,22 +149,6 @@ export default function useHintPosition({
 
     // return paddings;
   }, [offset]);
-
-  const hintPositionStyle = useMemo(() => {
-    const positionStyle = {left: 0};
-    if (
-      targetLayoutInWindowState?.x !== undefined &&
-      targetLayoutInWindowState?.width &&
-      hintMessageWidth !== undefined
-    ) {
-      const targetMidPosition = targetLayoutInWindowState.x + targetLayoutInWindowState.width / 2;
-      positionStyle.left = targetMidPosition;
-      positionStyle.left -= hintMessageWidth / 2;
-      positionStyle.left = _.clamp(positionStyle.left, edgeMargins, containerWidth - edgeMargins - hintMessageWidth);
-    }
-
-    return positionStyle;
-  }, [targetLayoutInWindowState, hintMessageWidth, edgeMargins, containerWidth]);
 
   const targetScreenToRelativeOffset = useMemo(() => {
     return {
