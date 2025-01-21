@@ -132,18 +132,8 @@ export default function useHintPosition({
   ]);
 
   const hintPadding = useMemo(() => {
-    const paddings: PaddingsStyle = {paddingVertical: offset /* , paddingHorizontal: edgeMargins */};
+    const paddings: PaddingsStyle = {paddingVertical: offset};
     return paddings;
-
-    // if (shouldUseSideTip && targetLayout?.x !== undefined) {
-    //   if (targetAlignmentOnScreen === TARGET_POSITIONS.LEFT) {
-    //     paddings.paddingLeft = targetLayout.x;
-    //   } else if (targetAlignmentOnScreen === TARGET_POSITIONS.RIGHT && targetLayout?.width) {
-    //     paddings.paddingRight = containerWidth - targetLayout.x - targetLayout.width;
-    //   }
-    // }
-
-    // return paddings;
   }, [offset]);
 
   const targetScreenToRelativeOffset = useMemo(() => {

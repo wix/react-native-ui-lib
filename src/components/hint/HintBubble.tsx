@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View as RNView, LayoutChangeEvent} from 'react-native';
 import _ from 'lodash';
 
-import {Constants} from 'src/commons/new';
+import {Constants} from '../../commons/new';
 import {BorderRadiuses, Colors, Shadows, Spacings, Typography} from 'style';
 import View from '../view';
 import Text from '../text';
