@@ -98,7 +98,6 @@ const NewHint = (props: HintProps) => {
     useSideTip,
     position,
     offset,
-    targetLayout,
     targetLayoutState,
     targetLayoutInWindowState,
     containerWidth,

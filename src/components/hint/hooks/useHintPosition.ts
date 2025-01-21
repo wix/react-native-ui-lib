@@ -6,7 +6,6 @@ import {HintPositions, LayoutStyle, PositionStyle, PaddingsStyle, TargetAlignmen
 
 interface UseHintPositionProps extends Pick<HintProps, 'position' | 'useSideTip'> {
   isUsingModal: boolean;
-  targetLayout?: LayoutRectangle;
   targetLayoutState?: LayoutRectangle;
   targetLayoutInWindowState?: LayoutRectangle;
   containerWidth: number;
@@ -17,7 +16,6 @@ interface UseHintPositionProps extends Pick<HintProps, 'position' | 'useSideTip'
 
 export default function useHintPosition({
   isUsingModal,
-  targetLayout,
   targetLayoutState,
   targetLayoutInWindowState,
   position,
@@ -40,9 +38,7 @@ export default function useHintPosition({
   // Calculate target's horizontal position on screen (left, center, right)
   const targetAlignmentOnScreen = useMemo(() => {
     const _containerWidth = containerWidth - edgeMargins * 2;
-    if (targetLayout?.x !== undefined && targetLayout?.width) {
-      const targetMidPosition = targetLayout.x + targetLayout.width / 2;
-
+    if (targetMidPosition !== undefined) {
       if (targetMidPosition > _containerWidth * (4 / 5)) {
         return TargetAlignments.RIGHT;
       } else if (targetMidPosition < _containerWidth * (1 / 5)) {
@@ -50,7 +46,7 @@ export default function useHintPosition({
       }
     }
     return TargetAlignments.CENTER;
-  }, [targetLayout, containerWidth, edgeMargins]);
+  }, [targetMidPosition, containerWidth, edgeMargins]);
 
   // Calc the hint container - a full width rectangle that contains the hint bubble message
   const hintContainerLayout = useMemo(() => {
@@ -103,7 +99,7 @@ export default function useHintPosition({
 
       let sideTipPosition = 0;
 
-      if (targetAlignmentOnScreen === TargetAlignments.LEFT) {
+      if (targetAlignmentOnScreen === TargetAlignments.LEFT || targetAlignmentOnScreen === TargetAlignments.CENTER) {
         sideTipPosition = Math.max(hintPositionStyle.left, targetLayoutInWindowState.x);
       } else if (targetAlignmentOnScreen === TargetAlignments.RIGHT) {
         sideTipPosition =
