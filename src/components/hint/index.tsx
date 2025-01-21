@@ -7,7 +7,7 @@ import View from '../view';
 import Image from '../image';
 import Modal from '../modal';
 import TouchableOpacity from '../touchableOpacity';
-import {HintPositions, HintProps, TARGET_POSITIONS} from './types';
+import {HintPositions, HintProps, TargetAlignments} from './types';
 
 import useHintAnimation from './hooks/useHintAnimation';
 import useHintLayout from './hooks/useHintLayout';
@@ -87,7 +87,7 @@ const NewHint = (props: HintProps) => {
   const showHint = !!targetLayout;
 
   const {
-    targetPositionOnScreen,
+    targetAlignmentOnScreen,
     hintContainerLayout,
     tipPosition,
     hintPadding,
@@ -151,7 +151,7 @@ const NewHint = (props: HintProps) => {
   const renderHintTip = () => {
     const source = useSideTip ? sideTip : middleTip;
     const flipVertically = position === HintPositions.TOP;
-    const flipHorizontally = targetPositionOnScreen === TARGET_POSITIONS.RIGHT;
+    const flipHorizontally = targetAlignmentOnScreen === TargetAlignments.RIGHT;
     const flipStyle = {
       transform: [{scaleY: flipVertically ? -1 : 1}, {scaleX: flipHorizontally ? -1 : 1}]
     };
@@ -191,7 +191,6 @@ const NewHint = (props: HintProps) => {
         hintPadding={hintPadding}
         hintAnimatedStyle={hintAnimatedStyle}
         isUsingModal={isUsingModal}
-        targetPositionOnScreen={targetPositionOnScreen}
         targetLayout={targetLayout}
       >
         <TouchableOpacity activeOpacity={opacity} onPress={onPress}>

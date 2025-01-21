@@ -2,7 +2,7 @@ import {useMemo} from 'react';
 import {LayoutRectangle} from 'react-native';
 import _ from 'lodash';
 import {Constants} from '../../../commons/new';
-import {HintPositions, HintPositionStyle, Position, Paddings, TARGET_POSITIONS, HintProps} from '../types';
+import {HintPositions, HintPositionStyle, Position, Paddings, TargetAlignments, HintProps} from '../types';
 
 interface UseHintPositionProps extends Pick<HintProps, 'position' | 'useSideTip'> {
   isUsingModal: boolean;
@@ -27,18 +27,18 @@ export default function useHintPosition({
   edgeMargins,
   hintMessageWidth
 }: UseHintPositionProps) {
-  const targetPositionOnScreen = useMemo(() => {
+  const targetAlignmentOnScreen = useMemo(() => {
     const _containerWidth = containerWidth - edgeMargins * 2;
     if (targetLayout?.x !== undefined && targetLayout?.width) {
       const targetMidPosition = targetLayout.x + targetLayout.width / 2;
 
       if (targetMidPosition > _containerWidth * (4 / 5)) {
-        return TARGET_POSITIONS.RIGHT;
+        return TargetAlignments.RIGHT;
       } else if (targetMidPosition < _containerWidth * (1 / 5)) {
-        return TARGET_POSITIONS.LEFT;
+        return TargetAlignments.LEFT;
       }
     }
-    return TARGET_POSITIONS.CENTER;
+    return TargetAlignments.CENTER;
   }, [targetLayout, containerWidth, edgeMargins]);
 
   const tipSize = useMemo(() => {
@@ -79,7 +79,7 @@ export default function useHintPosition({
       const tipMidWidth = tipSize.width / 2;
 
       let sideTipPosition = targetLayoutInWindowState.x;
-      if (targetPositionOnScreen === TARGET_POSITIONS.RIGHT) {
+      if (targetAlignmentOnScreen === TargetAlignments.RIGHT) {
         sideTipPosition += targetLayoutInWindowState.width - edgeMargins;
       }
 
@@ -97,7 +97,7 @@ export default function useHintPosition({
     targetLayout,
     containerWidth,
     position,
-    targetPositionOnScreen,
+    targetAlignmentOnScreen,
     offset,
     useSideTip,
     tipSize,
@@ -110,9 +110,9 @@ export default function useHintPosition({
     return paddings;
 
     // if (shouldUseSideTip && targetLayout?.x !== undefined) {
-    //   if (targetPositionOnScreen === TARGET_POSITIONS.LEFT) {
+    //   if (targetAlignmentOnScreen === TARGET_POSITIONS.LEFT) {
     //     paddings.paddingLeft = targetLayout.x;
-    //   } else if (targetPositionOnScreen === TARGET_POSITIONS.RIGHT && targetLayout?.width) {
+    //   } else if (targetAlignmentOnScreen === TARGET_POSITIONS.RIGHT && targetLayout?.width) {
     //     paddings.paddingRight = containerWidth - targetLayout.x - targetLayout.width;
     //   }
     // }
@@ -145,7 +145,7 @@ export default function useHintPosition({
 
   return {
     tipSize,
-    targetPositionOnScreen,
+    targetAlignmentOnScreen,
     hintContainerLayout,
     tipPosition,
     hintPadding,

@@ -3,17 +3,15 @@ import {StyleSheet, type LayoutRectangle} from 'react-native';
 
 import View from '../view';
 
-import {HintPositionStyle, HintProps, Paddings, TARGET_POSITIONS} from './types';
+import {HintPositionStyle, HintProps, Paddings} from './types';
 
 interface HintAnchorProps extends HintProps {
   showHint: boolean;
   isUsingModal: boolean;
   targetLayout?: LayoutRectangle;
-  containerWidth: number;
   hintContainerLayout: HintPositionStyle;
   hintPadding: Paddings;
   hintAnimatedStyle: any;
-  targetPositionOnScreen: TARGET_POSITIONS;
 }
 
 export default function HintAnchor({

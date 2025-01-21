@@ -17,7 +17,7 @@ export type Paddings = Pick<ViewStyle, 'paddingLeft' | 'paddingRight' | 'padding
 
 export type ContentType = string | ReactElement;
 
-export enum TARGET_POSITIONS {
+export enum TargetAlignments {
   LEFT = 'left',
   RIGHT = 'right',
   CENTER = 'center'
