@@ -56,7 +56,7 @@ const NewHint = (props: HintProps) => {
 
   const {hintUnmounted, visibleAnimated, animateHint} = useHintAnimation(visible);
   const {targetLayoutState, targetLayoutInWindowState, hintMessageWidth, targetRef, onTargetLayout, setHintLayout} =
-    useHintLayout(!!onBackgroundPress);
+    useHintLayout({onBackgroundPress, targetFrame});
   const {focusAccessibilityOnHint, accessibilityInfo} = useHintAccessibility(message);
 
   useEffect(() => {
@@ -70,12 +70,8 @@ const NewHint = (props: HintProps) => {
   }, [visible]);
 
   const targetLayout = useMemo(() => {
-    if (targetFrame) {
-      return targetFrame;
-    }
-
     return isUsingModal ? targetLayoutInWindowState : targetLayoutState;
-  }, [isUsingModal, targetLayoutState, targetLayoutInWindowState, targetFrame]);
+  }, [isUsingModal, targetLayoutState, targetLayoutInWindowState]);
 
   const setTargetRef = useCallback((ref: ElementRef<typeof RNView>) => {
     targetRef.current = ref;
