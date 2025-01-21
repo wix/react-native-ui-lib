@@ -1,12 +1,12 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, LayoutRectangle} from 'react-native';
 
 import {Constants} from '../../commons/new';
 import View from '../view';
-import {HintProps, HintTargetFrame} from './types';
+import {HintProps} from './types';
 
 interface HintMockChildrenProps extends Pick<HintProps, 'children' | 'backdropColor'> {
-  targetLayout?: HintTargetFrame;
+  targetLayout?: LayoutRectangle;
 }
 
 export default function HintMockChildren({children, backdropColor, targetLayout}: HintMockChildrenProps) {

@@ -1,28 +1,25 @@
 import React from 'react';
-import {LayoutChangeEvent, StyleSheet, View as RNView} from 'react-native';
+import {StyleSheet, type LayoutRectangle} from 'react-native';
 
 import View from '../view';
 
-import {HintPositionStyle, HintProps, HintTargetFrame, Paddings, Position, TARGET_POSITIONS} from './types';
+import {HintPositionStyle, HintProps, Paddings, TARGET_POSITIONS} from './types';
 
 interface HintAnchorProps extends HintProps {
   showHint: boolean;
-  targetLayout?: HintTargetFrame;
+  isUsingModal: boolean;
+  targetLayout?: LayoutRectangle;
   containerWidth: number;
   hintContainerLayout: HintPositionStyle;
   hintPadding: Paddings;
   hintAnimatedStyle: any;
-  hintRef: React.RefObject<RNView>;
-  setHintLayout: (layoutChangeEvent: LayoutChangeEvent) => void;
   targetPositionOnScreen: TARGET_POSITIONS;
-  tipPosition: Position;
-  isUsingModal: boolean;
-  hintPositionStyle: {left: number};
 }
 
 export default function HintAnchor({
   children,
   showHint,
+  isUsingModal,
   targetLayout,
   containerWidth,
   testID,
@@ -30,7 +27,6 @@ export default function HintAnchor({
   hintPadding,
   hintAnimatedStyle,
   style,
-  isUsingModal,
   ...others
 }: HintAnchorProps) {
   const renderHintContainer = () => {
@@ -61,11 +57,11 @@ export default function HintAnchor({
       collapsable
       testID={undefined}
       style={[
-        styles.container,
+        styles.anchor,
         style,
         /*  containerPosition, */
         {left: targetLayout?.x, top: targetLayout?.y},
-        !isUsingModal && styles.overlayContainer
+        !isUsingModal && styles.anchorForScreenOverlay
       ]}
     >
       {renderHintContainer()}
@@ -74,10 +70,10 @@ export default function HintAnchor({
 }
 
 const styles = StyleSheet.create({
-  container: {
+  anchor: {
     position: 'absolute'
   },
-  overlayContainer: {
+  anchorForScreenOverlay: {
     zIndex: 10,
     elevation: 10
   },

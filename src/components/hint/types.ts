@@ -1,5 +1,13 @@
 import type {ReactElement} from 'react';
-import type {GestureResponderEvent, ImageSourcePropType, ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
+import type {
+  GestureResponderEvent,
+  ImageSourcePropType,
+  ImageStyle,
+  LayoutRectangle,
+  StyleProp,
+  TextStyle,
+  ViewStyle
+} from 'react-native';
 
 export type Position = Pick<ViewStyle, 'top' | 'bottom' | 'left' | 'right'>;
 
@@ -18,14 +26,6 @@ export enum TARGET_POSITIONS {
 export enum HintPositions {
   TOP = 'top',
   BOTTOM = 'bottom'
-}
-
-// TODO: unify with FeatureHighlightFrame
-export interface HintTargetFrame {
-  x?: number;
-  y?: number;
-  width?: number;
-  height?: number;
 }
 
 export interface HintProps {
@@ -60,7 +60,7 @@ export interface HintProps {
   /**
    * Provide custom target position instead of wrapping a child
    */
-  targetFrame?: HintTargetFrame;
+  targetFrame?: LayoutRectangle;
   /**
    * Open the hint using a Modal component
    */

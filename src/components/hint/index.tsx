@@ -185,8 +185,6 @@ const NewHint = (props: HintProps) => {
     return (
       <HintAnchor
         {...props}
-        hintRef={hintRef}
-        setHintLayout={setHintLayout}
         showHint={showHint}
         containerWidth={containerWidth}
         hintContainerLayout={hintContainerLayout}
@@ -194,9 +192,7 @@ const NewHint = (props: HintProps) => {
         hintAnimatedStyle={hintAnimatedStyle}
         isUsingModal={isUsingModal}
         targetPositionOnScreen={targetPositionOnScreen}
-        tipPosition={tipPosition}
         targetLayout={targetLayout}
-        hintPositionStyle={hintPositionStyle}
       >
         <TouchableOpacity activeOpacity={opacity} onPress={onPress}>
           {renderHint()}
@@ -207,13 +203,7 @@ const NewHint = (props: HintProps) => {
   };
 
   const renderMockChildren = () => {
-    return (
-      <HintMockChildren
-        children={children}
-        backdropColor={backdropColor}
-        targetLayout={targetLayout}
-      />
-    );
+    return <HintMockChildren children={children} backdropColor={backdropColor} targetLayout={targetLayout}/>;
   };
 
   const renderChildren = () => {

@@ -1,22 +1,15 @@
 import {useMemo} from 'react';
+import {LayoutRectangle} from 'react-native';
 import _ from 'lodash';
 import {Constants} from '../../../commons/new';
-import {
-  HintPositions,
-  HintPositionStyle,
-  Position,
-  Paddings,
-  TARGET_POSITIONS,
-  HintTargetFrame,
-  HintProps
-} from '../types';
+import {HintPositions, HintPositionStyle, Position, Paddings, TARGET_POSITIONS, HintProps} from '../types';
 
 interface UseHintPositionProps extends Pick<HintProps, 'position' | 'useSideTip'> {
   isUsingModal: boolean;
   offset: number;
-  targetLayout?: HintTargetFrame;
-  targetLayoutState?: HintTargetFrame;
-  targetLayoutInWindowState?: HintTargetFrame;
+  targetLayout?: LayoutRectangle;
+  targetLayoutState?: LayoutRectangle;
+  targetLayoutInWindowState?: LayoutRectangle;
   containerWidth: number;
   edgeMargins: number;
   hintMessageWidth?: number;
