@@ -2,7 +2,7 @@ import {useMemo} from 'react';
 import {LayoutRectangle} from 'react-native';
 import _ from 'lodash';
 import {Constants} from '../../../commons/new';
-import {HintPositions, HintPositionStyle, Position, Paddings, TargetAlignments, HintProps} from '../types';
+import {HintPositions, LayoutStyle, PositionStyle, PaddingsStyle, TargetAlignments, HintProps} from '../types';
 
 interface UseHintPositionProps extends Pick<HintProps, 'position' | 'useSideTip'> {
   isUsingModal: boolean;
@@ -46,7 +46,7 @@ export default function useHintPosition({
   }, [useSideTip]);
 
   const hintContainerLayout = useMemo(() => {
-    const containerStyle: HintPositionStyle = {alignItems: 'flex-start'};
+    const containerStyle: LayoutStyle = {alignItems: 'flex-start'};
 
     if (targetLayoutInWindowState?.x !== undefined) {
       containerStyle.left = -targetLayoutInWindowState.x;
@@ -62,7 +62,7 @@ export default function useHintPosition({
   }, [position, targetLayoutInWindowState]);
 
   const tipPosition = useMemo(() => {
-    const tipPositionStyle: Position = {};
+    const tipPositionStyle: PositionStyle = {};
     const _containerWidth = containerWidth - (isUsingModal ? 0 : edgeMargins);
 
     if (position === HintPositions.TOP) {
@@ -106,7 +106,7 @@ export default function useHintPosition({
   ]);
 
   const hintPadding = useMemo(() => {
-    const paddings: Paddings = {paddingVertical: offset /* , paddingHorizontal: edgeMargins */};
+    const paddings: PaddingsStyle = {paddingVertical: offset /* , paddingHorizontal: edgeMargins */};
     return paddings;
 
     // if (shouldUseSideTip && targetLayout?.x !== undefined) {

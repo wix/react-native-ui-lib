@@ -9,11 +9,11 @@ import type {
   ViewStyle
 } from 'react-native';
 
-export type Position = Pick<ViewStyle, 'top' | 'bottom' | 'left' | 'right'>;
+export type PositionStyle = Pick<ViewStyle, 'top' | 'bottom' | 'left' | 'right'>;
 
-export type HintPositionStyle = Position & Pick<ViewStyle, 'alignItems'>;
+export type LayoutStyle = PositionStyle & Pick<ViewStyle, 'alignItems'>;
 
-export type Paddings = Pick<ViewStyle, 'paddingLeft' | 'paddingRight' | 'paddingVertical' | 'paddingHorizontal'>;
+export type PaddingsStyle = Pick<ViewStyle, 'paddingLeft' | 'paddingRight' | 'paddingVertical' | 'paddingHorizontal'>;
 
 export type ContentType = string | ReactElement;
 
