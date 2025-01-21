@@ -97,7 +97,7 @@ export default class HintsScreen extends Component<HintScreenProps> {
 
         {renderMultipleSegmentOptions.call(this, 'Tip Position', 'useSideTip', [
           {label: 'Side Tip', value: true},
-          {label: 'Middle Top', value: false}
+          {label: 'Middle Tip', value: false}
         ])}
 
         {renderMultipleSegmentOptions.call(this, 'Hint Position', 'showBottomHint', [
@@ -141,6 +141,9 @@ export default class HintsScreen extends Component<HintScreenProps> {
       : 'Add other cool and useful stuff through adding apps to your visitors to enjoy.';
     const color = !showCustomContent && showReactionStrip ? {color: Colors.$backgroundDefault} : undefined;
 
+
+    const hintKey = `${useSideTip}-${targetPosition}-${useShortMessage}-${showIcon}-${useTargetFrame}`;
+
     return (
       <View flex>
         <View
@@ -170,7 +173,7 @@ export default class HintsScreen extends Component<HintScreenProps> {
             // offset={35}
             position={showBottomHint ? Hint.positions.BOTTOM : Hint.positions.TOP}
             useSideTip={useSideTip}
-            key={targetPosition}
+            key={hintKey}
             onPress={this.onHintPressed}
             targetFrame={useTargetFrame ? targetFrame : undefined}
             // borderRadius={BorderRadiuses.br40}
@@ -229,7 +232,6 @@ export default class HintsScreen extends Component<HintScreenProps> {
               visible={showSecondHint}
               onBackgroundPress={this.toggleSecondHint}
               useSideTip={false}
-              
             >
               <Button label="Button" onPress={this.toggleSecondHint}/>
             </Hint>
