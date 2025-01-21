@@ -1,18 +1,24 @@
 import React, {isValidElement, ElementRef, useMemo, useCallback, useRef, useEffect} from 'react';
 import {Animated, StyleSheet, TouchableWithoutFeedback, View as RNView} from 'react-native';
-import {Typography, Spacings, Colors, BorderRadiuses, Shadows} from '../../style';
+import {Typography, Spacings, Colors, BorderRadiuses, Shadows} from 'style';
+import {useDidUpdate} from 'hooks';
 import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
+import Image from '../image';
 import Modal from '../modal';
+import TouchableOpacity from '../touchableOpacity';
 import {HintPositions, HintProps, TARGET_POSITIONS} from './types';
 
-import {useDidUpdate} from 'hooks';
 import useHintAnimation from './hooks/useHintAnimation';
 import useHintLayout from './hooks/useHintLayout';
 import useHintAccessibility from './hooks/useHintAccessibility';
 import useHintPosition from './hooks/useHintPosition';
 import HintMockChildren from './HintMockChildren';
 import HintAnchor from './HintAnchor';
+import HintBubble from './HintBubble';
+
+const sideTip = require('./assets/hintTipSide.png');
+const middleTip = require('./assets/hintTipMiddle.png');
 
 const DEFAULT_COLOR = Colors.$backgroundPrimaryHeavy;
 const DEFAULT_HINT_OFFSET = Spacings.s4;
@@ -28,11 +34,20 @@ const NewHint = (props: HintProps) => {
     message,
     containerWidth = Constants.windowWidth,
     offset = DEFAULT_HINT_OFFSET,
-    edgeMargins: edgeMarginsProp,
+    edgeMargins = DEFAULT_EDGE_MARGINS,
     targetFrame,
     useSideTip,
+    onPress,
     onBackgroundPress,
     backdropColor,
+    color = DEFAULT_COLOR,
+    icon,
+    iconStyle,
+    messageStyle,
+    removePaddings,
+    enableShadow,
+    borderRadius,
+    customContent,
     testID
   } = props;
 
@@ -69,50 +84,27 @@ const NewHint = (props: HintProps) => {
     }
   }, []);
 
-  const isShortMessage = useCallback((messageWidth: number) => {
-    return messageWidth && messageWidth < Constants.screenWidth / 2;
-  }, []);
-
   const showHint = !!targetLayout;
 
-  const edgeMargins = useMemo(() => {
-    if (edgeMarginsProp !== undefined) {
-      return edgeMarginsProp;
-    }
-    return isUsingModal ? DEFAULT_EDGE_MARGINS : 0;
-  }, [isUsingModal, edgeMarginsProp]);
-
-  const {shouldUseSideTip, targetPositionOnScreen, hintPosition, containerPosition, tipPosition, hintPadding} =
-    useHintPosition({
-      useSideTip,
-      position,
-      offset,
-      targetLayout,
-      containerWidth,
-      edgeMargins
-    });
-
-  const hintOffsetForShortMessage = useMemo(() => {
-    let hintMessageOffset = 0;
-    if (isShortMessage(hintMessageOffset)) {
-      const _hintMessageWidth = hintMessageWidth ?? 0;
-      const targetPosition = tipPosition;
-      if (targetPosition?.right) {
-        hintMessageOffset = -targetPosition?.right + _hintMessageWidth / 2;
-      }
-
-      if (targetPosition?.left) {
-        hintMessageOffset = targetPosition?.left as number;
-        if (targetPositionOnScreen === TARGET_POSITIONS.CENTER) {
-          hintMessageOffset -= Constants.screenWidth / 2;
-        } else {
-          hintMessageOffset -= _hintMessageWidth / 2;
-        }
-      }
-    }
-
-    return hintMessageOffset;
-  }, [hintMessageWidth, tipPosition, targetPositionOnScreen, isShortMessage]);
+  const {
+    targetPositionOnScreen,
+    hintContainerLayout,
+    tipPosition,
+    hintPadding,
+    hintPositionStyle,
+    targetScreenToRelativeOffset
+  } = useHintPosition({
+    isUsingModal,
+    useSideTip,
+    position,
+    offset,
+    targetLayout,
+    targetLayoutState,
+    targetLayoutInWindowState,
+    containerWidth,
+    edgeMargins,
+    hintMessageWidth
+  });
 
   const hintAnimatedStyle = useMemo(() => {
     const translateY = position === HintPositions.TOP ? -10 : 10;
@@ -128,14 +120,17 @@ const NewHint = (props: HintProps) => {
   }, [position, visibleAnimated]);
 
   const renderOverlay = () => {
-    if (targetLayoutInWindowState && containerPosition?.top !== undefined && containerPosition?.left !== undefined) {
+    if (
+      targetLayoutInWindowState &&
+      targetScreenToRelativeOffset?.top !== undefined &&
+      targetScreenToRelativeOffset?.left !== undefined
+    ) {
       return (
         <Animated.View
           style={[
             styles.overlay,
             {
-              top: containerPosition.top - targetLayoutInWindowState.y,
-              left: containerPosition.left - targetLayoutInWindowState.x,
+              ...targetScreenToRelativeOffset,
               backgroundColor: backdropColor,
               opacity: visibleAnimated
             }
@@ -153,7 +148,40 @@ const NewHint = (props: HintProps) => {
     }
   };
 
+  const renderHintTip = () => {
+    const source = useSideTip ? sideTip : middleTip;
+    const flipVertically = position === HintPositions.TOP;
+    const flipHorizontally = targetPositionOnScreen === TARGET_POSITIONS.RIGHT;
+    const flipStyle = {
+      transform: [{scaleY: flipVertically ? -1 : 1}, {scaleX: flipHorizontally ? -1 : 1}]
+    };
+
+    return <Image tintColor={color} source={source} style={[styles.hintTip, tipPosition, flipStyle]}/>;
+  };
+
+  const renderHint = () => {
+    return (
+      <HintBubble
+        visible={visible}
+        message={message}
+        messageStyle={messageStyle}
+        color={color}
+        removePaddings={removePaddings}
+        enableShadow={enableShadow}
+        borderRadius={borderRadius}
+        icon={icon}
+        iconStyle={iconStyle}
+        customContent={customContent}
+        testID={testID}
+        hintRef={hintRef}
+        setHintLayout={setHintLayout}
+        hintPositionStyle={hintPositionStyle}
+      />
+    );
+  };
+
   const renderHintAnchor = () => {
+    const opacity = onPress ? 0.9 : 1.0;
     return (
       <HintAnchor
         {...props}
@@ -161,16 +189,20 @@ const NewHint = (props: HintProps) => {
         setHintLayout={setHintLayout}
         showHint={showHint}
         containerWidth={containerWidth}
-        hintPosition={hintPosition}
+        hintContainerLayout={hintContainerLayout}
         hintPadding={hintPadding}
         hintAnimatedStyle={hintAnimatedStyle}
-        hintOffsetForShortMessage={hintOffsetForShortMessage}
-        shouldUseSideTip={shouldUseSideTip}
         isUsingModal={isUsingModal}
         targetPositionOnScreen={targetPositionOnScreen}
         tipPosition={tipPosition}
-        containerPosition={containerPosition}
-      />
+        targetLayout={targetLayout}
+        hintPositionStyle={hintPositionStyle}
+      >
+        <TouchableOpacity activeOpacity={opacity} onPress={onPress}>
+          {renderHint()}
+        </TouchableOpacity>
+        {renderHintTip()}
+      </HintAnchor>
     );
   };
 
@@ -179,7 +211,6 @@ const NewHint = (props: HintProps) => {
       <HintMockChildren
         children={children}
         backdropColor={backdropColor}
-        containerPosition={containerPosition}
         targetLayout={targetLayout}
       />
     );

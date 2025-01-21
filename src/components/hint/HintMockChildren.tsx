@@ -6,23 +6,17 @@ import View from '../view';
 import {HintProps, HintTargetFrame} from './types';
 
 interface HintMockChildrenProps extends Pick<HintProps, 'children' | 'backdropColor'> {
-  containerPosition?: {top: number | undefined; left: number | undefined};
   targetLayout?: HintTargetFrame;
 }
 
-export default function HintMockChildren({
-  children,
-  backdropColor,
-  containerPosition,
-  targetLayout
-}: HintMockChildrenProps) {
+export default function HintMockChildren({children, backdropColor, targetLayout}: HintMockChildrenProps) {
   const isBackdropColorPassed = backdropColor !== undefined;
   if (children && React.isValidElement(children)) {
     const layout = {
-      ...containerPosition,
       width: targetLayout?.width,
       height: targetLayout?.height,
       right: Constants.isRTL ? targetLayout?.x : undefined,
+      top: targetLayout?.y,
       left: Constants.isRTL ? undefined : targetLayout?.x
     };
 
