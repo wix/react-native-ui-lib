@@ -10,7 +10,6 @@ const someDateNextHour = new Date(someDate.getTime() + 60 * 60 * 1000);
 const TestCase = (props: Partial<Omit<DateTimePickerProps, 'dialogProps'>>) => {
   const defaultProps: DateTimePickerProps = {
     value: someDate,
-    migrateDialog: true,
     testID
   };
   return <DateTimePicker {...defaultProps} {...props}/>;
