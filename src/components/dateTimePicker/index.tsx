@@ -15,8 +15,7 @@ import {Colors} from '../../style';
 import Assets from '../../assets';
 import {Constants, asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
 import TextField, {TextFieldProps, TextFieldMethods} from '../textField';
-import type {DialogMigrationProps} from '../../incubator/dialog';
-import {DialogProps} from '../dialog';
+import type {DialogProps} from '../../incubator/dialog';
 import View from '../view';
 import Button, {ButtonProps} from '../button';
 import ExpandableOverlay, {ExpandableOverlayMethods, RenderCustomOverlayProps} from '../../incubator/expandableOverlay';
@@ -26,8 +25,7 @@ import {isSameDate, isSameHourAndMinute} from '../../utils/dateUtils';
 export type DateTimePickerMode = 'date' | 'time';
 
 export type DateTimePickerProps = OldApiProps &
-  Omit<TextFieldProps, 'value' | 'onChange'> &
-  DialogMigrationProps & {
+  Omit<TextFieldProps, 'value' | 'onChange'> & {
     /**
      * The type of picker to display ('date' or 'time')
      */
@@ -36,6 +34,10 @@ export type DateTimePickerProps = OldApiProps &
      * The initial value to set the picker to. Defaults to device's date / time
      */
     value?: Date;
+    /**
+     *  The props to pass to the dialog expandable container
+     */
+    dialogProps?: DialogProps;
     /**
      * The onChange callback
      */
@@ -144,7 +146,6 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
     themeVariant = Colors.getScheme(),
     onChange,
     dialogProps,
-    migrateDialog,
     textColor = Colors.$textDefault,
     backgroundColor = Colors.$backgroundDefault,
     headerStyle,
@@ -191,7 +192,7 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
         'landscape',
         'landscape-left',
         'landscape-right'
-      ] as DialogProps['supportedOrientations'],
+      ],
       ...dialogProps
     };
   }, [dialogProps, testID]);
@@ -338,7 +339,6 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
         expandableContent={Constants.isIOS ? renderIOSExpandableOverlay() : undefined}
         useDialog
         dialogProps={_dialogProps}
-        migrateDialog={migrateDialog}
         disabled={editable === false}
         // NOTE: Android picker comes with its own overlay built-in therefor we're not using ExpandableOverlay for it
         renderCustomOverlay={Constants.isAndroid ? renderAndroidDateTimePicker : undefined}

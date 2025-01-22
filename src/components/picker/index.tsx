@@ -281,7 +281,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
           ref={pickerExpandable}
           useDialog={useDialog || useWheelPicker}
           dialogProps={DEFAULT_DIALOG_PROPS}
-          migrateDialog
           expandableContent={expandableModalContent}
           renderCustomOverlay={renderOverlay ? _renderOverlay : undefined}
           onPress={onPress}
