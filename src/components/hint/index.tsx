@@ -25,7 +25,7 @@ const DEFAULT_HINT_OFFSET = Spacings.s4;
 const DEFAULT_EDGE_MARGINS = Spacings.s5;
 const HINT_MIN_WIDTH = 68;
 
-const NewHint = (props: HintProps) => {
+const Hint = (props: HintProps) => {
   const {
     visible,
     useModal,
@@ -50,6 +50,8 @@ const NewHint = (props: HintProps) => {
     customContent,
     testID
   } = props;
+
+  
 
   const hintRef = useRef<RNView>(null);
   const isUsingModal = Boolean(onBackgroundPress && useModal);
@@ -305,14 +307,14 @@ const styles = StyleSheet.create({
   }
 });
 
-NewHint.displayName = 'Hint';
-NewHint.defaultProps = {
+Hint.displayName = 'Hint';
+Hint.defaultProps = {
   position: HintPositions.BOTTOM,
   useModal: true
 };
-NewHint.positions = HintPositions;
+Hint.positions = HintPositions;
 
-export {HintProps};
+export {HintProps, Hint};
 
 // @ts-expect-error
-export default asBaseComponent<HintProps, typeof NewHint>(NewHint);
+export default asBaseComponent<HintProps, typeof Hint>(Hint);
