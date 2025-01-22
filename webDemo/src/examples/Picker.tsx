@@ -5,7 +5,7 @@ import {
   Colors,
   View,
   Text,
-  Incubator,
+  Dialog,
   PickerProps,
   RenderCustomModalProps,
   PanningProvider
@@ -42,7 +42,7 @@ const PickerWrapper = () => {
     const {visible, children, toggleModal, onDone} = modalProps;
 
     return (
-      <Incubator.Dialog
+      <Dialog
         visible={visible}
         onDismiss={() => {
           onDone();
@@ -57,7 +57,7 @@ const PickerWrapper = () => {
         headerProps={{title: 'Custom modal'}}
       >
         <ScrollView>{children}</ScrollView>
-      </Incubator.Dialog>
+      </Dialog>
     );
   };
 

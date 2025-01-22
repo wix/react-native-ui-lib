@@ -10,7 +10,7 @@ import Image from '../image';
 //@ts-ignore
 import ListItem from '../listItem';
 import PanningProvider from '../panningViews/panningProvider';
-import {Dialog, DialogProps} from '../../incubator';
+import Dialog, {type DialogProps} from '../dialog';
 
 const VERTICAL_PADDING = 8;
 type ActionSheetOnOptionPress = (index: number) => void;
