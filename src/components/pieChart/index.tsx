@@ -24,6 +24,7 @@ const PieChart = (props: PieChartProps) => {
 
   if (!Svg || !Path) {
     console.error(`RNUILib PieChart requires installing "@react-native-svg" dependency`);
+    return null;
   }
 
   const renderPieSegments = () => {
