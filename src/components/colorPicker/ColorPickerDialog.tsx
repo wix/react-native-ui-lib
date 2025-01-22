@@ -4,7 +4,7 @@ import {LayoutAnimation, StyleSheet, Keyboard, StyleProp, ViewStyle} from 'react
 import {Constants, asBaseComponent} from '../../commons/new';
 import {Colors} from '../../style';
 import {ModalProps} from '../../components/modal';
-import Dialog, {DialogProps} from '../../incubator/dialog';
+import Dialog, {DialogProps} from '../dialog';
 import {getColorValue, getValidColorString, getTextColor, BORDER_RADIUS, HSLColor} from './ColorPickerPresenter';
 import ColorPickerDialogHeader from './ColorPickerDialogHeader';
 import ColorPickerPreview from './ColorPickerPreview';

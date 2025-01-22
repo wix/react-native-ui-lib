@@ -4,7 +4,7 @@
   "description": "Component for displaying custom content inside a popup dialog",
   "note": "Use alignment modifiers to control the dialog position (top, bottom, centerV, centerH, etc... by default the dialog is aligned to center).  \nWhen adding a `FlatList` \\ `ScrollView` to the content be sure to use one from `react-native-gesture-handler` (see [this link](https://github.com/software-mansion/react-native-gesture-handler/issues/1380) for `SectionList`).",
   "modifiers": ["alignment"],
-  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/IncubatorDialogScreen.tsx",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DialogScreen.tsx",
   "props": [
     {"name": "visible", "type": "boolean", "description": "The visibility of the dialog"},
     {"name": "headerProps", "type": "DialogHeaderProps", "description": "The Dialog's header (title, subtitle etc)"},

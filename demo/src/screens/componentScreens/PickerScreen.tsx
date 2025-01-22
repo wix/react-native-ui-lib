@@ -5,7 +5,7 @@ import {
   Assets,
   Colors,
   Typography,
-  Incubator,
+  Dialog,
   View,
   Text,
   Button,
@@ -113,7 +113,7 @@ export default class PickerScreen extends Component {
   renderDialog: PickerProps['renderOverlay'] = (modalProps: RenderCustomModalProps) => {
     const {visible, children, toggleModal, onDone} = modalProps;
     return (
-      <Incubator.Dialog
+      <Dialog
         visible={visible}
         onDismiss={() => {
           onDone();
@@ -128,7 +128,7 @@ export default class PickerScreen extends Component {
         headerProps={{title: 'Custom modal'}}
       >
         <ScrollView>{children}</ScrollView>
-      </Incubator.Dialog>
+      </Dialog>
     );
   };
 

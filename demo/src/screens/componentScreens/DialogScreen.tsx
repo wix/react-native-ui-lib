@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
-import {View, Text, Card, Button, Incubator, Colors, Spacings, ModalProps} from 'react-native-ui-lib';
+import {View, Text, Card, Button, Dialog, DialogHeaderProps, Colors, Spacings, ModalProps} from 'react-native-ui-lib';
 
 interface Item {
   value: string;
@@ -31,10 +31,10 @@ const colors: Item[] = [
   {value: Colors.yellow70, label: 'Yellow70'}
 ];
 
-export default class IncubatorDialogScreen extends Component {
+export default class DialogScreen extends Component {
   state = {visible: false};
   modalProps: ModalProps = {supportedOrientations: ['portrait', 'landscape']};
-  headerProps: Incubator.DialogHeaderProps = {title: 'Title (swipe here)'};
+  headerProps: DialogHeaderProps = {title: 'Title (swipe here)'};
 
   renderVerticalItem = ({item}: {item: Item}) => {
     return (
@@ -67,13 +67,13 @@ export default class IncubatorDialogScreen extends Component {
       <View bg-$backgroundNeutralLight flex padding-20>
         <Card height={100} center padding-20>
           <Text $textDefault text50>
-            IncubatorDialogScreen
+            DialogScreen
           </Text>
         </Card>
         <View flex center>
           <Button marginV-s5 label="Open Dialog" onPress={this.openDialog}/>
         </View>
-        <Incubator.Dialog
+        <Dialog
           useSafeArea
           visible={visible}
           onDismiss={this.onDismiss}
@@ -89,7 +89,7 @@ export default class IncubatorDialogScreen extends Component {
             renderItem={this.renderVerticalItem}
             keyExtractor={this.keyExtractor}
           />
-        </Incubator.Dialog>
+        </Dialog>
       </View>
     );
   }
