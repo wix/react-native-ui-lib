@@ -267,6 +267,9 @@ module.exports = {
       get Pinterest() {
         return require('./screens/realExamples/Pinterest').default;
       },
+      get PieChartScreen() {
+        return require('./screens/componentScreens/PieChartScreen.tsx').default;
+      },
       get ListActionsScreen() {
         return require('./screens/realExamples/ListActions/ListActionsScreen').default;
       },
