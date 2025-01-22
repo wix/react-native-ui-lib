@@ -3,7 +3,7 @@ import {AccessibilityInfo, findNodeHandle} from 'react-native';
 import TouchableOpacity, {TouchableOpacityProps} from '../../components/touchableOpacity';
 import View from '../../components/view';
 import Modal, {ModalProps, ModalTopBarProps} from '../../components/modal';
-import Dialog, {DialogProps} from '../dialog';
+import Dialog, {DialogProps} from '../../components/dialog';
 import {Colors} from 'style';
 
 export interface ExpandableOverlayMethods {

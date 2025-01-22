@@ -251,9 +251,6 @@ module.exports = {
       get IncubatorSlider() {
         return require('./screens/incubatorScreens/IncubatorSliderScreen').default;
       },
-      get IncubatorDialog() {
-        return require('./screens/incubatorScreens/IncubatorDialogScreen').default;
-      },
       get IncubatorToast() {
         return require('./screens/incubatorScreens/IncubatorToastScreen').default;
       },

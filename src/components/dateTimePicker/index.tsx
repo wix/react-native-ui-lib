@@ -15,7 +15,7 @@ import {Colors} from '../../style';
 import Assets from '../../assets';
 import {Constants, asBaseComponent, BaseComponentInjectedProps} from '../../commons/new';
 import TextField, {TextFieldProps, TextFieldMethods} from '../textField';
-import type {DialogProps} from '../../incubator/dialog';
+import type {DialogProps} from '../dialog';
 import View from '../view';
 import Button, {ButtonProps} from '../button';
 import ExpandableOverlay, {ExpandableOverlayMethods, RenderCustomOverlayProps} from '../../incubator/expandableOverlay';
