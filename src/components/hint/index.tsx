@@ -29,6 +29,7 @@ const middleTip = require('./assets/hintTipMiddle.png');
 const DEFAULT_COLOR = Colors.$backgroundPrimaryHeavy;
 const DEFAULT_HINT_OFFSET = Spacings.s4;
 const DEFAULT_EDGE_MARGINS = Spacings.s5;
+const HINT_MIN_WIDTH = 68;
 
 enum TARGET_POSITIONS {
   LEFT = 'left',
@@ -153,6 +154,7 @@ interface HintState {
   targetLayout?: HintTargetFrame;
   targetLayoutInWindow?: HintTargetFrame;
   hintUnmounted: boolean;
+  hintMessageWidth?: number;
 }
 
 /**
@@ -178,7 +180,8 @@ class Hint extends Component<HintProps, HintState> {
   state = {
     targetLayoutInWindow: undefined as {x: number; y: number; width: number; height: number} | undefined,
     targetLayout: this.props.targetFrame,
-    hintUnmounted: !this.props.visible
+    hintUnmounted: !this.props.visible,
+    hintMessageWidth: undefined
   };
 
   visibleAnimated = new Animated.Value(Number(!!this.props.visible));
@@ -220,6 +223,12 @@ class Hint extends Component<HintProps, HintState> {
   setTargetRef = (ref: ElementRef<typeof RNView>) => {
     this.targetRef = ref;
     this.focusAccessibilityOnHint();
+  };
+
+  setHintLayout = ({nativeEvent: {layout}}: LayoutChangeEvent) => {
+    if (!this.state.hintMessageWidth) {
+      this.setState({hintMessageWidth: layout.width});
+    }
   };
 
   onTargetLayout = ({nativeEvent: {layout}}: LayoutChangeEvent) => {
@@ -278,7 +287,7 @@ class Hint extends Component<HintProps, HintState> {
   }
 
   get edgeMargins() {
-    const {edgeMargins = DEFAULT_EDGE_MARGINS} = this.props;
+    const {edgeMargins = this.isUsingModal() ? DEFAULT_EDGE_MARGINS : 0} = this.props;
     return edgeMargins;
   }
 
@@ -292,17 +301,21 @@ class Hint extends Component<HintProps, HintState> {
     return this.getTargetPositionOnScreen() !== TARGET_POSITIONS.CENTER;
   }
 
+  get isShortMessage() {
+    const {hintMessageWidth} = this.state;
+    return hintMessageWidth && hintMessageWidth < Constants.screenWidth / 2;
+  }
+
   getTargetPositionOnScreen() {
     if (this.targetLayout?.x !== undefined && this.targetLayout?.width) {
       const targetMidPosition = this.targetLayout.x + this.targetLayout.width / 2;
 
-      if (targetMidPosition > this.containerWidth * (2 / 3)) {
+      if (targetMidPosition > this.containerWidth * (4 / 5)) {
         return TARGET_POSITIONS.RIGHT;
-      } else if (targetMidPosition < this.containerWidth * (1 / 3)) {
+      } else if (targetMidPosition < this.containerWidth * (1 / 5)) {
         return TARGET_POSITIONS.LEFT;
       }
     }
-
     return TARGET_POSITIONS.CENTER;
   }
 
@@ -405,6 +418,29 @@ class Hint extends Component<HintProps, HintState> {
     return tipPositionStyle;
   }
 
+  getHintOffsetForShortMessage = () => {
+    const {hintMessageWidth = 0} = this.state;
+
+    let hintMessageOffset = 0;
+    if (this.isShortMessage) {
+      const targetPosition = this.getTipPosition();
+      if (targetPosition?.right) {
+        hintMessageOffset = -targetPosition?.right + hintMessageWidth / 2;
+      }
+
+      if (targetPosition?.left) {
+        hintMessageOffset = targetPosition?.left as number;
+        if (this.getTargetPositionOnScreen() === TARGET_POSITIONS.CENTER) {
+          hintMessageOffset -= Constants.screenWidth / 2;
+        } else {
+          hintMessageOffset -= hintMessageWidth / 2;
+        }
+      }
+    }
+
+    return hintMessageOffset;
+  };
+
   isUsingModal = () => {
     const {onBackgroundPress, useModal} = this.props;
     return onBackgroundPress && useModal;
@@ -451,7 +487,7 @@ class Hint extends Component<HintProps, HintState> {
     return <Image tintColor={color} source={source} style={[styles.hintTip, this.getTipPosition(), flipStyle]}/>;
   }
 
-  renderContent() {
+  renderHint() {
     const {
       message,
       messageStyle,
@@ -466,18 +502,23 @@ class Hint extends Component<HintProps, HintState> {
       testID
     } = this.props;
 
+    const hintMessageOffset = this.getHintOffsetForShortMessage();
+
     return (
       <View
         testID={`${testID}.message`}
         row
         centerV
+        centerH={!!hintMessageOffset}
         style={[
           styles.hint,
           !removePaddings && styles.hintPaddings,
           visible && enableShadow && styles.containerShadow,
           {backgroundColor: color},
-          !_.isUndefined(borderRadius) && {borderRadius}
+          !_.isUndefined(borderRadius) && {borderRadius},
+          hintMessageOffset ? {left: hintMessageOffset} : undefined
         ]}
+        onLayout={this.setHintLayout}
         ref={this.hintRef}
       >
         {customContent}
@@ -491,7 +532,7 @@ class Hint extends Component<HintProps, HintState> {
     );
   }
 
-  renderHint() {
+  renderHintContainer() {
     const {onPress, testID} = this.props;
     const opacity = onPress ? 0.9 : 1.0;
 
@@ -510,7 +551,7 @@ class Hint extends Component<HintProps, HintState> {
           testID={testID}
         >
           <TouchableOpacity activeOpacity={opacity} onPress={onPress}>
-            {this.renderContent()}
+            {this.renderHint()}
           </TouchableOpacity>
           {this.renderHintTip()}
         </View>
@@ -518,7 +559,7 @@ class Hint extends Component<HintProps, HintState> {
     }
   }
 
-  renderHintContainer() {
+  renderHintAnchor() {
     const {style, ...others} = this.props;
     return (
       <View
@@ -528,7 +569,7 @@ class Hint extends Component<HintProps, HintState> {
         testID={undefined}
         style={[styles.container, style, this.getContainerPosition(), !this.isUsingModal() && styles.overlayContainer]}
       >
-        {this.renderHint()}
+        {this.renderHintContainer()}
       </View>
     );
   }
@@ -592,13 +633,13 @@ class Hint extends Component<HintProps, HintState> {
             testID={`${testID}.modal`}
           >
             {this.renderMockChildren()}
-            {this.renderHintContainer()}
+            {this.renderHintAnchor()}
           </Modal>
         ) : (
           <>
             {this.renderOverlay()}
             {this.renderMockChildren()}
-            {this.renderHintContainer()}
+            {this.renderHintAnchor()}
           </>
         )}
       </>
@@ -644,6 +685,7 @@ const styles = StyleSheet.create({
     position: 'absolute'
   },
   hint: {
+    minWidth: HINT_MIN_WIDTH,
     maxWidth: Math.min(Constants.windowWidth - 2 * Spacings.s4, 400),
     borderRadius: BorderRadiuses.br60,
     backgroundColor: DEFAULT_COLOR
