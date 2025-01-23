@@ -3,6 +3,7 @@
 exports[`Hint Screen component test Different positions and scenarios center position should position correctly for a target positioned on center - with sideTip 1`] = `
 <View
   centerV={true}
+  padding-s5={true}
   style={
     [
       undefined,
@@ -12,7 +13,9 @@ exports[`Hint Screen component test Different positions and scenarios center pos
         "flex": 1,
       },
       undefined,
-      {},
+      {
+        "padding": 20,
+      },
       {},
       {
         "justifyContent": "center",
@@ -279,6 +282,7 @@ exports[`Hint Screen component test Different positions and scenarios center pos
 exports[`Hint Screen component test Different positions and scenarios center position should position correctly for a target positioned on center 1`] = `
 <View
   centerV={true}
+  padding-s5={true}
   style={
     [
       undefined,
@@ -288,7 +292,9 @@ exports[`Hint Screen component test Different positions and scenarios center pos
         "flex": 1,
       },
       undefined,
-      {},
+      {
+        "padding": 20,
+      },
       {},
       {
         "justifyContent": "center",
@@ -554,6 +560,7 @@ exports[`Hint Screen component test Different positions and scenarios center pos
 exports[`Hint Screen component test Different positions and scenarios left position should position correctly for a target positioned on left - with sideTip 1`] = `
 <View
   centerV={true}
+  padding-s5={true}
   style={
     [
       undefined,
@@ -563,7 +570,9 @@ exports[`Hint Screen component test Different positions and scenarios left posit
         "flex": 1,
       },
       undefined,
-      {},
+      {
+        "padding": 20,
+      },
       {},
       {
         "justifyContent": "center",
@@ -830,6 +839,7 @@ exports[`Hint Screen component test Different positions and scenarios left posit
 exports[`Hint Screen component test Different positions and scenarios left position should position correctly for a target positioned on left 1`] = `
 <View
   centerV={true}
+  padding-s5={true}
   style={
     [
       undefined,
@@ -839,7 +849,9 @@ exports[`Hint Screen component test Different positions and scenarios left posit
         "flex": 1,
       },
       undefined,
-      {},
+      {
+        "padding": 20,
+      },
       {},
       {
         "justifyContent": "center",
@@ -1105,6 +1117,7 @@ exports[`Hint Screen component test Different positions and scenarios left posit
 exports[`Hint Screen component test Different positions and scenarios right position should position correctly for a target positioned on right - with sideTip 1`] = `
 <View
   centerV={true}
+  padding-s5={true}
   style={
     [
       undefined,
@@ -1114,7 +1127,9 @@ exports[`Hint Screen component test Different positions and scenarios right posi
         "flex": 1,
       },
       undefined,
-      {},
+      {
+        "padding": 20,
+      },
       {},
       {
         "justifyContent": "center",
@@ -1381,6 +1396,7 @@ exports[`Hint Screen component test Different positions and scenarios right posi
 exports[`Hint Screen component test Different positions and scenarios right position should position correctly for a target positioned on right 1`] = `
 <View
   centerV={true}
+  padding-s5={true}
   style={
     [
       undefined,
@@ -1390,7 +1406,9 @@ exports[`Hint Screen component test Different positions and scenarios right posi
         "flex": 1,
       },
       undefined,
-      {},
+      {
+        "padding": 20,
+      },
       {},
       {
         "justifyContent": "center",
