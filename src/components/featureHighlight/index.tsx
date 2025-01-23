@@ -10,7 +10,7 @@ import {
   TouchableWithoutFeedbackProps,
   LayoutChangeEvent
 } from 'react-native';
-import {HighlighterOverlayView} from 'uilib-native';
+import {UilibNativePackage} from 'optionalDeps';
 import {Colors, Typography} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
@@ -18,6 +18,7 @@ import Text from '../text';
 import Button, {ButtonProps, ButtonSize} from '../button';
 import PageControl, {PageControlProps} from '../pageControl';
 
+const HighlighterOverlayView = UilibNativePackage?.HighlighterOverlayView;
 const defaultOverlayColor = Colors.rgba(Colors.black, 0.82);
 const defaultTextColor = Colors.white;
 const defaultStrokeColor = Colors.rgba(Colors.white, 0.12);

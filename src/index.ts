@@ -1,9 +1,10 @@
 /* ===== General Stuff ===== */
+import {UilibNativePackage} from 'optionalDeps';
+export {UilibNativePackage};
 export {default as Assets} from './assets';
 export type {emojis as EmojisAssetsType} from './assets/emojis';
 export * from './style';
 export * from './services';
-export * from 'uilib-native';
 export {
   asBaseComponent,
   Config,
