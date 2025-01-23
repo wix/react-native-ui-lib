@@ -87,7 +87,7 @@ const Hint = (props: HintProps) => {
   const {
     targetAlignmentOnScreen,
     hintContainerLayout,
-    tipPosition,
+    tipPositionStyle,
     hintPadding,
     hintPositionStyle,
     targetScreenToRelativeOffset
@@ -153,7 +153,7 @@ const Hint = (props: HintProps) => {
       transform: [{scaleY: flipVertically ? -1 : 1}, {scaleX: flipHorizontally ? -1 : 1}]
     };
 
-    return <Image tintColor={color} source={source} style={[styles.hintTip, tipPosition, flipStyle]}/>;
+    return <Image tintColor={color} source={source} style={[styles.hintTip, tipPositionStyle, flipStyle]}/>;
   };
 
   const renderHint = () => {

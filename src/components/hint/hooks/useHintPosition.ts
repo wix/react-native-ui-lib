@@ -76,15 +76,15 @@ export default function useHintPosition({
     return positionStyle;
   }, [hintMessageWidth, edgeMargins, containerWidth, targetMidPosition]);
 
-  const tipPosition = useMemo(() => {
-    const tipPositionStyle: PositionStyle = {};
+  const tipPositionStyle = useMemo(() => {
+    const positionStyle: PositionStyle = {};
     const _containerWidth = containerWidth - (isUsingModal ? 0 : edgeMargins);
 
     if (position === HintPositions.TOP) {
-      tipPositionStyle.bottom = offset - tipSize.height;
-      !useSideTip ? (tipPositionStyle.bottom += 1) : undefined;
+      positionStyle.bottom = offset - tipSize.height;
+      !useSideTip ? (positionStyle.bottom += 1) : undefined;
     } else {
-      tipPositionStyle.top = offset - tipSize.height;
+      positionStyle.top = offset - tipSize.height;
     }
 
     if (
@@ -112,10 +112,10 @@ export default function useHintPosition({
         ? _containerWidth - targetLayoutInWindowState.x - layoutWidth
         : _containerWidth - targetLayoutInWindowState.x - targetMidWidth - tipMidWidth;
 
-      tipPositionStyle.left = Constants.isRTL ? rightPosition : leftPosition;
+      positionStyle.left = Constants.isRTL ? rightPosition : leftPosition;
     }
 
-    return tipPositionStyle;
+    return positionStyle;
   }, [
     targetMidPosition,
     targetLayoutInWindowState,
@@ -147,7 +147,7 @@ export default function useHintPosition({
     tipSize,
     targetAlignmentOnScreen,
     hintContainerLayout,
-    tipPosition,
+    tipPositionStyle,
     hintPadding,
     hintPositionStyle,
     targetScreenToRelativeOffset
