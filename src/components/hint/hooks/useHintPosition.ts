@@ -136,6 +136,8 @@ export default function useHintPosition({
     return paddings;
   }, [offset]);
 
+
+  // This is the offset between the target relative position and its absolute position on the screen
   const targetScreenToRelativeOffset = useMemo(() => {
     return {
       left: (targetLayoutState?.x ?? 0) - (targetLayoutInWindowState?.x ?? 0),
