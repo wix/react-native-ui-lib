@@ -8,15 +8,13 @@ import {Constants} from '../../../commons/new';
 type UseHintLayoutProps = Pick<HintProps, 'onBackgroundPress' | 'targetFrame'>;
 
 export default function useHintLayout({onBackgroundPress, targetFrame}: UseHintLayoutProps) {
-  const [targetLayoutState, setTargetLayout] = useState<LayoutRectangle | undefined>();
+  const [targetLayoutState, setTargetLayout] = useState<LayoutRectangle | undefined>(targetFrame);
   const [targetLayoutInWindowState, setTargetLayoutInWindow] = useState<LayoutRectangle | undefined>();
   const [hintMessageWidth, setHintMessageWidth] = useState<number | undefined>();
   const targetRef = useRef<ElementRef<typeof RNView> | null>(null);
 
   useEffect(() => {
     if (targetFrame) {
-      setTargetLayout(targetFrame);
-
       if (!onBackgroundPress) {
         setTargetLayoutInWindow(targetFrame);
       } else {
