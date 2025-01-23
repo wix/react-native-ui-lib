@@ -104,6 +104,12 @@ export const navigationData = {
       {title: 'SortableGridList', tags: 'sort grid list drag', screen: 'unicorn.components.SortableGridListScreen'}
     ]
   },
+  Charts: {
+    title: 'Charts',
+    screens: [
+      {title: 'PieChart', tags: 'pie chart data', screen: 'unicorn.components.PieChartScreen'}
+    ]
+  },
   LayoutsAndTemplates: {
     title: 'Layouts & Templates',
     screens: [
