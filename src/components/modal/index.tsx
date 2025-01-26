@@ -8,7 +8,8 @@ import {
   TouchableWithoutFeedback,
   GestureResponderEvent,
   KeyboardAvoidingView,
-  KeyboardAvoidingViewProps
+  KeyboardAvoidingViewProps,
+  ColorValue
 } from 'react-native';
 import {BlurViewPackage} from '../../optionalDependencies';
 import {Constants, asBaseComponent} from '../../commons/new';
@@ -34,7 +35,7 @@ export interface ModalProps extends RNModalProps {
   /**
    * the background color of the overlay
    */
-  overlayBackgroundColor?: string;
+  overlayBackgroundColor?: ColorValue;
   /**
    * The modal's end-to-end test identifier
    */
@@ -93,7 +94,11 @@ class Modal extends Component<ModalProps> {
         >
           {/*
             // @ts-ignore */}
-          <TouchableWithoutFeedback {...accessibilityProps} onPress={onBackgroundPress} testID={`${testID}.TouchableOverlay`}>
+          <TouchableWithoutFeedback
+            {...accessibilityProps}
+            onPress={onBackgroundPress}
+            testID={`${testID}.TouchableOverlay`}
+          >
             <View style={isScreenReaderEnabled ? styles.accessibleOverlayView : styles.fill}/>
           </TouchableWithoutFeedback>
         </View>
