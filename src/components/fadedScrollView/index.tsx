@@ -4,7 +4,8 @@ import {
   ScrollViewProps,
   NativeSyntheticEvent,
   NativeScrollEvent,
-  LayoutChangeEvent
+  LayoutChangeEvent,
+  View
 } from 'react-native';
 import {ScrollView as GestureScrollView, GestureHandlerRootView} from 'react-native-gesture-handler';
 import Fader, {FaderProps} from '../fader';
@@ -34,6 +35,10 @@ export type FadedScrollViewProps = ScrollViewProps & {
    * Use the react-native-gesture-handler version, useful when using react-native-reanimated
    */
   useGesture?: boolean;
+  /**
+   * Whether the ScrollView is the root component of the screen, wrap the main content with GestureHandlerRootView
+   */
+  isRoot?: boolean;
   children?: React.ReactNode | React.ReactNode[];
 };
 
@@ -59,6 +64,8 @@ const FadedScrollView = (props: Props) => {
     showEndFader,
     endFaderProps,
     useGesture,
+    isRoot,
+    testID,
     ...others
   } = props;
   const ScrollView = useGesture ? GestureScrollView : RNScrollView;
@@ -105,10 +112,12 @@ const FadedScrollView = (props: Props) => {
     isScrollEnabled
   }));
 
-  if (children) {
+  const renderContent = () => {
     return (
-      <GestureHandlerRootView>
+      <View>
         <ScrollView
+          keyboardShouldPersistTaps="always"
+          testID={`${testID}.scroll`}
           scrollEventThrottle={16}
           decelerationRate={'fast'}
           {...others}
@@ -132,8 +141,16 @@ const FadedScrollView = (props: Props) => {
           position={horizontal ? Fader.position.END : Fader.position.BOTTOM}
           {...endFaderProps}
         />
-      </GestureHandlerRootView>
+      </View>
     );
+  };
+
+  if (children) {
+    if (isRoot) {
+      return <GestureHandlerRootView>{renderContent()}</GestureHandlerRootView>;
+    } else {
+      return renderContent();
+    }
   }
 
   return null;
