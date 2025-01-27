@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     lineHeight: undefined,
     height: Typography?.text70?.lineHeight
   },
+  clearButtonStyle: {marginHorizontal: Spacings.s3},
   floatingPlaceholder: {...Typography.text70}
 });
 
@@ -37,5 +38,6 @@ export default {
   labelColor: colorByState,
   fieldStyle: styles.field,
   style: styles.input,
+  clearButtonStyle: styles.clearButtonStyle,
   floatingPlaceholderStyle: styles.floatingPlaceholder
 };

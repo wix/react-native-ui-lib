@@ -3,11 +3,11 @@ import {StyleSheet} from 'react-native';
 import {useAnimatedStyle, useSharedValue, withTiming, Easing} from 'react-native-reanimated';
 import {useDidUpdate} from '../../hooks';
 import Assets from '../../assets';
-import {Spacings, Colors} from '../../style';
+import {Colors} from '../../style';
 import View from '../view';
 import Button from '../button';
 import FieldContext from './FieldContext';
-import {TextFieldProps} from './types';
+import {ClearButtonProps} from './types';
 
 const hitSlop = {top: 20, bottom: 20, left: 20, right: 20};
 const NON_VISIBLE_POSITION = 18;
@@ -17,7 +17,7 @@ const TIMING_CONFIG = {
   easing: Easing.bezier(0.33, 1, 0.68, 1)
 };
 
-const ClearButton = ({testID, onClear, onChangeText}: Pick<TextFieldProps, 'onClear' | 'testID' | 'onChangeText'>) => {
+const ClearButton = ({testID, onClear, onChangeText, clearButtonStyle}: ClearButtonProps) => {
   const {hasValue} = useContext(FieldContext);
   const animatedValue = useSharedValue(hasValue ? VISIBLE_POSITION : NON_VISIBLE_POSITION);
   const animatedOpacity = useSharedValue(hasValue ? 1 : 0);
@@ -29,7 +29,7 @@ const ClearButton = ({testID, onClear, onChangeText}: Pick<TextFieldProps, 'onCl
     };
   });
 
-  const style = useMemo(() => [styles.container, animatedStyle], [animatedStyle]);
+  const style = useMemo(() => [clearButtonStyle, animatedStyle], [clearButtonStyle, animatedStyle]);
 
   const animate = useCallback(() => {
     const toValue = hasValue ? VISIBLE_POSITION : NON_VISIBLE_POSITION;
@@ -64,9 +64,6 @@ const ClearButton = ({testID, onClear, onChangeText}: Pick<TextFieldProps, 'onCl
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: Spacings.s3
-  },
   clearIcon: {
     tintColor: Colors.$textNeutralLight
   }

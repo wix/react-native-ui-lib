@@ -34,7 +34,8 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     mode,
     testID,
     showLoader,
-    customLoaderElement
+    customLoaderElement,
+    renderCustomTopElement
   } = props;
   const context = useContext(PickerContext);
 
@@ -167,6 +168,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     ) : (
       <>
         {renderSearchInput()}
+        {renderCustomTopElement?.(context.value)}
         {renderList()}
       </>
     );

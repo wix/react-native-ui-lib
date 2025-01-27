@@ -10367,6 +10367,7 @@ __metadata:
     shell-utils: ^1.0.10
     tinycolor2: ^1.4.2
     typescript: 5.0.4
+    uilib-native: 4.5.1
     url-parse: ^1.2.0
     wix-react-native-text-size: 1.0.9
   peerDependencies:
@@ -12034,6 +12035,19 @@ __metadata:
   version: 2.6.1
   resolution: "typical@npm:2.6.1"
   checksum: 6af04fefe50d90d3471f058b2cdc0f49b7436bdd605cd00acea7965926ff388a5a7d692ef144f45fccee6f8e896c065702ecc44b69057e2ce88c09e897c7d3a4
+  languageName: node
+  linkType: hard
+
+"uilib-native@npm:4.5.1":
+  version: 4.5.1
+  resolution: "uilib-native@npm:4.5.1"
+  dependencies:
+    lodash: ^4.17.21
+    prop-types: ^15.5.10
+  peerDependencies:
+    react: ">=17.0.1"
+    react-native: ">=0.64.1"
+  checksum: 2a85fe8976f50003c7eeda7c752fa12f7b9af24089b07e86b2b93505eeb0e91d1f9268b8a9166091432b39a535b676efb0eaa0a0d01e8f7f6ae33d0f06b2cf37
   languageName: node
   linkType: hard
 
