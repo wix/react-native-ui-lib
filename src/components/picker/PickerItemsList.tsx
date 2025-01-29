@@ -213,8 +213,7 @@ const styles = StyleSheet.create({
     ...Typography.text70
   },
   list: {
-    height: '100%',
-    backgroundColor: 'red'
+    height: '100%'
   }
 });
 
