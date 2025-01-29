@@ -27,15 +27,7 @@ export {
 export {BaseComponent, PureBaseComponent} from './commons';
 
 import * as Incubator from './incubator';
-export {
-  ExpandableOverlayProps,
-  ExpandableOverlayMethods,
-  ToastProps,
-  ToastPresets,
-  PanViewProps,
-  PanViewDirections,
-  PanViewDismissThreshold
-} from './incubator';
+export {ExpandableOverlayProps, ExpandableOverlayMethods, ToastProps, ToastPresets} from './incubator';
 import * as Hooks from './hooks';
 import * as Modifiers from './commons/modifiers';
 export {default as LogService} from './services/LogService';
@@ -115,6 +107,15 @@ export {
   PickerMethods,
   PickerSelectionStatusProps
 } from './components/picker';
+export {
+  default as PanView,
+  PanViewProps,
+  PanningDirections,
+  PanningDirectionsEnum,
+  PanViewDirections,
+  PanViewDirectionsEnum,
+  PanViewDismissThreshold
+} from './components/panView';
 export {default as PieChart, type PieChartProps, PieChartSegmentProps} from './components/pieChart';
 export {default as ProgressBar, ProgressBarProps} from './components/progressBar';
 export {default as ProgressiveImage, ProgressiveImageProps} from './components/progressiveImage';

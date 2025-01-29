@@ -235,10 +235,10 @@ module.exports = {
       get SortableGridList() {
         return require('./screens/componentScreens/SortableGridListScreen').default;
       },
-      // Incubator
       get PanViewScreen() {
-        return require('./screens/incubatorScreens/PanViewScreen').default;
+        return require('./screens/componentScreens/PanViewScreen').default;
       },
+      // Incubator
       get IncubatorSlider() {
         return require('./screens/incubatorScreens/IncubatorSliderScreen').default;
       },
