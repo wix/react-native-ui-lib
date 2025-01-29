@@ -102,11 +102,6 @@ export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal
 export {default as NumberInput, NumberInputProps, NumberInputData} from './components/numberInput';
 export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as PageControl, PageControlProps} from './components/pageControl';
-export {
-  default as PanDismissibleView,
-  PanDismissibleViewProps,
-  DismissibleAnimationProps
-} from './components/panningViews/panDismissibleView';
 export {default as PanListenerView, PanListenerViewProps} from './components/panningViews/panListenerView';
 export {default as PanningContext} from './components/panningViews/panningContext';
 export {
