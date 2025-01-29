@@ -87,9 +87,6 @@ module.exports = {
       get PageControlScreen() {
         return require('./screens/componentScreens/PageControlScreen').default;
       },
-      get PanListenerScreen() {
-        return require('./screens/componentScreens/PanListenerScreen').default;
-      },
       get PickerScreen() {
         return require('./screens/componentScreens/PickerScreen').default;
       },
