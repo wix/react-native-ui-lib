@@ -103,13 +103,6 @@ export {default as NumberInput, NumberInputProps, NumberInputData} from './compo
 export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as PageControl, PageControlProps} from './components/pageControl';
 export {default as PanningContext} from './components/panningViews/panningContext';
-export {
-  default as PanningProvider,
-  PanningDirections,
-  PanLocationProps,
-  PanAmountsProps,
-  PanDirectionsProps
-} from './components/panningViews/panningProvider';
 export {default as asPanViewConsumer} from './components/panningViews/asPanViewConsumer';
 export {
   default as Picker,

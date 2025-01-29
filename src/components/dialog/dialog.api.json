@@ -46,7 +46,7 @@
     "<Dialog",
     "  visible={isVisible$1}",
     "  onDismiss={() => console.log('dismissed')$2}",
-    "  panDirection={PanningProvider.Directions.DOWN$3}",
+    "  direction={Dialog.directions.DOWN$3}",
     ">",
     "  <Text text60>Content</Text>$4",
     "</Dialog>"
