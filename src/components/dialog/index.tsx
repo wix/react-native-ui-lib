@@ -22,7 +22,7 @@ import {asBaseComponent, Constants} from '../../commons/new';
 import View from '../../components/view';
 import Modal from '../../components/modal';
 import {extractAlignmentsValues} from '../../commons/modifiers';
-import useHiddenLocation from '../../incubator/hooks/useHiddenLocation';
+import useHiddenLocation from '../../hooks/useHiddenLocation';
 import DialogHeader from './DialogHeader';
 import useDialogContent from './useDialogContent';
 import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps} from './types';

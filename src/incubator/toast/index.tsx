@@ -14,7 +14,7 @@ import View from '../../components/view';
 import Text from '../../components/text';
 import Icon from '../../components/icon';
 import Button from '../../components/button';
-import PanView from '../panView';
+import PanView from '../../components/panView';
 import {ToastProps, ToastPresets} from './types';
 import useToastTimer from './helpers/useToastTimer';
 import useToastPresets from './helpers/useToastPresets';
