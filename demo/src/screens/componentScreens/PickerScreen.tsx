@@ -12,7 +12,6 @@ import {
   Icon,
   Avatar,
   Picker,
-  PanningProvider,
   PickerProps,
   RenderCustomModalProps,
   PickerMethods,
@@ -141,7 +140,7 @@ export default class PickerScreen extends Component {
         bottom
         useSafeArea
         containerStyle={{backgroundColor: Colors.$backgroundDefault}}
-        direction={PanningProvider.Directions.DOWN}
+        direction={Dialog.directions.DOWN}
         headerProps={{title: 'Custom modal'}}
       >
         <ScrollView>{children}</ScrollView>
