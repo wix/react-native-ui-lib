@@ -7,8 +7,7 @@ import {
   Text,
   Dialog,
   PickerProps,
-  RenderCustomModalProps,
-  PanningProvider
+  RenderCustomModalProps
 } from 'react-native-ui-lib';
 
 const options = [
@@ -53,7 +52,7 @@ const PickerWrapper = () => {
         bottom
         useSafeArea
         containerStyle={{backgroundColor: Colors.$backgroundDefault}}
-        direction={PanningProvider.Directions.DOWN}
+        direction={Dialog.directions.DOWN}
         headerProps={{title: 'Custom modal'}}
       >
         <ScrollView>{children}</ScrollView>
