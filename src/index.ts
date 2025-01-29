@@ -107,7 +107,6 @@ export {
   PanDismissibleViewProps,
   DismissibleAnimationProps
 } from './components/panningViews/panDismissibleView';
-export {default as PanGestureView, PanGestureViewProps} from './components/panningViews/panGestureView';
 export {default as PanListenerView, PanListenerViewProps} from './components/panningViews/panListenerView';
 export {default as PanningContext} from './components/panningViews/panningContext';
 export {
