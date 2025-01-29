@@ -113,9 +113,6 @@ export default {
   get PanningProvider() {
     return require('./panningViews/panningProvider').default;
   },
-  get PanListenerView() {
-    return require('./panningViews/panListenerView').default;
-  },
   get Picker() {
     return require('./picker').default;
   },

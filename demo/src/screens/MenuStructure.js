@@ -182,8 +182,7 @@ export const navigationData = {
         tags: 'progressive image cover overlay',
         screen: 'unicorn.components.ProgressiveImageScreen'
       },
-      {title: 'Card Scanner', tags: 'card scanner process', screen: 'unicorn.animations.CardScannerScreen'},
-      {title: 'Pan Listener', tags: 'pan swipe drag listener', screen: 'unicorn.components.PanListenerScreen'}
+      {title: 'Card Scanner', tags: 'card scanner process', screen: 'unicorn.animations.CardScannerScreen'}
     ]
   },
   Incubator: {
