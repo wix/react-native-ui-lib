@@ -110,9 +110,6 @@ export default {
   get PageControl() {
     return require('./pageControl').default;
   },
-  get PanningProvider() {
-    return require('./panningViews/panningProvider').default;
-  },
   get Picker() {
     return require('./picker').default;
   },

@@ -9,7 +9,6 @@ import {ButtonProps} from '../button';
 import Image from '../image';
 //@ts-ignore
 import ListItem from '../listItem';
-import PanningProvider from '../panningViews/panningProvider';
 import Dialog, {type DialogProps} from '../dialog';
 
 const VERTICAL_PADDING = 8;
@@ -217,7 +216,7 @@ class ActionSheet extends Component<ActionSheetProps> {
         bottom
         centerH
         width="100%"
-        direction={PanningProvider.Directions.DOWN}
+        direction={Dialog.directions.DOWN}
         {...dialogProps}
         useSafeArea={useSafeArea}
         testID={testID}
