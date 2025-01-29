@@ -111,7 +111,6 @@ export {
   PanAmountsProps,
   PanDirectionsProps
 } from './components/panningViews/panningProvider';
-export {default as PanResponderView, PanResponderViewProps} from './components/panningViews/panResponderView';
 export {default as asPanViewConsumer} from './components/panningViews/asPanViewConsumer';
 export {
   default as Picker,
