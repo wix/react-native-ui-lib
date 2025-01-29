@@ -3,7 +3,7 @@ import {type DimensionValue, type StyleProp, type TextStyle, type ViewStyle} fro
 import {AlignmentModifiers} from '../../commons/modifiers';
 import {ButtonProps} from '../../components/button';
 import {ModalProps} from '../../components/modal';
-import {PanningDirections, PanningDirectionsEnum} from '../../incubator/panView';
+import {PanningDirections, PanningDirectionsEnum} from '../panView';
 import {TextProps} from '../../components/text';
 import {ViewProps} from '../../components/view';
 type DialogDirections = PanningDirections;
