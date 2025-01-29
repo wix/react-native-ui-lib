@@ -197,7 +197,7 @@ export const navigationData = {
         tags: 'text field expandable input picker',
         screen: 'unicorn.components.IncubatorExpandableOverlayScreen'
       },
-      {title: 'PanView', tags: 'pan swipe drag', screen: 'unicorn.incubator.PanViewScreen'}
+      {title: 'PanView', tags: 'pan swipe drag', screen: 'unicorn.components.PanViewScreen'}
     ]
   },
   Inspirations: {

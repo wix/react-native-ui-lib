@@ -32,6 +32,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.MarqueeScreen', () => require('./MarqueeScreen').default);
   registrar('unicorn.components.NumberInputScreen', () => require('./NumberInputScreen').default);
   registrar('unicorn.components.OverlaysScreen', () => require('./OverlaysScreen').default);
+  registrar('unicorn.components.PanViewScreen', () => require('./PanViewScreen').default);
   registrar('unicorn.components.PageControlScreen', () => require('./PageControlScreen').default);
   registrar('unicorn.components.PickerScreen', () => require('./PickerScreen').default);
   registrar('unicorn.animations.ProgressBarScreen', () => require('../componentScreens/ProgressBarScreen').default);
