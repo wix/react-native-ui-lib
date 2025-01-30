@@ -5,14 +5,13 @@ import {
   Assets,
   Colors,
   Typography,
-  Incubator,
+  Dialog,
   View,
   Text,
   Button,
   Icon,
   Avatar,
   Picker,
-  PanningProvider,
   PickerProps,
   RenderCustomModalProps,
   PickerMethods
@@ -113,7 +112,7 @@ export default class PickerScreen extends Component {
   renderDialog: PickerProps['renderOverlay'] = (modalProps: RenderCustomModalProps) => {
     const {visible, children, toggleModal, onDone} = modalProps;
     return (
-      <Incubator.Dialog
+      <Dialog
         visible={visible}
         onDismiss={() => {
           onDone();
@@ -124,11 +123,11 @@ export default class PickerScreen extends Component {
         bottom
         useSafeArea
         containerStyle={{backgroundColor: Colors.$backgroundDefault}}
-        direction={PanningProvider.Directions.DOWN}
+        direction={Dialog.directions.DOWN}
         headerProps={{title: 'Custom modal'}}
       >
         <ScrollView>{children}</ScrollView>
-      </Incubator.Dialog>
+      </Dialog>
     );
   };
 

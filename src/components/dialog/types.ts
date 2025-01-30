@@ -1,7 +1,6 @@
 import {PropsWithChildren, ReactElement} from 'react';
 import {type DimensionValue, type StyleProp, type TextStyle, type ViewStyle} from 'react-native';
 import {AlignmentModifiers} from '../../commons/modifiers';
-import {DialogProps as DialogPropsOld} from '../../components/dialog';
 import {ButtonProps} from '../../components/button';
 import {ModalProps} from '../../components/modal';
 import {PanningDirections, PanningDirectionsEnum} from '../panView';
@@ -134,25 +133,3 @@ export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSa
 }
 
 export type DialogProps = PropsWithChildren<_DialogProps>;
-
-// For migration purposes
-export interface _DialogPropsOld {
-  /**
-   * The props to pass to the dialog expandable container
-   */
-  dialogProps?: DialogPropsOld;
-  migrateDialog?: false;
-}
-
-export interface _DialogPropsNew {
-  /**
-   * The props to pass to the dialog expandable container
-   */
-  dialogProps?: DialogProps;
-  /**
-   * Migrate the Dialog to DialogNew (make sure you use only new props in dialogProps)
-   */
-  migrateDialog: true;
-}
-
-export type DialogMigrationProps = _DialogPropsOld | _DialogPropsNew;

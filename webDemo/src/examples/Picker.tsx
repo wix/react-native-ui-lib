@@ -5,10 +5,9 @@ import {
   Colors,
   View,
   Text,
-  Incubator,
+  Dialog,
   PickerProps,
-  RenderCustomModalProps,
-  PanningProvider
+  RenderCustomModalProps
 } from 'react-native-ui-lib';
 
 const options = [
@@ -42,7 +41,7 @@ const PickerWrapper = () => {
     const {visible, children, toggleModal, onDone} = modalProps;
 
     return (
-      <Incubator.Dialog
+      <Dialog
         visible={visible}
         onDismiss={() => {
           onDone();
@@ -53,11 +52,11 @@ const PickerWrapper = () => {
         bottom
         useSafeArea
         containerStyle={{backgroundColor: Colors.$backgroundDefault}}
-        direction={PanningProvider.Directions.DOWN}
+        direction={Dialog.directions.DOWN}
         headerProps={{title: 'Custom modal'}}
       >
         <ScrollView>{children}</ScrollView>
-      </Incubator.Dialog>
+      </Dialog>
     );
   };
 
