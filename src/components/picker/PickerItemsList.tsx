@@ -80,7 +80,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     return <PickerItem {...item}/>;
   }, []);
 
-  const listPropsWithMergedStyles = useMemo(() => {
+  const _listProps = useMemo(() => {
     return {
       ...listProps,
       style: [styles.list, listProps?.style]
@@ -95,7 +95,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
           data={items}
           renderItem={renderPropItems}
           keyExtractor={keyExtractor}
-          {...listPropsWithMergedStyles}
+          {..._listProps}
         />
       );
     }
@@ -106,7 +106,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         testID={`${testID}.list`}
-        {...listPropsWithMergedStyles}
+        {..._listProps}
       />
     );
   };
