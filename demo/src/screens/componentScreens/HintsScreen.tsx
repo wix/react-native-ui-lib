@@ -141,8 +141,7 @@ export default class HintsScreen extends Component<HintScreenProps> {
       : 'Add other cool and useful stuff through adding apps to your visitors to enjoy.';
     const color = !showCustomContent && showReactionStrip ? {color: Colors.$backgroundDefault} : undefined;
 
-
-    const hintKey = `${useSideTip}-${targetPosition}-${useShortMessage}-${showIcon}-${useTargetFrame}`;
+    const hintKey = `${useSideTip}-${targetPosition}-${useShortMessage}-${showIcon}-${useTargetFrame}-${showCustomContent}-${showReactionStrip}`;
 
     return (
       <View flex>
