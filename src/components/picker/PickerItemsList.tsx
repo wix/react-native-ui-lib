@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {useCallback, useContext, useState} from 'react';
+import React, {useCallback, useContext, useMemo, useState} from 'react';
 import {StyleSheet, FlatList, TextInput, ListRenderItemInfo, ActivityIndicator} from 'react-native';
 import {Typography, Colors} from '../../style';
 import Assets from '../../assets';
@@ -34,7 +34,8 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     mode,
     testID,
     showLoader,
-    customLoaderElement
+    customLoaderElement,
+    renderCustomTopElement
   } = props;
   const context = useContext(PickerContext);
 
@@ -79,6 +80,13 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     return <PickerItem {...item}/>;
   }, []);
 
+  const _listProps = useMemo(() => {
+    return {
+      ...listProps,
+      style: [styles.list, listProps?.style]
+    };
+  }, [listProps]);
+
   const renderList = () => {
     if (items) {
       return (
@@ -87,7 +95,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
           data={items}
           renderItem={renderPropItems}
           keyExtractor={keyExtractor}
-          {...listProps}
+          {..._listProps}
         />
       );
     }
@@ -98,7 +106,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         testID={`${testID}.list`}
-        {...listProps}
+        {..._listProps}
       />
     );
   };
@@ -167,6 +175,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     ) : (
       <>
         {renderSearchInput()}
+        {renderCustomTopElement?.(context.value)}
         {renderList()}
       </>
     );
@@ -202,6 +211,9 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     flex: 1,
     ...Typography.text70
+  },
+  list: {
+    height: '100%'
   }
 });
 

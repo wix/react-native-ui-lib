@@ -1,5 +1,6 @@
 export function registerScreens(registrar) {
   registrar('unicorn.components.ActionSheetScreen', () => require('./ActionSheetScreen').default);
+  registrar('unicorn.components.PieChartScreen', () => require('./PieChartScreen').default);
   registrar('unicorn.components.ActionBarScreen', () => require('./ActionBarScreen').default);
   registrar('unicorn.components.AvatarsScreen', () => require('./AvatarsScreen').default);
   registrar('unicorn.components.AnimatedImageScreen', () => require('./AnimatedImageScreen').default);

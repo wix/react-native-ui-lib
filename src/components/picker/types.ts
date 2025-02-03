@@ -207,6 +207,10 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
       label?: string
     ) => React.ReactElement;
     /**
+     * Render custom top element
+     */
+    renderCustomTopElement?: (value?: PickerValue) => React.ReactElement;
+    /**
      * Add onPress callback for when pressing the picker
      */
     onPress?: () => void;
@@ -315,6 +319,7 @@ export type PickerItemsListProps = Pick<
   | 'useSafeArea'
   | 'showLoader'
   | 'customLoaderElement'
+  | 'renderCustomTopElement'
   | 'showSearch'
   | 'searchStyle'
   | 'searchPlaceholder'
