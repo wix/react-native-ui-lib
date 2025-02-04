@@ -14,6 +14,7 @@ import {
   Picker,
   PanningProvider,
   PickerProps,
+  PickerValue,
   RenderCustomModalProps,
   PickerMethods
 } from 'react-native-ui-lib'; //eslint-disable-line
@@ -148,7 +149,7 @@ export default class PickerScreen extends Component {
           <Text text40 $textDefault>
             Picker
           </Text>
-          
+
           <Picker
             placeholder="Favorite Language"
             floatingPlaceholder
@@ -212,6 +213,36 @@ export default class PickerScreen extends Component {
             )}
             showSearch
             searchPlaceholder={'Search a language'}
+            items={dialogOptions}
+          />
+
+          <Text text70 $textDefault>
+            Multi Dialog With Validation:
+          </Text>
+          <Picker
+            label="Dialog Picker"
+            placeholder="Favorite Language"
+            mode={Picker.modes.MULTI}
+            value={this.state.option}
+            enableModalBlur={false}
+            onChange={item => this.setState({option: item})}
+            useDialog
+            selectionValidation={(value: PickerValue) => {
+              if (_.isArray(value)) {
+                return value?.length >= 4;
+              } else {
+                return true;
+              }
+            }}
+            selectionOptions={{
+              validationMessage: 'Select Minimum 4 options',
+              onChangeValidity: isValid => console.log('onChangeValidity ,isValid:', isValid),
+              onValidationFailed: value => console.log('onValidationFailed, value:', value)
+            }}
+            customPickerProps={{
+              migrateDialog: true,
+              dialogProps: {useSafeArea: true, headerProps: {title: 'Languages'}}
+            }}
             items={dialogOptions}
           />
 
@@ -299,7 +330,7 @@ export default class PickerScreen extends Component {
             style={{alignSelf: 'flex-start'}}
             onPress={() => this.picker.current?.openExpandable?.()}
           />
-          
+
           <Text text60 marginT-s5>
             Different Field Types
           </Text>
