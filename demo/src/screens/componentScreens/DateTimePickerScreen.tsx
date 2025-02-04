@@ -66,6 +66,9 @@ export default class DateTimePickerScreen extends Component<{}, State> {
             containerStyle={{marginVertical: 20}}
             label={'Date'}
             placeholder={'Select a date'}
+            // textColor={Colors.red30}
+            // backgroundColor={Colors.$backgroundDark}
+            // cancelButtonProps={{iconStyle: {tintColor: Colors.$iconDefaultLight}}}
             // value={new Date('October 13, 2014')}
           />
           <DateTimePicker

@@ -10,7 +10,7 @@ import Reanimated, {
 } from 'react-native-reanimated';
 import {Constants} from '../../commons/new';
 
-const FIX_RTL = Constants.isRTL && Constants.isAndroid;
+const FIX_RTL = Constants.isRTL;
 
 /**
  * @description: TabController's Page Carousel

@@ -69,6 +69,17 @@ export interface MandatoryIndication {
   showMandatoryIndication?: boolean;
 }
 
+export interface ClearButtonProps extends Pick<TextInputProps, 'testID' | 'onChangeText'> {
+  /**
+   * On clear button callback
+   */
+  onClear?: () => void;
+  /**
+   * The style of the clear button
+   */
+  clearButtonStyle?: StyleProp<ViewStyle>;
+}
+
 export interface LabelProps extends MandatoryIndication, Pick<ValidationMessageProps, 'enableErrors'> {
   /**
    * Field label
@@ -190,6 +201,7 @@ export type TextFieldProps = MarginModifiers &
   LabelProps &
   Omit<FloatingPlaceholderProps, 'testID'> &
   MandatoryIndication &
+  Omit<ClearButtonProps, 'testID' | 'onChangeText'> &
   // We're declaring these props explicitly here for react-docgen (which can't read hooks)
   // FieldStateProps &
   ValidationMessageProps &
@@ -214,10 +226,6 @@ export type TextFieldProps = MarginModifiers &
      * Should show a clear button when there is a value
      */
     showClearButton?: boolean;
-    /**
-     * On clear button callback
-     */
-    onClear?: () => void;
     /**
      * Text to display under the input
      */

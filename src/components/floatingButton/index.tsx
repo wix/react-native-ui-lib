@@ -211,7 +211,6 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject,
     top: undefined,
     zIndex: Constants.isAndroid ? 99 : undefined
   },

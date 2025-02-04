@@ -22,7 +22,7 @@ const componentsCategories = {
   form: 'Form',
   // dateTime: 'Date & Time',
   overlays: 'Overlays',
-  // charts: 'Charts',
+  charts: 'Charts',
   incubator: 'Incubator',
   infra: 'Infra'
 };
