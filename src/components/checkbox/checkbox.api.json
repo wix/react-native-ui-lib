@@ -10,9 +10,7 @@
     "background"
   ],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/CheckboxScreen.tsx",
-  "images": [
-    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Checkbox/Checkbox.gif?raw=true"
-  ],
+  "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Checkbox/Checkbox.gif?raw=true"],
   "props": [
     {
       "name": "value",
@@ -95,16 +93,7 @@
       "description": "Custom styling for the checkbox and label container"
     }
   ],
-  "snippet": [
-    "function Example(props) {",
-    "  const [value, setValue] = useState(false$1);",
-    "  return (",
-    "    <div>",
-    "      <Checkbox value={value$2} onValueChange={setValue$3}/>",
-    "    </div>",
-    "  );",
-    "}"
-  ],
+  "snippet": ["<Checkbox value={value} onValueChange={setValue}/>"],
   "docs": {
     "hero": {
       "title": "Checkbox",

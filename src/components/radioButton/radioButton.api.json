@@ -85,16 +85,7 @@
       "description": "Additional styling for the container"
     }
   ],
-  "snippet": [
-    "function Example(props) {",
-    "  const [value, setValue] = useState(false$1);",
-    "  return (",
-    "    <div>",
-    "      <RadioButton label={'Individual Radio Button'} selected={value$2} onPress={() => setValue(!value)$3}/>",
-    "    </div>",
-    "  );",
-    "}"
-  ],
+  "snippet": ["<RadioButton label={'Individual Radio Button'} selected={value} onPress={() => setValue(!value)}/>"],
   "docs": {
     "hero": {
       "title": "RadioButton",
