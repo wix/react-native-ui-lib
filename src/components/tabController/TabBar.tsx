@@ -307,7 +307,7 @@ const TabBar = (props: Props) => {
         testID={testID}
         onContentSizeChange={onContentSizeChange}
         onLayout={onLayout}
-        isRoot
+        useGestureHandlerRootView
       >
         <View style={tabBarContainerStyle}>{tabBarItems}</View>
         {itemsCount > 1 && (
