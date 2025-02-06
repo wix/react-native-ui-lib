@@ -106,7 +106,7 @@ function IncubatorActionSheetScreen() {
 
   const getGridOptions = () => {
     const {optionsType} = actionSheetOptions;
-    if (optionsType === OPTIONS_TYPE.GRID_VIEW) {
+    if (optionsType === OPTIONS_TYPE.GRID_VIEW || optionsType === OPTIONS_TYPE.GRID_VIEW_LONG) {
       return {
         numColumns: 3
       };
@@ -130,6 +130,11 @@ function IncubatorActionSheetScreen() {
           }
         }));
       case 'Grid view':
+        return gridItems.slice(0, 6).map(item => ({
+          ...item,
+          containerStyle: styles.gridItemsContainer
+        }));
+      case 'Grid view long':
         return gridItems.map(item => ({
           ...item,
           containerStyle: styles.gridItemsContainer
@@ -248,7 +253,7 @@ const styles = StyleSheet.create({
   scrollViewContainer: {
     paddingBottom: 12
   },
-  gridItemsContainer: {margin: 5},
+  gridItemsContainer: {margin: 5, justifyContent: 'center', alignItems: 'center'},
   sectionHeaders: {backgroundColor: Colors.grey60, padding: 10}
 });
 

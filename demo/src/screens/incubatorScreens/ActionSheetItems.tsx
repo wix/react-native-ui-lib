@@ -20,7 +20,8 @@ export enum OPTIONS_TYPE {
   REGULAR = 'Regular',
   WITH_ICONS = 'With icons',
   SECTION_HEADERS = 'Section headers',
-  GRID_VIEW = 'Grid view'
+  GRID_VIEW = 'Grid view',
+  GRID_VIEW_LONG = 'Grid view long'
 }
 
 export type State = {
@@ -50,8 +51,10 @@ const pickOption = (option: string) => {
 
 const renderCustomItem = (imageProps: ImageProps) => {
   return (
-    <View center style={styles.gridItemCircle}>
-      <Image {...imageProps}/>
+    <View center>
+      <View center style={styles.gridItemCircle}>
+        <Image {...imageProps}/>
+      </View>
     </View>
   );
 };
@@ -111,6 +114,86 @@ export const gridItems = [
     title: 'Record Video',
     renderCustomItem: () => renderCustomItem({source: Assets.icons.demo.camera}),
     onPress: () => pickOption('Record Video')
+  },
+  {
+    title: 'Send Message',
+    renderCustomItem: () => renderCustomItem({source: Assets.icons.demo.settings}),
+    onPress: () => pickOption('Send Message')
+  },
+  {
+    title: 'Create Event',
+    renderCustomItem: () => renderCustomItem({source: Assets.icons.x}),
+    onPress: () => pickOption('Create Event')
+  },
+  {
+    title: 'Browse Contacts',
+    renderCustomItem: () => renderCustomItem({source: Assets.icons.check}),
+    onPress: () => pickOption('Browse Contacts')
+  },
+  {
+    title: 'Check Updates',
+    renderCustomItem: () => renderCustomItem({source: Assets.icons.plusSmall}),
+    onPress: () => pickOption('Check Updates')
+  },
+  {
+    title: 'Provide Feedback',
+    renderCustomItem: () => renderCustomItem({source: Assets.icons.demo.refresh}),
+    onPress: () => pickOption('Provide Feedback')
+  },
+  {
+    title: 'View Gallery',
+    renderCustomItem: () => renderCustomItem({source: Assets.icons.demo.camera}),
+    onPress: () => pickOption('View Gallery')
+  },
+  {
+    title: 'Access Help',
+    renderCustomItem: () => renderCustomItem({source: Assets.icons.check}),
+    onPress: () => pickOption('Access Help')
+  },
+  {
+    title: 'Explore Settings',
+    renderCustomItem: () => renderCustomItem({source: Assets.icons.x}),
+    onPress: () => pickOption('Explore Settings')
+  },
+  {
+    title: 'Manage Subscriptions',
+    renderCustomItem: () => renderCustomItem({source: Assets.icons.plusSmall}),
+    onPress: () => pickOption('Manage Subscriptions')
+  },
+  {
+    title: 'Change Password',
+    renderCustomItem: () => renderCustomItem({source: Assets.icons.demo.settings}),
+    onPress: () => pickOption('Change Password')
+  },
+  {
+    title: 'View Terms of Service',
+    renderCustomItem: () => renderCustomItem({source: Assets.icons.demo.refresh}),
+    onPress: () => pickOption('View Terms of Service')
+  },
+  {
+    title: 'Contact Support',
+    renderCustomItem: () => renderCustomItem({source: Assets.icons.x}),
+    onPress: () => pickOption('Contact Support')
+  },
+  {
+    title: 'Manage Privacy Settings',
+    renderCustomItem: () => renderCustomItem({source: Assets.icons.check}),
+    onPress: () => pickOption('Manage Privacy Settings')
+  },
+  {
+    title: 'Send Feedback',
+    renderCustomItem: () => renderCustomItem({source: Assets.icons.plusSmall}),
+    onPress: () => pickOption('Send Feedback')
+  },
+  {
+    title: 'View FAQ',
+    renderCustomItem: () => renderCustomItem({source: Assets.icons.demo.camera}),
+    onPress: () => pickOption('View FAQ')
+  },
+  {
+    title: 'Reset App Preferences',
+    renderCustomItem: () => renderCustomItem({source: Assets.icons.demo.refresh}),
+    onPress: () => pickOption('Reset App Preferences')
   }
 ];
 
