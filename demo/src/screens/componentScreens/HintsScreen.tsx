@@ -12,6 +12,7 @@ type HintScreenProps = {};
 export default class HintsScreen extends Component<HintScreenProps> {
   state = {
     showHint: true,
+    showSecondHint: false,
     useShortMessage: false,
     showBottomHint: false,
     showIcon: false,
@@ -26,6 +27,10 @@ export default class HintsScreen extends Component<HintScreenProps> {
 
   toggleHint = () => {
     this.setState({showHint: !this.state.showHint});
+  };
+
+  toggleSecondHint = () => {
+    this.setState({showSecondHint: !this.state.showSecondHint});
   };
 
   toggleHintPosition = () => {
@@ -92,7 +97,7 @@ export default class HintsScreen extends Component<HintScreenProps> {
 
         {renderMultipleSegmentOptions.call(this, 'Tip Position', 'useSideTip', [
           {label: 'Side Tip', value: true},
-          {label: 'Middle Top', value: false}
+          {label: 'Middle Tip', value: false}
         ])}
 
         {renderMultipleSegmentOptions.call(this, 'Hint Position', 'showBottomHint', [
@@ -118,6 +123,7 @@ export default class HintsScreen extends Component<HintScreenProps> {
   render() {
     const {
       showHint,
+      showSecondHint,
       showBottomHint,
       showIcon,
       targetPosition,
@@ -134,6 +140,8 @@ export default class HintsScreen extends Component<HintScreenProps> {
       ? 'Add other cool and useful stuff.'
       : 'Add other cool and useful stuff through adding apps to your visitors to enjoy.';
     const color = !showCustomContent && showReactionStrip ? {color: Colors.$backgroundDefault} : undefined;
+
+    const hintKey = `${useSideTip}-${targetPosition}-${useShortMessage}-${showIcon}-${useTargetFrame}-${showCustomContent}-${showReactionStrip}`;
 
     return (
       <View flex>
@@ -164,7 +172,7 @@ export default class HintsScreen extends Component<HintScreenProps> {
             // offset={35}
             position={showBottomHint ? Hint.positions.BOTTOM : Hint.positions.TOP}
             useSideTip={useSideTip}
-            key={targetPosition}
+            key={hintKey}
             onPress={this.onHintPressed}
             targetFrame={useTargetFrame ? targetFrame : undefined}
             // borderRadius={BorderRadiuses.br40}
@@ -215,6 +223,19 @@ export default class HintsScreen extends Component<HintScreenProps> {
               </View>
             </>
           )}
+
+          <View marginT-100 row center>
+            {targetPosition !== 'flex-start' && <Text marginH-s3>Text pushing button</Text>}
+            <Hint
+              message={'Hint'}
+              visible={showSecondHint}
+              onBackgroundPress={this.toggleSecondHint}
+              useSideTip={false}
+            >
+              <Button label="Button" onPress={this.toggleSecondHint}/>
+            </Hint>
+            {targetPosition === 'flex-start' && <Text marginH-s3>Text pushing button</Text>}
+          </View>
         </View>
 
         {this.renderOptionsFAB()}
