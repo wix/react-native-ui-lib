@@ -1,7 +1,6 @@
 import React, {isValidElement, ElementRef, useMemo, useCallback, useRef, useEffect} from 'react';
 import {Animated, StyleSheet, TouchableWithoutFeedback, View as RNView} from 'react-native';
 import {Typography, Spacings, Colors, BorderRadiuses, Shadows} from 'style';
-import {useDidUpdate} from 'hooks';
 import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Image from '../image';
@@ -9,7 +8,7 @@ import Modal from '../modal';
 import TouchableOpacity from '../touchableOpacity';
 import {HintPositions, HintProps, TargetAlignments} from './types';
 
-import useHintAnimation from './hooks/useHintAnimation';
+import useHintVisibility from './hooks/useHintVisibility';
 import useHintLayout from './hooks/useHintLayout';
 import useHintAccessibility from './hooks/useHintAccessibility';
 import useHintPosition from './hooks/useHintPosition';
@@ -56,7 +55,7 @@ const Hint = (props: HintProps) => {
   const hintRef = useRef<RNView>(null);
   const isUsingModal = Boolean(onBackgroundPress && useModal);
 
-  const {hintUnmounted, visibleAnimated, animateHint} = useHintAnimation(visible);
+  const {hintUnmounted, visibilityProgress} = useHintVisibility(visible);
   const {targetLayoutState, targetLayoutInWindowState, hintMessageWidth, targetRef, onTargetLayout, setHintLayout} =
     useHintLayout({onBackgroundPress, targetFrame});
   const {focusAccessibilityOnHint, accessibilityInfo} = useHintAccessibility(message);
@@ -66,10 +65,6 @@ const Hint = (props: HintProps) => {
       focusAccessibilityOnHint(targetRef.current, hintRef.current);
     }
   }, []);
-
-  useDidUpdate(() => {
-    animateHint();
-  }, [visible]);
 
   const targetLayout = useMemo(() => {
     return isUsingModal ? targetLayoutInWindowState : targetLayoutState;
@@ -107,14 +102,14 @@ const Hint = (props: HintProps) => {
     const translateY = position === HintPositions.TOP ? -10 : 10;
 
     return {
-      opacity: visibleAnimated,
+      opacity: visibilityProgress,
       transform: [
         {
-          translateY: visibleAnimated.interpolate({inputRange: [0, 1], outputRange: [translateY, 0]})
+          translateY: visibilityProgress.interpolate({inputRange: [0, 1], outputRange: [translateY, 0]})
         }
       ]
     };
-  }, [position, visibleAnimated]);
+  }, [position, visibilityProgress]);
 
   const renderOverlay = () => {
     if (
@@ -129,7 +124,7 @@ const Hint = (props: HintProps) => {
             {
               ...targetScreenToRelativeOffset,
               backgroundColor: backdropColor,
-              opacity: visibleAnimated
+              opacity: visibilityProgress
             }
           ]}
           pointerEvents="box-none"

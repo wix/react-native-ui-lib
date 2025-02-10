@@ -1,11 +1,16 @@
 import {useRef, useCallback, useState} from 'react';
 import {Animated} from 'react-native';
+import {useDidUpdate} from 'hooks';
 
 const ANIMATION_DURATION = 170;
 
-export default function useHintAnimation(visible?: boolean) {
+export default function useHintVisibility(visible?: boolean) {
   const [hintUnmounted, setHintUnmounted] = useState(!visible);
   const visibleAnimated = useRef(new Animated.Value(Number(!!visible)));
+
+  useDidUpdate(() => {
+    animateHint();
+  }, [visible]);
 
   const toggleAnimationEndedToRemoveHint = useCallback(() => {
     setHintUnmounted(!visible);
@@ -21,7 +26,7 @@ export default function useHintAnimation(visible?: boolean) {
 
   return {
     hintUnmounted,
-    visibleAnimated: visibleAnimated.current,
+    visibilityProgress: visibleAnimated.current,
     animateHint
   };
 }
