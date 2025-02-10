@@ -27,9 +27,10 @@ export default function useHintPosition({
 }: UseHintPositionProps) {
   const targetMidPosition = useMemo(() => {
     if (targetLayoutInWindowState?.x !== undefined && targetLayoutInWindowState?.width) {
-      return targetLayoutInWindowState?.x + targetLayoutInWindowState?.width / 2;
+      const midPosition = targetLayoutInWindowState?.x + targetLayoutInWindowState?.width / 2;
+      return Constants.isRTL ? containerWidth - midPosition : midPosition;
     }
-  }, [targetLayoutInWindowState]);
+  }, [targetLayoutInWindowState, containerWidth]);
 
   const tipSize = useMemo(() => {
     return useSideTip ? {width: 14, height: 7} : {width: 20, height: 7};
@@ -70,7 +71,7 @@ export default function useHintPosition({
     if (targetMidPosition !== undefined && hintMessageWidth !== undefined) {
       positionStyle.left = targetMidPosition;
       positionStyle.left -= hintMessageWidth / 2;
-      positionStyle.left = _.clamp(positionStyle.left, edgeMargins, containerWidth - edgeMargins - hintMessageWidth);
+      positionStyle.left = _.clamp(positionStyle.left, edgeMargins, containerWidth - edgeMargins - hintMessageWidth); 
     }
 
     return positionStyle;
