@@ -31,20 +31,20 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     showExtraDays = true
   } = props;
 
-  const [items] = useState<DateObjectWithOptionalDay[]>(() =>
+  const [monthItems] = useState<DateObjectWithOptionalDay[]>(() =>
     generateMonthItems(initialDate, YEARS_RANGE, YEARS_RANGE));
 
   const getItemIndex = useCallback((date: number) => {
     'worklet';
     const dateObject = getDateObject(date);
-    for (let i = 0; i < items.length; i++) {
-      if (items[i].month === dateObject.month && items[i].year === dateObject.year) {
+    for (let i = 0; i < monthItems.length; i++) {
+      if (monthItems[i].month === dateObject.month && monthItems[i].year === dateObject.year) {
         return i;
       }
     }
     return -1;
   },
-  [items]);
+  [monthItems]);
 
   const flashListRef = useRef();
   const current = useSharedValue<number>(new Date(initialDate).setHours(0, 0, 0, 0));
@@ -79,7 +79,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     console.log('Update items');
     const index = getItemIndex(current.value);
     scrollToIndex(index);
-  }, [items, getItemIndex]);
+  }, [monthItems, getItemIndex]);
 
   const setHeaderHeight = useCallback((height: number) => {
     headerHeight.value = height;
@@ -125,14 +125,14 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     // setItems(newArray);
     // // eslint-disable-next-line react-hooks/exhaustive-deps
   },
-  [items]);
+  [monthItems]);
 
   const shouldAddPages = useCallback((index: number) => {
     'worklet';
-    return index !== -1 && (index < PAGE_RELOAD_THRESHOLD || index > items.length - PAGE_RELOAD_THRESHOLD);
+    return index !== -1 && (index < PAGE_RELOAD_THRESHOLD || index > monthItems.length - PAGE_RELOAD_THRESHOLD);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },
-  [items]);
+  [monthItems]);
 
   useAnimatedReaction(() => {
     return current.value;
@@ -141,7 +141,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     const index = getItemIndex(selected);
 
     if (shouldAddPages(index)) {
-      console.log('Add new pages: ', index, items.length);
+      console.log('Add new pages: ', index, monthItems.length);
       runOnJS(addPages)(/* index */);
     } else if (lastUpdateSource.value !== UpdateSource.MONTH_SCROLL) {
       if (previous && !isSameMonth(selected, previous)) {
@@ -189,7 +189,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
       <FlashList
         ref={flashListRef}
         estimatedItemSize={Constants.screenWidth}
-        data={items}
+        data={monthItems}
         initialScrollIndex={initialMonthIndex.current}
         estimatedFirstItemOffset={0}
         renderItem={renderCalendarItem}
