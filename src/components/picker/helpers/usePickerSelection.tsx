@@ -1,15 +1,17 @@
 import {RefObject, useCallback, useState, useEffect} from 'react';
 import _ from 'lodash';
 import {PickerProps, PickerValue, PickerSingleValue, PickerMultiValue, PickerModes} from '../types';
+import { AccessibilityInfo } from 'react-native';
 
 interface UsePickerSelectionProps
   extends Pick<PickerProps, 'migrate' | 'value' | 'onChange' | 'getItemValue' | 'topBarProps' | 'mode'> {
   pickerExpandableRef: RefObject<any>;
   setSearchValue: (searchValue: string) => void;
+  pickerRef: React.RefObject<any>;
 }
 
 const usePickerSelection = (props: UsePickerSelectionProps) => {
-  const {migrate, value, onChange, topBarProps, pickerExpandableRef, getItemValue, setSearchValue, mode} = props;
+  const {migrate, value, onChange, topBarProps, pickerExpandableRef, getItemValue, setSearchValue, mode, pickerRef} = props;
   const [multiDraftValue, setMultiDraftValue] = useState(value as PickerMultiValue);
   const [multiFinalValue, setMultiFinalValue] = useState(value as PickerMultiValue);
 
@@ -25,6 +27,10 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     setMultiFinalValue(item as PickerMultiValue);
     pickerExpandableRef.current?.closeExpandable?.();
     onChange?.(item);
+    const reactTag = pickerRef.current.getNodeHandle();
+    if (reactTag) {
+      AccessibilityInfo.setAccessibilityFocus(reactTag);
+    }
   },
   [onChange]);
 

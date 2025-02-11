@@ -110,7 +110,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     getItemValue,
     topBarProps,
     setSearchValue,
-    mode
+    mode,
+    pickerRef
   });
 
   const {label, accessibilityInfo} = usePickerLabel({

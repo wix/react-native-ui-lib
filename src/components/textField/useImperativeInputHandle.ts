@@ -1,5 +1,5 @@
 import React, {useContext, useImperativeHandle, useRef} from 'react';
-import {TextInput, TextInputProps} from 'react-native';
+import {findNodeHandle, TextInput, TextInputProps} from 'react-native';
 import FieldContext from './FieldContext';
 
 const useImperativeInputHandle = (ref: React.Ref<any>, props: Pick<TextInputProps, 'onChangeText'>) => {
@@ -21,6 +21,11 @@ const useImperativeInputHandle = (ref: React.Ref<any>, props: Pick<TextInputProp
       // Note: This returns field validity without actually validating it
       isValid: () => {
         return context.checkValidity();
+      },
+      getNodeHandle: () => {
+        if (inputRef.current) {
+          return findNodeHandle(inputRef.current);
+        }
       }
     };
   });
