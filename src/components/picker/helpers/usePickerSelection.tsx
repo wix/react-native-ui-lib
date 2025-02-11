@@ -1,7 +1,7 @@
 import {RefObject, useCallback, useState, useEffect} from 'react';
 import _ from 'lodash';
 import {PickerProps, PickerValue, PickerSingleValue, PickerMultiValue, PickerModes} from '../types';
-import { AccessibilityInfo } from 'react-native';
+import {AccessibilityInfo} from 'react-native';
 
 interface UsePickerSelectionProps
   extends Pick<PickerProps, 'migrate' | 'value' | 'onChange' | 'getItemValue' | 'topBarProps' | 'mode'> {
