@@ -6,6 +6,7 @@ import MockServer from './MockServer';
 
 export default class CalendarScreen extends Component {
   pageIndex = 0;
+  loadingEventsPromise?: Promise<any[]>;
 
   state = {
     date: new Date(/* '2025-01-12' */).getTime(),
@@ -18,19 +19,24 @@ export default class CalendarScreen extends Component {
   }
 
   // Note: we throttle event loading because initially the Agenda reach end and trigger extra event load
-  loadEvents = _.throttle(async (date: number) => {
+  loadEvents = (async (date: number) => {
+
+    if (this.loadingEventsPromise) {
+      return;
+    }
+
     this.setState({showLoader: true});
     // const {events} = this.state;
-    const newEvents = await MockServer.getEvents(date);
+    this.loadingEventsPromise = MockServer.getEvents(date);
+    const newEvents = await this.loadingEventsPromise;
+    this.loadingEventsPromise = undefined;
     this.pageIndex++;
     // this.setState({events: _.uniqBy([...events, ...newEvents], e => e.id), showLoader: false});
     this.setState({events: newEvents, showLoader: false});
-  },
-  1500,
-  {leading: true, trailing: false});
+  });
 
   onChangeDate = (date: number) => {
-    console.log('Date change: ', date);
+    /* console.log('Date change: ', date); */
     const {events} = this.state;
     if (date < events[0]?.start || date > _.last(events)?.start) {
       console.log('Load new events');
