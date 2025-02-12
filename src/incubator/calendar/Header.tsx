@@ -10,9 +10,10 @@ import {HeaderProps, DayNamesFormat, UpdateSource} from './types';
 import CalendarContext from './CalendarContext';
 import WeekDaysNames from './WeekDaysNames';
 
+// Note: this fixes the updates on the header month title
 Reanimated.addWhitelistedNativeProps({text: true});
 
-const ARROWS_THROTTLE_TIME = 0;
+const ARROWS_THROTTLE_TIME = 300;
 const WEEK_NUMBER_WIDTH = 32;
 const ARROW_NEXT = require('./assets/arrowNext.png');
 const ARROW_BACK = require('./assets/arrowBack.png');
@@ -30,12 +31,12 @@ const Header = (props: HeaderProps) => {
 
   const onLeftArrowPress = useCallback(throttle(() => {
     setDate(getNewDate(-1), UpdateSource.MONTH_ARROW);
-  }, ARROWS_THROTTLE_TIME, {leading: false, trailing: true}),
+  }, ARROWS_THROTTLE_TIME, {leading: true, trailing: false}),
   [setDate, getNewDate]);
 
   const onRightArrowPress = useCallback(throttle(() => {
     setDate(getNewDate(1), UpdateSource.MONTH_ARROW);
-  }, ARROWS_THROTTLE_TIME, {leading: false, trailing: true}),
+  }, ARROWS_THROTTLE_TIME, {leading: true, trailing: false}),
   [setDate, getNewDate]);
 
   const getTitle = useCallback((date: number) => {

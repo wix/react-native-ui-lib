@@ -15,8 +15,8 @@ import {useDidUpdate} from 'hooks';
 
 const FlashList = FlashListPackage?.FlashList;
 
-const VIEWABILITY_CONFIG = {itemVisiblePercentThreshold: 95, minimumViewTime: 200};
-const YEARS_RANGE = 1;
+const VIEWABILITY_CONFIG = {itemVisiblePercentThreshold: 95, minimumViewTime: 1000};
+const YEARS_RANGE = 5;
 const PAGE_RELOAD_THRESHOLD = 3;
 const NOW = new Date().setHours(0, 0, 0, 0);
 
@@ -122,7 +122,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     // const newDate = addYears(current.value, prepend ? -1 : 1);
     // const newItems = generateMonthItems(newDate, pastRange, futureRange);
     // const newArray = mergeArrays(prepend, items, newItems);
-    // setItems(newArray);
+    // setMonthItems(newArray);
     // // eslint-disable-next-line react-hooks/exhaustive-deps
   },
   [monthItems]);
