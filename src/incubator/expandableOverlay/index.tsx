@@ -12,6 +12,7 @@ export interface ExpandableOverlayMethods {
   openExpandable: () => void;
   closeExpandable: () => void;
   toggleExpandable: () => void;
+  focusAccessibility: () => void;
 }
 
 export interface RenderCustomOverlayProps extends ExpandableOverlayMethods {
@@ -132,7 +133,8 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
         visible,
         openExpandable,
         closeExpandable,
-        toggleExpandable
+        toggleExpandable,
+        focusAccessibility
       });
     } else {
       return useDialog ? renderDialog() : renderModal();
