@@ -47,14 +47,14 @@ describe('Hint Screen component test', () => {
     const renderTree = render(<TestCase visible/>);
     const driver = HintDriver({renderTree, testID: HINT_TEST_ID});
     const hintBubble = await driver.getHintBubble();
-    expect(hintBubble.getStyle().backgroundColor).toBe(expectedColor);
+    expect(hintBubble.getStyle(true).backgroundColor).toBe(expectedColor);
   });
 
   it('Should color hint bubble with provided color prop', async () => {
     const renderTree = render(<TestCase visible color={Colors.white}/>);
     const driver = HintDriver({renderTree, testID: HINT_TEST_ID});
     const hintBubble = await driver.getHintBubble();
-    expect(hintBubble.getStyle().backgroundColor).toBe(Colors.white);
+    expect(hintBubble.getStyle(true).backgroundColor).toBe(Colors.white);
   });
 
   it('Should modal be not visible when hint is not visible', async () => {
