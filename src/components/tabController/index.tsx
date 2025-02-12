@@ -76,6 +76,7 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
     children
   } = themeProps;
   const [screenWidth, setScreenWidth] = useState<number>(getScreenWidth(useSafeArea));
+  const [selectedIndex, setSelectedIndex] = useState(initialIndex);
 
   if (items?.length < 2) {
     console.warn('TabController component expect a minimum of 2 items');
@@ -103,6 +104,7 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
   const setCurrentIndex = useCallback((index: number) => {
     'worklet';
     currentPage.value = index;
+    runOnJS(setSelectedIndex)(index);
   }, []);
 
   useEffect(() => {
@@ -135,12 +137,13 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
       /* Animated Values */
       targetPage,
       currentPage,
+      selectedIndex,
       containerWidth: screenWidth,
       /* Callbacks */
       onChangeIndex,
       setCurrentIndex
     };
-  }, [initialIndex, asCarousel, items, onChangeIndex, screenWidth, nestedInScrollView]);
+  }, [initialIndex, asCarousel, items, onChangeIndex, screenWidth, nestedInScrollView, selectedIndex]);
 
   return <TabBarContext.Provider value={context}>{children}</TabBarContext.Provider>;
 });

@@ -137,7 +137,7 @@ export default function TabBarItem({
   onPress,
   ...props
 }: Props) {
-  const {currentPage, setCurrentIndex} = useContext(TabBarContext);
+  const {currentPage, setCurrentIndex, selectedIndex} = useContext(TabBarContext);
   const itemRef = useRef();
   const itemWidth = useRef(props.width);
   const isPressed = useSharedValue(false);
@@ -226,6 +226,9 @@ export default function TabBarItem({
         style={_style}
         onLayout={onLayout}
         testID={testID}
+        accessible
+        accessibilityRole="tab"
+        accessibilityState={{selected: selectedIndex === index}}
       >
         {leadingAccessory}
         {icon && (
