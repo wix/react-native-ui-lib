@@ -104,6 +104,7 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
   const setCurrentIndex = useCallback((index: number) => {
     'worklet';
     currentPage.value = index;
+    runOnJS(setSelectedIndex)(index);
   }, []);
 
   useEffect(() => {
@@ -117,7 +118,6 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
     if (value !== prevValue) {
       targetPage.value = withTiming(value);
       prevValue !== null && runOnJS(onChangeIndex)(value, prevValue);
-      runOnJS(setSelectedIndex)(value);
     }
   });
 
