@@ -15,6 +15,13 @@
 [![NPM Downloads](https://img.shields.io/npm/dm/react-native-ui-lib.svg?style=flat)](https://www.npmjs.com/package/react-native-ui-lib)
 <a href="https://twitter.com/rnuilib"><img src="https://img.shields.io/twitter/follow/rnuilib.svg?style=flat&colorA=1DA1F2&colorB=20303C&label=Follow%20us%20on%20Twitter" alt="Follow on Twitter"></a>
 
+## Notes
+
+#### React Native New Arc
+
+We are working on upgrading our UI Library to support the new React Native Architecture.
+Currently, we support React Native 0.73, and we plan to support React Native 0.77 next.
+While we don’t have a timeline yet, this is part of our roadmap.
 
 ## Links
 - [Docs](https://wix.github.io/react-native-ui-lib/)
