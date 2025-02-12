@@ -308,7 +308,7 @@ const TabBar = (props: Props) => {
         onContentSizeChange={onContentSizeChange}
         onLayout={onLayout}
       >
-        {/* TODO: Might need to change role to tablist. Didn't work now when upgrading rn77 */}
+        {/* TODO: Might need to change role to tablist, when upgrading rn77, it didn't work now (rn73) */}
         <View style={tabBarContainerStyle} accessibilityRole="tabbar" >{tabBarItems}</View>
         {itemsCount > 1 && (
           <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, _indicatorTransitionStyle]}/>
