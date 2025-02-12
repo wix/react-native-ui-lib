@@ -21,14 +21,14 @@ function Agenda(props: AgendaProps) {
   const closestSectionHeader = useSharedValue<DateSectionHeader | null>(null);
   const scrolledByUser = useSharedValue<boolean>(false);
   const [stickyHeaderIndices, setStickyHeaderIndices] = useState<number[]>([]);
-  const lastDateBeforeLoadingNewEvents = useRef<number>(selectedDate.value);
+  const lastDateBeforeLoadingNewEvents = useSharedValue<number>(selectedDate.value);
 
   /* const keyExtractor = useCallback((item: InternalEvent) => {
     return item.type === 'Event' ? item.id : item.header;
   }, []); */
 
   useDidUpdate(() => {
-    const result = findClosestDateAfter(lastDateBeforeLoadingNewEvents.current);
+    const result = findClosestDateAfter(lastDateBeforeLoadingNewEvents.value);
     if (result?.index) {
       setTimeout(() => scrollToIndex(result?.index, false), 200);
     }
@@ -130,6 +130,10 @@ function Agenda(props: AgendaProps) {
             const _isSameMonth = isSameMonth(selected, previous);
             runOnJS(scrollToIndex)(index, _isSameMonth);
           }
+        } else {
+          // Note: We got here because we are missing future agenda events to scroll to.
+          // therefor we should expect and new events data load
+          lastDateBeforeLoadingNewEvents.value = selectedDate.value;
         }
       }
     }
@@ -162,7 +166,7 @@ function Agenda(props: AgendaProps) {
   }, []);
 
   const _onEndReached = useCallback(() => {
-    lastDateBeforeLoadingNewEvents.current = selectedDate.value;
+    lastDateBeforeLoadingNewEvents.value = selectedDate.value;
     onEndReached?.(selectedDate.value);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onEndReached]);
