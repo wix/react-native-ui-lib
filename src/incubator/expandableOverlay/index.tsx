@@ -74,7 +74,6 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
 
   const focusAccessibility = useCallback(() => {
     const reactTag = findNodeHandle(containerRef.current);
-    console.log(`Nitzan - focs reac`, reactTag);
     if (reactTag) {
       AccessibilityInfo.setAccessibilityFocus(reactTag);
     }
