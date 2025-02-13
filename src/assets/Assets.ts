@@ -1,10 +1,10 @@
 import _ from 'lodash';
 
-interface CustomObject {
-  [key: string]: any;
-}
+type NestedObject<Path extends string, U> = Path extends `${infer Key}.${infer Rest}`
+  ? {[K in Key]: NestedObject<Rest, U>}
+  : {[K in Path]: U};
 
-function assignProperties(a: CustomObject, b: {[key: string]: any}) {
+function assignProperties(a: unknown, b: {[key: string]: any}) {
   if (a) {
     Object.keys(b).forEach(key => {
       // @ts-ignore
@@ -15,7 +15,7 @@ function assignProperties(a: CustomObject, b: {[key: string]: any}) {
   return a;
 }
 
-function ensurePath(obj: CustomObject, path: string) {
+function ensurePath(obj: Record<string, any>, path: string) {
   let pointer = obj;
 
   const pathArray = path.split('.');
@@ -38,28 +38,34 @@ function ensurePath(obj: CustomObject, path: string) {
   return pointer;
 }
 
-export class Assets {
-  [key: string]: any;
+export const Assets = <T extends Record<string, unknown>>(initialAssets = {} as T) => {
+  const assets = initialAssets;
 
-  loadAssetsGroup(groupName: string, assets: object) {
+  const loadAssetsGroup = <Path extends string, U extends Record<string, unknown>>(
+    groupName: Path,
+    assetsToLoad: U
+  ) => {
     if (!_.isString(groupName)) {
       throw new Error('group name should be a string');
     }
 
-    if (!_.isPlainObject(assets)) {
+    if (!_.isPlainObject(assetsToLoad)) {
       throw new Error('assets should be a hash map or a function (for lazy access)');
     }
-
     if (groupName === '') {
-      assignProperties(this, assets);
+      assignProperties(assets, assetsToLoad);
     } else {
-      assignProperties(ensurePath(this, groupName), assets);
+      assignProperties(ensurePath(assets, groupName), assetsToLoad);
     }
+    return Assets(assets as T & NestedObject<Path, U>);
+  };
 
-    return this;
-  }
+  const build = () => {
+    return assets;
+  };
 
-  getAssetByPath(path: string) {
-    return _.get(this, path);
-  }
-}
+  return {
+    loadAssetsGroup,
+    build
+  };
+};
