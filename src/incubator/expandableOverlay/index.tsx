@@ -1,4 +1,4 @@
-import React, {useCallback, useState, forwardRef, PropsWithChildren, useImperativeHandle} from 'react';
+import React, {useCallback, useState, forwardRef, PropsWithChildren, useImperativeHandle, useRef} from 'react';
 
 import TouchableOpacity, {TouchableOpacityProps} from '../../components/touchableOpacity';
 import View from '../../components/view';
@@ -6,11 +6,13 @@ import Modal, {ModalProps, ModalTopBarProps} from '../../components/modal';
 import DialogOld from '../../components/dialog';
 import DialogNew, {DialogMigrationProps} from '../dialog';
 import {Colors} from 'style';
+import {AccessibilityInfo, findNodeHandle} from 'react-native';
 
 export interface ExpandableOverlayMethods {
   openExpandable: () => void;
   closeExpandable: () => void;
   toggleExpandable: () => void;
+  focusAccessibility: () => void;
 }
 
 export interface RenderCustomOverlayProps extends ExpandableOverlayMethods {
@@ -68,14 +70,25 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
     ...others
   } = props;
   const [visible, setExpandableVisible] = useState(false);
+  const containerRef = useRef(null);
+
+  const focusAccessibility = useCallback(() => {
+    const reactTag = findNodeHandle(containerRef.current);
+    if (reactTag) {
+      AccessibilityInfo.setAccessibilityFocus(reactTag);
+    }
+  }, [containerRef]);
+
   const openExpandable = useCallback(() => {
     setExpandableVisible(true);
     onPress?.(props);
   }, [onPress, customValue]);
+
   const closeExpandable = useCallback(() => {
     setExpandableVisible(false);
+    focusAccessibility();
     useDialog ? dialogProps?.onDismiss?.() : modalProps?.onDismiss?.();
-  }, [useDialog, dialogProps?.onDismiss, modalProps?.onDismiss]);
+  }, [useDialog, dialogProps?.onDismiss, modalProps?.onDismiss, focusAccessibility]);
 
   const toggleExpandable = useCallback(() => (visible ? closeExpandable() : openExpandable()),
     [visible, openExpandable, closeExpandable]);
@@ -83,7 +96,8 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
   useImperativeHandle(ref, () => ({
     openExpandable,
     closeExpandable,
-    toggleExpandable
+    toggleExpandable,
+    focusAccessibility
   }));
 
   const renderModal = () => {
@@ -118,7 +132,8 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
         visible,
         openExpandable,
         closeExpandable,
-        toggleExpandable
+        toggleExpandable,
+        focusAccessibility
       });
     } else {
       return useDialog ? renderDialog() : renderModal();
@@ -126,7 +141,7 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
   };
 
   return (
-    <TouchableOpacity {...others} onPress={openExpandable} disabled={disabled} testID={testID}>
+    <TouchableOpacity ref={containerRef} {...others} onPress={openExpandable} disabled={disabled} testID={testID}>
       <View pointerEvents="none">{children}</View>
       {renderOverlay()}
     </TouchableOpacity>
