@@ -186,6 +186,7 @@ const WheelPicker = <T extends WheelPickerItemValue>(props: WheelPickerProps<T>)
 
   const onValueChange = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const {value, index} = getRowItemAtOffset(event.nativeEvent.contentOffset.y);
+    offset.value = event.nativeEvent.contentOffset.y;
     _onChange(value, index);
   },
   [_onChange, getRowItemAtOffset]);
