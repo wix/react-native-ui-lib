@@ -194,6 +194,7 @@ const TextField = (props: InternalTextFieldProps) => {
                 />
               )}
               <Input
+                hitSlop={{top: 20, bottom: 20}}
                 placeholderTextColor={hidePlaceholder ? 'transparent' : placeholderTextColor}
                 value={fieldState.value}
                 {...others}
