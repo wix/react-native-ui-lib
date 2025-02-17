@@ -56,6 +56,7 @@ const transparentImage = require('./assets/transparentSwatch/TransparentSwatch.p
 const DEFAULT_SIZE = Constants.isTablet ? 44 : 36;
 export const SWATCH_MARGIN = 12;
 export const SWATCH_SIZE = DEFAULT_SIZE;
+const DEFAULT_COLOR = Colors.grey30;
 
 /**
  * @description: A color swatch component
@@ -141,11 +142,13 @@ class ColorSwatch extends PureComponent<Props & BaseComponentInjectedProps> {
   }
 
   getAccessibilityInfo() {
-    const color = this.color;
-
+    const color = this.color || DEFAULT_COLOR;
+    const defaultText = !this.color ? 'default' : '';
+    
     return {
-      accessibilityLabel: color && Colors.getColorName(color),
-      accessibilityStates: this.props.selected ? ['selected'] : []
+      accessible: true,
+      accessibilityLabel: `${defaultText} color ${Colors.getColorName(color)}`,
+      accessibilityState: {selected: this.props.selected}
     };
   }
 
@@ -163,7 +166,6 @@ class ColorSwatch extends PureComponent<Props & BaseComponentInjectedProps> {
     const {isSelected} = this.state;
     const Container = onPress ? TouchableOpacity : View;
     const tintColor = this.getTintColor(color);
-    const accessibilityInfo = Constants.accessibility.isScreenReaderEnabled && this.getAccessibilityInfo();
 
     return (
       <Container
@@ -175,7 +177,7 @@ class ColorSwatch extends PureComponent<Props & BaseComponentInjectedProps> {
         onPress={this.onPress}
         style={[this.styles.container, {width: size, height: size, borderRadius: size / 2}, style]}
         onLayout={this.onLayout}
-        {...accessibilityInfo}
+        {...this.getAccessibilityInfo()}
       >
         {Colors.isTransparent(color) && (
           <Image source={transparentImage} style={this.styles.transparentImage} resizeMode={'cover'}/>
@@ -222,7 +224,7 @@ class ColorSwatch extends PureComponent<Props & BaseComponentInjectedProps> {
 
 export default asBaseComponent<ColorSwatchProps>(ColorSwatch);
 
-function createStyles({color = Colors.grey30}) {
+function createStyles({color = DEFAULT_COLOR}) {
   return StyleSheet.create({
     container: {
       backgroundColor: color,
