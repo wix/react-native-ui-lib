@@ -125,9 +125,8 @@ class ColorSwatch extends PureComponent<Props & BaseComponentInjectedProps> {
 
   onPress = () => {
     const {value, index} = this.props;
-    const color = this.color ?? '';
     const tintColor = this.getTintColor(value);
-    const result = value || color;
+    const result = value || this.color || '';
     const hexString = Colors.getHexString(result);
     this.props.onPress?.(result, {tintColor, index, hexString});
   };
@@ -162,10 +161,9 @@ class ColorSwatch extends PureComponent<Props & BaseComponentInjectedProps> {
 
   renderContent() {
     const {style, onPress, unavailable, size = DEFAULT_SIZE, ...others} = this.props;
-    const color = this.color;
     const {isSelected} = this.state;
     const Container = onPress ? TouchableOpacity : View;
-    const tintColor = this.getTintColor(color);
+    const tintColor = this.getTintColor(this.color);
 
     return (
       <Container
@@ -179,7 +177,7 @@ class ColorSwatch extends PureComponent<Props & BaseComponentInjectedProps> {
         onLayout={this.onLayout}
         {...this.getAccessibilityInfo()}
       >
-        {Colors.isTransparent(color) && (
+        {Colors.isTransparent(this.color) && (
           <Image source={transparentImage} style={this.styles.transparentImage} resizeMode={'cover'}/>
         )}
         {unavailable ? (
@@ -228,7 +226,7 @@ function createStyles({color = DEFAULT_COLOR}) {
   return StyleSheet.create({
     container: {
       backgroundColor: color,
-      borderWidth: color === 'transparent' ? undefined : 1,
+      borderWidth: Colors.isTransparent(color) ? undefined : 1,
       borderColor: Colors.rgba(Colors.$outlineDisabledHeavy, 0.2),
       margin: SWATCH_MARGIN,
       overflow: 'hidden'
