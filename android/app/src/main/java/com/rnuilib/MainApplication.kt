@@ -26,7 +26,7 @@ class MainApplication : NavigationApplication() {
               // add(MyReactNativePackage())
             }
 
-        override fun getJSMainModuleName(): String = "demo"
+        override fun getJSMainModuleName(): String = "index"
 
         override fun getUseDeveloperSupport(): Boolean = BuildConfig.DEBUG
 
