@@ -1,5 +1,5 @@
 import {ImageProps} from '../image';
-import {StyleProp, TextStyle, ViewStyle} from 'react-native';
+import {StyleProp, TextStyle, ViewStyle, ColorValue} from 'react-native';
 
 export enum WizardStepStates {
   ENABLED = 'enabled',
@@ -29,11 +29,11 @@ export interface WizardStepProps {
   /**
    * Color of the step index (or of the icon, when provided)
    */
-  color?: string;
+  color?: ColorValue;
   /**
    * Color of the circle
    */
-  circleColor?: string;
+  circleColor?: ColorValue;
   /**
    * The step's circle size (diameter)
    */
@@ -41,7 +41,7 @@ export interface WizardStepProps {
   /**
    * Circle's background color
    */
-  circleBackgroundColor?: string;
+  circleBackgroundColor?: ColorValue;
   /**
    * Icon to replace the (default) index
    */
