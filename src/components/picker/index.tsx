@@ -3,7 +3,7 @@
 // TODO: consider deprecating renderCustomModal prop
 import _ from 'lodash';
 import React, {useMemo, useState, useRef, useCallback, useEffect} from 'react';
-import {DimensionValue, LayoutChangeEvent} from 'react-native';
+import {LayoutChangeEvent} from 'react-native';
 import {useThemeProps} from 'hooks';
 import {Constants} from '../../commons/new';
 import ExpandableOverlay, {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
@@ -11,13 +11,14 @@ import TextField from '../textField';
 import PickerItemsList from './PickerItemsList';
 import PickerItem from './PickerItem';
 import PickerContext from './PickerContext';
-import usePickerSelection from './helpers/usePickerSelection';
+// import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
+import useFieldType from './helpers/useFieldType';
+import useImperativePickerHandle from './helpers/useImperativePickerHandle';
+import useNewPickerProps from './helpers/useNewPickerProps';
+import usePickerDialogProps from './helpers/usePickerDialogProps';
 import usePickerLabel from './helpers/usePickerLabel';
 import usePickerSearch from './helpers/usePickerSearch';
-import useImperativePickerHandle from './helpers/useImperativePickerHandle';
-import useFieldType from './helpers/useFieldType';
-import useNewPickerProps from './helpers/useNewPickerProps';
-// import usePickerMigrationWarnings from './helpers/usePickerMigrationWarnings';
+import usePickerSelection from './helpers/usePickerSelection';
 import {extractPickerItems} from './PickerPresenter';
 import {
   PickerProps,
@@ -30,12 +31,6 @@ import {
   PickerItemsListProps,
   PickerMethods
 } from './types';
-import {DialogProps} from '../../incubator/dialog';
-
-const DEFAULT_DIALOG_PROPS: DialogProps = {
-  bottom: true,
-  width: '100%' as DimensionValue
-};
 
 type PickerStatics = {
   Item: typeof PickerItem;
@@ -76,6 +71,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     accessibilityLabel,
     accessibilityHint,
     items: propItems,
+    selectionValidation,
+    selectionOptions,
     showLoader,
     customLoaderElement,
     renderCustomTopElement,
@@ -102,16 +99,24 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     setSearchValue,
     onSearchChange: _onSearchChange
   } = usePickerSearch({showSearch, onSearchChange, getItemLabel, children, items});
-  const {multiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect} = usePickerSelection({
-    migrate,
-    value,
-    onChange,
-    pickerExpandableRef: pickerExpandable,
-    getItemValue,
-    topBarProps,
-    setSearchValue,
-    mode
-  });
+
+  const {multiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect, shouldDisableDoneButton} =
+    usePickerSelection({
+      migrate,
+      value,
+      onChange,
+      pickerExpandableRef: pickerExpandable,
+      getItemValue,
+      topBarProps,
+      setSearchValue,
+      mode,
+      selectionValidation,
+      selectionOptions,
+      useDialog
+    });
+
+  const {dialogProps = {}} = usePickerDialogProps({...themeProps, shouldDisableDoneButton}, () =>
+    onDoneSelecting(multiDraftValue));
 
   const {label, accessibilityInfo} = usePickerLabel({
     value,
@@ -244,6 +249,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         renderHeader={renderHeader}
         listProps={listProps}
         useSafeArea={useSafeArea}
+        selectionValidation={selectionValidation}
         showLoader={showLoader}
         customLoaderElement={customLoaderElement}
         renderCustomTopElement={renderCustomTopElement}
@@ -280,13 +286,13 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         <ExpandableOverlay
           ref={pickerExpandable}
           useDialog={useDialog || useWheelPicker}
-          dialogProps={DEFAULT_DIALOG_PROPS}
           migrateDialog
           expandableContent={expandableModalContent}
           renderCustomOverlay={renderOverlay ? _renderOverlay : undefined}
           onPress={onPress}
           testID={testID}
           {...customPickerProps}
+          dialogProps={dialogProps}
           disabled={themeProps.editable === false}
         >
           {renderTextField()}
