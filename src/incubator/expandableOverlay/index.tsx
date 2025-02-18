@@ -77,7 +77,7 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
     if (reactTag) {
       AccessibilityInfo.setAccessibilityFocus(reactTag);
     }
-  }, [containerRef]);
+  }, []);
 
   const openExpandable = useCallback(() => {
     setExpandableVisible(true);
