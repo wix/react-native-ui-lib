@@ -1,12 +1,11 @@
 import React, {useCallback, useState, forwardRef, PropsWithChildren, useImperativeHandle, useRef} from 'react';
-
+import {AccessibilityInfo, findNodeHandle} from 'react-native';
 import TouchableOpacity, {TouchableOpacityProps} from '../../components/touchableOpacity';
 import View from '../../components/view';
 import Modal, {ModalProps, ModalTopBarProps} from '../../components/modal';
 import DialogOld from '../../components/dialog';
 import DialogNew, {DialogMigrationProps} from '../dialog';
 import {Colors} from 'style';
-import {AccessibilityInfo, findNodeHandle} from 'react-native';
 
 export interface ExpandableOverlayMethods {
   openExpandable: () => void;
