@@ -341,11 +341,11 @@ class Button extends PureComponent<Props, ButtonState> {
 
   getAccessibleHitSlop() {
     const containerStyle = this.getContainerSizeStyle();
-    const height = containerStyle.height || containerStyle.paddingVertical * 2;
-    const width = containerStyle.width || containerStyle.paddingHorizontal * 2;
+    const height = containerStyle.height || (containerStyle.paddingVertical ? containerStyle.paddingVertical * 2 : 0);
+    const width = containerStyle.width || (containerStyle.paddingHorizontal ? containerStyle.paddingHorizontal * 2 : 0);
     
-    const verticalPadding = Math.max(0, (48 - height) / 2);
-    const horizontalPadding = Math.max(0, (48 - width) / 2);
+    const verticalPadding = Math.max(0, (48 - (height || 0)) / 2);
+    const horizontalPadding = Math.max(0, (48 - (width || 0)) / 2);
     
     return {
       top: verticalPadding,
