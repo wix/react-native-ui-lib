@@ -258,9 +258,9 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
   }
 
   render() {
-    const {onPress, onValueChange, containerStyle, contentOnLeft, ...others} = this.props;
+    const {onPress, onValueChange, containerStyle, contentOnLeft, size = DEFAULT_SIZE, iconOnRight, ...others} = this.props;
     const Container = onPress || onValueChange ? TouchableOpacity : View;
-    const verticalPadding = Math.max(0, (48 - (this.props.size || DEFAULT_SIZE)) / 2);
+    const verticalPadding = Math.max(0, (48 - size) / 2);
     const horizontalPadding = verticalPadding;
 
     return (

@@ -253,8 +253,8 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   };
 
   renderCheckbox() {
-    const {selectedIcon, label, testID, style, containerStyle, indeterminate, ...others} = this.props;
-    const verticalPadding = Math.max(0, (48 - (this.props.size || DEFAULT_SIZE)) / 2);
+    const {selectedIcon, label, testID, style, containerStyle, indeterminate, size = DEFAULT_SIZE, ...others} = this.props;
+    const verticalPadding = Math.max(0, (48 - size) / 2);
     const horizontalPadding = verticalPadding;
     
     return (
