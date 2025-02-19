@@ -339,6 +339,22 @@ class Button extends PureComponent<Props, ButtonState> {
     return null;
   }
 
+  getAccessibleHitSlop() {
+    const containerStyle = this.getContainerSizeStyle();
+    const height = containerStyle.height || containerStyle.paddingVertical * 2;
+    const width = containerStyle.width || containerStyle.paddingHorizontal * 2;
+    
+    const verticalPadding = Math.max(0, (48 - height) / 2);
+    const horizontalPadding = Math.max(0, (48 - width) / 2);
+    
+    return {
+      top: verticalPadding,
+      bottom: verticalPadding,
+      left: horizontalPadding,
+      right: horizontalPadding
+    };
+  }
+
   render() {
     const {onPress, disabled, style, testID, animateLayout, modifiers, forwardedRef, ...others} = this.props;
     const shadowStyle = this.getShadowStyle();
@@ -373,6 +389,7 @@ class Button extends PureComponent<Props, ButtonState> {
         testID={testID}
         {...others}
         ref={forwardedRef}
+        hitSlop={this.getAccessibleHitSlop()}
       >
         {this.props.children}
         {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
