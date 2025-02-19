@@ -20,6 +20,25 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     }
   }, [value]);
 
+  const isPickerSingleValue = useCallback((item: any): item is PickerSingleValue => {
+    return typeof item === 'string' || typeof item === 'number';
+  }, []);
+
+  const isMultiValue = useCallback((value: any): value is PickerMultiValue => {
+    if (!Array.isArray(value)) {
+      return false;
+    }
+    return value.every(item => isPickerSingleValue(item));
+  },
+  [isPickerSingleValue]);
+
+  const setExperimentalValue = useCallback((value: any) => {
+    if (isMultiValue(value)) {
+      setMultiDraftValue(value);
+    }
+  },
+  [setMultiDraftValue, isMultiValue]);
+
   const onDoneSelecting = useCallback((item: PickerValue) => {
     setSearchValue('');
     setMultiFinalValue(item as PickerMultiValue);
@@ -50,6 +69,7 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
 
   return {
     multiDraftValue,
+    setMultiDraftValue: setExperimentalValue,
     onDoneSelecting,
     toggleItemSelection,
     cancelSelect

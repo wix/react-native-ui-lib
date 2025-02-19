@@ -175,7 +175,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     ) : (
       <>
         {renderSearchInput()}
-        {renderCustomTopElement?.(context.value)}
+        {renderCustomTopElement?.(context.value, context.setMultiDraftValue)}
         {renderList()}
       </>
     );
