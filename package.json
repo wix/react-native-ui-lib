@@ -62,7 +62,7 @@
     "@babel/cli": "^7.16.8",
     "@babel/core": "^7.24.4",
     "@babel/plugin-transform-modules-commonjs": "^7.17.9",
-    "@babel/preset-env": "^7.20.0",
+    "@babel/preset-env": "^7.24.0",
     "@babel/preset-react": "^7.10.1",
     "@babel/runtime": "^7.20.0",
     "@formatjs/intl-datetimeformat": "^6.0.3",
