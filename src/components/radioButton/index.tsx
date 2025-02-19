@@ -281,8 +281,8 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
         } : undefined}
       >
         {!contentOnLeft && this.renderButton()}
-        {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
-        {this.props.iconOnRight ? this.renderIcon() : this.renderLabel()}
+        {iconOnRight ? this.renderLabel() : this.renderIcon()}
+        {iconOnRight ? this.renderIcon() : this.renderLabel()}
         {contentOnLeft && this.renderButton()}
       </Container>
     );
