@@ -151,9 +151,9 @@ class Switch extends Component<SwitchProps> {
   }
 
   render() {
-    const {...others} = this.props;
-    const verticalPadding = Math.max(0, (48 - (this.props.height || DEFAULT_HEIGHT)) / 2);
-    const horizontalPadding = Math.max(0, (48 - (this.props.width || DEFAULT_WIDTH)) / 2);
+    const {width = DEFAULT_WIDTH, height = DEFAULT_HEIGHT, ...others} = this.props;
+    const verticalPadding = Math.max(0, (48 - height) / 2);
+    const horizontalPadding = Math.max(0, (48 - width) / 2);
     
     return (
       // @ts-ignore
