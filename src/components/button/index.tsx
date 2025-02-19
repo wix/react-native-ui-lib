@@ -16,7 +16,7 @@ import {
   DEFAULT_PROPS,
   ButtonSizeProp
 } from './types';
-import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE} from './ButtonConstants';
+import {PADDINGS, HORIZONTAL_PADDINGS, MIN_WIDTH, DEFAULT_SIZE, SIZE_TO_VERTICAL_HITSLOP} from './ButtonConstants';
 
 export {ButtonSize, ButtonAnimationDirection, ButtonProps};
 
@@ -35,7 +35,7 @@ class Button extends PureComponent<Props, ButtonState> {
     super(props);
   }
 
-  state = {
+  state: Record<'size', undefined | number> = {
     size: undefined
   };
   styles = createStyles();
@@ -152,7 +152,17 @@ class Button extends PureComponent<Props, ButtonState> {
     const {avoidMinWidth, avoidInnerPadding, round, size: propsSize} = this.props;
     const size = propsSize || DEFAULT_SIZE;
 
-    const CONTAINER_STYLE_BY_SIZE: Dictionary<any> = {};
+    const CONTAINER_STYLE_BY_SIZE: Record<
+      string,
+      Partial<{
+        height: number;
+        width: number;
+        padding: number;
+        paddingVertical: number;
+        paddingHorizontal: number;
+        minWidth: number;
+      }>
+    > = {};
     CONTAINER_STYLE_BY_SIZE[Button.sizes.xSmall] = round
       ? {height: this.state.size, width: this.state.size, padding: PADDINGS.XSMALL}
       : {
@@ -339,6 +349,21 @@ class Button extends PureComponent<Props, ButtonState> {
     return null;
   }
 
+  getAccessibleHitSlop() {
+    const containerStyle = this.getContainerSizeStyle();
+    const width = (containerStyle.width || containerStyle.minWidth || 0);
+    const widthWithPadding = width + (containerStyle.paddingHorizontal || containerStyle.padding || 0) * 2;
+    const horizontalHitslop = Math.max(0, (48 - widthWithPadding) / 2);
+    const verticalHitslop = SIZE_TO_VERTICAL_HITSLOP[this.props.size || DEFAULT_SIZE] / 2;
+
+    return {
+      top: verticalHitslop,
+      bottom: verticalHitslop,
+      left: horizontalHitslop,
+      right: horizontalHitslop
+    };
+  }
+
   render() {
     const {onPress, disabled, style, testID, animateLayout, modifiers, forwardedRef, ...others} = this.props;
     const shadowStyle = this.getShadowStyle();
@@ -373,6 +398,7 @@ class Button extends PureComponent<Props, ButtonState> {
         testID={testID}
         {...others}
         ref={forwardedRef}
+        hitSlop={this.getAccessibleHitSlop()}
       >
         {this.props.children}
         {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
