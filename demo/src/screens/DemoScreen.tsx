@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
-import {View, TextField, Text, Colors, ScrollView, Switch} from 'react-native-ui-lib';//eslint-disable-line
+import {ScrollView, Switch} from 'react-native';
+import {View, TextField, Text, Colors} from 'react-native-ui-lib';//eslint-disable-line
 
 interface Props {
   getComponent: () => any; // TODO: Add proper type for the component
