@@ -23,3 +23,15 @@ describe('Avatar Badge', () => {
     });
   });
 });
+
+describe('Avatar Accessibility', () => {
+  it('should render with hitSlop when onPress is provided', () => {
+    const renderTree = render(<Avatar testID={'avatar'} onPress={() => {}}/>);
+    expect(renderTree.toJSON()).toMatchSnapshot();
+  });
+
+  it('should not render hitSlop when onPress is not provided', () => {
+    const renderTree = render(<Avatar testID={'avatar'}/>);
+    expect(renderTree.toJSON()).toMatchSnapshot();
+  });
+});
