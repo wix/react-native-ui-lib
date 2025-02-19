@@ -187,6 +187,16 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
     onPress,
     children
   } = themeProps;
+
+  const getAccessibleHitSlop = () => {
+    const padding = Math.max(0, (48 - size) / 2);
+    return {
+      top: padding,
+      bottom: padding,
+      left: padding,
+      right: padding
+    };
+  };
   const {size: _badgeSize, borderWidth: badgeBorderWidth = 0} = badgeProps;
   const badgeSize = _badgeSize || DEFAULT_BADGE_SIZE;
 
@@ -346,6 +356,7 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
       accessible={!_.isUndefined(onPress)}
       accessibilityLabel={'Avatar'}
       accessibilityRole={onPress ? 'button' : 'image'}
+      hitSlop={onPress ? getAccessibleHitSlop() : undefined}
       {...accessibilityProps}
     >
       <View testID={`${testID}.container`} style={textContainerStyle}>
