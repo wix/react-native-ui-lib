@@ -258,8 +258,10 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
   }
 
   render() {
-    const {onPress, onValueChange, containerStyle, contentOnLeft, ...others} = this.props;
+    const {onPress, onValueChange, containerStyle, contentOnLeft, size = DEFAULT_SIZE, iconOnRight, ...others} = this.props;
     const Container = onPress || onValueChange ? TouchableOpacity : View;
+    const verticalPadding = Math.max(0, (48 - size) / 2);
+    const horizontalPadding = verticalPadding;
 
     return (
       // @ts-ignore
@@ -271,10 +273,16 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
         style={containerStyle}
         onPress={this.onPress}
         {...this.getAccessibilityProps()}
+        hitSlop={Container === TouchableOpacity ? {
+          top: verticalPadding,
+          bottom: verticalPadding,
+          left: horizontalPadding,
+          right: horizontalPadding
+        } : undefined}
       >
         {!contentOnLeft && this.renderButton()}
-        {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
-        {this.props.iconOnRight ? this.renderIcon() : this.renderLabel()}
+        {iconOnRight ? this.renderLabel() : this.renderIcon()}
+        {iconOnRight ? this.renderIcon() : this.renderLabel()}
         {contentOnLeft && this.renderButton()}
       </Container>
     );

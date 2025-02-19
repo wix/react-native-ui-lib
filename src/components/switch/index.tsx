@@ -151,7 +151,10 @@ class Switch extends Component<SwitchProps> {
   }
 
   render() {
-    const {...others} = this.props;
+    const {width = DEFAULT_WIDTH, height = DEFAULT_HEIGHT, ...others} = this.props;
+    const verticalPadding = Math.max(0, (48 - height) / 2);
+    const horizontalPadding = Math.max(0, (48 - width) / 2);
+    
     return (
       // @ts-ignore
       <TouchableOpacity
@@ -160,6 +163,7 @@ class Switch extends Component<SwitchProps> {
         {...others}
         style={this.getSwitchStyle()}
         onPress={this.onPress}
+        hitSlop={{top: verticalPadding, bottom: verticalPadding, left: horizontalPadding, right: horizontalPadding}}
       >
         {this.renderThumb()}
       </TouchableOpacity>
