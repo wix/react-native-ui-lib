@@ -150,7 +150,7 @@ class Switch extends Component<SwitchProps> {
     return <Animated.View style={[this.styles.thumb, thumbPositionStyle, thumbStyle]}/>;
   }
 
-  getHitSlopSize() {
+  getAccessibleHitSlop() {
     const {width = DEFAULT_WIDTH, height = DEFAULT_HEIGHT} = this.props;
     const verticalPadding = Math.max(0, (48 - height) / 2);
     const horizontalPadding = Math.max(0, (48 - width) / 2);
@@ -174,7 +174,7 @@ class Switch extends Component<SwitchProps> {
         {...others}
         style={this.getSwitchStyle()}
         onPress={this.onPress}
-        hitSlop={this.getHitSlopSize()}
+        hitSlop={this.getAccessibleHitSlop()}
       >
         {this.renderThumb()}
       </TouchableOpacity>
