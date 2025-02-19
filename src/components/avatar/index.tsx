@@ -356,6 +356,7 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
       accessible={!_.isUndefined(onPress)}
       accessibilityLabel={'Avatar'}
       accessibilityRole={onPress ? 'button' : 'image'}
+      hitSlop={onPress ? getAccessibleHitSlop() : undefined}
       {...accessibilityProps}
     >
       <View testID={`${testID}.container`} style={textContainerStyle}>
