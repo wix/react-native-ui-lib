@@ -271,7 +271,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
   }
 
   render() {
-    const {onPress, onValueChange, containerStyle, contentOnLeft, iconOnRight, ...others} = this.props;
+    const {onPress, onValueChange, containerStyle, contentOnLeft, ...others} = this.props;
     const Container = onPress || onValueChange ? TouchableOpacity : View;
 
     return (
