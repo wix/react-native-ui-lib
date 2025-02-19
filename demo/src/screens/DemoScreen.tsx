@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
-import {ScrollView, Switch} from 'react-native';
-import {View, TextField, Text, Colors} from 'react-native-ui-lib';//eslint-disable-line
+import {View, TextField, Text, Colors, ScrollView, Switch} from 'react-native-ui-lib';//eslint-disable-line
 
 interface Props {
   getComponent: () => any; // TODO: Add proper type for the component
@@ -34,7 +33,7 @@ export default class DemoScreen extends Component<Props, State> {
   }
 
   getComponentProps() {
-    const component = this.props.getComponent();
+    this.props.getComponent();
     // Note: Component props should be accessed via type system instead of runtime
     return {};
   }
@@ -71,7 +70,7 @@ export default class DemoScreen extends Component<Props, State> {
           </Text>
           <Switch
             value={this.state[propId]}
-            onValueChange={value => this.updatePropValue(value, propId, propType)}
+            onValueChange={(value: boolean) => this.updatePropValue(value, propId, propType)}
           />
         </View>
       );
@@ -84,7 +83,7 @@ export default class DemoScreen extends Component<Props, State> {
           floatingPlaceholder
           enableError={false}
           value={this.state[propId]}
-          onChangeText={text => this.updatePropValue(text, propId, propType)}
+          onChangeText={(text: string) => this.updatePropValue(text, propId, propType)}
           autoCapitalize='none'
         />
       </View>
