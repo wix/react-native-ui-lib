@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
 import {ScrollView, Switch} from 'react-native';
-import {View, TextField, Text, Badge, Colors} from 'react-native-ui-lib';//eslint-disable-line
+import {View, TextField, Text, Colors} from 'react-native-ui-lib';//eslint-disable-line
 
-interface Props {}
+interface Props {
+  getComponent: () => any; // TODO: Add proper type for the component
+}
 
 interface State {
   backgroundColor: string;
@@ -32,7 +34,7 @@ export default class DemoScreen extends Component<Props, State> {
   }
 
   getComponentProps() {
-    const DemoComponent = this.getComponent();
+    const component = this.props.getComponent();
     // Note: Component props should be accessed via type system instead of runtime
     return {};
   }
