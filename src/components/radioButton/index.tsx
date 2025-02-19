@@ -287,8 +287,8 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
         hitSlop={Container === TouchableOpacity ? this.getAccessibleHitSlop() : undefined}
       >
         {!contentOnLeft && this.renderButton()}
-        {iconOnRight ? this.renderLabel() : this.renderIcon()}
-        {iconOnRight ? this.renderIcon() : this.renderLabel()}
+        {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
+        {this.props.iconOnRight ? this.renderIcon() : this.renderLabel()}
         {contentOnLeft && this.renderButton()}
       </Container>
     );
