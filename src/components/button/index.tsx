@@ -277,10 +277,10 @@ class Button extends PureComponent<Props, ButtonState> {
     let style;
     switch (animateTo) {
       case 'left':
-        style = {alignSelf: 'flex-start'};
+        style = {alignSelf: 'flex-start'} as const;
         break;
       case 'right':
-        style = {alignSelf: 'flex-end'};
+        style = {alignSelf: 'flex-end'} as const;
         break;
       default:
         // 'center' is the default
