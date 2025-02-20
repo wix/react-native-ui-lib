@@ -155,7 +155,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
       getItemLabel,
       onSelectedLayout: onSelectedItemLayout,
       renderItem,
-      selectionLimit
+      selectionLimit,
+      selectAll
     };
   }, [
     migrate,
@@ -168,7 +169,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     selectionLimit,
     onSelectedItemLayout,
     toggleItemSelection,
-    onDoneSelecting
+    onDoneSelecting,
+    selectAll
   ]);
 
   const renderPickerItem = useCallback((item: PickerItemProps, index: number): React.ReactElement => {

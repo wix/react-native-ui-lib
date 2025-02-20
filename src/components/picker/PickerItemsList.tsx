@@ -175,6 +175,9 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     ) : (
       <>
         {renderSearchInput()}
+        {mode === PickerModes.MULTI && (
+          <Button link label="Select All" marginB-s2 onPress={context.selectAll}/>
+        )}
         {renderCustomTopElement?.(context.value)}
         {renderList()}
       </>
