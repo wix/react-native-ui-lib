@@ -86,7 +86,12 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   const [selectedItemPosition, setSelectedItemPosition] = useState<number>(0);
   const [items, setItems] = useState<PickerItemProps[]>(propItems || extractPickerItems(themeProps));
   const pickerExpandable = useRef<ExpandableOverlayMethods>(null);
-  const pickerRef = useImperativePickerHandle(ref, pickerExpandable);
+
+  const {
+    filteredItems,
+    setSearchValue,
+    onSearchChange: _onSearchChange
+  } = usePickerSearch({showSearch, onSearchChange, getItemLabel, children, items});
 
   // TODO: Remove this when migration is completed, starting of v8
   // usePickerMigrationWarnings({children, migrate, getItemLabel, getItemValue});
@@ -97,12 +102,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     }
   }, [propItems]);
 
-  const {
-    filteredItems,
-    setSearchValue,
-    onSearchChange: _onSearchChange
-  } = usePickerSearch({showSearch, onSearchChange, getItemLabel, children, items});
-  const {multiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect} = usePickerSelection({
+  const {multiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect, selectAll} = usePickerSelection({
     migrate,
     value,
     onChange,
@@ -110,8 +110,11 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     getItemValue,
     topBarProps,
     setSearchValue,
-    mode
+    mode,
+    items
   });
+
+  const pickerRef = useImperativePickerHandle(ref, pickerExpandable, {selectAll});
 
   const {label, accessibilityInfo} = usePickerLabel({
     value,
