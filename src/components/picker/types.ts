@@ -309,6 +309,7 @@ export interface PickerContextProps
   isMultiMode: boolean;
   onSelectedLayout: (event: any) => any;
   selectionLimit: PickerProps['selectionLimit'];
+  selectAll?: () => void;
 }
 
 export type PickerItemsListProps = Pick<
@@ -335,4 +336,9 @@ export type PickerItemsListProps = Pick<
   items?: {value: any; label: any}[];
 };
 
-export type PickerMethods = TextFieldMethods & ExpandableOverlayMethods;
+export type PickerMethods = TextFieldMethods & ExpandableOverlayMethods & {
+  /**
+   * Toggles between selecting all items and clearing selection in Multi mode
+   */
+  selectAll?: () => void;
+};

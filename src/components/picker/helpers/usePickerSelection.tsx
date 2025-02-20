@@ -3,13 +3,13 @@ import _ from 'lodash';
 import {PickerProps, PickerValue, PickerSingleValue, PickerMultiValue, PickerModes} from '../types';
 
 interface UsePickerSelectionProps
-  extends Pick<PickerProps, 'migrate' | 'value' | 'onChange' | 'getItemValue' | 'topBarProps' | 'mode'> {
+  extends Pick<PickerProps, 'migrate' | 'value' | 'onChange' | 'getItemValue' | 'topBarProps' | 'mode' | 'items'> {
   pickerExpandableRef: RefObject<any>;
   setSearchValue: (searchValue: string) => void;
 }
 
 const usePickerSelection = (props: UsePickerSelectionProps) => {
-  const {migrate, value, onChange, topBarProps, pickerExpandableRef, getItemValue, setSearchValue, mode} = props;
+  const {migrate, value, onChange, topBarProps, pickerExpandableRef, getItemValue, setSearchValue, mode, items} = props;
   const [multiDraftValue, setMultiDraftValue] = useState(value as PickerMultiValue);
   const [multiFinalValue, setMultiFinalValue] = useState(value as PickerMultiValue);
 
@@ -48,11 +48,28 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     topBarProps?.onCancel?.();
   }, [multiFinalValue, topBarProps]);
 
+  const selectAll = useCallback(() => {
+    if (mode !== PickerModes.MULTI) {
+      return;
+    }
+    
+    if (!migrate) {
+      const allValues = (items?.map(item => ({value: getItemValue?.(item as unknown as PickerValue) || item.value})) || []) as unknown as PickerMultiValue;
+      const isAllSelected = _.isEqual(_.sortBy(multiDraftValue, 'value'), _.sortBy(allValues, 'value'));
+      setMultiDraftValue(isAllSelected ? [] : allValues);
+    } else {
+      const allValues = (items?.map(item => getItemValue?.(item as unknown as PickerValue) || item.value) || []) as unknown as PickerMultiValue;
+      const isAllSelected = _.isEqual(_.sortBy(multiDraftValue), _.sortBy(allValues));
+      setMultiDraftValue(isAllSelected ? [] : allValues);
+    }
+  }, [mode, items, multiDraftValue, getItemValue, migrate]);
+
   return {
     multiDraftValue,
     onDoneSelecting,
     toggleItemSelection,
-    cancelSelect
+    cancelSelect,
+    selectAll
   };
 };
 
