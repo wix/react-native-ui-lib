@@ -209,7 +209,10 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
     /**
      * Render custom top element
      */
-    renderCustomTopElement?: (value?: PickerValue) => React.ReactElement;
+    renderCustomTopElement?: (
+      value?: PickerValue,
+      setValue?: React.Dispatch<React.SetStateAction<PickerMultiValue>> | undefined
+    ) => React.ReactElement;
     /**
      * Add onPress callback for when pressing the picker
      */
@@ -309,6 +312,7 @@ export interface PickerContextProps
   isMultiMode: boolean;
   onSelectedLayout: (event: any) => any;
   selectionLimit: PickerProps['selectionLimit'];
+  setMultiDraftValue?: React.Dispatch<React.SetStateAction<PickerMultiValue>> | undefined;
 }
 
 export type PickerItemsListProps = Pick<
