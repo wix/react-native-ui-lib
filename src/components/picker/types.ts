@@ -310,6 +310,7 @@ export interface PickerContextProps
   onSelectedLayout: (event: any) => any;
   selectionLimit: PickerProps['selectionLimit'];
   selectAll?: () => void;
+  isAllSelected?: () => boolean;
 }
 
 export type PickerItemsListProps = Pick<

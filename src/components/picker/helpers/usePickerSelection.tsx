@@ -48,6 +48,20 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     topBarProps?.onCancel?.();
   }, [multiFinalValue, topBarProps]);
 
+  const isAllSelected = useCallback(() => {
+    if (mode !== PickerModes.MULTI || !items?.length) {
+      return false;
+    }
+    
+    if (!migrate) {
+      const allValues = (items?.map(item => ({value: getItemValue?.(item as unknown as PickerValue) || item.value})) || []) as unknown as PickerMultiValue;
+      return _.isEqual(_.sortBy(multiDraftValue, 'value'), _.sortBy(allValues, 'value'));
+    } else {
+      const allValues = (items?.map(item => getItemValue?.(item as unknown as PickerValue) || item.value) || []) as unknown as PickerMultiValue;
+      return _.isEqual(_.sortBy(multiDraftValue), _.sortBy(allValues));
+    }
+  }, [mode, items, multiDraftValue, getItemValue, migrate]);
+
   const selectAll = useCallback(() => {
     if (mode !== PickerModes.MULTI) {
       return;
@@ -55,21 +69,20 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     
     if (!migrate) {
       const allValues = (items?.map(item => ({value: getItemValue?.(item as unknown as PickerValue) || item.value})) || []) as unknown as PickerMultiValue;
-      const isAllSelected = _.isEqual(_.sortBy(multiDraftValue, 'value'), _.sortBy(allValues, 'value'));
-      setMultiDraftValue(isAllSelected ? [] : allValues);
+      setMultiDraftValue(isAllSelected() ? [] : allValues);
     } else {
       const allValues = (items?.map(item => getItemValue?.(item as unknown as PickerValue) || item.value) || []) as unknown as PickerMultiValue;
-      const isAllSelected = _.isEqual(_.sortBy(multiDraftValue), _.sortBy(allValues));
-      setMultiDraftValue(isAllSelected ? [] : allValues);
+      setMultiDraftValue(isAllSelected() ? [] : allValues);
     }
-  }, [mode, items, multiDraftValue, getItemValue, migrate]);
+  }, [mode, items, multiDraftValue, getItemValue, migrate, isAllSelected]);
 
   return {
     multiDraftValue,
     onDoneSelecting,
     toggleItemSelection,
     cancelSelect,
-    selectAll
+    selectAll,
+    isAllSelected
   };
 };
 

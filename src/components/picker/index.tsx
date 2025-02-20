@@ -102,7 +102,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     }
   }, [propItems]);
 
-  const {multiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect, selectAll} = usePickerSelection({
+  const {multiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect, selectAll, isAllSelected} = usePickerSelection({
     migrate,
     value,
     onChange,
@@ -156,7 +156,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
       onSelectedLayout: onSelectedItemLayout,
       renderItem,
       selectionLimit,
-      selectAll
+      selectAll,
+      isAllSelected
     };
   }, [
     migrate,
@@ -170,7 +171,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     onSelectedItemLayout,
     toggleItemSelection,
     onDoneSelecting,
-    selectAll
+    selectAll,
+    isAllSelected
   ]);
 
   const renderPickerItem = useCallback((item: PickerItemProps, index: number): React.ReactElement => {
