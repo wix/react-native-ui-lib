@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, ColorValue} from 'react-native';
+import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, ColorValue, ViewProps} from 'react-native';
 import {Colors, BorderRadiuses} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
@@ -57,6 +57,10 @@ export type SwitchProps = TouchableOpacityProps & {
   style?: StyleProp<ViewStyle>;
   testID?: string;
   id?: string;
+  /**
+   * Defines how far a touch event can start away from the switch
+   */
+  hitSlop?: ViewProps['hitSlop'];
 }
 
 /**
@@ -164,7 +168,7 @@ class Switch extends Component<SwitchProps> {
   }
 
   render() {
-    const {...others} = this.props;
+    const {hitSlop, ...others} = this.props;
     
     return (
       // @ts-ignore
@@ -174,7 +178,7 @@ class Switch extends Component<SwitchProps> {
         {...others}
         style={this.getSwitchStyle()}
         onPress={this.onPress}
-        hitSlop={this.getAccessibleHitSlop()}
+        hitSlop={hitSlop || this.getAccessibleHitSlop()}
       >
         {this.renderThumb()}
       </TouchableOpacity>
