@@ -19,7 +19,7 @@ interface ThumbProps extends ViewProps {
   defaultStyle?: SharedValue<ViewStyle>;
   activeStyle?: SharedValue<ViewStyle>;
   disableActiveStyling?: boolean;
-  hitSlop?: ViewProps['hitSlop'];
+  hitSlop?: number | Insets;
   shouldDisableRTL?: boolean;
   onSeekStart?: () => void;
   onSeekEnd?: () => void;
