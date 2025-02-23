@@ -351,11 +351,14 @@ class Button extends PureComponent<Props, ButtonState> {
 
   getAccessibleHitSlop() {
     const containerStyle = this.getContainerSizeStyle();
-    const width = (containerStyle.width || containerStyle.minWidth || 0);
+    const isWidthDefined = containerStyle.width !== undefined || containerStyle.minWidth !== undefined;
+    const width = containerStyle.width || containerStyle.minWidth || 0;
     const widthWithPadding = width + (containerStyle.paddingHorizontal || containerStyle.padding || 0) * 2;
-    const horizontalHitslop = Math.max(0, (48 - widthWithPadding) / 2);
-    const verticalHitslop = SIZE_TO_VERTICAL_HITSLOP[this.props.size || DEFAULT_SIZE] / 2;
-
+    const horizontalHitslop = isWidthDefined ? Math.max(0, (48 - widthWithPadding) / 2) : 10;
+    const verticalHitslop =
+      (containerStyle.height
+        ? Math.max(0, 48 - containerStyle.height)
+        : SIZE_TO_VERTICAL_HITSLOP[this.props.size || DEFAULT_SIZE]) / 2;
     return {
       top: verticalHitslop,
       bottom: verticalHitslop,
