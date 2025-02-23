@@ -44,7 +44,11 @@ type PickerStatics = {
   extractPickerItems: typeof extractPickerItems;
 };
 
-const Picker = React.forwardRef((props: PickerProps, ref) => {
+type InternalPickerProps = PickerProps & {
+  migrate?: boolean;
+};
+
+const Picker = React.forwardRef((props: InternalPickerProps, ref) => {
   const themeProps = useThemeProps(props, 'Picker');
   const {
     mode = PickerModes.SINGLE,
@@ -71,7 +75,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     renderItem,
     children,
     useSafeArea,
-    // TODO: Remove migrate props and migrate code
     migrate = true,
     accessibilityLabel,
     accessibilityHint,
