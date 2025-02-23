@@ -6,7 +6,7 @@ import {Colors} from '../../style';
 import View from '../../components/view';
 import {Constants} from '../../commons/new';
 
-interface ThumbProps extends ViewProps {
+interface ThumbProps extends Omit<ViewProps, 'hitSlop'> {
   start: SharedValue<number>;
   end: SharedValue<number>;
   offset: SharedValue<number>;
