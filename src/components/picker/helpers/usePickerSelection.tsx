@@ -31,12 +31,8 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
   const toggleItemSelection = useCallback((item: PickerSingleValue) => {
     let newValue;
     const itemAsArray = [item];
-    if (!migrate) {
-      newValue = _.xorBy(multiDraftValue, itemAsArray, getItemValue || 'value');
-    } else {
-      newValue = _.xor(multiDraftValue, itemAsArray);
-    }
-
+    // Always use the legacy behavior internally since we're making migrate internal
+    newValue = _.xorBy(multiDraftValue, itemAsArray, getItemValue || 'value');
     setMultiDraftValue(newValue);
   },
   [multiDraftValue, getItemValue]);
