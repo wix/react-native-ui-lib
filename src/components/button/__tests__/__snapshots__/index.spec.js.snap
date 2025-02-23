@@ -23,6 +23,14 @@ exports[`Button backgroundColor should return backgroundColor according to modif
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -111,6 +119,14 @@ exports[`Button backgroundColor should return backgroundColor according to prop 
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -199,6 +215,14 @@ exports[`Button backgroundColor should return defined theme backgroundColor 1`] 
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -287,6 +311,14 @@ exports[`Button backgroundColor should return theme disabled color if button is 
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -375,6 +407,14 @@ exports[`Button backgroundColor should return undefined if this button is link 1
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 10,
+      "right": 10,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -463,6 +503,14 @@ exports[`Button backgroundColor should return undefined if this button is outlin
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -553,6 +601,14 @@ exports[`Button border radius should return 0 border radius when border radius p
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -641,6 +697,14 @@ exports[`Button border radius should return 0 border radius when button is full 
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -729,6 +793,14 @@ exports[`Button border radius should return given border radius when use plain n
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -817,6 +889,14 @@ exports[`Button container size should avoid minWidth limitation if avoidMinWidth
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 10,
+      "left": 10,
+      "right": 10,
+      "top": 10,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -910,6 +990,14 @@ exports[`Button container size should have no padding if avoidInnerPadding prop 
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 10,
+      "left": 0,
+      "right": 0,
+      "top": 10,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1003,6 +1091,14 @@ exports[`Button container size should have no padding of button is a link nor mi
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 10,
+      "left": 10,
+      "right": 10,
+      "top": 10,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1096,6 +1192,14 @@ exports[`Button container size should have no padding of button is an icon butto
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 10,
+      "left": 0,
+      "right": 0,
+      "top": 10,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1211,6 +1315,14 @@ exports[`Button container size should reduce padding by outlineWidth in case of 
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1301,6 +1413,14 @@ exports[`Button container size should return style for large button 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1389,6 +1509,14 @@ exports[`Button container size should return style for large button 2`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1479,6 +1607,14 @@ exports[`Button container size should return style for medium button 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 10,
+      "left": 0,
+      "right": 0,
+      "top": 10,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1572,6 +1708,14 @@ exports[`Button container size should return style for medium button 2`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 10,
+      "left": 0,
+      "right": 0,
+      "top": 10,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1667,6 +1811,14 @@ exports[`Button container size should return style for round button 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 10,
+      "right": 10,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1755,6 +1907,14 @@ exports[`Button container size should return style for small button 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 12.5,
+      "left": 0,
+      "right": 0,
+      "top": 12.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1848,6 +2008,14 @@ exports[`Button container size should return style for small button 2`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 12.5,
+      "left": 0,
+      "right": 0,
+      "top": 12.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -1943,6 +2111,14 @@ exports[`Button container size should return style for xSmall button 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 15,
+      "left": 0,
+      "right": 0,
+      "top": 15,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2036,6 +2212,14 @@ exports[`Button container size should return style for xSmall button 2`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 15,
+      "left": 0,
+      "right": 0,
+      "top": 15,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2131,6 +2315,14 @@ exports[`Button hyperlink should render button as a hyperlink 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 10,
+      "right": 10,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2221,6 +2413,14 @@ exports[`Button icon should apply color on icon 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 10,
+      "right": 10,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2289,6 +2489,14 @@ exports[`Button icon should apply color on icon 2`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 10,
+      "right": 10,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2357,6 +2565,14 @@ exports[`Button icon should apply the right icon color 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 10,
+      "right": 10,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2425,6 +2641,14 @@ exports[`Button icon should apply the right icon color 2`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 10,
+      "right": 10,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2495,6 +2719,14 @@ exports[`Button icon should apply the right icon color 3`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 10,
+      "right": 10,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2565,6 +2797,14 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 10,
+      "right": 10,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2636,6 +2876,14 @@ exports[`Button icon should return icon style according to different variations 
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 10,
+      "right": 10,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2706,6 +2954,14 @@ exports[`Button icon should return icon style according to different variations 
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 10,
+      "right": 10,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2774,6 +3030,14 @@ exports[`Button icon should return icon style according to different variations 
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 10,
+      "right": 10,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2842,6 +3106,14 @@ exports[`Button icon should return the right spacing according to button size wh
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -2930,6 +3202,14 @@ exports[`Button icon should return the right spacing according to button size wh
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 10,
+      "left": 0,
+      "right": 0,
+      "top": 10,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3023,6 +3303,14 @@ exports[`Button icon should return the right spacing according to button size wh
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 12.5,
+      "left": 0,
+      "right": 0,
+      "top": 12.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3116,6 +3404,14 @@ exports[`Button icon should return the right spacing according to button size wh
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 15,
+      "left": 0,
+      "right": 0,
+      "top": 15,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3209,6 +3505,14 @@ exports[`Button label size should return style for large button 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3297,6 +3601,14 @@ exports[`Button label size should return style for medium button 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 10,
+      "left": 0,
+      "right": 0,
+      "top": 10,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3390,6 +3702,14 @@ exports[`Button label size should return style for small button 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 12.5,
+      "left": 0,
+      "right": 0,
+      "top": 12.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3483,6 +3803,14 @@ exports[`Button label size should return style for xSmall button 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 15,
+      "left": 0,
+      "right": 0,
+      "top": 15,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3576,6 +3904,14 @@ exports[`Button labelColor should return Theme linkColor color for link 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 10,
+      "right": 10,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3664,6 +4000,14 @@ exports[`Button labelColor should return color according to color modifier 1`] =
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3752,6 +4096,14 @@ exports[`Button labelColor should return color according to color prop 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3840,6 +4192,14 @@ exports[`Button labelColor should return disabled text color according to theme 
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 10,
+      "right": 10,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -3928,6 +4288,14 @@ exports[`Button labelColor should return linkColor color for link 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 10,
+      "right": 10,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -4016,6 +4384,14 @@ exports[`Button labelColor should return undefined color if this is an icon butt
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 10,
+      "right": 10,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -4084,6 +4460,14 @@ exports[`Button link should render button as a link 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 10,
+      "right": 10,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -4172,6 +4556,14 @@ exports[`Button outline should render button with an outline 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -4262,6 +4654,14 @@ exports[`Button outline should render button with an outlineColor 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -4352,6 +4752,14 @@ exports[`Button outline should render button with outline and outlineColor 1`] =
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -4442,6 +4850,14 @@ exports[`Button outline should return custom borderWidth according to outlineWid
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -4532,6 +4948,14 @@ exports[`Button outline should return disabled color for outline if button is di
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -4622,6 +5046,14 @@ exports[`Button outline should return undefined when link is true, even when out
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 10,
+      "right": 10,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
@@ -4710,6 +5142,14 @@ exports[`Button should render default button 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
   onClick={[Function]}
   onLayout={[Function]}
   onResponderGrant={[Function]}
