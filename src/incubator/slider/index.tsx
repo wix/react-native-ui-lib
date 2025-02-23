@@ -94,7 +94,7 @@ export interface SliderProps extends AccessibilityProps {
   /**
    * Defines how far a touch event can start away from the thumb
    */
-  thumbHitSlop?: ViewProps['hitSlop'];
+  thumbHitSlop?: number | Insets;
   /**
    * Whether the thumb will have a shadow
    */

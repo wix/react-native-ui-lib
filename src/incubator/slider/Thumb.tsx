@@ -110,7 +110,7 @@ const Thumb = (props: ThumbProps) => {
       <View
         reanimated
         style={[styles.thumbPosition, enableShadow && styles.thumbShadow, animatedStyle]}
-        hitSlop={typeof hitSlop === 'number' ? {top: hitSlop, bottom: hitSlop, left: hitSlop, right: hitSlop} : hitSlop}
+        hitSlop={hitSlop}
         onLayout={onThumbLayout}
       />
     </GestureDetector>
