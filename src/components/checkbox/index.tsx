@@ -254,14 +254,13 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
 
   getAccessibleHitSlop() {
     const {size = DEFAULT_SIZE} = this.props;
-    const verticalPadding = Math.max(0, (48 - size) / 2);
-    const horizontalPadding = verticalPadding;
+    const hitTargetPadding = Math.max(0, (48 - size) / 2);
     
     return {
-      top: verticalPadding,
-      bottom: verticalPadding,
-      left: horizontalPadding,
-      right: horizontalPadding
+      top: hitTargetPadding,
+      bottom: hitTargetPadding,
+      left: hitTargetPadding,
+      right: hitTargetPadding
     };
   }
 
