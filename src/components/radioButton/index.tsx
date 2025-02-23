@@ -264,9 +264,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
     
     return {
       top: verticalPadding,
-      bottom: verticalPadding,
-      left: horizontalPadding,
-      right: horizontalPadding
+      bottom: verticalPadding
     };
   }
 
