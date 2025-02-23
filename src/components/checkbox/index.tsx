@@ -252,8 +252,21 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     };
   };
 
+  getAccessibleHitSlop() {
+    const {size = DEFAULT_SIZE} = this.props;
+    const hitTargetPadding = Math.max(0, (48 - size) / 2);
+    
+    return {
+      top: hitTargetPadding,
+      bottom: hitTargetPadding,
+      left: hitTargetPadding,
+      right: hitTargetPadding
+    };
+  }
+
   renderCheckbox() {
     const {selectedIcon, label, testID, style, containerStyle, indeterminate, ...others} = this.props;
+    
     return (
       //@ts-ignore
       <TouchableOpacity
@@ -263,6 +276,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
         {...others}
         style={[this.getBorderStyle(), style, !label && containerStyle]}
         onPress={this.onPress}
+        hitSlop={this.getAccessibleHitSlop()}
       >
         {
           <Animated.View
