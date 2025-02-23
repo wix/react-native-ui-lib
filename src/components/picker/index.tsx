@@ -144,8 +144,8 @@ const Picker = React.forwardRef((props: InternalPickerProps, ref) => {
   }, []);
 
   const contextValue = useMemo(() => {
-    // @ts-expect-error cleanup after removing migrate prop
-    const pickerValue = !migrate && typeof value === 'object' && !_.isArray(value) ? value?.value : value;
+    // Handle legacy object value format when migrate is false
+    const pickerValue = !migrate && typeof value === 'object' && !_.isArray(value) ? (value as {value: any})?.value : value;
     return {
       value: mode === PickerModes.MULTI ? multiDraftValue : pickerValue,
       onPress: mode === PickerModes.MULTI ? toggleItemSelection : onDoneSelecting,
