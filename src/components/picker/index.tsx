@@ -147,7 +147,6 @@ const Picker = React.forwardRef((props: InternalPickerProps, ref) => {
     // @ts-expect-error cleanup after removing migrate prop
     const pickerValue = !migrate && typeof value === 'object' && !_.isArray(value) ? value?.value : value;
     return {
-      migrate,
       value: mode === PickerModes.MULTI ? multiDraftValue : pickerValue,
       onPress: mode === PickerModes.MULTI ? toggleItemSelection : onDoneSelecting,
       isMultiMode: mode === PickerModes.MULTI,
