@@ -157,7 +157,6 @@ const Picker = React.forwardRef((props: InternalPickerProps, ref) => {
       selectionLimit
     };
   }, [
-    migrate,
     mode,
     value,
     multiDraftValue,
@@ -202,17 +201,14 @@ const Picker = React.forwardRef((props: InternalPickerProps, ref) => {
 
   const renderTextField = () => {
     return renderInput ? (
-      // @ts-expect-error - hopefully will be solved after the picker migration ends
       renderInput(value, label)
     ) : (
       <TextField
-        // @ts-expect-error
-        ref={pickerRef}
+        ref={pickerRef as any}
         {...others}
         {...propsByFieldType}
         testID={`${testID}.input`}
-        // @ts-expect-error
-        containerStyle={[containerStyle, propsByFieldType?.containerStyle]}
+        containerStyle={[containerStyle, propsByFieldType?.containerStyle] as any}
         labelStyle={[propsByFieldType?.labelStyle, labelStyle]}
         {...accessibilityInfo}
         importantForAccessibility={'no-hide-descendants'}
@@ -298,16 +294,12 @@ const Picker = React.forwardRef((props: InternalPickerProps, ref) => {
   );
 });
 
-// @ts-expect-error
-Picker.Item = PickerItem;
-
-Picker.displayName = 'Picker';
-// @ts-expect-error
-Picker.modes = PickerModes;
-// @ts-expect-error
-Picker.fieldTypes = PickerFieldTypes;
-// @ts-expect-error
-Picker.extractPickerItems = extractPickerItems;
+const PickerComponent = Picker as typeof Picker & PickerStatics;
+PickerComponent.Item = PickerItem;
+PickerComponent.displayName = 'Picker';
+PickerComponent.modes = PickerModes;
+PickerComponent.fieldTypes = PickerFieldTypes;
+PickerComponent.extractPickerItems = extractPickerItems;
 
 export {
   PickerProps,
@@ -321,4 +313,4 @@ export {
   PickerMethods
 };
 export {Picker}; // For tests
-export default Picker as typeof Picker & PickerStatics;
+export default PickerComponent;
