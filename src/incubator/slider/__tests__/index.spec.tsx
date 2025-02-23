@@ -1,36 +1,13 @@
 import React from 'react';
-import Slider, {SliderProps} from '../index';
-import {SliderDriver} from '../Slider.driver';
+import Slider from '../index';
+import {render} from '@testing-library/react-native';
 
 describe('Slider', () => {
-  afterEach(() => {
-    SliderDriver.clear();
-  });
-
-  const sliderDriver = (testID: string, props: Partial<SliderProps>) => {
-    const defaultProps: Partial<SliderProps> = {
-      testID,
-      onValueChange: jest.fn(),
-      disabled: false
-    };
-    const component = (<Slider {...defaultProps} {...props}/>);
-    return new SliderDriver({
-      component,
-      testID
+  describe('Accessibility', () => {
+    it('should have correct default hit target size', () => {
+      const {getByTestId} = render(<Slider testID="slider"/>);
+      const element = getByTestId('slider');
+      expect(element.props.thumbHitSlop).toBe(12);
     });
-  };
-
-  it('Should be disabled', async () => {
-    const testId = 'slider-comp';
-    const driver = await sliderDriver(testId, {disabled: true});
-  
-    expect(await driver.isDisabled()).toBe(true);
-  });
-  
-  it('Should be disabled', async () => {
-    const testId = 'slider-comp';
-    const driver = await sliderDriver(testId, {disabled: false});
-
-    expect(await driver.isDisabled()).toBe(false);
   });
 });

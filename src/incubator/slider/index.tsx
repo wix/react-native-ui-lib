@@ -186,7 +186,7 @@ const Slider = React.memo((props: Props) => {
     activeThumbStyle,
     thumbTintColor = Colors.$backgroundPrimaryHeavy,
     disabledThumbTintColor = Colors.$backgroundDisabled,
-    thumbHitSlop,
+    thumbHitSlop = 12, // Add default 48x48 hit target
     disableActiveStyling,
     disabled,
     useGap = true,
