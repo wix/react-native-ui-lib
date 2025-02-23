@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {StyleSheet, ViewProps, ViewStyle, LayoutChangeEvent} from 'react-native';
+import {StyleSheet, ViewProps, ViewStyle, LayoutChangeEvent, Insets} from 'react-native';
 import {SharedValue, useAnimatedStyle, useSharedValue, withSpring} from 'react-native-reanimated';
 import {GestureDetector, Gesture} from 'react-native-gesture-handler';
 import {Colors} from '../../style';
@@ -110,7 +110,7 @@ const Thumb = (props: ThumbProps) => {
       <View
         reanimated
         style={[styles.thumbPosition, enableShadow && styles.thumbShadow, animatedStyle]}
-        hitSlop={hitSlop}
+        hitSlop={typeof hitSlop === 'number' ? {top: hitSlop, bottom: hitSlop, left: hitSlop, right: hitSlop} : hitSlop}
         onLayout={onThumbLayout}
       />
     </GestureDetector>
