@@ -189,12 +189,12 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
   } = themeProps;
 
   const getAccessibleHitSlop = () => {
-    const padding = Math.max(0, (48 - size) / 2);
+    const hitTargetPadding = Math.max(0, (48 - size) / 2);
     return {
-      top: padding,
-      bottom: padding,
-      left: padding,
-      right: padding
+      top: hitTargetPadding,
+      bottom: hitTargetPadding,
+      left: hitTargetPadding,
+      right: hitTargetPadding
     };
   };
   const {size: _badgeSize, borderWidth: badgeBorderWidth = 0} = badgeProps;
