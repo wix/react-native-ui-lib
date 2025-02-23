@@ -73,11 +73,11 @@ export default class ColorSwatchScreen extends Component {
               <Text text90R>Unavailable</Text>
             </View>
             <View>
-              <ColorSwatch transparent/>
+              <ColorSwatch color={'transparent'}/>
               <Text text90R>Transparent</Text>
             </View>
             <View center>
-              <ColorSwatch style={{borderRadius: 0}} transparent/>
+              <ColorSwatch style={{borderRadius: 0}} transparent selected/>
               <Text text90R>Square</Text>
             </View>
           </View>
