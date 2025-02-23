@@ -56,7 +56,7 @@ const defaultProps = {
   minimumValue: 0,
   maximumValue: 1,
   step: 0,
-  thumbHitSlop: {top: 10, bottom: 10, left: 24, right: 24},
+  thumbHitSlop: 12, // Ensure 48x48 hit target (24 + 12 + 12)
   useGap: true
 };
 

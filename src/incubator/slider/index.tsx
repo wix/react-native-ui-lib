@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {ReactElement, useImperativeHandle, useCallback, useMemo, useEffect, useRef} from 'react';
-import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle, GestureResponderEvent, LayoutChangeEvent, ViewProps, AccessibilityProps} from 'react-native';
+import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle, GestureResponderEvent, LayoutChangeEvent, Insets, AccessibilityProps} from 'react-native';
 import {useSharedValue, useAnimatedStyle, runOnJS, useAnimatedReaction, withTiming} from 'react-native-reanimated';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
@@ -94,7 +94,7 @@ export interface SliderProps extends AccessibilityProps {
   /**
    * Defines how far a touch event can start away from the thumb
    */
-  thumbHitSlop?: ViewProps['hitSlop'];
+  thumbHitSlop?: number | Insets;
   /**
    * Whether the thumb will have a shadow
    */
@@ -186,7 +186,7 @@ const Slider = React.memo((props: Props) => {
     activeThumbStyle,
     thumbTintColor = Colors.$backgroundPrimaryHeavy,
     disabledThumbTintColor = Colors.$backgroundDisabled,
-    thumbHitSlop,
+    thumbHitSlop = 12, // Add default 48x48 hit target
     disableActiveStyling,
     disabled,
     useGap = true,

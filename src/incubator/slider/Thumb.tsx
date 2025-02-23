@@ -1,12 +1,12 @@
 import React, {useCallback} from 'react';
-import {StyleSheet, ViewProps, ViewStyle, LayoutChangeEvent} from 'react-native';
+import {StyleSheet, ViewProps, ViewStyle, LayoutChangeEvent, Insets} from 'react-native';
 import {SharedValue, useAnimatedStyle, useSharedValue, withSpring} from 'react-native-reanimated';
 import {GestureDetector, Gesture} from 'react-native-gesture-handler';
 import {Colors} from '../../style';
 import View from '../../components/view';
 import {Constants} from '../../commons/new';
 
-interface ThumbProps extends ViewProps {
+interface ThumbProps extends Omit<ViewProps, 'hitSlop'> {
   start: SharedValue<number>;
   end: SharedValue<number>;
   offset: SharedValue<number>;
@@ -19,7 +19,7 @@ interface ThumbProps extends ViewProps {
   defaultStyle?: SharedValue<ViewStyle>;
   activeStyle?: SharedValue<ViewStyle>;
   disableActiveStyling?: boolean;
-  hitSlop?: ViewProps['hitSlop'];
+  hitSlop?: number | Insets;
   shouldDisableRTL?: boolean;
   onSeekStart?: () => void;
   onSeekEnd?: () => void;
@@ -110,7 +110,7 @@ const Thumb = (props: ThumbProps) => {
       <View
         reanimated
         style={[styles.thumbPosition, enableShadow && styles.thumbShadow, animatedStyle]}
-        hitSlop={hitSlop}
+        hitSlop={typeof hitSlop === 'number' ? {top: hitSlop, bottom: hitSlop, left: hitSlop, right: hitSlop} : hitSlop}
         onLayout={onThumbLayout}
       />
     </GestureDetector>

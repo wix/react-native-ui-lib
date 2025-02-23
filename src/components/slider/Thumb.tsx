@@ -129,7 +129,7 @@ const Thumb = forwardRef((props: ThumbProps, ref: any) => {
     // @ts-expect-error
       ref={thumbRef}
       {...others}
-      hitSlop={thumbHitSlop}
+      hitSlop={typeof thumbHitSlop === 'number' ? {top: thumbHitSlop, bottom: thumbHitSlop, left: thumbHitSlop, right: thumbHitSlop} : thumbHitSlop}
       onTouchStart={_onTouchStart}
       onTouchEnd={_onTouchEnd}
       style={[
