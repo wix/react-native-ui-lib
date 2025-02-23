@@ -260,7 +260,6 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
   getAccessibleHitSlop() {
     const {size = DEFAULT_SIZE} = this.props;
     const verticalPadding = Math.max(0, (48 - size) / 2);
-    const horizontalPadding = verticalPadding;
     
     return {
       top: verticalPadding,
