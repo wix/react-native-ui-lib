@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, ColorValue, ViewProps} from 'react-native';
+import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, ColorValue} from 'react-native';
 import {Colors, BorderRadiuses} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
