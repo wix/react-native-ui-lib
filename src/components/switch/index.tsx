@@ -57,10 +57,6 @@ export type SwitchProps = TouchableOpacityProps & {
   style?: StyleProp<ViewStyle>;
   testID?: string;
   id?: string;
-  /**
-   * Defines how far a touch event can start away from the switch
-   */
-  hitSlop?: ViewProps['hitSlop'];
 }
 
 /**
@@ -168,17 +164,17 @@ class Switch extends Component<SwitchProps> {
   }
 
   render() {
-    const {hitSlop, ...others} = this.props;
+    const {...others} = this.props;
     
     return (
       // @ts-ignore
       <TouchableOpacity
         {...this.getAccessibilityProps()}
         activeOpacity={1}
+        hitSlop={this.getAccessibleHitSlop()}
         {...others}
         style={this.getSwitchStyle()}
         onPress={this.onPress}
-        hitSlop={hitSlop || this.getAccessibleHitSlop()}
       >
         {this.renderThumb()}
       </TouchableOpacity>

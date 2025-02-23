@@ -76,11 +76,6 @@
       "name": "id",
       "type": "string",
       "description": "Component id"
-    },
-    {
-      "name": "hitSlop",
-      "type": "ViewProps['hitSlop']",
-      "description": "Defines how far a touch event can start away from the switch"
     }
   ],
   "snippet": [
