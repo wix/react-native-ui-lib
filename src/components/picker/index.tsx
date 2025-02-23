@@ -201,6 +201,7 @@ const Picker = React.forwardRef((props: InternalPickerProps, ref) => {
 
   const renderTextField = () => {
     return renderInput ? (
+      // @ts-expect-error renderInput is from useNewPickerProps and accepts these types
       renderInput(value, label)
     ) : (
       <TextField
