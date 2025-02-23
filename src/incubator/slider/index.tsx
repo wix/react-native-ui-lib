@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {ReactElement, useImperativeHandle, useCallback, useMemo, useEffect, useRef} from 'react';
-import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle, GestureResponderEvent, LayoutChangeEvent, ViewProps, AccessibilityProps} from 'react-native';
+import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle, GestureResponderEvent, LayoutChangeEvent, Insets, AccessibilityProps} from 'react-native';
 import {useSharedValue, useAnimatedStyle, runOnJS, useAnimatedReaction, withTiming} from 'react-native-reanimated';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
