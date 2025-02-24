@@ -256,12 +256,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     const {size = DEFAULT_SIZE} = this.props;
     const hitTargetPadding = Math.max(0, (48 - size) / 2);
     
-    return {
-      top: hitTargetPadding,
-      bottom: hitTargetPadding,
-      left: hitTargetPadding,
-      right: hitTargetPadding
-    };
+    return hitTargetPadding;
   }
 
   renderCheckbox() {
