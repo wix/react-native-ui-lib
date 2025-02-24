@@ -208,6 +208,8 @@ export default function TabBarItem({
     return [styles.tabItem, {flex}, style, constantWidthStyle, pressStyle];
   }, [style, spreadItems]);
 
+  const accessibilityState = useMemo(() => ({selected: isSelected}), [isSelected]);
+
   const gesture = Gesture.Tap()
     .maxDuration(60000)
     .onEnd(() => {
@@ -235,7 +237,7 @@ export default function TabBarItem({
         testID={testID}
         accessible
         accessibilityRole="tab"
-        accessibilityState={{selected: isSelected}}
+        accessibilityState={accessibilityState}
       >
         {leadingAccessory}
         {icon && (
