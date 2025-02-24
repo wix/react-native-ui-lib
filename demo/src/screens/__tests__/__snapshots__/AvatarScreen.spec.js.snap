@@ -83,14 +83,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        hitSlop={
-          {
-            "bottom": 0,
-            "left": 0,
-            "right": 0,
-            "top": 0,
-          }
-        }
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -216,14 +209,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        hitSlop={
-          {
-            "bottom": 0,
-            "left": 0,
-            "right": 0,
-            "top": 0,
-          }
-        }
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -410,14 +396,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        hitSlop={
-          {
-            "bottom": 0,
-            "left": 0,
-            "right": 0,
-            "top": 0,
-          }
-        }
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -646,14 +625,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        hitSlop={
-          {
-            "bottom": 0,
-            "left": 0,
-            "right": 0,
-            "top": 0,
-          }
-        }
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -888,14 +860,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        hitSlop={
-          {
-            "bottom": 0,
-            "left": 0,
-            "right": 0,
-            "top": 0,
-          }
-        }
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1152,14 +1117,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        hitSlop={
-          {
-            "bottom": 4,
-            "left": 4,
-            "right": 4,
-            "top": 4,
-          }
-        }
+        hitSlop={4}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1416,14 +1374,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        hitSlop={
-          {
-            "bottom": 0,
-            "left": 0,
-            "right": 0,
-            "top": 0,
-          }
-        }
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1631,14 +1582,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        hitSlop={
-          {
-            "bottom": 0,
-            "left": 0,
-            "right": 0,
-            "top": 0,
-          }
-        }
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1895,14 +1839,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        hitSlop={
-          {
-            "bottom": 0,
-            "left": 0,
-            "right": 0,
-            "top": 0,
-          }
-        }
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -2204,14 +2141,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        hitSlop={
-          {
-            "bottom": 0,
-            "left": 0,
-            "right": 0,
-            "top": 0,
-          }
-        }
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -2399,14 +2329,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        hitSlop={
-          {
-            "bottom": 0,
-            "left": 0,
-            "right": 0,
-            "top": 0,
-          }
-        }
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -2636,14 +2559,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        hitSlop={
-          {
-            "bottom": 0,
-            "left": 0,
-            "right": 0,
-            "top": 0,
-          }
-        }
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -2873,14 +2789,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        hitSlop={
-          {
-            "bottom": 0,
-            "left": 0,
-            "right": 0,
-            "top": 0,
-          }
-        }
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -3068,14 +2977,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        hitSlop={
-          {
-            "bottom": 0,
-            "left": 0,
-            "right": 0,
-            "top": 0,
-          }
-        }
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
