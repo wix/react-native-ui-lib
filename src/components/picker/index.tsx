@@ -274,6 +274,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     showLoader
   ]);
 
+  const accessbileHitSlop = useMemo(() => ({top: 10, bottom: 10}), []);
+
   return (
     <PickerContext.Provider value={contextValue}>
       {
@@ -286,6 +288,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
           renderCustomOverlay={renderOverlay ? _renderOverlay : undefined}
           onPress={onPress}
           testID={testID}
+          hitSlop={fieldType !== PickerFieldTypes.form ? accessbileHitSlop : undefined}
           {...customPickerProps}
           disabled={themeProps.editable === false}
         >
