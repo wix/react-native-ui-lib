@@ -38,6 +38,7 @@ export const navigationData = {
       {title: 'Page Control', tags: 'page', screen: 'unicorn.components.PageControlScreen'},
       {title: 'ProgressBar', tags: 'progress bar animated', screen: 'unicorn.animations.ProgressBarScreen'},
       {title: 'ScrollBar', tags: 'scroll bar gradient', screen: 'unicorn.components.ScrollBarScreen'},
+      {title: 'SearchInputScreen', tags: 'search input', screen: 'unicorn.components.SearchInputScreen'},
       {
         title: 'Shared Transition',
         tags: 'shared transition element',
@@ -99,16 +100,18 @@ export const navigationData = {
       {title: 'Conversation List', tags: 'list conversation', screen: 'unicorn.lists.ConversationListScreen'},
       {title: 'Drawer', tags: 'drawer', screen: 'unicorn.components.DrawerScreen'},
       {title: 'SortableList', tags: 'sortable list drag', screen: 'unicorn.components.SortableListScreen'},
-      {title: 'HorizontalSortableList', tags: 'sortable horizontal list drag', screen: 'unicorn.components.HorizontalSortableListScreen'},
+      {
+        title: 'HorizontalSortableList',
+        tags: 'sortable horizontal list drag',
+        screen: 'unicorn.components.HorizontalSortableListScreen'
+      },
       {title: 'GridList', tags: 'grid list', screen: 'unicorn.components.GridListScreen'},
       {title: 'SortableGridList', tags: 'sort grid list drag', screen: 'unicorn.components.SortableGridListScreen'}
     ]
   },
   Charts: {
     title: 'Charts',
-    screens: [
-      {title: 'PieChart', tags: 'pie chart data', screen: 'unicorn.components.PieChartScreen'}
-    ]
+    screens: [{title: 'PieChart', tags: 'pie chart data', screen: 'unicorn.components.PieChartScreen'}]
   },
   LayoutsAndTemplates: {
     title: 'Layouts & Templates',
@@ -120,7 +123,11 @@ export const navigationData = {
       {title: 'Modal', tags: 'modal topbar screen', screen: 'unicorn.screens.ModalScreen'},
       {title: 'StateScreen', tags: 'empty state screen', screen: 'unicorn.screens.EmptyStateScreen'},
       {title: 'TabController', tags: 'tabbar controller native', screen: 'unicorn.components.TabControllerScreen'},
-      {title: 'TabControllerWithStickyHeader', tags: 'tabbar controller native sticky header', screen: 'unicorn.components.TabControllerWithStickyHeaderScreen'},
+      {
+        title: 'TabControllerWithStickyHeader',
+        tags: 'tabbar controller native sticky header',
+        screen: 'unicorn.components.TabControllerWithStickyHeaderScreen'
+      },
       {title: 'Timeline', tags: 'timeline', screen: 'unicorn.components.TimelineScreen'},
       {
         title: 'withScrollEnabler',
