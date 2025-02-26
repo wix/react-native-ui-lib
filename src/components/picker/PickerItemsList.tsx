@@ -9,7 +9,7 @@ import Text from '../text';
 import Icon from '../icon';
 import Button from '../button';
 import WheelPicker from '../WheelPicker';
-import {PickerItemProps, PickerItemsListProps, PickerSingleValue, PickerModes} from './types';
+import {PickerItemProps, PickerItemsListProps, PickerSingleValue} from './types';
 import PickerContext from './PickerContext';
 import PickerItem from './PickerItem';
 import {Constants} from '../../commons/new';
@@ -31,7 +31,6 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     renderHeader,
     useSafeArea,
     useDialog,
-    mode,
     testID,
     showLoader,
     customLoaderElement,
@@ -141,7 +140,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
           </Text>
         </View>
       );
-    } else if (!useDialog || mode === PickerModes.MULTI) {
+    } else if (!useDialog) {
       return <Modal.TopBar testID={`${props.testID}.topBar`} {...topBarProps}/>;
     }
   };
