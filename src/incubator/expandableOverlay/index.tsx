@@ -1,4 +1,4 @@
-import React, {useCallback, useState, forwardRef, PropsWithChildren, useImperativeHandle, useRef} from 'react';
+import React, {useCallback, useState, forwardRef, PropsWithChildren, useImperativeHandle, useRef, useEffect} from 'react';
 import {AccessibilityInfo, findNodeHandle} from 'react-native';
 import TouchableOpacity, {TouchableOpacityProps} from '../../components/touchableOpacity';
 import View from '../../components/view';
@@ -69,6 +69,8 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
   } = props;
   const [visible, setExpandableVisible] = useState(false);
   const containerRef = useRef(null);
+  // Use a state machine pattern to track the component's state
+  const [dismissState, setDismissState] = useState('idle'); // 'idle', 'dismissing', 'dismissed'
 
   const focusAccessibility = useCallback(() => {
     const reactTag = findNodeHandle(containerRef.current);
@@ -79,17 +81,42 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
 
   const openExpandable = useCallback(() => {
     setExpandableVisible(true);
+    // Reset the dismissal state when opening
+    setDismissState('idle');
     onPress?.(props);
   }, [onPress, customValue]);
 
   const closeExpandable = useCallback(() => {
-    setExpandableVisible(false);
-    focusAccessibility();
-    useDialog ? dialogProps?.onDismiss?.() : modalProps?.onDismiss?.();
-  }, [useDialog, dialogProps?.onDismiss, modalProps?.onDismiss, focusAccessibility]);
+    // Only proceed with full dismissal if in idle state
+    if (dismissState === 'idle') {
+      setDismissState('dismissing');
+      setExpandableVisible(false);
+      focusAccessibility();
+      
+      // Call onDismiss
+      useDialog ? dialogProps?.onDismiss?.() : modalProps?.onDismiss?.();
+      
+      // Set state to dismissed after a short delay
+      setTimeout(() => {
+        setDismissState('dismissed');
+      }, 0);
+    } else if (dismissState === 'dismissing') {
+      // If already dismissing, just update UI state but don't call onDismiss again
+      setExpandableVisible(false);
+      focusAccessibility();
+    }
+    // If already dismissed, do nothing
+  }, [dismissState, useDialog, dialogProps?.onDismiss, modalProps?.onDismiss, focusAccessibility]);
 
   const toggleExpandable = useCallback(() => (visible ? closeExpandable() : openExpandable()),
     [visible, openExpandable, closeExpandable]);
+    
+  // Reset dismissState when visible changes to false
+  useEffect(() => {
+    if (!visible) {
+      setDismissState('dismissed');
+    }
+  }, [visible]);
 
   useImperativeHandle(ref, () => ({
     openExpandable,
