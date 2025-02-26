@@ -159,7 +159,6 @@ const THUMB_SIZE = 24;
 const THUMB_BORDER_WIDTH = 6;
 const SHADOW_RADIUS = 4;
 const GAP = Spacings.s2;
-const ACCESSIBILITY_ADDTIONAL_HEIGHT = 48 - THUMB_SIZE - SHADOW_RADIUS;
 
 
 const Slider = React.memo((props: Props) => {
