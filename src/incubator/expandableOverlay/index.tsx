@@ -69,8 +69,9 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
   } = props;
   const [visible, setExpandableVisible] = useState(false);
   const containerRef = useRef(null);
-  // Add a ref to track if dismissal is in progress to prevent duplicate calls
+  // Add refs to track dismissal state
   const isDismissing = useRef(false);
+  const hasCalledOnDismiss = useRef(false);
 
   const focusAccessibility = useCallback(() => {
     const reactTag = findNodeHandle(containerRef.current);
@@ -81,6 +82,8 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
 
   const openExpandable = useCallback(() => {
     setExpandableVisible(true);
+    // Reset the onDismiss tracking flag when opening
+    hasCalledOnDismiss.current = false;
     onPress?.(props);
   }, [onPress, customValue]);
 
@@ -90,8 +93,14 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
       isDismissing.current = true;
       setExpandableVisible(false);
       focusAccessibility();
-      useDialog ? dialogProps?.onDismiss?.() : modalProps?.onDismiss?.();
-      // Reset the flag after a short delay to ensure all dismissal logic has completed
+      
+      // Only call onDismiss if it hasn't been called yet during this dismissal cycle
+      if (!hasCalledOnDismiss.current) {
+        hasCalledOnDismiss.current = true;
+        useDialog ? dialogProps?.onDismiss?.() : modalProps?.onDismiss?.();
+      }
+      
+      // Reset the dismissing flag after a short delay to ensure all dismissal logic has completed
       setTimeout(() => {
         isDismissing.current = false;
       }, 0);
