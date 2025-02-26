@@ -177,6 +177,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
@@ -632,6 +638,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
@@ -1166,6 +1178,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={false}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
@@ -1527,6 +1545,12 @@ exports[`TextField Screen renders screen 1`] = `
                   }
                 }
                 editable={true}
+                hitSlop={
+                  {
+                    "bottom": 20,
+                    "top": 20,
+                  }
+                }
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
@@ -1752,6 +1776,12 @@ exports[`TextField Screen renders screen 1`] = `
                   }
                 }
                 editable={true}
+                hitSlop={
+                  {
+                    "bottom": 20,
+                    "top": 20,
+                  }
+                }
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
@@ -2111,6 +2141,12 @@ exports[`TextField Screen renders screen 1`] = `
                   }
                 }
                 editable={true}
+                hitSlop={
+                  {
+                    "bottom": 20,
+                    "top": 20,
+                  }
+                }
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
@@ -2420,6 +2456,12 @@ exports[`TextField Screen renders screen 1`] = `
                   }
                 }
                 editable={true}
+                hitSlop={
+                  {
+                    "bottom": 20,
+                    "top": 20,
+                  }
+                }
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
@@ -2979,6 +3021,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onChangeValidity={[Function]}
@@ -3317,6 +3365,12 @@ exports[`TextField Screen renders screen 1`] = `
                   }
                 }
                 editable={true}
+                hitSlop={
+                  {
+                    "bottom": 20,
+                    "top": 20,
+                  }
+                }
                 maxLength={20}
                 onBlur={[Function]}
                 onChangeText={[Function]}
@@ -3739,6 +3793,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
@@ -4161,6 +4221,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               maxLength={20}
               multiline={true}
               onBlur={[Function]}
@@ -4484,6 +4550,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
@@ -4776,6 +4848,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               keyboardType="numeric"
               onBlur={[Function]}
               onChangeText={[Function]}
@@ -5092,6 +5170,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
@@ -5825,6 +5909,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
@@ -6119,6 +6209,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
@@ -6442,6 +6538,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
@@ -6811,6 +6913,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
@@ -7085,6 +7193,12 @@ exports[`TextField Screen renders screen 1`] = `
                   }
                 }
                 editable={true}
+                hitSlop={
+                  {
+                    "bottom": 20,
+                    "top": 20,
+                  }
+                }
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
@@ -7334,6 +7448,12 @@ exports[`TextField Screen renders screen 1`] = `
                   }
                 }
                 editable={true}
+                hitSlop={
+                  {
+                    "bottom": 20,
+                    "top": 20,
+                  }
+                }
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
@@ -7599,6 +7719,12 @@ exports[`TextField Screen renders screen 1`] = `
                   }
                 }
                 editable={true}
+                hitSlop={
+                  {
+                    "bottom": 20,
+                    "top": 20,
+                  }
+                }
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
