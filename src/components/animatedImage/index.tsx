@@ -51,18 +51,16 @@ const AnimatedImage = (props: AnimatedImageProps) => {
     }
   }, [loader]);
 
-  const onLoad = useCallback(
-    (event: NativeSyntheticEvent<ImageLoadEventData>) => {
-      setIsLoading(false);
-      propsOnLoad?.(event);
-      // did not start the animation already
-      if (opacity.value === 0) {
-        opacity.value = withTiming(1, {duration: animationDuration});
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [setIsLoading, propsOnLoad, animationDuration]
-  );
+  const onLoad = useCallback((event: NativeSyntheticEvent<ImageLoadEventData>) => {
+    setIsLoading(false);
+    propsOnLoad?.(event);
+    // did not start the animation already
+    if (opacity.value === 0) {
+      opacity.value = withTiming(1, {duration: animationDuration});
+    }
+  },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  [setIsLoading, propsOnLoad, animationDuration]);
 
   const onLoadStart = useCallback(() => {
     setIsLoading(true);
