@@ -252,11 +252,8 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     };
   };
 
-  getAccessibleHitSlop() {
-    const {size = DEFAULT_SIZE} = this.props;
-    const hitTargetPadding = Math.max(0, (48 - size) / 2);
-    
-    return hitTargetPadding;
+  getAccessibleHitSlop(size: number) {
+    return Math.max(0, (48 - size) / 2);    
   }
 
   renderCheckbox() {
@@ -271,7 +268,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
         {...others}
         style={[this.getBorderStyle(), style, !label && containerStyle]}
         onPress={this.onPress}
-        hitSlop={this.getAccessibleHitSlop()}
+        hitSlop={this.getAccessibleHitSlop(this.props.size || DEFAULT_SIZE)}
       >
         {
           <Animated.View
