@@ -87,6 +87,12 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
     focusAccessibility();
     useDialog ? dialogProps?.onDismiss?.() : modalProps?.onDismiss?.();
   }, [useDialog, dialogProps?.onDismiss, modalProps?.onDismiss, focusAccessibility]);
+  
+  // This handler is used internally by Modal/Dialog components to avoid duplicate onDismiss calls
+  const handleInternalDismiss = useCallback(() => {
+    setExpandableVisible(false);
+    focusAccessibility();
+  }, [focusAccessibility]);
 
   const toggleExpandable = useCallback(() => (visible ? closeExpandable() : openExpandable()),
     [visible, openExpandable, closeExpandable]);
@@ -104,11 +110,11 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
         overlayBackgroundColor={Colors.$backgroundDefault}
         {...modalProps}
         visible={visible}
-        onDismiss={closeExpandable}
-        onRequestClose={closeExpandable}
-        onBackgroundPress={closeExpandable}
+        onDismiss={handleInternalDismiss}
+        onRequestClose={handleInternalDismiss}
+        onBackgroundPress={handleInternalDismiss}
       >
-        {showTopBar && <Modal.TopBar onDone={closeExpandable} {...topBarProps}/>}
+        {showTopBar && <Modal.TopBar onDone={handleInternalDismiss} {...topBarProps}/>}
         {expandableContent}
       </Modal>
     );
@@ -117,7 +123,7 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
   const renderDialog = () => {
     const Dialog = migrateDialog ? DialogNew : DialogOld;
     return (
-      <Dialog testID={`${testID}.overlay`} {...dialogProps} visible={visible} onDismiss={closeExpandable}>
+      <Dialog testID={`${testID}.overlay`} {...dialogProps} visible={visible} onDismiss={handleInternalDismiss}>
         {expandableContent}
       </Dialog>
     );
