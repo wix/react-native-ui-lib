@@ -160,7 +160,6 @@ const THUMB_BORDER_WIDTH = 6;
 const SHADOW_RADIUS = 4;
 const GAP = Spacings.s2;
 
-
 const Slider = React.memo((props: Props) => {
   const themeProps = useThemeProps(props, 'Incubator.Slider');
   const {
