@@ -22,10 +22,6 @@ function TestCase(textFieldProps?: TextFieldProps) {
   );
 }
 
-const validate = jest.fn((value: string) => {
-  return !!value;
-});
-
 describe('TextField', () => {
   afterEach(() => {
     jest.clearAllMocks();
