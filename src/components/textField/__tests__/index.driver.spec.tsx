@@ -236,27 +236,26 @@ describe('TextField', () => {
     });
 
     describe('validateOnBlur', () => {
-      it('validate is called with undefined when defaultValue is not passed', () => {
-        const renderTree = render(<TestCase {...defaultProps} validateOnBlur validationMessage={'Not valid'} validate={validate}/>);
+      it('should display validation error message when validation fail after blur', () => {
+        const renderTree = render(<TestCase {...defaultProps} validateOnBlur validationMessage={'Not valid'} validate={'required'}/>);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
         textFieldDriver.focus();
         textFieldDriver.blur();
 
-        expect(validate).toHaveBeenCalledTimes(1);
-        expect(validate).toHaveBeenCalledWith(undefined);
+        expect(textFieldDriver.getValidationMessage().exists()).toBe(true);
+        expect(textFieldDriver.getValidationMessage().getText()).toEqual('Not valid');
       });
 
-      it('validate is called with defaultValue when defaultValue is passed', () => {
+      it('should not display validation error message when validation passes', () => {
         const defaultValue = '1';
-        const renderTree = render(<TestCase {...defaultProps} validateOnBlur validationMessage={'Not valid'} validate={validate} defaultValue={defaultValue}/>);
+        const renderTree = render(<TestCase {...defaultProps} validateOnBlur validationMessage={'Not valid'} validate={'required'} defaultValue={defaultValue}/>);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
         textFieldDriver.focus();
         textFieldDriver.blur();
 
-        expect(validate).toHaveBeenCalledTimes(1);
-        expect(validate).toHaveBeenCalledWith(defaultValue);
+        expect(textFieldDriver.getValidationMessage().exists()).toBe(false);
       });
     });
 
