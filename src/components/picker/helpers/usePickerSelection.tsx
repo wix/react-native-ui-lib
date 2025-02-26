@@ -3,22 +3,74 @@ import _ from 'lodash';
 import {PickerProps, PickerValue, PickerSingleValue, PickerMultiValue, PickerModes} from '../types';
 
 interface UsePickerSelectionProps
-  extends Pick<PickerProps, 'migrate' | 'value' | 'onChange' | 'getItemValue' | 'topBarProps' | 'mode'> {
+  extends Pick<
+    PickerProps,
+    | 'migrate'
+    | 'value'
+    | 'onChange'
+    | 'getItemValue'
+    | 'topBarProps'
+    | 'mode'
+    | 'selectionValidation'
+    | 'selectionOptions'
+    | 'useDialog'
+  > {
   pickerExpandableRef: RefObject<any>;
   setSearchValue: (searchValue: string) => void;
 }
 
 const usePickerSelection = (props: UsePickerSelectionProps) => {
-  const {migrate, value, onChange, topBarProps, pickerExpandableRef, getItemValue, setSearchValue, mode} = props;
+  const {
+    migrate,
+    value,
+    onChange,
+    topBarProps,
+    pickerExpandableRef,
+    getItemValue,
+    setSearchValue,
+    mode,
+    selectionValidation,
+    selectionOptions,
+    useDialog
+  } = props;
+  const {onValidationFailed, validateOnStart, onChangeValidity} = selectionOptions || {};
+
   const [multiDraftValue, setMultiDraftValue] = useState(value as PickerMultiValue);
   const [multiFinalValue, setMultiFinalValue] = useState(value as PickerMultiValue);
+  const [isValid, setIsValid] = useState<boolean | undefined>(undefined);
+
+  const _selectionValidation = useCallback((item: PickerValue) => {
+    if (useDialog) {
+      const isValid = selectionValidation?.(item);
+      if (!isValid) {
+        onValidationFailed?.(item);
+      }
+      setIsValid(isValid);
+    }
+  }, [useDialog, selectionValidation, onValidationFailed, setIsValid]);
 
   useEffect(() => {
     if (mode === PickerModes.MULTI && multiFinalValue !== value) {
       setMultiDraftValue(value as PickerMultiValue);
       setMultiFinalValue(value as PickerMultiValue);
     }
-  }, [value]);
+  }, [value, mode, multiFinalValue]);
+
+  useEffect(() => {
+    if (_.isUndefined(selectionValidation)) {
+      setIsValid(true);
+    } else if (_.isFunction(selectionValidation) && validateOnStart) {
+      _selectionValidation?.(value);
+    } else {
+      setIsValid(false);
+    }
+  }, [selectionValidation, validateOnStart, _selectionValidation, value]);
+
+  useEffect(() => {
+    if (isValid !== undefined) {
+      onChangeValidity?.(isValid);
+    }
+  }, [isValid, onChangeValidity]);
 
   const onDoneSelecting = useCallback((item: PickerValue) => {
     setSearchValue('');
@@ -26,7 +78,7 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     pickerExpandableRef.current?.closeExpandable?.();
     onChange?.(item);
   },
-  [onChange]);
+  [onChange, setSearchValue, pickerExpandableRef, setMultiFinalValue]);
 
   const toggleItemSelection = useCallback((item: PickerSingleValue) => {
     let newValue;
@@ -36,23 +88,24 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     } else {
       newValue = _.xor(multiDraftValue, itemAsArray);
     }
-
+    _selectionValidation(newValue);
     setMultiDraftValue(newValue);
   },
-  [multiDraftValue, getItemValue]);
+  [multiDraftValue, getItemValue, _selectionValidation, migrate]);
 
   const cancelSelect = useCallback(() => {
     setSearchValue('');
     setMultiDraftValue(multiFinalValue);
     pickerExpandableRef.current?.closeExpandable?.();
     topBarProps?.onCancel?.();
-  }, [multiFinalValue, topBarProps]);
+  }, [multiFinalValue, topBarProps, setSearchValue, pickerExpandableRef, setMultiDraftValue]);
 
   return {
     multiDraftValue,
     onDoneSelecting,
     toggleItemSelection,
-    cancelSelect
+    cancelSelect,
+    shouldDisableDoneButton: isValid
   };
 };
 

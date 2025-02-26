@@ -15,7 +15,8 @@ import {
   PanningProvider,
   PickerProps,
   RenderCustomModalProps,
-  PickerMethods
+  PickerMethods,
+  PickerValue
 } from 'react-native-ui-lib'; //eslint-disable-line
 import contactsData from '../../data/conversations';
 import {longOptions} from './PickerScreenLongOptions';
@@ -202,14 +203,23 @@ export default class PickerScreen extends Component {
             value={this.state.option}
             enableModalBlur={false}
             onChange={item => this.setState({option: item})}
-            topBarProps={{title: 'Languages'}}
             useDialog
-            renderHeader={({onDone, onCancel}) => (
-              <View padding-s5 row spread>
-                <Button link label="Cancel" onPress={onCancel}/>
-                <Button link label="Done" onPress={onDone}/>
-              </View>
-            )}
+            selectionValidation={(value: PickerValue) => {
+              if (_.isArray(value)) {
+                return value?.length >= 4;
+              } else {
+                return true;
+              }
+            }}
+            selectionOptions={{
+              validationMessage: 'Select Minimum 4 options',
+              onChangeValidity: isValid => console.log('onChangeValidity, isValid:', isValid),
+              onValidationFailed: value => console.log('onValidationFailed, value:', value)
+            }}
+            customPickerProps={{
+              migrateDialog: true,
+              dialogProps: {useSafeArea: true, headerProps: {title: 'Languages'}}
+            }}
             showSearch
             searchPlaceholder={'Search a language'}
             items={dialogOptions}

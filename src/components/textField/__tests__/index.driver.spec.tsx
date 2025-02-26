@@ -22,10 +22,6 @@ function TestCase(textFieldProps?: TextFieldProps) {
   );
 }
 
-const validate = jest.fn((value: string) => {
-  return !!value;
-});
-
 describe('TextField', () => {
   afterEach(() => {
     jest.clearAllMocks();
@@ -225,17 +221,7 @@ describe('TextField', () => {
       });
 
       it('should remove validation error message after entering a valid input', () => {
-        const renderTree = render(
-          <TestCase
-            {...defaultProps}
-            value={'invalid'}
-            validate={'email'}
-            validationMessage={'email is invalid'}
-            enableErrors
-            validateOnStart
-            validateOnChange
-          />
-        );
+        const renderTree = render(<TestCase {...defaultProps} value={'invalid'} validate={'email'} validationMessage={'email is invalid'} enableErrors validateOnStart validateOnChange/>);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
         expect(textFieldDriver.getValidationMessage().getText()).toEqual('email is invalid');
@@ -246,42 +232,32 @@ describe('TextField', () => {
     });
 
     describe('validateOnBlur', () => {
-      it('validate is called with undefined when defaultValue is not passed', () => {
-        const renderTree = render(<TestCase {...defaultProps} validateOnBlur validationMessage={'Not valid'} validate={[validate]}/>);
+      it('should display validation error message when validation fail after blur', () => {
+        const renderTree = render(<TestCase {...defaultProps} validateOnBlur validationMessage={'Not valid'} validate={'required'}/>);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
         textFieldDriver.focus();
         textFieldDriver.blur();
 
-        expect(validate).toHaveBeenCalledTimes(1);
-        expect(validate).toHaveBeenCalledWith(undefined);
+        expect(textFieldDriver.getValidationMessage().exists()).toBe(true);
+        expect(textFieldDriver.getValidationMessage().getText()).toEqual('Not valid');
       });
 
-      it('validate is called with defaultValue when defaultValue is passed', () => {
+      it('should not display validation error message when validation passes', () => {
         const defaultValue = '1';
-        const renderTree = render(<TestCase {...defaultProps} validateOnBlur validationMessage={'Not valid'} validate={[validate]} defaultValue={defaultValue}/>);
+        const renderTree = render(<TestCase {...defaultProps} validateOnBlur validationMessage={'Not valid'} validate={'required'} defaultValue={defaultValue}/>);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
         textFieldDriver.focus();
         textFieldDriver.blur();
 
-        expect(validate).toHaveBeenCalledTimes(1);
-        expect(validate).toHaveBeenCalledWith(defaultValue);
+        expect(textFieldDriver.getValidationMessage().exists()).toBe(false);
       });
     });
 
     describe('validationIcon', () => {
       it('should display validationIcon', () => {
-        const renderTree = render(
-          <TestCase
-            {...defaultProps}
-            enableErrors
-            validateOnStart
-            validate={'required'}
-            validationMessage={'This field is required'}
-            validationIcon={{source: Assets.icons.check}}
-          />
-        );
+        const renderTree = render(<TestCase {...defaultProps} enableErrors validateOnStart validate={'required'} validationMessage={'This field is required'} validationIcon={{source: Assets.icons.check}}/>);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
         expect(textFieldDriver.getValidationMessage().exists()).toBe(true);
@@ -487,21 +463,21 @@ describe('TextField', () => {
     describe('formatter', () => {
       const priceFormatter = Intl.NumberFormat('en-US');
 
-      const props = {
+      const formatterProps = {
         ...defaultProps,
         value: '10000',
-        formatter: value => priceFormatter.format(Number(value))
-      };
+        formatter: (value: string) => priceFormatter.format(Number(value))
+      } as TextFieldProps;
 
       it('should format value while not focused based on formatter prop', () => {
-        const renderTree = render(<TestCase {...props}/>);
+        const renderTree = render(<TestCase {...formatterProps}/>);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
         expect(textFieldDriver.getValue()).toEqual('10,000');
       });
 
       it('should not format value while focused', () => {
-        const renderTree = render(<TestCase {...props}/>);
+        const renderTree = render(<TestCase {...formatterProps}/>);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
         textFieldDriver.focus();
