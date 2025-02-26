@@ -30,7 +30,6 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     renderCustomSearch,
     renderHeader,
     useSafeArea,
-    useDialog,
     testID,
     showLoader,
     customLoaderElement,
