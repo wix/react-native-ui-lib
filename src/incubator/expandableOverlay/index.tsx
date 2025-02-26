@@ -69,6 +69,8 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
   } = props;
   const [visible, setExpandableVisible] = useState(false);
   const containerRef = useRef(null);
+  // Add a ref to track if dismissal is in progress to prevent duplicate calls
+  const isDismissing = useRef(false);
 
   const focusAccessibility = useCallback(() => {
     const reactTag = findNodeHandle(containerRef.current);
@@ -83,16 +85,18 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
   }, [onPress, customValue]);
 
   const closeExpandable = useCallback(() => {
-    setExpandableVisible(false);
-    focusAccessibility();
-    useDialog ? dialogProps?.onDismiss?.() : modalProps?.onDismiss?.();
+    // Only proceed if not already dismissing
+    if (!isDismissing.current) {
+      isDismissing.current = true;
+      setExpandableVisible(false);
+      focusAccessibility();
+      useDialog ? dialogProps?.onDismiss?.() : modalProps?.onDismiss?.();
+      // Reset the flag after a short delay to ensure all dismissal logic has completed
+      setTimeout(() => {
+        isDismissing.current = false;
+      }, 0);
+    }
   }, [useDialog, dialogProps?.onDismiss, modalProps?.onDismiss, focusAccessibility]);
-  
-  // This handler is used internally by Modal/Dialog components to avoid duplicate onDismiss calls
-  const handleInternalDismiss = useCallback(() => {
-    setExpandableVisible(false);
-    focusAccessibility();
-  }, [focusAccessibility]);
 
   const toggleExpandable = useCallback(() => (visible ? closeExpandable() : openExpandable()),
     [visible, openExpandable, closeExpandable]);
@@ -110,11 +114,11 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
         overlayBackgroundColor={Colors.$backgroundDefault}
         {...modalProps}
         visible={visible}
-        onDismiss={handleInternalDismiss}
-        onRequestClose={handleInternalDismiss}
-        onBackgroundPress={handleInternalDismiss}
+        onDismiss={closeExpandable}
+        onRequestClose={closeExpandable}
+        onBackgroundPress={closeExpandable}
       >
-        {showTopBar && <Modal.TopBar onDone={handleInternalDismiss} {...topBarProps}/>}
+        {showTopBar && <Modal.TopBar onDone={closeExpandable} {...topBarProps}/>}
         {expandableContent}
       </Modal>
     );
@@ -123,7 +127,7 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
   const renderDialog = () => {
     const Dialog = migrateDialog ? DialogNew : DialogOld;
     return (
-      <Dialog testID={`${testID}.overlay`} {...dialogProps} visible={visible} onDismiss={handleInternalDismiss}>
+      <Dialog testID={`${testID}.overlay`} {...dialogProps} visible={visible} onDismiss={closeExpandable}>
         {expandableContent}
       </Dialog>
     );
