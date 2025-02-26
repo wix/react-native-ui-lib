@@ -444,7 +444,7 @@ export default forwardRef<SliderProps, ComponentStatics<typeof Slider>, SliderRe
 
 const styles = StyleSheet.create({
   container: {
-    height: THUMB_SIZE + SHADOW_RADIUS + ACCESSIBILITY_ADDTIONAL_HEIGHT,
+    height: THUMB_SIZE + SHADOW_RADIUS,
     justifyContent: 'center'
   },
   disableRTL: {

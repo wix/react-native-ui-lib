@@ -56,7 +56,7 @@ const defaultProps = {
   minimumValue: 0,
   maximumValue: 1,
   step: 0,
-  thumbHitSlop: {top: 24, bottom: 24, left: 24, right: 24},
+  thumbHitSlop: {top: 12, bottom: 12, left: 24, right: 24},
   useGap: true
 };
 

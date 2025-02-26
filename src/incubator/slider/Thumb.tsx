@@ -28,7 +28,13 @@ interface ThumbProps extends ViewProps {
 
 const SHADOW_RADIUS = 4;
 const THUMB_SIZE = 24;
-const DEFAULT_THUMB_HIT_SLOP = {top: 12, bottom: 12, left: 12, right: 12} as const;
+const THUMB_ACCESSIBLE_HITSLOP = Math.max(0, 48 - THUMB_SIZE) / 2;
+const DEFAULT_THUMB_HIT_SLOP = {
+  top: THUMB_ACCESSIBLE_HITSLOP,
+  bottom: THUMB_ACCESSIBLE_HITSLOP,
+  left: THUMB_ACCESSIBLE_HITSLOP,
+  right: THUMB_ACCESSIBLE_HITSLOP
+} as const;
 
 const Thumb = (props: ThumbProps) => {
   const {
