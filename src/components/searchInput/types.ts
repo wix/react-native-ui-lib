@@ -1,4 +1,4 @@
-import {TextInputProps, StyleProp, ViewStyle, TextStyle} from 'react-native';
+import {TextInputProps, StyleProp, ViewStyle, TextStyle, ActivityIndicatorProps} from 'react-native';
 import {ButtonProps} from '../button';
 
 export enum SearchInputPresets {
@@ -22,21 +22,25 @@ export type SearchInputProps = TextInputProps & {
    */
   onDismiss?: () => void;
   /**
-   * The SearchInput colors (affects the search icon color, the filter icon color when 'showFilterIcon' is passed and the cancel button color)
+   * Props for the cancel button
    */
-  schemeColor?: string | null;
+  cancelButtonProps?: ButtonProps;
+  /**
+   * Custom right element
+   */
+  renderCustomRightElement?: () => React.ReactElement;
   /**
    * Title prop
    */
   title?: string;
   /**
-   * Pass true to add filter icon on the right
-   */
-  showFilterIcon?: boolean;
-  /**
    * Whether to show a loader instead of the left search icon
    */
   showLoader?: boolean;
+  /**
+   * Loader props
+   */
+  loaderProps?: ActivityIndicatorProps;
   /**
    * custom loader element
    */
@@ -65,8 +69,4 @@ export type SearchInputProps = TextInputProps & {
    * The preset for the search input: default or prominent
    */
   preset?: SearchInputPresets | `${SearchInputPresets}`;
-  /**
-   * Props for the cancel button
-   */
-  cancelButtonProps?: ButtonProps;
 };

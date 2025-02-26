@@ -25,17 +25,17 @@ const SearchInput = forwardRef((props: SearchInputProps, ref: ForwardedRef<any>)
     invertColors,
     testID,
     showLoader,
+    loaderProps,
     value: controlledValue,
     onChangeText,
     onClear,
     containerStyle,
-    showFilterIcon,
-    // loaderProps,
+    renderCustomRightElement,
     style,
     inaccessible
   } = props;
   const currentAnimatedValue = useRef<ReturnType<typeof Animated.timing> | undefined>();
-  const searchInputRef = useRef<TextInput>();
+  const searchInputRef = useRef<TextInput>(null);
   const [hasValue, setHasValue] = useState(Boolean(controlledValue));
   const [value, setValue] = useState(controlledValue);
   const [valueState] = useState(new Animated.Value(_.isEmpty(controlledValue) ? 0 : 1));
@@ -113,26 +113,6 @@ const SearchInput = forwardRef((props: SearchInputProps, ref: ForwardedRef<any>)
     onClear?.();
   };
 
-  // const blur = () => {
-  //   if (searchInputRef.current) {
-  //     searchInputRef.current.blur();
-  //   }
-  // };
-
-  // const focus = () => {
-  //   if (searchInputRef.current) {
-  //     searchInputRef.current.focus();
-  //   }
-  // };
-
-  // const clear = () => {
-  //   if (searchInputRef.current) {
-  //     searchInputRef.current.clear();
-  //     onChangeText?.('');
-  //     onClear?.();
-  //   }
-  // };
-
   const renderClearButton = () => {
     const transform = [
       {
@@ -144,7 +124,7 @@ const SearchInput = forwardRef((props: SearchInputProps, ref: ForwardedRef<any>)
     ];
 
     const clearButtonStyle = !isDismissible() && isAnimatingClearButton && styles.clearButton;
-    const iconStyle = {tintColor: invertColors ? INVERTED_ICON_COLOR : Colors.grey40};
+    const iconStyle = {tintColor: invertColors ? INVERTED_ICON_COLOR : Colors.grey40, width: 12, height: 12};
     return (
       <Animated.View style={[{transform}, clearButtonStyle]}>
         <Button
@@ -194,8 +174,7 @@ const SearchInput = forwardRef((props: SearchInputProps, ref: ForwardedRef<any>)
           placeholderTextColor={placeholderTextColor}
           underlineColorAndroid="transparent"
           selectionColor={selectionColor}
-          //@ts-ignore
-          ref={searchInputRef?.current}
+          ref={searchInputRef}
           value={value}
           allowFontScaling={false}
           style={[
@@ -209,7 +188,7 @@ const SearchInput = forwardRef((props: SearchInputProps, ref: ForwardedRef<any>)
         />
         {isAnimatingClearButton && renderClearButton()}
         {isDismissible() && renderCancelButton()}
-        {!isDismissible() && showFilterIcon && renderIcon(Assets.icons.general.filter, true)}
+        {!isDismissible() && renderCustomRightElement && renderCustomRightElement()}
       </View>
     );
   };
@@ -236,7 +215,7 @@ const SearchInput = forwardRef((props: SearchInputProps, ref: ForwardedRef<any>)
     const {renderLoaderElement} = props;
     return (
       <View>
-        {renderLoaderElement ? renderLoaderElement() : <ActivityIndicator size={'small'} color={Colors.grey40}/>}
+        {renderLoaderElement ? renderLoaderElement() : <ActivityIndicator style={styles.loader} {...loaderProps}/>}
       </View>
     );
   };
@@ -294,6 +273,9 @@ const styles = StyleSheet.create({
   },
   leftIcon: {
     marginLeft: Spacings.s4
+  },
+  loader: {
+    marginHorizontal: Spacings.s4
   }
 });
 

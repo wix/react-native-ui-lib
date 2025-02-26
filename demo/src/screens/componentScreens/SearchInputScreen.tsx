@@ -1,10 +1,22 @@
 import React, {useCallback, useRef, useState} from 'react';
-import {Alert, ScrollView} from 'react-native';
-import {Colors, View, Text, Switch, SearchInput, SearchInputRef, SearchInputPresets, Button} from 'react-native-ui-lib';
+import {Alert} from 'react-native';
+import {
+  Colors,
+  View,
+  Text,
+  Switch,
+  SearchInput,
+  SearchInputRef,
+  SearchInputPresets,
+  Button,
+  Icon,
+  Assets
+} from 'react-native-ui-lib';
 
 const SearchInputScreen = () => {
   const [showCancelBtn, setShowCancelBtn] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
+  const [showCustomRightElement, setShowCustomRightElement] = useState(false);
   const searchInput = useRef<SearchInputRef>();
 
   const onChangeText = (text: string) => {
@@ -15,8 +27,16 @@ const SearchInputScreen = () => {
     Alert.alert('Cancel was pressed');
   }, []);
 
+  const customRightElement = () => {
+    return (
+      <View center marginH-s2>
+        <Icon source={Assets.icons.check} size={3}/>
+      </View>
+    );
+  };
+
   return (
-    <ScrollView style={{marginVertical: 10}}>
+    <View style={{marginVertical: 5}}>
       <Text center h3 $textDefault margin-5>
         SearchInput
       </Text>
@@ -30,6 +50,7 @@ const SearchInputScreen = () => {
           placeholder="Search"
           onDismiss={showCancelBtn ? onDismiss : undefined}
           cancelButtonProps={{label: 'Cancel'}}
+          renderCustomRightElement={showCustomRightElement ? customRightElement : undefined}
         />
         <View marginV-s2>
           <SearchInput
@@ -41,6 +62,7 @@ const SearchInputScreen = () => {
             onDismiss={showCancelBtn ? onDismiss : undefined}
             cancelButtonProps={{label: 'Cancel'}}
             onChangeText={onChangeText}
+            renderCustomRightElement={showCustomRightElement ? customRightElement : undefined}
           />
         </View>
         <SearchInput
@@ -51,9 +73,9 @@ const SearchInputScreen = () => {
           cancelButtonProps={{label: 'Cancel'}}
           onChangeText={onChangeText}
           style={{backgroundColor: Colors.purple20}}
-          schemeColor={Colors.white}
           placeholderTextColor={Colors.white}
           containerStyle={{color: Colors.white}}
+          renderCustomRightElement={showCustomRightElement ? customRightElement : undefined}
         />
       </View>
 
@@ -72,6 +94,7 @@ const SearchInputScreen = () => {
             placeholder="Search"
             onDismiss={showCancelBtn ? onDismiss : undefined}
             cancelButtonProps={{label: 'Cancel'}}
+            renderCustomRightElement={showCustomRightElement ? customRightElement : undefined}
           />
         </View>
         <Text marginL-s3 marginV-s2>
@@ -85,6 +108,7 @@ const SearchInputScreen = () => {
           onDismiss={showCancelBtn ? onDismiss : undefined}
           cancelButtonProps={{label: 'Cancel'}}
           preset={SearchInputPresets.PROMINENT}
+          renderCustomRightElement={showCustomRightElement ? customRightElement : undefined}
         />
       </View>
 
@@ -99,6 +123,14 @@ const SearchInputScreen = () => {
           <Text marginL-s4>Toggle cancel button</Text>
         </View>
         <View row marginV-s2>
+          <Switch
+            value={showCustomRightElement}
+            onValueChange={value => setShowCustomRightElement(value)}
+            onColor={Colors.$iconSuccessLight}
+          />
+          <Text marginL-s4>Toggle Custom right element</Text>
+        </View>
+        <View row marginV-s2>
           <Switch value={showLoader} onValueChange={value => setShowLoader(value)} onColor={Colors.$iconSuccessLight}/>
           <Text marginL-s4>Toggle loader</Text>
         </View>
@@ -111,7 +143,7 @@ const SearchInputScreen = () => {
           </View>
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
