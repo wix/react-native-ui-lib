@@ -159,6 +159,8 @@ const THUMB_SIZE = 24;
 const THUMB_BORDER_WIDTH = 6;
 const SHADOW_RADIUS = 4;
 const GAP = Spacings.s2;
+const ACCESSIBILITY_ADDTIONAL_HEIGHT = 48 - THUMB_SIZE - SHADOW_RADIUS;
+
 
 const Slider = React.memo((props: Props) => {
   const themeProps = useThemeProps(props, 'Incubator.Slider');
@@ -195,7 +197,6 @@ const Slider = React.memo((props: Props) => {
     enableThumbShadow = true,
     throttleTime = 200
   } = themeProps;
-
   const accessibilityProps = useMemo(() => {
     if (accessible) {
       return {
@@ -443,7 +444,7 @@ export default forwardRef<SliderProps, ComponentStatics<typeof Slider>, SliderRe
 
 const styles = StyleSheet.create({
   container: {
-    height: THUMB_SIZE + SHADOW_RADIUS,
+    height: THUMB_SIZE + SHADOW_RADIUS + ACCESSIBILITY_ADDTIONAL_HEIGHT,
     justifyContent: 'center'
   },
   disableRTL: {

@@ -28,6 +28,7 @@ interface ThumbProps extends ViewProps {
 
 const SHADOW_RADIUS = 4;
 const THUMB_SIZE = 24;
+const DEFAULT_THUMB_HIT_SLOP = {top: 12, bottom: 12, left: 12, right: 12} as const;
 
 const Thumb = (props: ThumbProps) => {
   const {
@@ -35,7 +36,7 @@ const Thumb = (props: ThumbProps) => {
     disableActiveStyling,
     activeStyle,
     defaultStyle,
-    hitSlop,
+    hitSlop = DEFAULT_THUMB_HIT_SLOP,
     onSeekStart,
     onSeekEnd,
     start,
