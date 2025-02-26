@@ -237,7 +237,7 @@ describe('TextField', () => {
 
     describe('validateOnBlur', () => {
       it('validate is called with undefined when defaultValue is not passed', () => {
-        const renderTree = render(<TestCase {...defaultProps} validateOnBlur validationMessage={'Not valid'} validate={'required'}/>);
+        const renderTree = render(<TestCase {...defaultProps} validateOnBlur validationMessage={'Not valid'} validate={validate}/>);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
         textFieldDriver.focus();
@@ -249,7 +249,7 @@ describe('TextField', () => {
 
       it('validate is called with defaultValue when defaultValue is passed', () => {
         const defaultValue = '1';
-        const renderTree = render(<TestCase {...defaultProps} validateOnBlur validationMessage={'Not valid'} validate={'required'} defaultValue={defaultValue}/>);
+        const renderTree = render(<TestCase {...defaultProps} validateOnBlur validationMessage={'Not valid'} validate={validate} defaultValue={defaultValue}/>);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
         textFieldDriver.focus();
