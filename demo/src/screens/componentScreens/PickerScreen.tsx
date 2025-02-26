@@ -15,7 +15,8 @@ import {
   PanningProvider,
   PickerProps,
   RenderCustomModalProps,
-  PickerMethods
+  PickerMethods,
+  PickerValue
 } from 'react-native-ui-lib'; //eslint-disable-line
 import contactsData from '../../data/conversations';
 import {longOptions} from './PickerScreenLongOptions';
