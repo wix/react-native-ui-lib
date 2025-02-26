@@ -195,6 +195,7 @@ const Slider = React.memo((props: Props) => {
     enableThumbShadow = true,
     throttleTime = 200
   } = themeProps;
+
   const accessibilityProps = useMemo(() => {
     if (accessible) {
       return {
