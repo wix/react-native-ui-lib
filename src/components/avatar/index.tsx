@@ -188,6 +188,13 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
     children
   } = themeProps;
 
+  const ImageContainer = useMemo(() => {
+    // Looks like reanimated does not support SVG
+    return animate && !isSvg(source) ? AnimatedImage : Image;
+    // We don't want the container to change EVER, can cause crashes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const hitTargetPadding = Math.max(0, (48 - size) / 2);
   const {size: _badgeSize, borderWidth: badgeBorderWidth = 0} = badgeProps;
   const badgeSize = _badgeSize || DEFAULT_BADGE_SIZE;
@@ -286,8 +293,6 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
 
   const renderImage = () => {
     if (source !== undefined) {
-      // Looks like reanimated does not support SVG
-      const ImageContainer = animate && !isSvg(source) ? AnimatedImage : Image;
       return (
         <ImageContainer
           style={_imageStyle}
