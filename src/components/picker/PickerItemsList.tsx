@@ -140,7 +140,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
           </Text>
         </View>
       );
-    } else if (!useDialog) {
+    } else {
       return <Modal.TopBar testID={`${props.testID}.topBar`} {...topBarProps}/>;
     }
   };
