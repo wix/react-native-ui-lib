@@ -483,21 +483,21 @@ describe('TextField', () => {
     describe('formatter', () => {
       const priceFormatter = Intl.NumberFormat('en-US');
 
-      const props = {
+      const formatterProps = {
         ...defaultProps,
         value: '10000',
         formatter: (value: string) => priceFormatter.format(Number(value))
-      };
+      } as TextFieldProps;
 
       it('should format value while not focused based on formatter prop', () => {
-        const renderTree = render(<TestCase {...props}/>);
+        const renderTree = render(<TestCase {...formatterProps}/>);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
         expect(textFieldDriver.getValue()).toEqual('10,000');
       });
 
       it('should not format value while focused', () => {
-        const renderTree = render(<TestCase {...props}/>);
+        const renderTree = render(<TestCase {...formatterProps}/>);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
         textFieldDriver.focus();
