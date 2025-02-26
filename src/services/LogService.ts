@@ -20,6 +20,7 @@ class LogService {
 
   error = (message?: any, ...optionalParams: any[]) => {
     if (__DEV__) {
+      // eslint-disable-next-line no-restricted-syntax
       console.error(message, ...optionalParams);
     }
   };
