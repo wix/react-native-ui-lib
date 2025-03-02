@@ -121,7 +121,8 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   get size() {
-    return this.props.size || 20;
+    const {size, label} = this.props;
+    return label === undefined ? 10 : size !== undefined ? size : 20;
   }
 
   isSmallBadge() {
