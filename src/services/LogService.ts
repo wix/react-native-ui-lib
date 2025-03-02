@@ -1,7 +1,7 @@
 interface BILogger {
   log: (event: any) => void;
 }
-class LogService {
+class LogService<ErrorInfo extends {message: string;}> {
   private biLogger: BILogger | undefined;
 
   injectBILogger = (biLogger: BILogger) => {
@@ -23,6 +23,11 @@ class LogService {
       // eslint-disable-next-line no-restricted-syntax
       console.error(message, ...optionalParams);
     }
+  };
+
+  forwardError = (errorInfo: ErrorInfo) => {
+    // eslint-disable-next-line no-restricted-syntax
+    console.error(errorInfo.message);
   };
 
   deprecationWarn = ({component, oldProp, newProp}: {component: string; oldProp: string; newProp?: string}) => {
