@@ -159,7 +159,8 @@
                   {
                     "props": {
                       "label": "",
-                      "backgroundColor": "#FC3D2F"
+                      "backgroundColor": "#FC3D2F",
+                      "size": 6
                     }
                   }
                 ]
