@@ -6,6 +6,7 @@ import {Colors, Typography} from '../../style';
 import TouchableOpacity from '../touchableOpacity';
 import View from '../view';
 import {Constants, asBaseComponent} from '../../commons/new';
+import {LogService} from 'services';
 import {ConnectionStatusBarProps, ConnectionStatusBarState, DEFAULT_PROPS} from './types';
 export {ConnectionStatusBarProps};
 
@@ -47,7 +48,8 @@ class ConnectionStatusBar extends PureComponent<ConnectionStatusBarProps, Connec
     if (NetInfo) {
       this.getInitialConnectionState();
     } else {
-      console.error(`RNUILib ConnectionStatusBar component requires installing "@react-native-community/netinfo" dependency`);
+      // eslint-disable-next-line max-len
+      LogService.error(`RNUILib ConnectionStatusBar component requires installing "@react-native-community/netinfo" dependency`);
     }
   }
 

@@ -6,6 +6,7 @@ import {BorderRadiuses, Colors, Dividers, Spacings} from '../../style';
 import {createShimmerPlaceholder, LinearGradientPackage} from 'optionalDeps';
 import View from '../view';
 import {Constants, AlignmentModifiers, PaddingModifiers, MarginModifiers} from '../../commons/new';
+import {LogService} from 'services';
 
 const LinearGradient = LinearGradientPackage?.default;
 
@@ -174,9 +175,9 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
     };
 
     if (_.isUndefined(LinearGradientPackage?.default)) {
-      console.error(`RNUILib SkeletonView's requires installing "react-native-linear-gradient" dependency`);
+      LogService.error(`RNUILib SkeletonView's requires installing "react-native-linear-gradient" dependency`);
     } else if (_.isUndefined(createShimmerPlaceholder)) {
-      console.error(`RNUILib SkeletonView's requires installing "react-native-shimmer-placeholder" dependency`);
+      LogService.error(`RNUILib SkeletonView's requires installing "react-native-shimmer-placeholder" dependency`);
     } else if (ShimmerPlaceholder === undefined) {
       ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
     }

@@ -1,6 +1,7 @@
 // TODO: delete whole file in v8
 import {useEffect} from 'react';
 import {MomentPackage as moment} from '../../optionalDependencies';
+import {LogService} from 'services';
 
 export interface OldApiProps {
   /**
@@ -35,7 +36,8 @@ const useOldApi = (props: OldApiProps) => {
 
   useEffect(() => {
     if (!moment && (dateFormat || timeFormat)) {
-      console.error(`RNUILib DateTimePicker component with date/time format requires installing "moment" dependency`);
+      // eslint-disable-next-line max-len
+      LogService.error(`RNUILib DateTimePicker component with date/time format requires installing "moment" dependency`);
     }
   }, [dateFormat, timeFormat]);
 
