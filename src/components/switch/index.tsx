@@ -83,15 +83,10 @@ class Switch extends Component<SwitchProps> {
   getAccessibilityProps() {
     const {disabled, value} = this.props;
 
-
     return {
       accessible: true,
       accessibilityRole: 'switch',
-      accessibilityState: {
-        disabled,
-        checked: value ? 'checked' : 'unchecked'
-      },
-      accessibilityValue: {text: value ? '1' : '0'}
+      accessibilityState: {disabled, checked: value}
     };
   }
 
@@ -155,13 +150,28 @@ class Switch extends Component<SwitchProps> {
     return <Animated.View style={[this.styles.thumb, thumbPositionStyle, thumbStyle]}/>;
   }
 
+  getAccessibleHitSlop() {
+    const {width = DEFAULT_WIDTH, height = DEFAULT_HEIGHT} = this.props;
+    const verticalPadding = Math.max(0, (48 - height) / 2);
+    const horizontalPadding = Math.max(0, (48 - width) / 2);
+    
+    return {
+      top: verticalPadding,
+      bottom: verticalPadding,
+      left: horizontalPadding,
+      right: horizontalPadding
+    };
+  }
+
   render() {
     const {...others} = this.props;
+    
     return (
       // @ts-ignore
       <TouchableOpacity
         {...this.getAccessibilityProps()}
         activeOpacity={1}
+        hitSlop={this.getAccessibleHitSlop()}
         {...others}
         style={this.getSwitchStyle()}
         onPress={this.onPress}

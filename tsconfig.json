@@ -31,5 +31,5 @@
     }
   },
   "include": ["src/**/*", "typings/**/*", "demo/**/*", "lib/components/**/*"] ,
-  "exclude": ["node_modules", "src/**/__tests__"]
+  "exclude": ["node_modules"]
 }
