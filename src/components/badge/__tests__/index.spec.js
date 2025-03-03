@@ -69,10 +69,10 @@ describe('Badge', () => {
       expect(uut.size).toEqual(10);
     });
 
-    it('Should return pimple badge when no label is undefined and size passed', () => {
+    it('Shouldn\'t return pimple badge when label is undefined and size passed', () => {
       const uut = new Badge({label: undefined, size: 20});
       console.log(`uut.size`, uut.size);
-      expect(uut.size).toEqual(10);
+      expect(uut.size).toEqual(20);
     });
 
     it('Should return size when label is empty string', () => {

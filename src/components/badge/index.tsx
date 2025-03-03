@@ -18,8 +18,9 @@ import Image from '../image';
 import View from '../view';
 import Text from '../text';
 
-
 const LABEL_FORMATTER_VALUES = [1, 2, 3, 4] as const;
+const DEFAULT_PIMPLE_SIZE = 10;
+const DEFAULT_BADGE_SIZE = 20;
 
 type LabelFormatterValues = typeof LABEL_FORMATTER_VALUES[number];
 
@@ -122,7 +123,10 @@ class Badge extends PureComponent<BadgeProps> {
 
   get size() {
     const {size, label} = this.props;
-    return label === undefined ? 10 : size !== undefined ? size : 20;
+    if (size !== undefined) {
+      return size;
+    }
+    return label === undefined ? DEFAULT_PIMPLE_SIZE : DEFAULT_BADGE_SIZE;
   }
 
   isSmallBadge() {
