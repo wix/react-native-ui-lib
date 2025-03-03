@@ -9,7 +9,24 @@ import {getColorValue, getValidColorString, getTextColor, BORDER_RADIUS, HSLColo
 import ColorPickerDialogHeader from './ColorPickerDialogHeader';
 import ColorPickerPreview from './ColorPickerPreview';
 import ColorPickerDialogSliders from './ColorPickerDialogSliders';
+import {ButtonProps} from '../button';
 
+type ColorPickerHeaderButtonProps = {
+  /**
+   * Ok (v) button color
+   */
+  doneButtonColor?: string;
+  /**
+   * Done button props
+   */
+  doneButtonProps?: Pick<ButtonProps, 'iconSource' | 'iconStyle'>;
+  /**
+   * Dismiss button props
+   */
+  dismissButtonProps?: Pick<ButtonProps, 'iconSource' | 'iconStyle'>;
+};
+
+// TODO: deprecate doneButtonColor prop
 export interface ColorPickerDialogProps extends DialogProps {
   /**
    * The initial color to pass the picker dialog
@@ -30,15 +47,21 @@ export interface ColorPickerDialogProps extends DialogProps {
   /**
    * Accessibility labels as an object of strings, ex. {addButton: 'add custom color using hex code', dismissButton: 'dismiss', doneButton: 'done', input: 'custom hex color code'}
    */
-  /**
-   * Ok (v) button color
-   */
-  doneButtonColor?: string;
   accessibilityLabels?: {
     dismissButton?: string;
     doneButton?: string;
     input?: string;
   };
+  /**
+   * @deprecated
+   * Ok (v) button color
+   * Pass doneButtonColor via colorPickerHeaderProps
+   */
+  doneButtonColor?: string;
+  /**
+   * Color Picker header button props, done and dismiss button customize props
+   */
+  colorPickerHeaderProps?: ColorPickerHeaderButtonProps;
   /**
    * Whether to use the new Slider implementation using Reanimated
    */
@@ -64,7 +87,8 @@ const ColorPickerDialog = (props: ColorPickerDialogProps) => {
     accessibilityLabels,
     doneButtonColor,
     previewInputStyle,
-    migrate
+    migrate,
+    colorPickerHeaderProps
   } = props;
 
   const [keyboardHeight, setKeyboardHeight] = useState(KEYBOARD_HEIGHT);
@@ -172,6 +196,7 @@ const ColorPickerDialog = (props: ColorPickerDialogProps) => {
         testID={testID}
         doneButtonColor={doneButtonColor}
         onDismiss={onDismiss}
+        colorPickerHeaderProps={colorPickerHeaderProps}
       />
       <ColorPickerPreview
         color={color}

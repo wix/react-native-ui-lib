@@ -9,14 +9,22 @@ import {Colors} from '../../style';
 import {ColorPickerDialogProps} from './ColorPickerDialog';
 import {BORDER_RADIUS} from './ColorPickerPresenter';
 
-type HeaderProps = Pick<ColorPickerDialogProps, 'doneButtonColor' | 'accessibilityLabels' | 'testID'> & {
+type HeaderProps = Pick<
+  ColorPickerDialogProps,
+  'doneButtonColor' | 'accessibilityLabels' | 'testID' | 'colorPickerHeaderProps'
+> & {
   valid: boolean;
   onDismiss: () => void;
   onDonePressed: () => void;
 };
 
 const ColorPickerDialogHeader = (props: HeaderProps) => {
-  const {onDismiss, accessibilityLabels, testID, doneButtonColor, valid, onDonePressed} = props;
+  const {onDismiss, accessibilityLabels, testID, doneButtonColor, valid, onDonePressed, colorPickerHeaderProps} = props;
+  const {
+    doneButtonProps,
+    dismissButtonProps,
+    doneButtonColor: doneButtonHeaderColorProp
+  } = colorPickerHeaderProps || {};
 
   return (
     <View row spread bg-$backgroundDefault paddingH-20 style={styles.header}>
@@ -27,15 +35,17 @@ const ColorPickerDialogHeader = (props: HeaderProps) => {
         onPress={onDismiss}
         accessibilityLabel={_.get(accessibilityLabels, 'dismissButton')}
         testID={`${testID}.dialog.cancel`}
+        {...dismissButtonProps}
       />
       <Button
-        color={doneButtonColor}
+        color={doneButtonColor || doneButtonHeaderColorProp}
         disabled={!valid}
         link
         iconSource={Assets.icons.check}
         onPress={onDonePressed}
         accessibilityLabel={_.get(accessibilityLabels, 'doneButton')}
         testID={`${testID}.dialog.done`}
+        {...doneButtonProps}
       />
     </View>
   );
