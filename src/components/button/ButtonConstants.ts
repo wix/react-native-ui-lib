@@ -22,4 +22,11 @@ export const MIN_WIDTH = {
   LARGE: 90
 };
 
+export const SIZE_TO_VERTICAL_HITSLOP = {
+  [ButtonSize.xSmall]: 30,
+  [ButtonSize.small]: 25,
+  [ButtonSize.medium]: 20,
+  [ButtonSize.large]: 15
+} as const;
+
 export const DEFAULT_SIZE = ButtonSize.large;

@@ -89,7 +89,7 @@ export default class CheckboxScreen extends Component {
             disabled
             value={this.state.value5}
             onValueChange={value5 => this.setState({value5})}
-            style={{marginRight: 10}}
+            style={{marginRight: 20}}
           />
           <Checkbox
             disabled

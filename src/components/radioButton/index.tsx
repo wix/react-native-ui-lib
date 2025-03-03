@@ -257,6 +257,15 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
     );
   }
 
+  getAccessibleHitSlop(size: number) {
+    const verticalPadding = Math.max(0, (48 - size) / 2);
+    
+    return {
+      top: verticalPadding,
+      bottom: verticalPadding
+    };
+  }
+
   render() {
     const {onPress, onValueChange, containerStyle, contentOnLeft, ...others} = this.props;
     const Container = onPress || onValueChange ? TouchableOpacity : View;
@@ -271,6 +280,7 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
         style={containerStyle}
         onPress={this.onPress}
         {...this.getAccessibilityProps()}
+        hitSlop={this.getAccessibleHitSlop(this.props.size || DEFAULT_SIZE)}
       >
         {!contentOnLeft && this.renderButton()}
         {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
