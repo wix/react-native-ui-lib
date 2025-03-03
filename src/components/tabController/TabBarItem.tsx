@@ -1,8 +1,8 @@
 // TODO: support commented props
-import React, {useCallback, useContext, useEffect, useRef, useMemo, ReactElement} from 'react';
+import React, {useCallback, useContext, useEffect, useRef, useMemo, ReactElement, useState} from 'react';
 import {StyleSheet, TextStyle, LayoutChangeEvent, StyleProp, ViewStyle, TextProps} from 'react-native';
 import _ from 'lodash';
-import Reanimated, {runOnJS, useAnimatedStyle, useSharedValue} from 'react-native-reanimated';
+import Reanimated, {runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue} from 'react-native-reanimated';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import {Colors, Typography, Spacings} from '../../style';
 import Badge, {BadgeProps} from '../badge';
@@ -144,6 +144,7 @@ export default function TabBarItem({
   // JSON.parse(JSON.stringify is due to an issue with reanimated
   const sharedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(StyleSheet.flatten(labelStyle))));
   const sharedSelectedLabelStyle = useSharedValue(JSON.parse(JSON.stringify(StyleSheet.flatten(selectedLabelStyle))));
+  const [isSelected, setIsSelected] = useState(currentPage.value === index);
 
   // NOTE: We clone these color values in refs because they might contain a PlatformColor value
   //       which throws an error (see https://github.com/software-mansion/react-native-reanimated/issues/3164)
@@ -156,6 +157,12 @@ export default function TabBarItem({
         index);
     }
   }, []);
+
+  useAnimatedReaction(() => currentPage.value === index, (isSelected, prevIsSelected) => {
+    if (isSelected !== prevIsSelected) {
+      runOnJS(setIsSelected)(isSelected);
+    }
+  });
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     const {width} = event.nativeEvent.layout;
@@ -201,6 +208,8 @@ export default function TabBarItem({
     return [styles.tabItem, {flex}, style, constantWidthStyle, pressStyle];
   }, [style, spreadItems]);
 
+  const accessibilityState = useMemo(() => ({selected: isSelected}), [isSelected]);
+
   const gesture = Gesture.Tap()
     .maxDuration(60000)
     .onEnd(() => {
@@ -226,6 +235,9 @@ export default function TabBarItem({
         style={_style}
         onLayout={onLayout}
         testID={testID}
+        accessible
+        accessibilityRole="tab"
+        accessibilityState={accessibilityState}
       >
         {leadingAccessory}
         {icon && (
