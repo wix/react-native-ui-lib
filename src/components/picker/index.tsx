@@ -274,7 +274,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     showLoader
   ]);
 
-  const accessbileHitSlop = useMemo(() => ({top: 10, bottom: 10}), []);
+  const accessbileHitSlop = useMemo(() => ({top: 14, bottom: 14}), []);
 
   return (
     <PickerContext.Provider value={contextValue}>
