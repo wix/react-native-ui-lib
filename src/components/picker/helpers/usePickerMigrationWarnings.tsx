@@ -3,10 +3,10 @@ import {LogService} from '../../../services';
 import {PickerProps} from '../types';
 
 // TODO: Remove this whole file when migration is completed
-type UsePickerMigrationWarnings = Pick<
-  PickerProps,
-  'children' | 'migrate' | 'getItemLabel' | 'getItemValue' | 'onShow'
->;
+type UsePickerMigrationWarnings = Pick<PickerProps, 'children' | 'getItemLabel' | 'getItemValue' | 'onShow'> & {
+  //TODO: after finish Picker props migration, migrate should be removed
+  migrate?: boolean;
+};
 
 const usePickerMigrationWarnings = (props: UsePickerMigrationWarnings) => {
   const {children, migrate, getItemLabel, getItemValue, onShow} = props;
