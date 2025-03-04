@@ -78,6 +78,8 @@ export interface ClearButtonProps extends Pick<TextInputProps, 'testID' | 'onCha
    * The style of the clear button
    */
   clearButtonStyle?: StyleProp<ViewStyle>;
+  /** Pass to render a custom clear button */
+  ClearButtonContentComponent?: ReactElement;
 }
 
 export interface LabelProps extends MandatoryIndication, Pick<ValidationMessageProps, 'enableErrors'> {
@@ -226,6 +228,11 @@ export type TextFieldProps = MarginModifiers &
      * Should show a clear button when there is a value
      */
     showClearButton?: boolean;
+
+    /**
+     * Pass to render a custom clear button
+     */
+    ClearButtonContentComponent?: ReactElement;
     /**
      * Text to display under the input
      */
