@@ -5,7 +5,7 @@ import {Colors} from '../../style';
 import {asBaseComponent, BaseComponentInjectedProps, Constants, ColorsModifiers} from '../../commons/new';
 import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
-import Image from '../image';
+import Image, {ImageProps} from '../image';
 
 export interface ColorInfo {
   index?: number;
@@ -49,6 +49,10 @@ interface Props {
    * Color swatch size
    */
   size?: number;
+  /**
+   * Icon image source
+   */
+  selectedIconSource?: ImageProps['source'];
 }
 export type ColorSwatchProps = Props & ColorsModifiers;
 
@@ -160,7 +164,7 @@ class ColorSwatch extends PureComponent<Props & BaseComponentInjectedProps> {
   };
 
   renderContent() {
-    const {style, onPress, unavailable, size = DEFAULT_SIZE, ...others} = this.props;
+    const {style, onPress, unavailable, size = DEFAULT_SIZE, selectedIconSource, ...others} = this.props;
     const {isSelected} = this.state;
     const Container = onPress ? TouchableOpacity : View;
     const tintColor = this.getTintColor(this.color);
@@ -184,7 +188,7 @@ class ColorSwatch extends PureComponent<Props & BaseComponentInjectedProps> {
           <View style={[this.styles.unavailable, {backgroundColor: tintColor}]}/>
         ) : (
           <Animated.Image
-            source={Assets.icons.check}
+            source={selectedIconSource || Assets.icons.check}
             style={{
               tintColor,
               opacity: isSelected,
