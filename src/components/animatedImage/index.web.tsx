@@ -6,7 +6,7 @@ import View from '../../components/view';
  * @description: Image component that fades-in the image with animation once it's loaded
  * @extends: Animated.Image
  */
-const AnimatedImage = props => {
+const AnimatedImage = (props: any) => {
   const {
     containerStyle,
     source,
@@ -32,13 +32,11 @@ const AnimatedImage = props => {
     }
   }, [isLoading, opacity, animationDuration]);
 
-  const onLoad = useCallback(
-    event => {
-      setIsLoading(false);
-      propsOnLoad?.(event);
-    },
-    [propsOnLoad]
-  );
+  const onLoad = useCallback((event: any) => {
+    setIsLoading(false);
+    propsOnLoad?.(event);
+  },
+  [propsOnLoad]);
 
   return (
     <View style={containerStyle}>
