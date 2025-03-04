@@ -368,7 +368,17 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   render() {
-    const {onPress, disabled, style, testID, animateLayout, modifiers, forwardedRef, ...others} = this.props;
+    const {
+      onPress,
+      disabled,
+      style,
+      testID,
+      animateLayout,
+      modifiers,
+      forwardedRef,
+      hitSlop: hitSlopProp,
+      ...others
+    } = this.props;
     const shadowStyle = this.getShadowStyle();
     const {margins, paddings} = modifiers;
     const backgroundColor = this.getBackgroundColor();
@@ -399,9 +409,9 @@ class Button extends PureComponent<Props, ButtonState> {
         onPress={onPress}
         disabled={disabled}
         testID={testID}
+        hitSlop={hitSlopProp ?? this.getAccessibleHitSlop()}
         {...others}
         ref={forwardedRef}
-        hitSlop={this.getAccessibleHitSlop()}
       >
         {this.props.children}
         {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
