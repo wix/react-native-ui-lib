@@ -3,9 +3,7 @@
   "category": "controls",
   "description": "Switch component for toggling boolean value related to some context",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SwitchScreen.tsx",
-  "images": [
-    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Switch/Switch.gif?raw=true"
-  ],
+  "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Switch/Switch.gif?raw=true"],
   "props": [
     {
       "name": "value",
@@ -78,16 +76,7 @@
       "description": "Component id"
     }
   ],
-  "snippet": [
-    "function Example(props) {",
-    "  const [value, setValue] = useState(false$1);",
-    "  return (",
-    "    <div>",
-    "      <Switch value={value$2} onValueChange={setValue$3}/>",
-    "    </div>",
-    "  );",
-    "}"
-  ],
+  "snippet": ["<Switch value={value$2} onValueChange={setValue$3}/>"],
   "docs": {
     "hero": {
       "title": "Switch",
@@ -106,10 +95,7 @@
         "sections": [
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Preview"
-            ],
+            "columns": ["Property", "Preview"],
             "items": [
               {
                 "title": "Default",
@@ -135,11 +121,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Default Style",
-              "Light Style"
-            ],
+            "columns": ["Property", "Default Style", "Light Style"],
             "items": [
               {
                 "title": "ON",
