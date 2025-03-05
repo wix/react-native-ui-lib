@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import '../ComponentPage.module.scss';
 import {LiveProvider, LivePreview} from 'react-live';
 import ReactLiveScope from '../../theme/ReactLiveScope';
+import CodeBlock from '../CodeBlock';
+import CodeIcon from '../../assets/icons/code';
 
 type ComponentItemProps = {
   componentName: string;
@@ -28,20 +30,46 @@ function generateComponentCodeSnippet(componentName, componentProps) {
 
 const ComponentItem = (props: ComponentItemProps) => {
   const {componentName, props: componentProps} = props;
+  const [show, setShow] = React.useState(false);
 
   let code = '';
   if (Array.isArray(componentProps)) {
     code = componentProps
       .map(componentPropsItem => generateComponentCodeSnippet(componentName, componentPropsItem))
-      .join(' ');
+      .join('');
+    code = `<View center gap-s1>${code}</View>`;
   } else {
     code = generateComponentCodeSnippet(componentName, componentProps);
   }
 
+  const toggleCode = useCallback(() => {
+    setShow(prev => !prev);
+  }, []);
+
   return (
-    <LiveProvider code={`<View center gap-s1>${code} </View>`} scope={ReactLiveScope}>
-      <LivePreview/>
-    </LiveProvider>
+    <div>
+      <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 20}}>
+        <LiveProvider code={code} scope={ReactLiveScope}>
+          <LivePreview/>
+        </LiveProvider>
+        <button
+          onClick={toggleCode}
+          style={{
+            border: 0,
+            background: 'none',
+            color: 'rgb(56, 153, 236)',
+            cursor: 'pointer',
+            justifyContent: 'center',
+            display: 'flex',
+            alignItems: 'center'
+          }}
+        >
+          <CodeIcon/>
+          {show ? 'Hide' : 'Show'} code
+        </button>
+      </div>
+      {show && <CodeBlock snippet={code} title="Code Example"/>}
+    </div>
   );
 };
 
@@ -67,11 +95,11 @@ export const ContentItem = ({item, componentName}: ContentItemProps) => {
   };
 
   const value = item.value;
-  
+
   if (item.props) {
     const name = item.component ?? componentName;
     const isComponentExists = !!ReactLiveScope[name];
-    
+
     if (isComponentExists) {
       return <ComponentItem componentName={name} props={item.props}/>;
     } else if (!value) {
