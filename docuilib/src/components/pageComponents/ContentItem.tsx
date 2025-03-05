@@ -63,7 +63,7 @@ const ComponentItem = (props: ComponentItemProps) => {
           {show ? 'Hide' : 'Show'} code
         </button>
       </div>
-      {<CodeBlock snippet={codeWithContainer} title="Code Example" show={show}/>}
+      {show && <CodeBlock snippet={codeWithContainer} title="Code Example"/>}
     </div>
   );
 };

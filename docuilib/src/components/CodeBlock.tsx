@@ -7,7 +7,6 @@ type CodeBlockProps = {
   snippet: string;
   printWidth?: number;
   fontSize?: number;
-  show: boolean;
 } & Omit<Props, 'children'>;
 
 const CodeBlock: React.FC<CodeBlockProps> = ({
@@ -16,7 +15,6 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
   printWidth = 30,
   fontSize = 14,
   showLineNumbers,
-  show,
   ...others
 }) => {
   const [code, setCode] = useState<string>('formatting...');
@@ -41,9 +39,8 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
         textAlign: 'left',
         fontSize,
         maxWidth: printWidth * fontSize,
-        maxHeight: show ? 400 : 0,
-        overflowY: 'auto',
-        transition: 'maxHeight 500ms'
+        maxHeight: 400,
+        overflowY: 'auto'
       }}
     >
       <ThemeCodeBlock language={language ?? 'jsx'} showLineNumbers={showLineNumbers ?? true} {...others}>
