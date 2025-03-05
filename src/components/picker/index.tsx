@@ -44,7 +44,7 @@ type PickerStatics = {
   extractPickerItems: typeof extractPickerItems;
 };
 
-const Picker = React.forwardRef((props: PickerProps, ref) => {
+const Picker = React.forwardRef((props: PickerProps & {migrate?: boolean}, ref) => {
   const themeProps = useThemeProps(props, 'Picker');
   const {
     mode = PickerModes.SINGLE,

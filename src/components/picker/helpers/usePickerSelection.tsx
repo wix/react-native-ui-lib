@@ -3,9 +3,11 @@ import _ from 'lodash';
 import {PickerProps, PickerValue, PickerSingleValue, PickerMultiValue, PickerModes} from '../types';
 
 interface UsePickerSelectionProps
-  extends Pick<PickerProps, 'migrate' | 'value' | 'onChange' | 'getItemValue' | 'topBarProps' | 'mode'> {
+  extends Pick<PickerProps, 'value' | 'onChange' | 'getItemValue' | 'topBarProps' | 'mode'> {
   pickerExpandableRef: RefObject<any>;
   setSearchValue: (searchValue: string) => void;
+  //TODO: after finish Picker props migration, migrate should be removed
+  migrate?: boolean;
 }
 
 const usePickerSelection = (props: UsePickerSelectionProps) => {
