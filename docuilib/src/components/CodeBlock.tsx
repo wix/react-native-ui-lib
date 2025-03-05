@@ -24,7 +24,6 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
       const formattedCode = await prettier.format(snippet.trim(), {
         parser: 'babel',
         plugins: [parser],
-        trailingComma: 'none',
         singleQuote: true,
         printWidth
       });
