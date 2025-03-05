@@ -37,14 +37,15 @@ const ComponentItem = (props: ComponentItemProps) => {
     code = componentProps
       .map(componentPropsItem => generateComponentCodeSnippet(componentName, componentPropsItem))
       .join('');
+    code = `<View center gap-s1>${code}</View>`;
   } else {
     code = generateComponentCodeSnippet(componentName, componentProps);
   }
-  const codeWithContainer = `<View center gap-s1>${code}</View>`;
+
   return (
     <div>
       <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 20}}>
-        <LiveProvider code={codeWithContainer} scope={ReactLiveScope}>
+        <LiveProvider code={code} scope={ReactLiveScope}>
           <LivePreview/>
         </LiveProvider>
         <button
@@ -63,7 +64,7 @@ const ComponentItem = (props: ComponentItemProps) => {
           {show ? 'Hide' : 'Show'} code
         </button>
       </div>
-      {show && <CodeBlock snippet={codeWithContainer} title="Code Example"/>}
+      {show && <CodeBlock snippet={code} title="Code Example"/>}
     </div>
   );
 };
