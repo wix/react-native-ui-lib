@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import '../ComponentPage.module.scss';
 import {LiveProvider, LivePreview} from 'react-live';
 import ReactLiveScope from '../../theme/ReactLiveScope';
@@ -42,6 +42,10 @@ const ComponentItem = (props: ComponentItemProps) => {
     code = generateComponentCodeSnippet(componentName, componentProps);
   }
 
+  const toggleCode = useCallback(() => {
+    setShow(prev => !prev);
+  }, []);
+
   return (
     <div>
       <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 20}}>
@@ -49,7 +53,7 @@ const ComponentItem = (props: ComponentItemProps) => {
           <LivePreview/>
         </LiveProvider>
         <button
-          onClick={() => setShow(!show)}
+          onClick={toggleCode}
           style={{
             border: 0,
             background: 'none',
