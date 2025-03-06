@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
+import Heading from '@theme/Heading';
 import '../ComponentPage.module.scss';
 
 
@@ -24,7 +25,7 @@ export const PropsList = ({props}) => {
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
-          margin: '4px 12px 4px 0',
+          margin: '4px 0px 4px 12px',
           borderRadius: '2px',
           height: 20,
           backgroundColor: color
@@ -54,10 +55,11 @@ export const PropsList = ({props}) => {
       return (
         <div className="column">
           <div className="row" style={{marginBottom: 12}}>
-            <div style={{fontSize: '16px', fontWeight: '700', marginRight: 12, marginLeft: 16}}>{prop.name}</div>
-            {getTag(prop.type, getTypeColor(prop.type))}
-            {prop.required && getTag('Required', getTypeColor())}
-            {prop.platform && getTag(prop.platform, getTypeColor())}
+            <Heading as="h4" style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}} id={prop.name}>{prop.name}
+              {getTag(prop.type, getTypeColor(prop.type))}
+              {prop.required && getTag('Required', getTypeColor())}
+              {prop.platform && getTag(prop.platform, getTypeColor())}
+            </Heading>
           </div>
           <span style={{display: 'block', marginBottom: prop.note ? 12 : 28, fontSize: '16px', fontWeight: '400', color: descColor}}>
             {prop.description}
