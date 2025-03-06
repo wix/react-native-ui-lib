@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useMemo} from 'react';
 import {default as ThemeCodeBlock, Props} from '@theme/CodeBlock';
 import prettier from 'prettier/standalone';
 import parser from 'prettier/parser-babel';
+import styles from './CodeBlock.module.scss';
 
 type CodeBlockProps = {
   snippet: string;
@@ -12,7 +13,7 @@ type CodeBlockProps = {
 const CodeBlock: React.FC<CodeBlockProps> = ({
   snippet,
   language,
-  printWidth = 30,
+  printWidth = 35,
   fontSize = 14,
   showLineNumbers,
   ...others
@@ -32,17 +33,21 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
     })();
   }, [snippet, printWidth]);
 
+  const containerStyle = useMemo(() => {
+    return {
+      fontSize,
+      maxWidth: printWidth * fontSize
+    };
+  }, [fontSize, printWidth]);
+
   return (
-    <div
-      style={{
-        textAlign: 'left',
-        fontSize,
-        maxWidth: printWidth * fontSize,
-        maxHeight: 400,
-        overflowY: 'auto'
-      }}
-    >
-      <ThemeCodeBlock language={language ?? 'jsx'} showLineNumbers={showLineNumbers ?? true} {...others}>
+    <div style={containerStyle}>
+      <ThemeCodeBlock
+        className={styles.codeBlock}
+        language={language ?? 'jsx'}
+        showLineNumbers={showLineNumbers ?? true}
+        {...others}
+      >
         {code}
       </ThemeCodeBlock>
     </div>

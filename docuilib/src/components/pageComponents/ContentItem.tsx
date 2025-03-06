@@ -1,6 +1,7 @@
-import React, { useCallback } from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import '../ComponentPage.module.scss';
 import {LiveProvider, LivePreview} from 'react-live';
+import styles from './ContentItem.module.scss';
 import ReactLiveScope from '../../theme/ReactLiveScope';
 import CodeBlock from '../CodeBlock';
 import CodeIcon from '../../assets/icons/code';
@@ -8,6 +9,7 @@ import CodeIcon from '../../assets/icons/code';
 type ComponentItemProps = {
   componentName: string;
   props: Record<string, unknown> | Record<string, unknown>[];
+  showCodeButton?: boolean;
 };
 
 function generateComponentCodeSnippet(componentName, componentProps) {
@@ -29,46 +31,38 @@ function generateComponentCodeSnippet(componentName, componentProps) {
 }
 
 const ComponentItem = (props: ComponentItemProps) => {
-  const {componentName, props: componentProps} = props;
-  const [show, setShow] = React.useState(false);
+  const {componentName, props: componentProps, showCodeButton = false} = props;
+  const [show, setShow] = useState(true);
 
-  let code = '';
-  if (Array.isArray(componentProps)) {
-    code = componentProps
-      .map(componentPropsItem => generateComponentCodeSnippet(componentName, componentPropsItem))
-      .join('');
-    code = `<View center gap-s1>${code}</View>`;
-  } else {
-    code = generateComponentCodeSnippet(componentName, componentProps);
-  }
+  const code = useMemo(() => {
+    if (Array.isArray(componentProps)) {
+      const snippet = componentProps
+        .map(componentPropsItem => generateComponentCodeSnippet(componentName, componentPropsItem))
+        .join('');
+      return `<View center gap-s1>${snippet}</View>`;
+    } else {
+      return generateComponentCodeSnippet(componentName, componentProps);
+    }
+  }, [componentName, componentProps]);
 
   const toggleCode = useCallback(() => {
     setShow(prev => !prev);
   }, []);
 
   return (
-    <div>
-      <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 20}}>
+    <div style={{position: 'relative'}}>
+      {!show && (
         <LiveProvider code={code} scope={ReactLiveScope}>
           <LivePreview/>
         </LiveProvider>
-        <button
-          onClick={toggleCode}
-          style={{
-            border: 0,
-            background: 'none',
-            color: 'rgb(56, 153, 236)',
-            cursor: 'pointer',
-            justifyContent: 'center',
-            display: 'flex',
-            alignItems: 'center'
-          }}
-        >
+      )}
+      {show && <CodeBlock snippet={code} title="Code Example"/>}
+      {showCodeButton && (
+        <button onClick={toggleCode} className={styles.showCodeButton}>
           <CodeIcon/>
           {show ? 'Hide' : 'Show'} code
         </button>
-      </div>
-      {show && <CodeBlock snippet={code} title="Code Example"/>}
+      )}
     </div>
   );
 };
@@ -81,8 +75,9 @@ type Item = {
 type ContentItemProps = {
   item: Item;
   componentName: string;
+  showCodeButton?: boolean;
 };
-export const ContentItem = ({item, componentName}: ContentItemProps) => {
+export const ContentItem = ({item, componentName, showCodeButton}: ContentItemProps) => {
   const getFigmaEmbed = item => {
     const value = item.value;
     const height = item.height || 450;
@@ -101,7 +96,7 @@ export const ContentItem = ({item, componentName}: ContentItemProps) => {
     const isComponentExists = !!ReactLiveScope[name];
 
     if (isComponentExists) {
-      return <ComponentItem componentName={name} props={item.props}/>;
+      return <ComponentItem componentName={name} props={item.props} showCodeButton={showCodeButton}/>;
     } else if (!value) {
       return <div style={{color: 'red'}}>Component Not Supported</div>;
     }

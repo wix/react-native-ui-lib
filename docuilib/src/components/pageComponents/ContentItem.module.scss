@@ -1,0 +1,26 @@
+.showCodeButton {
+  position: absolute;
+  border: 0;
+  background: none;
+  color: rgb(56, 153, 236);
+  cursor: pointer;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  right: 0px;
+  top: 0px;
+}
+
+.componentExample {
+  display: 'flex';
+  justify-content: 'space-between';
+}
+
+.componentItemContainer {
+  position: 'absolute';
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: red;
+}
