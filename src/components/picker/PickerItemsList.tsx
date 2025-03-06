@@ -9,7 +9,8 @@ import Text from '../text';
 import Icon from '../icon';
 import Button from '../button';
 import WheelPicker from '../WheelPicker';
-import {PickerItemProps, PickerItemsListProps, PickerSingleValue, PickerModes} from './types';
+import {PickerItemProps, PickerItemsListProps, PickerSingleValue, PickerModes, SelectAllType} from './types';
+import Checkbox from '../checkbox';
 import PickerContext from './PickerContext';
 import PickerItem from './PickerItem';
 import {Constants} from '../../commons/new';
@@ -35,7 +36,8 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     testID,
     showLoader,
     customLoaderElement,
-    renderCustomTopElement
+    renderCustomTopElement,
+    selectionStatus
   } = props;
   const context = useContext(PickerContext);
 
@@ -169,6 +171,52 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     );
   };
 
+  const renderSelectAll = () => {
+    if (!selectionStatus || mode !== PickerModes.MULTI || !items || items.length === 0) {
+      return null;
+    }
+
+    const {selectAllType, getLabel, buttonProps, checkboxProps} = selectionStatus;
+    
+    if (!selectAllType || selectAllType === SelectAllType.NONE) {
+      return null;
+    }
+
+    const isAllSelected = context.multiDraftValue?.length === items.filter(item => !item.disabled).length;
+    const label = getLabel ? 
+      getLabel({values: context.multiDraftValue, isAll: isAllSelected}) : 
+      isAllSelected ? 'Deselect All' : 'Select All';
+
+    if (selectAllType === SelectAllType.BUTTON) {
+      return (
+        <View style={styles.selectAllContainer}>
+          <Button
+            label={label}
+            size={Button.sizes.small}
+            link
+            onPress={() => context.toggleAllItemsSelection?.(items, !isAllSelected)}
+            testID={`${testID}.selectAllButton`}
+            {...buttonProps}
+          />
+        </View>
+      );
+    } else if (selectAllType === SelectAllType.CHECKBOX) {
+      return (
+        <View style={styles.selectAllContainer}>
+          <Checkbox
+            value={isAllSelected}
+            label={label}
+            onValueChange={() => context.toggleAllItemsSelection?.(items, !isAllSelected)}
+            testID={`${testID}.selectAllCheckbox`}
+            {...checkboxProps}
+          />
+        </View>
+      );
+    }
+
+    return null;
+  };
+
   const renderContent = () => {
     return useWheelPicker ? (
       renderWheel()
@@ -176,6 +224,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
       <>
         {renderSearchInput()}
         {renderCustomTopElement?.(context.value)}
+        {renderSelectAll()}
         {renderList()}
       </>
     );
@@ -214,6 +263,12 @@ const styles = StyleSheet.create({
   },
   list: {
     height: '100%'
+  },
+  selectAllContainer: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: Colors.$outlineDefault
   }
 });
 

@@ -4,6 +4,8 @@ import {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/
 import {ModalTopBarProps} from '../modal/TopBar';
 import {TextFieldMethods, TextFieldProps} from '../textField';
 import {TouchableOpacityProps} from '../touchableOpacity';
+import {ButtonProps} from '../button';
+import {CheckboxProps} from '../checkbox';
 
 // Note: enum values are uppercase due to legacy
 export enum PickerModes {
@@ -15,6 +17,31 @@ export enum PickerFieldTypes {
   form = 'form',
   filter = 'filter',
   settings = 'settings'
+}
+
+export enum SelectAllType {
+  NONE = 'none',
+  BUTTON = 'button',
+  CHECKBOX = 'checkbox'
+}
+
+export interface SelectionStatus {
+  /**
+   * A function that returns a label based on the selected values and whether all items are selected
+   */
+  getLabel?: (options: {values: PickerValue; isAll?: boolean}) => string;
+  /**
+   * The type of UI element to use for selecting all items
+   */
+  selectAllType?: SelectAllType | keyof typeof SelectAllType;
+  /**
+   * Props to pass to the Button component if selectAllType is BUTTON
+   */
+  buttonProps?: ButtonProps;
+  /**
+   * Props to pass to the Checkbox component if selectAllType is CHECKBOX
+   */
+  checkboxProps?: CheckboxProps;
 }
 
 // TODO: Remove type
@@ -238,6 +265,10 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
      * Custom loader element
      */
     customLoaderElement?: JSX.Element;
+    /**
+     * Configuration for the select all functionality in multi-mode
+     */
+    selectionStatus?: SelectionStatus;
   };
 
 export type PickerPropsWithSingle = PickerBaseProps & {
@@ -309,6 +340,8 @@ export interface PickerContextProps
   isMultiMode: boolean;
   onSelectedLayout: (event: any) => any;
   selectionLimit: PickerProps['selectionLimit'];
+  multiDraftValue?: PickerMultiValue;
+  toggleAllItemsSelection: (items: PickerItemProps[], select: boolean) => void;
 }
 
 export type PickerItemsListProps = Pick<
@@ -330,6 +363,7 @@ export type PickerItemsListProps = Pick<
   | 'useDialog'
   | 'mode'
   | 'testID'
+  | 'selectionStatus'
 > & {
   //TODO: after finish Picker props migration, items should be taken from PickerProps
   items?: {value: any; label: any}[];

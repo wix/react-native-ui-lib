@@ -1,11 +1,12 @@
 import {RefObject, useCallback, useState, useEffect} from 'react';
 import _ from 'lodash';
-import {PickerProps, PickerValue, PickerSingleValue, PickerMultiValue, PickerModes} from '../types';
+import {PickerProps, PickerValue, PickerSingleValue, PickerMultiValue, PickerModes, PickerItemProps} from '../types';
 
 interface UsePickerSelectionProps
   extends Pick<PickerProps, 'migrate' | 'value' | 'onChange' | 'getItemValue' | 'topBarProps' | 'mode'> {
   pickerExpandableRef: RefObject<any>;
   setSearchValue: (searchValue: string) => void;
+  items?: PickerItemProps[];
 }
 
 const usePickerSelection = (props: UsePickerSelectionProps) => {
@@ -48,11 +49,26 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     topBarProps?.onCancel?.();
   }, [multiFinalValue, topBarProps]);
 
+  const toggleAllItemsSelection = useCallback((itemsToToggle: PickerItemProps[], select: boolean) => {
+    if (!itemsToToggle) {
+      return;
+    }
+    
+    let newValue: PickerMultiValue = [];
+    if (select) {
+      // Select all items
+      newValue = itemsToToggle.filter(item => !item.disabled).map(item => item.value);
+    }
+    
+    setMultiDraftValue(newValue);
+  }, []);
+
   return {
     multiDraftValue,
     onDoneSelecting,
     toggleItemSelection,
-    cancelSelect
+    cancelSelect,
+    toggleAllItemsSelection
   };
 };
 
