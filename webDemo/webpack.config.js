@@ -22,7 +22,8 @@ const baseProjectSource = [
   path.resolve(appDirectory, 'node_modules/react-native-color'),
   path.resolve(appDirectory, 'node_modules/react-native-ui-lib'),
   path.resolve(appDirectory, 'node_modules/postcss'),
-  path.resolve(appDirectory, 'node_modules/postcss-js')
+  path.resolve(appDirectory, 'node_modules/postcss-js'),
+  path.resolve(appDirectory, 'node_modules/uilib-native')
 ];
 
 const useBabelForRN = {
