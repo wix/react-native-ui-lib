@@ -12,15 +12,23 @@
 }
 
 .componentExample {
-  display: 'flex';
-  justify-content: 'space-between';
+  display: flex;
+  justify-content: space-between;
 }
 
 .componentItemContainer {
-  position: 'absolute';
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: red;
+  position: relative;
+  height: 100%;
+}
+
+.componentSpotlightStyle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

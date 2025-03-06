@@ -32,7 +32,7 @@ function generateComponentCodeSnippet(componentName, componentProps) {
 
 const ComponentItem = (props: ComponentItemProps) => {
   const {componentName, props: componentProps, showCodeButton = false} = props;
-  const [show, setShow] = useState(true);
+  const [showCode, setShowCode] = useState(false);
 
   const code = useMemo(() => {
     if (Array.isArray(componentProps)) {
@@ -46,21 +46,21 @@ const ComponentItem = (props: ComponentItemProps) => {
   }, [componentName, componentProps]);
 
   const toggleCode = useCallback(() => {
-    setShow(prev => !prev);
+    setShowCode(prev => !prev);
   }, []);
 
   return (
-    <div style={{position: 'relative'}}>
-      {!show && (
+    <div className={`${styles.componentItemContainer} ${!showCode ? styles.componentSpotlightStyle : ''}`}>
+      {!showCode && (
         <LiveProvider code={code} scope={ReactLiveScope}>
           <LivePreview/>
         </LiveProvider>
       )}
-      {show && <CodeBlock snippet={code} title="Code Example"/>}
+      {showCode && <CodeBlock snippet={code} title="Code Example"/>}
       {showCodeButton && (
         <button onClick={toggleCode} className={styles.showCodeButton}>
           <CodeIcon/>
-          {show ? 'Hide' : 'Show'} code
+          {showCode ? 'Hide' : 'Show'} code
         </button>
       )}
     </div>
@@ -86,7 +86,11 @@ export const ContentItem = ({item, componentName, showCodeButton}: ContentItemPr
   };
 
   const getImage = (value, style = undefined) => {
-    return <img src={value} style={{display: 'block', ...style}}/>;
+    return (
+      <div className={styles.image}>
+        <img src={value} style={{display: 'block', ...style}}/>
+      </div>
+    );
   };
 
   const value = item.value;

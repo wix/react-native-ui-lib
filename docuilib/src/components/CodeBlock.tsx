@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useMemo} from 'react';
+import React, {useEffect, useState, useMemo, ComponentProps} from 'react';
 import {default as ThemeCodeBlock, Props} from '@theme/CodeBlock';
 import prettier from 'prettier/standalone';
 import parser from 'prettier/parser-babel';
@@ -33,7 +33,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
     })();
   }, [snippet, printWidth]);
 
-  const containerStyle = useMemo(() => {
+  const containerStyle = useMemo<ComponentProps<'div'>['style']>(() => {
     return {
       fontSize,
       maxWidth: printWidth * fontSize
@@ -41,7 +41,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
   }, [fontSize, printWidth]);
 
   return (
-    <div style={containerStyle}>
+    <div style={containerStyle} className={styles.codeBlockContainer}>
       <ThemeCodeBlock
         className={styles.codeBlock}
         language={language ?? 'jsx'}
