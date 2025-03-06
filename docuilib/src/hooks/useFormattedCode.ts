@@ -5,7 +5,7 @@ import parser from 'prettier/parser-babel';
 type UseFormattedCodeOptions = {
   printWidth?: number;
 };
-const useFormattedCode = (code: string, {printWidth = 35}: UseFormattedCodeOptions) => {
+const useFormattedCode = (code: string, {printWidth = 35}: UseFormattedCodeOptions = {}) => {
   const [formattedCode, setFormattedCode] = useState<string>('formatting...');
 
   useEffect(() => {
