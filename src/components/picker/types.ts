@@ -252,13 +252,8 @@ export type PickerPropsWithMulti = PickerBaseProps & {
   onChange?: (value: PickerMultiValue) => void;
 };
 
-export type PickerProps = (PickerPropsWithSingle | PickerPropsWithMulti) & {
-  /**
-   * @deprecated
-   * Temporary prop required for migration to Picker's new API
-   */
-  migrate?: boolean;
-};
+// Using Pick to ensure TypeScript recognizes the migrate prop from PickerPropsDeprecation
+export type PickerProps = (PickerPropsWithSingle | PickerPropsWithMulti) & Pick<PickerPropsDeprecation, 'migrate'>;
 
 export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValue'> {
   /**

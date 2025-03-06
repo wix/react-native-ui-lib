@@ -9,7 +9,7 @@ type UsePickerMigrationWarnings = Pick<
 >;
 
 const usePickerMigrationWarnings = (props: UsePickerMigrationWarnings) => {
-  const {children, getItemLabel, getItemValue, onShow} = props;
+  const {children, /* migrate, */ getItemLabel, getItemValue, onShow} = props;
   useEffect(() => {
     if (children) {
       LogService.warn(`UILib Picker will stop supporting the 'children' prop in the next major version, please pass 'items' prop instead`);
