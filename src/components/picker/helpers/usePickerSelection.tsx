@@ -48,11 +48,17 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     topBarProps?.onCancel?.();
   }, [multiFinalValue, topBarProps]);
 
+  const toggleAllItemsSelection = useCallback((itemsToToggle: PickerMultiValue, select: boolean) => {
+    setMultiDraftValue(select ? itemsToToggle : []);
+  }, []);
+
   return {
     multiDraftValue,
     onDoneSelecting,
     toggleItemSelection,
-    cancelSelect
+    cancelSelect,
+    setMultiFinalValue,
+    toggleAllItemsSelection
   };
 };
 
