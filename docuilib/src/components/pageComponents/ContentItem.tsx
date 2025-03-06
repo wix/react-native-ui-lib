@@ -49,14 +49,19 @@ const ComponentItem = (props: ComponentItemProps) => {
     setShowCode(prev => !prev);
   }, []);
 
+  const componentPreview = (
+    <LiveProvider code={code} scope={ReactLiveScope}>
+      <LivePreview/>
+    </LiveProvider>
+  );
+
+  const codePreview = <CodeBlock snippet={code} title="Code Example"/>;
+
+  const content = showCode ? codePreview : componentPreview;
+
   return (
     <div className={`${styles.componentItemContainer} ${!showCode ? styles.componentSpotlightStyle : ''}`}>
-      {!showCode && (
-        <LiveProvider code={code} scope={ReactLiveScope}>
-          <LivePreview/>
-        </LiveProvider>
-      )}
-      {showCode && <CodeBlock snippet={code} title="Code Example"/>}
+      {content}
       {showCodeButton && (
         <button onClick={toggleCode} className={styles.showCodeButton}>
           <CodeIcon/>

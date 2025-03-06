@@ -17,7 +17,6 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
   showLineNumbers,
   ...others
 }) => {
-
   const {code} = useFormattedCode(snippet, {printWidth});
 
   const containerStyle = useMemo<ComponentProps<'div'>['style']>(() => {
