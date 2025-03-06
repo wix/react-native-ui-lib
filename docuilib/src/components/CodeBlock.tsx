@@ -1,8 +1,7 @@
-import React, {useEffect, useState, useMemo, ComponentProps} from 'react';
+import React, {useMemo, ComponentProps} from 'react';
 import {default as ThemeCodeBlock, Props} from '@theme/CodeBlock';
-import prettier from 'prettier/standalone';
-import parser from 'prettier/parser-babel';
 import styles from './CodeBlock.module.scss';
+import useFormattedCode from '../hooks/useFormattedCode';
 
 type CodeBlockProps = {
   snippet: string;
@@ -18,20 +17,8 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
   showLineNumbers,
   ...others
 }) => {
-  const [code, setCode] = useState<string>('formatting...');
 
-  useEffect(() => {
-    (async () => {
-      const formattedCode = await prettier.format(snippet.trim(), {
-        parser: 'babel',
-        plugins: [parser],
-        singleQuote: true,
-        printWidth
-      });
-      const noLastSemiColonCode = formattedCode.trim().slice(0, -1);
-      setCode(noLastSemiColonCode);
-    })();
-  }, [snippet, printWidth]);
+  const {code} = useFormattedCode(snippet, {printWidth});
 
   const containerStyle = useMemo<ComponentProps<'div'>['style']>(() => {
     return {
