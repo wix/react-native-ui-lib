@@ -15,6 +15,7 @@ export interface WheelPickerItemProps<T = WheelPickerItemValue> {
   value: T;
   align?: WheelPickerAlign;
   disableRTL?: boolean;
+  disabled?: boolean;
 }
 
 interface InternalProps<T> extends WheelPickerItemProps<T> {
@@ -23,6 +24,7 @@ interface InternalProps<T> extends WheelPickerItemProps<T> {
   itemHeight: number;
   activeColor?: string;
   inactiveColor?: string;
+  disabledColor?: string;
   style?: TextStyle;
   onSelect: (index: number) => void;
   centerH?: boolean;
@@ -45,24 +47,29 @@ const WheelPickerItem = <T extends WheelPickerItemValue = number>(props: Interna
     offset,
     activeColor = Colors.$textPrimary,
     inactiveColor = Colors.$textNeutralHeavy,
+    disabledColor = Colors.$textDisabled,
     style,
     testID,
     centerH = true,
     align,
-    disableRTL
+    disableRTL,
+    disabled
   } = themeProps;
   
-  const selectItem = useCallback(() => onSelect(index), [index]);
+  const selectItem = useCallback(() => !disabled && onSelect(index), [index, disabled, onSelect]);
   const itemOffset = index * itemHeight;
   const _activeColor = useRef(activeColor.toString());
   const _inactiveColor = useRef(inactiveColor.toString());
 
   const animatedColorStyle = useAnimatedStyle(() => {
+    if (disabled) {
+      return {color: disabledColor};
+    }
     const color = interpolateColor(offset.value,
       [itemOffset - itemHeight, itemOffset, itemOffset + itemHeight],
       [_inactiveColor.current, _activeColor.current, _inactiveColor.current]);
     return {color};
-  }, [itemHeight]);
+  }, [itemHeight, disabled]);
 
   const containerStyle = useMemo(() => {
     return [{height: itemHeight}, styles.container, disableRTL && styles.disableRTL];
