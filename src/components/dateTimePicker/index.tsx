@@ -22,6 +22,7 @@ import Button, {ButtonProps} from '../button';
 import ExpandableOverlay, {ExpandableOverlayMethods, RenderCustomOverlayProps} from '../../incubator/expandableOverlay';
 import useOldApi, {OldApiProps} from './useOldApi';
 import {isSameDate, isSameHourAndMinute} from '../../utils/dateUtils';
+import {LogService} from 'services';
 
 export type DateTimePickerMode = 'date' | 'time';
 
@@ -170,7 +171,7 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
   useEffect(() => {
     if (!RNDateTimePicker) {
       // eslint-disable-next-line max-len
-      console.error(`RNUILib DateTimePicker component requires installing "@react-native-community/datetimepicker" dependency`);
+      LogService.error(`RNUILib DateTimePicker component requires installing "@react-native-community/datetimepicker" dependency`);
     }
   }, []);
 

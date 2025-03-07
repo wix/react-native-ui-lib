@@ -3,6 +3,7 @@ import View from '../view';
 import PieSegment, {PieSegmentProps} from './PieSegment';
 import {SvgPackage} from '../../optionalDependencies';
 const {Svg, Path} = SvgPackage;
+import {LogService} from 'services';
 
 export type PieChartSegmentProps = Pick<PieSegmentProps, 'percentage' | 'color'>;
 
@@ -23,7 +24,7 @@ const PieChart = (props: PieChartProps) => {
   const {segments, diameter = DEFAULT_DIAMETER, ...others} = props;
 
   if (!Svg || !Path) {
-    console.error(`RNUILib PieChart requires installing "@react-native-svg" dependency`);
+    LogService.error(`RNUILib PieChart requires installing "@react-native-svg" dependency`);
     return null;
   }
 
