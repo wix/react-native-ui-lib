@@ -2,12 +2,20 @@
   "name": "Timeline",
   "category": "lists",
   "description": "A timeline item to render as part of a timeline list",
-  "extends": ["View"],
-  "extendsLink": ["https://reactnative.dev/docs/view"],
+  "extends": [
+    "View"
+  ],
+  "extendsLink": [
+    "https://reactnative.dev/docs/view"
+  ],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TimelineScreen.tsx",
   "images": [],
   "props": [
-    {"name": "backgroundColor", "type": "string", "description": "Background color for the item"},
+    {
+      "name": "backgroundColor",
+      "type": "string",
+      "description": "Background color for the item"
+    },
     {
       "name": "renderContent",
       "type": "any",
@@ -35,7 +43,9 @@
       "description": "The point props"
     },
     {
-      "name": "testID", "type": "string", "description": "The test id for e2e tests"
+      "name": "testID",
+      "type": "string",
+      "description": "The test id for e2e tests"
     }
   ],
   "snippet": [
@@ -57,5 +67,266 @@
     "    alignmentTargetRef: target",
     "  }$5}",
     "/>"
+  ],
+  "docs": {
+    "hero": {
+      "title": "Timeline",
+      "description": "markdown:\nThe timeline displays a vertical list of events or steps.   \nIt provides the user with a sense of awareness around the progress and the remaining steps.",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_overview_cover.png"
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "list",
+            "items": [
+              {
+                "title": "Log Timeline",
+                "description": "A log of past and future activities or events. The list starts with an empty state, and it keeps on updating and changing.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_overview_usageExamples1.png"
+                  }
+                ]
+              },
+              {
+                "title": "Steps Timeline",
+                "description": "A list of suggested steps to take to achieve a certain goal. Users usually need to take action with these steps. The steps are usually decided in advance, meaning that the initial state is not empty.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_overview_usageExamples2.png"
+                  }
+                ]
+              }
+            ],
+            "title": "Usage Examples",
+            "description": "The timeline displays a vertical list of events or steps. \nIt provides the user with a sense of awareness around the progress and the remaining steps.",
+            "layout": "horizontal"
+          },
+          {
+            "type": "section",
+            "title": "Structure",
+            "description": "markdown:\nThe Timeline consists of points and lines, each with different styles and states. These elements can be combined in various ways to suit different product goals.  \nPoints create visual breakpoints that make your timeline easier to read, they act as bullet points, representing each step or activity. The icons and colors can be customized.  \nLines can either match the state and color of the points or be styled differently or in neutral tokens to emphasize the points.",
+            "layout": "horizontal",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_overview_structure.png"
+              }
+            ]
+          },
+          {
+            "type": "table",
+            "columns": [
+              "State",
+              "Preview",
+              "DELETE ME"
+            ],
+            "items": [
+              {
+                "title": "Current",
+                "content": [
+                  {
+                    "props": {
+                      "state": "current",
+                      "point": {
+                        "type": {
+                          "type": "bullet"
+                        }
+                      },
+                      "bottomLine": {
+                        "type": {
+                          "type": "solid"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "props": {
+                      "point": {
+                        "type": {
+                          "type": "bullet",
+                          "color": "#116DFF"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Next",
+                "content": [
+                  {
+                    "props": {
+                      "state": "next",
+                      "point": {
+                        "type": {
+                          "type": "bullet"
+                        }
+                      },
+                      "bottomLine": {
+                        "type": {
+                          "type": "solid"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Error",
+                "content": [
+                  {
+                    "props": {
+                      "state": "error",
+                      "point": {
+                        "type": {
+                          "type": "bullet"
+                        }
+                      },
+                      "bottomLine": {
+                        "type": {
+                          "type": "solid"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Success",
+                "content": [
+                  {
+                    "props": {
+                      "state": "success",
+                      "point": {
+                        "type": {
+                          "type": "bullet"
+                        }
+                      },
+                      "bottomLine": {
+                        "type": {
+                          "type": "solid"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ],
+            "title": "States",
+            "name": ""
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Style",
+              "Preview"
+            ],
+            "items": [
+              {
+                "title": "Bullet"
+              },
+              {
+                "title": "New Item"
+              },
+              {
+                "title": "New Item"
+              },
+              {
+                "title": "New Item"
+              },
+              {
+                "title": "New Item"
+              }
+            ],
+            "title": "Styles",
+            "name": "Point"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Style",
+              "Preview"
+            ],
+            "items": [
+              {
+                "title": "Solid",
+                "content": [
+                  {
+                    "props": {
+                      "state": "current",
+                      "bottomLine": {
+                        "type": {
+                          "type": "solid"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Dashed",
+                "content": [
+                  {
+                    "props": {
+                      "state": "current",
+                      "bottomLine": {
+                        "type": {
+                          "type": "dashed"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ],
+            "name": "Line"
+          },
+          {
+            "type": "section",
+            "title": "Orientation",
+            "description": "markdown:\nThe Timeline can be displayed in either ascending or descending order, depending on the context:  \n\n - **Ascending:** Numbers increase as you move forward.   \n - **Descending:** Numbers decrease as you move forward.",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=2325-449060&embed-host=share"
+              }
+            ]
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "title": "Aligned to top",
+                "description": "The Timeline can be configured to align its points with the top of a specific group of elements on the right. In the example, the points are aligned with the top of the first element within the Card.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_overview_spec1.png"
+                  }
+                ]
+              },
+              {
+                "title": "Aligned to center",
+                "description": "The timeline points are aligned with the center of the element on the right.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_overview_spec2.png"
+                  }
+                ]
+              }
+            ],
+            "layout": "horizontal",
+            "title": "Spec",
+            "description": "markdown:\n**Key rules:**  \n- Maintain a minimum distance of S2 between the Timeline and the elements on the right. \n- Points can be aligned either to the top or the center of the elements on the right. \n- When points are center-aligned with the elements, set the line length to auto, with a minimum of 20px."
+          }
+        ]
+      }
     ]
+  }
 }
