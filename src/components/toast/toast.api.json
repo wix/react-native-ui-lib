@@ -37,7 +37,28 @@
               "Type of message",
               "Preview"
             ],
-            "items": [],
+            "items": [
+              {
+                "title": "Generic",
+                "content": [
+                  {
+                    "props": {
+                      "visible": true,
+                      "message": "\"Mika Or\" was saved to contacts."
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Success"
+              },
+              {
+                "title": "Validation"
+              },
+              {
+                "title": "Offline Error"
+              }
+            ],
             "title": "Types"
           },
           {
@@ -46,7 +67,17 @@
               "Prop",
               "Preview"
             ],
-            "items": [],
+            "items": [
+              {
+                "title": "None"
+              },
+              {
+                "title": "With action"
+              },
+              {
+                "title": "With loader"
+              }
+            ],
             "title": "Accessories"
           },
           {
