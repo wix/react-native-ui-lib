@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {ComponentProps, useCallback, useMemo, useState} from 'react';
 import '../ComponentPage.module.scss';
 import {LiveProvider, LivePreview} from 'react-live';
 import styles from './ContentItem.module.scss';
@@ -8,11 +8,12 @@ import CodeIcon from '../../assets/icons/code';
 
 type ComponentItemProps = {
   componentName: string;
-  props: Record<string, unknown> | Record<string, unknown>[];
+  props?: Record<string, unknown> | Record<string, unknown>[];
+  jsx?: string
   showCodeButton?: boolean;
 };
 
-function generateComponentCodeSnippet(componentName, componentProps) {
+function generateComponentCodeSnippet(componentName: string, componentProps: Record<string, unknown>) {
   const propString = Object.keys(componentProps).reduce((acc, key) => {
     let propValue = componentProps[key];
     switch (typeof propValue) {
@@ -31,11 +32,13 @@ function generateComponentCodeSnippet(componentName, componentProps) {
 }
 
 const ComponentItem = (props: ComponentItemProps) => {
-  const {componentName, props: componentProps, showCodeButton = false} = props;
+  const {componentName, props: componentProps, jsx, showCodeButton = false} = props;
   const [showCode, setShowCode] = useState(false);
 
   const code = useMemo(() => {
-    if (Array.isArray(componentProps)) {
+    if (typeof jsx === 'string') {
+      return jsx;
+    } else if (Array.isArray(componentProps)) {
       const snippet = componentProps
         .map(componentPropsItem => generateComponentCodeSnippet(componentName, componentPropsItem))
         .join('');
@@ -43,7 +46,7 @@ const ComponentItem = (props: ComponentItemProps) => {
     } else {
       return generateComponentCodeSnippet(componentName, componentProps);
     }
-  }, [componentName, componentProps]);
+  }, [componentName, componentProps, jsx]);
 
   const toggleCode = useCallback(() => {
     setShowCode(prev => !prev);
@@ -76,21 +79,32 @@ type Item = {
   component?: string;
   props?: any;
   value?: any;
+  jsx?: string;
+  height?: number;
 };
 type ContentItemProps = {
   item: Item;
   componentName: string;
   showCodeButton?: boolean;
 };
+
+const extractComponentFromSnippet = (snippet: string) => {
+  if (!snippet.startsWith('<')) {
+    return;
+  }
+  const firstWord = snippet.split(' ')[0];
+  return firstWord.slice(1);
+};
+
 export const ContentItem = ({item, componentName, showCodeButton}: ContentItemProps) => {
-  const getFigmaEmbed = item => {
+  const getFigmaEmbed = (item: {value: string; height?: number}) => {
     const value = item.value;
     const height = item.height || 450;
 
     return <iframe width={'100%'} height={height} src={value}/>;
   };
 
-  const getImage = (value, style = undefined) => {
+  const getImage = (value: string, style: ComponentProps<'img'>['style'] = undefined) => {
     return (
       <div className={styles.image}>
         <img src={value} style={{display: 'block', ...style}}/>
@@ -100,12 +114,12 @@ export const ContentItem = ({item, componentName, showCodeButton}: ContentItemPr
 
   const value = item.value;
 
-  if (item.props) {
-    const name = item.component ?? componentName;
+  if (item.props || item.jsx) {
+    const name = item.jsx ? extractComponentFromSnippet(item.jsx) : item.component ?? componentName;
     const isComponentExists = !!ReactLiveScope[name];
 
     if (isComponentExists) {
-      return <ComponentItem componentName={name} props={item.props} showCodeButton={showCodeButton}/>;
+      return <ComponentItem componentName={name} props={item.props} jsx={item.jsx} showCodeButton={showCodeButton}/>;
     } else if (!value) {
       return <div style={{color: 'red'}}>Component Not Supported</div>;
     }
@@ -114,7 +128,7 @@ export const ContentItem = ({item, componentName, showCodeButton}: ContentItemPr
   if (value) {
     if (typeof value === 'string') {
       if (value.includes('embed.figma.com')) {
-        return getFigmaEmbed(item);
+        return getFigmaEmbed({value, height: item.height});
       } else {
         return getImage(value);
       }
