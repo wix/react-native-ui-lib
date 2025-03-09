@@ -196,7 +196,7 @@
                 "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Hint/hint_position.png"
               }
             ],
-            "description": "markdown:\nDistance\nKeep a distance of S2 from the component the hint is pointing at."
+            "description": "markdown:\nDistance  \nKeep a distance of S2 from the component the hint is pointing at."
           },
           {
             "type": "section",
@@ -207,7 +207,7 @@
                 "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Hint/hint_spec.png"
               }
             ],
-            "description": "markdown:\nThe Hint component adjusts to its content.\nMax width: screen width, S4 margins."
+            "description": "markdown:\nThe Hint component adjusts to its content.  \nMax width: screen width, S4 margins."
           }
         ]
       }
