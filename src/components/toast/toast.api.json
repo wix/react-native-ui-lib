@@ -5,5 +5,34 @@
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ToastsScreen.js",
   "caution": "Please consider moving to our new Toast implementation and use Incubator.Toast instead",
   "images": [],
-  "props": []
+  "props": [],
+  "docs": {
+    "hero": {
+      "title": "Toast",
+      "description": "Toasts give quick feedback or updates without interrupting the user. They’re used for non-critical messages, like success notifications, and disappear on their own. Toasts can include one action, but it shouldn’t be “Dismiss” or “Close.”",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Toast/toast_cover.png"
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "section",
+            "title": "Usage Examples",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=4419-247566&embed-host=share"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }
