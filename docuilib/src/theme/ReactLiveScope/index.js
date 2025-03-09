@@ -12,6 +12,7 @@ import Checkbox from 'react-native-ui-lib/checkbox';
 import Chip from 'react-native-ui-lib/chip';
 import Constants from 'react-native-ui-lib/constants';
 import Drawer from 'react-native-ui-lib/drawer';
+import Hint from 'react-native-ui-lib/hint';
 import Icon from 'react-native-ui-lib/icon';
 import Incubator from 'react-native-ui-lib/incubator';
 import MaskedInput from 'react-native-ui-lib/maskedInput';
@@ -70,6 +71,7 @@ const ReactLiveScope = {
   Constants,
   Colors,
   Drawer,
+  Hint,
   Icon,
   Image,
   Incubator,
