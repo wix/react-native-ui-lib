@@ -122,7 +122,7 @@
               },
               {
                 "title": "",
-                "description": "markdown:3.‘#’ symbol is permanent and cant be deleted.  \n4. Once hex value is valid (6 characters), background color changes accordingly. ",
+                "description": "markdown:3. ‘#’ symbol is permanent and cant be deleted.  \n4. Once hex value is valid (6 characters), background color changes accordingly. ",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ColorPicker/ColorPicker_hex2.png"
