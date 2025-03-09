@@ -24,6 +24,7 @@ import SortableGridList from 'react-native-ui-lib/sortableGridList';
 import SortableList from 'react-native-ui-lib/sortableList';
 import Switch from 'react-native-ui-lib/switch';
 import TextField from 'react-native-ui-lib/textField';
+import Picker from 'react-native-ui-lib/picker';
 import * as Playground from './Playground';
 
 Assets.loadAssetsGroup('icons.demo', {
@@ -88,7 +89,8 @@ const ReactLiveScope = {
   Text,
   TextField,
   TouchableOpacity,
-  View
+  View,
+  Picker
 };
 
 export default ReactLiveScope;
