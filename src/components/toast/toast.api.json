@@ -110,7 +110,31 @@
       },
       {
         "title": "UX Guidelines",
-        "sections": []
+        "sections": [
+          {
+            "type": "list",
+            "items": [
+              {
+                "title": "",
+                "content": [
+                  {
+                    "value": "<iframe style=\"border: 1px solid rgba(0, 0, 0, 0.1);\" width=\"800\" height=\"450\" src=\"https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=4419-247566&embed-host=share\" allowfullscreen></iframe>"
+                  }
+                ]
+              },
+              {
+                "title": "",
+                "content": [
+                  {
+                    "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=4419-247643&embed-host=share"
+                  }
+                ]
+              }
+            ],
+            "title": "Do’s & Don’ts",
+            "description": "**Message Length**\nDo not display long messages in a Toast, keep the Toast message short and focused, yet informative.  \nFurther information regarding the phrasing of toast messages can be found in UX Writers - Toast Guidelines."
+          }
+        ]
       }
     ]
   }
