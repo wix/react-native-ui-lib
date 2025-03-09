@@ -164,7 +164,7 @@
             "type": "section",
             "layout": "horizontal",
             "title": "Spec",
-            "description": "Border width 1px.   \n\n‘Unavailable’ swatch can be either tappable or “disabled”. ",
+            "description": "markdown:Border width 1px.\n\n‘Unavailable’ swatch can be either tappable or “disabled”. ",
             "content": [
               {
                 "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ColorSwatch/ColorSwatch_spec.png"
