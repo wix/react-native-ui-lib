@@ -88,7 +88,7 @@
   "docs": {
     "hero": {
       "title": "ColorPalette",
-      "description": "Our Color Palette is basically an arrangement of Color Swatches representing various colors and styles. \nIn ColorPalette only a single color swatch can be selected.",
+      "description": "markdown:Our Color Palette is basically an arrangement of Color Swatches representing various colors and styles.  \nIn ColorPalette only a single color swatch can be selected.",
       "type": "hero",
       "layout": "horizontal",
       "content": [
