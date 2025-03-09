@@ -157,7 +157,32 @@
               "Top",
               "Bottom"
             ],
-            "items": [],
+            "items": [
+              {
+                "title": "Left",
+                "content": [
+                  {
+                    "props": {
+                      "visible": true,
+                      "message": "Write here the hint’s content text",
+                      "targetFrame": {
+                        "x": 10,
+                        "y": 10,
+                        "width": 1,
+                        "heigh": 1
+                      },
+                      "useSideTip": true
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Center"
+              },
+              {
+                "title": "Right"
+              }
+            ],
             "title": "Alignment",
             "description": "The Hint component supports different alignments, so it works well with elements anywhere on the screen."
           },
