@@ -151,10 +151,6 @@
             ]
           },
           {
-            "type": "section",
-            "title": "Accessories"
-          },
-          {
             "type": "table",
             "columns": [
               "Alignment",
