@@ -157,7 +157,17 @@
               "Top",
               "Bottom"
             ],
-            "items": [],
+            "items": [
+              {
+                "title": "Left"
+              },
+              {
+                "title": "Center"
+              },
+              {
+                "title": "Right"
+              }
+            ],
             "title": "Alignment",
             "description": "The Hint component supports different alignments, so it works well with elements anywhere on the screen."
           },
@@ -167,16 +177,35 @@
               "Prop",
               "Preview"
             ],
-            "items": [],
+            "items": [
+              {
+                "title": "None"
+              },
+              {
+                "title": "Icon"
+              }
+            ],
             "title": "Accessories"
           },
           {
             "type": "section",
-            "title": "Position"
+            "title": "Position",
+            "layout": "horizontal",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Hint/hint_position.png"
+              }
+            ]
           },
           {
             "type": "section",
-            "title": "Spec"
+            "title": "Spec",
+            "layout": "horizontal",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Hint/hint_spec.png"
+              }
+            ]
           }
         ]
       }
