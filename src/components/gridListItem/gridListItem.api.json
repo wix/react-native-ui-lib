@@ -177,7 +177,8 @@
                       "avatar": {
                         "source": {
                           "uri": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/icons/icon%20examples%20for%20docs/avatar_1.jpg"
-                        }
+                        },
+                        "size": "XLarge"
                       }
                     }
                   }
@@ -185,10 +186,179 @@
               },
               {
                 "title": "Custom component",
-                "description": "(renderCustomItem)"
+                "description": "(renderCustomItem)",
+                "content": [
+                  {
+                    "props": {
+                      "itemSize": 124,
+                      "title": "Title",
+                      "subtitle": "Subtitle",
+                      "thumbnail": {
+                        "source": {
+                          "uri": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/icons/icon%20examples%20for%20docs/CustomComponent_Square.png"
+                        }
+                      }
+                    }
+                  }
+                ]
               }
             ],
             "title": "Media Types"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Property",
+              "Preview"
+            ],
+            "items": [
+              {
+                "title": "Text under image (default)",
+                "content": [
+                  {
+                    "props": {
+                      "itemSize": 124,
+                      "title": "Title",
+                      "subtitle": "Subtitle"
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "OverlayText",
+                "content": [
+                  {
+                    "props": {
+                      "itemSize": 124,
+                      "title": "Title",
+                      "subtitle": "Subtitle",
+                      "overlayText": true
+                    }
+                  }
+                ]
+              }
+            ],
+            "title": "Layout"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Property",
+              "Preview"
+            ],
+            "items": [
+              {
+                "title": "Title (default)",
+                "content": [
+                  {
+                    "props": {
+                      "itemSize": 124,
+                      "title": "Title"
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Subtitle",
+                "content": [
+                  {
+                    "props": {
+                      "itemSize": 124,
+                      "title": "Title",
+                      "subtitle": "Subtitle"
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Description",
+                "content": [
+                  {
+                    "props": {
+                      "itemSize": 124,
+                      "title": "Title",
+                      "subtitle": "Subtitle",
+                      "description": "Description"
+                    }
+                  }
+                ]
+              }
+            ],
+            "title": "Text Types"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Property",
+              "Preview"
+            ],
+            "items": [
+              {
+                "title": "Text alignment",
+                "description": "horizontalAlignment",
+                "content": [
+                  {
+                    "props": {
+                      "itemSize": 124,
+                      "title": "Title",
+                      "horizontalAlignment": "center"
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Max lines number",
+                "description": "markdown:\ntitleLines  \nsubtitleLines  \ndescriptionLines  ",
+                "content": [
+                  {
+                    "props": {
+                      "itemSize": 124,
+                      "title": "This text shows a long text example",
+                      "subtitle": "This text shows a long text example",
+                      "description": "This text shows a long text example",
+                      "titleLines": 2,
+                      "subtitleLines": 2,
+                      "descriptionLines": 2
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Text color",
+                "description": "titleColor  \nsubtitleColor  \ndescriptionColor",
+                "content": [
+                  {
+                    "props": {
+                      "itemSize": 124,
+                      "title": "Title",
+                      "subtitle": "Subtitle",
+                      "description": "Description",
+                      "titleColor": "#9A27D5",
+                      "subtitleColor": "#116DFF",
+                      "descriptionColor": "#008563"
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Text styles",
+                "description": "titleTypography   \nsubtitleTypography  \ndescriptionTypography",
+                "content": [
+                  {
+                    "props": {
+                      "itemSize": 124,
+                      "title": "Title",
+                      "subtitle": "Subtitle",
+                      "description": "Description",
+                      "titleTypography": "headingL",
+                      "subtitleTypography": "bodyMedium",
+                      "descriptionTypography": "bodyMedium"
+                    }
+                  }
+                ]
+              }
+            ],
+            "title": "Styling Options"
           }
         ]
       }
