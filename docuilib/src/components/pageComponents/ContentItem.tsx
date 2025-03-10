@@ -102,7 +102,7 @@ export const ContentItem = ({item, componentName, showCodeButton}: ContentItemPr
     return <iframe width={'100%'} height={height} src={value}/>;
   };
 
-  const getImage = (value: string, style: ComponentProps<'img'>['style'] = undefined) => {
+  const getImage = (value: string, style?: ComponentProps<'img'>['style']) => {
     return (
       <div className={styles.image}>
         <img src={value} style={{display: 'block', ...style}}/>
