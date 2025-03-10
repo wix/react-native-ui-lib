@@ -86,8 +86,8 @@ export const ContentItem = ({item, componentName, showCodeButton}: ContentItemPr
   const getFigmaEmbed = item => {
     const value = item.value;
     const height = item.height || 450;
-
-    return <iframe width={'100%'} height={height} src={value}/>;
+    const modifiedValue = !value.includes('page-selector=') ? value + '&page-selector=false' : value;
+    return <iframe width={'100%'} height={height} src={modifiedValue}/>;
   };
 
   const getImage = (value, style = undefined) => {
