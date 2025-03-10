@@ -9,10 +9,11 @@ import Text from '../text';
 import Icon from '../icon';
 import Button from '../button';
 import WheelPicker from '../WheelPicker';
-import {PickerItemProps, PickerItemsListProps, PickerSingleValue, PickerModes} from './types';
+import {PickerItemProps, PickerItemsListProps, PickerSingleValue, PickerModes, PickerMultiValue} from './types';
 import PickerContext from './PickerContext';
 import PickerItem from './PickerItem';
 import {Constants} from '../../commons/new';
+import PickerSelectionControlBar from './PickerSelectionControlBar';
 
 const keyExtractor = (_item: string, index: number) => index.toString();
 
@@ -35,7 +36,8 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     testID,
     showLoader,
     customLoaderElement,
-    renderCustomTopElement
+    renderCustomTopElement,
+    selectionStatus
   } = props;
   const context = useContext(PickerContext);
 
@@ -169,6 +171,17 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     );
   };
 
+  const renderSelectionStatus = useMemo(() => {
+    const props = {...selectionStatus, items};
+    return (
+      <PickerSelectionControlBar
+        {...props}
+        value={context?.value as PickerMultiValue}
+        toggleAllItemsSelection={context?.toggleAllItemsSelection}
+      />
+    );
+  }, [selectionStatus, items, context?.value, context?.toggleAllItemsSelection]);
+
   const renderContent = () => {
     return useWheelPicker ? (
       renderWheel()
@@ -176,6 +189,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
       <>
         {renderSearchInput()}
         {renderCustomTopElement?.(context.value)}
+        {mode === PickerModes.MULTI && renderSelectionStatus}
         {renderList()}
       </>
     );
