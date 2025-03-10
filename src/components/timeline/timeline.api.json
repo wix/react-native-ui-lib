@@ -365,6 +365,49 @@
             ],
             "layout": "horizontal",
             "title": "Structure"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Property",
+              "Preview"
+            ],
+            "items": [
+              {
+                "title": "Solid",
+                "description": "type: solid"
+              },
+              {
+                "title": "Dashed",
+                "description": "type: dashed"
+              }
+            ],
+            "title": "Line",
+            "name": "Line Types"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Property",
+              "Preview"
+            ],
+            "items": [
+              {
+                "title": "Entry",
+                "description": "entry: true"
+              }
+            ],
+            "name": "Line Accessories"
+          },
+          {
+            "type": "section",
+            "title": "Spec",
+            "description": "markdown:\n**Key rules:**  \n- Maintain a minimum distance of S2 between the Timeline and the elements on the right. \n- Points can be aligned either to the top or the center of the elements on the right. \n- When points are center-aligned with the elements, set the line length to auto, with a minimum of 20px.",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_spec.png"
+              }
+            ]
           }
         ]
       }
