@@ -24,6 +24,7 @@ import RadioGroup from 'react-native-ui-lib/radioGroup';
 import SegmentedControl from 'react-native-ui-lib/segmentedControl';
 import SortableGridList from 'react-native-ui-lib/sortableGridList';
 import SortableList from 'react-native-ui-lib/sortableList';
+import Stepper from 'react-native-ui-lib/stepper';
 import Switch from 'react-native-ui-lib/switch';
 import TextField from 'react-native-ui-lib/textField';
 import Timeline from 'react-native-ui-lib/timeline';
@@ -90,6 +91,7 @@ const ReactLiveScope = {
   SortableGridList,
   SortableList,
   Spacings,
+  Stepper,
   Switch,
   Text,
   TextField,
