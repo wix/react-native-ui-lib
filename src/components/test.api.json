@@ -143,7 +143,7 @@
                 "description": "Item #2 Subtitle",
                 "content": [
                   {
-                    "snippet": "<Text text30>This is a code snippet</Text>"
+                    "snippet": "<Text text30 highlightString='snippet' highlightStyle={{color: 'red'}}>This is a code snippet</Text>"
                   }
                 ]
               },
