@@ -2,12 +2,8 @@
   "name": "Timeline",
   "category": "lists",
   "description": "A timeline item to render as part of a timeline list",
-  "extends": [
-    "View"
-  ],
-  "extendsLink": [
-    "https://reactnative.dev/docs/view"
-  ],
+  "extends": ["View"],
+  "extendsLink": ["https://reactnative.dev/docs/view"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TimelineScreen.tsx",
   "images": [],
   "props": [
@@ -111,23 +107,42 @@
             "layout": "horizontal"
           },
           {
-            "type": "section",
-            "title": "Structure",
-            "description": "markdown:\nThe Timeline consists of points and lines, each with different styles and states. These elements can be combined in various ways to suit different product goals.  \nPoints create visual breakpoints that make your timeline easier to read, they act as bullet points, representing each step or activity. The icons and colors can be customized.  \nLines can either match the state and color of the points or be styled differently or in neutral tokens to emphasize the points.",
-            "layout": "horizontal",
-            "content": [
+            "type": "list",
+            "items": [
               {
-                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_overview_structure.png"
+                "title": "",
+                "description": "markdown:\nThe Timeline consists of points and lines, each with different styles and states. These elements can be combined in various ways to suit different product goals.  \nPoints create visual breakpoints that make your timeline easier to read, they act as bullet points, representing each step or activity. The icons and colors can be customized.  \nLines can either match the state and color of the points or be styled differently or in neutral tokens to emphasize the points.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_structure.png"
+                  }
+                ]
+              },
+              {
+                "title": "Points aligned to center (default)",
+                "description": "The timeline points are aligned with the center of the element on the right.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_structure_center.png"
+                  }
+                ]
+              },
+              {
+                "title": "Points aligned to anchor ref",
+                "description": "The Timeline can be configured to align its points to one of the elements on the right. In the example, the points are aligned with the titles in the cards.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_structure_anchorRef.png"
+                  }
+                ]
               }
-            ]
+            ],
+            "layout": "horizontal",
+            "title": "Structure"
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Preview",
-              "DELETE ME"
-            ],
+            "columns": ["Property", "Preview"],
             "items": [
               {
                 "title": "Current",
@@ -229,10 +244,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Preview"
-            ],
+            "columns": ["Property", "Preview"],
             "items": [
               {
                 "title": "Bullet",
@@ -252,10 +264,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Preview"
-            ],
+            "columns": ["Property", "Preview"],
             "items": [
               {
                 "title": "Text",
@@ -297,81 +306,8 @@
             "name": "Point Accessories"
           },
           {
-            "type": "section",
-            "title": "Orientation",
-            "description": "markdown:\nThe Timeline can be displayed in either ascending or descending order, depending on the context:  \n\n - **Ascending:** Numbers increase as you move forward.   \n - **Descending:** Numbers decrease as you move forward.",
-            "content": [
-              {
-                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=2325-449060&embed-host=share"
-              }
-            ]
-          },
-          {
-            "type": "list",
-            "items": [
-              {
-                "title": "Aligned to top",
-                "description": "The Timeline can be configured to align its points with the top of a specific group of elements on the right. In the example, the points are aligned with the top of the first element within the Card.",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_overview_spec1.png"
-                  }
-                ]
-              },
-              {
-                "title": "Aligned to center",
-                "description": "The timeline points are aligned with the center of the element on the right.",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_overview_spec2.png"
-                  }
-                ]
-              }
-            ],
-            "layout": "horizontal",
-            "title": "Spec",
-            "description": "markdown:\n**Key rules:**  \n- Maintain a minimum distance of S2 between the Timeline and the elements on the right. \n- Points can be aligned either to the top or the center of the elements on the right. \n- When points are center-aligned with the elements, set the line length to auto, with a minimum of 20px."
-          },
-          {
-            "type": "list",
-            "items": [
-              {
-                "title": "",
-                "description": "markdown:\nThe Timeline consists of points and lines, each with different styles and states. These elements can be combined in various ways to suit different product goals.  \nPoints create visual breakpoints that make your timeline easier to read, they act as bullet points, representing each step or activity. The icons and colors can be customized.  \nLines can either match the state and color of the points or be styled differently or in neutral tokens to emphasize the points.",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_structure.png"
-                  }
-                ]
-              },
-              {
-                "title": "Points aligned to center (default)",
-                "description": "The timeline points are aligned with the center of the element on the right.",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_structure_center.png"
-                  }
-                ]
-              },
-              {
-                "title": "Points aligned to anchor ref",
-                "description": "The Timeline can be configured to align its points to one of the elements on the right. In the example, the points are aligned with the titles in the cards.",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_structure_anchorRef.png"
-                  }
-                ]
-              }
-            ],
-            "layout": "horizontal",
-            "title": "Structure"
-          },
-          {
             "type": "table",
-            "columns": [
-              "Property",
-              "Preview"
-            ],
+            "columns": ["Property", "Preview"],
             "items": [
               {
                 "title": "Solid",
@@ -387,10 +323,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Preview"
-            ],
+            "columns": ["Property", "Preview"],
             "items": [
               {
                 "title": "Entry",
@@ -398,6 +331,16 @@
               }
             ],
             "name": "Line Accessories"
+          },
+          {
+            "type": "section",
+            "title": "Orientation",
+            "description": "markdown:\nThe Timeline can be displayed in either ascending or descending order, depending on the context:  \n\n - **Ascending:** Numbers increase as you move forward.   \n - **Descending:** Numbers decrease as you move forward.",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=2325-449060&embed-host=share"
+              }
+            ]
           },
           {
             "type": "section",
