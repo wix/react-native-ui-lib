@@ -76,6 +76,7 @@ const TextField = (props: InternalTextFieldProps) => {
     topTrailingAccessory,
     bottomAccessory,
     showClearButton,
+    ClearButtonContentComponent,
     onClear,
     // Validation
     enableErrors, // TODO: rename to enableValidation
@@ -210,11 +211,13 @@ const TextField = (props: InternalTextFieldProps) => {
             </View>
           )}
           {showClearButton && (
+          
             <ClearButton
               onClear={onClear}
               testID={`${props.testID}.clearButton`}
               onChangeText={onChangeText}
               clearButtonStyle={clearButtonStyle}
+              ClearButtonContentComponent={ClearButtonContentComponent}
             />
           )}
           {trailingAccessory}
