@@ -9,7 +9,7 @@ import CodeIcon from '../../assets/icons/code';
 type ComponentItemProps = {
   componentName: string;
   props?: Record<string, unknown> | Record<string, unknown>[];
-  jsx?: string
+  snippet?: string
   showCodeButton?: boolean;
 };
 
@@ -32,12 +32,12 @@ function generateComponentCodeSnippet(componentName: string, componentProps: Rec
 }
 
 const ComponentItem = (props: ComponentItemProps) => {
-  const {componentName, props: componentProps, jsx, showCodeButton = false} = props;
+  const {componentName, props: componentProps, snippet, showCodeButton = false} = props;
   const [showCode, setShowCode] = useState(false);
 
   const code = useMemo(() => {
-    if (typeof jsx === 'string') {
-      return jsx;
+    if (typeof snippet === 'string') {
+      return snippet;
     } else if (Array.isArray(componentProps)) {
       const snippet = componentProps
         .map(componentPropsItem => generateComponentCodeSnippet(componentName, componentPropsItem))
@@ -46,7 +46,7 @@ const ComponentItem = (props: ComponentItemProps) => {
     } else {
       return generateComponentCodeSnippet(componentName, componentProps);
     }
-  }, [componentName, componentProps, jsx]);
+  }, [componentName, componentProps, snippet]);
 
   const toggleCode = useCallback(() => {
     setShowCode(prev => !prev);
@@ -79,7 +79,7 @@ type Item = {
   component?: string;
   props?: any;
   value?: any;
-  jsx?: string;
+  snippet?: string;
   height?: number;
 };
 type ContentItemProps = {
@@ -112,12 +112,14 @@ export const ContentItem = ({item, componentName, showCodeButton}: ContentItemPr
 
   const value = item.value;
 
-  if (item.props || item.jsx) {
-    const name = item.jsx ? extractComponentFromSnippet(item.jsx) : item.component ?? componentName;
+  if (item.props || item.snippet) {
+    const name = item.snippet ? extractComponentFromSnippet(item.snippet) : item.component ?? componentName;
     const isComponentExists = !!ReactLiveScope[name];
 
     if (isComponentExists) {
-      return <ComponentItem componentName={name} props={item.props} jsx={item.jsx} showCodeButton={showCodeButton}/>;
+      return (
+        <ComponentItem componentName={name} props={item.props} snippet={item.snippet} showCodeButton={showCodeButton}/>
+      );
     } else if (!value) {
       return <div style={{color: 'red'}}>Component Not Supported</div>;
     }
