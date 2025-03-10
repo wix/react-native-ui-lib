@@ -97,9 +97,7 @@ const extractComponentFromSnippet = (snippet: string) => {
 };
 
 export const ContentItem = ({item, componentName, showCodeButton}: ContentItemProps) => {
-  const getFigmaEmbed = (item: {value: string; height?: number}) => {
-    const value = item.value;
-    const height = item.height || 450;
+  const getFigmaEmbed = (value: string, height = 450) => {
 
     return <iframe width={'100%'} height={height} src={value}/>;
   };
@@ -128,7 +126,7 @@ export const ContentItem = ({item, componentName, showCodeButton}: ContentItemPr
   if (value) {
     if (typeof value === 'string') {
       if (value.includes('embed.figma.com')) {
-        return getFigmaEmbed({value, height: item.height});
+        return getFigmaEmbed(value, item.height);
       } else {
         return getImage(value);
       }
