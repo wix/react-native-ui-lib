@@ -240,6 +240,7 @@ exports[`Hint Screen component test Different positions and scenarios center pos
         }
         style={
           [
+            false,
             {
               "tintColor": "#5A48F5",
             },
@@ -518,6 +519,7 @@ exports[`Hint Screen component test Different positions and scenarios center pos
         }
         style={
           [
+            false,
             {
               "tintColor": "#5A48F5",
             },
@@ -797,6 +799,7 @@ exports[`Hint Screen component test Different positions and scenarios left posit
         }
         style={
           [
+            false,
             {
               "tintColor": "#5A48F5",
             },
@@ -1075,6 +1078,7 @@ exports[`Hint Screen component test Different positions and scenarios left posit
         }
         style={
           [
+            false,
             {
               "tintColor": "#5A48F5",
             },
@@ -1354,6 +1358,7 @@ exports[`Hint Screen component test Different positions and scenarios right posi
         }
         style={
           [
+            false,
             {
               "tintColor": "#5A48F5",
             },
@@ -1632,6 +1637,7 @@ exports[`Hint Screen component test Different positions and scenarios right posi
         }
         style={
           [
+            false,
             {
               "tintColor": "#5A48F5",
             },
