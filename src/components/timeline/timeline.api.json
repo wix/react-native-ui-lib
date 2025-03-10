@@ -124,7 +124,7 @@
           {
             "type": "table",
             "columns": [
-              "State",
+              "Property",
               "Preview",
               "DELETE ME"
             ],
@@ -157,7 +157,8 @@
                       }
                     }
                   }
-                ]
+                ],
+                "description": "state: current"
               },
               {
                 "title": "Next",
@@ -177,7 +178,8 @@
                       }
                     }
                   }
-                ]
+                ],
+                "description": "state: next"
               },
               {
                 "title": "Error",
@@ -197,7 +199,8 @@
                       }
                     }
                   }
-                ]
+                ],
+                "description": "state: error"
               },
               {
                 "title": "Success",
@@ -217,7 +220,8 @@
                       }
                     }
                   }
-                ]
+                ],
+                "description": "state: success"
               }
             ],
             "title": "States",
@@ -226,38 +230,35 @@
           {
             "type": "table",
             "columns": [
-              "Style",
+              "Property",
               "Preview"
             ],
             "items": [
               {
-                "title": "Bullet"
+                "title": "Bullet",
+                "description": "type: bullet"
               },
               {
-                "title": "New Item"
+                "title": "Circle",
+                "description": "type: circle"
               },
               {
-                "title": "New Item"
-              },
-              {
-                "title": "New Item"
-              },
-              {
-                "title": "New Item"
+                "title": "Outline",
+                "description": "type: outline"
               }
             ],
-            "title": "Styles",
-            "name": "Point"
+            "title": "Point",
+            "name": "Point Types"
           },
           {
             "type": "table",
             "columns": [
-              "Style",
+              "Property",
               "Preview"
             ],
             "items": [
               {
-                "title": "Solid",
+                "title": "Text",
                 "content": [
                   {
                     "props": {
@@ -269,10 +270,11 @@
                       }
                     }
                   }
-                ]
+                ],
+                "description": "text: “1”"
               },
               {
-                "title": "Dashed",
+                "title": "Icon",
                 "content": [
                   {
                     "props": {
@@ -284,10 +286,15 @@
                       }
                     }
                   }
-                ]
+                ],
+                "description": "icon: Assets.icons.general.checkmarkSmall"
+              },
+              {
+                "title": "Icon without background",
+                "description": "icon: Assets.icons.general.favorite, removeIconBackground: true"
               }
             ],
-            "name": "Line"
+            "name": "Point Accessories"
           },
           {
             "type": "section",
@@ -324,6 +331,40 @@
             "layout": "horizontal",
             "title": "Spec",
             "description": "markdown:\n**Key rules:**  \n- Maintain a minimum distance of S2 between the Timeline and the elements on the right. \n- Points can be aligned either to the top or the center of the elements on the right. \n- When points are center-aligned with the elements, set the line length to auto, with a minimum of 20px."
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "title": "",
+                "description": "markdown:\nThe Timeline consists of points and lines, each with different styles and states. These elements can be combined in various ways to suit different product goals.  \nPoints create visual breakpoints that make your timeline easier to read, they act as bullet points, representing each step or activity. The icons and colors can be customized.  \nLines can either match the state and color of the points or be styled differently or in neutral tokens to emphasize the points.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_structure.png"
+                  }
+                ]
+              },
+              {
+                "title": "Points aligned to center (default)",
+                "description": "The timeline points are aligned with the center of the element on the right.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_structure_center.png"
+                  }
+                ]
+              },
+              {
+                "title": "Points aligned to anchor ref",
+                "description": "The Timeline can be configured to align its points to one of the elements on the right. In the example, the points are aligned with the titles in the cards.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_structure_anchorRef.png"
+                  }
+                ]
+              }
+            ],
+            "layout": "horizontal",
+            "title": "Structure"
           }
         ]
       }
