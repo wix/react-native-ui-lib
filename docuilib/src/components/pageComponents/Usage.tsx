@@ -6,11 +6,12 @@ import ReactLiveScope from '../../theme/ReactLiveScope';
 import UILivePreview from '../UILivePreview';
 
 export const Usage = ({component}) => {
-  const componentLivePlaygroundSupport = !!ReactLiveScope[component.name];
-  const code = component.snippet?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), '')).join('\n');
+  const supportedComponentNames = Object.keys(ReactLiveScope);
+  const componentLivePlaygroundSupport = supportedComponentNames.includes(component.name);
   if (component.snippet) {
+    const code = component.snippet.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), '')).join('\n');
     return componentLivePlaygroundSupport ? (
-      <UILivePreview code={code}/>
+      <UILivePreview code={code} liveScopeSupport/>
     ) : (
       <CodeBlock language="jsx">{code}</CodeBlock>
     );

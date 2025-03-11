@@ -184,7 +184,7 @@ function buildOldDocs(component) {
   /* Snippet */
   if (component.snippet) {
     content += `### Usage\n`;
-    content += `<UILivePreview code={\`${component.snippet
+    content += `<UILivePreview componentName={"${component.name}"} code={\`${component.snippet
       ?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), ''))
       .join('\n')
       .toString()}\`}/>\n\n`;
