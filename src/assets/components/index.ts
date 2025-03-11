@@ -11,7 +11,7 @@ export const components = {
     return require('./checkMarkSmall.png');
   },
   get dropdown() {
-    return require('./dropDown.png');
+    return require('./dropdown.png');
   },
   get exclamationSmall() {
     return require('./exclamationSmall.png');
