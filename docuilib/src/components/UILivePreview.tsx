@@ -9,7 +9,7 @@ import CodeBlock from '@theme/CodeBlock';
 
 export const IFRAME_MESSAGE_TYPE = 'LIVE_PREVIEW_CODE_UPDATE_MESSAGE';
 
-export default function UILivePreview({code: codeProp, componentName, liveScopeSupport = false}) {
+export default function UILivePreview({code: codeProp, componentName = undefined, liveScopeSupport = false}) {
   const [code, setCode] = useState(codeProp);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const {siteConfig} = useDocusaurusContext();
