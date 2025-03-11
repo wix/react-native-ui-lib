@@ -13,7 +13,11 @@
       "type": "string[]",
       "description": "Array of colors for the picker's color palette (hex values)"
     },
-    {"name": "value", "type": "string", "description": "The value of the selected swatch"},
+    {
+      "name": "value",
+      "type": "string",
+      "description": "The value of the selected swatch"
+    },
     {
       "name": "animatedIndex",
       "type": "number",
@@ -31,8 +35,16 @@
       "description": "Accessibility labels as an object of strings",
       "default": "{\n addButton: 'add custom color using hex code',\n dismissButton: 'dismiss',\n doneButton: 'done',\n input: 'custom hex color code'\n}"
     },
-    {"name": "testID", "type": "string", "description": "The test id for e2e tests"},
-    {"name": "backgroundColor", "type": "string", "description": "The ColorPicker's background color"}
+    {
+      "name": "testID",
+      "type": "string",
+      "description": "The test id for e2e tests"
+    },
+    {
+      "name": "backgroundColor",
+      "type": "string",
+      "description": "The ColorPicker's background color"
+    }
   ],
   "snippet": [
     "<ColorPicker",
@@ -43,5 +55,96 @@
     " onSubmit={() => console.log('submit')$5}",
     " onValueChange={() => console.log('value changed')$6}",
     "/>"
-  ]
+  ],
+  "docs": {
+    "hero": {
+      "title": "ColorPicker",
+      "description": "markdown:Picking color for background, typography and other elements is possible by various means, among these are:  \nColor Swatch, Color Palette and Color Picker Dialog.  \nAll these can be implemented in the color picking flow. ",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ColorPicker/ColorPicker_cover.png"
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "list",
+            "items": [
+              {
+                "title": "",
+                "description": "markdown:1. Tapping 'Add New' in the Color Palette opens a color picker dialog.   \n2. Using HLS controls (or even typing actual HEX value) user can achieve any color. ",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ColorPicker/ColorPicker_usage1.png"
+                  }
+                ]
+              },
+              {
+                "title": "",
+                "description": "markdown:3. Changes are saved by tapping on ‘V’.  \n4. New color styles is saved in the Color Palette and selected as the theme color. ",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ColorPicker/ColorPicker_usage2.png"
+                  }
+                ]
+              }
+            ],
+            "layout": "horizontal",
+            "title": "Usage Example",
+            "description": "In this example, user picks his own theme color."
+          },
+          {
+            "type": "section",
+            "title": "Additional entry points examples",
+            "description": "As mentioned, Color Picker dialog can be triggered by various entry points. ",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=2476-69290&m=dev&embed-host=share&page-selector=false"
+              }
+            ]
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "title": "",
+                "description": "markdown:1. Tapping on the HEX value will “activate” the input field (Main Input) and display the keyboard. New color can be created either by typing a hex value or by pasting a specific value.  \n2. Until new valid hex value is provided, the initial color background is kept. Hex value is highlighted with either white at 25% or black at 25%, depending on the background color. ",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ColorPicker/ColorPicker_hex1.png"
+                  }
+                ]
+              },
+              {
+                "title": "",
+                "description": "markdown:3. ‘#’ symbol is permanent and cant be deleted.  \n4. Once hex value is valid (6 characters), background color changes accordingly. ",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ColorPicker/ColorPicker_hex2.png"
+                  }
+                ]
+              }
+            ],
+            "layout": "horizontal",
+            "title": "Adding HEX values manually",
+            "description": "Color Picker dialog allows manual entry of the HEX values:"
+          },
+          {
+            "type": "section",
+            "title": "Spec",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ColorPicker/ColorPicker_spec.png"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }
