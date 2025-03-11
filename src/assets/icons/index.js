@@ -17,6 +17,9 @@ export const icons = {
   get x() {
     return require('./x.png');
   },
+  get xSmall() {
+    return require('./xSmall.png');
+  },
   get xMedium() {
     return require('./xMedium.png');
   },
