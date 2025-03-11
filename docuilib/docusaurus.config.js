@@ -1,7 +1,6 @@
 const {themes} = require('prism-react-renderer');
 const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
-const isDev = process.env.NODE_ENV === 'development';
 
 // With JSDoc @type annotations, IDEs can provide config autocompletion
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
@@ -18,7 +17,7 @@ const isDev = process.env.NODE_ENV === 'development';
     projectName: 'react-native-ui-lib', // Usually your repo name.
     trailingSlash: false,
     customFields: {
-      docsMainEntry: `${isDev ? 'next/' : ''}getting-started/setup`,
+      docsMainEntry: 'getting-started/setup',
       expoSnackLink: 'https://snack.expo.io/@ethanshar/rnuilib_snack',
       stars: '4.7'
     },
