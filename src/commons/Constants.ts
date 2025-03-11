@@ -194,9 +194,7 @@ const constants = {
   enterKey: 'Enter',
 
   /* Font scale */
-  get fontScale() {
-    return PixelRatio.getFontScale();
-  }
+  fontScale: () => PixelRatio.getFontScale()
 };
 
 setStatusBarHeight();
