@@ -5,10 +5,26 @@
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/StepperScreen.tsx",
   "images": [],
   "props": [
-    {"name": "type", "type": "StepperType", "description": "Stepper style type"},
-    {"name": "value", "type": "number", "description": "Stepper value"},
-    {"name": "minValue", "type": "number", "description": "Minimum value"},
-    {"name": "maxValue", "type": "number", "description": "Maximum value"},
+    {
+      "name": "type",
+      "type": "StepperType",
+      "description": "Stepper style type"
+    },
+    {
+      "name": "value",
+      "type": "number",
+      "description": "Stepper value"
+    },
+    {
+      "name": "minValue",
+      "type": "number",
+      "description": "Minimum value"
+    },
+    {
+      "name": "maxValue",
+      "type": "number",
+      "description": "Maximum value"
+    },
     {
       "name": "step",
       "type": "number",
@@ -20,12 +36,213 @@
       "type": "(value: number, testID?: string) => void",
       "description": "Value change callback function"
     },
-    {"name": "disabled", "type": "boolean", "description": "Disables interaction with the stepper"},
-    {"name": "small", "type": "boolean", "description": "Renders a small sized Stepper"},
-    {"name": "accessibilityLabel", "type": "string", "description": "Component accessibility label"},
-    {"name": "testID", "type": "string", "description": "Test id for component"}
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Disables interaction with the stepper"
+    },
+    {
+      "name": "small",
+      "type": "boolean",
+      "description": "Renders a small sized Stepper"
+    },
+    {
+      "name": "accessibilityLabel",
+      "type": "string",
+      "description": "Component accessibility label"
+    },
+    {
+      "name": "testID",
+      "type": "string",
+      "description": "Test id for component"
+    }
   ],
   "snippet": [
     "<Stepper$1/>"
-  ]
+  ],
+  "docs": {
+    "hero": {
+      "title": "Stepper",
+      "description": "The Stepper lets users easily increase or decrease a value by small amounts. Steppers are best used when the user needs to adjust the value by small increments.",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Stepper/Stepper_overview_cover.png"
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "section",
+            "title": "Usage Examples",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=2394-210062&m=dev&embed-host=share&page-selector=false"
+              }
+            ]
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Style",
+              "Preview"
+            ],
+            "items": [
+              {
+                "title": "Default",
+                "description": "Primarily used in form screens, typically within list items.",
+                "content": [
+                  {
+                    "props": {
+                      "value": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Floating ",
+                "description": "Ideal to be used over images, such as when adding multiple items to a cart.",
+                "content": [
+                  {
+                    "props": {
+                      "type": "floating",
+                      "value": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "title": "Styles"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Size",
+              "Preview"
+            ],
+            "items": [
+              {
+                "title": "Large",
+                "content": [
+                  {
+                    "props": {
+                      "value": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Small",
+                "content": [
+                  {
+                    "props": {
+                      "small": true,
+                      "value": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "title": "Sizes",
+            "description": "Relevant only for the default style."
+          },
+          {
+            "type": "table",
+            "columns": [
+              "State",
+              "Default",
+              "Floating"
+            ],
+            "items": [
+              {
+                "title": "Active",
+                "content": [
+                  {
+                    "props": {
+                      "value": 1
+                    }
+                  },
+                  {
+                    "props": {
+                      "value": 1,
+                      "type": "floating"
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Disabled",
+                "content": [
+                  {
+                    "props": {
+                      "value": 1,
+                      "disabled": true
+                    }
+                  },
+                  {
+                    "props": {
+                      "value": 1,
+                      "disabled": true,
+                      "type": "floating"
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Reached min value",
+                "content": [
+                  {
+                    "props": {
+                      "value": 0,
+                      "minValue": 0
+                    }
+                  },
+                  {
+                    "props": {
+                      "value": 0,
+                      "minValue": 0,
+                      "type": "floating"
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Reached max value",
+                "content": [
+                  {
+                    "props": {
+                      "value": 99,
+                      "maxValue": 99
+                    }
+                  },
+                  {
+                    "props": {
+                      "value": 99,
+                      "maxValue": 99,
+                      "type": "floating"
+                    }
+                  }
+                ]
+              }
+            ],
+            "title": "States"
+          },
+          {
+            "type": "section",
+            "title": "Spec",
+            "layout": "horizontal",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Stepper/Stepper_overview_spec.png"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }
