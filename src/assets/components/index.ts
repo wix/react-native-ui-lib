@@ -29,6 +29,6 @@ export const components = {
     return require('./plusSmall.png');
   },
   get transparentSwatch() {
-    return require('./transparentSwatch.png');
+    return require('./TransparentSwatch.png');
   }
 };
