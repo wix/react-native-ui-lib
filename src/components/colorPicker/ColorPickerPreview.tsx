@@ -22,7 +22,7 @@ const ColorPickerPreview = (props: PreviewProps) => {
 
   const hex = getHexString(color);
   const textColor = getTextColor(hex);
-  const fontScale = PixelRatio.getFontScale();
+  const fontScale = Constants.getFontScale();
   const value = Colors.isTransparent(text) ? '000000' : text;
 
   return (
