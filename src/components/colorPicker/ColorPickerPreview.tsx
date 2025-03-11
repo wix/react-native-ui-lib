@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {StyleSheet, TextInput, PixelRatio, I18nManager} from 'react-native';
+import {StyleSheet, TextInput, I18nManager} from 'react-native';
 
 import {Colors, Typography} from '../../style';
 import {ColorPickerDialogProps} from './ColorPickerDialog';
