@@ -192,7 +192,11 @@ const constants = {
   /* Keyboard */
   backspaceKey: 'Backspace',
   enterKey: 'Enter',
-  fontScale: PixelRatio.getFontScale()
+
+  /* Font scale */
+  get fontScale() {
+    return PixelRatio.getFontScale();
+  }
 };
 
 setStatusBarHeight();
