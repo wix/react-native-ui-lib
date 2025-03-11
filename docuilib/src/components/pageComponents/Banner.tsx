@@ -89,6 +89,10 @@ export const Banner = ({section, component}) => {
   const _title = title || getTitle(type);
   const _description = description || getDescription(type);
 
+  if (!_description) {
+    return null;
+  }
+  
   return (
     <div
       className="row"
