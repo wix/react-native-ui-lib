@@ -22,6 +22,7 @@ import AnimatedImage, {AnimatedImageProps} from '../animatedImage';
 import * as AvatarHelper from '../../helpers/AvatarHelper';
 import {useThemeProps} from '../../hooks';
 import {isSvg} from '../../utils/imageUtils';
+import Constants from '../../commons/Constants';
 
 export enum BadgePosition {
   TOP_RIGHT = 'TOP_RIGHT',
@@ -290,7 +291,7 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
   const renderImage = () => {
     if (source !== undefined) {
       // Looks like reanimated does not support SVG
-      const ImageContainer = animate && !isSvg(source) ? AnimatedImage : Image;
+      const ImageContainer = animate && !isSvg(source) && !Constants.isWeb ? AnimatedImage : Image;
       return (
         <ImageContainer
           style={_imageStyle}
