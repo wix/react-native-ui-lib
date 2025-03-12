@@ -62,9 +62,12 @@ const ComponentItem = (props: ComponentItemProps) => {
 
   const content = showCode ? codePreview : componentPreview;
 
+  const interactionBlocker = <div style={{position: 'absolute', top: 0, left: 0, height: '100%', width: '100%'}}/>;
+
   return (
     <div className={`${styles.componentItemContainer} ${!showCode ? styles.componentSpotlightStyle : ''}`}>
       {content}
+      {interactionBlocker}
       {showCodeButton && (
         <button onClick={toggleCode} className={styles.showCodeButton}>
           <CodeIcon/>
