@@ -4,6 +4,8 @@ import {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/
 import {ModalTopBarProps} from '../modal/TopBar';
 import {TextFieldMethods, TextFieldProps} from '../textField';
 import {TouchableOpacityProps} from '../touchableOpacity';
+import {ButtonProps} from '../button';
+import {CheckboxProps} from '../checkbox';
 
 // Note: enum values are uppercase due to legacy
 export enum PickerModes {
@@ -15,6 +17,12 @@ export enum PickerFieldTypes {
   form = 'form',
   filter = 'filter',
   settings = 'settings'
+}
+
+export enum PickerSelectAllType {
+  none = 'none',
+  button = 'button',
+  checkbox = 'checkbox'
 }
 
 // TODO: Remove type
@@ -159,6 +167,43 @@ type PickerExpandableOverlayProps = {
   enableModalBlur?: boolean;
 };
 
+interface getLabelOptions {
+  selectedCount?: number;
+  value?: PickerItemProps[];
+  isSelectedAll?: boolean;
+}
+
+type PickerSelectionStatusProps = {
+  /**
+   * A function that returns the label to show for the selected Picker value
+   */
+  getLabel?: (options?: getLabelOptions) => string;
+  /**
+   * Select all element type
+   */
+  selectAllType?: PickerSelectAllType | `${PickerSelectAllType}`;
+  /**
+   * Button props
+   */
+  buttonProps?: ButtonProps;
+  /**
+   * Checkbox props
+   */
+  checkboxProps?: CheckboxProps;
+  /**
+   * Custom container style
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * Control weather to show the label or not
+   */
+  showLabel?: boolean;
+  /**
+   * Custom label to show next to the selection element.
+   */
+  customLabel?: string;
+};
+
 export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
   PickerPropsDeprecation &
   PickerExpandableOverlayProps &
@@ -210,6 +255,10 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
      * Render custom top element
      */
     renderCustomTopElement?: (value?: PickerValue) => React.ReactElement;
+    /**
+     *
+     */
+    selectionStatus?: PickerSelectionStatusProps;
     /**
      * Add onPress callback for when pressing the picker
      */
@@ -309,6 +358,7 @@ export interface PickerContextProps
   isMultiMode: boolean;
   onSelectedLayout: (event: any) => any;
   selectionLimit: PickerProps['selectionLimit'];
+  toggleAllItemsSelection?: (itemsToToggle: PickerMultiValue, select: boolean) => void;
 }
 
 export type PickerItemsListProps = Pick<
@@ -320,6 +370,7 @@ export type PickerItemsListProps = Pick<
   | 'showLoader'
   | 'customLoaderElement'
   | 'renderCustomTopElement'
+  | 'selectionStatus'
   | 'showSearch'
   | 'searchStyle'
   | 'searchPlaceholder'
