@@ -7,6 +7,7 @@ const fs = require('fs');
 
 const COMPONENTS_DOCS_DIR = './docs/components';
 const SERVICES_DOCS_DIR = './docs/services';
+const FOUNDATION_DOCS_DIR = './docs/foundation';
 
 const VALID_COMPONENTS_CATEGORIES = [
   'foundation',
@@ -92,14 +93,22 @@ function processComponents(components) {
       content += `${buildOldDocs(component)}\n`;
     }
 
-
     let dirPath;
-    if (component.category === 'services') {
-      dirPath = `${SERVICES_DOCS_DIR}`;
-    } else {
-      const componentParentDir =
-        componentParentName || isParentComponent ? `/${componentParentName || componentName}` : '';
-      dirPath = `${COMPONENTS_DOCS_DIR}/${component.category}${componentParentDir}`;
+    switch (component.category) {
+      case 'services': {
+        dirPath = `${SERVICES_DOCS_DIR}`;
+        break;
+      }
+      case 'foundation': {
+        dirPath = `${FOUNDATION_DOCS_DIR}`;
+        break;
+      }
+      default: {
+        const componentParentDir =
+          componentParentName || isParentComponent ? `/${componentParentName || componentName}` : '';
+        dirPath = `${COMPONENTS_DOCS_DIR}/${component.category}${componentParentDir}`;
+        break;
+      }
     }
 
     if (!fs.existsSync(dirPath)) {

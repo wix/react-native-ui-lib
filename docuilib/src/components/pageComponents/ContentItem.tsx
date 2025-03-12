@@ -98,8 +98,8 @@ const extractComponentFromSnippet = (snippet: string) => {
 
 export const ContentItem = ({item, componentName, showCodeButton}: ContentItemProps) => {
   const getFigmaEmbed = (value: string, height = 450) => {
-
-    return <iframe width={'100%'} height={height} src={value}/>;
+    const modifiedValue = !value.includes('page-selector=') ? value + '&page-selector=false' : value;
+    return <iframe width={'100%'} height={height} src={modifiedValue}/>;
   };
 
   const getImage = (value: string, style?: ComponentProps<'img'>['style']) => {
