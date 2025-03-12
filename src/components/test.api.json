@@ -143,7 +143,7 @@
                 "description": "Item #2 Subtitle",
                 "content": [
                   {
-                    "value": "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Docs/thumbnail-horizontal.png?raw=true"
+                    "snippet": "<Text text30>This is a code snippet</Text>"
                   }
                 ]
               },
@@ -283,38 +283,6 @@
             "type": "section",
             "title": "HTML support",
             "description": "html:<h2>Title</h2><p>This is a html content</p><ul><li>item 1</li><li>item 2</li></ul>"
-          }
-        ]
-      },
-      {
-        "title": "Code",
-        "sections": [
-          {
-            "title": "Usage",
-            "type": "usage"
-          },
-          {
-            "type": "info"
-          },
-          {
-            "type": "tip"
-          },
-          {
-            "type": "banner",
-            "title": "NOTE",
-            "description": "This is an interesting information"
-          },
-          {
-            "type": "banner",
-            "title": "Banner",
-            "description": "This is some massage to the user",
-            "color": "pink",
-            "icon": ""
-          },
-          {
-            "type": "props",
-            "title": "API",
-            "description": "This is the list of additional props for the Text component"
           }
         ]
       }
