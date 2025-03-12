@@ -8,6 +8,7 @@ import {
   ImagePropsBase,
   ImageStyle,
   TextStyle,
+  TextProps,
   AccessibilityProps
 } from 'react-native';
 import {Colors, BorderRadiuses} from '../../style';
@@ -48,6 +49,7 @@ export type AutoColorsProps = {
 };
 
 export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> &
+  Pick<TextProps, 'ellipsizeMode'> &
   PropsWithChildren<{
     /**
      * Adds fade in animation when Avatar image loads
@@ -185,6 +187,7 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
     useAutoColors,
     autoColorsConfig,
     containerStyle,
+    ellipsizeMode = 'clip',
     onPress,
     children
   } = themeProps;
@@ -354,7 +357,7 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
     >
       <View testID={`${testID}.container`} style={textContainerStyle}>
         {!_.isUndefined(text) && (
-          <Text numberOfLines={1} style={textStyle} testID={`${testID}.label`}>
+          <Text numberOfLines={1} ellipsizeMode={ellipsizeMode} style={textStyle} testID={`${testID}.label`}>
             {text}
           </Text>
         )}
@@ -373,7 +376,8 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: BorderRadiuses.br100
+    borderRadius: BorderRadiuses.br100,
+    overflow: 'hidden'
   },
   initialsContainerWithInset: {
     top: 1,
