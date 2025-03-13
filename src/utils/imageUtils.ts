@@ -1,6 +1,7 @@
 import get from 'lodash/get';
 import Assets from '../assets';
 import type {ImageSourceType} from '../components/image';
+import Constants from '../commons/Constants';
 
 export function isSvgUri(source?: ImageSourceType) {
   // @ts-expect-error
@@ -26,4 +27,12 @@ function isSvgData(source?: ImageSourceType) {
     const sourceString = source;
     return sourceString.includes('</svg>') || sourceString.includes('data:image/svg');
   }
+}
+
+export function isWebImageSource(source?: ImageSourceType) {
+  const isSourceString =
+    //@ts-ignore
+    (typeof source === 'object' && typeof source?.default === 'string' && isBase64ImageContent(source.default)) ||
+    (typeof source === 'string' && isBase64ImageContent(source));
+  return isSourceString && Constants.isWeb;
 }
