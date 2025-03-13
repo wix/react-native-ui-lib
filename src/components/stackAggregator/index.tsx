@@ -7,13 +7,12 @@ import Button, {ButtonSize, ButtonProps} from '../button';
 import Card from '../card';
 import {Constants, asBaseComponent} from '../../commons/new';
 import {useDidUpdate} from '../../hooks';
+import Assets from '../../assets';
 
 const PEEP = 8;
 const DURATION = 300;
 const MARGIN_BOTTOM = 24;
 const buttonStartValue = 0.8;
-const icon = require('./assets/arrow-down.png');
-
 export type StackAggregatorProps = ViewProps & {
   /**
    * The initial state of the stack
@@ -278,7 +277,7 @@ const StackAggregator = (props: StackAggregatorProps) => {
         >
           <Button
             label={'Show less'}
-            iconSource={icon}
+            iconSource={Assets.components.arrowDown}
             link
             size={ButtonSize.small}
             {...buttonProps}

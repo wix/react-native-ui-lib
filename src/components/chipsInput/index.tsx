@@ -5,8 +5,7 @@ import {Constants} from '../../commons/new';
 import {useCombinedRefs, useDidUpdate} from '../../hooks';
 import TextField, {TextFieldProps} from '../textField';
 import Chip, {ChipProps} from '../chip';
-
-const removeIcon = require('./assets/xSmall.png');
+import Assets from '../../assets';
 
 export enum ChipsInputChangeReason {
   Added = 'added',
@@ -122,7 +121,7 @@ const ChipsInput = forwardRef((props: ChipsInputProps, refToForward: React.Ref<a
         // paddingH-s2
         marginR-s2
         marginB-s2
-        dismissIcon={removeIcon}
+        dismissIcon={Assets.icons.xSmall}
         recorderTag={'mask'}
         {...defaultChipProps}
         {...(chip.invalid ? invalidChipProps : undefined)}
