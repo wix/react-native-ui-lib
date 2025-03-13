@@ -53,21 +53,20 @@ const ComponentItem = (props: ComponentItemProps) => {
   }, []);
 
   const componentPreview = (
-    <LiveProvider code={code} scope={ReactLiveScope}>
-      <LivePreview/>
-    </LiveProvider>
+    <div style={{pointerEvents: 'none'}}>
+      <LiveProvider code={code} scope={ReactLiveScope}>
+        <LivePreview/>
+      </LiveProvider>
+    </div>
   );
 
   const codePreview = <CodeBlock snippet={code} title="Code Example"/>;
 
   const content = showCode ? codePreview : componentPreview;
 
-  const interactionBlocker = <div style={{position: 'absolute', top: 0, left: 0, height: '100%', width: '100%'}}/>;
-
   return (
     <div className={`${styles.componentItemContainer} ${!showCode ? styles.componentSpotlightStyle : ''}`}>
       {content}
-      {interactionBlocker}
       {showCodeButton && (
         <button onClick={toggleCode} className={styles.showCodeButton}>
           <CodeIcon/>
