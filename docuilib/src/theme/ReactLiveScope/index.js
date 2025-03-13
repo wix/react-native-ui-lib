@@ -98,7 +98,8 @@ const ReactLiveScope = {
   Timeline,
   TouchableOpacity,
   View,
-  Picker
+  Picker,
+  Toast: Incubator.Toast
 };
 
 export default ReactLiveScope;
