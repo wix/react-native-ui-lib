@@ -53,7 +53,7 @@ const ComponentItem = (props: ComponentItemProps) => {
   }, []);
 
   const componentPreview = (
-    <div style={{pointerEvents: 'none'}}>
+    <div className={styles.blocker}>
       <LiveProvider code={code} scope={ReactLiveScope}>
         <LivePreview/>
       </LiveProvider>
