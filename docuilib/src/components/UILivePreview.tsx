@@ -3,9 +3,10 @@ import {StyleSheet} from 'react-native';
 import {LiveProvider, LiveEditor} from 'react-live';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import BrowserOnly from '@docusaurus/BrowserOnly';
+import CodeBlock from '@theme/CodeBlock';
 import {View, Colors} from 'react-native-ui-lib/core';
 import ReactLiveScope from '../theme/ReactLiveScope';
-import CodeBlock from '@theme/CodeBlock';
+import {isComponentSupported} from '../utils/componentUtils';
 
 export const IFRAME_MESSAGE_TYPE = 'LIVE_PREVIEW_CODE_UPDATE_MESSAGE';
 
@@ -14,10 +15,6 @@ export default function UILivePreview({code: codeProp, componentName = undefined
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const {siteConfig} = useDocusaurusContext();
   const iframeRef = useRef(null);
-
-  const supportedComponentNames = Object.keys(ReactLiveScope);
-  const componentLivePlaygroundSupport =
-    liveScopeSupport || (componentName && supportedComponentNames.includes(componentName));
 
   useEffect(() => {
     if (iframeLoaded) {
@@ -34,7 +31,7 @@ export default function UILivePreview({code: codeProp, componentName = undefined
     return {overflowY: 'scroll', scrollbarWidth: 'none'};
   }, []);
 
-  if (!componentLivePlaygroundSupport) {
+  if (!liveScopeSupport && !isComponentSupported(componentName)) {
     return <CodeBlock language="jsx">{code}</CodeBlock>;
   }
 
