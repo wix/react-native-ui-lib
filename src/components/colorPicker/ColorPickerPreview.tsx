@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {StyleSheet, TextInput, PixelRatio, I18nManager} from 'react-native';
+import {StyleSheet, TextInput, I18nManager} from 'react-native';
 
 import {Colors, Typography} from '../../style';
 import {ColorPickerDialogProps} from './ColorPickerDialog';
@@ -22,7 +22,7 @@ const ColorPickerPreview = (props: PreviewProps) => {
 
   const hex = getHexString(color);
   const textColor = getTextColor(hex);
-  const fontScale = PixelRatio.getFontScale();
+  const fontScale = Constants.getFontScale();
   const value = Colors.isTransparent(text) ? '000000' : text;
 
   return (
