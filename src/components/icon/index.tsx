@@ -3,7 +3,7 @@ import React, {useMemo, forwardRef} from 'react';
 import {Image, ImageProps as RNImageProps, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {asBaseComponent, BaseComponentInjectedProps, MarginModifiers, Constants} from '../../commons/new';
 import {ComponentStatics} from '../../typings/common';
-import {getAsset, isSvg, isBase64ImageContent} from '../../utils/imageUtils';
+import {getAsset, isSvg, isWebImageSource} from '../../utils/imageUtils';
 import {RecorderProps} from '../../typings/recorderTypes';
 import Badge, {BadgeProps} from '../badge';
 import SvgImage from '../svgImage';
@@ -100,7 +100,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
 
   const renderSvg = () => <SvgImage fsTagName={recorderTag} data={source} {...iconSize} {...props}/>;
 
-  if (typeof source === 'string' && isBase64ImageContent(source) && Constants.isWeb) {
+  if (isWebImageSource(source)) {
     return renderImage();
   }
 
