@@ -197,7 +197,7 @@ export default class ActionsList extends Component {
               size={'xSmall'}
               round
               backgroundColor="transparent"
-              iconSource={Assets.icons.x}
+              iconSource={Assets.internal.icons.x}
               iconStyle={{tintColor: Colors.white}}
               onPress={() => {
                 // console.warn('dismiss press');

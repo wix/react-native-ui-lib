@@ -83,7 +83,7 @@ export default function MainScreen({navigation}) {
             preset={null}
             text70
             fieldStyle={styles.fieldStyle}
-            leadingAccessory={<Icon source={Assets.icons.search} marginH-s2/>}
+            leadingAccessory={<Icon source={Assets.internal.icons.search} marginH-s2/>}
           />
         }
         sections={sections}

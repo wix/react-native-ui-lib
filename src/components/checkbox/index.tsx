@@ -280,7 +280,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
           >
             <AnimatedIcon
               style={[this.styles.selectedIcon, {transform: this.animationStyle.transform}]}
-              source={indeterminate ? Assets.icons.minusSmall : selectedIcon || Assets.icons.checkSmall}
+              source={indeterminate ? Assets.internal.icons.minusSmall : selectedIcon || Assets.internal.icons.checkSmall}
               testID={`${testID}.selected`}
               tintColor={this.getTintColor()}
             />

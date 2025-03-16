@@ -184,7 +184,7 @@ class ColorSwatch extends PureComponent<Props & BaseComponentInjectedProps> {
           <View style={[this.styles.unavailable, {backgroundColor: tintColor}]}/>
         ) : (
           <Animated.Image
-            source={Assets.icons.check}
+            source={Assets.internal.icons.check}
             style={{
               tintColor,
               opacity: isSelected,

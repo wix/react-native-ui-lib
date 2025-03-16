@@ -214,19 +214,19 @@
                 "title": "Icon",
                 "content": [
                   {
-                    "snippet": "<Timeline point={{state: Timeline.states.SUCCESS, icon: Assets.icons.checkSmall}}><View style={{height: 88}}/></Timeline>"
+                    "snippet": "<Timeline point={{state: Timeline.states.SUCCESS, icon: Assets.internal.icons.checkSmall}}><View style={{height: 88}}/></Timeline>"
                   }
                 ],
-                "description": "icon: Assets.icons.general.checkmarkSmall"
+                "description": "icon: Assets.internal.icons.general.checkmarkSmall"
               },
               {
                 "title": "Icon without background",
                 "content": [
                   {
-                    "snippet": "<Timeline point={{state: Timeline.states.SUCCESS, icon: Assets.icons.search, removeIconBackground: true}}><View style={{height: 88}}/></Timeline>"
+                    "snippet": "<Timeline point={{state: Timeline.states.SUCCESS, icon: Assets.internal.icons.search, removeIconBackground: true}}><View style={{height: 88}}/></Timeline>"
                   }
                 ],
-                "description": "icon: Assets.icons.general.favorite, removeIconBackground: true"
+                "description": "icon: Assets.internal.icons.general.favorite, removeIconBackground: true"
               }
             ],
             "name": "Point Accessories"

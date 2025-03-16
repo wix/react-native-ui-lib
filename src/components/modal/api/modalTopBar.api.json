@@ -29,7 +29,7 @@
       "name": "cancelIcon",
       "type": "ImageSource",
       "description": "Cancel action icon",
-      "default": "Assets.icons.x"
+      "default": "Assets.internal.icons.x"
     },
     {"name": "onCancel", "type": "(props?: any) => void", "description": "Cancel action callback"},
     {

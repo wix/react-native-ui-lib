@@ -8,7 +8,7 @@ const segments: Record<string, Array<SegmentedControlItemProps>> = {
   third: [
     {
       label: 'Very Long Label with icon',
-      iconSource: Assets.icons.search,
+      iconSource: Assets.internal.icons.search,
       iconStyle: {marginLeft: Spacings.s1, width: 16, height: 16},
       iconOnRight: true
     },
@@ -18,7 +18,7 @@ const segments: Record<string, Array<SegmentedControlItemProps>> = {
   fifth: [{label: 'Full'}, {label: 'Width'}],
   sixth: [{label: 'Full'}, {label: 'Width'}, {label: 'With'}, {label: 'A'}, {label: 'Very Long Segment'}],
   seventh: [{label: '$'}, {label: '%'}],
-  eighth: [{label: 'Plus', iconSource: Assets.icons.plusSmall}, {label: 'Minus', iconSource: Assets.icons.minusSmall}, {label: 'Check', iconSource: Assets.icons.checkSmall}],
+  eighth: [{label: 'Plus', iconSource: Assets.internal.icons.plusSmall}, {label: 'Minus', iconSource: Assets.internal.icons.minusSmall}, {label: 'Check', iconSource: Assets.internal.icons.checkSmall}],
   ninth: [{label: 'with'}, {label: 'a'}, {label: 'label'}]
 };
 

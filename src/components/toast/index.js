@@ -239,7 +239,7 @@ export default class Toast extends PureBaseComponent {
         <Button
           link
           iconStyle={{tintColor: textColor}}
-          iconSource={Assets.icons.x}
+          iconSource={Assets.internal.icons.x}
           onPress={this.onDismiss}
           paddingR-20
           accessibilityLabel={'dismiss'}

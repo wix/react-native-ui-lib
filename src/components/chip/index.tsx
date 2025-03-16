@@ -146,7 +146,7 @@ const Chip = ({
   containerStyle,
   onDismiss,
   dismissColor = Colors.$iconDefault,
-  dismissIcon = Assets.icons.x,
+  dismissIcon = Assets.internal.icons.x,
   dismissIconStyle,
   dismissContainerStyle,
   iconProps,

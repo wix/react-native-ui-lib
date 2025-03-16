@@ -32,7 +32,7 @@ const useDialogContent = (props: InternalDialogCloseButtonProps) => {
     return (
       <View left centerV pointerEvents={'box-none'}>
         <TouchableOpacity paddingB-s2 row onPress={close}>
-          <Icon source={Assets.icons.xMedium} tintColor={Colors.white} {...closeButtonProps?.iconProps}/>
+          <Icon source={Assets.internal.icons.xMedium} tintColor={Colors.white} {...closeButtonProps?.iconProps}/>
           <Text recorderTag={'unmask'} text70BO white {...closeButtonProps?.labelProps}>
             {closeButtonProps?.label || 'Close'}
           </Text>

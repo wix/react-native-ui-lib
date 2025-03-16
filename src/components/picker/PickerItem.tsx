@@ -23,7 +23,7 @@ const PickerItem = (props: PickerItemProps) => {
     label,
     labelStyle,
     disabled,
-    selectedIcon = Assets.icons.check,
+    selectedIcon = Assets.internal.icons.check,
     selectedIconColor = Colors.$iconPrimary,
     onPress,
     testID

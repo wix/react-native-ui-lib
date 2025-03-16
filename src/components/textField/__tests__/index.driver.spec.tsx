@@ -279,7 +279,7 @@ describe('TextField', () => {
             validateOnStart
             validate={'required'}
             validationMessage={'This field is required'}
-            validationIcon={{source: Assets.icons.check}}
+            validationIcon={{source: Assets.internal.icons.check}}
           />
         );
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});

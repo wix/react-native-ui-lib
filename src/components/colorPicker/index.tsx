@@ -95,7 +95,7 @@ const ColorPicker = (props: Props) => {
           style={styles.button}
           round
           outline
-          iconSource={Assets.icons.plusSmall}
+          iconSource={Assets.internal.icons.plusSmall}
           onPress={showDialog}
           testID={`${testID}-button`}
           accessibilityLabel={accessibilityLabels?.addButton}
