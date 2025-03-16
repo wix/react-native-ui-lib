@@ -53,9 +53,11 @@ const ComponentItem = (props: ComponentItemProps) => {
   }, []);
 
   const componentPreview = (
-    <LiveProvider code={code} scope={ReactLiveScope}>
-      <LivePreview/>
-    </LiveProvider>
+    <div className={styles.blocker}>
+      <LiveProvider code={code} scope={ReactLiveScope}>
+        <LivePreview/>
+      </LiveProvider>
+    </div>
   );
 
   const codePreview = <CodeBlock snippet={code} title="Code Example"/>;
