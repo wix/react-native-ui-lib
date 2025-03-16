@@ -1,0 +1,47 @@
+export const icons = {
+  get checkSmall() {
+    return {uri: require('./check-small.png'), dimensions: {width: 24, height: 24}};
+  },
+  get check() {
+    return {uri: require('./check.png'), dimensions: {width: 21, height: 15}};
+  },
+  get checkMarkSmall() {
+    return {uri: require('./checkMarkSmall.png'), dimensions: {width: 16, height: 16}};
+  },
+  get dropdown() {
+    return {uri: require('./dropdown.png'), dimensions: {width: 16, height: 16}};
+  },
+  get exclamationSmall() {
+    return {uri: require('./exclamationSmall.png'), dimensions: {width: 16, height: 16}};
+  },
+  get hintTipMiddle() {
+    return {uri: require('./hintTipMiddle.png'), dimensions: {width: 20, height: 7}};
+  },
+  get hintTipSide() {
+    return {uri: require('./hintTipSide.png'), dimensions: {width: 20, height: 24}};
+  },
+  get minusSmall() {
+    return {uri: require('./minusSmall.png'), dimensions: {width: 16, height: 16}};
+  },
+  get plusSmall() {
+    return {uri: require('./plusSmall.png'), dimensions: {width: 16, height: 16}};
+  },
+  get search() {
+    return {uri: require('./search.png'), dimensions: {width: 24, height: 24}};
+  },
+  get transparentSwatch() {
+    return {uri: require('./transparentSwatch.png'), dimensions: {width: 100, height: 100}};
+  },
+  get x() {
+    return {uri: require('./x.png'), dimensions: {width: 17, height: 16}};
+  },
+  get xFlat() {
+    return {uri: require('./xFlat.png'), dimensions: {width: 16, height: 16}};
+  },
+  get xMedium() {
+    return {uri: require('./xMedium.png'), dimensions: {width: 24, height: 24}};
+  },
+  get xSmall() {
+    return {uri: require('./xSmall.png'), dimensions: {width: 16, height: 16}};
+  },
+};
