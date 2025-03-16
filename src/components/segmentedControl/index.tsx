@@ -248,6 +248,8 @@ const SegmentedControl = (props: SegmentedControlProps) => {
       <View row center onLayout={containerOnLayout} style={[styles.container, style, {borderRadius, backgroundColor}]}>
         <View
           reanimated
+          // Using pointerEvents="box-none" to allow touch events to pass through to underlying components on Android
+          pointerEvents="box-none"
           style={[
             styles.selectedSegment,
             {
@@ -263,6 +265,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
         {shouldRenderDividers && (
           <View
             reanimated
+            pointerEvents="box-none"
             style={[
               styles.selectedSegment,
               {
