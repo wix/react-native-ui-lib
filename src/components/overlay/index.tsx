@@ -3,10 +3,7 @@ import React, {PureComponent} from 'react';
 import {StyleSheet, Image, ImageProps, ImageSourcePropType} from 'react-native';
 import {Colors} from '../../style';
 import View from '../view';
-
-const gradientImageLow = require('./assets/GradientOverlayLow.png');
-const gradientImageMed = require('./assets/GradientOverlayMedium.png');
-const gradientImageHigh = require('./assets/GradientOverlayHigh.png');
+import Assets from '../../assets';
 
 const OVERLY_TYPES = {
   VERTICAL: 'vertical',
@@ -94,11 +91,11 @@ class Overlay extends PureComponent<OverlayTypes> {
   getImageSource = (type?: OverlayTypeType, intensity?: OverlayTypes['intensity']) => {
     if (type !== OVERLY_TYPES.SOLID) {
       if (intensity === OverlayIntensityType.MEDIUM) {
-        return gradientImageMed;
+        return Assets.internal.images.gradientOverlayMedium;
       } else if (intensity === OverlayIntensityType.HIGH) {
-        return gradientImageHigh;
+        return Assets.internal.images.gradientOverlayHigh;
       } else {
-        return gradientImageLow;
+        return Assets.internal.images.gradientOverlayLow;
       }
     }
   };
