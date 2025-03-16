@@ -2,11 +2,17 @@ export const icons = {
   get check() {
     return require('./check.png');
   },
+  get checkMarkSmall() {
+    return require('./checkMarkSmall.png');
+  },
   get checkSmall() {
     return require('./check-small.png');
   },
   get dropdown() {
     return require('./dropdown.png');
+  },
+  get exclamationSmall() {
+    return require('./exclamationSmall.png');
   },
   get hintTipMiddle() {
     return require('./hintTipMiddle.png');
