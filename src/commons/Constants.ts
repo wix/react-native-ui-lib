@@ -5,7 +5,8 @@ import {
   I18nManager,
   AccessibilityInfo,
   AccessibilityChangeEvent,
-  StatusBar
+  StatusBar,
+  PixelRatio
 } from 'react-native';
 
 export enum orientations {
@@ -190,7 +191,10 @@ const constants = {
   },
   /* Keyboard */
   backspaceKey: 'Backspace',
-  enterKey: 'Enter'
+  enterKey: 'Enter',
+
+  /* Font scale */
+  getFontScale: PixelRatio.getFontScale
 };
 
 setStatusBarHeight();
