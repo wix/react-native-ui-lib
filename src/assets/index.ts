@@ -9,5 +9,8 @@ export default new Assets().loadAssetsGroup('', {
   },
   get images() {
     return require('./images').images;
+  },
+  get internal() {
+    return require('./internal').internal;
   }
 });
