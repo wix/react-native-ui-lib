@@ -1,0 +1,211 @@
+name: Label Issue Priority
+
+on:
+  # Run on new issues and when issues are edited or commented on
+  issues:
+    types: [opened, edited]
+  issue_comment:
+    types: [created, edited, deleted]
+  # Allow manual triggering
+  workflow_dispatch:
+    inputs:
+      process-all-issues:
+        description: 'Process all open issues'
+        type: boolean
+        default: false
+        required: false
+
+jobs:
+  label-issue-priority:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Process issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Define priority labels and thresholds
+            const PRIORITY_LABELS = {
+              HIGH: 'high-priority',
+              MEDIUM: 'medium-priority',
+              LOW: 'low-priority'
+            };
+            
+            const PRIORITY_THRESHOLDS = {
+              HIGH: 5,    // 5+ relevant users
+              MEDIUM: 3,  // 3-4 relevant users
+              LOW: 1      // 1-2 relevant users
+            };
+            
+            // Function to check if a user is an admin/maintainer
+            async function isAdmin(username) {
+              try {
+                const response = await github.rest.repos.getCollaboratorPermissionLevel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  username: username
+                });
+                
+                return ['admin', 'write'].includes(response.data.permission);
+              } catch (error) {
+                console.error(`Error checking permissions for ${username}:`, error);
+                return false;
+              }
+            }
+            
+            // Function to get all comments on an issue (including reactions)
+            async function getIssueComments(issueNumber) {
+              try {
+                // Get regular comments
+                const comments = await github.paginate(github.rest.issues.listComments, {
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issueNumber,
+                  per_page: 100
+                });
+                
+                // Get reactions on the issue itself
+                const reactions = await github.paginate(github.rest.reactions.listForIssue, {
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issueNumber,
+                  per_page: 100
+                });
+                
+                return { comments, reactions };
+              } catch (error) {
+                console.error(`Error fetching comments for issue #${issueNumber}:`, error);
+                return { comments: [], reactions: [] };
+              }
+            }
+            
+            // Function to count relevant users (non-admin users who commented or reacted)
+            async function countRelevantUsers(issueNumber, issueAuthor) {
+              const { comments, reactions } = await getIssueComments(issueNumber);
+              
+              // Get unique users who commented (excluding the issue author)
+              const commentUsers = [...new Set(comments.map(comment => comment.user.login))].filter(user => user !== issueAuthor);
+              
+              // Get unique users who reacted (excluding the issue author)
+              const reactionUsers = [...new Set(reactions.map(reaction => reaction.user.login))].filter(user => user !== issueAuthor);
+              
+              // Combine unique users from comments and reactions
+              const allUsers = [...new Set([...commentUsers, ...reactionUsers])];
+              
+              // Filter out admin users
+              const relevantUsers = [];
+              for (const user of allUsers) {
+                const isUserAdmin = await isAdmin(user);
+                if (!isUserAdmin) {
+                  relevantUsers.push(user);
+                }
+              }
+              
+              return relevantUsers.length;
+            }
+            
+            // Function to determine priority label based on relevant user count
+            function getPriorityLabel(relevantUserCount) {
+              if (relevantUserCount >= PRIORITY_THRESHOLDS.HIGH) {
+                return PRIORITY_LABELS.HIGH;
+              } else if (relevantUserCount >= PRIORITY_THRESHOLDS.MEDIUM) {
+                return PRIORITY_LABELS.MEDIUM;
+              } else if (relevantUserCount >= PRIORITY_THRESHOLDS.LOW) {
+                return PRIORITY_LABELS.LOW;
+              }
+              return null;
+            }
+            
+            // Function to update issue labels
+            async function updateIssueLabels(issueNumber, priorityLabel) {
+              try {
+                // Get current labels
+                const { data: currentLabels } = await github.rest.issues.get({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issueNumber
+                });
+                
+                // Remove existing priority labels
+                const labelsToKeep = currentLabels.labels
+                  .map(label => label.name)
+                  .filter(name => !Object.values(PRIORITY_LABELS).includes(name));
+                
+                // Add new priority label if applicable
+                if (priorityLabel) {
+                  labelsToKeep.push(priorityLabel);
+                }
+                
+                // Update labels
+                await github.rest.issues.setLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issueNumber,
+                  labels: labelsToKeep
+                });
+                
+                console.log(`Updated labels for issue #${issueNumber}`);
+              } catch (error) {
+                console.error(`Error updating labels for issue #${issueNumber}:`, error);
+              }
+            }
+            
+            // Process a single issue
+            async function processIssue(issueNumber) {
+              try {
+                console.log(`Processing issue #${issueNumber}...`);
+                
+                // Get issue details
+                const { data: issue } = await github.rest.issues.get({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issueNumber
+                });
+                
+                // Skip pull requests (they're also considered issues in the API)
+                if (issue.pull_request) {
+                  console.log(`Skipping PR #${issueNumber}`);
+                  return;
+                }
+                
+                // Count relevant users
+                const relevantUserCount = await countRelevantUsers(issueNumber, issue.user.login);
+                console.log(`Issue #${issueNumber} has ${relevantUserCount} relevant users`);
+                
+                // Determine priority label
+                const priorityLabel = getPriorityLabel(relevantUserCount);
+                
+                // Update issue labels
+                await updateIssueLabels(issueNumber, priorityLabel);
+              } catch (error) {
+                console.error(`Error processing issue #${issueNumber}:`, error);
+              }
+            }
+            
+            // Main execution
+            async function main() {
+              // Check if we're processing all issues or just the current one
+              const processAllIssues = context.payload.inputs && context.payload.inputs['process-all-issues'] === 'true';
+              
+              if (processAllIssues) {
+                // Process all open issues
+                const issues = await github.paginate(github.rest.issues.listForRepo, {
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  state: 'open',
+                  per_page: 100
+                });
+                
+                for (const issue of issues) {
+                  // Skip pull requests
+                  if (issue.pull_request) continue;
+                  
+                  await processIssue(issue.number);
+                }
+              } else if (context.payload.issue) {
+                // Process just the current issue
+                await processIssue(context.payload.issue.number);
+              }
+            }
+            
+            // Run the main function
+            await main();
