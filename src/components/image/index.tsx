@@ -244,6 +244,7 @@ class Image extends PureComponent<Props, State> {
       // @ts-ignore
       <ImageView
         style={[
+          Constants.isWeb && source?.dimensions,
           tintColor && {tintColor},
           shouldFlipRTL && styles.rtlFlipped,
           width && {width},
