@@ -14,6 +14,9 @@ export const icons = {
   get search() {
     return require('./search.png');
   },
+  get transparentSwatch() {
+    return require('./transparentSwatch.png');
+  },
   get x() {
     return require('./x.png');
   },
