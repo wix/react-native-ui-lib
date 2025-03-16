@@ -8,6 +8,12 @@ export const icons = {
   get dropdown() {
     return require('./dropdown.png');
   },
+  get hintTipMiddle() {
+    return require('./hintTipMiddle.png');
+  },
+  get hintTipSide() {
+    return require('./hintTipSide.png');
+  },
   get minusSmall() {
     return require('./minusSmall.png');
   },
