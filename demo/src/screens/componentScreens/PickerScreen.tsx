@@ -235,9 +235,12 @@ export default class PickerScreen extends Component {
             items={dialogOptions}
           />
 
-          <Text text70 $textDefault>
-            Selection Status:
-          </Text>
+          <View row spread centerV>
+            <Text text70 $textDefault>
+              Selection Status:
+            </Text>
+            <SegmentedControl segments={selectAllSegment} onChangeIndex={this._onSegmentChange}/>
+          </View>
           <Picker
             placeholder="Status"
             floatingPlaceholder
@@ -247,20 +250,7 @@ export default class PickerScreen extends Component {
             mode={Picker.modes.MULTI}
             items={statusOptions}
             selectionStatus={{selectAllType: this.state.selectAllType, buttonProps, checkboxProps}}
-            // renderCustomTopElement={value => {
-            //   const allOptionsSelected = Array.isArray(value) && value.length === statusOptions.length;
-            //   return (
-            //     <View margin-s3>
-            //       <Button
-            //         label={allOptionsSelected ? 'Unselect All' : 'Select All'}
-            //         onPress={() => this.onTopElementPress(allOptionsSelected)}
-            //         size="small"
-            //       />
-            //     </View>
-            //   );
-            // }}
           />
-          <SegmentedControl segments={selectAllSegment} onChangeIndex={this._onSegmentChange}/>
 
           <Text marginV-10 text70 $textDefault>
             Custom Picker:
