@@ -367,7 +367,8 @@ export interface PickerContextProps
   isMultiMode: boolean;
   onSelectedLayout: (event: any) => any;
   selectionLimit: PickerProps['selectionLimit'];
-  toggleAllItemsSelection?: (itemsToToggle: PickerMultiValue, select: boolean) => void;
+  availableItems: PickerMultiValue;
+  toggleAllItemsSelection?: (selectAll: boolean) => void;
 }
 
 export type PickerItemsListProps = Pick<

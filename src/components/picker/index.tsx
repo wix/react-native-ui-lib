@@ -105,7 +105,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     setSearchValue,
     onSearchChange: _onSearchChange
   } = usePickerSearch({showSearch, onSearchChange, getItemLabel, children, items});
-  const {multiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect, toggleAllItemsSelection} =
+  const {multiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect, availableItems, toggleAllItemsSelection} =
     usePickerSelection({
       migrate,
       value,
@@ -114,7 +114,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
       getItemValue,
       topBarProps,
       setSearchValue,
-      mode
+      mode,
+      items
     });
 
   const {label, accessibilityInfo} = usePickerLabel({
@@ -157,6 +158,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
       onSelectedLayout: onSelectedItemLayout,
       renderItem,
       selectionLimit,
+      availableItems,
       toggleAllItemsSelection
     };
   }, [
@@ -171,6 +173,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     onSelectedItemLayout,
     toggleItemSelection,
     onDoneSelecting,
+    availableItems,
     toggleAllItemsSelection
   ]);
 
