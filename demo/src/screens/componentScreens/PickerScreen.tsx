@@ -25,11 +25,7 @@ const tagIcon = require('../../assets/icons/tags.png');
 const dropdown = require('../../assets/icons/chevronDown.png');
 const dropdownIcon = <Icon source={dropdown} tintColor={Colors.$iconDefault}/>;
 
-const selectAllSegment = [
-  {label: Picker.selectAllType.button},
-  {label: Picker.selectAllType.checkbox},
-  {label: Picker.selectAllType.none}
-];
+const selectAllSegment = [{label: Picker.selectAllType.button}, {label: Picker.selectAllType.checkbox}];
 
 const buttonProps = {
   onPress: (items: any) => console.log('onPress', items)

@@ -20,7 +20,6 @@ export enum PickerFieldTypes {
 }
 
 export enum PickerSelectAllType {
-  none = 'none',
   button = 'button',
   checkbox = 'checkbox'
 }
@@ -195,13 +194,6 @@ export type CheckboxSelectionStatus = {
   checkboxProps?: CheckboxProps;
 };
 
-type NoneSelectionStatus = {
-  /**
-   * Select all element type
-   */
-  selectAllType: PickerSelectAllType.none | `${PickerSelectAllType.none}`;
-};
-
 type PickerSelectionStatusProps = {
   /**
    * A function that related data to show in the label
@@ -219,7 +211,7 @@ type PickerSelectionStatusProps = {
    * Custom label to show next to the selection element.
    */
   customLabel?: string;
-} & (ButtonSelectionStatus | CheckboxSelectionStatus | NoneSelectionStatus);
+} & (ButtonSelectionStatus | CheckboxSelectionStatus);
 
 export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
   PickerPropsDeprecation &
