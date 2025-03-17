@@ -5,13 +5,13 @@ import View from '../view';
 import Text from '../text';
 import {PickerItemProps, PickerProps, PickerContextProps, PickerMultiValue} from './types';
 
-export type PickerSelectionControlBarProps = PickerProps['selectionStatus'] &
+export type PickerSelectionStatusToolbarProps = PickerProps['selectionStatus'] &
   Partial<PickerContextProps> & {
     value?: PickerMultiValue;
     items?: PickerItemProps[];
   };
 
-export default function PickerSelectionControlBar(props: PickerSelectionControlBarProps) {
+export default function PickerSelectionStatusToolbar(props: PickerSelectionStatusToolbarProps) {
   const {
     selectAllType = 'none',
     buttonProps = {},
