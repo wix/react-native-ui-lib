@@ -60,10 +60,12 @@ export default function ComponentPage({component}) {
 
   const buildTabs = () => {
     const tabs = component.docs?.tabs;
-
+    const api = component.props;
+    const tabsArray = !_.isEmpty(api) ? [...tabs, devTab] : tabs;
+    
     // TODO: align Tabs bottom border with TabItem's selected indication line
     if (tabs) {
-      return <Tabs queryString="tab" className="main-tabs">{getTabItems([...tabs, devTab])}</Tabs>;
+      return <Tabs queryString="tab" className="main-tabs">{getTabItems(tabsArray)}</Tabs>;
     }
   };
 

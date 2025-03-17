@@ -40,7 +40,7 @@ export default () => {
         </div>
 
         <div className={styles.buttons}>
-          <Link to={`docs/${docsMainEntry}`}>
+          <Link to={`docs/${location.hostname === 'localhost' ? 'next/' : ''}${docsMainEntry}`}>
             <button className={'button dark'}>View Docs</button>
           </Link>
 

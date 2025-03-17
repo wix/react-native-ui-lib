@@ -3,12 +3,14 @@ import {StyleSheet} from 'react-native';
 import {LiveProvider, LiveEditor} from 'react-live';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import BrowserOnly from '@docusaurus/BrowserOnly';
+import CodeBlock from '@theme/CodeBlock';
 import {View, Colors} from 'react-native-ui-lib/core';
 import ReactLiveScope from '../theme/ReactLiveScope';
+import {isComponentSupported} from '../utils/componentUtils';
 
 export const IFRAME_MESSAGE_TYPE = 'LIVE_PREVIEW_CODE_UPDATE_MESSAGE';
 
-export default function UILivePreview({code: codeProp}) {
+export default function UILivePreview({code: codeProp, componentName = undefined, liveScopeSupport = false}) {
   const [code, setCode] = useState(codeProp);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const {siteConfig} = useDocusaurusContext();
@@ -28,6 +30,10 @@ export default function UILivePreview({code: codeProp}) {
   const liveEditorStyle = useMemo(() => {
     return {overflowY: 'scroll', scrollbarWidth: 'none'};
   }, []);
+
+  if (!liveScopeSupport && !isComponentSupported(componentName)) {
+    return <CodeBlock language="jsx">{code}</CodeBlock>;
+  }
 
   return (
     <BrowserOnly>
