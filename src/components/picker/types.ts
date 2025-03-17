@@ -176,7 +176,7 @@ export type ButtonSelectionStatus = {
   /**
    * Select all element type
    */
-  selectAllType: PickerSelectAllType.button | `${PickerSelectAllType.button}`;
+  selectAllType?: PickerSelectAllType.button | `${PickerSelectAllType.button}`;
   /**
    * Button props
    */
@@ -187,7 +187,7 @@ export type CheckboxSelectionStatus = {
   /**
    * Select all element type
    */
-  selectAllType: PickerSelectAllType.checkbox | `${PickerSelectAllType.checkbox}`;
+  selectAllType?: PickerSelectAllType.checkbox | `${PickerSelectAllType.checkbox}`;
   /**
    * Checkbox props
    */

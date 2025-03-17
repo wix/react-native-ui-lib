@@ -13,7 +13,7 @@ import {PickerItemProps, PickerItemsListProps, PickerSingleValue, PickerModes, P
 import PickerContext from './PickerContext';
 import PickerItem from './PickerItem';
 import {Constants} from '../../commons/new';
-import PickerSelectionStatusToolbar from './PickerSelectionStatusToolbar';
+import PickerSelectionStatusToolbar, {PickerSelectionStatusToolbarBaseProps} from './PickerSelectionStatusToolbar';
 
 const keyExtractor = (_item: string, index: number) => index.toString();
 
@@ -172,7 +172,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
   };
 
   const renderSelectionStatus = useMemo(() => {
-    const props = {...selectionStatus, items};
+    const props: PickerSelectionStatusToolbarBaseProps = {...selectionStatus, items};
     return (
       <PickerSelectionStatusToolbar
         {...props}
