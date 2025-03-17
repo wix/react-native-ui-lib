@@ -6,7 +6,7 @@ export const icons = {
     return require('./checkMarkSmall.png');
   },
   get checkSmall() {
-    return require('./check-small.png');
+    return require('./checkSmall.png');
   },
   get chevronDown() {
     return require('./chevronDown.png');
