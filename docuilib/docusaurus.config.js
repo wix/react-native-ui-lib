@@ -18,6 +18,7 @@ const darkCodeTheme = themes.dracula;
     trailingSlash: false,
     customFields: {
       docsMainEntry: 'getting-started/setup',
+      docsDevelopmentMainEntry: 'next/getting-started/setup',
       expoSnackLink: 'https://snack.expo.io/@ethanshar/rnuilib_snack',
       stars: '4.7'
     },
