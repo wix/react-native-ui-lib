@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
+import Heading from '@theme/Heading';
 import '../ComponentPage.module.scss';
-
 
 export const PropsList = ({props}) => {
   const getTypeColor = (type?: string) => {
@@ -16,7 +16,7 @@ export const PropsList = ({props}) => {
         return '#E8ECF0';
     }
   };
-  
+
   const getTag = (label, color) => {
     return (
       <div
@@ -24,7 +24,7 @@ export const PropsList = ({props}) => {
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
-          margin: '4px 12px 4px 0',
+          margin: '4px 0px 4px 12px',
           borderRadius: '2px',
           height: 20,
           backgroundColor: color
@@ -47,24 +47,35 @@ export const PropsList = ({props}) => {
   const getPropsList = () => {
     const descColor = getDescriptionColor('item');
     const sorted = _.sortBy(props, p => p.name);
-  
+
     return _.map(sorted, prop => {
       const defaultValue = prop.default ? `. Default is ${prop.default}` : '';
-  
+
       return (
-        <div className="column">
-          <div className="row" style={{marginBottom: 12}}>
-            <div style={{fontSize: '16px', fontWeight: '700', marginRight: 12, marginLeft: 16}}>{prop.name}</div>
+        <>
+          <Heading key={`${prop.name}-heading`} as="h4" style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}} id={prop.name}>
+            {prop.name}
             {getTag(prop.type, getTypeColor(prop.type))}
             {prop.required && getTag('Required', getTypeColor())}
             {prop.platform && getTag(prop.platform, getTypeColor())}
-          </div>
-          <span style={{display: 'block', marginBottom: prop.note ? 12 : 28, fontSize: '16px', fontWeight: '400', color: descColor}}>
+          </Heading>
+          <span
+            key={`${prop.name}-description`}
+            style={{
+              display: 'block',
+              marginBottom: prop.note ? 12 : 28,
+              fontSize: '16px',
+              fontWeight: '400',
+              color: descColor
+            }}
+          >
             {prop.description}
             {defaultValue}
           </span>
-          {prop.note && <span style={{display: 'block', marginBottom: 28, fontSize: '16px', fontWeight: '700'}}>{prop.note}</span>}
-        </div>
+          {prop.note && (
+            <span key={`${props.name}-note`} style={{display: 'block', marginBottom: 28, fontSize: '16px', fontWeight: '700'}}>{prop.note}</span>
+          )}
+        </>
       );
     });
   };
