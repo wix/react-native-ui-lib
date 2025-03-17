@@ -13,5 +13,14 @@ export const images = {
   },
   get gradientOverlayMedium() {
     return {uri: require('./gradientOverlayMedium.png'), dimensions: {width: 1, height: 75}};
+  },
+  get hintTipMiddle() {
+    return {uri: require('./hintTipMiddle.png'), dimensions: {width: 24, height: 24}};
+  },
+  get hintTipSide() {
+    return {uri: require('./hintTipSide.png'), dimensions: {width: 24, height: 24}};
+  },
+  get transparentSwatch() {
+    return {uri: require('./transparentSwatch.png'), dimensions: {width: 20, height: 20}};
   }
 };

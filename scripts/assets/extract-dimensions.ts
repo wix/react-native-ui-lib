@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const mime = require('mime-types');
+const sizeOf = require('image-size');
 
 // Base paths
 const ICONS_PATH = path.resolve(__dirname, '../../src/assets/internal/icons');
@@ -12,23 +13,6 @@ function isImageFile(filePath) {
   return !!mimeType && mimeType.includes('image');
 }
 
-// Hardcoded dimensions for common icon sizes
-const DEFAULT_DIMENSIONS = {
-  'minusSmall.png': {width: 16, height: 16},
-  'plusSmall.png': {width: 16, height: 16},
-  'search.png': {width: 24, height: 24},
-  'transparentSwatch.png': {width: 20, height: 20},
-  'x.png': {width: 24, height: 24},
-  'xFlat.png': {width: 24, height: 24},
-  'xMedium.png': {width: 20, height: 20},
-  'xSmall.png': {width: 16, height: 16},
-  'gradient.png': {width: 1, height: 24},
-  'gradientOverlay.png': {width: 1, height: 50},
-  'gradientOverlayHigh.png': {width: 1, height: 100},
-  'gradientOverlayLow.png': {width: 1, height: 25},
-  'gradientOverlayMedium.png': {width: 1, height: 75}
-};
-
 // Function to get dimensions of an image
 function getDimensions(imagePath) {
   try {
@@ -37,13 +21,17 @@ function getDimensions(imagePath) {
       return {width: 0, height: 0};
     }
     
-    const fileName = path.basename(imagePath);
-    if (DEFAULT_DIMENSIONS[fileName]) {
-      return DEFAULT_DIMENSIONS[fileName];
+    try {
+      const dimensions = sizeOf(imagePath);
+      return {
+        width: dimensions.width,
+        height: dimensions.height
+      };
+    } catch (sizeError) {
+      console.error(`Error getting dimensions for ${imagePath}:`, sizeError);
+      // Default dimensions if sizeOf fails
+      return {width: 24, height: 24};
     }
-    
-    // Default dimensions if not found
-    return {width: 24, height: 24};
   } catch (error) {
     console.error(`Error getting dimensions for ${imagePath}:`, error);
     return {width: 0, height: 0};

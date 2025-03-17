@@ -1,6 +1,6 @@
 export const icons = {
   get checkSmall() {
-    return {uri: require('./check-small.png'), dimensions: {width: 24, height: 24}};
+    return {uri: require('./checkSmall.png'), dimensions: {width: 24, height: 24}};
   },
   get check() {
     return {uri: require('./check.png'), dimensions: {width: 24, height: 24}};
@@ -8,17 +8,11 @@ export const icons = {
   get checkMarkSmall() {
     return {uri: require('./checkMarkSmall.png'), dimensions: {width: 24, height: 24}};
   },
-  get dropdown() {
-    return {uri: require('./dropdown.png'), dimensions: {width: 24, height: 24}};
+  get chevronDown() {
+    return {uri: require('./chevronDown.png'), dimensions: {width: 24, height: 24}};
   },
   get exclamationSmall() {
     return {uri: require('./exclamationSmall.png'), dimensions: {width: 24, height: 24}};
-  },
-  get hintTipMiddle() {
-    return {uri: require('./hintTipMiddle.png'), dimensions: {width: 24, height: 24}};
-  },
-  get hintTipSide() {
-    return {uri: require('./hintTipSide.png'), dimensions: {width: 24, height: 24}};
   },
   get minusSmall() {
     return {uri: require('./minusSmall.png'), dimensions: {width: 16, height: 16}};
@@ -28,9 +22,6 @@ export const icons = {
   },
   get search() {
     return {uri: require('./search.png'), dimensions: {width: 24, height: 24}};
-  },
-  get transparentSwatch() {
-    return {uri: require('./transparentSwatch.png'), dimensions: {width: 20, height: 20}};
   },
   get x() {
     return {uri: require('./x.png'), dimensions: {width: 24, height: 24}};
