@@ -88,13 +88,9 @@ function processComponents(components) {
     content += `sidebar_label: ${componentName}\n`;
     content += '---\n\n';
 
-    // if (component.docs) {
     content += `import ComponentPage from '@site/src/components/ComponentPage';\n\n`;
     const componentObject = JSON.stringify(component);
     content += `<ComponentPage component={${componentObject}}/>\n`;
-    // } else {
-    //   content += `${buildOldDocs(component)}\n`;
-    // }
 
     let dirPath;
     switch (component.category) {
