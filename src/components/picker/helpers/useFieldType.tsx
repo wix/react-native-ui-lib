@@ -22,7 +22,7 @@ const useFieldType = (props: UseFieldTypeProps) => {
         containerStyle: {flexDirection: 'row'},
         label,
         labelStyle: {...Typography.text70, color: Colors.$textNeutral},
-        trailingAccessory: trailingAccessory ?? <Icon marginL-s1 source={Assets.internal.icons.dropdown}/>
+        trailingAccessory: trailingAccessory ?? <Icon marginL-s1 source={Assets.internal.icons.chevronDown}/>
       };
     } else if (fieldType === PickerFieldTypes.settings) {
       return {

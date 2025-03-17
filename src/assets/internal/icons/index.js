@@ -8,8 +8,8 @@ export const icons = {
   get checkSmall() {
     return require('./check-small.png');
   },
-  get dropdown() {
-    return require('./dropdown.png');
+  get chevronDown() {
+    return require('./chevronDown.png');
   },
   get exclamationSmall() {
     return require('./exclamationSmall.png');
