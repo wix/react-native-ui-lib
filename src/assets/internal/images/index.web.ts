@@ -13,5 +13,5 @@ export const images = {
   },
   get gradientOverlayMedium() {
     return {uri: require('./gradientOverlayMedium.png'), dimensions: {width: 1, height: 75}};
-  },
+  }
 };

@@ -43,5 +43,5 @@ export const icons = {
   },
   get xSmall() {
     return {uri: require('./xSmall.png'), dimensions: {width: 16, height: 16}};
-  },
+  }
 };
