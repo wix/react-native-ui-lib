@@ -249,7 +249,15 @@ export default class PickerScreen extends Component {
             topBarProps={{title: 'Status'}}
             mode={Picker.modes.MULTI}
             items={statusOptions}
-            selectionStatus={{selectAllType: this.state.selectAllType, buttonProps, checkboxProps}}
+            selectionStatus={{
+              selectAllType: this.state.selectAllType,
+              buttonProps,
+              checkboxProps,
+              getLabel: data => {
+                const {selectedCount, isAllSelected} = data;
+                return `${selectedCount} ${isAllSelected ? 'All Items' : ' Items Are'} Selected`;
+              }
+            }}
           />
 
           <Text marginV-10 text70 $textDefault>

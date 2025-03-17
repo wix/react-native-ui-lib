@@ -168,16 +168,16 @@ type PickerExpandableOverlayProps = {
 };
 
 interface PickerSelectionStatusLabelOptions {
-  selectedCount?: number;
-  value?: PickerItemProps[];
-  isSelectedAll?: boolean;
+  selectedCount: number;
+  value: PickerMultiValue;
+  isAllSelected: boolean;
 }
 
 type PickerSelectionStatusProps = {
   /**
    * A function that related data to show in the label
    */
-  getLabel?: (data?: PickerSelectionStatusLabelOptions) => string;
+  getLabel?: (data: PickerSelectionStatusLabelOptions) => string;
   /**
    * Select all element type
    */

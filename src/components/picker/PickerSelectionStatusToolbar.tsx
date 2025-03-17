@@ -13,21 +13,23 @@ export type PickerSelectionStatusToolbarProps = PickerProps['selectionStatus'] &
 
 export default function PickerSelectionStatusToolbar(props: PickerSelectionStatusToolbarProps) {
   const {
-    selectAllType = 'none',
     buttonProps = {},
     checkboxProps = {},
     containerStyle,
-    value = [],
+    getLabel,
     items = [],
-    toggleAllItemsSelection,
+    selectAllType = 'none',
     showLabel = true,
-    customLabel
+    toggleAllItemsSelection,
+    value = []
   } = props;
 
   const availableItems = useMemo(() => items.filter(item => !item.disabled).map(item => item.value), [items]);
   const isAllSelected = value.length === availableItems.length;
   const checkboxIndeterminate = value.length > 0 && value.length < availableItems.length;
-  const defaultLabel = `${value.length} Selected ${isAllSelected ? '(All)' : ''}`;
+  const label =
+    getLabel?.({selectedCount: value.length, value, isAllSelected}) ??
+    `${value.length} Selected ${isAllSelected ? '(All)' : ''}`;
 
   const handlePress = useCallback(() => {
     const newSelectionState = !isAllSelected;
@@ -58,7 +60,7 @@ export default function PickerSelectionStatusToolbar(props: PickerSelectionStatu
 
   const renderLabel = () => {
     if (showLabel) {
-      return <Text>{customLabel || defaultLabel}</Text>;
+      return <Text>{label}</Text>;
     }
     return null;
   };
