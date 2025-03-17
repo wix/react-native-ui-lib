@@ -1,0 +1,75 @@
+{
+  "name": "TextFieldOld",
+  "category": "form",
+  "description": "A wrapper for TextInput component with extra functionality like floating placeholder and validations (This is an uncontrolled component)",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextFieldScreen/BasicTextFieldScreen.js",
+  "props": [
+    {
+      "name": "floatingPlaceholder",
+      "type": "boolean",
+      "description": "Should placeholder have floating behavior"
+    },
+    {
+      "name": "floatingPlaceholderColor",
+      "type": "string | object",
+      "description": "Floating placeholder color as a string or object of states"
+    },
+    {
+      "name": "floatingPlaceholderStyle",
+      "type": "object | number | array",
+      "description": "Custom style for floating placeholder"
+    },
+    {
+      "name": "helperText",
+      "type": "string",
+      "description": "This text will appear as a placeholder when the textInput becomes focused, only when passing floatingPlaceholder as well"
+    },
+    {
+      "name": "hideUnderline",
+      "type": "boolean",
+      "description": "Hide text input underline, by default false"
+    },
+    {
+      "name": "underlineColor",
+      "type": "string | object",
+      "description": "Underline color as a string or object of states"
+    },
+    {
+      "name": "disabledColor",
+      "type": "string",
+      "description": "The color of all text when the input is disabled"
+    },
+    {
+      "name": "centered",
+      "type": "boolean",
+      "description": "Should text input be align to center"
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "description": "Input error message, should be empty if no error exists"
+    },
+    {
+      "name": "enableErrors",
+      "type": "boolean",
+      "description": "Should the input component support error messages"
+    },
+    {
+      "name": "errorColor",
+      "type": "string",
+      "description": "Input error message's text color"
+    },
+    {
+      "name": "expandable",
+      "type": "boolean",
+      "description": "Should the input expand to another text area modal"
+    }
+  ],
+  "snippet": [
+    "<TextFieldOld",
+    "  placeholder=\"Enter text here\"",
+    "  floatingPlaceholder",
+    "  onChangeText={text => console.log(text)}",
+    "/>"
+  ]
+}

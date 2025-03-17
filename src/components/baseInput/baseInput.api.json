@@ -1,0 +1,60 @@
+{
+  "name": "BaseInput",
+  "category": "form",
+  "description": "Base component for text inputs with validation support",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextFieldScreen/InputsScreen.js",
+  "props": [
+    {
+      "name": "color",
+      "type": "string",
+      "description": "Text color"
+    },
+    {
+      "name": "containerStyle",
+      "type": "ViewStyle",
+      "description": "Text input container style"
+    },
+    {
+      "name": "validate",
+      "type": "string | function | array",
+      "description": "Validator type or custom validator function"
+    },
+    {
+      "name": "markRequired",
+      "type": "boolean",
+      "description": "Whether to mark required field with an asterisk"
+    },
+    {
+      "name": "errorMessage",
+      "type": "string | array",
+      "description": "The message to be displayed when the validation fails"
+    },
+    {
+      "name": "validateOnStart",
+      "type": "boolean",
+      "description": "Whether to run the validation on mount"
+    },
+    {
+      "name": "validateOnChange",
+      "type": "boolean",
+      "description": "Whether to run the validation on text changed"
+    },
+    {
+      "name": "validateOnBlur",
+      "type": "boolean",
+      "description": "Whether to run the validation on blur"
+    },
+    {
+      "name": "onChangeValidity",
+      "type": "function",
+      "description": "Callback for validity change"
+    }
+  ],
+  "snippet": [
+    "<BaseInput",
+    "  validate=\"required\"",
+    "  errorMessage=\"This field is required\"",
+    "  validateOnBlur",
+    "/>"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Inputs",
+  "category": "form",
+  "description": "Collection of input components",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextFieldScreen/InputsScreen.js",
+  "props": [],
+  "snippet": [
+    "import {Inputs} from 'react-native-ui-lib';",
+    "",
+    "// Access specific input components",
+    "const {TextField, MaskedInput, TextArea} = Inputs;"
+  ]
+}
