@@ -173,23 +173,40 @@ interface PickerSelectionStatusLabelOptions {
   isAllSelected: boolean;
 }
 
+export type ButtonSelectionStatus = {
+  /**
+   * Select all element type
+   */
+  selectAllType: PickerSelectAllType.button | `${PickerSelectAllType.button}`;
+  /**
+   * Button props
+   */
+  buttonProps?: ButtonProps;
+};
+
+export type CheckboxSelectionStatus = {
+  /**
+   * Select all element type
+   */
+  selectAllType: PickerSelectAllType.checkbox | `${PickerSelectAllType.checkbox}`;
+  /**
+   * Checkbox props
+   */
+  checkboxProps?: CheckboxProps;
+};
+
+type NoneSelectionStatus = {
+  /**
+   * Select all element type
+   */
+  selectAllType: PickerSelectAllType.none | `${PickerSelectAllType.none}`;
+};
+
 type PickerSelectionStatusProps = {
   /**
    * A function that related data to show in the label
    */
   getLabel?: (data: PickerSelectionStatusLabelOptions) => string;
-  /**
-   * Select all element type
-   */
-  selectAllType?: PickerSelectAllType | `${PickerSelectAllType}`;
-  /**
-   * Button props
-   */
-  buttonProps?: ButtonProps;
-  /**
-   * Checkbox props
-   */
-  checkboxProps?: CheckboxProps;
   /**
    * Custom container style
    */
@@ -202,7 +219,7 @@ type PickerSelectionStatusProps = {
    * Custom label to show next to the selection element.
    */
   customLabel?: string;
-};
+} & (ButtonSelectionStatus | CheckboxSelectionStatus | NoneSelectionStatus);
 
 export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
   PickerPropsDeprecation &
