@@ -51,7 +51,7 @@ export default class CheckboxScreen extends Component {
             borderRadius={2}
             size={30}
             color={Colors.purple30}
-            selectedIcon={Assets.internal.icons.x}
+            selectedIcon={Assets.icons.demo.x}
             marginL-s5
           />
 

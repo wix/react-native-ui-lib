@@ -235,7 +235,7 @@ exports[`Hint Screen component test Different positions and scenarios center pos
         onError={[Function]}
         source={
           {
-            "testUri": "../../../src/assets/internal/icons/hintTipSide.png",
+            "testUri": "../../../src/assets/internal/images/hintTipSide.png",
           }
         }
         style={
@@ -514,7 +514,7 @@ exports[`Hint Screen component test Different positions and scenarios center pos
         onError={[Function]}
         source={
           {
-            "testUri": "../../../src/assets/internal/icons/hintTipMiddle.png",
+            "testUri": "../../../src/assets/internal/images/hintTipMiddle.png",
           }
         }
         style={
@@ -794,7 +794,7 @@ exports[`Hint Screen component test Different positions and scenarios left posit
         onError={[Function]}
         source={
           {
-            "testUri": "../../../src/assets/internal/icons/hintTipSide.png",
+            "testUri": "../../../src/assets/internal/images/hintTipSide.png",
           }
         }
         style={
@@ -1073,7 +1073,7 @@ exports[`Hint Screen component test Different positions and scenarios left posit
         onError={[Function]}
         source={
           {
-            "testUri": "../../../src/assets/internal/icons/hintTipMiddle.png",
+            "testUri": "../../../src/assets/internal/images/hintTipMiddle.png",
           }
         }
         style={
@@ -1353,7 +1353,7 @@ exports[`Hint Screen component test Different positions and scenarios right posi
         onError={[Function]}
         source={
           {
-            "testUri": "../../../src/assets/internal/icons/hintTipSide.png",
+            "testUri": "../../../src/assets/internal/images/hintTipSide.png",
           }
         }
         style={
@@ -1632,7 +1632,7 @@ exports[`Hint Screen component test Different positions and scenarios right posi
         onError={[Function]}
         source={
           {
-            "testUri": "../../../src/assets/internal/icons/hintTipMiddle.png",
+            "testUri": "../../../src/assets/internal/images/hintTipMiddle.png",
           }
         }
         style={

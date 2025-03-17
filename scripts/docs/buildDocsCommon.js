@@ -31,6 +31,9 @@ const VALID_COMPONENTS_CATEGORIES = [
 
 function buildDocs(apiFolders, componentsPreProcess) {
   let components = readComponentsFromApiFiles(apiFolders);
+
+  logStatistics(components);
+
   components = componentsPreProcess?.(components) ?? components;
   resetDocsDir();
   processComponents(components);
@@ -134,6 +137,22 @@ function generateExtendsLink(extendsLink) {
   return extendsText;
 }
 
+function logStatistics(components) {
+  const groupedComponents = _.countBy(components, 'name');
+  const duplicateComponents = Object.entries(groupedComponents)
+    .filter(([_, count]) => count > 1)
+    .map(([name, count]) => `${name} (${count} times)`);
+
+  if (duplicateComponents.length > 0) {
+    console.log('Components with multiple occurrences:\n-', duplicateComponents.join('\n- '));
+  }
+
+  const componentsWithoutSnippet = components.filter(c => !c.snippet).map(c => c.name);
+  if (componentsWithoutSnippet.length > 0) {
+    console.log('Components missing snippet:\n-', componentsWithoutSnippet.join('\n- '));
+  }
+}
+
 function buildOldDocs(component) {
   let content = '';
   content += `import UILivePreview from '@site/src/components/UILivePreview';\n\n`;
@@ -197,8 +216,6 @@ function buildOldDocs(component) {
       ?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), ''))
       .join('\n')
       .toString()}\`}/>\n\n`;
-  } else {
-    console.warn(`${component.name} does not have a snippet`);
   }
 
   /* Props */

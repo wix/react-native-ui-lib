@@ -137,7 +137,7 @@ const Hint = (props: HintProps) => {
   };
 
   const renderHintTip = () => {
-    const source = useSideTip ? Assets.internal.icons.hintTipSide : Assets.internal.icons.hintTipMiddle;
+    const source = useSideTip ? Assets.internal.images.hintTipSide : Assets.internal.images.hintTipMiddle;
     const flipVertically = position === HintPositions.TOP;
     const flipHorizontally = targetAlignmentOnScreen === TargetAlignments.RIGHT;
     const flipStyle = {

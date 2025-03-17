@@ -24,7 +24,7 @@ const IconScreen = () => {
         <Icon
           size={customSize ? size : undefined}
           tintColor={customColor ? (color as string) : undefined}
-          source={Assets.internal.icons.search}
+          source={Assets.icons.demo.search}
           badgeProps={
             useBadge
               ? {

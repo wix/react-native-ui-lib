@@ -6,19 +6,13 @@ export const icons = {
     return require('./checkMarkSmall.png');
   },
   get checkSmall() {
-    return require('./check-small.png');
+    return require('./checkSmall.png');
   },
-  get dropdown() {
-    return require('./dropdown.png');
+  get chevronDown() {
+    return require('./chevronDown.png');
   },
   get exclamationSmall() {
     return require('./exclamationSmall.png');
-  },
-  get hintTipMiddle() {
-    return require('./hintTipMiddle.png');
-  },
-  get hintTipSide() {
-    return require('./hintTipSide.png');
   },
   get minusSmall() {
     return require('./minusSmall.png');
@@ -28,9 +22,6 @@ export const icons = {
   },
   get search() {
     return require('./search.png');
-  },
-  get transparentSwatch() {
-    return require('./transparentSwatch.png');
   },
   get x() {
     return require('./x.png');
