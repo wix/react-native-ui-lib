@@ -29,7 +29,9 @@ export default function PickerSelectionStatusToolbar(props: PickerSelectionStatu
     selectAllType = 'none',
     showLabel = true,
     toggleAllItemsSelection,
-    value = []
+    value = [],
+    renderTopCustomElement,
+    renderBottomCustomElement
   } = props;
 
   const isAllSelected = value.length === availableItems.length;
@@ -82,9 +84,13 @@ export default function PickerSelectionStatusToolbar(props: PickerSelectionStatu
   };
 
   return (
-    <View row spread centerV paddingH-page style={containerStyle}>
-      {renderLabel()}
-      {renderSelectionStatus()}
+    <View>
+      {renderTopCustomElement?.()}
+      <View row spread centerV paddingH-page style={containerStyle}>
+        {renderLabel()}
+        {renderSelectionStatus()}
+      </View>
+      {renderBottomCustomElement?.()}
     </View>
   );
 }
