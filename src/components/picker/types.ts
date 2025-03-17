@@ -207,10 +207,6 @@ type PickerSelectionStatusProps = {
    * Control weather to show the label or not
    */
   showLabel?: boolean;
-  /**
-   * Custom label to show next to the selection element.
-   */
-  customLabel?: string;
 } & (ButtonSelectionStatus | CheckboxSelectionStatus);
 
 export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
