@@ -14,12 +14,6 @@ export const icons = {
   get exclamationSmall() {
     return require('./exclamationSmall.png');
   },
-  get hintTipMiddle() {
-    return require('./hintTipMiddle.png');
-  },
-  get hintTipSide() {
-    return require('./hintTipSide.png');
-  },
   get minusSmall() {
     return require('./minusSmall.png');
   },
@@ -28,9 +22,6 @@ export const icons = {
   },
   get search() {
     return require('./search.png');
-  },
-  get transparentSwatch() {
-    return require('./transparentSwatch.png');
   },
   get x() {
     return require('./x.png');
