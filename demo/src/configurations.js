@@ -16,7 +16,10 @@ export const loadDemoConfigurations = () => {
     settings: require('./assets/icons/settings.png'),
     share: require('./assets/icons/share.png'),
     info: require('./assets/icons/info.png'),
-    exclamation: require('./assets/icons/exclamationFillSmall.png')
+    exclamation: require('./assets/icons/exclamationFillSmall.png'),
+    check: require('./assets/icons/check.png'),
+    x: require('./assets/icons/x.png'),
+    minus: require('./assets/icons/minusSmall.png')
   });
 
   Assets.loadAssetsGroup('images.demo', {
