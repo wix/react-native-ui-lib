@@ -30,7 +30,6 @@ export default function PickerSelectionStatusToolbar(props: PickerSelectionStatu
     showLabel = true,
     toggleAllItemsSelection,
     value = [],
-    renderTopCustomElement,
     renderBottomCustomElement
   } = props;
 
@@ -84,7 +83,6 @@ export default function PickerSelectionStatusToolbar(props: PickerSelectionStatu
 
   return (
     <View>
-      {renderTopCustomElement?.()}
       <View row spread centerV paddingH-page style={containerStyle}>
         {renderLabel()}
         {renderSelectionStatus()}

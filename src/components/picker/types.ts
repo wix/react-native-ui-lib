@@ -208,10 +208,6 @@ type PickerSelectionStatusProps = {
    */
   showLabel?: boolean;
   /**
-   * Top element to render above the selection toolbar
-   */
-  renderTopCustomElement?: () => React.ReactElement;
-  /**
    * Bottom element to render under the selection toolbar
    */
   renderBottomCustomElement?: () => React.ReactElement;
@@ -269,7 +265,7 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
      */
     renderCustomTopElement?: (value?: PickerValue) => React.ReactElement;
     /**
-     *
+     * Selection status toolbar props
      */
     selectionStatus?: PickerSelectionStatusProps;
     /**
