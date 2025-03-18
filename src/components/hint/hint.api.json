@@ -159,13 +159,37 @@
             ],
             "items": [
               {
-                "title": "Left"
+                "title": "Left",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Hint/hint_alignment_left_top.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Hint/hint_alignment_left_bottom.png"
+                  }
+                ]
               },
               {
-                "title": "Center"
+                "title": "Center",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Hint/hint_alignment_center_top.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Hint/hint_alignment_center_bottom.png"
+                  }
+                ]
               },
               {
-                "title": "Right"
+                "title": "Right",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Hint/hint_alignment_right_top.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Hint/hint_alignment_right_bottom.png"
+                  }
+                ]
               }
             ],
             "title": "Alignment",
@@ -179,10 +203,20 @@
             ],
             "items": [
               {
-                "title": "None"
+                "title": "None",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Hint/hint_accessories_none.png"
+                  }
+                ]
               },
               {
-                "title": "Icon"
+                "title": "Icon",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Hint/hint_accessories_icon.png"
+                  }
+                ]
               }
             ],
             "title": "Accessories"
