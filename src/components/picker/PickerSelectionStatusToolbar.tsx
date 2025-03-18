@@ -80,7 +80,6 @@ export default function PickerSelectionStatusToolbar(props: PickerSelectionStatu
     if (showLabel) {
       return <Text>{label}</Text>;
     }
-    return null;
   };
 
   return (
