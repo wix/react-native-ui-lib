@@ -37,7 +37,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     showLoader,
     customLoaderElement,
     renderCustomTopElement,
-    selectionStatus
+    selectionStatus: selectionStatusProps
   } = props;
   const context = useContext(PickerContext);
 
@@ -171,16 +171,19 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     );
   };
 
-  const renderSelectionStatus = useMemo(() => {
+  const selectionStatus = useMemo(() => {
     return (
-      <PickerSelectionStatusToolbar
-        {...selectionStatus}
-        availableItems={context?.availableItems}
-        value={context?.value as PickerMultiValue}
-        toggleAllItemsSelection={context?.toggleAllItemsSelection}
-      />
+      mode === PickerModes.MULTI &&
+      selectionStatusProps && (
+        <PickerSelectionStatusToolbar
+          {...selectionStatusProps}
+          availableItems={context?.availableItems}
+          value={context?.value as PickerMultiValue}
+          toggleAllItemsSelection={context?.toggleAllItemsSelection}
+        />
+      )
     );
-  }, [selectionStatus, context?.value, context?.availableItems, context?.toggleAllItemsSelection]);
+  }, [selectionStatusProps, mode, context?.value, context?.availableItems, context?.toggleAllItemsSelection]);
 
   const renderContent = () => {
     return useWheelPicker ? (
@@ -189,7 +192,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
       <>
         {renderSearchInput()}
         {renderCustomTopElement?.(context.value)}
-        {mode === PickerModes.MULTI && selectionStatus && renderSelectionStatus}
+        {selectionStatus}
         {renderList()}
       </>
     );
