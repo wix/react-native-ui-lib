@@ -122,7 +122,7 @@ export default class PickerScreen extends Component {
     selectAllType: Picker.selectAllType.button
   };
 
-  _onSegmentChange = (index: number) => {
+  onSegmentChange = (index: number) => {
     this.setState({selectAllType: Picker.selectAllType[selectAllSegment[index].label]});
   };
 
@@ -235,7 +235,7 @@ export default class PickerScreen extends Component {
             <Text text70 $textDefault>
               Selection Status:
             </Text>
-            <SegmentedControl segments={selectAllSegment} onChangeIndex={this._onSegmentChange}/>
+            <SegmentedControl segments={selectAllSegment} onChangeIndex={this.onSegmentChange}/>
           </View>
           <Picker
             placeholder="Status"
