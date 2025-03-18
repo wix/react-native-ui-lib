@@ -134,13 +134,11 @@ class PanListenerView extends PureComponent<Props> {
     const {dy, dx} = gestureState;
     const {directions, panSensitivity = DEFAULT_PAN_SENSITIVITY} = this.props;
 
-    return Boolean(
-      directions &&
+    return Boolean(directions &&
       ((directions.includes(PanningProvider.Directions.UP) && dy < -panSensitivity) ||
         (directions.includes(PanningProvider.Directions.DOWN) && dy > panSensitivity) ||
         (directions.includes(PanningProvider.Directions.LEFT) && dx < -panSensitivity) ||
-        (directions.includes(PanningProvider.Directions.RIGHT) && dx > panSensitivity))
-    );
+        (directions.includes(PanningProvider.Directions.RIGHT) && dx > panSensitivity)));
   };
 
   handlePanStart = () => {
