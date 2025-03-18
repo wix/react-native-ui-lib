@@ -9,7 +9,7 @@ import Text from '../text';
 import Icon from '../icon';
 import Button from '../button';
 import WheelPicker from '../WheelPicker';
-import {PickerItemProps, PickerItemsListProps, PickerSingleValue, PickerModes, PickerMultiValue} from './types';
+import {PickerItemProps, PickerItemsListProps, PickerSingleValue, PickerModes} from './types';
 import PickerContext from './PickerContext';
 import PickerItem from './PickerItem';
 import {Constants} from '../../commons/new';
@@ -171,19 +171,9 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     );
   };
 
-  const selectionStatus = useMemo(() => {
-    return (
-      mode === PickerModes.MULTI &&
-      selectionStatusProps && (
-        <PickerSelectionStatusToolbar
-          {...selectionStatusProps}
-          availableItems={context?.availableItems}
-          value={context?.value as PickerMultiValue}
-          toggleAllItemsSelection={context?.toggleAllItemsSelection}
-        />
-      )
-    );
-  }, [selectionStatusProps, mode, context?.value, context?.availableItems, context?.toggleAllItemsSelection]);
+  const selectionStatus = useMemo(() =>
+    mode === PickerModes.MULTI && selectionStatusProps && <PickerSelectionStatusToolbar {...selectionStatusProps}/>,
+  [selectionStatusProps, mode]);
 
   const renderContent = () => {
     return useWheelPicker ? (

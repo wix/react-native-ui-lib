@@ -169,7 +169,7 @@ type PickerExpandableOverlayProps = {
 interface PickerSelectionStatusLabelOptions {
   selectedCount: number;
   value: PickerMultiValue;
-  isAllSelected: boolean;
+  areAllItemsSelected: boolean;
 }
 
 export type ButtonSelectionStatus = {
@@ -367,7 +367,7 @@ export interface PickerContextProps
   isMultiMode: boolean;
   onSelectedLayout: (event: any) => any;
   selectionLimit: PickerProps['selectionLimit'];
-  availableItems: PickerMultiValue;
+  areAllItemsSelected: boolean;
   toggleAllItemsSelection?: (selectAll: boolean) => void;
 }
 

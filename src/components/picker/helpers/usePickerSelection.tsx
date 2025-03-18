@@ -52,6 +52,10 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     return items?.filter(item => !item.disabled).map(item => item.value) || [];
   }, [items]);
 
+  const areAllItemsSelected = useMemo(() => {
+    return multiDraftValue?.length === availableItems.length;
+  }, [multiDraftValue, availableItems]);
+
   const toggleAllItemsSelection = useCallback((selectAll: boolean) => {
     setMultiDraftValue(selectAll ? availableItems : []);
   },
@@ -63,7 +67,7 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     toggleItemSelection,
     cancelSelect,
     setMultiFinalValue,
-    availableItems,
+    areAllItemsSelected,
     toggleAllItemsSelection
   };
 };
