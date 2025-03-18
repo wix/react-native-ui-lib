@@ -178,7 +178,7 @@ class ColorSwatch extends PureComponent<Props & BaseComponentInjectedProps> {
       >
         {Colors.isTransparent(this.color) && (
           <Image
-            source={Assets.internal.icons.transparentSwatch}
+            source={Assets.internal.images.transparentSwatch}
             style={this.styles.transparentImage}
             resizeMode={'cover'}
           />
