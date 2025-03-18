@@ -42,7 +42,8 @@ describe('Checkbox renderer test', () => {
       checkboxInitialValue | checkboxExpectedValue
       ${false}             | ${true}
       ${true}              | ${false}
-    `('Send value ($checkboxInitialValue)',
+    `(
+      'Send value ($checkboxInitialValue)',
       async ({
         checkboxInitialValue,
         checkboxExpectedValue
@@ -58,7 +59,8 @@ describe('Checkbox renderer test', () => {
 
         expect(onValueChange).toHaveBeenCalledTimes(1);
         expect(onValueChange).toHaveBeenCalledWith(checkboxExpectedValue);
-      });
+      }
+    );
   });
 
   describe('Press', () => {

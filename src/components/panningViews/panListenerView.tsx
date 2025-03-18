@@ -204,7 +204,6 @@ class PanListenerView extends PureComponent<Props> {
         const data = {directions: panResult.selectedDirections, deltas: panResult.selectedAmounts};
         this.props.onDrag?.(data);
         context?.onDrag?.(data);
-  
       }
     }
   };

@@ -403,8 +403,9 @@ describe('TextField', () => {
 
     describe('helperText', () => {
       it('should display helperText', () => {
-        const renderTree = 
-          render(<TestCase {...defaultProps} placeholder={placeholder} hint={hint} helperText={helperText}/>);
+        const renderTree = render(
+          <TestCase {...defaultProps} placeholder={placeholder} hint={hint} helperText={helperText}/>
+        );
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
         expect(textFieldDriver.getHelperText().exists()).toBe(true);

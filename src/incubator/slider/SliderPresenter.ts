@@ -44,11 +44,15 @@ export function validateValues(props: SliderProps) {
     minimumValue > maximumValue ||
     (useRange && initialMinimumValue && initialMaximumValue && initialMinimumValue > initialMaximumValue)
   ) {
-    LogService.forwardError({message: 'Your passed values are invalid. Please check if minimum values are not higher than maximum values'});
+    LogService.forwardError({
+      message: 'Your passed values are invalid. Please check if minimum values are not higher than maximum values'
+    });
   }
   if (value !== undefined && minimumValue && maximumValue && !inRange(value, minimumValue, maximumValue)) {
-    LogService.forwardError({message: `Your passed value (${value}) is invalid. 
-      Please check that it is in range of the minimum (${minimumValue}) and maximum (${maximumValue}) values`});
+    LogService.forwardError({
+      message: `Your passed value (${value}) is invalid. 
+      Please check that it is in range of the minimum (${minimumValue}) and maximum (${maximumValue}) values`
+    });
   }
   if (useRange && initialMinimumValue && initialMaximumValue) {
     if (
