@@ -25,6 +25,25 @@ export const SectionHeader = ({section, component}) => {
     return type === 'item' ? '#6E7881' : '#495059';
   };
 
+  const getUsageTitle = () => {
+    if (component.snippet) {
+      return (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: 12
+          }}
+        >
+          {getTitle(type, title)}
+          {getCodeExampleLink()}
+        </div>
+      );
+    }
+  };
+
   const getCodeExampleLink = () => {
     return (
       <a
@@ -66,20 +85,7 @@ export const SectionHeader = ({section, component}) => {
 
   switch (type) {
     case 'usage':
-      return (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: 12
-          }}
-        >
-          {getTitle(type, title)}
-          {getCodeExampleLink()}
-        </div>
-      );
+      return getUsageTitle();
     default:
       return (
         <div

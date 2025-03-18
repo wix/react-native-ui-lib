@@ -12,7 +12,7 @@
     {
       "name": "animate",
       "type": "boolean",
-      "description": "Adds fade in animation when Avatar image loads",
+      "description": "Adds fade in animation when Avatar image loads. This prop isn't supported on web (will be set to false by default when using web).",
       "default": "false"
     },
     {"name": "backgroundColor", "type": "string", "description": "Background color for Avatar"},

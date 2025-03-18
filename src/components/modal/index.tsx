@@ -14,6 +14,7 @@ import {BlurViewPackage} from '../../optionalDependencies';
 import {Constants, asBaseComponent} from '../../commons/new';
 import TopBar, {ModalTopBarProps} from './TopBar';
 import View from '../../components/view';
+import {LogService} from 'services';
 
 const BlurView = BlurViewPackage?.BlurView;
 
@@ -73,7 +74,8 @@ class Modal extends Component<ModalProps> {
     super(props);
 
     if (props.enableModalBlur && !BlurView) {
-      console.error(`RNUILib Modal's "enableModalBlur" prop requires installing "@react-native-community/blur" dependency`);
+      // eslint-disable-next-line max-len
+      LogService.error(`RNUILib Modal's "enableModalBlur" prop requires installing "@react-native-community/blur" dependency`);
     }
   }
 

@@ -68,5 +68,131 @@
     "  autoDismiss={5000$2}",
     "  onDismiss={onDismiss$3}",
     ">"
-  ]
+  ],
+  "docs": {
+    "hero": {
+      "title": "Toast",
+      "description": "Toasts give quick feedback or updates without interrupting the user. They’re used for non-critical messages, like success notifications, and disappear on their own. Toasts can include one action, but it shouldn’t be “Dismiss” or “Close.”",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Toast/toast_cover.png"
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "section",
+            "title": "Usage Examples",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=4419-247566&embed-host=share"
+              }
+            ]
+          },
+          {
+            "type": "table",
+            "columns": ["Type of message", "Preview"],
+            "items": [
+              {
+                "title": "Generic",
+                "content": [
+                  {
+                    "props": {
+                      "visible": true,
+                      "message": "Mika Or was saved to contacts."
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Success"
+              },
+              {
+                "title": "Validation"
+              },
+              {
+                "title": "Offline Error"
+              }
+            ],
+            "title": "Types"
+          },
+          {
+            "type": "table",
+            "columns": ["Prop", "Preview"],
+            "items": [
+              {
+                "title": "None"
+              },
+              {
+                "title": "With action"
+              },
+              {
+                "title": "With loader"
+              }
+            ],
+            "title": "Accessories"
+          },
+          {
+            "type": "section",
+            "title": "Timing",
+            "description": "markdown:\nToast disappears automatically after 5-10 seconds. The **default** duration depends on text length: [word count / 2] = X secs to disappear  \nExamples: \n[15 words / 2] = 7.5 secs\n[2 words / 2] = 1, but 5 secs is minimum >> 5 secs  \nWhen using Toasts in your product, keep in mind that the default display time is preset but can be adjusted for messages that need more attention or reading time. However, the duration should never be less than 5 seconds."
+          },
+          {
+            "type": "section",
+            "layout": "horizontal",
+            "title": "Spec",
+            "description": "markdown:\n**Positioning**\nThe Toast appears at the bottom of the screen, while keeping a spacing of S4 from the bottom of the screen, or from the bottom bar.  \nThe Toast can be placed above CTA’s in order to keep the CTA available for the user.  \nToast can be dismissed manually by swiping it down.",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Toast/toast_spec.png"
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "title": "Tablet Spec",
+            "description": "markdown:\nWhen displaying a Toast on a Tablet, the width of the component adjusts to the content.  \n- Min-width: 200px  \n- Max-width: 524px",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Toast/toast_tablet.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "UX Guidelines",
+        "sections": [
+          {
+            "type": "list",
+            "items": [
+              {
+                "title": "",
+                "content": [
+                  {
+                    "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=4419-247566&embed-host=share"
+                  }
+                ]
+              },
+              {
+                "title": "",
+                "content": [
+                  {
+                    "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=4419-247643&embed-host=share"
+                  }
+                ]
+              }
+            ],
+            "title": "Do’s & Don’ts",
+            "description": "markdown:\n**Message Length**\nDo not display long messages in a Toast, keep the Toast message short and focused, yet informative.  \nFurther information regarding the phrasing of toast messages can be found in UX Writers - Toast Guidelines."
+          }
+        ]
+      }
+    ]
+  }
 }

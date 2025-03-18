@@ -1,0 +1,37 @@
+.showCodeButton {
+  position: absolute;
+  border: 0;
+  background: none;
+  color: rgb(56, 153, 236);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  right: 0px;
+  top: 0px;
+}
+
+.blocker {
+  pointer-events: none;
+}
+
+.componentExample {
+  display: flex;
+  justify-content: space-between;
+}
+
+.componentItemContainer {
+  position: relative;
+  height: 100%;
+}
+
+.componentSpotlightStyle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

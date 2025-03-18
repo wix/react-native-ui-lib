@@ -10,7 +10,7 @@ const STARS_COUNT_KEY = 'starsCount';
 
 export default () => {
   const {siteConfig} = useDocusaurusContext();
-  const {expoSnackLink, docsMainEntry} = siteConfig.customFields;
+  const {expoSnackLink, docsMainEntry, docsDevelopmentVersion} = siteConfig.customFields;
   const [starsCount, setStarsCount] = useState(localStorage.getItem(STARS_COUNT_KEY) ?? siteConfig.customFields.stars);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default () => {
         </div>
 
         <div className={styles.buttons}>
-          <Link to={`docs/${docsMainEntry}`}>
+          <Link to={`/docs/${location.hostname === 'localhost' ? `${docsDevelopmentVersion}/` : ''}${docsMainEntry}`}>
             <button className={'button dark'}>View Docs</button>
           </Link>
 
