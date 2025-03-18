@@ -28,7 +28,7 @@ const dropdownIcon = <Icon source={dropdown} tintColor={Colors.$iconDefault}/>;
 const selectAllSegment = [{label: Picker.selectAllType.button}, {label: Picker.selectAllType.checkbox}];
 
 const buttonProps = {
-  onPress: (items: any) => console.log('onPress', items)
+  onPress: (selectionValue: any) => console.log('onPress', selectionValue)
 };
 
 const checkboxProps = {

@@ -26,7 +26,7 @@ export default function PickerSelectionStatusToolbar(props: PickerSelectionStatu
     containerStyle,
     getSelectionStatusLabel,
     availableItems = [],
-    selectAllType = 'none',
+    selectAllType = 'button',
     showLabel = true,
     toggleAllItemsSelection,
     value = [],
@@ -54,7 +54,7 @@ export default function PickerSelectionStatusToolbar(props: PickerSelectionStatu
   const handlePress = useCallback(() => {
     const newSelectionState = !isAllSelected;
     toggleAllItemsSelection?.(newSelectionState);
-    buttonProps?.onPress?.(availableItems);
+    buttonProps?.onPress?.({selectionValue: newSelectionState});
     checkboxProps?.onValueChange?.(newSelectionState);
   }, [isAllSelected, toggleAllItemsSelection, availableItems, buttonProps, checkboxProps]);
 
