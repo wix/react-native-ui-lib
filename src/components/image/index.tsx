@@ -18,7 +18,7 @@ import {
   MarginModifiers
 } from '../../commons/new';
 import {RecorderProps} from '../../typings/recorderTypes';
-import {getAsset, isSvg} from '../../utils/imageUtils';
+import {getAsset, isSvg, extractImageSource} from '../../utils/imageUtils';
 import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
 import SvgImage from '../svgImage';
 import View from '../view';
@@ -165,11 +165,12 @@ class Image extends PureComponent<Props, State> {
   }
 
   getVerifiedSource(source?: ImageSourceType) {
-    if (_.get(source, 'uri') === null || _.get(source, 'uri') === '') {
+    const sourceUri = _.get(source, 'uri');
+    if (sourceUri === null || sourceUri === '') {
       // @ts-ignore
       return {...source, uri: undefined};
     }
-    return source;
+    return extractImageSource(source);
   }
 
   getImageSource() {
@@ -234,6 +235,7 @@ class Image extends PureComponent<Props, State> {
       modifiers,
       recorderTag,
       borderRadius,
+      source: _source,
       ...others
     } = this.props;
     const shouldFlipRTL = supportRTL && Constants.isRTL;
@@ -244,6 +246,8 @@ class Image extends PureComponent<Props, State> {
       // @ts-ignore
       <ImageView
         style={[
+          // @ts-ignore
+          {width: _source?.width, height: _source?.height},
           tintColor && {tintColor},
           shouldFlipRTL && styles.rtlFlipped,
           width && {width},
