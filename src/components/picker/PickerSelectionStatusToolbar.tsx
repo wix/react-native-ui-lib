@@ -24,7 +24,7 @@ export type PickerSelectionStatusToolbarProps =
 export default function PickerSelectionStatusToolbar(props: PickerSelectionStatusToolbarProps) {
   const {
     containerStyle,
-    getLabel,
+    getSelectionStatusLabel,
     availableItems = [],
     selectAllType = 'none',
     showLabel = true,
@@ -37,7 +37,7 @@ export default function PickerSelectionStatusToolbar(props: PickerSelectionStatu
   const isAllSelected = value.length === availableItems.length;
   const checkboxIndeterminate = value.length > 0 && value.length < availableItems.length;
   const label =
-    getLabel?.({selectedCount: value.length, value, isAllSelected}) ??
+    getSelectionStatusLabel?.({selectedCount: value.length, value, isAllSelected}) ??
     `${value.length} Selected ${isAllSelected ? '(All)' : ''}`;
 
   let buttonProps: ButtonSelectionStatus['buttonProps'] | undefined;

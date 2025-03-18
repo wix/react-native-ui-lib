@@ -196,9 +196,9 @@ export type CheckboxSelectionStatus = {
 
 type PickerSelectionStatusProps = {
   /**
-   * A function that related data to show in the label
+   * A function that generates a label based on the selected items' count and status
    */
-  getLabel?: (data: PickerSelectionStatusLabelOptions) => string;
+  getSelectionStatusLabel?: (data: PickerSelectionStatusLabelOptions) => string;
   /**
    * Custom container style
    */

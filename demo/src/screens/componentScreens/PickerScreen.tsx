@@ -248,11 +248,7 @@ export default class PickerScreen extends Component {
             selectionStatus={{
               selectAllType: this.state.selectAllType,
               buttonProps,
-              checkboxProps,
-              getLabel: data => {
-                const {selectedCount, isAllSelected} = data;
-                return `${selectedCount} ${isAllSelected ? 'All Items' : ' Items Are'} Selected`;
-              }
+              checkboxProps
             }}
           />
 
