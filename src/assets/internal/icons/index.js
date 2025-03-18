@@ -1,38 +1,38 @@
 export const icons = {
   get check() {
-    return require('./check.png');
+    return {uri: require('./check.png').default, width: 21, height: 15};
   },
   get checkMarkSmall() {
-    return require('./checkMarkSmall.png');
+    return {uri: require('./checkMarkSmall.png'), width: 16, height: 16};
   },
   get checkSmall() {
-    return require('./checkSmall.png');
+    return {uri: require('./checkSmall.png'), width: 24, height: 24};
   },
   get chevronDown() {
-    return require('./chevronDown.png');
+    return {uri: require('./chevronDown.png'), width: 16, height: 16};
   },
   get exclamationSmall() {
-    return require('./exclamationSmall.png');
+    return {uri: require('./exclamationSmall.png'), width: 16, height: 16};
   },
   get minusSmall() {
-    return require('./minusSmall.png');
+    return {uri: require('./minusSmall.png'), width: 16, height: 16};
   },
   get plusSmall() {
-    return require('./plusSmall.png');
+    return {uri: require('./plusSmall.png'), width: 16, height: 16};
   },
   get search() {
-    return require('./search.png');
+    return {uri: require('./search.png'), width: 24, height: 24};
   },
   get x() {
-    return require('./x.png');
+    return {uri: require('./x.png'), width: 17, height: 16};
   },
   get xFlat() {
-    return require('./xFlat.png');
+    return {uri: require('./xFlat.png'), width: 16, height: 16};
   },
   get xMedium() {
-    return require('./xMedium.png');
+    return {uri: require('./xMedium.png'), width: 24, height: 24};
   },
   get xSmall() {
-    return require('./xSmall.png');
+    return {uri: require('./xSmall.png'), width: 16, height: 16};
   }
 };

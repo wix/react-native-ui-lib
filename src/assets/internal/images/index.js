@@ -1,26 +1,26 @@
 export const images = {
   get gradient() {
-    return require('./gradient.png');
+    return {uri: require('./gradient.png'), width: 56, height: 2};
   },
   get gradientOverlay() {
-    return require('./gradientOverlay.png');
+    return {uri: require('./gradientOverlay.png'), width: 76, height: 48};
   },
   get gradientOverlayHigh() {
-    return require('./gradientOverlayHigh.png');
+    return {uri: require('./gradientOverlayHigh.png'), width: 1, height: 297};
   },
   get gradientOverlayLow() {
-    return require('./gradientOverlayLow.png');
+    return {uri: require('./gradientOverlayLow.png'), width: 1, height: 297};
   },
   get gradientOverlayMedium() {
-    return require('./gradientOverlayMedium.png');
+    return {uri: require('./gradientOverlayMedium.png'), width: 1, height: 297};
   },
   get hintTipMiddle() {
-    return require('./hintTipMiddle.png');
+    return {uri: require('./hintTipMiddle.png'), width: 20, height: 7};
   },
   get hintTipSide() {
-    return require('./hintTipSide.png');
+    return {uri: require('./hintTipSide.png'), width: 20, height: 24};
   },
   get transparentSwatch() {
-    return require('./transparentSwatch.png');
+    return {uri: require('./transparentSwatch.png'), width: 100, height: 100};
   }
 };
