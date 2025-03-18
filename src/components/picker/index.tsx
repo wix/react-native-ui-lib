@@ -316,7 +316,7 @@ Picker.modes = PickerModes;
 Picker.fieldTypes = PickerFieldTypes;
 // @ts-expect-error
 Picker.extractPickerItems = extractPickerItems;
-//@ts-ignore
+//@ts-expect-error
 Picker.selectAllType = PickerSelectAllType;
 
 export {
