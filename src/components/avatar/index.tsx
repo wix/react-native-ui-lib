@@ -49,7 +49,6 @@ export type AutoColorsProps = {
 };
 
 export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> &
-  Pick<TextProps, 'ellipsizeMode'> &
   PropsWithChildren<{
     /**
      * Adds fade in animation when Avatar image loads
@@ -122,6 +121,10 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> &
      * The label color
      */
     labelColor?: string;
+    /*
+     * The ellipsize mode for the label, default is clip
+     */
+    labelEllipsizeMode?: TextProps['ellipsizeMode'];
     /**
      * ribbon label to display on the avatar
      */
@@ -187,7 +190,7 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
     useAutoColors,
     autoColorsConfig,
     containerStyle,
-    ellipsizeMode = 'clip',
+    labelEllipsizeMode = 'clip',
     onPress,
     children
   } = themeProps;
@@ -357,7 +360,7 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
     >
       <View testID={`${testID}.container`} style={textContainerStyle}>
         {!_.isUndefined(text) && (
-          <Text numberOfLines={1} ellipsizeMode={ellipsizeMode} style={textStyle} testID={`${testID}.label`}>
+          <Text numberOfLines={1} ellipsizeMode={labelEllipsizeMode} style={textStyle} testID={`${testID}.label`}>
             {text}
           </Text>
         )}
