@@ -1,6 +1,6 @@
 export const icons = {
   get check() {
-    return {uri: require('./check.png').default, width: 21, height: 15};
+    return {uri: require('./check.png'), width: 21, height: 15};
   },
   get checkMarkSmall() {
     return {uri: require('./checkMarkSmall.png'), width: 16, height: 16};
