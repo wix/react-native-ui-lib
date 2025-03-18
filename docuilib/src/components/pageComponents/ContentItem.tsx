@@ -1,4 +1,5 @@
 import React, {ComponentProps, useCallback, useMemo, useState} from 'react';
+import _ from 'lodash';
 import '../ComponentPage.module.scss';
 import {LiveProvider, LivePreview} from 'react-live';
 import styles from './ContentItem.module.scss';
@@ -110,13 +111,17 @@ export const ContentItem = ({item, componentName, showCodeButton, isIncubator}: 
   const value = item.value;
 
   if (item.props || item.snippet) {
-    const name = item.component ?? componentName;
-    const isComponentExists = isIncubator ? !!ReactLiveScope?.Incubator[name] : !!ReactLiveScope[name];
+    let name = item.component ?? componentName;
+    if (isIncubator) {
+      name = `Incubator.${name}`;
+    }
+
+    const isComponentExists = !!_.get(ReactLiveScope, name);
 
     if (isComponentExists) {
       return (
         <ComponentItem
-          componentName={isIncubator ? `Incubator.${name}` : name}
+          componentName={name}
           props={item.props}
           snippet={item.snippet}
           showCodeButton={showCodeButton}
