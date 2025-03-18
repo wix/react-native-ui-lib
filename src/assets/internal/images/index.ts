@@ -22,5 +22,5 @@ export const images = {
   },
   get transparentSwatch() {
     return {uri: require('./transparentSwatch.png'), dimensions: {width: 100, height: 100}};
-  },
+  }
 };
