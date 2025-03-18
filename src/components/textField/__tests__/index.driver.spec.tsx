@@ -233,7 +233,7 @@ describe('TextField', () => {
           enableErrors
           validateOnStart
           validateOnChange
-                                  />);
+        />);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
         expect(textFieldDriver.getValidationMessage().getText()).toEqual('email is invalid');
@@ -277,7 +277,7 @@ describe('TextField', () => {
           validate={'required'}
           validationMessage={'This field is required'}
           validationIcon={{source: Assets.internal.icons.check}}
-                                  />);
+        />);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
         expect(textFieldDriver.getValidationMessage().exists()).toBe(true);
