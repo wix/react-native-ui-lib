@@ -108,13 +108,403 @@
   ],
   "snippet": [
     "<Picker",
-    "  value={currentValue$1}",
+    "  value={2$1}",
     "  placeholder={'Placeholder'$2}",
     "  onChange={() => console.log('changed')$3}",
+    " items={[{label: 'Item 1', value: 1}, {label: 'Item 2', value: 2},{label: 'Item 3', value: 3}]}",
     ">",
-    "  {_.map(items, item => (",
-    "   return renderItem(item, index);",
-    "  ))$4}",
     "</Picker>"
-  ]
+  ],
+  "docs": {
+    "hero": {
+      "title": "Picker",
+      "description": "Picker allows the user to select an option from a variety of choices available.Pressing the Picker Field, will open a dialog or modal displaying a list of available options for selection.",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Picker/picker_cover.png"
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "section",
+            "title": "Usage Example",
+            "description": "Pickers allow selection of an option or multiple options from a list usually displayed using an actionSheet. Pickers can be used in forms, settings screens or as part of an interactive flow.",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=4415-185562&embed-host=share"
+              }
+            ]
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "title": "Form Field (default)",
+                "description": "Mainly used as part of a form, works cohesively with the text field component and other form related components.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Picker/picker_types_form.png"
+                  }
+                ]
+              },
+              {
+                "title": "Filter Field",
+                "description": "Used mostly for filtering a screen or part of it. Can be combined with search functionality.\nThe colon symbol in the Label is not part of the component itself and should be included as part of the text string.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Picker/picker_types_filter.png"
+                  }
+                ]
+              },
+              {
+                "title": "Settings Field",
+                "description": "Based on ListItem component.\nUsed mostly when the picker is part of a settings screen.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Picker/picker_types_settings.png"
+                  }
+                ]
+              }
+            ],
+            "layout": "horizontal",
+            "title": "Picker Types",
+            "description": "Various types of pickers are available to accommodate different needs and use cases. "
+          },
+          {
+            "type": "section",
+            "title": "Picker Types Examples",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=4415-185650&embed-host=share"
+              }
+            ]
+          },
+          {
+            "type": "table",
+            "columns": ["State/Type/Preset", "Preview"],
+            "items": [
+              {
+                "title": "Default",
+                "content": [
+                  {
+                    "flexed": true,
+                    "props": {
+                      "preset": "outline",
+                      "label": "Label",
+                      "placeholder": "Select"
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Value selected + icon prefix ",
+                "content": [
+                  {
+                    "flexed": true,
+                    "snippet": "<Picker preset='outline' placeholder='select' leadingAccessory={<Icon source={Assets.icons.general.favorite}/>} items={[{label: 'Selected Value', value: 1}]} value={1}/>"
+                  }
+                ]
+              },
+              {
+                "title": "Disabled",
+                "content": [
+                  {
+                    "flexed": true,
+                    "props": {
+                      "preset": "outline",
+                      "label": "Label",
+                      "placeholder": "Select",
+                      "editable": false
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Validation error (value not selected)",
+                "content": [
+                  {
+                    "flexed": true,
+                    "props": {
+                      "preset": "outline",
+                      "label": "Label",
+                      "placeholder": "Select",
+                      "validationMessage": "Validation message"
+                    }
+                  }
+                ]
+              }
+            ],
+            "title": "Form Field"
+          },
+          {
+            "type": "table",
+            "columns": ["State/Type/Preset", "Preview"],
+            "items": [
+              {
+                "title": "Default",
+                "content": [
+                  {
+                    "props": {
+                      "items": [
+                        {
+                          "label": "Selected Value",
+                          "value": 1
+                        }
+                      ],
+                      "value": 1,
+                      "fieldType": "filter"
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "With label",
+                "content": [
+                  {
+                    "props": {
+                      "label": "Label: ",
+                      "items": [
+                        {
+                          "label": "Selected Value",
+                          "value": 1
+                        }
+                      ],
+                      "value": 1,
+                      "fieldType": "filter"
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Multiple values selected",
+                "content": [
+                  {
+                    "props": {
+                      "mode": "MULTI",
+                      "items": [
+                        {
+                          "label": "Value 1",
+                          "value": 1
+                        },
+                        {
+                          "label": "Value 2",
+                          "value": 2
+                        }
+                      ],
+                      "value": [1, 2],
+                      "fieldType": "filter"
+                    }
+                  }
+                ]
+              }
+            ],
+            "title": "Filter Field"
+          },
+          {
+            "type": "table",
+            "columns": ["State/Type/Preset", "Preview"],
+            "items": [
+              {
+                "title": "Default",
+                "content": [
+                  {
+                    "background": "#E8ECF0",
+                    "flexed": true,
+                    "snippet": "<View bg-$backgroundDefault padding-20><Picker label='Label' placeholder='Select' fieldType='settings'/></View>"
+                  }
+                ]
+              },
+              {
+                "title": "Value selected + icon prefix ",
+                "content": [
+                  {
+                    "background": "#E8ECF0",
+                    "flexed": true,
+                    "snippet": "<View bg-$backgroundDefault padding-20><Picker label='Label' placeholder='Select' value={1} fieldType='settings' items={[{label: 'Selected value', value: 1}]}/></View>",
+                    "props": {
+                      "label": "Label",
+                      "placeholder": "Select",
+                      "fieldType": "settings",
+                      "items": [
+                        {
+                          "label": "Selected Value",
+                          "value": 1
+                        }
+                      ],
+                      "value": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "title": "Settings Field"
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "title": "Dialog",
+                "description": "Recommended for short value lists.",
+                "content": [
+                  {
+                    "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=4415-185705&embed-host=share"
+                  }
+                ]
+              },
+              {
+                "title": "Modal",
+                "description": "Used for longer lists like country selection, currency selection or a language picker.",
+                "content": [
+                  {
+                    "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=4415-185740&embed-host=share"
+                  }
+                ]
+              }
+            ],
+            "layout": "horizontal",
+            "title": "Picker Values display options",
+            "description": "The Picker component serves as an entry point to a list of selectable values, usually displayed in a modal or a dialog."
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "title": "Single selection",
+                "description": "Tapping on an item will select it and close the dialog. In scrollable long lists, the selected item will be displayed at the top of the list to stay visible. ",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Picker/picker_values_dialog_single.png"
+                  }
+                ]
+              },
+              {
+                "title": "Multi-select",
+                "description": "In multi-select dialogs, a clear CTA for “Done” or “Save” is required to confirm the selection and dismiss the dialog.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Picker/picker_values_dialog_multiple.png"
+                  }
+                ]
+              }
+            ],
+            "layout": "horizontal",
+            "title": "Values displayed in Dialog",
+            "description": "The Picker component serves as an entry point to a list of selectable values, usually displayed in a modal or a dialog."
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "title": "Maximum Selected",
+                "description": "When the user reaches the limited amount of options allowed to select, the non-selected options will become disabled to restrict the user from selecting more options.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Picker/picker_dialog_states_max.png"
+                  }
+                ]
+              },
+              {
+                "title": "Validation Error",
+                "description": "markdown:Product can set the minimum amount for the selected options. If the user selects less options than the minimum:  \n- Display a validation error in the picker header. The error text should explain the user should select at least one option.\n- The dialog CTA will become disabled.\n- If the user will close the dialog, the changes won’t be saved.\n- When the user selects the minimum required options, the validation error will disappear and the CTA will become active.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Picker/picker_dialog_states_validation.png"
+                  }
+                ]
+              },
+              {
+                "title": "Loading Data",
+                "description": "If the data can't be loaded before opening the dialog, a Loader should be shown to let the user know that content is being fetched.\nThe search input is hidden while loading.\nSince the number of items to be loaded is unpredictable, a fixed spacing of 120px below and above the loader has been set.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Picker/picker_dialog_states_loading.png"
+                  }
+                ]
+              }
+            ],
+            "title": "Dialog States",
+            "layout": "horizontal"
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "title": "Single selection",
+                "description": "Tapping on one of the list items will select it and close the modal. The CTA is optional and disabled by default. It can be added in cases where users might not expect or want the modal to auto-dismiss upon selection.\nThe selected Item is hoisted on top of long lists by default (placed above other values). This can also be set for short lists.\nA search bar can be added on top of the values list.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Picker/picker_modal_single.png"
+                  }
+                ]
+              },
+              {
+                "title": "Multi-select",
+                "description": "In multi-selection dialogs, a CTA for “Done” or “Save” is required to confirm the selection and dismiss the modal.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Picker/picker_modal_multiple.png"
+                  }
+                ]
+              },
+              {
+                "title": "Select all",
+                "description": "Providing a clear “select all” action is a good practice. In case all items are selected, display a “clear all” action. Make sure items number is clearly displayed according to the selection.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Picker/picker_modal_selectAll.png"
+                  }
+                ]
+              },
+              {
+                "title": "Select all checkbox",
+                "description": "In some cases, using checkbox for the “select all” action will be more appropriate. Note that “select all” checkbox can use an “indeterminate” state, if needed. \nMake sure that selected items number is clearly displayed. ",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Picker/picker_modal_selectAll_checkbox.png"
+                  }
+                ]
+              },
+              {
+                "title": "Loading Data",
+                "description": "If the data can't be loaded prior to opening the modal, a Loader should be shown, indicating that content is being fetched.\nSearch input is hidden while loading, and the loader is aligned to the center of the screen.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Picker/picker_modal_loading.png"
+                  }
+                ]
+              }
+            ],
+            "layout": "horizontal",
+            "title": "Values displayed in Modal",
+            "description": "This type of selection list is used for long lists, e.g. contacts, countries and currencies."
+          },
+          {
+            "type": "section",
+            "title": "Picker Presets",
+            "description": "Pickers allow selection of an option/value or multiple options/values from a list. Pickers can be used in forms, settings screens or as part of an interactive flow. ",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=4418-192956&embed-host=share"
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "title": "Spec",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Picker/picker_spec.png"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }

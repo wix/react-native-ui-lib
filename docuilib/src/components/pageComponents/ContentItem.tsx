@@ -9,7 +9,8 @@ import CodeIcon from '../../assets/icons/code';
 type ComponentItemProps = {
   componentName: string;
   props?: Record<string, unknown> | Record<string, unknown>[];
-  snippet?: string
+  snippet?: string;
+  flexed?: boolean;
   showCodeButton?: boolean;
 };
 
@@ -32,7 +33,7 @@ function generateComponentCodeSnippet(componentName: string, componentProps: Rec
 }
 
 const ComponentItem = (props: ComponentItemProps) => {
-  const {componentName, props: componentProps, snippet, showCodeButton = false} = props;
+  const {componentName, props: componentProps, snippet, flexed, showCodeButton = false} = props;
   const [showCode, setShowCode] = useState(false);
 
   const code = useMemo(() => {
@@ -53,9 +54,9 @@ const ComponentItem = (props: ComponentItemProps) => {
   }, []);
 
   const componentPreview = (
-    <div className={styles.blocker}>
+    <div className={`${styles.blocker} ${flexed ? styles.flexed : ''}`}>
       <LiveProvider code={code} scope={ReactLiveScope}>
-        <LivePreview/>
+        <LivePreview style={{width: '100%'}}/>
       </LiveProvider>
     </div>
   );
@@ -83,19 +84,12 @@ type Item = {
   value?: any;
   snippet?: string;
   height?: number;
+  flexed?: boolean;
 };
 type ContentItemProps = {
   item: Item;
   componentName: string;
   showCodeButton?: boolean;
-};
-
-const extractComponentFromSnippet = (snippet: string) => {
-  if (!snippet.startsWith('<')) {
-    return;
-  }
-  const firstWord = snippet.split(' ')[0];
-  return firstWord.slice(1);
 };
 
 export const ContentItem = ({item, componentName, showCodeButton}: ContentItemProps) => {
@@ -115,12 +109,12 @@ export const ContentItem = ({item, componentName, showCodeButton}: ContentItemPr
   const value = item.value;
 
   if (item.props || item.snippet) {
-    const name = item.snippet ? extractComponentFromSnippet(item.snippet) : item.component ?? componentName;
+    const name = item.component ?? componentName;
     const isComponentExists = !!ReactLiveScope[name];
 
     if (isComponentExists) {
       return (
-        <ComponentItem componentName={name} props={item.props} snippet={item.snippet} showCodeButton={showCodeButton}/>
+        <ComponentItem componentName={name} props={item.props} snippet={item.snippet} showCodeButton={showCodeButton} flexed={item.flexed}/>
       );
     } else if (!value) {
       return <div style={{color: 'red'}}>Component Not Supported</div>;
