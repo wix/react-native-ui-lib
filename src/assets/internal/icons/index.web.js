@@ -14,8 +14,20 @@ export const icons = {
   get exclamationSmall() {
     return {uri: require('./exclamationSmall.png'), width: 16, height: 16};
   },
+  get minusOutline() {
+    return {uri: require('./minusOutline.png'), width: 32, height: 32};
+  },
+  get minusOutlineSmall() {
+    return {uri: require('./minusOutlineSmall.png'), width: 24, height: 24};
+  },
   get minusSmall() {
     return {uri: require('./minusSmall.png'), width: 16, height: 16};
+  },
+  get plusOutline() {
+    return {uri: require('./plusOutline.png'), width: 32, height: 32};
+  },
+  get plusOutlineSmall() {
+    return {uri: require('./plusOutlineSmall.png'), width: 24, height: 24};
   },
   get plusSmall() {
     return {uri: require('./plusSmall.png'), width: 16, height: 16};
