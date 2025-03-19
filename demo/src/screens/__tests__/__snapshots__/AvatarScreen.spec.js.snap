@@ -944,6 +944,7 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           style={
             [
+              false,
               undefined,
               undefined,
               {
@@ -1202,6 +1203,7 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           style={
             [
+              false,
               undefined,
               undefined,
               {
@@ -1474,6 +1476,7 @@ exports[`AvatarScreen renders screen 1`] = `
             }
             style={
               [
+                false,
                 undefined,
                 undefined,
                 {
@@ -1669,6 +1672,7 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           style={
             [
+              false,
               undefined,
               undefined,
               {
@@ -1927,6 +1931,7 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           style={
             [
+              false,
               undefined,
               undefined,
               {
@@ -2057,6 +2062,7 @@ exports[`AvatarScreen renders screen 1`] = `
               }
               style={
                 [
+                  false,
                   null,
                   undefined,
                   undefined,
@@ -2230,6 +2236,7 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           style={
             [
+              false,
               undefined,
               undefined,
               {
@@ -2462,6 +2469,7 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           style={
             [
+              false,
               undefined,
               undefined,
               {
@@ -2694,6 +2702,7 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           style={
             [
+              false,
               undefined,
               undefined,
               {
@@ -2883,6 +2892,7 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           style={
             [
+              false,
               undefined,
               undefined,
               {

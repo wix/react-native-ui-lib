@@ -3532,6 +3532,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/mime-types@npm:^2.1.4":
+  version: 2.1.4
+  resolution: "@types/mime-types@npm:2.1.4"
+  checksum: f8c521c54ee0c0b9f90a65356a80b1413ed27ccdc94f5c7ebb3de5d63cedb559cd2610ea55b4100805c7349606a920d96e54f2d16b2f0afa6b7cd5253967ccc9
+  languageName: node
+  linkType: hard
+
 "@types/node-forge@npm:^1.3.0":
   version: 1.3.11
   resolution: "@types/node-forge@npm:1.3.11"
@@ -7093,6 +7100,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"image-size@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "image-size@npm:2.0.1"
+  bin:
+    image-size: bin/image-size.js
+  checksum: 1057c58f5b17fddb17c4b1d43e28a9574dfc231411c42b9eca2dcb2b96fa2c19e3ef933b281ce9b549cac42f6fc1ea356481e939bf63655fd9d757781456c1ef
+  languageName: node
+  linkType: hard
+
 "import-fresh@npm:^2.0.0":
   version: 2.0.0
   resolution: "import-fresh@npm:2.0.0"
@@ -8933,7 +8949,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mime-types@npm:^2.1.27, mime-types@npm:~2.1.34":
+"mime-types@npm:^2.1.27, mime-types@npm:^2.1.35, mime-types@npm:~2.1.34":
   version: 2.1.35
   resolution: "mime-types@npm:2.1.35"
   dependencies:
@@ -10310,6 +10326,7 @@ __metadata:
     "@types/hoist-non-react-statics": ^3.3.1
     "@types/jest": ^29.2.1
     "@types/lodash": ^4.0.0
+    "@types/mime-types": ^2.1.4
     "@types/prop-types": ^15.5.3
     "@types/react": 18.3.7
     "@types/react-native": 0.73.0
@@ -10333,11 +10350,13 @@ __metadata:
     eslint-plugin-react-hooks: ^4.0.4
     eslint-plugin-react-native: ^4.0.0
     hoist-non-react-statics: ^3.0.0
+    image-size: ^2.0.1
     jest: ^29.6.3
     light-date: ^1.2.0
     lodash: ^4.17.21
     memoize-one: ^5.0.5
     metro-react-native-babel-preset: 0.73.10
+    mime-types: ^2.1.35
     moment: ^2.24.0
     object-hash: ^3.0.0
     postcss: ^8.4.21
