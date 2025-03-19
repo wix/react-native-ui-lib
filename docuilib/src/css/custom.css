@@ -74,13 +74,11 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 
 /** Docusaurus Menu */
 
-.menu__link--sublist-caret:after {
+.menu__link--sublist-caret:after, .menu__caret:before {
   background-size: 20px;
   filter: invert(0) sepia(0) saturate(0) hue-rotate(0) brightness(0) contrast(100%);
-  /*--ifm-menu-link-sublist-icon-filter*/
 }
 .menu {
-  margin-top: 36px;
   margin-left: 24px;
   margin-right: 24px;
   margin-bottom: 80px;
@@ -88,15 +86,16 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 .menu__list .menu__list:has(ul) {
   padding-left: 0;
 }
-.menu__list-item-collapsible:has(.menu__link.menu__link--active:not(.menu__link--sublist)) a {
+.menu__list-item-collapsible:has(.menu__link:not(.menu__link--sublist)) a {
   color: #A6ACB1 !important;
   font-size: 12px;
   font-weight: 700;
   line-height: 16px;
   text-transform: uppercase;
   margin-bottom: 10px;
+  margin-top: 24px;
 }
-.menu__list-item-collapsible:has(.menu__link.menu__link--active:not(.menu__link--sublist)):hover {
+.menu__list-item-collapsible:has(.menu__link:not(.menu__link--sublist)):hover {
   background: #FFF;
 }
 .menu__link {
