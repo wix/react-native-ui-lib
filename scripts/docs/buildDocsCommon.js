@@ -88,13 +88,9 @@ function processComponents(components) {
     content += `sidebar_label: ${componentName}\n`;
     content += '---\n\n';
 
-    if (component.docs) {
-      content += `import ComponentPage from '@site/src/components/ComponentPage';\n\n`;
-      const componentObject = JSON.stringify(component);
-      content += `<ComponentPage component={${componentObject}}/>\n`;
-    } else {
-      content += `${buildOldDocs(component)}\n`;
-    }
+    content += `import ComponentPage from '@site/src/components/ComponentPage';\n\n`;
+    const componentObject = JSON.stringify(component);
+    content += `<ComponentPage component={${componentObject}}/>\n`;
 
     let dirPath;
     switch (component.category) {
@@ -151,86 +147,6 @@ function logStatistics(components) {
   if (componentsWithoutSnippet.length > 0) {
     console.log('Components missing snippet:\n-', componentsWithoutSnippet.join('\n- '));
   }
-}
-
-function buildOldDocs(component) {
-  let content = '';
-  content += `import UILivePreview from '@site/src/components/UILivePreview';\n\n`;
-
-  /* General Info */
-  content += `${component.description}  \n`;
-  if (typeof component.example === 'string') {
-    content += `[(code example)](${component.example})\n`;
-  } else if (Array.isArray(component.example)) {
-    content += '(code examples: ';
-    component.example.forEach((example, index) => {
-      const slashIndex = example.lastIndexOf('/');
-      const dotIndex = example.lastIndexOf('.');
-      content += `${index > 0 ? ', ' : ''}[${example.slice(slashIndex + 1, dotIndex)}](${example})`;
-    });
-    content += ')\n';
-  }
-
-  if (component.extends) {
-    let extendsText = component.extends?.join(', ');
-    if (component.extendsLink) {
-      extendsText = `[${extendsText}](${component.extendsLink})`;
-    } else {
-      extendsText = _.map(component.extends, generateExtendsLink).join(', ');
-    }
-    content += ':::info\n';
-    content += `This component extends **${extendsText}** props.\n`;
-    content += ':::\n';
-  }
-
-  if (component.modifiers) {
-    content += ':::tip\n';
-    content += `This component support **${component.modifiers?.join(', ')}** modifiers.\n`;
-    content += ':::\n';
-  }
-
-  if (component.caution) {
-    content += ':::caution\n';
-    content += `${component.caution}\n`;
-    content += ':::\n';
-  }
-
-  if (component.note) {
-    content += ':::note\n';
-    content += `${component.note}\n`;
-    content += ':::\n';
-  }
-
-  /* Images */
-  content += `<div style={{display: 'flex', flexDirection: 'row', overflowX: 'auto', maxHeight: '500px', alignItems: 'center'}}>`;
-  component.images?.forEach(image => {
-    content += `<img style={{maxHeight: '420px'}} src={'${image}'}/>`;
-    content += '\n\n';
-  });
-  content += '</div>\n\n';
-
-  /* Snippet */
-  if (component.snippet) {
-    content += `### Usage\n`;
-    content += `<UILivePreview componentName={"${component.name}"} code={\`${component.snippet
-      ?.map(item => _.replace(item, new RegExp(/\$[1-9]/, 'g'), ''))
-      .join('\n')
-      .toString()}\`}/>\n\n`;
-  }
-
-  /* Props */
-  content += '## API\n';
-  _.sortBy(component.props, p => p.name)?.forEach(prop => {
-    content += `### ${prop.name}\n`;
-    if (prop.note) {
-      content += `#### ${prop.note}\n`;
-    }
-    content += `${prop.description}\n`;
-    // content += `<span style={{color: 'grey'}}>${_.escape(prop.type)}</span>\n\n`;
-    content += `\`${prop.type} \` \n\n`;
-  });
-
-  return content;
 }
 
 module.exports = {buildDocs};

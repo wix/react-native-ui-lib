@@ -1,4 +1,5 @@
 import React, {ComponentProps, useCallback, useMemo, useState} from 'react';
+import _ from 'lodash';
 import '../ComponentPage.module.scss';
 import {LiveProvider, LivePreview} from 'react-live';
 import styles from './ContentItem.module.scss';
@@ -116,7 +117,7 @@ export const ContentItem = ({item, componentName, showCodeButton}: ContentItemPr
 
   if (item.props || item.snippet) {
     const name = item.snippet ? extractComponentFromSnippet(item.snippet) : item.component ?? componentName;
-    const isComponentExists = !!ReactLiveScope[name];
+    const isComponentExists = !!(_.get(ReactLiveScope, name));
 
     if (isComponentExists) {
       return (
