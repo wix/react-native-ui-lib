@@ -40,7 +40,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 }
 .navbar__logo {
   height: 53px;
-  margin-right: 4.75rem;
+  margin-right: 76px;
   margin-left: 36px;
 }
 .navbar__link {
@@ -56,7 +56,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   border-bottom: 2px solid #20303C;
 }
 
-/* Algolia search */
+/* Algolia search input */
 
 .DocSearch-Button {
   border-radius: 8px !important;
