@@ -2,23 +2,6 @@ import get from 'lodash/get';
 import Assets from '../assets';
 import type {ImageSourceType} from '../components/image';
 
-export function extractImageSource(source?: ImageSourceType) {
-  const sourceUri = get(source, 'uri');
-
-  if (sourceUri) {
-    // Case when uri is a number (Local Assets)
-    if (typeof sourceUri === 'number') {
-      return sourceUri;
-    }
-    // Case when uri is a Base64 encoded string
-    if (typeof sourceUri === 'string' && isBase64ImageContent(sourceUri)) {
-      return source;
-    }
-  }
-
-  return source;
-}
-
 export function isSvgUri(source?: ImageSourceType) {
   // @ts-expect-error
   return typeof source === 'object' && source?.uri?.endsWith?.('.svg');

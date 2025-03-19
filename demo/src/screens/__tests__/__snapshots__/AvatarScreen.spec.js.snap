@@ -944,10 +944,6 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           style={
             [
-              {
-                "height": undefined,
-                "width": undefined,
-              },
               undefined,
               undefined,
               {
@@ -1206,10 +1202,6 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           style={
             [
-              {
-                "height": undefined,
-                "width": undefined,
-              },
               undefined,
               undefined,
               {
@@ -1482,10 +1474,6 @@ exports[`AvatarScreen renders screen 1`] = `
             }
             style={
               [
-                {
-                  "height": undefined,
-                  "width": undefined,
-                },
                 undefined,
                 undefined,
                 {
@@ -1681,10 +1669,6 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           style={
             [
-              {
-                "height": undefined,
-                "width": undefined,
-              },
               undefined,
               undefined,
               {
@@ -1943,10 +1927,6 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           style={
             [
-              {
-                "height": undefined,
-                "width": undefined,
-              },
               undefined,
               undefined,
               {
@@ -2077,10 +2057,6 @@ exports[`AvatarScreen renders screen 1`] = `
               }
               style={
                 [
-                  {
-                    "height": undefined,
-                    "width": undefined,
-                  },
                   null,
                   undefined,
                   undefined,
@@ -2254,10 +2230,6 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           style={
             [
-              {
-                "height": undefined,
-                "width": undefined,
-              },
               undefined,
               undefined,
               {
@@ -2490,10 +2462,6 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           style={
             [
-              {
-                "height": undefined,
-                "width": undefined,
-              },
               undefined,
               undefined,
               {
@@ -2726,10 +2694,6 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           style={
             [
-              {
-                "height": undefined,
-                "width": undefined,
-              },
               undefined,
               undefined,
               {
@@ -2919,10 +2883,6 @@ exports[`AvatarScreen renders screen 1`] = `
           }
           style={
             [
-              {
-                "height": undefined,
-                "width": undefined,
-              },
               undefined,
               undefined,
               {

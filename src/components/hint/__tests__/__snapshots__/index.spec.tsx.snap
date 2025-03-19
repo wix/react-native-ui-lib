@@ -235,19 +235,11 @@ exports[`Hint Screen component test Different positions and scenarios center pos
         onError={[Function]}
         source={
           {
-            "height": 24,
-            "uri": {
-              "testUri": "../../../src/assets/internal/images/hintTipSide.png",
-            },
-            "width": 20,
+            "testUri": "../../../src/assets/internal/images/hintTipSide.png",
           }
         }
         style={
           [
-            {
-              "height": 24,
-              "width": 20,
-            },
             {
               "tintColor": "#5A48F5",
             },
@@ -521,19 +513,11 @@ exports[`Hint Screen component test Different positions and scenarios center pos
         onError={[Function]}
         source={
           {
-            "height": 7,
-            "uri": {
-              "testUri": "../../../src/assets/internal/images/hintTipMiddle.png",
-            },
-            "width": 20,
+            "testUri": "../../../src/assets/internal/images/hintTipMiddle.png",
           }
         }
         style={
           [
-            {
-              "height": 7,
-              "width": 20,
-            },
             {
               "tintColor": "#5A48F5",
             },
@@ -808,19 +792,11 @@ exports[`Hint Screen component test Different positions and scenarios left posit
         onError={[Function]}
         source={
           {
-            "height": 24,
-            "uri": {
-              "testUri": "../../../src/assets/internal/images/hintTipSide.png",
-            },
-            "width": 20,
+            "testUri": "../../../src/assets/internal/images/hintTipSide.png",
           }
         }
         style={
           [
-            {
-              "height": 24,
-              "width": 20,
-            },
             {
               "tintColor": "#5A48F5",
             },
@@ -1094,19 +1070,11 @@ exports[`Hint Screen component test Different positions and scenarios left posit
         onError={[Function]}
         source={
           {
-            "height": 7,
-            "uri": {
-              "testUri": "../../../src/assets/internal/images/hintTipMiddle.png",
-            },
-            "width": 20,
+            "testUri": "../../../src/assets/internal/images/hintTipMiddle.png",
           }
         }
         style={
           [
-            {
-              "height": 7,
-              "width": 20,
-            },
             {
               "tintColor": "#5A48F5",
             },
@@ -1381,19 +1349,11 @@ exports[`Hint Screen component test Different positions and scenarios right posi
         onError={[Function]}
         source={
           {
-            "height": 24,
-            "uri": {
-              "testUri": "../../../src/assets/internal/images/hintTipSide.png",
-            },
-            "width": 20,
+            "testUri": "../../../src/assets/internal/images/hintTipSide.png",
           }
         }
         style={
           [
-            {
-              "height": 24,
-              "width": 20,
-            },
             {
               "tintColor": "#5A48F5",
             },
@@ -1667,19 +1627,11 @@ exports[`Hint Screen component test Different positions and scenarios right posi
         onError={[Function]}
         source={
           {
-            "height": 7,
-            "uri": {
-              "testUri": "../../../src/assets/internal/images/hintTipMiddle.png",
-            },
-            "width": 20,
+            "testUri": "../../../src/assets/internal/images/hintTipMiddle.png",
           }
         }
         style={
           [
-            {
-              "height": 7,
-              "width": 20,
-            },
             {
               "tintColor": "#5A48F5",
             },

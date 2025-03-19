@@ -1,16 +1,9 @@
 import isUndefined from 'lodash/isUndefined';
 import React, {useMemo, forwardRef} from 'react';
-import {
-  Image,
-  ImageProps as RNImageProps,
-  ImageStyle as RNImageStyle,
-  StyleSheet,
-  StyleProp,
-  ViewStyle
-} from 'react-native';
+import {Image, ImageProps as RNImageProps, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {asBaseComponent, BaseComponentInjectedProps, MarginModifiers, Constants} from '../../commons/new';
 import {ComponentStatics} from '../../typings/common';
-import {getAsset, isSvg, isBase64ImageContent, extractImageSource} from '../../utils/imageUtils';
+import {getAsset, isSvg, isBase64ImageContent} from '../../utils/imageUtils';
 import {RecorderProps} from '../../typings/recorderTypes';
 import Badge, {BadgeProps} from '../badge';
 import SvgImage from '../svgImage';
@@ -90,19 +83,8 @@ const Icon = forwardRef((props: Props, ref: any) => {
     if (!isUndefined(assetName)) {
       return getAsset(assetName, assetGroup);
     }
-    return extractImageSource(source);
+    return source;
   }, [source, assetGroup, assetName]);
-
-  const sourceSizeStyle = useMemo(() => {
-    const styles: RNImageStyle = {};
-    if (iconSource?.width) {
-      styles.width = iconSource.width;
-    }
-    if (iconSource?.height) {
-      styles.height = iconSource.height;
-    }
-    return styles;
-  }, [iconSource]);
 
   const renderImage = () => {
     return (
@@ -113,14 +95,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
         {...others}
         ref={ref}
         source={iconSource}
-        style={[
-          sourceSizeStyle,
-          margins,
-          iconSize,
-          shouldFlipRTL && styles.rtlFlipped,
-          !!tintColor && {tintColor},
-          style
-        ]}
+        style={[margins, iconSize, shouldFlipRTL && styles.rtlFlipped, !!tintColor && {tintColor}, style]}
       />
     );
   };

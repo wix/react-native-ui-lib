@@ -3294,7 +3294,6 @@ exports[`TextField Screen renders screen 1`] = `
                 }
                 style={
                   [
-                    {},
                     undefined,
                     {
                       "height": 16,
@@ -3934,19 +3933,11 @@ exports[`TextField Screen renders screen 1`] = `
                 accessible={false}
                 source={
                   {
-                    "height": 16,
-                    "uri": {
-                      "testUri": "../../../src/assets/internal/icons/xFlat.png",
-                    },
-                    "width": 16,
+                    "testUri": "../../../src/assets/internal/icons/xFlat.png",
                   }
                 }
                 style={
                   [
-                    {
-                      "height": 16,
-                      "width": 16,
-                    },
                     undefined,
                     undefined,
                     undefined,
@@ -3975,7 +3966,6 @@ exports[`TextField Screen renders screen 1`] = `
             }
             style={
               [
-                {},
                 undefined,
                 undefined,
                 undefined,
@@ -4672,7 +4662,6 @@ exports[`TextField Screen renders screen 1`] = `
               }
               style={
                 [
-                  {},
                   undefined,
                   undefined,
                   undefined,
@@ -6865,7 +6854,6 @@ exports[`TextField Screen renders screen 1`] = `
               }
               style={
                 [
-                  {},
                   {
                     "marginLeft": 4,
                   },
@@ -7799,7 +7787,6 @@ exports[`TextField Screen renders screen 1`] = `
               }
               style={
                 [
-                  {},
                   undefined,
                   undefined,
                   undefined,

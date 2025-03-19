@@ -80,7 +80,7 @@ function createIndexFile(sourcePath, targetPath, fileType) {
 }
 
 // Create index files
-createIndexFile(ICONS_PATH, path.join(ICONS_PATH, 'index.js'), 'icons');
-createIndexFile(IMAGES_PATH, path.join(IMAGES_PATH, 'index.js'), 'images');
+createIndexFile(ICONS_PATH, path.join(ICONS_PATH, 'index.web.js'), 'icons');
+createIndexFile(IMAGES_PATH, path.join(IMAGES_PATH, 'index.web.js'), 'images');
 
 console.log('Index files created successfully!');
