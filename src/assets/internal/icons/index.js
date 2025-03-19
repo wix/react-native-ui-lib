@@ -14,8 +14,20 @@ export const icons = {
   get exclamationSmall() {
     return require('./exclamationSmall.png');
   },
+  get minusOutline() {
+    return require('./minusOutline.png');
+  },
+  get minusOutlineSmall() {
+    return require('./minusOutlineSmall.png');
+  },
   get minusSmall() {
     return require('./minusSmall.png');
+  },
+  get plusOutline() {
+    return require('./plusOutline.png');
+  },
+  get plusOutlineSmall() {
+    return require('./plusOutlineSmall.png');
   },
   get plusSmall() {
     return require('./plusSmall.png');
