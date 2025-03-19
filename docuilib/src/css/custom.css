@@ -86,6 +86,11 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 .menu__list .menu__list:has(ul) {
   padding-left: 0;
 }
+
+.theme-doc-sidebar-item-category:is(.theme-doc-sidebar-item-category-level-1) {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #D2D6D8;
+}
 .menu__list-item-collapsible:has(.menu__link:not(.menu__link--sublist)) a {
   color: #A6ACB1 !important;
   font-size: 12px;
