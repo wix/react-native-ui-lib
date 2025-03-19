@@ -69,7 +69,7 @@ function createIndexFile(sourcePath, targetPath, fileType) {
 
     content += `  get ${propertyName}() {\n`;
     // eslint-disable-next-line max-len
-    content += `    return {uri: require('./${file}'), width: ${dimensions.width}, height: ${dimensions.height}};\n`;
+    content += `    return {uri: require('./${file}').default, width: ${dimensions.width}, height: ${dimensions.height}};\n`;
     content += index === files.length - 1 ? `  }\n` : `  },\n`; // Conditional check for the last file
   });
 
