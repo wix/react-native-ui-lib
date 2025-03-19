@@ -1,6 +1,5 @@
 import React from 'react';
 import products from '../../assets/data/products';
-require('./configurations');
 import {Colors} from 'react-native-ui-lib/style';
 import {BorderRadiuses, Button, Image, Spacings, Text, TouchableOpacity, View} from 'react-native-ui-lib/core';
 import ActionBar from 'react-native-ui-lib/actionBar';
