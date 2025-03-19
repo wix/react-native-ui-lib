@@ -17,7 +17,7 @@ import Constants from 'react-native-ui-lib/constants';
 import Drawer from 'react-native-ui-lib/drawer';
 import Hint from 'react-native-ui-lib/hint';
 import Icon from 'react-native-ui-lib/icon';
-import Incubator from 'react-native-ui-lib/incubator';
+import * as Incubator from 'react-native-ui-lib/incubator';
 import MaskedInput from 'react-native-ui-lib/maskedInput';
 import RadioButton from 'react-native-ui-lib/radioButton';
 import RadioGroup from 'react-native-ui-lib/radioGroup';
