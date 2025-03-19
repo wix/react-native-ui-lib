@@ -56,7 +56,6 @@ const darkCodeTheme = themes.dracula;
       ({
         metadata: [
           {name: 'title', content: 'React Native UI Lib'},
-
           {
             name: 'keywords',
             content: 'design system, react native, react, mobile, web, ui library, components library'
@@ -83,66 +82,81 @@ const darkCodeTheme = themes.dracula;
           //... other Algolia params
         },
         navbar: {
-          title: 'RNUILib',
-          hideOnScroll: true,
           logo: {
-            alt: 'RNUILib Logo',
-            src: 'img/logo.png'
+            alt: 'RNUI Logo',
+            src: 'img/logo_rnui.png',
+            width: 139,
+            height: 53
           },
           items: [
             {
               type: 'doc',
               docId: 'getting-started/setup',
               position: 'left',
-              label: 'Guides'
+              label: 'GETTING STARTED'
+            },
+            {
+              type: 'doc',
+              docId: 'foundation/style',
+              position: 'left',
+              label: 'FOUNDATION'
             },
             {
               type: 'doc',
               docId: 'components/basic/View',
               position: 'left',
-              label: 'Components'
+              label: 'COMPONENTS'
             },
-            // {to: '/blog', label: 'Blog', position: 'left'},
             {
               href: 'https://github.com/wix/react-native-ui-lib',
-              label: 'GitHub',
-              position: 'right'
+              position: 'right',
+              html: `
+                <div style="display: flex; align-items: center;">
+                  <span style="margin-right: 6px;">GitHub</span>
+                  <image src="https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/site/externalSmall.png" alt="external link icon" width="17" height="16" />
+                </div>
+              `
             }
           ]
         },
         footer: {
-          style: 'dark',
           links: [
             {
-              title: 'Links',
-              items: [
-                {
-                  label: 'Docs',
-                  to: '/docs/getting-started/setup'
-                },
-                {
-                  label: 'GitHub',
-                  href: 'https://github.com/wix/react-native-ui-lib'
-                },
-                {
-                  label: 'Expo-Snack',
-                  href: 'https://snack.expo.io/@ethanshar/rnuilib_snack?platform=ios&supportedPlatforms=ios,android'
-                }
-              ]
+              html: `
+                <a href="/docs/getting-started/setup" target="_blank" rel="noreferrer noopener" aria-label="Go to docs">
+                  <img src="https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/site/logo_rnui_footer.png" alt="rnui logo" width="139" height="38" />
+                </a>
+              `
             },
-
             {
-              title: 'Community',
-              items: [
-                {
-                  label: 'Discord',
-                  href: 'https://discord.gg/2eW4g6Z'
-                },
-                {
-                  label: 'Twitter',
-                  href: 'https://twitter.com/rnuilib'
-                }
-              ]
+              html: `
+                <a herf="https://github.com/wix/react-native-ui-lib" target="_blank" rel="noreferrer noopener" aria-label="Open gitHub">
+                  <span>GitHub</span>
+                  <image src="https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/site/externalSmall.png" alt="external link icon" width="17" height="16" />
+                </a>
+              `
+            },
+            {
+              html: `
+                <a herf="https://snack.expo.io/@ethanshar/rnuilib_snack?platform=ios&supportedPlatforms=ios,android" target="_blank" rel="noreferrer noopener" aria-label="Open expo snack">
+                  <span>Expo-Snack</span>
+                  <image src="https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/site/externalSmall.png" alt="external link icon" width="17" height="16" />
+                </a>
+              `
+            },
+            {
+              html: `
+                <a href="https://discord.gg/2eW4g6Z" target="_blank" rel="noreferrer noopener" aria-label="Open discord">
+                  <img src="https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/site/discord.png" alt="Discord icon" width="28" height="28" />
+                </a>
+              `
+            },
+            {
+              html: `
+                <a href="https://twitter.com/rnuilib" target="_blank" rel="noreferrer noopener" aria-label="Open x">
+                  <img src="https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/site/xSocial.png" alt="x icon" width="28" height="28" />
+                </a>
+              `
             }
           ],
           copyright: `© 2006-${new Date().getFullYear()} Wix.com, Inc.`

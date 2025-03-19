@@ -9,14 +9,22 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #5848ff;
-  --ifm-color-primary-dark: #4633E9;
-  --ifm-color-primary-darker: #3220CD;
-  --ifm-color-primary-darkest: #3220CD;
-  --ifm-color-primary-light: #5A48F5;
-  --ifm-color-primary-lighter: #8579FF;
-  --ifm-color-primary-lightest: #B2ABFF;
+  --ifm-color-primary: #1b2430;
+  --ifm-color-primary-dark: #18202b;
+  --ifm-color-primary-darker: #171f29;
+  --ifm-color-primary-darkest: #131922;
+  --ifm-color-primary-light: #1e2835;
+  --ifm-color-primary-lighter: #1f2937;
+  --ifm-color-primary-lightest: #232f3e;
+
   --ifm-code-font-size: 95%;
+  --ifm-font-color-base: #20303C;
+
+  --ifm-navbar-item-padding-horizontal: 0.10rem;
+  --ifm-breadcrumb-item-background-active: #FFF;
+  --ifm-breadcrumb-color: #4D5963;
+  --ifm-breadcrumb-color-active: #20303C;
+  /* --ifm-footer-background-color: #F8F9FA; */
 }
 
 .docusaurus-highlight-code-line {
@@ -29,6 +37,147 @@
 html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+/** Docusaurus Navbar */
+
+.navbar {
+  height: 86px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+.navbar__logo {
+  height: 53px;
+  margin-right: 4.75rem;
+  margin-left: 36px;
+}
+.navbar__link {
+  padding: 0 10px;
+  margin: 0 16px;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  line-height: 38px;
+}
+.navbar__link--active {
+  font-weight: 700;
+  border-bottom: 2px solid #20303C;
+}
+
+/* Algolia search */
+
+.DocSearch-Button {
+  border-radius: 8px !important;
+  background-color: #F9FAFB !important;
+  border: 1px solid #D2D5DA !important;
+  color: #6E7881 !important;
+}
+.DocSearch-Search-Icon {
+  width: 16px !important;
+  height: 16px !important;
+  filter: invert(35%) sepia(8%) saturate(964%) hue-rotate(165deg) brightness(87%) contrast(84%) !important;
+  fill: #4D5963 !important;
+  stroke-width: 3 !important;
+}
+
+/** Docusaurus Menu */
+
+.menu__link--sublist-caret:after {
+  background-size: 20px;
+  filter: invert(0) sepia(0) saturate(0) hue-rotate(0) brightness(0) contrast(100%);
+  /*--ifm-menu-link-sublist-icon-filter*/
+}
+.menu {
+  margin-top: 36px;
+  margin-left: 24px;
+  margin-right: 24px;
+  margin-bottom: 80px;
+}
+.menu__list .menu__list:has(ul) {
+  padding-left: 0;
+}
+.menu__list-item-collapsible:has(.menu__link.menu__link--active:not(.menu__link--sublist)) a {
+  color: #A6ACB1 !important;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.menu__list-item-collapsible:has(.menu__link.menu__link--active:not(.menu__link--sublist)):hover {
+  background: #FFF;
+}
+.menu__link {
+  color: #20303C;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+.menu__link--active {
+  font-weight: 700;
+}
+
+/** Docusaurus Footer */
+
+.footer {
+  padding-top: 64px;
+  padding-bottom: 107px;
+  padding-left: 350px;
+  padding-right: 350px;
+  border-top: 1px solid #D2D6D8;
+  background-color: #F8F9FA;
+  color: #6D7280;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 130%;
+}
+.container.container-fluid {
+  padding-top: 20px;
+  padding-left: 0;
+  padding-right: 0;
+  border-top: 1px solid #D2D6D8;
+}
+.footer__links {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+/* .footer__link-item:first-child {
+  width: 200px;
+} */
+.footer__link-item {
+  margin-right: 16px;
+}
+.footer__link-item:last-child {
+  margin-right: 0;
+}
+.footer__link-item a {
+  display: flex;
+  align-items: center;
+}
+.footer__link-item span {
+  margin: 4px;
+  color: #4D5963 !important;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.028px;
+}
+.footer__link-separator {
+  display: none;
+}
+
+/** Docusaurus Breadcrumbs */
+
+.breadcrumbs__link {
+  color: #4D5963;
+}
+.breadcrumbHomeIcon_YNFT {
+  color: #20303C;
+}
+
+/** Component page tabs */
 
 .main-tabs {
   margin: 40px 0 60px 0;
