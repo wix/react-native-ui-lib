@@ -16,15 +16,8 @@
   --ifm-color-primary-light: #1e2835;
   --ifm-color-primary-lighter: #1f2937;
   --ifm-color-primary-lightest: #232f3e;
-
   --ifm-code-font-size: 95%;
   --ifm-font-color-base: #20303C;
-
-  --ifm-navbar-item-padding-horizontal: 0.10rem;
-  --ifm-breadcrumb-item-background-active: #FFF;
-  --ifm-breadcrumb-color: #4D5963;
-  --ifm-breadcrumb-color-active: #20303C;
-  /* --ifm-footer-background-color: #F8F9FA; */
 }
 
 .docusaurus-highlight-code-line {
@@ -116,66 +109,62 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   font-weight: 700;
 }
 
-/** Docusaurus Footer */
+/** Docusaurus Breadcrumbs */
+
+.breadcrumbs__link {
+  color: #4D5963;
+}
+.breadcrumbs__item--active .breadcrumbs__link {
+  color: #20303C;
+  background-color: #FFF;
+}
+.breadcrumbHomeIcon_YNFT {
+  color: #20303C;
+}
+
+/** Custom Footer */
 
 .footer {
-  padding-top: 64px;
-  padding-bottom: 107px;
-  padding-left: 350px;
-  padding-right: 350px;
   border-top: 1px solid #D2D6D8;
   background-color: #F8F9FA;
+  padding-top: 64px;
+  padding-bottom: 107px;
+  justify-content: center;
+}
+.footer__container {
+  justify-content: center;
+  border-top: 1px solid #D2D6D8;
+  padding-top: 20px;
+  margin-left: 350px;
+  margin-right: 350px;
+}
+.footer__links {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+.footer__section {
+  width: 200px;
+}
+.right__section {
+  display: flex;
+  justify-content: end;
+}
+.text__link {
+  margin-right: 24px;
+}
+.icon__link {
+  margin-right: 16px;
+}
+.footer__copyright {
   color: #6D7280;
   text-align: center;
   font-size: 12px;
   font-weight: 600;
   line-height: 130%;
 }
-.container.container-fluid {
-  padding-top: 20px;
-  padding-left: 0;
-  padding-right: 0;
-  border-top: 1px solid #D2D6D8;
-}
-.footer__links {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  justify-content: center;
-}
-/* .footer__link-item:first-child {
-  width: 200px;
-} */
-.footer__link-item {
-  margin-right: 16px;
-}
-.footer__link-item:last-child {
-  margin-right: 0;
-}
-.footer__link-item a {
-  display: flex;
-  align-items: center;
-}
-.footer__link-item span {
-  margin: 4px;
-  color: #4D5963 !important;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  letter-spacing: -0.028px;
-}
-.footer__link-separator {
-  display: none;
-}
 
-/** Docusaurus Breadcrumbs */
-
-.breadcrumbs__link {
-  color: #4D5963;
-}
-.breadcrumbHomeIcon_YNFT {
-  color: #20303C;
-}
 
 /** Component page tabs */
 
