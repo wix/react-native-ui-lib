@@ -43,7 +43,7 @@ function getDimensions(imagePath) {
 
 // Function to create index files with dimensions
 function createIndexFile(sourcePath, targetPath, fileType) {
-  const files = fs.readdirSync(sourcePath).filter(file => !file.includes('@') && !file.startsWith('.'));
+  const files = fs.readdirSync(sourcePath).filter(file => !file.includes('@'));
 
   let content = '';
 
