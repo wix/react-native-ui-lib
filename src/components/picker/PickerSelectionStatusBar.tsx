@@ -1,4 +1,5 @@
 import React, {useCallback, useContext} from 'react';
+import {StyleSheet} from 'react-native';
 import Button from '../button';
 import Checkbox from '../checkbox';
 import View from '../view';
@@ -30,25 +31,27 @@ export default function PickerSelectionStatusBar(props: PickerSelectionStatusPro
   }, [areAllItemsSelected, toggleAllItemsSelection]);
 
   const renderSelectionStatus = () => {
-    if (props.selectAllType === 'button') {
-      return (
-        <Button
-          label={areAllItemsSelected ? 'Deselect All' : 'Select All'}
-          link
-          {...props?.buttonProps}
-          onPress={handlePress}
-        />
-      );
-    } else if (props.selectAllType === 'checkbox') {
-      return (
-        <Checkbox
-          {...props.checkboxProps}
-          value={_value.length > 0}
-          indeterminate={checkboxIndeterminate}
-          onValueChange={handlePress}
-        />
-      );
-    }
+    return (
+      <View flexG={!showLabel} style={!showLabel && styles.componentContainer}>
+        {props.selectAllType === 'button' ? (
+          <Button
+            label={areAllItemsSelected ? 'Deselect All' : 'Select All'}
+            link
+            {...props?.buttonProps}
+            onPress={handlePress}
+          />
+        ) : (
+          props.selectAllType === 'checkbox' && (
+            <Checkbox
+              {...props.checkboxProps}
+              value={_value.length > 0}
+              indeterminate={checkboxIndeterminate}
+              onValueChange={handlePress}
+            />
+          )
+        )}
+      </View>
+    );
   };
 
   const renderLabel = () => {
@@ -59,7 +62,7 @@ export default function PickerSelectionStatusBar(props: PickerSelectionStatusPro
 
   return (
     <View>
-      <View row spread centerV paddingH-page marginV-s4 style={containerStyle}>
+      <View row spread paddingH-page marginV-s4 style={containerStyle}>
         {renderLabel()}
         {renderSelectionStatus()}
       </View>
@@ -67,3 +70,9 @@ export default function PickerSelectionStatusBar(props: PickerSelectionStatusPro
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  componentContainer: {
+    alignItems: 'flex-end'
+  }
+});
