@@ -13,7 +13,7 @@ import {PickerItemProps, PickerItemsListProps, PickerSingleValue, PickerModes} f
 import PickerContext from './PickerContext';
 import PickerItem from './PickerItem';
 import {Constants} from '../../commons/new';
-import PickerSelectionStatusToolbar from './PickerSelectionStatusToolbar';
+import PickerSelectionStatusBar from './PickerSelectionStatusBar';
 
 const keyExtractor = (_item: string, index: number) => index.toString();
 
@@ -171,9 +171,8 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     );
   };
 
-  const selectionStatus = useMemo(() =>
-    mode === PickerModes.MULTI && selectionStatusProps && <PickerSelectionStatusToolbar {...selectionStatusProps}/>,
-  [selectionStatusProps, mode]);
+  const selectionStatus = useMemo(() => mode === PickerModes.MULTI && selectionStatusProps && <PickerSelectionStatusBar {...selectionStatusProps}/>,
+    [selectionStatusProps, mode]);
 
   const renderContent = () => {
     return useWheelPicker ? (

@@ -7,7 +7,7 @@ import Dividers from '../../style/dividers';
 import PickerContext from './PickerContext';
 import {PickerSelectionStatusProps, PickerMultiValue} from './types';
 
-export default function PickerSelectionStatusToolbar(props: PickerSelectionStatusProps) {
+export default function PickerSelectionStatusBar(props: PickerSelectionStatusProps) {
   const {containerStyle, getLabel, showLabel = true} = props;
   const context = useContext(PickerContext);
   const {toggleAllItemsSelection, value = [], areAllItemsSelected} = context;

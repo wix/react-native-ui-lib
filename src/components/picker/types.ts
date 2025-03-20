@@ -256,7 +256,7 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
      */
     renderCustomTopElement?: (value?: PickerValue) => React.ReactElement;
     /**
-     * Selection status toolbar props
+     * Selection status bar props
      */
     selectionStatus?: PickerSelectionStatusProps;
     /**
