@@ -1,0 +1,173 @@
+name: Label Issues with Component Names
+
+on:
+  issues:
+    types: [opened, edited]
+  workflow_dispatch:
+    inputs:
+      process-all-issues:
+        description: 'Process all open issues'
+        type: boolean
+        default: false
+        required: false
+
+jobs:
+  label-component-issues:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'issues' || (github.event_name == 'workflow_dispatch' && github.event.inputs.process-all-issues != 'true')
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Label issue with component names
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Get issue data
+            const issueNumber = context.issue.number;
+            const issueData = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber
+            });
+            
+            const issueBody = issueData.data.body || '';
+            const issueTitle = issueData.data.title || '';
+            const fullContent = `${issueTitle}\n${issueBody}`;
+            
+            // Define component names to look for
+            const componentNames = [
+              'ActionBar', 'ActionSheet', 'AnimatedImage', 'AnimatedScanner', 'Avatar',
+              'Badge', 'Button', 'Card', 'Carousel', 'Checkbox', 'Chip', 'ChipsInput',
+              'ColorPalette', 'ColorPicker', 'ColorSwatch', 'ConnectionStatusBar',
+              'Dash', 'DateTimePicker', 'Dialog', 'Drawer', 'ExpandableOverlay', 'ExpandableSection',
+              'Fader', 'FeatureHighlight', 'FloatingButton', 'Gradient', 'GridList', 'GridView',
+              'Hint', 'Icon', 'Image', 'KeyboardAwareScrollView', 'ListItem', 'LoaderScreen',
+              'Marquee', 'MaskedInput', 'Modal', 'NumberInput', 'Overlay', 'PageControl',
+              'PanView', 'Picker', 'ProgressBar', 'ProgressiveImage', 'RadioButton', 'RadioGroup',
+              'ScrollBar', 'SegmentedControl', 'SharedTransition', 'Slider', 'SortableList',
+              'StackAggregator', 'StateScreen', 'Stepper', 'Switch', 'TabController',
+              'Text', 'TextArea', 'TextField', 'Timeline', 'Toast', 'TouchableOpacity',
+              'View', 'WheelPicker', 'Wizard', 'Calendar'
+            ];
+            
+            // Find mentioned components in the issue
+            const mentionedComponents = [];
+            
+            for (const component of componentNames) {
+              // Match component name as a whole word with word boundaries
+              const regex = new RegExp(`\\b${component}\\b`, 'i');
+              if (regex.test(fullContent)) {
+                mentionedComponents.push(component);
+              }
+            }
+            
+            // Add labels for mentioned components
+            if (mentionedComponents.length > 0) {
+              console.log(`Found components in issue #${issueNumber}: ${mentionedComponents.join(', ')}`);
+              
+              // Get existing labels to avoid duplicates
+              const existingLabels = issueData.data.labels.map(label => label.name);
+              
+              // Filter out components that already have labels
+              const newLabels = mentionedComponents.filter(component => !existingLabels.includes(component));
+              
+              if (newLabels.length > 0) {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issueNumber,
+                  labels: newLabels
+                });
+                console.log(`Added labels to issue #${issueNumber}: ${newLabels.join(', ')}`);
+              } else {
+                console.log(`No new component labels to add to issue #${issueNumber}`);
+              }
+            } else {
+              console.log(`No component names found in issue #${issueNumber}`);
+            }
+
+  process-all-issues:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.process-all-issues == 'true'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Process all open issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Define component names to look for
+            const componentNames = [
+              'ActionBar', 'ActionSheet', 'AnimatedImage', 'AnimatedScanner', 'Avatar',
+              'Badge', 'Button', 'Card', 'Carousel', 'Checkbox', 'Chip', 'ChipsInput',
+              'ColorPalette', 'ColorPicker', 'ColorSwatch', 'ConnectionStatusBar',
+              'Dash', 'DateTimePicker', 'Dialog', 'Drawer', 'ExpandableOverlay', 'ExpandableSection',
+              'Fader', 'FeatureHighlight', 'FloatingButton', 'Gradient', 'GridList', 'GridView',
+              'Hint', 'Icon', 'Image', 'KeyboardAwareScrollView', 'ListItem', 'LoaderScreen',
+              'Marquee', 'MaskedInput', 'Modal', 'NumberInput', 'Overlay', 'PageControl',
+              'PanView', 'Picker', 'ProgressBar', 'ProgressiveImage', 'RadioButton', 'RadioGroup',
+              'ScrollBar', 'SegmentedControl', 'SharedTransition', 'Slider', 'SortableList',
+              'StackAggregator', 'StateScreen', 'Stepper', 'Switch', 'TabController',
+              'Text', 'TextArea', 'TextField', 'Timeline', 'Toast', 'TouchableOpacity',
+              'View', 'WheelPicker', 'Wizard', 'Calendar'
+            ];
+            
+            // Get all open issues
+            const issues = await github.paginate(github.rest.issues.listForRepo, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              per_page: 100
+            });
+            
+            for (const issue of issues) {
+              try {
+                console.log(`Processing issue #${issue.number}...`);
+                
+                const issueBody = issue.body || '';
+                const issueTitle = issue.title || '';
+                const fullContent = `${issueTitle}\n${issueBody}`;
+                
+                // Find mentioned components in the issue
+                const mentionedComponents = [];
+                
+                for (const component of componentNames) {
+                  // Match component name as a whole word with word boundaries
+                  const regex = new RegExp(`\\b${component}\\b`, 'i');
+                  if (regex.test(fullContent)) {
+                    mentionedComponents.push(component);
+                  }
+                }
+                
+                // Add labels for mentioned components
+                if (mentionedComponents.length > 0) {
+                  console.log(`Found components in issue #${issue.number}: ${mentionedComponents.join(', ')}`);
+                  
+                  // Get existing labels to avoid duplicates
+                  const existingLabels = issue.labels.map(label => label.name);
+                  
+                  // Filter out components that already have labels
+                  const newLabels = mentionedComponents.filter(component => !existingLabels.includes(component));
+                  
+                  if (newLabels.length > 0) {
+                    await github.rest.issues.addLabels({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      issue_number: issue.number,
+                      labels: newLabels
+                    });
+                    console.log(`Added labels to issue #${issue.number}: ${newLabels.join(', ')}`);
+                  } else {
+                    console.log(`No new component labels to add to issue #${issue.number}`);
+                  }
+                } else {
+                  console.log(`No component names found in issue #${issue.number}`);
+                }
+              } catch (error) {
+                console.error(`Error processing issue #${issue.number}:`, error);
+              }
+            }
