@@ -1,6 +1,5 @@
 import React from 'react';
 import products from '../../assets/data/products';
-require('./configurations');
 import {Colors} from 'react-native-ui-lib/style';
 import {BorderRadiuses, Button, Image, Spacings, Text, TouchableOpacity, View} from 'react-native-ui-lib/core';
 import ActionBar from 'react-native-ui-lib/actionBar';
@@ -34,16 +33,18 @@ import * as Playground from './Playground';
 Assets.loadAssetsGroup('icons.demo', {
   // chevronDown: require('../../assets/icons/chevronDown.png').default,
   chevronRight: {
-    source: require('../../assets/icons/chevronRight.png').default,
-    style: {width: 24, height: 24}
+    uri: require('../../assets/icons/chevronRight.png').default,
+    width: 24,
+    height: 24
   },
   // add: require('../../assets/icons/add.png').default,
   // camera: require('../../assets/icons/cameraSelected.png').default,
   // close: require('../../assets/icons/close.png').default,
   // dashboard: require('../../assets/icons/dashboard.png').default,
   drag: {
-    source: require('../../assets/icons/drag.png').default,
-    style: {width: 10, height: 16}
+    uri: require('../../assets/icons/drag.png').default,
+    width: 10,
+    height: 16
   }
   // image: require('../../assets/icons/image.png').default,
   // plus: require('../../assets/icons/plus.png').default,
