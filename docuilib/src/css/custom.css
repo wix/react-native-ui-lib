@@ -1,8 +1,8 @@
 /**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
- */
+* Any CSS included here will be global. The classic template
+* bundles Infima by default. Infima is a CSS framework designed to
+* work well for content-centric websites.
+*/
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
@@ -151,10 +151,8 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: #F8F9FA;
   padding-top: 64px;
   padding-bottom: 107px;
-  justify-content: center;
 }
 .footer__container {
-  justify-content: center;
   border-top: 1px solid #D2D6D8;
   padding-top: 20px;
   margin-left: 350px;
@@ -162,12 +160,23 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 }
 .footer__links {
   display: flex;
-  align-items: center;
   justify-content: space-between;
   margin-bottom: 40px;
 }
 .footer__section {
   width: 200px;
+  display: flex;
+}
+.footer__section__item a {
+  display: flex;
+  align-items: center;
+}
+.footer__section__item span {
+  margin-right: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  line-height: 38px;
 }
 .right__section {
   display: flex;
@@ -186,7 +195,6 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   font-weight: 600;
   line-height: 130%;
 }
-
 
 /** Component page tabs */
 
