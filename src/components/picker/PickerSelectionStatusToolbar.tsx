@@ -3,6 +3,7 @@ import Button from '../button';
 import Checkbox from '../checkbox';
 import View from '../view';
 import Text from '../text';
+import Dividers from '../../style/dividers';
 import PickerContext from './PickerContext';
 import {
   PickerProps,
@@ -23,7 +24,7 @@ export type PickerSelectionStatusToolbarProps =
   | (Partial<PickerContextProps> & (CheckboxSelectionStatus & PickerSelectionStatusToolbarBaseProps));
 
 export default function PickerSelectionStatusToolbar(props: PickerSelectionStatusToolbarProps) {
-  const {containerStyle, getLabel, selectAllType = 'button', showLabel = true, renderBottomCustomElement} = props;
+  const {containerStyle, getLabel, selectAllType = 'button', showLabel = true} = props;
   const context = useContext(PickerContext);
   const {toggleAllItemsSelection, value = [], areAllItemsSelected} = context;
   const _value: PickerMultiValue = Array.isArray(value) ? value : [];
@@ -82,11 +83,11 @@ export default function PickerSelectionStatusToolbar(props: PickerSelectionStatu
 
   return (
     <View>
-      <View row spread centerV paddingH-page style={containerStyle}>
+      <View row spread centerV paddingH-page marginV-s4 style={containerStyle}>
         {renderLabel()}
         {renderSelectionStatus()}
       </View>
-      {renderBottomCustomElement?.()}
+      <View style={Dividers.d20}/>
     </View>
   );
 }
