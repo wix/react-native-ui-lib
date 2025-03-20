@@ -1,6 +1,6 @@
 {
   "name": "ScrollBar",
-  "category": "interaction",
+  "category": "layouts",
   "description": "Scrollable container with animated gradient overlay for horizontal scroll",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ScrollBarScreen.js",
   "props": [
