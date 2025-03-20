@@ -40,7 +40,7 @@
     "releaseDocs": "./scripts/release/releaseDocs.sh",
     "releaseEslint": "./scripts/release/releaseEslint.sh",
     "releaseNative": "./scripts/release/releaseNative.sh",
-    "update-web-assets": "node scripts/assets/extract-dimensions.js"
+    "updateWebAssets": "node scripts/assets/extract-dimensions.js"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
