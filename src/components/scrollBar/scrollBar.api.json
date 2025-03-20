@@ -57,7 +57,7 @@
   ],
   "snippet": [
     "<ScrollBar>",
-    "  {Array(5).fill('').map((_, index) => (",
+    "  {_.times(5, index => (",
     "    <View key={index} style={{width: 100}}>",
     "      <Text>Item {index + 1}</Text>",
     "    </View>",
