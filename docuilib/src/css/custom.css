@@ -73,9 +73,10 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 .DocSearch-Search-Icon {
   width: 16px !important;
   height: 16px !important;
-  filter: invert(35%) sepia(8%) saturate(964%) hue-rotate(165deg) brightness(87%) contrast(84%) !important;
-  fill: #4D5963 !important;
   stroke-width: 3 !important;
+}
+.DocSearch-Button .DocSearch-Search-Icon {
+  color: #4D5963 !important;
 }
 .DocSearch-Button-Placeholder {
   padding: 0 12px !important;
