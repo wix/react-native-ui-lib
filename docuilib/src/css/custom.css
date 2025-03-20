@@ -168,6 +168,19 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 }
 .footer__section {
   width: 200px;
+  display: flex;
+  align-items: center;
+}
+.footer__section__item a {
+  display: flex;
+  align-items: center;
+}
+.footer__section__item span {
+  margin-right: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  line-height: 38px;
 }
 .right__section {
   display: flex;
@@ -186,7 +199,6 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   font-weight: 600;
   line-height: 130%;
 }
-
 
 /** Component page tabs */
 
