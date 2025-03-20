@@ -40,7 +40,7 @@ export default () => {
         </div>
 
         <div className={styles.buttons}>
-          <Link to={`/docs/${location.hostname === 'localhost' ? `${docsDevelopmentVersion}/` : ''}${docsMainEntry}`}>
+          <Link to={`/docs/${(location.hostname === 'localhost' && docsDevelopmentVersion) ? `${docsDevelopmentVersion}/` : ''}${docsMainEntry}`}>
             <button className={'button dark'}>View Docs</button>
           </Link>
 
