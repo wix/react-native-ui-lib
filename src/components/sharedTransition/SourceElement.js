@@ -5,7 +5,7 @@ import TouchableOpacity from '../touchableOpacity';
 import ShareTransitionContext from './ShareTransitionContext';
 
 class SourceElement extends Component {
-  displayName = 'IGNORE';
+  displayName = 'SharedTransition.Source';
   static propTypes = {
     /**
      * Data to share between shared element and placeholder

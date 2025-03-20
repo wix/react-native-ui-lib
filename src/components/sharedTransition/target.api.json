@@ -1,0 +1,12 @@
+{
+  "name": "SharedTransition.Target",
+  "category": "interaction",
+  "description": "A component that defines the target element for a shared transition",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SharedTransitionScreen.js",
+  "props": [],
+  "snippet": [
+    "<SharedTransition.Target>",
+    "  <Image source={item.image} style={{width: '100%', height: 300}} />",
+    "</SharedTransition.Target>"
+  ]
+}

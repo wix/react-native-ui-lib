@@ -1,0 +1,18 @@
+{
+  "name": "SharedTransition.Source",
+  "category": "interaction",
+  "description": "A component that defines the source element for a shared transition",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SharedTransitionScreen.js",
+  "props": [
+    {
+      "name": "data",
+      "type": "object",
+      "description": "Data to share between shared element and placeholder"
+    }
+  ],
+  "snippet": [
+    "<SharedTransition.Source data={item}>",
+    "  <Image source={item.image} />",
+    "</SharedTransition.Source>"
+  ]
+}

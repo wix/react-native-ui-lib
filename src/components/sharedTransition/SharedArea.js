@@ -13,7 +13,7 @@ const interpolate = interpolateNode || _interpolate;
 
 // TODO: 2.17 breaks Android (at list the screen, the image is not shown) - move to incubator?
 class SharedArea extends Component {
-  displayName = 'IGNORE';
+  displayName = 'SharedTransition.Area';
   static propTypes = {
     /**
      * render details screen
