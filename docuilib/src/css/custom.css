@@ -58,11 +58,17 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 
 /* Algolia search input */
 
+.navbarSearchContainer_Bca1 {
+  margin-right: 28px;
+}
 .DocSearch-Button {
   border-radius: 8px !important;
   background-color: #F9FAFB !important;
   border: 1px solid #D2D5DA !important;
   color: #6E7881 !important;
+  width: 279px;
+  height: 44px !important;
+  padding: 10px 20px !important;
 }
 .DocSearch-Search-Icon {
   width: 16px !important;
@@ -70,6 +76,12 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   filter: invert(35%) sepia(8%) saturate(964%) hue-rotate(165deg) brightness(87%) contrast(84%) !important;
   fill: #4D5963 !important;
   stroke-width: 3 !important;
+}
+.DocSearch-Button-Placeholder {
+  padding: 0 12px !important;
+}
+.DocSearch-Button-Keys {
+  display: none !important;
 }
 
 /** Docusaurus Menu */
