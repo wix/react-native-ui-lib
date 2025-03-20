@@ -19,11 +19,6 @@ export enum PickerFieldTypes {
   settings = 'settings'
 }
 
-export enum PickerSelectAllType {
-  button = 'button',
-  checkbox = 'checkbox'
-}
-
 // TODO: Remove type
 // type PickerValueDeprecated = {value: string | number; label: string};
 
@@ -176,7 +171,7 @@ export type ButtonSelectionStatus = {
   /**
    * Select all element type
    */
-  selectAllType?: PickerSelectAllType.button | `${PickerSelectAllType.button}`;
+  selectAllType?: 'button';
   /**
    * Button props
    */
@@ -187,14 +182,14 @@ export type CheckboxSelectionStatus = {
   /**
    * Select all element type
    */
-  selectAllType?: PickerSelectAllType.checkbox | `${PickerSelectAllType.checkbox}`;
+  selectAllType?: 'checkbox';
   /**
    * Checkbox props
    */
   checkboxProps?: CheckboxProps;
 };
 
-type PickerSelectionStatusProps = {
+export type PickerSelectionStatusProps = {
   /**
    * A function that generates a label based on the selected items' count and status
    */

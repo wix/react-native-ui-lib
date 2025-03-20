@@ -28,8 +28,7 @@ import {
   PickerSearchStyle,
   RenderCustomModalProps,
   PickerItemsListProps,
-  PickerMethods,
-  PickerSelectAllType
+  PickerMethods
 } from './types';
 import {DialogProps} from '../../incubator/dialog';
 
@@ -43,7 +42,6 @@ type PickerStatics = {
   modes: typeof PickerModes;
   fieldTypes: typeof PickerFieldTypes;
   extractPickerItems: typeof extractPickerItems;
-  selectAllType: typeof PickerSelectAllType;
 };
 
 const Picker = React.forwardRef((props: PickerProps, ref) => {
@@ -322,8 +320,6 @@ Picker.modes = PickerModes;
 Picker.fieldTypes = PickerFieldTypes;
 // @ts-expect-error
 Picker.extractPickerItems = extractPickerItems;
-//@ts-expect-error
-Picker.selectAllType = PickerSelectAllType;
 
 export {
   PickerProps,
@@ -334,8 +330,7 @@ export {
   PickerSearchStyle,
   RenderCustomModalProps,
   PickerItemsListProps,
-  PickerMethods,
-  PickerSelectAllType
+  PickerMethods
 };
 export {Picker}; // For tests
 export default Picker as typeof Picker & PickerStatics;

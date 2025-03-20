@@ -9,7 +9,6 @@ import {
   PickerProps,
   PickerContextProps,
   PickerMultiValue,
-  PickerSelectAllType,
   ButtonSelectionStatus,
   CheckboxSelectionStatus
 } from './types';
@@ -38,10 +37,10 @@ export default function PickerSelectionStatusToolbar(props: PickerSelectionStatu
   let checkboxProps: CheckboxSelectionStatus['checkboxProps'] | undefined;
 
   switch (props.selectAllType) {
-    case PickerSelectAllType.button:
+    case 'button':
       buttonProps = props.buttonProps;
       break;
-    case PickerSelectAllType.checkbox:
+    case 'checkbox':
       checkboxProps = props.checkboxProps;
       break;
   }

@@ -25,7 +25,7 @@ const tagIcon = require('../../assets/icons/tags.png');
 const dropdown = require('../../assets/icons/chevronDown.png');
 const dropdownIcon = <Icon source={dropdown} tintColor={Colors.$iconDefault}/>;
 
-const selectAllSegment = [{label: Picker.selectAllType.button}, {label: Picker.selectAllType.checkbox}];
+const selectAllSegment = [{label: 'button'}, {label: 'checkbox'}];
 
 const buttonProps = {
   onPress: (selectionValue: any) => console.log('onPress', selectionValue)
@@ -119,11 +119,11 @@ export default class PickerScreen extends Component {
     statOption: [],
     scheme: undefined,
     contact: 0,
-    selectAllType: Picker.selectAllType.button
+    selectAllType: 'button' as 'button' | 'checkbox' | undefined
   };
 
   onSegmentChange = (index: number) => {
-    this.setState({selectAllType: Picker.selectAllType[selectAllSegment[index].label]});
+    this.setState({selectAllType: selectAllSegment[index].label});
   };
 
   renderDialog: PickerProps['renderOverlay'] = (modalProps: RenderCustomModalProps) => {
