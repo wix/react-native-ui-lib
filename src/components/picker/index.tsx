@@ -79,6 +79,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     showLoader,
     customLoaderElement,
     renderCustomTopElement,
+    selectionStatus,
     ...others
   } = themeProps;
   const {preset, placeholder, style, trailingAccessory, label: propsLabel} = others;
@@ -102,7 +103,14 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     setSearchValue,
     onSearchChange: _onSearchChange
   } = usePickerSearch({showSearch, onSearchChange, getItemLabel, children, items});
-  const {multiDraftValue, onDoneSelecting, toggleItemSelection, cancelSelect} = usePickerSelection({
+  const {
+    multiDraftValue,
+    onDoneSelecting,
+    toggleItemSelection,
+    cancelSelect,
+    areAllItemsSelected,
+    toggleAllItemsSelection
+  } = usePickerSelection({
     migrate,
     value,
     onChange,
@@ -110,7 +118,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     getItemValue,
     topBarProps,
     setSearchValue,
-    mode
+    mode,
+    items
   });
 
   const {label, accessibilityInfo} = usePickerLabel({
@@ -152,7 +161,9 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
       getItemLabel,
       onSelectedLayout: onSelectedItemLayout,
       renderItem,
-      selectionLimit
+      selectionLimit,
+      areAllItemsSelected,
+      toggleAllItemsSelection
     };
   }, [
     migrate,
@@ -165,7 +176,9 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     selectionLimit,
     onSelectedItemLayout,
     toggleItemSelection,
-    onDoneSelecting
+    onDoneSelecting,
+    areAllItemsSelected,
+    toggleAllItemsSelection
   ]);
 
   const renderPickerItem = useCallback((item: PickerItemProps, index: number): React.ReactElement => {
@@ -247,6 +260,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         showLoader={showLoader}
         customLoaderElement={customLoaderElement}
         renderCustomTopElement={renderCustomTopElement}
+        selectionStatus={selectionStatus}
       >
         {filteredItems}
       </PickerItemsList>
