@@ -35,15 +35,17 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 
 .navbar {
   height: 86px;
-  padding-top: 16px;
+  padding-top: 26px;
   padding-bottom: 16px;
 }
 .navbar__logo {
+  position: relative;
+  top: -10px;
   height: 53px;
   margin-right: 76px;
   margin-left: 36px;
 }
-.navbar__items {
+.navbar__inner {
   align-items: flex-end;
 }
 .navbar__link {
