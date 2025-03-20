@@ -12429,9 +12429,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-ui-lib@npm:7.34.6-snapshot.5981":
-  version: 7.34.6-snapshot.5981
-  resolution: "react-native-ui-lib@npm:7.34.6-snapshot.5981"
+"react-native-ui-lib@npm:snapshot":
+  version: 7.39.0-snapshot.6582
+  resolution: "react-native-ui-lib@npm:7.39.0-snapshot.6582"
   dependencies:
     babel-plugin-transform-inline-environment-variables: ^0.0.2
     color: ^3.1.0
@@ -12446,6 +12446,7 @@ __metadata:
     react-native-redash: ^12.0.3
     semver: ^5.5.0
     tinycolor2: ^1.4.2
+    uilib-native: 4.5.1
     url-parse: ^1.2.0
     wix-react-native-text-size: 1.0.9
   peerDependencies:
@@ -12454,7 +12455,7 @@ __metadata:
     react-native-gesture-handler: ">=2.5.0"
     react-native-reanimated: ">=2.0.0"
     react-native-ui-lib: "*"
-  checksum: 7432ec4b1e73a67ecc499b2f14fbf32c292cc0d140c0ddae25c25ceff3a6529f54bfd42c335ea4a744cdd9fa16e15ebf9659636f0c4fae5efd264da02e33e505
+  checksum: 207c3b4bbc21fc05148cfdf12717e6e33cdcd707b89f21c5f0061bd65812518f83dc79326464513e26162afa69e5cb98ba3cc78e411e73d5e2fc46425bc45d2e
   languageName: node
   linkType: hard
 
@@ -14322,7 +14323,7 @@ __metadata:
     react-native-linear-gradient: 2.6.2
     react-native-reanimated: ^3.15.1
     react-native-shimmer-placeholder: ^2.0.9
-    react-native-ui-lib: 7.34.6-snapshot.5981
+    react-native-ui-lib: snapshot
     react-native-web: ^0.19.12
     sass: ^1.39.0
     shell-utils: ^1.0.10
@@ -14331,6 +14332,19 @@ __metadata:
     url-loader: ^4.1.1
   languageName: unknown
   linkType: soft
+
+"uilib-native@npm:4.5.1":
+  version: 4.5.1
+  resolution: "uilib-native@npm:4.5.1"
+  dependencies:
+    lodash: ^4.17.21
+    prop-types: ^15.5.10
+  peerDependencies:
+    react: ">=17.0.1"
+    react-native: ">=0.64.1"
+  checksum: 2a85fe8976f50003c7eeda7c752fa12f7b9af24089b07e86b2b93505eeb0e91d1f9268b8a9166091432b39a535b676efb0eaa0a0d01e8f7f6ae33d0f06b2cf37
+  languageName: node
+  linkType: hard
 
 "unbox-primitive@npm:^1.0.2":
   version: 1.0.2
