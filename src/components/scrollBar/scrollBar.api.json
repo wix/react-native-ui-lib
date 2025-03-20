@@ -1,6 +1,6 @@
 {
   "name": "ScrollBar",
-  "category": "lists",
+  "category": "interaction",
   "description": "Scrollable container with animated gradient overlay for horizontal scroll",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ScrollBarScreen.js",
   "props": [
@@ -57,12 +57,11 @@
   ],
   "snippet": [
     "<ScrollBar>",
-    "  <View style={{width: 100}}>",
-    "    <Text>Item 1</Text>",
-    "  </View>",
-    "  <View style={{width: 100}}>",
-    "    <Text>Item 2</Text>",
-    "  </View>",
+    "  {Array(5).fill('').map((_, index) => (",
+    "    <View key={index} style={{width: 100}}>",
+    "      <Text>Item {index + 1}</Text>",
+    "    </View>",
+    "  ))}",
     "</ScrollBar>"
   ]
 }
