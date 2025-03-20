@@ -8,7 +8,7 @@ import PickerContext from './PickerContext';
 import {PickerSelectionStatusProps, PickerMultiValue} from './types';
 
 export default function PickerSelectionStatusBar(props: PickerSelectionStatusProps) {
-  const {containerStyle, getLabel, showLabel = true} = props;
+  const {containerStyle, getLabel, showLabel = true, selectAllType = 'button'} = props;
   const context = useContext(PickerContext);
   const {toggleAllItemsSelection, value = [], areAllItemsSelected} = context;
   const _value: PickerMultiValue = Array.isArray(value) ? value : [];
@@ -18,19 +18,22 @@ export default function PickerSelectionStatusBar(props: PickerSelectionStatusPro
     getLabel?.({selectedCount: _value.length, value: _value, areAllItemsSelected}) ??
     `${_value.length} Selected ${areAllItemsSelected ? '(All)' : ''}`;
 
+  const isButton = selectAllType === 'button' && 'buttonProps' in props;
+  const isCheckbox = selectAllType === 'checkbox' && 'checkboxProps' in props;
+
   const handlePress = useCallback(() => {
     const newSelectionState = !areAllItemsSelected;
     toggleAllItemsSelection?.(newSelectionState);
-    if (props.selectAllType === 'button') {
+    if (isButton) {
       props.buttonProps?.onPress?.({customValue: newSelectionState});
-    } else if (props.selectAllType === 'checkbox') {
+    } else if (isCheckbox) {
       props.checkboxProps?.onValueChange?.(newSelectionState);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [areAllItemsSelected, toggleAllItemsSelection]);
 
   const renderSelectionStatus = () => {
-    if (props.selectAllType === 'button') {
+    if (isButton) {
       return (
         <Button
           label={areAllItemsSelected ? 'Deselect All' : 'Select All'}
@@ -39,7 +42,7 @@ export default function PickerSelectionStatusBar(props: PickerSelectionStatusPro
           onPress={handlePress}
         />
       );
-    } else if (props.selectAllType === 'checkbox') {
+    } else if (isCheckbox) {
       return (
         <Checkbox
           {...props.checkboxProps}
