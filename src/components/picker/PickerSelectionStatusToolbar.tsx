@@ -23,20 +23,14 @@ export type PickerSelectionStatusToolbarProps =
   | (Partial<PickerContextProps> & (CheckboxSelectionStatus & PickerSelectionStatusToolbarBaseProps));
 
 export default function PickerSelectionStatusToolbar(props: PickerSelectionStatusToolbarProps) {
-  const {
-    containerStyle,
-    getSelectionStatusLabel,
-    selectAllType = 'button',
-    showLabel = true,
-    renderBottomCustomElement
-  } = props;
+  const {containerStyle, getLabel, selectAllType = 'button', showLabel = true, renderBottomCustomElement} = props;
   const context = useContext(PickerContext);
   const {toggleAllItemsSelection, value = [], areAllItemsSelected} = context;
   const _value: PickerMultiValue = Array.isArray(value) ? value : [];
 
   const checkboxIndeterminate = _value.length > 0 && !areAllItemsSelected;
   const label =
-    getSelectionStatusLabel?.({selectedCount: _value.length, value: _value, areAllItemsSelected}) ??
+    getLabel?.({selectedCount: _value.length, value: _value, areAllItemsSelected}) ??
     `${_value.length} Selected ${areAllItemsSelected ? '(All)' : ''}`;
 
   let buttonProps: ButtonSelectionStatus['buttonProps'] | undefined;

@@ -166,7 +166,7 @@ type PickerExpandableOverlayProps = {
   enableModalBlur?: boolean;
 };
 
-interface PickerSelectionStatusLabelOptions {
+interface PickerSelectionStatusLabelData {
   selectedCount: number;
   value: PickerMultiValue;
   areAllItemsSelected: boolean;
@@ -198,7 +198,7 @@ type PickerSelectionStatusProps = {
   /**
    * A function that generates a label based on the selected items' count and status
    */
-  getSelectionStatusLabel?: (data: PickerSelectionStatusLabelOptions) => string;
+  getLabel?: (data: PickerSelectionStatusLabelData) => string;
   /**
    * Custom container style
    */
