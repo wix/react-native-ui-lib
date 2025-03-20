@@ -1,6 +1,6 @@
 {
   "name": "ExpandableOverlay",
-  "category": "overlays",
+  "category": "incubator",
   "description": "A component that presents content on top of the invoking screen using an overlay",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/IncubatorExpandableOverlayScreen.tsx",
   "props": [

@@ -1,6 +1,6 @@
 {
   "name": "PanView",
-  "category": "interaction",
+  "category": "incubator",
   "description": "A component that detects pan gestures and animates accordingly",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/PanViewScreen.tsx",
   "props": [
