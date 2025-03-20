@@ -29,12 +29,14 @@ function getDimensions(imagePath) {
         height: dimensions.height
       };
     } catch (sizeError) {
-      console.log(`Error getting dimensions for ${imagePath}:`, sizeError);
+      // eslint-disable-next-line no-restricted-syntax
+      console.error(`Error getting dimensions for ${imagePath}:`, sizeError);
       // Default dimensions if sizeOf fails
       return {width: 24, height: 24};
     }
   } catch (error) {
-    console.log(`Error getting dimensions for ${imagePath}:`, error);
+    // eslint-disable-next-line no-restricted-syntax
+    console.error(`Error getting dimensions for ${imagePath}:`, error);
     return {width: 0, height: 0};
   }
 }
