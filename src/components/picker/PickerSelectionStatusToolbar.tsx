@@ -5,25 +5,10 @@ import View from '../view';
 import Text from '../text';
 import Dividers from '../../style/dividers';
 import PickerContext from './PickerContext';
-import {
-  PickerProps,
-  PickerContextProps,
-  PickerMultiValue,
-  ButtonSelectionStatus,
-  CheckboxSelectionStatus
-} from './types';
+import {PickerSelectionStatusProps, PickerMultiValue} from './types';
 
-export type PickerSelectionStatusToolbarBaseProps = PickerProps['selectionStatus'] & {
-  value?: PickerMultiValue;
-  availableItems?: PickerMultiValue;
-};
-
-export type PickerSelectionStatusToolbarProps =
-  | (Partial<PickerContextProps> & (ButtonSelectionStatus & PickerSelectionStatusToolbarBaseProps))
-  | (Partial<PickerContextProps> & (CheckboxSelectionStatus & PickerSelectionStatusToolbarBaseProps));
-
-export default function PickerSelectionStatusToolbar(props: PickerSelectionStatusToolbarProps) {
-  const {containerStyle, getLabel, selectAllType = 'button', showLabel = true} = props;
+export default function PickerSelectionStatusToolbar(props: PickerSelectionStatusProps) {
+  const {containerStyle, getLabel, showLabel = true} = props;
   const context = useContext(PickerContext);
   const {toggleAllItemsSelection, value = [], areAllItemsSelected} = context;
   const _value: PickerMultiValue = Array.isArray(value) ? value : [];
@@ -33,39 +18,31 @@ export default function PickerSelectionStatusToolbar(props: PickerSelectionStatu
     getLabel?.({selectedCount: _value.length, value: _value, areAllItemsSelected}) ??
     `${_value.length} Selected ${areAllItemsSelected ? '(All)' : ''}`;
 
-  let buttonProps: ButtonSelectionStatus['buttonProps'] | undefined;
-  let checkboxProps: CheckboxSelectionStatus['checkboxProps'] | undefined;
-
-  switch (props.selectAllType) {
-    case 'button':
-      buttonProps = props.buttonProps;
-      break;
-    case 'checkbox':
-      checkboxProps = props.checkboxProps;
-      break;
-  }
-
   const handlePress = useCallback(() => {
     const newSelectionState = !areAllItemsSelected;
     toggleAllItemsSelection?.(newSelectionState);
-    buttonProps?.onPress?.({selectionValue: newSelectionState});
-    checkboxProps?.onValueChange?.(newSelectionState);
-  }, [areAllItemsSelected, toggleAllItemsSelection, buttonProps, checkboxProps]);
+    if (props.selectAllType === 'button') {
+      props.buttonProps?.onPress?.({selectionValue: newSelectionState});
+    } else if (props.selectAllType === 'checkbox') {
+      props.checkboxProps?.onValueChange?.(newSelectionState);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [areAllItemsSelected, toggleAllItemsSelection]);
 
   const renderSelectionStatus = () => {
-    if (selectAllType === 'button') {
+    if (props.selectAllType === 'button') {
       return (
         <Button
           label={areAllItemsSelected ? 'Deselect All' : 'Select All'}
           link
-          {...buttonProps}
+          {...props.buttonProps}
           onPress={handlePress}
         />
       );
-    } else if (selectAllType === 'checkbox') {
+    } else if (props.selectAllType === 'checkbox') {
       return (
         <Checkbox
-          {...checkboxProps}
+          {...props.checkboxProps}
           value={_value.length > 0}
           indeterminate={checkboxIndeterminate}
           onValueChange={handlePress}
