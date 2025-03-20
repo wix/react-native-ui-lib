@@ -102,8 +102,8 @@ export default class RadioButtonScreen extends Component {
               Yes or No?
             </Text>
             <View row>
-              {this.renderRadioButtonWithImage('yes', Assets.icons.check, {tintColor: 'green'})}
-              {this.renderRadioButtonWithImage('no', Assets.icons.x, {tintColor: 'red'})}
+              {this.renderRadioButtonWithImage('yes', Assets.icons.demo.check, {tintColor: 'green'})}
+              {this.renderRadioButtonWithImage('no', Assets.icons.demo.x, {tintColor: 'red'})}
             </View>
             <Text marginT-10>You chose: {this.state.value}</Text>
           </RadioGroup>

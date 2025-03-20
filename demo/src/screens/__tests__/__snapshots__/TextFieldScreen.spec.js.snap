@@ -3933,7 +3933,7 @@ exports[`TextField Screen renders screen 1`] = `
                 accessible={false}
                 source={
                   {
-                    "testUri": "../../../src/assets/icons/xFlat.png",
+                    "testUri": "../../../src/assets/internal/icons/xFlat.png",
                   }
                 }
                 style={

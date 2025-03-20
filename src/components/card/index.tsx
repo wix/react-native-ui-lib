@@ -23,7 +23,7 @@ const DEFAULT_SELECTION_PROPS = {
   borderWidth: 2,
   color: Colors.$backgroundPrimaryHeavy,
   indicatorSize: 20,
-  icon: Assets.icons.checkSmall,
+  icon: Assets.internal.icons.checkSmall,
   iconColor: Colors.$iconDefaultLight,
   hideIndicator: false
 };
