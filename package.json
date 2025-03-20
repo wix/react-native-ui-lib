@@ -39,7 +39,8 @@
     "releaseDemo": "./scripts/release/releaseDemo.sh",
     "releaseDocs": "./scripts/release/releaseDocs.sh",
     "releaseEslint": "./scripts/release/releaseEslint.sh",
-    "releaseNative": "./scripts/release/releaseNative.sh"
+    "releaseNative": "./scripts/release/releaseNative.sh",
+    "updateWebAssets": "node scripts/assets/extractDimensions.js"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",
