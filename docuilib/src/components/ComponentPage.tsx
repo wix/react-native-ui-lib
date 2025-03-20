@@ -49,9 +49,9 @@ export default function ComponentPage({component}) {
   /** Tabs */
 
   const getTabItems = tabs => {
-    return _.map(tabs, (tab, index) => {
+    return _.map(tabs, (tab) => {
       return (
-        <TabItem value={index} label={tab.title} attributes={{className: 'single-tab'}}>
+        <TabItem value={tab.title.toLowerCase()} label={tab.title} attributes={{className: 'single-tab'}}>
           {buildDocsSections(tab.sections)}
         </TabItem>
       );
@@ -59,11 +59,13 @@ export default function ComponentPage({component}) {
   };
 
   const buildTabs = () => {
-    const tabs = component.docs?.tabs;
-
+    const tabs = component.docs?.tabs ?? [];
+    const api = component.props;
+    const tabsArray = !_.isEmpty(api) ? [...tabs, devTab] : tabs;
+    
     // TODO: align Tabs bottom border with TabItem's selected indication line
     if (tabs) {
-      return <Tabs className="main-tabs">{getTabItems([...tabs, devTab])}</Tabs>;
+      return <Tabs queryString="tab" className="main-tabs">{getTabItems(tabsArray)}</Tabs>;
     }
   };
 
