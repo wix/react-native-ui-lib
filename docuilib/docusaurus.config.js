@@ -119,9 +119,7 @@ const darkCodeTheme = themes.dracula;
             }
           ]
         },
-        footer: {
-          copyright: `© 2006-${new Date().getFullYear()} Wix.com, Inc.`
-        },
+        footer: {},
         prism: {
           theme: lightCodeTheme,
           darkTheme: darkCodeTheme
