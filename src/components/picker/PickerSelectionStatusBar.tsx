@@ -22,11 +22,11 @@ export default function PickerSelectionStatusBar(props: PickerSelectionStatusPro
     const newSelectionState = !areAllItemsSelected;
     toggleAllItemsSelection?.(newSelectionState);
     if (props.selectAllType === 'button') {
-      props.buttonProps?.onPress?.({selectionValue: newSelectionState});
+      props.buttonProps?.onPress?.({customValue: newSelectionState});
     } else if (props.selectAllType === 'checkbox') {
       props.checkboxProps?.onValueChange?.(newSelectionState);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [areAllItemsSelected, toggleAllItemsSelection]);
 
   const renderSelectionStatus = () => {
