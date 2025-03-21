@@ -30,7 +30,7 @@ const SearchInputScreen = () => {
   const customRightElement = () => {
     return (
       <View center marginH-s2>
-        <Icon source={Assets.icons.check} size={3}/>
+        <Icon source={Assets.icons.demo.check}/>
       </View>
     );
   };

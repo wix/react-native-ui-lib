@@ -131,7 +131,7 @@ const SearchInput = forwardRef((props: SearchInputProps, ref: ForwardedRef<any>)
           link
           grey10
           text80
-          iconSource={Assets.icons.x}
+          iconSource={Assets.internal.icons.x}
           iconStyle={iconStyle}
           onPress={clearInput}
           hitSlop={HIT_SLOP_VALUE}
@@ -231,7 +231,7 @@ const SearchInput = forwardRef((props: SearchInputProps, ref: ForwardedRef<any>)
       style={[style, isProminent && styles.prominentContainer, topInputTopMargin]}
       testID={`${testID}.searchBox`}
     >
-      {showLoader ? renderLoader() : renderIcon(Assets.icons.search)}
+      {showLoader ? renderLoader() : renderIcon(Assets.internal.icons.search)}
       {renderTextInput()}
     </View>
   );
