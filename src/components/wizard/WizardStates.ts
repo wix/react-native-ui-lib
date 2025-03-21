@@ -1,6 +1,5 @@
 import Colors from '../../style/colors';
-const checkMarkSmall = require('./assets/checkMarkSmall.png');
-const exclamationSmall = require('./assets/exclamationSmall.png');
+import Assets from '../../assets';
 import {WizardStepsConfig} from './types';
 
 export const StatesConfig: WizardStepsConfig = {
@@ -9,7 +8,7 @@ export const StatesConfig: WizardStepsConfig = {
   error: {
     color: Colors.$iconDangerLight,
     circleColor: Colors.$outlineDanger,
-    icon: exclamationSmall,
+    icon: Assets.internal.icons.exclamationSmall,
     enabled: true,
     accessibilityInfo: 'Validation Error'
   },
@@ -22,7 +21,7 @@ export const StatesConfig: WizardStepsConfig = {
   completed: {
     color: Colors.$iconNeutral,
     circleColor: Colors.$outlineDisabled,
-    icon: checkMarkSmall,
+    icon: Assets.internal.icons.checkMarkSmall,
     enabled: true,
     accessibilityInfo: 'Completed'
   },

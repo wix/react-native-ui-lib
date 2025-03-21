@@ -47,11 +47,9 @@ export type IconProps = Omit<RNImageProps, 'source' | 'tintColor'> &
 
 type Props = IconProps & BaseComponentInjectedProps;
 
-const DEFAULT_WEB_ICON_SIZE = 16;
-
 const Icon = forwardRef((props: Props, ref: any) => {
   const {
-    size = Constants.isWeb ? DEFAULT_WEB_ICON_SIZE : undefined,
+    size,
     tintColor,
     style,
     supportRTL,
@@ -86,17 +84,19 @@ const Icon = forwardRef((props: Props, ref: any) => {
     return source;
   }, [source, assetGroup, assetName]);
 
-  const renderImage = () => (
-    <Image
-      accessible={false}
-      accessibilityRole={'image'}
-      fsTagName={recorderTag}
-      {...others}
-      ref={ref}
-      source={iconSource}
-      style={[margins, iconSize, shouldFlipRTL && styles.rtlFlipped, !!tintColor && {tintColor}, style]}
-    />
-  );
+  const renderImage = () => {
+    return (
+      <Image
+        accessible={false}
+        accessibilityRole={'image'}
+        fsTagName={recorderTag}
+        {...others}
+        ref={ref}
+        source={iconSource}
+        style={[margins, iconSize, shouldFlipRTL && styles.rtlFlipped, !!tintColor && {tintColor}, style]}
+      />
+    );
+  };
 
   const renderSvg = () => <SvgImage fsTagName={recorderTag} data={source} {...iconSize} {...props}/>;
 

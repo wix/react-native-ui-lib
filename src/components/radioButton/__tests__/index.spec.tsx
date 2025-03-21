@@ -25,14 +25,14 @@ describe('RadioButton renderer test', () => {
   });
 
   it('should render a RadioButton with icon', async () => {
-    const component = <TestCase iconSource={Assets.icons.x}/>;
+    const component = <TestCase iconSource={Assets.internal.icons.x}/>;
     const driver = new RadioButtonDriver({component, testID});
 
     expect(await driver.hasIcon()).toBeTruthy();
   });
 
   it('should render a RadioButton with label and icon', async () => {
-    const component = <TestCase label={'test'} iconSource={Assets.icons.x}/>;
+    const component = <TestCase label={'test'} iconSource={Assets.internal.icons.x}/>;
     const driver = new RadioButtonDriver({component, testID});
 
     expect(await driver.hasLabel()).toBeTruthy();

@@ -252,8 +252,13 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     };
   };
 
+  getAccessibleHitSlop(size: number) {
+    return Math.max(0, (48 - size) / 2);    
+  }
+
   renderCheckbox() {
     const {selectedIcon, label, testID, style, containerStyle, indeterminate, ...others} = this.props;
+    
     return (
       //@ts-ignore
       <TouchableOpacity
@@ -263,6 +268,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
         {...others}
         style={[this.getBorderStyle(), style, !label && containerStyle]}
         onPress={this.onPress}
+        hitSlop={this.getAccessibleHitSlop(this.props.size || DEFAULT_SIZE)}
       >
         {
           <Animated.View
@@ -274,7 +280,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
           >
             <AnimatedIcon
               style={[this.styles.selectedIcon, {transform: this.animationStyle.transform}]}
-              source={indeterminate ? Assets.icons.minusSmall : selectedIcon || Assets.icons.checkSmall}
+              source={indeterminate ? Assets.internal.icons.minusSmall : selectedIcon || Assets.internal.icons.checkSmall}
               testID={`${testID}.selected`}
               tintColor={this.getTintColor()}
             />

@@ -69,7 +69,7 @@ export default class RadioButtonScreen extends Component {
             Radio Buttons
           </Text>
 
-          <RadioGroup initialValue={this.state.color || null} onValueChange={value => this.setState({color: value})}>
+          <RadioGroup gap-s4 initialValue={this.state.color || null} onValueChange={value => this.setState({color: value})}>
             <Text marginB-20 text60 $textDefault>
               Select a color{'\n'}
               (enum with default value)
@@ -82,6 +82,7 @@ export default class RadioButtonScreen extends Component {
           </RadioGroup>
 
           <RadioGroup
+            gap-s4
             marginT-30
             initialValue={this.state.textSide}
             onValueChange={value => this.setState({textSide: value})}
@@ -96,13 +97,13 @@ export default class RadioButtonScreen extends Component {
             <Text marginT-10>You chose: {this.state.textSide}</Text>
           </RadioGroup>
 
-          <RadioGroup marginT-30 initialValue={this.state.value} onValueChange={value => this.setState({value})}>
+          <RadioGroup gap-s4 marginT-30 initialValue={this.state.value} onValueChange={value => this.setState({value})}>
             <Text marginB-20 text60 $textDefault>
               Yes or No?
             </Text>
             <View row>
-              {this.renderRadioButtonWithImage('yes', Assets.icons.check, {tintColor: 'green'})}
-              {this.renderRadioButtonWithImage('no', Assets.icons.x, {tintColor: 'red'})}
+              {this.renderRadioButtonWithImage('yes', Assets.icons.demo.check, {tintColor: 'green'})}
+              {this.renderRadioButtonWithImage('no', Assets.icons.demo.x, {tintColor: 'red'})}
             </View>
             <Text marginT-10>You chose: {this.state.value}</Text>
           </RadioGroup>
@@ -112,6 +113,7 @@ export default class RadioButtonScreen extends Component {
           </Text>
           <View row centerV marginB-10>
             <RadioButton
+              gap-s4
               selected={this.state.individualValue2}
               onPress={() => this.setState({individualValue2: !this.state.individualValue2})}
               label="Individual Radio Button (with style)"

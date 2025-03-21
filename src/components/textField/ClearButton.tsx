@@ -51,7 +51,7 @@ const ClearButton = ({testID, onClear, onChangeText, clearButtonStyle}: ClearBut
     <View reanimated style={style} testID={`${testID}.container`}>
       <Button
         link
-        iconSource={Assets.icons.xFlat}
+        iconSource={Assets.internal.icons.xFlat}
         iconStyle={styles.clearIcon}
         onPress={clear}
         hitSlop={hitSlop}
