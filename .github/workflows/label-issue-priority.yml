@@ -26,14 +26,12 @@ jobs:
             // Define priority labels and thresholds
             const PRIORITY_LABELS = {
               HIGH: 'high-priority',
-              MEDIUM: 'medium-priority',
-              LOW: 'low-priority'
+              MEDIUM: 'medium-priority'
             };
             
             const PRIORITY_THRESHOLDS = {
-              HIGH: 5,    // 5+ relevant users
-              MEDIUM: 3,  // 3-4 relevant users
-              LOW: 1      // 1-2 relevant users
+              HIGH: 6,    // 6+ relevant users
+              MEDIUM: 3   // 3-5 relevant users
             };
             
             // Function to check if a user is an admin/maintainer
@@ -109,8 +107,6 @@ jobs:
                 return PRIORITY_LABELS.HIGH;
               } else if (relevantUserCount >= PRIORITY_THRESHOLDS.MEDIUM) {
                 return PRIORITY_LABELS.MEDIUM;
-              } else if (relevantUserCount >= PRIORITY_THRESHOLDS.LOW) {
-                return PRIORITY_LABELS.LOW;
               }
               return null;
             }
