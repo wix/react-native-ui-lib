@@ -66,7 +66,6 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     onDoneSelecting,
     toggleItemSelection,
     cancelSelect,
-    setMultiFinalValue,
     areAllItemsSelected,
     toggleAllItemsSelection
   };
