@@ -150,19 +150,304 @@ console.log(`Components with api.json: ${componentsWithApiJson.length}`);
 console.log(`Components without api.json: ${componentsWithoutApiJson.length}`);
 
 // Function to generate a template api.json file for a component
-function generateApiJsonTemplate(componentName) {
+function generateApiJsonTemplate(componentName, description = '', props = []) {
   return {
     name: componentName,
-    category: 'to be filled',
-    description: 'to be filled',
+    category: '',
+    description: description || 'A component',
     example: 'to be filled',
     images: [],
-    props: [],
-    snippet: {
-      js: `import {${componentName}} from 'react-native-ui-lib';`,
-      jsx: `"<${componentName}></${componentName}>"`
-    }
+    props: props,
+    snippet: `<${componentName}></${componentName}>`
   };
+}
+
+/**
+ * Extract component description from JSDoc comments in component file
+ * @param {string} componentDir - Component directory
+ * @param {string} componentName - Component name
+ * @returns {string} - Component description or empty string if not found
+ */
+function extractComponentDescription(componentDir, componentName) {
+  try {
+    // Try to find the component file (index.tsx, componentName.tsx, etc.)
+    const possibleFiles = [
+      `${componentDir}/index.tsx`,
+      `${componentDir}/index.ts`,
+      `${componentDir}/${componentName}.tsx`,
+      `${componentDir}/${componentName}.ts`,
+      `${componentDir}/${componentName.toLowerCase()}.tsx`,
+      `${componentDir}/${componentName.toLowerCase()}.ts`
+    ];
+
+    for (const filePath of possibleFiles) {
+      if (fs.existsSync(filePath)) {
+        const fileContent = fs.readFileSync(filePath, 'utf8');
+        
+        // Look for JSDoc description in various formats
+        // @description: text
+        const descriptionMatch = fileContent.match(/@description:\s*([^\n]*)/);
+        if (descriptionMatch && descriptionMatch[1]) {
+          return descriptionMatch[1].trim();
+        }
+        
+        // Component description in block comment
+        const blockCommentMatch = fileContent.match(/\/\*\*[\s\S]*?\*\//);
+        if (blockCommentMatch) {
+          const blockComment = blockCommentMatch[0];
+          const descInBlockMatch = blockComment.match(/@description:?\s*([^\n@]*)/);
+          if (descInBlockMatch && descInBlockMatch[1]) {
+            return descInBlockMatch[1].trim();
+          }
+        }
+      }
+    }
+    
+    return '';
+  } catch (error) {
+    console.error(`Error extracting description for ${componentName}: ${error.message}`);
+    return '';
+  }
+}
+
+/**
+ * Find the props interface file for a component
+ * @param {string} componentDir - Component directory
+ * @param {string} componentName - Component name
+ * @returns {Object|null} - Object with filePath and interfaceName or null if not found
+ */
+function findPropsInterface(componentDir, componentName) {
+  try {
+    // Special case mappings for components with props in different locations
+    const specialCaseMappings = {
+      'GradientSlider': {
+        dir: path.resolve(process.cwd(), 'src/components/slider'),
+        interfaceName: 'GradientSliderProps'
+      },
+      'ColorSliderGroup': {
+        dir: path.resolve(process.cwd(), 'src/components/slider'),
+        interfaceName: 'ColorSliderGroupProps'
+      }
+    };
+    
+    // Check if we have a special case mapping for this component
+    if (specialCaseMappings[componentName]) {
+      const { dir, interfaceName } = specialCaseMappings[componentName];
+      const typesFilePath = `${dir}/types.ts`;
+      
+      if (fs.existsSync(typesFilePath)) {
+        return {
+          filePath: typesFilePath,
+          interfaceName
+        };
+      }
+    }
+    
+    // Check types.ts file first
+    const typesFilePath = `${componentDir}/types.ts`;
+    if (fs.existsSync(typesFilePath)) {
+      const typesContent = fs.readFileSync(typesFilePath, 'utf8');
+      
+      // Look for interface or type export that includes "Props"
+      const propsMatchRegex = new RegExp(`export\\s+(type|interface)\\s+(${componentName}Props|Props)\\s*=?\\s*`, 'i');
+      const propsMatch = typesContent.match(propsMatchRegex);
+      
+      if (propsMatch) {
+        return {
+          filePath: typesFilePath,
+          interfaceName: propsMatch[2]
+        };
+      }
+    }
+    
+    // If not found in types.ts, check component file
+    const possibleFiles = [
+      `${componentDir}/index.tsx`,
+      `${componentDir}/index.ts`,
+      `${componentDir}/${componentName}.tsx`,
+      `${componentDir}/${componentName}.ts`,
+      `${componentDir}/${componentName.toLowerCase()}.tsx`,
+      `${componentDir}/${componentName.toLowerCase()}.ts`
+    ];
+    
+    for (const filePath of possibleFiles) {
+      if (fs.existsSync(filePath)) {
+        const fileContent = fs.readFileSync(filePath, 'utf8');
+        
+        // Look for interface or type export that includes "Props"
+        const propsMatchRegex = new RegExp(`export\\s+(type|interface)\\s+(${componentName}Props|Props)\\s*=?\\s*`, 'i');
+        const propsMatch = fileContent.match(propsMatchRegex);
+        
+        if (propsMatch) {
+          return {
+            filePath,
+            interfaceName: propsMatch[2]
+          };
+        }
+        
+        // Also look for interface definitions within the file
+        const interfaceRegex = new RegExp(`interface\\s+(${componentName}Props|Props)\\s*\\{`, 'i');
+        const interfaceMatch = fileContent.match(interfaceRegex);
+        
+        if (interfaceMatch) {
+          return {
+            filePath,
+            interfaceName: interfaceMatch[1]
+          };
+        }
+        
+        // Look for type imports that might contain the props
+        const importTypeRegex = new RegExp(`import.*\\{.*${componentName}Props.*\\}.*from`, 'i');
+        const importTypeMatch = fileContent.match(importTypeRegex);
+        
+        if (importTypeMatch) {
+          // Try to find the import source
+          const importSourceRegex = /from\s+['"](.+)['"]/;
+          const importSourceMatch = fileContent.match(importSourceRegex);
+          
+          if (importSourceMatch && importSourceMatch[1]) {
+            const importSource = importSourceMatch[1];
+            
+            // Handle relative imports
+            if (importSource.startsWith('./') || importSource.startsWith('../')) {
+              const importDir = path.dirname(filePath);
+              const importPath = path.resolve(importDir, importSource);
+              
+              // Check if it's a directory or file
+              let resolvedPath = importPath;
+              if (!importPath.endsWith('.ts') && !importPath.endsWith('.tsx')) {
+                resolvedPath = `${importPath}.ts`;
+                if (!fs.existsSync(resolvedPath)) {
+                  resolvedPath = `${importPath}/types.ts`;
+                }
+              }
+              
+              if (fs.existsSync(resolvedPath)) {
+                return {
+                  filePath: resolvedPath,
+                  interfaceName: `${componentName}Props`
+                };
+              }
+            }
+          }
+        }
+      }
+    }
+    
+    return null;
+  } catch (error) {
+    console.error(`Error finding props interface for ${componentName}: ${error.message}`);
+    return null;
+  }
+}
+
+/**
+ * Extract props from component interface
+ * @param {Object} propsInterfaceInfo - Object with filePath and interfaceName
+ * @returns {Array} - Array of prop objects with name, type, and description
+ */
+function extractProps(propsInterfaceInfo) {
+  if (!propsInterfaceInfo) {
+    return [];
+  }
+  
+  try {
+    const { filePath, interfaceName } = propsInterfaceInfo;
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    
+    // Find the interface or type definition
+    let propsContent = '';
+    
+    // For interfaces
+    const interfaceRegex = new RegExp(`interface\\s+${interfaceName}\\s*\\{([\\s\\S]*?)\\}`, 'i');
+    const interfaceMatch = fileContent.match(interfaceRegex);
+    
+    if (interfaceMatch && interfaceMatch[1]) {
+      propsContent = interfaceMatch[1];
+    } else {
+      // For export type declarations with generic parameters
+      const exportTypeRegex = new RegExp(`export\\s+type\\s+${interfaceName}(?:<[^>]*>)?\\s*=\\s*\\{([\\s\\S]*?)\\};`, 'i');
+      const exportTypeMatch = fileContent.match(exportTypeRegex);
+      
+      if (exportTypeMatch && exportTypeMatch[1]) {
+        propsContent = exportTypeMatch[1];
+      } else {
+        // For type aliases that are objects
+        const typeObjectRegex = new RegExp(`type\\s+${interfaceName}\\s*=\\s*\\{([\\s\\S]*?)\\}`, 'i');
+        const typeObjectMatch = fileContent.match(typeObjectRegex);
+        
+        if (typeObjectMatch && typeObjectMatch[1]) {
+          propsContent = typeObjectMatch[1];
+        } else {
+          // For type aliases that extend other types (e.g., Omit<SliderProps, 'onValueChange'> & {...})
+          const typeExtendRegex = new RegExp(`type\\s+${interfaceName}\\s*=\\s*[^{]*\\{([\\s\\S]*?)\\}`, 'i');
+          const typeExtendMatch = fileContent.match(typeExtendRegex);
+          
+          if (typeExtendMatch && typeExtendMatch[1]) {
+            propsContent = typeExtendMatch[1];
+          }
+        }
+      }
+    }
+    
+    if (!propsContent) {
+      console.log(`No props content found for ${interfaceName} in ${filePath}`);
+      return [];
+    }
+    
+    // Extract individual props with their JSDoc comments
+    const props = [];
+    
+    // Match JSDoc comments followed by prop definitions
+    // This regex handles both optional (?) and required props
+    const propRegex = /\/\*\*([\s\S]*?)\*\/\s*([a-zA-Z0-9_]+)(\?)?:\s*([^;]*);/g;
+    
+    let match;
+    while ((match = propRegex.exec(propsContent)) !== null) {
+      const jsdoc = match[1];
+      const propName = match[2];
+      const isOptional = match[3] === '?';
+      const propType = match[4].trim();
+      
+      // Extract description from JSDoc comment
+      let description = '';
+      
+      if (jsdoc) {
+        // Remove * at the beginning of lines and clean up whitespace
+        description = jsdoc
+          .replace(/^\s*\*\s*/gm, '')
+          .trim();
+      }
+      
+      // Simplify complex TypeScript types for api.json
+      let simplifiedType = propType;
+      
+      // Handle common type patterns
+      if (propType.includes('StyleProp<')) {
+        simplifiedType = 'style';
+      } else if (propType.includes('GradientSliderTypes')) {
+        simplifiedType = 'enum';
+      } else if (propType.includes('(') && propType.includes(')')) {
+        simplifiedType = 'function';
+      } else if (propType.includes('|')) {
+        // For union types, use the first non-null type or 'union'
+        const types = propType.split('|').map(t => t.trim());
+        const nonNullType = types.find(t => t !== 'null' && t !== 'undefined');
+        simplifiedType = nonNullType || 'union';
+      }
+      
+      props.push({
+        name: propName,
+        type: simplifiedType,
+        description
+      });
+    }
+    
+    return props;
+  } catch (error) {
+    console.error(`Error extracting props: ${error.message}`);
+    return [];
+  }
 }
 
 // Function to find the component directory
@@ -279,9 +564,21 @@ function generateApiJsonForComponent(componentName) {
     return false;
   }
   
+  // Extract component description
+  const description = extractComponentDescription(componentDir, componentName);
+  
+  // Find props interface and extract props
+  const propsInterfaceInfo = findPropsInterface(componentDir, componentName);
+  console.log(`Props interface info for ${componentName}:`, propsInterfaceInfo);
+  
+  const props = extractProps(propsInterfaceInfo);
+  console.log(`Extracted props for ${componentName}:`, props.length);
+  
+  // Generate api.json template with extracted information
+  const apiJsonTemplate = generateApiJsonTemplate(componentName, description, props);
+  
   // Generate and save api.json file
   const apiJsonPath = `${componentDir}/${componentName.toLowerCase()}.api.json`;
-  const apiJsonTemplate = generateApiJsonTemplate(componentName);
   
   try {
     fs.writeFileSync(apiJsonPath, JSON.stringify(apiJsonTemplate, null, 2));
