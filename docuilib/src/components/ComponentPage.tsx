@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 import './ComponentPage.module.scss';
 import {ListSection} from './pageComponents/ListSection';
 import {Section} from './pageComponents/Section';
@@ -49,7 +50,7 @@ export default function ComponentPage({component}) {
   /** Tabs */
 
   const getTabItems = tabs => {
-    return _.map(tabs, (tab) => {
+    return _.map(tabs, tab => {
       return (
         <TabItem value={tab.title.toLowerCase()} label={tab.title} attributes={{className: 'single-tab'}}>
           {buildDocsSections(tab.sections)}
@@ -61,11 +62,16 @@ export default function ComponentPage({component}) {
   const buildTabs = () => {
     const tabs = component.docs?.tabs ?? [];
     const api = component.props;
-    const tabsArray = !_.isEmpty(api) ? [...tabs, devTab] : tabs;
-    
+    // Note: empty props arrays is valid (we have some cases with components without props that should show Dev tab)
+    const tabsArray = api !== undefined ? [...tabs, devTab] : tabs;
+
     // TODO: align Tabs bottom border with TabItem's selected indication line
-    if (tabs) {
-      return <Tabs queryString="tab" className="main-tabs">{getTabItems(tabsArray)}</Tabs>;
+    if (!_.isEmpty(tabsArray)) {
+      return (
+        <Tabs queryString="tab" className="main-tabs">
+          {getTabItems(tabsArray)}
+        </Tabs>
+      );
     }
   };
 
@@ -87,9 +93,15 @@ export default function ComponentPage({component}) {
   };
 
   return (
-    <div>
-      {buildHero()}
-      {buildTabs()}
-    </div>
+    <BrowserOnly>
+      {() => {
+        return (
+          <div>
+            {buildHero()}
+            {buildTabs()}
+          </div>
+        );
+      }}
+    </BrowserOnly>
   );
 }
