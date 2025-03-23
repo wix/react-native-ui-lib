@@ -1,0 +1,20 @@
+=== Components without api.json files ===
+- GradientSlider
+- ColorSliderGroup
+- KeyboardAwareFlatList
+- PanDismissibleView
+- PanGestureView
+- PanListenerView
+- PanningContext
+- PanResponderView
+- asPanViewConsumer
+- ScrollBar
+- SharedTransition
+- TextArea
+- Calendar
+- ExpandableOverlay
+- PanView
+
+Total: 15 component(s) missing api.json files
+
+Generated on: 2025-03-23T12:00:58.346Z
