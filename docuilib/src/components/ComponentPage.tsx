@@ -64,7 +64,7 @@ export default function ComponentPage({component}) {
     const tabsArray = !_.isEmpty(api) ? [...tabs, devTab] : tabs;
     
     // TODO: align Tabs bottom border with TabItem's selected indication line
-    if (tabs) {
+    if (!_.isEmpty(tabsArray)) {
       return <Tabs queryString="tab" className="main-tabs">{getTabItems(tabsArray)}</Tabs>;
     }
   };
