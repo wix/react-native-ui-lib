@@ -1,6 +1,6 @@
 {
   "name": "uilib-docs",
-  "version": "3.13.0",
+  "version": "3.14.0",
   "main": "./src/index.ts",
   "scripts": {
     "docusaurus": "docusaurus",
@@ -48,7 +48,7 @@
     "react-native-linear-gradient": "2.6.2",
     "react-native-reanimated": "^3.15.1",
     "react-native-shimmer-placeholder": "^2.0.9",
-    "react-native-ui-lib": "7.34.6-snapshot.5981",
+    "react-native-ui-lib": "snapshot",
     "shell-utils": "^1.0.10",
     "typescript": "~5.2.2"
   },

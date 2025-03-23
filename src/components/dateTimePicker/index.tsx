@@ -262,7 +262,7 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
       >
         <Button
           link
-          iconSource={Assets.icons.x}
+          iconSource={Assets.internal.icons.x}
           iconStyle={{tintColor: Colors.$iconDefault}}
           testID={`${testID}.cancel`}
           {...cancelButtonProps}
@@ -270,7 +270,7 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
         />
         <Button
           link
-          iconSource={Assets.icons.check}
+          iconSource={Assets.internal.icons.check}
           testID={`${testID}.done`}
           {...confirmButtonProps}
           onPress={onDonePressed}

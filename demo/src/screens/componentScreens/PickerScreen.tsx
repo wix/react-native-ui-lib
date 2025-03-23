@@ -44,7 +44,7 @@ const renderContact = (contactValue: any, props: any) => {
           {contact?.name}
         </Text>
       </View>
-      {props.isSelected && <Icon source={Assets.icons.check} tintColor={Colors.$iconDefault}/>}
+      {props.isSelected && <Icon source={Assets.icons.demo.check} tintColor={Colors.$iconDefault}/>}
     </View>
   );
 };

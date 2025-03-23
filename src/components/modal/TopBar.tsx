@@ -107,7 +107,7 @@ class TopBar extends Component<ModalTopBarProps> {
 
   static defaultProps = {
     doneLabel: 'Save',
-    cancelIcon: Assets.icons.x,
+    cancelIcon: Assets.internal.icons.x,
     doneButtonProps: {},
     cancelButtonProps: {},
     includeStatusBar: Constants.isIOS

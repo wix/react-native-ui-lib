@@ -43,11 +43,11 @@ describe('ImageUtils', () => {
 
   describe('getAsset', () => {
     it('should return the asset if asset group and asset name exsist', () => {
-      const result = getAsset('search', 'icons');
+      const result = getAsset('search', 'internal.icons');
       expect(result).toBeDefined();
     });
     it('should return the asset if asset group and asset name exsist', () => {
-      const result = getAsset('blah', 'icons');
+      const result = getAsset('blah', 'internal.icons');
       expect(result).toBeUndefined();
     });
   });

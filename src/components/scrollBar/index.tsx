@@ -14,6 +14,7 @@ import {Constants, asBaseComponent, forwardRef, ForwardRefInjectedProps} from '.
 import {ComponentStatics} from '../../typings/common';
 import View from '../view';
 import Image from '../image';
+import Assets from '../../assets';
 
 export interface ScrollBarProps extends FlatListProps<any> {
   /**
@@ -67,7 +68,6 @@ type State = {
 };
 
 const GRADIENT_WIDTH = 76;
-const defaultImage = () => require('./assets/gradientOverlay.png');
 
 /**
  * @description: Scrollable container with animated gradient overlay for horizontal scroll
@@ -235,7 +235,7 @@ class ScrollBar extends Component<Props, State> {
         }}
       >
         <Image
-          source={gradientImage || defaultImage()}
+          source={gradientImage || Assets.internal.images.gradientOverlay}
           style={{
             width: gradientWidth,
             height: heightToUse,

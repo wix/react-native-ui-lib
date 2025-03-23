@@ -22,7 +22,7 @@ const ColorPickerDialogHeader = (props: HeaderProps) => {
     <View row spread bg-$backgroundDefault paddingH-20 style={styles.header}>
       <Button
         link
-        iconSource={Assets.icons.x}
+        iconSource={Assets.internal.icons.x}
         iconStyle={{tintColor: Colors.$iconDefault}}
         onPress={onDismiss}
         accessibilityLabel={_.get(accessibilityLabels, 'dismissButton')}
@@ -32,7 +32,7 @@ const ColorPickerDialogHeader = (props: HeaderProps) => {
         color={doneButtonColor}
         disabled={!valid}
         link
-        iconSource={Assets.icons.check}
+        iconSource={Assets.internal.icons.check}
         onPress={onDonePressed}
         accessibilityLabel={_.get(accessibilityLabels, 'doneButton')}
         testID={`${testID}.dialog.done`}

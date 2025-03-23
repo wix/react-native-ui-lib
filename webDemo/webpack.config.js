@@ -43,8 +43,7 @@ const imageLoaderConfiguration = {
   use: {
     loader: 'url-loader',
     options: {
-      name: '[name].[ext]',
-      esModule: false
+      name: '[name].[ext]'
     }
   }
 };
