@@ -80,10 +80,22 @@ console.log('\n=== Components without api.json files ===');
 if (componentsWithoutApiJson.length === 0) {
   console.log('All components have api.json files!');
 } else {
-  componentsWithoutApiJson.forEach(component => {
-    console.log(`- ${component}`);
-  });
-  console.log(`\nTotal: ${componentsWithoutApiJson.length} component(s) missing api.json files`);
+  // Create a formatted list of components without api.json
+  const componentsList = componentsWithoutApiJson.map(component => `- ${component}`).join('\n');
+  
+  // Log the list with more emphasis
+  console.log('\x1b[33m%s\x1b[0m', componentsList); // Yellow color for better visibility
+  console.log(`\nTotal: \x1b[1m${componentsWithoutApiJson.length}\x1b[0m component(s) missing api.json files`);
+  
+  // Also log the list to a file for reference
+  try {
+    fs.writeFileSync('./missing-api-components.log', 
+      `=== Components without api.json files ===\n${componentsList}\n\nTotal: ${componentsWithoutApiJson.length} component(s) missing api.json files\n\nGenerated on: ${new Date().toISOString()}`
+    );
+    console.log('List saved to missing-api-components.log');
+  } catch (error) {
+    console.error('Error saving list to file:', error.message);
+  }
 }
 
 console.log('\n=== Summary ===');
