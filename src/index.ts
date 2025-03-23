@@ -1,6 +1,7 @@
 /* ===== General Stuff ===== */
 export {default as Assets} from './assets';
 export type {emojis as EmojisAssetsType} from './assets/emojis';
+export type {internal as InternalAssetsType} from './assets/internal';
 export * from './style';
 export * from './services';
 export * from 'uilib-native';
