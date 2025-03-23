@@ -46,9 +46,9 @@ const incubatorComponents = extractExportedComponentsFromFile('./src/incubator/i
 // Combine all exported components
 const allExportedComponents = [...mainIndexComponents, ...incubatorComponents];
 
-// Find components without api.json
+// Find components without api.json, excluding TestKits
 const componentsWithoutApiJson = allExportedComponents.filter(
-  component => !componentsWithApiJson.includes(component)
+  component => !componentsWithApiJson.includes(component) && !component.includes('TestKit')
 );
 
 // Print results
