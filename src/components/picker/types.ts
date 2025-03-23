@@ -163,7 +163,6 @@ type PickerExpandableOverlayProps = {
 
 interface PickerSelectionStatusLabelData {
   selectedCount: number;
-  value: PickerMultiValue;
   areAllItemsSelected: boolean;
 }
 

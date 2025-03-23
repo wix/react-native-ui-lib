@@ -16,7 +16,7 @@ export default function PickerSelectionStatusBar(props: PickerSelectionStatusPro
 
   const checkboxIndeterminate = _value.length > 0 && !areAllItemsSelected;
   const label =
-    getLabel?.({selectedCount: _value.length, value: _value, areAllItemsSelected}) ??
+    getLabel?.({selectedCount: _value.length, areAllItemsSelected}) ??
     `${_value.length} Selected ${areAllItemsSelected ? '(All)' : ''}`;
 
   const handlePress = useCallback(() => {
