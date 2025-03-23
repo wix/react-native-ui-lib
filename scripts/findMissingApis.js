@@ -66,13 +66,59 @@ function isNonComponentDirectory(component) {
   return false;
 }
 
+// Cache for displayName checks to avoid rechecking files
+const displayNameCache = {};
+
+// Helper function to check if a component has displayName="IGNORE" (case-insensitive)
+function hasIgnoreDisplayName(componentName) {
+  // Return cached result if available
+  if (displayNameCache[componentName] !== undefined) {
+    return displayNameCache[componentName];
+  }
+  
+  try {
+    // First, find all potential files that might define this component
+    const findComponentFiles = childProcess.execSync(
+      `find ./src -type f -name "*.tsx" -o -name "*.ts" -o -name "*.js" | xargs grep -l "${componentName}[^a-zA-Z0-9]" | head -n 5`
+    ).toString().trim().split('\n').filter(Boolean);
+    
+    // Check each file for displayName="IGNORE" (case-insensitive)
+    for (const filePath of findComponentFiles) {
+      if (!filePath) continue;
+      const fileContent = fs.readFileSync(filePath, 'utf8');
+      
+      // Look for patterns like:
+      // - ComponentName.displayName = 'IGNORE'
+      // - static displayName = 'IGNORE'
+      // - displayName = 'IGNORE'
+      // Case-insensitive for 'ignore'
+      const pattern1 = new RegExp(`${componentName}\\.displayName\\s*=\\s*['"](?:IGNORE|ignore|Ignore)['"]`, 'i');
+      const pattern2 = new RegExp(`static\\s+displayName\\s*=\\s*['"](?:IGNORE|ignore|Ignore)['"]`, 'i');
+      const pattern3 = new RegExp(`displayName\\s*=\\s*['"](?:IGNORE|ignore|Ignore)['"]`, 'i');
+      
+      if (fileContent.match(pattern1) || fileContent.match(pattern2) || fileContent.match(pattern3)) {
+        displayNameCache[componentName] = true;
+        return true;
+      }
+    }
+    
+    displayNameCache[componentName] = false;
+    return false;
+  } catch (error) {
+    // If any error occurs, assume the component doesn't have IGNORE displayName
+    displayNameCache[componentName] = false;
+    return false;
+  }
+}
+
 const componentsWithoutApiJson = allExportedComponents.filter(
   component => !componentsWithApiJson.includes(component) && 
                !component.includes('TestKit') &&
                !componentsToExclude.includes(component) &&
                !component.includes('Driver') &&
                !component.includes('Factory') &&
-               !isNonComponentDirectory(component)
+               !isNonComponentDirectory(component) &&
+               !hasIgnoreDisplayName(component)
 );
 
 // Print results
