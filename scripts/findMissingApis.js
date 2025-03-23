@@ -51,7 +51,7 @@ const componentsToExclude = ['Swipeable', 'FadedScrollView', 'SliderContext', 'I
   'OverlayFadingBackground', 'DialogDismissibleView', 'SvgImage', 'PanningProvider', 
   'TargetElement', 'SharedArea', 'SourceElement'];
 
-// Helper function to check if a component is from services or assets directory
+// Helper function to check if a component is from services, assets, or lib directory
 function isNonComponentDirectory(component) {
   // Components from services directory
   if (['LogService', 'HapticService'].includes(component)) {
@@ -61,6 +61,21 @@ function isNonComponentDirectory(component) {
   // Components from assets directory
   if (component === 'Assets') {
     return true;
+  }
+  
+  // Components from lib directory
+  // Check if the component is from lib directory by searching for it in lib files
+  try {
+    const findInLibResult = childProcess.execSync(
+      `find ./lib -type f -name "*.tsx" -o -name "*.ts" | xargs grep -l "${component}" | head -n 1`
+    ).toString().trim();
+    
+    if (findInLibResult) {
+      return true;
+    }
+  } catch (error) {
+    // If grep doesn't find anything, it returns non-zero exit code
+    // We can ignore this error
   }
   
   return false;
