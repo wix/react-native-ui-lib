@@ -54,7 +54,9 @@ const componentsToExclude = ['Swipeable', 'FadedScrollView', 'SliderContext', 'I
 const componentsWithoutApiJson = allExportedComponents.filter(
   component => !componentsWithApiJson.includes(component) && 
                !component.includes('TestKit') &&
-               !componentsToExclude.includes(component)
+               !componentsToExclude.includes(component) &&
+               !component.includes('Driver') &&
+               !component.includes('Factory')
 );
 
 // Print results
