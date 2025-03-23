@@ -2,7 +2,6 @@ import _ from 'lodash';
 import React from 'react';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import BrowserOnly from '@docusaurus/BrowserOnly';
 import './ComponentPage.module.scss';
 import {ListSection} from './pageComponents/ListSection';
 import {Section} from './pageComponents/Section';
@@ -93,15 +92,9 @@ export default function ComponentPage({component}) {
   };
 
   return (
-    <BrowserOnly>
-      {() => {
-        return (
-          <div>
-            {buildHero()}
-            {buildTabs()}
-          </div>
-        );
-      }}
-    </BrowserOnly>
+    <div>
+      {buildHero()}
+      {buildTabs()}
+    </div>
   );
 }
