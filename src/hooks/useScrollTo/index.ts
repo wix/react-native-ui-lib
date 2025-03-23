@@ -61,16 +61,17 @@ const useScrollTo = <T extends ScrollToSupportedViews>(props: ScrollToProps<T>):
   [horizontal]);
 
   const scrollTo = useCallback((offset: number, animated = true) => {
-    // if (
-    //   horizontal &&
-    //     Constants.isRTL &&
-    //     Constants.isAndroid &&
-    //     !_.isUndefined(contentSize.current) &&
-    //     !_.isUndefined(containerSize.current)
-    // ) {
-    //   const scrollingWidth = Math.max(0, contentSize.current - containerSize.current);
-    //   offset = scrollingWidth - offset;
-    // }
+    // Fix that was for Android RTL. Scrolling is now aligned between IOS and Android and offset is ok.
+    /* if (
+      horizontal &&
+        Constants.isRTL &&
+        Constants.isAndroid &&
+        !_.isUndefined(contentSize.current) &&
+        !_.isUndefined(containerSize.current)
+    ) {
+      const scrollingWidth = Math.max(0, contentSize.current - containerSize.current);
+      offset = scrollingWidth - offset;
+    } */
 
     // @ts-ignore
     if (_.isFunction(scrollViewRef.current?.scrollToOffset)) {
