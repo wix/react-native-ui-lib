@@ -46,9 +46,15 @@ const incubatorComponents = extractExportedComponentsFromFile('./src/incubator/i
 // Combine all exported components
 const allExportedComponents = [...mainIndexComponents, ...incubatorComponents];
 
-// Find components without api.json, excluding TestKits
+// Find components without api.json, excluding TestKits and components with displayName="IGNORE"
+const componentsToExclude = ['Swipeable', 'FadedScrollView', 'SliderContext', 'Item', 
+  'OverlayFadingBackground', 'DialogDismissibleView', 'SvgImage', 'PanningProvider', 
+  'TargetElement', 'SharedArea', 'SourceElement'];
+
 const componentsWithoutApiJson = allExportedComponents.filter(
-  component => !componentsWithApiJson.includes(component) && !component.includes('TestKit')
+  component => !componentsWithApiJson.includes(component) && 
+               !component.includes('TestKit') &&
+               !componentsToExclude.includes(component)
 );
 
 // Print results
