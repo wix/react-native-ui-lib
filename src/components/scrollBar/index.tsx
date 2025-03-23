@@ -75,7 +75,7 @@ const GRADIENT_WIDTH = 76;
  */
 
 class ScrollBar extends Component<Props, State> {
-  static displayName = 'ScrollBar';
+  static displayName = 'IGNORE';
 
   static defaultProps = {
     gradientWidth: GRADIENT_WIDTH,
@@ -277,4 +277,5 @@ const Item = ({children, index, onLayout}: any) => {
 
 Item.displayName = 'IGNORE';
 ScrollBar.Item = Item;
+
 export default asBaseComponent<ScrollBarProps, ComponentStatics<typeof ScrollBar>>(forwardRef(gestureHandlerRootHOC(ScrollBar)));
