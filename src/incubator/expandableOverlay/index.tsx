@@ -7,12 +7,6 @@ import DialogOld from '../../components/dialog';
 import DialogNew, {DialogMigrationProps} from '../dialog';
 import {Colors} from 'style';
 
-enum DismissState {
-  IDLE = 'idle',
-  DISMISSING = 'dismissing',
-  DISMISSED = 'dismissed'
-}
-
 export interface ExpandableOverlayMethods {
   openExpandable: () => void;
   closeExpandable: () => void;
@@ -75,7 +69,6 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
   } = props;
   const [visible, setExpandableVisible] = useState(false);
   const containerRef = useRef(null);
-  const [dismissState, setDismissState] = useState<DismissState>(DismissState.IDLE);
 
   const focusAccessibility = useCallback(() => {
     const reactTag = findNodeHandle(containerRef.current);
@@ -86,22 +79,14 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
 
   const openExpandable = useCallback(() => {
     setExpandableVisible(true);
-    setDismissState(DismissState.IDLE);
     onPress?.(props);
   }, [onPress, customValue]);
 
   const closeExpandable = useCallback(() => {
-    if (dismissState === DismissState.IDLE) {
-      setDismissState(DismissState.DISMISSING);
-      setExpandableVisible(false);
-      focusAccessibility();
-      useDialog ? dialogProps?.onDismiss?.() : modalProps?.onDismiss?.();
-      setDismissState(DismissState.DISMISSED);
-    } else if (dismissState === DismissState.DISMISSING) {
-      setExpandableVisible(false);
-      focusAccessibility();
-    }
-  }, [dismissState, useDialog, dialogProps?.onDismiss, modalProps?.onDismiss, focusAccessibility]);
+    setExpandableVisible(false);
+    focusAccessibility();
+    useDialog ? dialogProps?.onDismiss?.() : modalProps?.onDismiss?.();
+  }, [useDialog, dialogProps?.onDismiss, modalProps?.onDismiss, focusAccessibility]);
 
   const imperativeCloseExpandable = useCallback(() => {
     setExpandableVisible(false);
