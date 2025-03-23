@@ -122,6 +122,32 @@ function generateApiJsonTemplate(componentName) {
 // Function to find the component directory
 function findComponentDirectory(componentName) {
   try {
+    // Special case mappings for known components
+    const specialCaseMappings = {
+      'PanView': './src/incubator/panView',
+      'PanDismissibleView': './src/incubator/panView',
+      'PanGestureView': './src/incubator/panView',
+      'PanListenerView': './src/incubator/panView',
+      'PanningContext': './src/incubator/panView',
+      'PanResponderView': './src/incubator/panView',
+      'asPanViewConsumer': './src/incubator/panView',
+      'ColorPickerDialog': './src/components/colorPicker',
+      'GradientSlider': './src/components/colorPicker',
+      'ColorSliderGroup': './src/components/colorPicker',
+      'BaseInput': './src/components/textField',
+      'TextArea': './src/components/textField',
+      'KeyboardAwareFlatList': './src/components/keyboardAwareFlatList',
+      'ScrollBar': './src/components/scrollBar',
+      'SharedTransition': './src/components/sharedTransition',
+      'Calendar': './src/components/calendar',
+      'ExpandableOverlay': './src/incubator/expandableOverlay'
+    };
+    
+    // Check if we have a special case mapping for this component
+    if (specialCaseMappings[componentName]) {
+      return specialCaseMappings[componentName];
+    }
+    
     // Try different naming conventions and locations
     const possiblePaths = [
       // Direct component directories
@@ -130,15 +156,7 @@ function findComponentDirectory(componentName) {
       
       // PascalCase to kebab-case conversion
       `./src/components/${componentName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()}`,
-      `./src/incubator/${componentName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()}`,
-      
-      // Check parent directories for nested components
-      `./src/components/colorPicker`, // For ColorPickerDialog, ColorSliderGroup, GradientSlider
-      `./src/incubator/panView`, // For PanView related components
-      `./src/components/textField`, // For BaseInput, TextArea
-      `./src/components/keyboardAwareFlatList`, // For KeyboardAwareFlatList
-      `./src/components/scrollBar`, // For ScrollBar
-      `./src/components/sharedTransition` // For SharedTransition
+      `./src/incubator/${componentName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()}`
     ];
     
     // Check each possible path
@@ -150,14 +168,24 @@ function findComponentDirectory(componentName) {
     
     // If still not found, try a more flexible search
     try {
-      // Search for files containing the component name
-      const findResult = childProcess.execSync(
-        `find ./src -type f -name "*.tsx" -o -name "*.ts" | xargs grep -l "${componentName}" | head -n 1`
+      // First try to find files that export the component
+      const findExportResult = childProcess.execSync(
+        `find ./src -type f -name "*.tsx" -o -name "*.ts" | xargs grep -l "export.*default.*as.*${componentName}[^a-zA-Z0-9]" | head -n 1`
       ).toString().trim();
       
-      if (findResult) {
+      if (findExportResult) {
         // Extract directory from file path
-        return path.dirname(findResult);
+        return path.dirname(findExportResult);
+      }
+      
+      // If that fails, try to find files that define the component
+      const findDefResult = childProcess.execSync(
+        `find ./src -type f -name "*.tsx" -o -name "*.ts" | xargs grep -l "class.*${componentName}.*extends\\|function.*${componentName}\\|const.*${componentName}.*=" | head -n 1`
+      ).toString().trim();
+      
+      if (findDefResult) {
+        // Extract directory from file path
+        return path.dirname(findDefResult);
       }
     } catch (e) {
       // Ignore errors from the find command
@@ -167,6 +195,55 @@ function findComponentDirectory(componentName) {
   } catch (error) {
     console.error(`Error finding directory for ${componentName}: ${error.message}`);
     return null;
+  }
+}
+
+// Function to generate an api.json file for a specific component
+function generateApiJsonForComponent(componentName) {
+  console.log(`\n=== Generating API File for ${componentName} ===`);
+  
+  // Check if component exists in the list of exported components
+  if (!allExportedComponents.includes(componentName)) {
+    console.error(`❌ Error: ${componentName} is not an exported component.`);
+    console.log('Available components:');
+    console.log(allExportedComponents.join(', '));
+    return false;
+  }
+  
+  // Check if component already has an api.json file
+  if (componentsWithApiJson.includes(componentName)) {
+    console.log(`⚠️ Warning: ${componentName} already has an api.json file.`);
+    const existingApiFile = apiJsonFiles.find(file => {
+      try {
+        const content = fs.readFileSync(file);
+        const api = JSON.parse(content.toString());
+        return api.name === componentName;
+      } catch (e) {
+        return false;
+      }
+    });
+    console.log(`Existing file: ${existingApiFile}`);
+    return false;
+  }
+  
+  // Find component directory
+  const componentDir = findComponentDirectory(componentName);
+  if (!componentDir) {
+    console.error(`❌ Error: Could not find directory for ${componentName}`);
+    return false;
+  }
+  
+  // Generate and save api.json file
+  const apiJsonPath = `${componentDir}/${componentName.toLowerCase()}.api.json`;
+  const apiJsonTemplate = generateApiJsonTemplate(componentName);
+  
+  try {
+    fs.writeFileSync(apiJsonPath, JSON.stringify(apiJsonTemplate, null, 2));
+    console.log(`✅ Created ${apiJsonPath}`);
+    return true;
+  } catch (error) {
+    console.error(`❌ Error creating api.json for ${componentName}: ${error.message}`);
+    return false;
   }
 }
 
@@ -191,21 +268,7 @@ function generateMissingApiJsonFiles() {
     const componentName = componentsWithoutApiJson[index];
     rl.question(`Generate api.json for ${componentName}? (y/n): `, (answer) => {
       if (answer.toLowerCase() === 'y' || answer.toLowerCase() === 'yes') {
-        const componentDir = findComponentDirectory(componentName);
-        
-        if (componentDir) {
-          const apiJsonPath = `${componentDir}/${componentName.toLowerCase()}.api.json`;
-          const apiJsonTemplate = generateApiJsonTemplate(componentName);
-          
-          try {
-            fs.writeFileSync(apiJsonPath, JSON.stringify(apiJsonTemplate, null, 2));
-            console.log(`✅ Created ${apiJsonPath}`);
-          } catch (error) {
-            console.error(`❌ Error creating api.json for ${componentName}: ${error.message}`);
-          }
-        } else {
-          console.error(`❌ Could not find directory for ${componentName}`);
-        }
+        generateApiJsonForComponent(componentName);
       }
       
       // Process the next component
@@ -227,9 +290,20 @@ function generateMissingApiJsonFiles() {
 if (componentsWithoutApiJson.length > 0) {
   console.log('\nYou can generate api.json files for missing components by running:');
   console.log('node scripts/findMissingApis.js --generate');
+  console.log('Or generate for a specific component:');
+  console.log('node scripts/findMissingApis.js --generate ComponentName');
 }
 
-// Check if --generate flag is passed
-if (process.argv.includes('--generate')) {
-  generateMissingApiJsonFiles();
+// Check command line arguments
+const generateIndex = process.argv.indexOf('--generate');
+if (generateIndex !== -1) {
+  const specificComponent = process.argv[generateIndex + 1];
+  
+  // If a component name is provided after --generate
+  if (specificComponent && !specificComponent.startsWith('--')) {
+    generateApiJsonForComponent(specificComponent);
+  } else {
+    // Otherwise, run the interactive mode
+    generateMissingApiJsonFiles();
+  }
 }
