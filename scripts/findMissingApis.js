@@ -90,3 +90,134 @@ console.log('\n=== Summary ===');
 console.log(`Total exported components: ${allExportedComponents.length}`);
 console.log(`Components with api.json: ${componentsWithApiJson.length}`);
 console.log(`Components without api.json: ${componentsWithoutApiJson.length}`);
+
+// Function to generate a template api.json file for a component
+function generateApiJsonTemplate(componentName) {
+  return {
+    name: componentName,
+    category: 'to be filled',
+    description: 'to be filled',
+    example: 'to be filled',
+    images: [],
+    props: [],
+    snippet: {
+      js: `import {${componentName}} from 'react-native-ui-lib';`,
+      jsx: `<${componentName}></${componentName}>`
+    }
+  };
+}
+
+// Function to find the component directory
+function findComponentDirectory(componentName) {
+  try {
+    // Try different naming conventions and locations
+    const possiblePaths = [
+      // Direct component directories
+      `./src/components/${componentName.toLowerCase()}`,
+      `./src/incubator/${componentName.toLowerCase()}`,
+      
+      // PascalCase to kebab-case conversion
+      `./src/components/${componentName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()}`,
+      `./src/incubator/${componentName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()}`,
+      
+      // Check parent directories for nested components
+      `./src/components/colorPicker`, // For ColorPickerDialog, ColorSliderGroup, GradientSlider
+      `./src/incubator/panView`, // For PanView related components
+      `./src/components/textField`, // For BaseInput, TextArea
+      `./src/components/keyboardAwareFlatList`, // For KeyboardAwareFlatList
+      `./src/components/scrollBar`, // For ScrollBar
+      `./src/components/sharedTransition` // For SharedTransition
+    ];
+    
+    // Check each possible path
+    for (const dirPath of possiblePaths) {
+      if (fs.existsSync(dirPath)) {
+        return dirPath;
+      }
+    }
+    
+    // If still not found, try a more flexible search
+    try {
+      // Search for files containing the component name
+      const findResult = childProcess.execSync(
+        `find ./src -type f -name "*.tsx" -o -name "*.ts" | xargs grep -l "${componentName}" | head -n 1`
+      ).toString().trim();
+      
+      if (findResult) {
+        // Extract directory from file path
+        return path.dirname(findResult);
+      }
+    } catch (e) {
+      // Ignore errors from the find command
+    }
+    
+    return null;
+  } catch (error) {
+    console.error(`Error finding directory for ${componentName}: ${error.message}`);
+    return null;
+  }
+}
+
+// Function to generate api.json files for missing components
+function generateMissingApiJsonFiles() {
+  const readline = require('readline');
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+
+  console.log('\n=== Generate Missing API Files ===');
+  
+  // Handle components sequentially using a recursive approach
+  function processComponents(index) {
+    if (index >= componentsWithoutApiJson.length) {
+      console.log('\nFinished processing all components.');
+      rl.close();
+      return;
+    }
+    
+    const componentName = componentsWithoutApiJson[index];
+    rl.question(`Generate api.json for ${componentName}? (y/n): `, (answer) => {
+      if (answer.toLowerCase() === 'y' || answer.toLowerCase() === 'yes') {
+        const componentDir = findComponentDirectory(componentName);
+        
+        if (componentDir) {
+          const apiJsonPath = `${componentDir}/${componentName.toLowerCase()}.api.json`;
+          const apiJsonTemplate = generateApiJsonTemplate(componentName);
+          
+          try {
+            fs.writeFileSync(apiJsonPath, JSON.stringify(apiJsonTemplate, null, 2));
+            console.log(`✅ Created ${apiJsonPath}`);
+          } catch (error) {
+            console.error(`❌ Error creating api.json for ${componentName}: ${error.message}`);
+          }
+        } else {
+          console.error(`❌ Could not find directory for ${componentName}`);
+        }
+      }
+      
+      // Process the next component
+      processComponents(index + 1);
+    });
+  }
+
+  rl.question('Do you want to generate api.json files for missing components? (y/n): ', (answer) => {
+    if (answer.toLowerCase() === 'y' || answer.toLowerCase() === 'yes') {
+      processComponents(0);
+    } else {
+      console.log('No api.json files will be generated.');
+      rl.close();
+    }
+  });
+}
+
+// Ask if user wants to generate missing api.json files
+if (componentsWithoutApiJson.length > 0) {
+  console.log('\nYou can generate api.json files for missing components by running:');
+  console.log('node scripts/findMissingApis.js --generate');
+}
+
+// Check if --generate flag is passed
+if (process.argv.includes('--generate')) {
+  generateMissingApiJsonFiles();
+}
