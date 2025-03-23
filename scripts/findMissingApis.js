@@ -51,12 +51,18 @@ const componentsToExclude = ['Swipeable', 'FadedScrollView', 'SliderContext', 'I
   'OverlayFadingBackground', 'DialogDismissibleView', 'SvgImage', 'PanningProvider', 
   'TargetElement', 'SharedArea', 'SourceElement'];
 
+// Helper function to check if a component is from services directory
+function isServiceComponent(component) {
+  return ['LogService', 'HapticService'].includes(component);
+}
+
 const componentsWithoutApiJson = allExportedComponents.filter(
   component => !componentsWithApiJson.includes(component) && 
                !component.includes('TestKit') &&
                !componentsToExclude.includes(component) &&
                !component.includes('Driver') &&
-               !component.includes('Factory')
+               !component.includes('Factory') &&
+               !isServiceComponent(component)
 );
 
 // Print results
