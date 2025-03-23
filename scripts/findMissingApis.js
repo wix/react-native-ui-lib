@@ -160,7 +160,7 @@ function generateApiJsonTemplate(componentName) {
     props: [],
     snippet: {
       js: `import {${componentName}} from 'react-native-ui-lib';`,
-      jsx: `<${componentName}></${componentName}>`
+      jsx: `"<${componentName}></${componentName}>"`
     }
   };
 }
