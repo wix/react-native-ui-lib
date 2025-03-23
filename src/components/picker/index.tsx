@@ -28,7 +28,8 @@ import {
   PickerSearchStyle,
   RenderCustomModalProps,
   PickerItemsListProps,
-  PickerMethods
+  PickerMethods,
+  PickerSelectionStatusProps
 } from './types';
 import {DialogProps} from '../../incubator/dialog';
 
@@ -330,7 +331,8 @@ export {
   PickerSearchStyle,
   RenderCustomModalProps,
   PickerItemsListProps,
-  PickerMethods
+  PickerMethods,
+  PickerSelectionStatusProps
 };
 export {Picker}; // For tests
 export default Picker as typeof Picker & PickerStatics;

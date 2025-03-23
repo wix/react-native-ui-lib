@@ -16,7 +16,8 @@ import {
   PickerProps,
   RenderCustomModalProps,
   PickerMethods,
-  SegmentedControl
+  SegmentedControl,
+  PickerSelectionStatusProps
 } from 'react-native-ui-lib'; //eslint-disable-line
 import contactsData from '../../data/conversations';
 import {longOptions} from './PickerScreenLongOptions';
@@ -119,7 +120,7 @@ export default class PickerScreen extends Component {
     statOption: [],
     scheme: undefined,
     contact: 0,
-    selectAllType: 'button' as 'button' | 'checkbox' | undefined
+    selectAllType: 'button' as PickerSelectionStatusProps['selectAllType']
   };
 
   onSegmentChange = (index: number) => {

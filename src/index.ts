@@ -121,7 +121,8 @@ export {
   PickerSearchStyle,
   RenderCustomModalProps,
   PickerItemsListProps,
-  PickerMethods
+  PickerMethods,
+  PickerSelectionStatusProps
 } from './components/picker';
 export {default as PieChart, type PieChartProps, PieChartSegmentProps} from './components/pieChart';
 export {default as ProgressBar, ProgressBarProps} from './components/progressBar';
