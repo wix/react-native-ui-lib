@@ -77,7 +77,7 @@ const PanView = (props: Props) => {
   );
 };
 
-PanView.displayName = 'PanView';
+PanView.displayName = 'IGNORE';
 PanView.directions = PanViewDirectionsEnum;
 
 export default asBaseComponent<PanViewProps, typeof PanView>(gestureHandlerRootHOC(PanView));

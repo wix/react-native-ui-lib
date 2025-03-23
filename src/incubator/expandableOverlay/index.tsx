@@ -144,4 +144,6 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
   );
 };
 
+ExpandableOverlay.displayName = 'IGNORE';
+
 export default forwardRef<ExpandableOverlayMethods, ExpandableOverlayProps>(ExpandableOverlay);
