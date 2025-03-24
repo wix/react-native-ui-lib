@@ -274,13 +274,36 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     showLoader
   ]);
 
+  const dialogProps = useMemo(() => {
+    // Start with default dialog props
+    const baseDialogProps = {...DEFAULT_DIALOG_PROPS};
+    
+    // Add custom dialog props from customPickerProps if they exist
+    const customDialogProps = customPickerProps?.dialogProps || {};
+    
+    // Merge with our onDismiss handler to ensure multi-selection is reset
+    return {
+      ...baseDialogProps,
+      ...customDialogProps,
+      onDismiss: () => {
+        // Call custom onDismiss if it exists
+        customDialogProps.onDismiss?.();
+        
+        // Reset selection state when in multi mode
+        if (mode === PickerModes.MULTI) {
+          cancelSelect();
+        }
+      }
+    };
+  }, [customPickerProps?.dialogProps, mode, cancelSelect]);
+
   return (
     <PickerContext.Provider value={contextValue}>
       {
         <ExpandableOverlay
           ref={pickerExpandable}
           useDialog={useDialog || useWheelPicker}
-          dialogProps={DEFAULT_DIALOG_PROPS}
+          dialogProps={dialogProps}
           migrateDialog
           expandableContent={expandableModalContent}
           renderCustomOverlay={renderOverlay ? _renderOverlay : undefined}
