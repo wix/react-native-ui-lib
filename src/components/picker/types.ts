@@ -159,10 +159,34 @@ type PickerExpandableOverlayProps = {
   enableModalBlur?: boolean;
 };
 
+type PickerSelectionOptions = Pick<
+  TextFieldProps,
+  'validateOnStart' | 'onChangeValidity' | 'validationMessage' | 'validationMessageStyle'
+> & {
+  /**
+   * Callback for when field validated and failed
+   */
+  onValidationFailed?: (value: PickerValue) => void;
+};
+
+type PickerSelectionValidation = {
+  /**
+   * Callback for validating the picker selection. Return true for valid selections, false for invalid.
+   * When using Dialog mode (with migrateDialog=true), a validation message will be shown and Save button disabled when invalid.
+   */
+  selectionValidation?: (value: PickerValue) => boolean;
+  /**
+   * Selection validation options including validation message text and styling
+   * Used in conjunction with selectionValidation when using Dialog mode
+   */
+  selectionOptions?: PickerSelectionOptions;
+};
+
 export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
   PickerPropsDeprecation &
   PickerExpandableOverlayProps &
-  PickerListProps & {
+  PickerListProps &
+  PickerSelectionValidation & {
     /* ...TextField.propTypes, */
     /**
      * Use dialog instead of modal picker
@@ -327,6 +351,7 @@ export type PickerItemsListProps = Pick<
   | 'renderCustomSearch'
   | 'children'
   | 'useWheelPicker'
+  | 'selectionValidation'
   | 'useDialog'
   | 'mode'
   | 'testID'
