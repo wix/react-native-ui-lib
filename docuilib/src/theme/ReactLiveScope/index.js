@@ -37,6 +37,16 @@ Assets.loadAssetsGroup('icons.demo', {
     width: 24,
     height: 24
   },
+  chevronDown: {
+    uri: require('../../assets/icons/chevronDown.png').default,
+    width: 14,
+    height: 8
+  },
+  star: {
+    uri: require('../../assets/icons/star.png').default,
+    width: 24,
+    height: 24
+  },
   // add: require('../../assets/icons/add.png').default,
   // camera: require('../../assets/icons/cameraSelected.png').default,
   // close: require('../../assets/icons/close.png').default,

@@ -12,6 +12,17 @@
 
 .blocker {
   pointer-events: none;
+
+  &.flexed {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+  }
+
+  // Note: Extends button's (Touchable) container to match its parent width
+  button {
+    width: inherit;
+  }
 }
 
 .componentExample {
