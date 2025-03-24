@@ -11,9 +11,9 @@ import {PickerSelectionStatusProps} from './types';
 export default function PickerSelectionStatusBar(props: PickerSelectionStatusProps) {
   const {containerStyle, getLabel, showLabel = true} = props;
   const context = useContext(PickerContext);
-  const {toggleAllItemsSelection, selectedCount = 0, areAllItemsSelected} = context;
+  const {toggleAllItemsSelection, selectedCount, areAllItemsSelected} = context;
 
-  const checkboxIndeterminate = !!selectedCount && !areAllItemsSelected;
+  const checkboxIndeterminate = selectedCount > 0 && !areAllItemsSelected;
   const label =
     getLabel?.({selectedCount, areAllItemsSelected}) ??
     `${selectedCount} Selected ${areAllItemsSelected ? '(All)' : ''}`;
