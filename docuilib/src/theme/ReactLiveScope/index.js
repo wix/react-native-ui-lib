@@ -3,7 +3,7 @@ import products from '../../assets/data/products';
 import {Colors} from 'react-native-ui-lib/style';
 import {BorderRadiuses, Button, Image, Spacings, Text, TouchableOpacity, View} from 'react-native-ui-lib/core';
 import ActionBar from 'react-native-ui-lib/actionBar';
-import Assets from 'react-native-ui-lib/assets';
+import UIAssets from 'react-native-ui-lib/assets';
 import Badge from 'react-native-ui-lib/badge';
 import Card from 'react-native-ui-lib/card';
 import Carousel from 'react-native-ui-lib/carousel';
@@ -30,7 +30,7 @@ import Timeline from 'react-native-ui-lib/timeline';
 import Picker from 'react-native-ui-lib/picker';
 import * as Playground from './Playground';
 
-Assets.loadAssetsGroup('icons.demo', {
+UIAssets.loadAssetsGroup('icons.demo', {
   // chevronDown: require('../../assets/icons/chevronDown.png').default,
   chevronRight: {
     uri: require('../../assets/icons/chevronRight.png').default,
@@ -65,6 +65,24 @@ Assets.loadAssetsGroup('icons.demo', {
   // info: require('../../assets/icons/info.png').default,
   // exclamation: require('../../assets/icons/exclamationFillSmall.png').default
 });
+
+const Assets = {...UIAssets};
+
+const fixAssets = (asset, parent) => {
+  Object.keys(asset).forEach(key => {
+    if (typeof asset[key] === 'object') {
+      if (asset[key].default) {
+        const newAsset = get(Assets, `${parent}.${key}`).default;
+        delete asset[key];
+        asset[key] = newAsset;
+      } else {
+        fixAssets(asset[key], parent ? `${parent}.${key}` : key);
+      }
+    }
+  });
+};
+
+fixAssets(Assets);
 
 const Data = {products};
 
