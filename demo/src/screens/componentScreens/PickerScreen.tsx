@@ -15,7 +15,9 @@ import {
   PanningProvider,
   PickerProps,
   RenderCustomModalProps,
-  PickerMethods
+  PickerMethods,
+  SegmentedControl,
+  PickerSelectionStatusProps
 } from 'react-native-ui-lib'; //eslint-disable-line
 import contactsData from '../../data/conversations';
 import {longOptions} from './PickerScreenLongOptions';
@@ -23,6 +25,16 @@ import {longOptions} from './PickerScreenLongOptions';
 const tagIcon = require('../../assets/icons/tags.png');
 const dropdown = require('../../assets/icons/chevronDown.png');
 const dropdownIcon = <Icon source={dropdown} tintColor={Colors.$iconDefault}/>;
+
+const selectAllSegment = [{label: 'button'}, {label: 'checkbox'}];
+
+const buttonProps = {
+  onPress: (selectionValue: any) => console.log('onPress', selectionValue)
+};
+
+const checkboxProps = {
+  onValueChange: (value: boolean) => console.log('onValueChange', value)
+};
 
 const renderContact = (contactValue: any, props: any) => {
   const contact = contacts[contactValue as number];
@@ -107,7 +119,12 @@ export default class PickerScreen extends Component {
     filter: undefined,
     statOption: [],
     scheme: undefined,
-    contact: 0
+    contact: 0,
+    selectAllType: 'button' as PickerSelectionStatusProps['selectAllType']
+  };
+
+  onSegmentChange = (index: number) => {
+    this.setState({selectAllType: selectAllSegment[index].label});
   };
 
   renderDialog: PickerProps['renderOverlay'] = (modalProps: RenderCustomModalProps) => {
@@ -148,7 +165,7 @@ export default class PickerScreen extends Component {
           <Text text40 $textDefault>
             Picker
           </Text>
-          
+
           <Picker
             placeholder="Favorite Language"
             floatingPlaceholder
@@ -215,9 +232,12 @@ export default class PickerScreen extends Component {
             items={dialogOptions}
           />
 
-          <Text text70 $textDefault>
-            Custom Top Element:
-          </Text>
+          <View row spread centerV>
+            <Text text70 $textDefault>
+              Selection Status:
+            </Text>
+            <SegmentedControl segments={selectAllSegment} onChangeIndex={this.onSegmentChange}/>
+          </View>
           <Picker
             placeholder="Status"
             floatingPlaceholder
@@ -226,21 +246,14 @@ export default class PickerScreen extends Component {
             topBarProps={{title: 'Status'}}
             mode={Picker.modes.MULTI}
             items={statusOptions}
-            renderCustomTopElement={value => {
-              const allOptionsSelected = Array.isArray(value) && value.length === statusOptions.length;
-              return (
-                <View margin-s3>
-                  <Button
-                    label={allOptionsSelected ? 'Unselect All' : 'Select All'}
-                    onPress={() => this.onTopElementPress(allOptionsSelected)}
-                    size="small"
-                  />
-                </View>
-              );
+            selectionStatus={{
+              selectAllType: this.state.selectAllType,
+              buttonProps,
+              checkboxProps
             }}
           />
 
-          <Text marginB-10 text70 $textDefault>
+          <Text marginV-10 text70 $textDefault>
             Custom Picker:
           </Text>
           <Picker
@@ -299,7 +312,7 @@ export default class PickerScreen extends Component {
             style={{alignSelf: 'flex-start'}}
             onPress={() => this.picker.current?.openExpandable?.()}
           />
-          
+
           <Text text60 marginT-s5>
             Different Field Types
           </Text>
