@@ -27,14 +27,14 @@ const usePickerDialogProps = (props: HookProps, onDone: any) => {
         <Button
           label="Save"
           link
-          style={{height: 48, paddingHorizontal: 12}}
+          style={{height: 30}}
           onPress={mode === PickerModes.MULTI ? onDone : undefined}
           testID={`${testID}.dialog.header.save`}
           disabled={!shouldDisableDoneButton}
         />
       ),
       subtitle: !shouldDisableDoneButton && validationMessage,
-      subtitleStyle: [styles.validationMessage, {marginTop: 4}, validationMessageStyle],
+      subtitleStyle: [styles.validationMessage, validationMessageStyle],
       ...customPickerProps?.dialogProps?.headerProps
     }
   };
@@ -54,6 +54,6 @@ export default usePickerDialogProps;
 
 const styles = StyleSheet.create({
   validationMessage: {
-    color: Colors.$textDangerLight
+    color: Colors.red30
   }
 });

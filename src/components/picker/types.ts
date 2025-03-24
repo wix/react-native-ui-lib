@@ -171,13 +171,11 @@ type PickerSelectionOptions = Pick<
 
 type PickerSelectionValidation = {
   /**
-   * Callback for validating the picker selection. Return true for valid selections, false for invalid.
-   * When using Dialog mode (with migrateDialog=true), a validation message will be shown and Save button disabled when invalid.
+   * Callback for when selection was made
    */
   selectionValidation?: (value: PickerValue) => boolean;
   /**
-   * Selection validation options including validation message text and styling
-   * Used in conjunction with selectionValidation when using Dialog mode
+   * Selection validation options
    */
   selectionOptions?: PickerSelectionOptions;
 };
