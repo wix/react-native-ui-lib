@@ -358,6 +358,7 @@ export interface PickerContextProps
   onSelectedLayout: (event: any) => any;
   selectionLimit: PickerProps['selectionLimit'];
   areAllItemsSelected: boolean;
+  selectedCount: number;
   toggleAllItemsSelection?: (selectAll: boolean) => void;
 }
 

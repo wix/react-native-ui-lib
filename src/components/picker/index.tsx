@@ -110,6 +110,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     toggleItemSelection,
     cancelSelect,
     areAllItemsSelected,
+    selectedCount,
     toggleAllItemsSelection
   } = usePickerSelection({
     migrate,
@@ -164,6 +165,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
       renderItem,
       selectionLimit,
       areAllItemsSelected,
+      selectedCount,
       toggleAllItemsSelection
     };
   }, [
@@ -179,6 +181,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     toggleItemSelection,
     onDoneSelecting,
     areAllItemsSelected,
+    selectedCount,
     toggleAllItemsSelection
   ]);
 

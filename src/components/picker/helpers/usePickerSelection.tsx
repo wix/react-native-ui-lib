@@ -56,6 +56,10 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     return multiDraftValue?.length === availableItems.length;
   }, [multiDraftValue, availableItems]);
 
+  const selectedCount = useMemo(() => {
+    return multiDraftValue?.length;
+  }, [multiDraftValue]);
+
   const toggleAllItemsSelection = useCallback((selectAll: boolean) => {
     setMultiDraftValue(selectAll ? availableItems : []);
   },
@@ -67,6 +71,7 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     toggleItemSelection,
     cancelSelect,
     areAllItemsSelected,
+    selectedCount,
     toggleAllItemsSelection
   };
 };

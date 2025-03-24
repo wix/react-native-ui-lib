@@ -6,18 +6,17 @@ import View from '../view';
 import Text from '../text';
 import Dividers from '../../style/dividers';
 import PickerContext from './PickerContext';
-import {PickerSelectionStatusProps, PickerMultiValue} from './types';
+import {PickerSelectionStatusProps} from './types';
 
 export default function PickerSelectionStatusBar(props: PickerSelectionStatusProps) {
   const {containerStyle, getLabel, showLabel = true} = props;
   const context = useContext(PickerContext);
-  const {toggleAllItemsSelection, value = [], areAllItemsSelected} = context;
-  const _value: PickerMultiValue = value as PickerMultiValue;
+  const {toggleAllItemsSelection, selectedCount = 0, areAllItemsSelected} = context;
 
-  const checkboxIndeterminate = _value.length > 0 && !areAllItemsSelected;
+  const checkboxIndeterminate = !!selectedCount && !areAllItemsSelected;
   const label =
-    getLabel?.({selectedCount: _value.length, areAllItemsSelected}) ??
-    `${_value.length} Selected ${areAllItemsSelected ? '(All)' : ''}`;
+    getLabel?.({selectedCount, areAllItemsSelected}) ??
+    `${selectedCount} Selected ${areAllItemsSelected ? '(All)' : ''}`;
 
   const handlePress = useCallback(() => {
     const newSelectionState = !areAllItemsSelected;
@@ -44,7 +43,7 @@ export default function PickerSelectionStatusBar(props: PickerSelectionStatusPro
           props.selectAllType === 'checkbox' && (
             <Checkbox
               {...props.checkboxProps}
-              value={_value.length > 0}
+              value={selectedCount > 0}
               indeterminate={checkboxIndeterminate}
               onValueChange={handlePress}
             />
