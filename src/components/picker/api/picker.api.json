@@ -308,7 +308,7 @@
                   {
                     "background": "#E8ECF0",
                     "flexed": true,
-                    "snippet": "<View bg-$backgroundDefault padding-20><Picker label='Label' placeholder='Select' fieldType='settings'/></View>"
+                    "snippet": "<Picker label='Label' placeholder='Select' fieldType='settings' containerStyle={{padding: 20, backgroundColor: Colors.$backgroundDefault}}/>"
                   }
                 ]
               },
@@ -318,7 +318,7 @@
                   {
                     "background": "#E8ECF0",
                     "flexed": true,
-                    "snippet": "<View bg-$backgroundDefault padding-20><Picker label='Label' placeholder='Select' value={1} fieldType='settings' items={[{label: 'Selected value', value: 1}]}/></View>",
+                    "snippet": "<Picker label='Label' placeholder='Select' value={1} fieldType='settings' items={[{label: 'Selected value', value: 1}]} containerStyle={{padding: 20, backgroundColor: Colors.$backgroundDefault}}/>",
                     "props": {
                       "label": "Label",
                       "placeholder": "Select",
