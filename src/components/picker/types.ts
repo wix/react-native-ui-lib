@@ -4,6 +4,8 @@ import {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/
 import {ModalTopBarProps} from '../modal/TopBar';
 import {TextFieldMethods, TextFieldProps} from '../textField';
 import {TouchableOpacityProps} from '../touchableOpacity';
+import {ButtonProps} from '../button';
+import {CheckboxProps} from '../checkbox';
 
 // Note: enum values are uppercase due to legacy
 export enum PickerModes {
@@ -159,6 +161,48 @@ type PickerExpandableOverlayProps = {
   enableModalBlur?: boolean;
 };
 
+interface PickerSelectionStatusLabelData {
+  selectedCount: number;
+  areAllItemsSelected: boolean;
+}
+
+export type ButtonSelectionStatus = {
+  /**
+   * Select all element type
+   */
+  selectAllType?: 'button';
+  /**
+   * Button props
+   */
+  buttonProps?: ButtonProps;
+};
+
+export type CheckboxSelectionStatus = {
+  /**
+   * Select all element type
+   */
+  selectAllType?: 'checkbox';
+  /**
+   * Checkbox props
+   */
+  checkboxProps?: CheckboxProps;
+};
+
+export type PickerSelectionStatusProps = {
+  /**
+   * A function that generates a label based on the selected items' count and status
+   */
+  getLabel?: (data: PickerSelectionStatusLabelData) => string;
+  /**
+   * Custom container style
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * Control weather to show the label or not
+   */
+  showLabel?: boolean;
+} & (ButtonSelectionStatus | CheckboxSelectionStatus);
+
 export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
   PickerPropsDeprecation &
   PickerExpandableOverlayProps &
@@ -210,6 +254,10 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
      * Render custom top element
      */
     renderCustomTopElement?: (value?: PickerValue) => React.ReactElement;
+    /**
+     * Selection status bar props
+     */
+    selectionStatus?: PickerSelectionStatusProps;
     /**
      * Add onPress callback for when pressing the picker
      */
@@ -309,6 +357,9 @@ export interface PickerContextProps
   isMultiMode: boolean;
   onSelectedLayout: (event: any) => any;
   selectionLimit: PickerProps['selectionLimit'];
+  areAllItemsSelected: boolean;
+  selectedCount: number;
+  toggleAllItemsSelection?: (selectAll: boolean) => void;
 }
 
 export type PickerItemsListProps = Pick<
@@ -320,6 +371,7 @@ export type PickerItemsListProps = Pick<
   | 'showLoader'
   | 'customLoaderElement'
   | 'renderCustomTopElement'
+  | 'selectionStatus'
   | 'showSearch'
   | 'searchStyle'
   | 'searchPlaceholder'
