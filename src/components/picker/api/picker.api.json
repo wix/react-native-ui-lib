@@ -111,6 +111,7 @@
     "  value={2$1}",
     "  placeholder={'Placeholder'$2}",
     "  onChange={() => console.log('changed')$3}",
+    "  trailingAccessory={<Icon source={Assets.icons.demo.chevronDown}/>}",
     " items={[{label: 'Item 1', value: 1}, {label: 'Item 2', value: 2},{label: 'Item 3', value: 3}]}",
     ">",
     "</Picker>"
@@ -194,6 +195,7 @@
                 "content": [
                   {
                     "flexed": true,
+                    "snippet": "<Picker preset='outline' placeholder='select' items={[{label: 'Selected Value', value: 1}]} value={1} trailingAccessory={<Icon source={Assets.icons.demo.chevronDown}/>}/>",
                     "props": {
                       "preset": "outline",
                       "label": "Label",
@@ -207,7 +209,7 @@
                 "content": [
                   {
                     "flexed": true,
-                    "snippet": "<Picker preset='outline' placeholder='select' leadingAccessory={<Icon source={Assets.icons.demo.star} marginR-s2/>} items={[{label: 'Selected Value', value: 1}]} value={1}/>"
+                    "snippet": "<Picker preset='outline' placeholder='select' leadingAccessory={<Icon source={Assets.icons.demo.star} marginR-s2/>} trailingAccessory={<Icon source={Assets.icons.demo.chevronDown}/>} items={[{label: 'Selected Value', value: 1}]} value={1}/>"
                   }
                 ]
               },
@@ -216,12 +218,7 @@
                 "content": [
                   {
                     "flexed": true,
-                    "props": {
-                      "preset": "outline",
-                      "label": "Label",
-                      "placeholder": "Select",
-                      "editable": false
-                    }
+                    "snippet": "<Picker preset='outline' label='Label' placeholder='Select' editable={false} trailingAccessory={<Icon source={Assets.icons.demo.chevronDown}/>} />"
                   }
                 ]
               },
@@ -230,12 +227,7 @@
                 "content": [
                   {
                     "flexed": true,
-                    "props": {
-                      "preset": "outline",
-                      "label": "Label",
-                      "placeholder": "Select",
-                      "validationMessage": "Validation message"
-                    }
+                    "snippet": "<Picker preset='outline' label='Label' placeholder='Select' validationMessage='Validation Message' trailingAccessory={<Icon source={Assets.icons.demo.chevronDown}/>} />"
                   }
                 ]
               }
