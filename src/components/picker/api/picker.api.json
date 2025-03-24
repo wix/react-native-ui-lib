@@ -207,7 +207,7 @@
                 "content": [
                   {
                     "flexed": true,
-                    "snippet": "<Picker preset='outline' placeholder='select' leadingAccessory={<Icon source={Assets.icons.general.favorite}/>} items={[{label: 'Selected Value', value: 1}]} value={1}/>"
+                    "snippet": "<Picker preset='outline' placeholder='select' leadingAccessory={<Icon source={Assets.icons.demo.star} marginR-s2/>} items={[{label: 'Selected Value', value: 1}]} value={1}/>"
                   }
                 ]
               },
