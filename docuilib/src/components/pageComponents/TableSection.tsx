@@ -26,7 +26,7 @@ export const TableSection = ({section, component}) => {
               item={item}
               componentName={component.name}
               showCodeButton
-              isIncubator={component.category === 'incubator'}
+              category={component.category}
             />
           </td>
         );

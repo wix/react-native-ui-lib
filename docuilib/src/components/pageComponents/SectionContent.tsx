@@ -18,7 +18,7 @@ export const SectionContent = ({section, component}) => {
               <ContentItem
                 item={item}
                 componentName={component.name}
-                isIncubator={component.category === 'incubator'}
+                category={component.category}
               />
             </div>
           );

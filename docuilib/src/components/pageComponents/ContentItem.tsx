@@ -91,10 +91,10 @@ type ContentItemProps = {
   item: Item;
   componentName: string;
   showCodeButton?: boolean;
-  isIncubator: boolean;
+  category: string;
 };
 
-export const ContentItem = ({item, componentName, showCodeButton, isIncubator}: ContentItemProps) => {
+export const ContentItem = ({item, componentName, showCodeButton, category}: ContentItemProps) => {
   const getFigmaEmbed = (value: string, height = 450) => {
     const modifiedValue = !value.includes('page-selector=') ? value + '&page-selector=false' : value;
     return <iframe width={'100%'} height={height} src={modifiedValue}/>;
@@ -112,7 +112,7 @@ export const ContentItem = ({item, componentName, showCodeButton, isIncubator}: 
 
   if (item.props || item.snippet) {
     let name = item.component ?? componentName;
-    if (isIncubator) {
+    if (category === 'incubator') {
       name = `Incubator.${name}`;
     }
 
