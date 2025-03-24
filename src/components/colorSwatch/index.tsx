@@ -52,7 +52,6 @@ interface Props {
 }
 export type ColorSwatchProps = Props & ColorsModifiers;
 
-const transparentImage = require('./assets/transparentSwatch/TransparentSwatch.png');
 const DEFAULT_SIZE = Constants.isTablet ? 44 : 36;
 export const SWATCH_MARGIN = 12;
 export const SWATCH_SIZE = DEFAULT_SIZE;
@@ -178,13 +177,17 @@ class ColorSwatch extends PureComponent<Props & BaseComponentInjectedProps> {
         {...this.getAccessibilityInfo()}
       >
         {Colors.isTransparent(this.color) && (
-          <Image source={transparentImage} style={this.styles.transparentImage} resizeMode={'cover'}/>
+          <Image
+            source={Assets.internal.images.transparentSwatch}
+            style={this.styles.transparentImage}
+            resizeMode={'cover'}
+          />
         )}
         {unavailable ? (
           <View style={[this.styles.unavailable, {backgroundColor: tintColor}]}/>
         ) : (
           <Animated.Image
-            source={Assets.icons.check}
+            source={Assets.internal.icons.check}
             style={{
               tintColor,
               opacity: isSelected,

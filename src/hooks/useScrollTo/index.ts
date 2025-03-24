@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import {RefObject, useCallback, useRef} from 'react';
 import {ScrollView, FlatList, LayoutChangeEvent} from 'react-native';
-import {Constants} from '../../commons/new';
 
 export type ScrollToSupportedViews = ScrollView | FlatList;
 
@@ -62,7 +61,8 @@ const useScrollTo = <T extends ScrollToSupportedViews>(props: ScrollToProps<T>):
   [horizontal]);
 
   const scrollTo = useCallback((offset: number, animated = true) => {
-    if (
+    // Fix that was for Android RTL. Scrolling is now aligned between IOS and Android and offset is ok.
+    /* if (
       horizontal &&
         Constants.isRTL &&
         Constants.isAndroid &&
@@ -71,7 +71,7 @@ const useScrollTo = <T extends ScrollToSupportedViews>(props: ScrollToProps<T>):
     ) {
       const scrollingWidth = Math.max(0, contentSize.current - containerSize.current);
       offset = scrollingWidth - offset;
-    }
+    } */
 
     // @ts-ignore
     if (_.isFunction(scrollViewRef.current?.scrollToOffset)) {

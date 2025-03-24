@@ -1,6 +1,6 @@
 {
   "name": "uilib-docs",
-  "version": "3.3.5",
+  "version": "3.17.0",
   "main": "./src/index.ts",
   "scripts": {
     "docusaurus": "docusaurus",
@@ -30,6 +30,7 @@
     "clsx": "^1.1.1",
     "docusaurus-plugin-sass": "^0.2.1",
     "file-loader": "^6.2.0",
+    "prettier": "2.8.8",
     "prism-react-renderer": "^2.1.0",
     "react-html-parser": "^2.0.2",
     "react-native-web": "^0.19.12",
@@ -47,7 +48,7 @@
     "react-native-linear-gradient": "2.6.2",
     "react-native-reanimated": "^3.15.1",
     "react-native-shimmer-placeholder": "^2.0.9",
-    "react-native-ui-lib": "7.34.6-snapshot.5981",
+    "react-native-ui-lib": "snapshot",
     "shell-utils": "^1.0.10",
     "typescript": "~5.2.2"
   },

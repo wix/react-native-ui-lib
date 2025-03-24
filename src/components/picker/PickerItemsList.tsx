@@ -53,7 +53,7 @@ const PickerItemsList = (props: PickerItemsListProps) => {
           <Icon
             style={styles.searchIcon}
             tintColor={Colors.$iconDefault}
-            source={searchStyle.icon || Assets.icons.search}
+            source={searchStyle.icon || Assets.internal.icons.search}
           />
           <TextInput
             testID={testID}

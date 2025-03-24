@@ -1,22 +1,23 @@
 /**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
- */
+* Any CSS included here will be global. The classic template
+* bundles Infima by default. Infima is a CSS framework designed to
+* work well for content-centric websites.
+*/
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #5848ff;
-  --ifm-color-primary-dark: #4633E9;
-  --ifm-color-primary-darker: #3220CD;
-  --ifm-color-primary-darkest: #3220CD;
-  --ifm-color-primary-light: #5A48F5;
-  --ifm-color-primary-lighter: #8579FF;
-  --ifm-color-primary-lightest: #B2ABFF;
+  --ifm-color-primary: #1b2430;
+  --ifm-color-primary-dark: #18202b;
+  --ifm-color-primary-darker: #171f29;
+  --ifm-color-primary-darkest: #131922;
+  --ifm-color-primary-light: #1e2835;
+  --ifm-color-primary-lighter: #1f2937;
+  --ifm-color-primary-lightest: #232f3e;
   --ifm-code-font-size: 95%;
+  --ifm-font-color-base: #20303C;
 }
 
 .docusaurus-highlight-code-line {
@@ -29,6 +30,173 @@
 html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+/** Docusaurus Navbar */
+
+.navbar {
+  height: 86px;
+  padding-top: 26px;
+  padding-bottom: 16px;
+}
+.navbar__logo {
+  position: relative;
+  top: -10px;
+  height: 53px;
+  margin-right: 76px;
+  margin-left: 36px;
+}
+.navbar__inner {
+  align-items: flex-end;
+}
+.navbar__link {
+  padding: 0 10px;
+  margin: 0 16px;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  line-height: 38px;
+}
+.navbar__link--active {
+  font-weight: 700;
+  border-bottom: 2px solid #20303C;
+}
+
+/* Algolia search input */
+
+.navbarSearchContainer_Bca1 {
+  margin-right: 28px;
+}
+.DocSearch-Button {
+  border-radius: 8px !important;
+  background-color: #F9FAFB !important;
+  border: 1px solid #D2D5DA !important;
+  color: #6E7881 !important;
+  width: 279px;
+  height: 44px !important;
+  padding: 10px 20px !important;
+}
+.DocSearch-Search-Icon {
+  width: 16px !important;
+  height: 16px !important;
+  stroke-width: 3 !important;
+}
+.DocSearch-Button .DocSearch-Search-Icon {
+  color: #4D5963 !important;
+}
+.DocSearch-Button-Placeholder {
+  padding: 0 12px !important;
+}
+.DocSearch-Button-Keys {
+  display: none !important;
+}
+
+/** Docusaurus Menu */
+
+.menu__link--sublist-caret:after, .menu__caret:before {
+  background-size: 20px;
+  filter: invert(0) sepia(0) saturate(0) hue-rotate(0) brightness(0) contrast(100%);
+}
+.menu {
+  margin-left: 24px;
+  margin-right: 24px;
+  margin-bottom: 80px;
+}
+.menu__list .menu__list:has(ul) {
+  padding-left: 0;
+}
+
+.theme-doc-sidebar-item-category:is(.theme-doc-sidebar-item-category-level-1) {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #D2D6D8;
+}
+.menu__list-item-collapsible:has(.menu__link:not(.menu__link--sublist)) a {
+  color: #A6ACB1 !important;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  margin-top: 24px;
+}
+.menu__list-item-collapsible:has(.menu__link:not(.menu__link--sublist)):hover {
+  background: #FFF;
+}
+.menu__link {
+  color: #20303C;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+.menu__link--active {
+  font-weight: 700;
+}
+
+/** Docusaurus Breadcrumbs */
+
+.breadcrumbs__link {
+  color: #4D5963;
+}
+.breadcrumbs__item--active .breadcrumbs__link {
+  color: #20303C;
+  background-color: #FFF;
+}
+.breadcrumbHomeIcon_YNFT {
+  color: #20303C;
+}
+
+/** Custom Footer */
+
+.footer {
+  border-top: 1px solid #D2D6D8;
+  background-color: #F8F9FA;
+  padding-top: 64px;
+  padding-bottom: 107px;
+}
+.footer__container {
+  border-top: 1px solid #D2D6D8;
+  padding-top: 20px;
+  margin-left: 350px;
+  margin-right: 350px;
+}
+.footer__links {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+.footer__section {
+  width: 200px;
+  display: flex;
+}
+.footer__section__item a {
+  display: flex;
+  align-items: center;
+}
+.footer__section__item span {
+  margin-right: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  line-height: 38px;
+}
+.right__section {
+  display: flex;
+  justify-content: end;
+}
+.text__link {
+  margin-right: 24px;
+}
+.icon__link {
+  margin-right: 16px;
+}
+.footer__copyright {
+  color: #6D7280;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 130%;
+}
+
+/** Component page tabs */
 
 .main-tabs {
   margin: 40px 0 60px 0;

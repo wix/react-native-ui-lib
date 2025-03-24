@@ -46,7 +46,7 @@ interface State {
  * @description: PanGestureView component for drag and swipe gestures (supports only vertical gestures at the moment)
  */
 class PanGestureView extends Component<PanGestureViewProps, State> {
-  static displayName = 'PanGestureView';
+  static displayName = 'IGNORE';
 
   static defaultProps: Partial<PanGestureViewProps> = {
     direction: GestureDirections.DOWN

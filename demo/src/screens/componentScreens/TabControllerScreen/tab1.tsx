@@ -24,7 +24,7 @@ class Tab1 extends Component {
             round
             style={{width: 50}}
             size={Button.sizes.small}
-            iconSource={Assets.icons.search}
+            iconSource={Assets.icons.demo.search}
             white
           />
         </View>

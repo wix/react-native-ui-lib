@@ -1,13 +1,17 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {Alert, ViewStyle} from 'react-native';
-import {Colors, View, Text, Hint, Button, Assets, Incubator} from 'react-native-ui-lib';
+import {Colors, View, Text, Hint, Button, Assets, Incubator, Constants} from 'react-native-ui-lib';
 import {renderMultipleSegmentOptions, renderBooleanOption} from '../ExampleScreenPresenter';
 
 const settingsIcon = require('../../assets/icons/settings.png');
 const reactions = ['❤️', '😮', '😔', '😂', '😡'];
 
 type HintScreenProps = {};
+
+const SHORT_MESSAGE = 'Add other cool and useful stuff.';
+const DEFAULT_MESSAGE = 'Add other cool and useful stuff through adding apps to your visitors to enjoy.';
+const TARGET_FRAMES_MESSAGE = 'Press Back button to go to previous screen';
 
 export default class HintsScreen extends Component<HintScreenProps> {
   state = {
@@ -135,10 +139,14 @@ export default class HintsScreen extends Component<HintScreenProps> {
       showReactionStrip,
       enableShadow
     } = this.state;
-    const targetFrame = {x: 140, y: 100, width: 10, height: 10};
-    const message = useShortMessage
-      ? 'Add other cool and useful stuff.'
-      : 'Add other cool and useful stuff through adding apps to your visitors to enjoy.';
+    const targetFrame = {
+      x: 20,
+      y: Constants.getSafeAreaInsets().top + Constants.statusBarHeight,
+      width: 1,
+      height: 1
+    };
+
+    const message = useTargetFrame ? TARGET_FRAMES_MESSAGE : useShortMessage ? SHORT_MESSAGE : DEFAULT_MESSAGE;
     const color = !showCustomContent && showReactionStrip ? {color: Colors.$backgroundDefault} : undefined;
 
     const hintKey = `${useSideTip}-${targetPosition}-${useShortMessage}-${showIcon}-${useTargetFrame}-${showCustomContent}-${showReactionStrip}`;
@@ -170,14 +178,14 @@ export default class HintsScreen extends Component<HintScreenProps> {
             icon={showIcon ? settingsIcon : undefined}
             // iconStyle={{tintColor: 'red'}}
             // offset={35}
-            position={showBottomHint ? Hint.positions.BOTTOM : Hint.positions.TOP}
-            useSideTip={useSideTip}
+            position={showBottomHint || useTargetFrame ? Hint.positions.BOTTOM : Hint.positions.TOP}
+            useSideTip={useSideTip || useTargetFrame}
             key={hintKey}
             onPress={this.onHintPressed}
             targetFrame={useTargetFrame ? targetFrame : undefined}
             // borderRadius={BorderRadiuses.br40}
             // edgeMargins={30}
-            onBackgroundPress={useBackdrop && !useTargetFrame ? this.toggleHint : undefined}
+            onBackgroundPress={useBackdrop || useTargetFrame ? this.toggleHint : undefined}
             backdropColor={Colors.rgba(Colors.$backgroundInverted, 0.3)}
             customContent={
               showCustomContent
@@ -207,17 +215,6 @@ export default class HintsScreen extends Component<HintScreenProps> {
 
           {useTargetFrame && (
             <>
-              <View
-                bg-red50
-                style={{
-                  position: 'absolute',
-                  top: targetFrame.y,
-                  left: targetFrame.x,
-                  width: targetFrame.width,
-                  height: targetFrame.height
-                }}
-              />
-
               <View absL absB margin-page>
                 <Button label="Show Hint" onPress={this.toggleHint}/>
               </View>
