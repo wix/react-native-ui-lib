@@ -22,7 +22,12 @@ export const TableSection = ({section, component}) => {
       if (index < numberOfColumns - 1) {
         return (
           <td style={{backgroundColor: item.background || 'white', padding: 0, height: '100px'}}>
-            <ContentItem item={item} componentName={component.name} showCodeButton/>
+            <ContentItem
+              item={item}
+              componentName={component.name}
+              showCodeButton
+              category={component.category}
+            />
           </td>
         );
       }

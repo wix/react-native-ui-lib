@@ -102,7 +102,6 @@
                 "title": "Generic",
                 "content": [
                   {
-                    "component": "Incubator.Toast",
                     "props": {
                       "visible": true,
                       "message": "Mika Or was saved to contacts.",
@@ -115,7 +114,6 @@
                 "title": "Success",
                 "content": [
                   {
-                    "component": "Incubator.Toast",
                     "props": {
                       "visible": true,
                       "message": "Post published.",
@@ -128,7 +126,6 @@
                 "title": "Validation",
                 "content": [
                   {
-                    "component": "Incubator.Toast",
                     "props": {
                       "visible": true,
                       "message": "Enter a card number.",
@@ -141,7 +138,6 @@
                 "title": "Offline Error",
                 "content": [
                   {
-                    "component": "Incubator.Toast",
                     "props": {
                       "visible": true,
                       "message": "This action is not available offline.",
@@ -161,7 +157,6 @@
                 "title": "None",
                 "content": [
                   {
-                    "component": "Incubator.Toast",
                     "props": {
                       "visible": true,
                       "message": "Action completed."
@@ -181,7 +176,6 @@
                 "title": "With loader",
                 "content": [
                   {
-                    "component": "Incubator.Toast",
                     "props": {
                       "visible": true,
                       "message": "Action completed.",
