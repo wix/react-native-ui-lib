@@ -19,6 +19,7 @@
     padding: 20px;
   }
 
+  // Note: Extends button's (Touchable) container to match its parent width
   button {
     width: inherit;
   }
