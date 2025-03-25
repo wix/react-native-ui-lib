@@ -39,6 +39,20 @@ module.exports = ({siteDir}, _options) => {
     use: useBabelForRN
   };
 
+  const imageLoaderConfiguration = {
+    include: baseProjectSource,
+    test: /\.(gif|jpe?g|png|svg)$/,
+    type: 'asset',
+    generator: {
+      dataUrl: content => {
+        content = content.toString();
+        const match = content.match(/data:image[^"]+/);
+        const imageData = match ? match[0] : '';
+        return imageData;
+      }
+    }
+  };
+
   return {
     name: 'uilib-plugin',
     configureWebpack(_config, _isServer, _utils) {
@@ -53,7 +67,7 @@ module.exports = ({siteDir}, _options) => {
           })
         ],
         module: {
-          rules: [babelLoaderAppConfiguration]
+          rules: [babelLoaderAppConfiguration, imageLoaderConfiguration]
         },
         resolve: {
           alias: {
