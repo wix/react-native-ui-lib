@@ -96,7 +96,7 @@ interface State {
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/PanDismissibleView/PanDismissibleView.gif?raw=true
  */
 class PanDismissibleView extends PureComponent<Props, State> {
-  static displayName = 'PanDismissibleView';
+  static displayName = 'IGNORE';
 
   static defaultProps: Partial<Props> = {
     directions: DEFAULT_DIRECTIONS,

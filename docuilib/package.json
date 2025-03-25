@@ -1,6 +1,6 @@
 {
   "name": "uilib-docs",
-  "version": "3.14.0",
+  "version": "3.18.0",
   "main": "./src/index.ts",
   "scripts": {
     "docusaurus": "docusaurus",

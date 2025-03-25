@@ -177,14 +177,13 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   }
 
   getAccessibilityProps() {
-    const {accessibilityLabel, disabled, value} = this.props;
-    const checkedState = value ? 'checked' : 'unchecked';
+    const {accessibilityLabel = 'checkbox', disabled, value} = this.props;
 
     return {
       accessible: true,
-      accessibilityLabel: accessibilityLabel ? `${accessibilityLabel} ${checkedState}` : `${checkedState}`,
+      accessibilityLabel,
       accessibilityRole: 'checkbox',
-      accessibilityStates: disabled ? ['disabled'] : undefined
+      accessibilityState: {disabled, checked: value}
     };
   }
 
