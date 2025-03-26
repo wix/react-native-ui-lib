@@ -6,7 +6,7 @@ type UseFormattedCodeOptions = {
   printWidth?: number;
 };
 const useFormattedCode = (code: string, {printWidth = 35}: UseFormattedCodeOptions = {}) => {
-  const [formattedCode, setFormattedCode] = useState<string>('formatting...');
+  const [formattedCode, setFormattedCode] = useState<string>('');
 
   useEffect(() => {
     (async () => {
