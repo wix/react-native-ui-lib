@@ -19,6 +19,12 @@ $preview-margin: 60px;
   position: relative;
   flex: 1;
   max-width: calc(100% - ($preview-width + $preview-margin));
+  border-radius: 4px;
+  overflow: hidden;
+
+  pre {
+    padding: 10px 20px;
+  }
 }
 
 .errorContainer {
@@ -35,7 +41,7 @@ $preview-margin: 60px;
   margin-left: $preview-margin;
   border-radius: 36px;
   border: 1px solid '#eee';
-  box-shadow: 1px 2px 10px rgba(110, 120, 129, 0.2);
+  box-shadow: 0 0 10px rgba(110, 120, 129, 0.2);
   overflow: hidden;
   padding: 10px
 }

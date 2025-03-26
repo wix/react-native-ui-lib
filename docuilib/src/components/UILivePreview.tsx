@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {LiveProvider, LiveEditor, LiveError} from 'react-live';
+import {themes} from 'prism-react-renderer';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import CodeBlock from '@theme/CodeBlock';
@@ -43,7 +44,7 @@ export default function UILivePreview({code: initialCode, componentName = undefi
         const iframeSource = `${window.location.origin}${siteConfig?.baseUrl}livePreview`;
 
         return (
-          <LiveProvider code={code} scope={ReactLiveScope}>
+          <LiveProvider code={code} scope={ReactLiveScope} theme={themes.oceanicNext}>
             <div className={styles.container}>
               <div className={styles.codeContainer}>
                 <LiveEditor onChange={setCode} className={styles.liveEditor}/>
