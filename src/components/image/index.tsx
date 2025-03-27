@@ -17,13 +17,13 @@ import {
   BaseComponentInjectedProps,
   MarginModifiers
 } from '../../commons/new';
+import {ComponentStatics} from '../../typings/common';
 import {RecorderProps} from '../../typings/recorderTypes';
 import {getAsset, isSvg} from '../../utils/imageUtils';
 import Overlay, {OverlayTypeType, OverlayIntensityType} from '../overlay';
 import SvgImage from '../svgImage';
 import View from '../view';
 import {Colors} from '../../style';
-import {ComponentStatics} from 'src/typings/common';
 
 export type ImageSourceType = string | RNImageProps['source'];
 
