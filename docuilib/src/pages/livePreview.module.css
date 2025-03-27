@@ -1,0 +1,11 @@
+.mobileFlexContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.fakeTopBar {
+  height: 60px;
+  background-color: #ddd;
+  margin-bottom: 1px;
+}

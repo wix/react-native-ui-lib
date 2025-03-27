@@ -8,6 +8,7 @@ import {
   ImagePropsBase,
   ImageStyle,
   TextStyle,
+  TextProps,
   AccessibilityProps
 } from 'react-native';
 import {Colors, BorderRadiuses} from '../../style';
@@ -21,6 +22,7 @@ import AnimatedImage, {AnimatedImageProps} from '../animatedImage';
 import * as AvatarHelper from '../../helpers/AvatarHelper';
 import {useThemeProps} from '../../hooks';
 import {isSvg} from '../../utils/imageUtils';
+import Constants from '../../commons/Constants';
 
 export enum BadgePosition {
   TOP_RIGHT = 'TOP_RIGHT',
@@ -119,6 +121,10 @@ export type AvatarProps = Pick<AccessibilityProps, 'accessibilityLabel'> &
      * The label color
      */
     labelColor?: string;
+    /*
+     * The ellipsize mode for the label, default is clip
+     */
+    labelEllipsizeMode?: TextProps['ellipsizeMode'];
     /**
      * ribbon label to display on the avatar
      */
@@ -184,9 +190,12 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
     useAutoColors,
     autoColorsConfig,
     containerStyle,
+    labelEllipsizeMode = 'clip',
     onPress,
     children
   } = themeProps;
+
+  const hitTargetPadding = Math.max(0, (48 - size) / 2);
   const {size: _badgeSize, borderWidth: badgeBorderWidth = 0} = badgeProps;
   const badgeSize = _badgeSize || DEFAULT_BADGE_SIZE;
 
@@ -285,7 +294,7 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
   const renderImage = () => {
     if (source !== undefined) {
       // Looks like reanimated does not support SVG
-      const ImageContainer = animate && !isSvg(source) ? AnimatedImage : Image;
+      const ImageContainer = animate && !isSvg(source) && !Constants.isWeb ? AnimatedImage : Image;
       return (
         <ImageContainer
           style={_imageStyle}
@@ -346,11 +355,12 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
       accessible={!_.isUndefined(onPress)}
       accessibilityLabel={'Avatar'}
       accessibilityRole={onPress ? 'button' : 'image'}
+      hitSlop={onPress ? hitTargetPadding : undefined}
       {...accessibilityProps}
     >
       <View testID={`${testID}.container`} style={textContainerStyle}>
         {!_.isUndefined(text) && (
-          <Text numberOfLines={1} style={textStyle} testID={`${testID}.label`}>
+          <Text numberOfLines={1} ellipsizeMode={labelEllipsizeMode} style={textStyle} testID={`${testID}.label`}>
             {text}
           </Text>
         )}
@@ -369,7 +379,8 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: BorderRadiuses.br100
+    borderRadius: BorderRadiuses.br100,
+    overflow: 'hidden'
   },
   initialsContainerWithInset: {
     top: 1,

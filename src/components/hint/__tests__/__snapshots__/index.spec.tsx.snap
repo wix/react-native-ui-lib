@@ -1,0 +1,1672 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Hint Screen component test Different positions and scenarios center position should position correctly for a target positioned on center - with sideTip 1`] = `
+<View
+  centerV={true}
+  padding-s5={true}
+  style={
+    [
+      undefined,
+      undefined,
+      undefined,
+      {
+        "flex": 1,
+      },
+      undefined,
+      {
+        "padding": 20,
+      },
+      {},
+      {
+        "justifyContent": "center",
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "backgroundColor": undefined,
+        "height": 1334,
+        "left": 0,
+        "opacity": 1,
+        "position": "absolute",
+        "top": 0,
+        "width": 750,
+      }
+    }
+    testID="Hint.overlay"
+  />
+  <View
+    collapsable={true}
+    message="Hint message to hint things"
+    modifiers={
+      {
+        "alignments": {},
+        "backgroundColor": undefined,
+        "borderRadius": undefined,
+        "color": undefined,
+        "flexStyle": undefined,
+        "margins": {},
+        "paddings": {},
+        "positionStyle": undefined,
+        "typography": undefined,
+      }
+    }
+    position="bottom"
+    style={
+      [
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        {},
+        {},
+        {},
+        [
+          {
+            "position": "absolute",
+          },
+          undefined,
+          {
+            "left": 100,
+            "top": 200,
+          },
+          {
+            "elevation": 10,
+            "zIndex": 10,
+          },
+        ],
+      ]
+    }
+    targetFrame={
+      {
+        "height": 60,
+        "width": 100,
+        "x": 100,
+        "y": 200,
+      }
+    }
+    useModal={true}
+    useSideTip={true}
+    visible={true}
+  >
+    <View
+      collapsable={false}
+      pointerEvents="box-none"
+      style={
+        {
+          "alignItems": "flex-start",
+          "left": -100,
+          "opacity": 1,
+          "paddingVertical": 16,
+          "position": "absolute",
+          "top": 60,
+          "transform": [
+            {
+              "translateY": 0,
+            },
+          ],
+          "width": 750,
+        }
+      }
+      testID="Hint"
+    >
+      <View
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          centerV={true}
+          onLayout={[Function]}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              [
+                {
+                  "backgroundColor": "#5A48F5",
+                  "borderRadius": 20,
+                  "maxWidth": 400,
+                },
+                {
+                  "paddingBottom": 16,
+                  "paddingHorizontal": 20,
+                  "paddingTop": 12,
+                },
+                undefined,
+                {
+                  "backgroundColor": "#5A48F5",
+                },
+                false,
+                {
+                  "left": 0,
+                },
+              ],
+            ]
+          }
+          testID="Hint.message"
+        >
+          <Text
+            fsTagName="unmask"
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "color": "#FFFFFF",
+                    "flexShrink": 1,
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": "400",
+                    "lineHeight": 24,
+                  },
+                  undefined,
+                ],
+              ]
+            }
+            testID="Hint.message.text"
+          >
+            Hint message to hint things
+          </Text>
+        </View>
+      </View>
+      <Image
+        accessibilityRole="image"
+        accessible={false}
+        assetGroup="icons"
+        onError={[Function]}
+        source={
+          {
+            "testUri": "../../../src/assets/internal/images/hintTipSide.png",
+          }
+        }
+        style={
+          [
+            {
+              "tintColor": "#5A48F5",
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            false,
+            [
+              {
+                "position": "absolute",
+              },
+              {
+                "top": 9,
+              },
+              {
+                "transform": [
+                  {
+                    "scaleY": 1,
+                  },
+                  {
+                    "scaleX": 1,
+                  },
+                ],
+              },
+            ],
+            false,
+          ]
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Hint Screen component test Different positions and scenarios center position should position correctly for a target positioned on center 1`] = `
+<View
+  centerV={true}
+  padding-s5={true}
+  style={
+    [
+      undefined,
+      undefined,
+      undefined,
+      {
+        "flex": 1,
+      },
+      undefined,
+      {
+        "padding": 20,
+      },
+      {},
+      {
+        "justifyContent": "center",
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "backgroundColor": undefined,
+        "height": 1334,
+        "left": 0,
+        "opacity": 1,
+        "position": "absolute",
+        "top": 0,
+        "width": 750,
+      }
+    }
+    testID="Hint.overlay"
+  />
+  <View
+    collapsable={true}
+    message="Hint message to hint things"
+    modifiers={
+      {
+        "alignments": {},
+        "backgroundColor": undefined,
+        "borderRadius": undefined,
+        "color": undefined,
+        "flexStyle": undefined,
+        "margins": {},
+        "paddings": {},
+        "positionStyle": undefined,
+        "typography": undefined,
+      }
+    }
+    position="bottom"
+    style={
+      [
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        {},
+        {},
+        {},
+        [
+          {
+            "position": "absolute",
+          },
+          undefined,
+          {
+            "left": 100,
+            "top": 200,
+          },
+          {
+            "elevation": 10,
+            "zIndex": 10,
+          },
+        ],
+      ]
+    }
+    targetFrame={
+      {
+        "height": 60,
+        "width": 100,
+        "x": 100,
+        "y": 200,
+      }
+    }
+    useModal={true}
+    visible={true}
+  >
+    <View
+      collapsable={false}
+      pointerEvents="box-none"
+      style={
+        {
+          "alignItems": "flex-start",
+          "left": -100,
+          "opacity": 1,
+          "paddingVertical": 16,
+          "position": "absolute",
+          "top": 60,
+          "transform": [
+            {
+              "translateY": 0,
+            },
+          ],
+          "width": 750,
+        }
+      }
+      testID="Hint"
+    >
+      <View
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          centerV={true}
+          onLayout={[Function]}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              [
+                {
+                  "backgroundColor": "#5A48F5",
+                  "borderRadius": 20,
+                  "maxWidth": 400,
+                },
+                {
+                  "paddingBottom": 16,
+                  "paddingHorizontal": 20,
+                  "paddingTop": 12,
+                },
+                undefined,
+                {
+                  "backgroundColor": "#5A48F5",
+                },
+                false,
+                {
+                  "left": 0,
+                },
+              ],
+            ]
+          }
+          testID="Hint.message"
+        >
+          <Text
+            fsTagName="unmask"
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "color": "#FFFFFF",
+                    "flexShrink": 1,
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": "400",
+                    "lineHeight": 24,
+                  },
+                  undefined,
+                ],
+              ]
+            }
+            testID="Hint.message.text"
+          >
+            Hint message to hint things
+          </Text>
+        </View>
+      </View>
+      <Image
+        accessibilityRole="image"
+        accessible={false}
+        assetGroup="icons"
+        onError={[Function]}
+        source={
+          {
+            "testUri": "../../../src/assets/internal/images/hintTipMiddle.png",
+          }
+        }
+        style={
+          [
+            {
+              "tintColor": "#5A48F5",
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            false,
+            [
+              {
+                "position": "absolute",
+              },
+              {
+                "top": 9,
+              },
+              {
+                "transform": [
+                  {
+                    "scaleY": 1,
+                  },
+                  {
+                    "scaleX": 1,
+                  },
+                ],
+              },
+            ],
+            false,
+          ]
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Hint Screen component test Different positions and scenarios left position should position correctly for a target positioned on left - with sideTip 1`] = `
+<View
+  centerV={true}
+  padding-s5={true}
+  style={
+    [
+      undefined,
+      undefined,
+      undefined,
+      {
+        "flex": 1,
+      },
+      undefined,
+      {
+        "padding": 20,
+      },
+      {},
+      {
+        "justifyContent": "center",
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "backgroundColor": undefined,
+        "height": 1334,
+        "left": 0,
+        "opacity": 1,
+        "position": "absolute",
+        "top": 0,
+        "width": 750,
+      }
+    }
+    testID="Hint.overlay"
+  />
+  <View
+    collapsable={true}
+    message="Hint message to hint things"
+    modifiers={
+      {
+        "alignments": {},
+        "backgroundColor": undefined,
+        "borderRadius": undefined,
+        "color": undefined,
+        "flexStyle": undefined,
+        "margins": {},
+        "paddings": {},
+        "positionStyle": undefined,
+        "typography": undefined,
+      }
+    }
+    position="bottom"
+    style={
+      [
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        {},
+        {},
+        {},
+        [
+          {
+            "position": "absolute",
+          },
+          undefined,
+          {
+            "left": 25,
+            "top": 370,
+          },
+          {
+            "elevation": 10,
+            "zIndex": 10,
+          },
+        ],
+      ]
+    }
+    targetFrame={
+      {
+        "height": 60,
+        "width": 100,
+        "x": 25,
+        "y": 370,
+      }
+    }
+    useModal={true}
+    useSideTip={true}
+    visible={true}
+  >
+    <View
+      collapsable={false}
+      pointerEvents="box-none"
+      style={
+        {
+          "alignItems": "flex-start",
+          "left": -25,
+          "opacity": 1,
+          "paddingVertical": 16,
+          "position": "absolute",
+          "top": 60,
+          "transform": [
+            {
+              "translateY": 0,
+            },
+          ],
+          "width": 750,
+        }
+      }
+      testID="Hint"
+    >
+      <View
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          centerV={true}
+          onLayout={[Function]}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              [
+                {
+                  "backgroundColor": "#5A48F5",
+                  "borderRadius": 20,
+                  "maxWidth": 400,
+                },
+                {
+                  "paddingBottom": 16,
+                  "paddingHorizontal": 20,
+                  "paddingTop": 12,
+                },
+                undefined,
+                {
+                  "backgroundColor": "#5A48F5",
+                },
+                false,
+                {
+                  "left": 0,
+                },
+              ],
+            ]
+          }
+          testID="Hint.message"
+        >
+          <Text
+            fsTagName="unmask"
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "color": "#FFFFFF",
+                    "flexShrink": 1,
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": "400",
+                    "lineHeight": 24,
+                  },
+                  undefined,
+                ],
+              ]
+            }
+            testID="Hint.message.text"
+          >
+            Hint message to hint things
+          </Text>
+        </View>
+      </View>
+      <Image
+        accessibilityRole="image"
+        accessible={false}
+        assetGroup="icons"
+        onError={[Function]}
+        source={
+          {
+            "testUri": "../../../src/assets/internal/images/hintTipSide.png",
+          }
+        }
+        style={
+          [
+            {
+              "tintColor": "#5A48F5",
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            false,
+            [
+              {
+                "position": "absolute",
+              },
+              {
+                "top": 9,
+              },
+              {
+                "transform": [
+                  {
+                    "scaleY": 1,
+                  },
+                  {
+                    "scaleX": 1,
+                  },
+                ],
+              },
+            ],
+            false,
+          ]
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Hint Screen component test Different positions and scenarios left position should position correctly for a target positioned on left 1`] = `
+<View
+  centerV={true}
+  padding-s5={true}
+  style={
+    [
+      undefined,
+      undefined,
+      undefined,
+      {
+        "flex": 1,
+      },
+      undefined,
+      {
+        "padding": 20,
+      },
+      {},
+      {
+        "justifyContent": "center",
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "backgroundColor": undefined,
+        "height": 1334,
+        "left": 0,
+        "opacity": 1,
+        "position": "absolute",
+        "top": 0,
+        "width": 750,
+      }
+    }
+    testID="Hint.overlay"
+  />
+  <View
+    collapsable={true}
+    message="Hint message to hint things"
+    modifiers={
+      {
+        "alignments": {},
+        "backgroundColor": undefined,
+        "borderRadius": undefined,
+        "color": undefined,
+        "flexStyle": undefined,
+        "margins": {},
+        "paddings": {},
+        "positionStyle": undefined,
+        "typography": undefined,
+      }
+    }
+    position="bottom"
+    style={
+      [
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        {},
+        {},
+        {},
+        [
+          {
+            "position": "absolute",
+          },
+          undefined,
+          {
+            "left": 25,
+            "top": 370,
+          },
+          {
+            "elevation": 10,
+            "zIndex": 10,
+          },
+        ],
+      ]
+    }
+    targetFrame={
+      {
+        "height": 60,
+        "width": 100,
+        "x": 25,
+        "y": 370,
+      }
+    }
+    useModal={true}
+    visible={true}
+  >
+    <View
+      collapsable={false}
+      pointerEvents="box-none"
+      style={
+        {
+          "alignItems": "flex-start",
+          "left": -25,
+          "opacity": 1,
+          "paddingVertical": 16,
+          "position": "absolute",
+          "top": 60,
+          "transform": [
+            {
+              "translateY": 0,
+            },
+          ],
+          "width": 750,
+        }
+      }
+      testID="Hint"
+    >
+      <View
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          centerV={true}
+          onLayout={[Function]}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              [
+                {
+                  "backgroundColor": "#5A48F5",
+                  "borderRadius": 20,
+                  "maxWidth": 400,
+                },
+                {
+                  "paddingBottom": 16,
+                  "paddingHorizontal": 20,
+                  "paddingTop": 12,
+                },
+                undefined,
+                {
+                  "backgroundColor": "#5A48F5",
+                },
+                false,
+                {
+                  "left": 0,
+                },
+              ],
+            ]
+          }
+          testID="Hint.message"
+        >
+          <Text
+            fsTagName="unmask"
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "color": "#FFFFFF",
+                    "flexShrink": 1,
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": "400",
+                    "lineHeight": 24,
+                  },
+                  undefined,
+                ],
+              ]
+            }
+            testID="Hint.message.text"
+          >
+            Hint message to hint things
+          </Text>
+        </View>
+      </View>
+      <Image
+        accessibilityRole="image"
+        accessible={false}
+        assetGroup="icons"
+        onError={[Function]}
+        source={
+          {
+            "testUri": "../../../src/assets/internal/images/hintTipMiddle.png",
+          }
+        }
+        style={
+          [
+            {
+              "tintColor": "#5A48F5",
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            false,
+            [
+              {
+                "position": "absolute",
+              },
+              {
+                "top": 9,
+              },
+              {
+                "transform": [
+                  {
+                    "scaleY": 1,
+                  },
+                  {
+                    "scaleX": 1,
+                  },
+                ],
+              },
+            ],
+            false,
+          ]
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Hint Screen component test Different positions and scenarios right position should position correctly for a target positioned on right - with sideTip 1`] = `
+<View
+  centerV={true}
+  padding-s5={true}
+  style={
+    [
+      undefined,
+      undefined,
+      undefined,
+      {
+        "flex": 1,
+      },
+      undefined,
+      {
+        "padding": 20,
+      },
+      {},
+      {
+        "justifyContent": "center",
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "backgroundColor": undefined,
+        "height": 1334,
+        "left": 0,
+        "opacity": 1,
+        "position": "absolute",
+        "top": 0,
+        "width": 750,
+      }
+    }
+    testID="Hint.overlay"
+  />
+  <View
+    collapsable={true}
+    message="Hint message to hint things"
+    modifiers={
+      {
+        "alignments": {},
+        "backgroundColor": undefined,
+        "borderRadius": undefined,
+        "color": undefined,
+        "flexStyle": undefined,
+        "margins": {},
+        "paddings": {},
+        "positionStyle": undefined,
+        "typography": undefined,
+      }
+    }
+    position="bottom"
+    style={
+      [
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        {},
+        {},
+        {},
+        [
+          {
+            "position": "absolute",
+          },
+          undefined,
+          {
+            "left": 240,
+            "top": 150,
+          },
+          {
+            "elevation": 10,
+            "zIndex": 10,
+          },
+        ],
+      ]
+    }
+    targetFrame={
+      {
+        "height": 60,
+        "width": 100,
+        "x": 240,
+        "y": 150,
+      }
+    }
+    useModal={true}
+    useSideTip={true}
+    visible={true}
+  >
+    <View
+      collapsable={false}
+      pointerEvents="box-none"
+      style={
+        {
+          "alignItems": "flex-start",
+          "left": -240,
+          "opacity": 1,
+          "paddingVertical": 16,
+          "position": "absolute",
+          "top": 60,
+          "transform": [
+            {
+              "translateY": 0,
+            },
+          ],
+          "width": 750,
+        }
+      }
+      testID="Hint"
+    >
+      <View
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          centerV={true}
+          onLayout={[Function]}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              [
+                {
+                  "backgroundColor": "#5A48F5",
+                  "borderRadius": 20,
+                  "maxWidth": 400,
+                },
+                {
+                  "paddingBottom": 16,
+                  "paddingHorizontal": 20,
+                  "paddingTop": 12,
+                },
+                undefined,
+                {
+                  "backgroundColor": "#5A48F5",
+                },
+                false,
+                {
+                  "left": 0,
+                },
+              ],
+            ]
+          }
+          testID="Hint.message"
+        >
+          <Text
+            fsTagName="unmask"
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "color": "#FFFFFF",
+                    "flexShrink": 1,
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": "400",
+                    "lineHeight": 24,
+                  },
+                  undefined,
+                ],
+              ]
+            }
+            testID="Hint.message.text"
+          >
+            Hint message to hint things
+          </Text>
+        </View>
+      </View>
+      <Image
+        accessibilityRole="image"
+        accessible={false}
+        assetGroup="icons"
+        onError={[Function]}
+        source={
+          {
+            "testUri": "../../../src/assets/internal/images/hintTipSide.png",
+          }
+        }
+        style={
+          [
+            {
+              "tintColor": "#5A48F5",
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            false,
+            [
+              {
+                "position": "absolute",
+              },
+              {
+                "top": 9,
+              },
+              {
+                "transform": [
+                  {
+                    "scaleY": 1,
+                  },
+                  {
+                    "scaleX": 1,
+                  },
+                ],
+              },
+            ],
+            false,
+          ]
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Hint Screen component test Different positions and scenarios right position should position correctly for a target positioned on right 1`] = `
+<View
+  centerV={true}
+  padding-s5={true}
+  style={
+    [
+      undefined,
+      undefined,
+      undefined,
+      {
+        "flex": 1,
+      },
+      undefined,
+      {
+        "padding": 20,
+      },
+      {},
+      {
+        "justifyContent": "center",
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "backgroundColor": undefined,
+        "height": 1334,
+        "left": 0,
+        "opacity": 1,
+        "position": "absolute",
+        "top": 0,
+        "width": 750,
+      }
+    }
+    testID="Hint.overlay"
+  />
+  <View
+    collapsable={true}
+    message="Hint message to hint things"
+    modifiers={
+      {
+        "alignments": {},
+        "backgroundColor": undefined,
+        "borderRadius": undefined,
+        "color": undefined,
+        "flexStyle": undefined,
+        "margins": {},
+        "paddings": {},
+        "positionStyle": undefined,
+        "typography": undefined,
+      }
+    }
+    position="bottom"
+    style={
+      [
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        {},
+        {},
+        {},
+        [
+          {
+            "position": "absolute",
+          },
+          undefined,
+          {
+            "left": 240,
+            "top": 150,
+          },
+          {
+            "elevation": 10,
+            "zIndex": 10,
+          },
+        ],
+      ]
+    }
+    targetFrame={
+      {
+        "height": 60,
+        "width": 100,
+        "x": 240,
+        "y": 150,
+      }
+    }
+    useModal={true}
+    visible={true}
+  >
+    <View
+      collapsable={false}
+      pointerEvents="box-none"
+      style={
+        {
+          "alignItems": "flex-start",
+          "left": -240,
+          "opacity": 1,
+          "paddingVertical": 16,
+          "position": "absolute",
+          "top": 60,
+          "transform": [
+            {
+              "translateY": 0,
+            },
+          ],
+          "width": 750,
+        }
+      }
+      testID="Hint"
+    >
+      <View
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          centerV={true}
+          onLayout={[Function]}
+          row={true}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              [
+                {
+                  "backgroundColor": "#5A48F5",
+                  "borderRadius": 20,
+                  "maxWidth": 400,
+                },
+                {
+                  "paddingBottom": 16,
+                  "paddingHorizontal": 20,
+                  "paddingTop": 12,
+                },
+                undefined,
+                {
+                  "backgroundColor": "#5A48F5",
+                },
+                false,
+                {
+                  "left": 0,
+                },
+              ],
+            ]
+          }
+          testID="Hint.message"
+        >
+          <Text
+            fsTagName="unmask"
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "color": "#FFFFFF",
+                    "flexShrink": 1,
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": "400",
+                    "lineHeight": 24,
+                  },
+                  undefined,
+                ],
+              ]
+            }
+            testID="Hint.message.text"
+          >
+            Hint message to hint things
+          </Text>
+        </View>
+      </View>
+      <Image
+        accessibilityRole="image"
+        accessible={false}
+        assetGroup="icons"
+        onError={[Function]}
+        source={
+          {
+            "testUri": "../../../src/assets/internal/images/hintTipMiddle.png",
+          }
+        }
+        style={
+          [
+            {
+              "tintColor": "#5A48F5",
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            false,
+            [
+              {
+                "position": "absolute",
+              },
+              {
+                "top": 9,
+              },
+              {
+                "transform": [
+                  {
+                    "scaleY": 1,
+                  },
+                  {
+                    "scaleX": 1,
+                  },
+                ],
+              },
+            ],
+            false,
+          ]
+        }
+      />
+    </View>
+  </View>
+</View>
+`;

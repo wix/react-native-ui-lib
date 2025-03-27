@@ -2,13 +2,8 @@
   "name": "Button",
   "category": "controls",
   "description": "Customizable button component that handles press events",
-  "extends": [
-    "basic/TouchableOpacity"
-  ],
-  "modifiers": [
-    "margin",
-    "background"
-  ],
+  "extends": ["basic/TouchableOpacity"],
+  "modifiers": ["margin", "background"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.tsx",
   "images": [
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Sizes.png?raw=true",
@@ -169,7 +164,11 @@
     }
   ],
   "snippet": [
-    "<Button label={'Press'$1} size={Button.sizes.medium$2} backgroundColor={Colors.red30$3}/>"
+    "<View flex center gap-s5>",
+    "<Button label={'Press'} backgroundColor={Colors.red30}/>",
+    "<Button label={'Press'} outline size={Button.sizes.medium}/>",
+    "<Button label={'Press'}  iconSource={Assets.icons.demo.star}/>",
+    "</View>"
   ],
   "docs": {
     "hero": {
@@ -189,10 +188,7 @@
         "sections": [
           {
             "type": "table",
-            "columns": [
-              "Type",
-              "Component"
-            ],
+            "columns": ["Type", "Component"],
             "items": [
               {
                 "title": "Main Button",
@@ -259,10 +255,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Component"
-            ],
+            "columns": ["Property", "Component"],
             "items": [
               {
                 "title": "Primary",
@@ -289,11 +282,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Primary",
-              "Secondary"
-            ],
+            "columns": ["Property", "Primary", "Secondary"],
             "items": [
               {
                 "title": "Main",
@@ -355,11 +344,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Primary",
-              "Secondary"
-            ],
+            "columns": ["Property", "Primary", "Secondary"],
             "items": [
               {
                 "title": "Active",
@@ -404,11 +389,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Primary",
-              "Secondary"
-            ],
+            "columns": ["Property", "Primary", "Secondary"],
             "items": [
               {
                 "title": "Active",
@@ -453,11 +434,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Primary",
-              "Secondary"
-            ],
+            "columns": ["Property", "Primary", "Secondary"],
             "items": [
               {
                 "title": "Active",
@@ -502,10 +479,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Component"
-            ],
+            "columns": ["Property", "Component"],
             "items": [
               {
                 "title": "Large",
@@ -540,10 +514,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Component"
-            ],
+            "columns": ["Property", "Component"],
             "items": [
               {
                 "title": "Icon prefix",
@@ -574,10 +545,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Component"
-            ],
+            "columns": ["Property", "Component"],
             "items": [
               {
                 "title": "Primary",
@@ -603,11 +571,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Primary",
-              "Secondary"
-            ],
+            "columns": ["Property", "Primary", "Secondary"],
             "items": [
               {
                 "title": "Main",
@@ -643,11 +607,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Primary",
-              "Secondary"
-            ],
+            "columns": ["Property", "Primary", "Secondary"],
             "items": [
               {
                 "title": "Active",
@@ -680,11 +640,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Primary",
-              "Secondary"
-            ],
+            "columns": ["Property", "Primary", "Secondary"],
             "items": [
               {
                 "title": "Active",
@@ -732,10 +688,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Component"
-            ],
+            "columns": ["Property", "Component"],
             "items": [
               {
                 "title": "Main",
@@ -769,10 +722,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Component"
-            ],
+            "columns": ["Property", "Component"],
             "items": [
               {
                 "title": "Regular",
@@ -797,11 +747,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Regular",
-              "Small (bodyBoldSmall)"
-            ],
+            "columns": ["Property", "Regular", "Small (bodyBoldSmall)"],
             "items": [
               {
                 "title": "Icon prefix",
@@ -838,10 +784,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Component"
-            ],
+            "columns": ["Property", "Component"],
             "items": [
               {
                 "title": "Main",
@@ -876,10 +819,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Component"
-            ],
+            "columns": ["Property", "Component"],
             "items": [
               {
                 "title": "Active",
@@ -914,7 +854,7 @@
         ]
       },
       {
-        "title": "UX",
+        "title": "UX Guidelines",
         "sections": [
           {
             "type": "list",

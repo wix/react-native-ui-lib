@@ -1,0 +1,56 @@
+$preview-width: 375px;
+$preview-margin: 60px;
+
+.container {
+  display: flex;
+}
+
+.liveEditor {
+  height: 100%;
+
+  pre {
+    height: 100%;
+    border-radius: 0;
+    background-color: #13191E;
+  }
+}
+
+.codeContainer {
+  position: relative;
+  flex: 1;
+  max-width: calc(100% - ($preview-width + $preview-margin));
+  border-radius: 4px;
+  overflow: hidden;
+
+  pre {
+    padding: 10px 20px;
+  }
+}
+
+.errorContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.preview {
+  position: relative;
+  width: $preview-width;
+  height: 700px;
+  margin-left: $preview-margin;
+  border-radius: 36px;
+  border: 1px solid #eee;
+  box-shadow: 0 0 10px rgba(110, 120, 129, 0.2);
+  overflow: hidden;
+}
+
+.iframe {
+  width: 100%;
+  height: 100%;
+  position: 'absolute';
+  top: 0;
+  left: 0;
+  border: 0;
+  padding: 10;
+}
