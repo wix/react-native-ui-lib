@@ -12,12 +12,11 @@ import styles from './UILivePreview.module.scss';
 export const IFRAME_MESSAGE_TYPE = 'LIVE_PREVIEW_CODE_UPDATE_MESSAGE';
 
 export default function UILivePreview({code: initialCode, componentName = undefined, liveScopeSupport = false}) {
-  const [code, setCode] = useState('');
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const {siteConfig} = useDocusaurusContext();
   const iframeRef = useRef(null);
-
   const {code: formattedCode} = useFormattedCode(initialCode);
+  const [code, setCode] = useState(formattedCode);
 
   useEffect(() => {
     setCode(formattedCode);
