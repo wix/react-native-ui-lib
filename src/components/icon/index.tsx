@@ -47,11 +47,9 @@ export type IconProps = Omit<RNImageProps, 'source' | 'tintColor'> &
 
 type Props = IconProps & BaseComponentInjectedProps;
 
-const DEFAULT_WEB_ICON_SIZE = 16;
-
 const Icon = forwardRef((props: Props, ref: any) => {
   const {
-    size = Constants.isWeb ? DEFAULT_WEB_ICON_SIZE : undefined,
+    size,
     tintColor,
     style,
     supportRTL,
@@ -87,6 +85,8 @@ const Icon = forwardRef((props: Props, ref: any) => {
   }, [source, assetGroup, assetName]);
 
   const renderImage = () => {
+    const {width, height} = others || {};
+    const remoteSize = Constants.isWeb && (width || height) ? {width, height} : undefined;
     return (
       <Image
         accessible={false}
@@ -95,7 +95,7 @@ const Icon = forwardRef((props: Props, ref: any) => {
         {...others}
         ref={ref}
         source={iconSource}
-        style={[margins, iconSize, shouldFlipRTL && styles.rtlFlipped, !!tintColor && {tintColor}, style]}
+        style={[margins, remoteSize, iconSize, shouldFlipRTL && styles.rtlFlipped, !!tintColor && {tintColor}, style]}
       />
     );
   };
