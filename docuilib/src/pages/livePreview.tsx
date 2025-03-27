@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet} from 'react-native';
 import {LiveProvider, LivePreview} from 'react-live';
-import ReactLiveScope from '../theme/ReactLiveScope';
 import {IFRAME_MESSAGE_TYPE} from '@site/src/components/UILivePreview';
+import ReactLiveScope from '../theme/ReactLiveScope';
+import styles from './livePreview.module.css';
 
 export default function UILivePreview() {
   const [code, setCode] = useState(``);
@@ -17,13 +17,8 @@ export default function UILivePreview() {
 
   return (
     <LiveProvider code={code} scope={ReactLiveScope}>
-      <LivePreview style={styles.livePreview}/>
+      <div className={styles.fakeTopBar}/>
+      <LivePreview className={styles.mobileFlexContainer}/>
     </LiveProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  livePreview: {
-    overflow: 'hidden'
-  }
-});

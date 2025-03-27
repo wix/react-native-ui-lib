@@ -21,13 +21,10 @@ export const TableSection = ({section, component}) => {
     return _.map(content, (item, index: number) => {
       if (index < numberOfColumns - 1) {
         return (
-          <td style={{backgroundColor: item.background || 'white', padding: 0, height: '100px'}}>
-            <ContentItem
-              item={item}
-              componentName={component.name}
-              showCodeButton
-              category={component.category}
-            />
+          <td style={{backgroundColor: item?.background || 'white', padding: 0, height: '100px'}}>
+            {item && (
+              <ContentItem item={item} componentName={component.name} showCodeButton category={component.category}/>
+            )}
           </td>
         );
       }

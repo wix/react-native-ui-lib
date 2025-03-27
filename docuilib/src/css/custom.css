@@ -18,6 +18,8 @@
   --ifm-color-primary-lightest: #232f3e;
   --ifm-code-font-size: 95%;
   --ifm-font-color-base: #20303C;
+
+  --ifm-container-width-xl: 1600px;
 }
 
 .docusaurus-highlight-code-line {

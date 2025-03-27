@@ -45,14 +45,14 @@
   "snippet": [
     "function Example(props) {",
     "  const data = Array.from({length: 10}, (_, index) => {",
-    "    let text = \\`\\${index}\\`;",
+    "    let text = `${index}`;",
     "    if (index === 3) {",
     "      text = 'Locked item';",
     "    }",
     "  ",
     "    return {",
     "      text,",
-    "      id: \\`\\${index}\\`,",
+    "      id: `${index}`,",
     "      locked: index === 3",
     "    };",
     "  });",
@@ -78,11 +78,11 @@
     "  }, []);",
     "",
     "  const keyExtractor = useCallback((item: Item) => {",
-    "    return \\`\\${item.id}\\`;",
+    "    return `${item.id}`;",
     "  }, []);",
     "",
     "  return (",
-    "    <div>",
+    "    <View>",
     "      <SortableList",
     "        data={data$1}",
     "        flexMigration",
@@ -90,8 +90,8 @@
     "        renderItem={renderItem$3}",
     "        keyExtractor={keyExtractor$4}",
     "      />",
-    "    </div>",
-    "  );",
-    "}"
+    "    </View>",
+    "  )",
+    "};"
   ]
 }
