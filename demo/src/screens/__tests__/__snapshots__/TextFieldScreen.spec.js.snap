@@ -3294,6 +3294,10 @@ exports[`TextField Screen renders screen 1`] = `
                 }
                 style={
                   [
+                    {
+                      "height": undefined,
+                      "width": undefined,
+                    },
                     undefined,
                     {
                       "height": 16,
@@ -3938,6 +3942,10 @@ exports[`TextField Screen renders screen 1`] = `
                 }
                 style={
                   [
+                    {
+                      "height": undefined,
+                      "width": undefined,
+                    },
                     undefined,
                     undefined,
                     undefined,
@@ -3966,6 +3974,10 @@ exports[`TextField Screen renders screen 1`] = `
             }
             style={
               [
+                {
+                  "height": undefined,
+                  "width": undefined,
+                },
                 undefined,
                 undefined,
                 undefined,
@@ -4662,6 +4674,10 @@ exports[`TextField Screen renders screen 1`] = `
               }
               style={
                 [
+                  {
+                    "height": undefined,
+                    "width": undefined,
+                  },
                   undefined,
                   undefined,
                   undefined,
@@ -6855,6 +6871,10 @@ exports[`TextField Screen renders screen 1`] = `
               style={
                 [
                   {
+                    "height": undefined,
+                    "width": undefined,
+                  },
+                  {
                     "marginLeft": 4,
                   },
                   {
@@ -7787,6 +7807,10 @@ exports[`TextField Screen renders screen 1`] = `
               }
               style={
                 [
+                  {
+                    "height": undefined,
+                    "width": undefined,
+                  },
                   undefined,
                   undefined,
                   undefined,
