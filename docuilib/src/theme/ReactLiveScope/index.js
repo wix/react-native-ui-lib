@@ -33,17 +33,17 @@ import * as Playground from './Playground';
 Assets.loadAssetsGroup('icons.demo', {
   // chevronDown: require('../../assets/icons/chevronDown.png').default,
   chevronRight: {
-    uri: require('../../assets/icons/chevronRight.png').default,
+    uri: require('../../assets/icons/chevronRight.png'),
     width: 24,
     height: 24
   },
   chevronDown: {
-    uri: require('../../assets/icons/chevronDown.png').default,
+    uri: require('../../assets/icons/chevronDown.png'),
     width: 14,
     height: 8
   },
   star: {
-    uri: require('../../assets/icons/star.png').default,
+    uri: require('../../assets/icons/star.png'),
     width: 24,
     height: 24
   },
@@ -52,7 +52,7 @@ Assets.loadAssetsGroup('icons.demo', {
   // close: require('../../assets/icons/close.png').default,
   // dashboard: require('../../assets/icons/dashboard.png').default,
   drag: {
-    uri: require('../../assets/icons/drag.png').default,
+    uri: require('../../assets/icons/drag.png'),
     width: 10,
     height: 16
   }

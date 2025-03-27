@@ -2,5 +2,10 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 20px;
+}
+
+.fakeTopBar {
+  height: 60px;
+  background-color: #ddd;
+  margin-bottom: 1px;
 }

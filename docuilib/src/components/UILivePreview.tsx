@@ -15,7 +15,7 @@ export default function UILivePreview({code: initialCode, componentName = undefi
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const {siteConfig} = useDocusaurusContext();
   const iframeRef = useRef(null);
-  const {code: formattedCode} = useFormattedCode(initialCode);
+  const {code: formattedCode} = useFormattedCode(initialCode, {printWidth: 100});
   const [code, setCode] = useState(formattedCode);
 
   useEffect(() => {

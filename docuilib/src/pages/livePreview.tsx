@@ -17,6 +17,7 @@ export default function UILivePreview() {
 
   return (
     <LiveProvider code={code} scope={ReactLiveScope}>
+      <div className={styles.fakeTopBar}/>
       <LivePreview className={styles.mobileFlexContainer}/>
     </LiveProvider>
   );
