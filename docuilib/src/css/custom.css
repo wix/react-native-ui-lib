@@ -55,6 +55,8 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   font-size: 14px;
   letter-spacing: 0.3px;
   line-height: 38px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease-out;
 }
 .navbar__link--active {
   font-weight: 700;
