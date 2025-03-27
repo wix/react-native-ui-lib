@@ -47,9 +47,11 @@ export type IconProps = Omit<RNImageProps, 'source' | 'tintColor'> &
 
 type Props = IconProps & BaseComponentInjectedProps;
 
+const DEFAULT_WEB_ICON_SIZE = 16;
+
 const Icon = forwardRef((props: Props, ref: any) => {
   const {
-    size,
+    size = Constants.isWeb ? DEFAULT_WEB_ICON_SIZE : undefined,
     tintColor,
     style,
     supportRTL,
