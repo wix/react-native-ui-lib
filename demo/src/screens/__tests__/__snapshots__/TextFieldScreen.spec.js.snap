@@ -3295,6 +3295,7 @@ exports[`TextField Screen renders screen 1`] = `
                 style={
                   [
                     undefined,
+                    undefined,
                     {
                       "height": 16,
                       "width": 16,
@@ -3941,6 +3942,7 @@ exports[`TextField Screen renders screen 1`] = `
                     undefined,
                     undefined,
                     undefined,
+                    undefined,
                     {
                       "tintColor": "#5A48F5",
                     },
@@ -3966,6 +3968,7 @@ exports[`TextField Screen renders screen 1`] = `
             }
             style={
               [
+                undefined,
                 undefined,
                 undefined,
                 undefined,
@@ -4662,6 +4665,7 @@ exports[`TextField Screen renders screen 1`] = `
               }
               style={
                 [
+                  undefined,
                   undefined,
                   undefined,
                   undefined,
@@ -6857,6 +6861,7 @@ exports[`TextField Screen renders screen 1`] = `
                   {
                     "marginLeft": 4,
                   },
+                  undefined,
                   {
                     "height": 16,
                     "width": 16,
@@ -7787,6 +7792,7 @@ exports[`TextField Screen renders screen 1`] = `
               }
               style={
                 [
+                  undefined,
                   undefined,
                   undefined,
                   undefined,
