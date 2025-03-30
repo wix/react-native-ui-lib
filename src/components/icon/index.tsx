@@ -31,7 +31,7 @@ export type IconProps = Omit<RNImageProps, 'source' | 'tintColor'> &
     /**
      * the icon size
      */
-    size?: number;
+    size?: number | {width: number; height: number};
     /**
      * whether the icon should flip horizontally on RTL
      */
@@ -62,7 +62,6 @@ const Icon = forwardRef((props: Props, ref: any) => {
     ...others
   } = props;
   const {margins} = modifiers;
-  const iconSize = size ? {width: size, height: size} : undefined;
   const shouldFlipRTL = supportRTL && Constants.isRTL;
 
   const getBadgeStyling = (): StyleProp<ViewStyle> => {
@@ -76,6 +75,16 @@ const Icon = forwardRef((props: Props, ref: any) => {
     badgePosition.top = position;
     return [badgePosition, containerStyle];
   };
+
+  const iconSize = useMemo(() => {
+    if (typeof size === 'number') {
+      return {width: size, height: size};
+    }
+    if (typeof size === 'object') {
+      return size;
+    }
+    return undefined;
+  }, [size]);
 
   const iconSource = useMemo(() => {
     if (!isUndefined(assetName)) {
