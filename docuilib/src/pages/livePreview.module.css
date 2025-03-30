@@ -1,0 +1,16 @@
+.mobileFlexContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.fakeTopBar {
+  height: 60px;
+  margin-bottom: 1px;
+  border-bottom: 1px solid #eee;
+}
+
+.fakeSafeArea {
+  height: 40px;
+  border-top: 1px solid #eee;
+}

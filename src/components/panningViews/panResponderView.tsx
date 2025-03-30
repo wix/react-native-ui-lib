@@ -35,7 +35,7 @@ interface Props extends PanResponderViewProps {
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/PanResponderView/PanResponderView.gif?raw=true
  */
 class PanResponderView extends PureComponent<Props> {
-  static displayName = 'PanResponderView';
+  static displayName = 'IGNORE';
 
   static defaultProps = {
     isAnimated: false

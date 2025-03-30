@@ -123,7 +123,7 @@ export default class ModalScreen extends Component<ModalScreenProps, State> {
               ]}
               leftButtons={[
                 {
-                  icon: Assets.icons.x,
+                  icon: Assets.icons.demo.x,
                   onPress: () => Alert.alert('back'),
                   buttonProps: {hitSlop: BUTTONS_HIT_SLOP, iconStyle: {tintColor: Colors.yellow10}}
                 }

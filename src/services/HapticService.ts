@@ -1,4 +1,5 @@
 import {HapticFeedbackPackage} from 'optionalDeps';
+import {LogService} from 'services';
 
 const options = {
   enableVibrateFallback: false,
@@ -19,7 +20,7 @@ function triggerHaptic(hapticType: HapticType, componentName: string) {
   if (HapticFeedbackPackage) {
     HapticFeedbackPackage.trigger(hapticType, options);
   } else {
-    console.error(`RNUILib ${componentName}'s requires installing "react-native-haptic-feedback" dependency`);
+    LogService.error(`RNUILib ${componentName}'s requires installing "react-native-haptic-feedback" dependency`);
   }
 }
 

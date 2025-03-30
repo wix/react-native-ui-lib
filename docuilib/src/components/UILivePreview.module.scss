@@ -1,0 +1,52 @@
+$preview-width: 350px;
+$preview-margin: 60px;
+$editor-height: 700px;
+
+.container {
+  display: flex;
+}
+
+.liveEditor {
+  height: $editor-height;
+}
+
+.codeContainer {
+  position: relative;
+  flex: 1;
+  height: 100%;
+  max-width: calc(100% - ($preview-width + $preview-margin));
+  border-radius: 8px;
+  overflow-y: scroll;
+
+  pre {
+    min-height: 100%;
+    padding: 20px !important;
+  }
+}
+
+.errorContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.preview {
+  position: relative;
+  width: $preview-width;
+  margin-left: $preview-margin;
+  border-radius: 36px;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 15px rgba(110, 120, 129, 0.05);
+  overflow: hidden;
+}
+
+.iframe {
+  width: 100%;
+  height: 100%;
+  position: 'absolute';
+  top: 0;
+  left: 0;
+  border: 0;
+  padding: 10;
+}
