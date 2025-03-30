@@ -1,29 +1,26 @@
-$preview-width: 375px;
+$preview-width: 350px;
 $preview-margin: 60px;
+$editor-height: 700px;
 
 .container {
   display: flex;
 }
 
 .liveEditor {
-  height: 100%;
-
-  pre {
-    height: 100%;
-    border-radius: 0;
-    background-color: #13191E;
-  }
+  height: $editor-height;
 }
 
 .codeContainer {
   position: relative;
   flex: 1;
+  height: 100%;
   max-width: calc(100% - ($preview-width + $preview-margin));
-  border-radius: 4px;
-  overflow: hidden;
+  border-radius: 8px;
+  overflow-y: scroll;
 
   pre {
-    padding: 10px 20px;
+    min-height: 100%;
+    padding: 20px !important;
   }
 }
 
@@ -37,11 +34,10 @@ $preview-margin: 60px;
 .preview {
   position: relative;
   width: $preview-width;
-  height: 700px;
   margin-left: $preview-margin;
   border-radius: 36px;
-  border: 1px solid #eee;
-  box-shadow: 0 0 10px rgba(110, 120, 129, 0.2);
+  border: 1px solid #ddd;
+  box-shadow: 0 0 15px rgba(110, 120, 129, 0.05);
   overflow: hidden;
 }
 
