@@ -135,7 +135,7 @@
     {
       "name": "enableShadow",
       "type": "boolean",
-      "description": "Control shadow visibility (iOS-only)"
+      "description": "Control shadow visibility"
     },
     {
       "name": "avoidInnerPadding",
@@ -164,16 +164,21 @@
     }
   ],
   "snippet": [
+    "<View flex>",
     "<View flex center gap-s5>",
     "<Button label={'Press'} backgroundColor={Colors.red30}/>",
     "<Button label={'Press'} outline size={Button.sizes.medium}/>",
     "<Button label={'Press'}  iconSource={Assets.icons.demo.star}/>",
+    "</View>",
+    "<View flex bottom>",
+    "<Button fullWidth label='Full Width Button'/>",
+    "</View>",
     "</View>"
   ],
   "docs": {
     "hero": {
       "title": "Button",
-      "description": "A button triggers an event or action.\n\nPrimary buttons that indicate a call to action, are the most prominent.  Secondary buttons, which indicate less commonly used actions, should be less prominent than primary buttons, second in hierarchy.\n\nButtons are placed where a user should expect them, i.e. in close proximity to the other elements that the action affects.",
+      "description": "A button triggers an event or action.\n\nPrimary buttons that indicate a call to action, are the most prominent. Secondary buttons, which indicate less commonly used actions, should be less prominent than primary buttons, second in hierarchy.\n\nButtons are placed where a user should expect them, i.e. in close proximity to the other elements that the action affects.",
       "type": "hero",
       "layout": "horizontal",
       "content": [
@@ -218,29 +223,11 @@
                 ]
               },
               {
-                "title": "Floating Button",
-                "description": "The Floating Button is displayed at the bottom of the screen.",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_types_floatingButton.png"
-                  }
-                ]
-              },
-              {
                 "title": "Full-Width Button",
                 "description": "Full Width buttons are sticky on the bottom of the screens.",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_types_fullButton.png"
-                  }
-                ]
-              },
-              {
-                "title": "Toggle Button",
-                "description": "Toggle Button are mainly used to toggle between a state, f.e- favorite, like.",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_types_toggleButtons.png"
                   }
                 ]
               }
@@ -279,63 +266,6 @@
             "title": "",
             "description": "",
             "name": "Priority"
-          },
-          {
-            "type": "table",
-            "columns": ["Property", "Primary", "Secondary"],
-            "items": [
-              {
-                "title": "Main",
-                "description": "The default button style, used for most actions.",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_mainPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_mainSecondary.png"
-                  }
-                ]
-              },
-              {
-                "title": "Inverted",
-                "description": "Used on top of images and dark background. ",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_invertedPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_invertedSecondary.png"
-                  }
-                ]
-              },
-              {
-                "title": "Distructive",
-                "description": "Used for destructive actions such as Delete and Log out. ",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_distructivePrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_distructiveSecondary.png"
-                  }
-                ]
-              },
-              {
-                "title": "Premium",
-                "description": "Used as a premium upgrade entry point.",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_premiumPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_premiumSecondary.png"
-                  }
-                ]
-              }
-            ],
-            "title": "",
-            "description": "",
-            "name": "Presets"
           },
           {
             "type": "section",
@@ -434,51 +364,6 @@
           },
           {
             "type": "table",
-            "columns": ["Property", "Primary", "Secondary"],
-            "items": [
-              {
-                "title": "Active",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_premiumActivePrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_premiumActiveSecondary.png"
-                  }
-                ]
-              },
-              {
-                "title": "Loading",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_premiumLoadingPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_premiumLoadingSecondary.png"
-                  }
-                ]
-              },
-              {
-                "title": "Disabled",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_premiumDisabledPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_premiumDisabledSecondary.png"
-                  }
-                ],
-                "description": ""
-              }
-            ],
-            "title": "",
-            "description": "",
-            "name": "Premium"
-          },
-          {
-            "type": "table",
             "columns": ["Property", "Component"],
             "items": [
               {
@@ -570,37 +455,6 @@
             "description": ""
           },
           {
-            "type": "table",
-            "columns": ["Property", "Primary", "Secondary"],
-            "items": [
-              {
-                "title": "Main",
-                "description": "The default button style, used for most actions.",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_presets_mainPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_presets_mainSecondary.png"
-                  }
-                ]
-              },
-              {
-                "title": "Inverted",
-                "description": "Used on top of images and dark background. ",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_presets_invertedPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_presets_invertedSecondary.png"
-                  }
-                ]
-              }
-            ],
-            "title": "Presets"
-          },
-          {
             "type": "section",
             "title": "States",
             "description": ""
@@ -637,39 +491,6 @@
             "title": "",
             "description": "",
             "name": "Main"
-          },
-          {
-            "type": "table",
-            "columns": ["Property", "Primary", "Secondary"],
-            "items": [
-              {
-                "title": "Active",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_presets_invertedPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_states_invertedActiveSecondary.png"
-                  }
-                ]
-              },
-              {
-                "title": "Disabled",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_states_invertedDisabledPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_states_invertedDisabledSecondary.png"
-                  }
-                ]
-              }
-            ],
-            "title": "",
-            "description": "",
-            "name": "Inverted"
           },
           {
             "type": "section",
@@ -780,7 +601,7 @@
           {
             "type": "section",
             "title": "Full-Width Button",
-            "description": "Full-Width buttons are sticky on the bottom of the screens. They are usually used for primary actions on management screens, e.g. adding a new item to a list.\nThey are great to use on screens with potentially long lists, since they stick to the bottom and are always visible."
+            "description": "Full-Width buttons are sticky on the bottom of the screens.They are usually used for primary actions on management screens, e.g. adding a new item to a list.\nThey are great to use on screens with potentially long lists, since they stick to the bottom and are always visible."
           },
           {
             "type": "table",
@@ -879,7 +700,7 @@
               },
               {
                 "title": "Action text truncation/ellipsis",
-                "description": "Action text truncation or ellipsis should be avoided at all costs.\nActions should be clear and down to the point.  In case the action is complex, consider displaying an explanatory text outside the actual button component. ",
+                "description": "Action text truncation or ellipsis should be avoided at all costs.\nActions should be clear and down to the point. In case the action is complex, consider displaying an explanatory text outside the actual button component. ",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_UX_dosDonts_truncation.png"
