@@ -268,6 +268,39 @@
             "name": "Priority"
           },
           {
+            "type": "table",
+            "columns": ["Property", "Primary", "Secondary"],
+            "items": [
+              {
+                "title": "Main",
+                "description": "The default button style, used for most actions.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_mainPrimary.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_mainSecondary.png"
+                  }
+                ]
+              },
+              {
+                "title": "Destructive",
+                "description": "Used for destructive actions such as Delete and Log out. ",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_distructivePrimary.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_distructiveSecondary.png"
+                  }
+                ]
+              }
+            ],
+            "title": "",
+            "description": "",
+            "name": "Presets"
+          },
+          {
             "type": "section",
             "title": "States",
             "description": ""
@@ -521,7 +554,7 @@
                 ]
               },
               {
-                "title": "Distructive",
+                "title": "Destructive",
                 "description": "text style: bodyBold, $textDangerLight",
                 "content": [
                   {
@@ -617,7 +650,7 @@
                 ]
               },
               {
-                "title": "Distructive ",
+                "title": "Destructive ",
                 "description": "",
                 "content": [
                   {
