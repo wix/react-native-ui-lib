@@ -2,9 +2,17 @@
   "name": "TextField",
   "category": "form",
   "description": "An enhanced customizable TextField with validation support",
-  "extends": ["TextInput"],
-  "extendsLink": ["https://reactnative.dev/docs/textinput"],
-  "modifiers": ["margin", "color", "typography"],
+  "extends": [
+    "TextInput"
+  ],
+  "extendsLink": [
+    "https://reactnative.dev/docs/textinput"
+  ],
+  "modifiers": [
+    "margin",
+    "color",
+    "typography"
+  ],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextFieldScreen.tsx",
   "images": [
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/FloatingPlaceholder.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/Validation.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/ColorByState.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/CharCounter.gif?raw=true, https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Incubator.TextField/Hint.gif?raw=true"
@@ -276,7 +284,7 @@
             "type": "section",
             "layout": "horizontal",
             "title": "Structure",
-            "description": "1. **Label**\nDescribes the information that the user needs to enter. The label should be short and clear, preferably a noun.  \n2. **Placeholder** (optional)  \nPlaceholders can serve as an assistive text that can provide additional aid or context to the user. Don’t use it to display critical information - as it disappears when the users starts typing.  \n3. **Helper text** (optional)  \nUse this to provide a hint or a disclaimer about the content of the field. For example, “Passwords must contain at least 8 characters”  \n4. **Clear button**  \nLets the user to easily clear the input value. Appears only when value was typed.  \n5. **Character count**  \nShould be used if there is a character limit. Displays the amount of typed characters out of total allowed. If the limit is reached, the counter will become red and further typing is disabled.  \n6. **Validation message**  \nDemonstrates that a required input is missing something or the entry was invalid.",
+            "description": "Markdown:\n\n1. **Label**\nDescribes the information that the user needs to enter. The label should be short and clear, preferably a noun.  \n2. **Placeholder** (optional)  \nPlaceholders can serve as an assistive text that can provide additional aid or context to the user. Don’t use it to display critical information - as it disappears when the users starts typing.  \n3. **Helper text** (optional)  \nUse this to provide a hint or a disclaimer about the content of the field. For example, “Passwords must contain at least 8 characters”  \n4. **Clear button**  \nLets the user to easily clear the input value. Appears only when value was typed.  \n5. **Character count**  \nShould be used if there is a character limit. Displays the amount of typed characters out of total allowed. If the limit is reached, the counter will become red and further typing is disabled.  \n6. **Validation message**  \nDemonstrates that a required input is missing something or the entry was invalid.",
             "content": [
               {
                 "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/textField/textField_overview_section_03.png"
@@ -285,7 +293,11 @@
           },
           {
             "type": "table",
-            "columns": ["Property", "Component", "New Column"],
+            "columns": [
+              "Property",
+              "Component",
+              "New Column"
+            ],
             "items": [
               {
                 "title": "Inactive (default)",
@@ -374,7 +386,10 @@
           },
           {
             "type": "table",
-            "columns": ["Property", "Component"],
+            "columns": [
+              "Property",
+              "Component"
+            ],
             "items": [
               {
                 "title": "Outline (Default)",
@@ -400,7 +415,10 @@
           },
           {
             "type": "table",
-            "columns": ["Property", "Component"],
+            "columns": [
+              "Property",
+              "Component"
+            ],
             "items": [
               {
                 "title": "Leading Accessory (Prefix)",
@@ -458,7 +476,7 @@
               }
             ],
             "title": "Spec",
-            "description": "**Label**\nbodySmall, $textNeutralHeavy  \n**Placeholder**\nbody, $textNeutralLight  \n**Value**  \nbody, $textDefault  \n**Helper Text**  \nsubtext, $textNeutralHeavy  \n**Character Count**  \nbodySmall, $textNeutralHeavy  \n**Validation message**  \nMessage - bodySmall, $textDangerLight\nIcon - exclamationFillSmall, $iconDangerLight  \n**Prefix & Suffix**  \nbody, $textNeutral  \n**Clear Button**  \nxFlat, $textNeutralLight  \n**Warning Message**  \nMessage - bodySmall, $textDefault\nIcon - exclamationFillSmall, $iconDefault  \n**Validation Success**  \nIcon - checkmarkFlatSmall, $iconSuccess  \n**Outline - Default/unfocused**  \n1p, $outlineNeutral  \n**Outline - Focused, typing**  \n1p, $outlinePrimary  \n**Outline - Validation**  \n1p, $outlineDanger  \n**Outline - Disabled**  \n1p, $outlineDisabled  \n**Outline - Read only**  \nfill background- $backgroundNeutralLight"
+            "description": "Markdown:\n\n**Label**\nbodySmall, $textNeutralHeavy  \n**Placeholder**\nbody, $textNeutralLight  \n**Value**  \nbody, $textDefault  \n**Helper Text**  \nsubtext, $textNeutralHeavy  \n**Character Count**  \nbodySmall, $textNeutralHeavy  \n**Validation message**  \nMessage - bodySmall, $textDangerLight\nIcon - exclamationFillSmall, $iconDangerLight  \n**Prefix & Suffix**  \nbody, $textNeutral  \n**Clear Button**  \nxFlat, $textNeutralLight  \n**Warning Message**  \nMessage - bodySmall, $textDefault\nIcon - exclamationFillSmall, $iconDefault  \n**Validation Success**  \nIcon - checkmarkFlatSmall, $iconSuccess  \n**Outline - Default/unfocused**  \n1p, $outlineNeutral  \n**Outline - Focused, typing**  \n1p, $outlinePrimary  \n**Outline - Validation**  \n1p, $outlineDanger  \n**Outline - Disabled**  \n1p, $outlineDisabled  \n**Outline - Read only**  \nfill background- $backgroundNeutralLight"
           }
         ]
       },
