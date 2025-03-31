@@ -72,17 +72,100 @@
     {"name": "ribbonStyle", "type": "ViewStyle", "description": "Ribbon custom style"},
     {"name": "ribbonLabelStyle", "type": "TextStyle", "description": "Ribbon label custom style"},
     {"name": "customRibbon", "type": "JSX.Element", "description": "Custom ribbon"},
-    {"name": "isOnline", "type": "boolean", "description": "Determine if to show online badge"},
-    {
-      "name": "status",
-      "type": "StatusModes",
-      "description": "AWAY, ONLINE, OFFLINE or NONE mode (if set to a value other then 'NONE' will override isOnline prop)"
-    },
     {"name": "size", "type": " number", "description": "Custom size for the Avatar", "default": "50"},
     {"name": "onPress", "type": "(props: any) => void", "description": "Press handler"},
     {"name": "testID", "type": "string", "description": "Test identifier"}
   ],
   "snippet": [
-    "<Avatar source={{uri: 'https://lh3.googleusercontent.com/-cw77lUnOvmI/AAAAAAAAAAI/AAAAAAAAAAA/WMNck32dKbc/s181-c/104220521160525129167.jpg'$1}} label={IT$2}/>"
-  ]
+    "<View flex center row gap-s5>",
+    "<Avatar",
+    "  size={60$2}",
+    "  source={{uri: 'https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/icons/icon%20examples%20for%20docs/avatar_1.jpg'}$3}",
+    "  badgeProps={{label: '2'}$4}",
+    "  badgePosition={'BOTTOM_RIGHT'}",
+    "  onPress={() => {}}",
+    "/>",
+    "<Avatar",
+    "  size={60}",
+    "  source={{uri: 'https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/icons/icon%20examples%20for%20docs/avatar_1.jpg'}}",
+    "  ribbonLabel='NEW'",
+    "/>",
+    "</View>"
+  ],
+  "docs": {
+    "hero": {
+      "title": "Avatar",
+      "description": "An Avatar component is a visual representation of a user or entity, often displayed as a circular image, icon, or placeholder with initials. In mobile app design systems, it is used to personalize the interface by representing users in profiles, chats, notifications, or lists. Avatars help users quickly recognize people, accounts, or items, enhancing both engagement and navigational clarity.",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Avatar/avatar_hero.png"
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "table",
+            "columns": ["Property", "Component"],
+            "items": [
+              {
+                "title": "Image",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Avatar/avatar_table01.png"
+                  }
+                ]
+              },
+              {
+                "title": "Initials",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Avatar/avatar_table04.png"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "table",
+            "columns": ["Property", "Component"],
+            "items": [
+              {
+                "title": "Badge (online indication)",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Avatar/avatarPlaceholder_overview_table.png"
+                  }
+                ]
+              },
+              {
+                "title": "Badge with icon",
+                "description": "Not supported in XXSmall and 3Xsmall.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Avatar/avatarPlaceholder_overview_table02.png"
+                  }
+                ]
+              },
+              {
+                "title": "Label",
+                "description": "Supported only in XLarge, Large and Medium.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Avatar/avatarPlaceholder_overview_table03.png"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }

@@ -4,6 +4,7 @@ import {Colors} from 'react-native-ui-lib/style';
 import {BorderRadiuses, Button, Image, Spacings, Text, TouchableOpacity, View} from 'react-native-ui-lib/core';
 import ActionBar from 'react-native-ui-lib/actionBar';
 import Assets from 'react-native-ui-lib/assets';
+import Avatar from 'react-native-ui-lib/avatar';
 import Badge from 'react-native-ui-lib/badge';
 import Card from 'react-native-ui-lib/card';
 import Carousel from 'react-native-ui-lib/carousel';
@@ -78,6 +79,7 @@ const ReactLiveScope = {
   /* UI Lib's components */
   ActionBar,
   Assets,
+  Avatar,
   Badge,
   BorderRadiuses,
   Button,
