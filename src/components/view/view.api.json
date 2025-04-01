@@ -26,13 +26,22 @@
     {"name": "style", "type": "ViewStyle", "description": "Custom style"}
   ],
   "snippet": [
-   "<View row gap-s5 centerV>",
-   "  <View style={{width: 200, height: 200}} bg-purple40 centerH>",
-   "  <View style={{width: 60, height: 60}} bg-green20/>",
-   "  </View>",
-   "  <View style={{width: 150, height: 150}} bg-orange30 bottom right>",
-   "  <View style={{width: 50, height: 50}} bg-yellow40 br100 margin-s2/>",
-   "  </View>",
-   "</View>"
-  ]
+    "<View row gap-s5 centerV>",
+    "  <View style={{width: 200, height: 200}} bg-purple40 centerH>",
+    "  <View style={{width: 60, height: 60}} bg-green20/>",
+    "  </View>",
+    "  <View style={{width: 150, height: 150}} bg-orange30 bottom right>",
+    "  <View style={{width: 50, height: 50}} bg-yellow40 br100 margin-s2/>",
+    "  </View>",
+    "</View>"
+  ],
+  "docs": {
+    "hero": {
+      "title": "View",
+      "description": "An enhanced version of React Native's View component providing additional features and modifiers support",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [{}]
+    }
+  }
 }
