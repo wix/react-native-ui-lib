@@ -30,10 +30,6 @@ export type SearchInputProps = TextInputProps & {
    */
   customRightElement?: React.ReactElement;
   /**
-   * Title prop
-   */
-  title?: string;
-  /**
    * Whether to show a loader instead of the left search icon
    */
   showLoader?: boolean;
