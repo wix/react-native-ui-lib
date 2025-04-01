@@ -284,6 +284,18 @@
                 ]
               },
               {
+                "title": "Inverted",
+                "description": "Used on top of images and dark background. ",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_invertedPrimary.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_invertedSecondary.png"
+                  }
+                ]
+              },
+              {
                 "title": "Destructive",
                 "description": "Used for destructive actions such as Delete and Log out. ",
                 "content": [
@@ -486,6 +498,37 @@
             ],
             "title": "Priority",
             "description": ""
+          },
+          {
+            "type": "table",
+            "columns": ["Property", "Primary", "Secondary"],
+            "items": [
+              {
+                "title": "Main",
+                "description": "The default button style, used for most actions.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_presets_mainPrimary.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_presets_mainSecondary.png"
+                  }
+                ]
+              },
+              {
+                "title": "Inverted",
+                "description": "Used on top of images and dark background. ",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_presets_invertedPrimary.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_presets_invertedSecondary.png"
+                  }
+                ]
+              }
+            ],
+            "title": "Presets"
           },
           {
             "type": "section",
