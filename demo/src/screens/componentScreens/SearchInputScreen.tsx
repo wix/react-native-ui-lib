@@ -27,13 +27,11 @@ const SearchInputScreen = () => {
     Alert.alert('Cancel was pressed');
   }, []);
 
-  const customRightElement = () => {
-    return (
-      <View center marginH-s2>
-        <Icon source={Assets.icons.demo.check}/>
-      </View>
-    );
-  };
+  const customRightElement = (
+    <View center marginH-s2>
+      <Icon source={Assets.icons.demo.check}/>
+    </View>
+  );
 
   return (
     <View style={{marginVertical: 5}}>
@@ -50,7 +48,7 @@ const SearchInputScreen = () => {
           placeholder="Search"
           onDismiss={showCancelBtn ? onDismiss : undefined}
           cancelButtonProps={{label: 'Cancel'}}
-          renderCustomRightElement={showCustomRightElement ? customRightElement : undefined}
+          customRightElement={showCustomRightElement ? customRightElement : undefined}
         />
         <View marginV-s2>
           <SearchInput
@@ -62,7 +60,7 @@ const SearchInputScreen = () => {
             onDismiss={showCancelBtn ? onDismiss : undefined}
             cancelButtonProps={{label: 'Cancel'}}
             onChangeText={onChangeText}
-            renderCustomRightElement={showCustomRightElement ? customRightElement : undefined}
+            customRightElement={showCustomRightElement ? customRightElement : undefined}
           />
         </View>
         <SearchInput
@@ -75,7 +73,7 @@ const SearchInputScreen = () => {
           style={{backgroundColor: Colors.purple20}}
           placeholderTextColor={Colors.white}
           containerStyle={{color: Colors.white}}
-          renderCustomRightElement={showCustomRightElement ? customRightElement : undefined}
+          customRightElement={showCustomRightElement ? customRightElement : undefined}
         />
       </View>
 
@@ -94,7 +92,7 @@ const SearchInputScreen = () => {
             placeholder="Search"
             onDismiss={showCancelBtn ? onDismiss : undefined}
             cancelButtonProps={{label: 'Cancel'}}
-            renderCustomRightElement={showCustomRightElement ? customRightElement : undefined}
+            customRightElement={showCustomRightElement ? customRightElement : undefined}
           />
         </View>
         <Text marginL-s3 marginV-s2>
@@ -108,7 +106,7 @@ const SearchInputScreen = () => {
           onDismiss={showCancelBtn ? onDismiss : undefined}
           cancelButtonProps={{label: 'Cancel'}}
           preset={SearchInputPresets.PROMINENT}
-          renderCustomRightElement={showCustomRightElement ? customRightElement : undefined}
+          customRightElement={showCustomRightElement ? customRightElement : undefined}
         />
       </View>
 

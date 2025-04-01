@@ -30,7 +30,7 @@ const SearchInput = forwardRef((props: SearchInputProps, ref: ForwardedRef<any>)
     onChangeText,
     onClear,
     containerStyle,
-    renderCustomRightElement,
+    customRightElement,
     style,
     inaccessible
   } = props;
@@ -188,7 +188,7 @@ const SearchInput = forwardRef((props: SearchInputProps, ref: ForwardedRef<any>)
         />
         {isAnimatingClearButton && renderClearButton()}
         {isDismissible() && renderCancelButton()}
-        {!isDismissible() && renderCustomRightElement && renderCustomRightElement()}
+        {!isDismissible() && customRightElement}
       </View>
     );
   };

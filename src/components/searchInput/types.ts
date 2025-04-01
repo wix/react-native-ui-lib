@@ -28,7 +28,7 @@ export type SearchInputProps = TextInputProps & {
   /**
    * Custom right element
    */
-  renderCustomRightElement?: (props?: any) => React.ReactElement;
+  customRightElement?: React.ReactElement;
   /**
    * Title prop
    */
