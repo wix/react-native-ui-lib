@@ -8,8 +8,6 @@
   "props": [
     {"name": "onDismiss", "type": "() => void", "description": "callback for dismiss action"},
     {"name": "onClear", "type": "() => void", "description": "On clear button callback."},
-    {"name": "title", "type": "string", "description": "Title prop."},
-    {"name": "showFilterIcon", "type": "boolean", "description": "Pass true to add filter icon on the right."},
     {
       "name": "showLoader",
       "type": "boolean",
@@ -21,9 +19,9 @@
       "description": "custom loader element to render instead of the default loader"
     },
     {
-      "name": "renderLoaderElement",
-      "type": " () => React.ReactElement",
-      "description": "custom loader element to render instead of the default loader"
+      "name": "customRightElement",
+      "type": "React.ReactElement",
+      "description": "Custom right element"
     },
     {
       "name": "cancelButtonProps",
