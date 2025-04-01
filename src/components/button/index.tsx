@@ -72,7 +72,7 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   get isFilled() {
-    return !this.isOutline && !this.isLink;
+    return this.getBackgroundColor() !== 'transparent';
   }
 
   get isIconButton() {
