@@ -111,7 +111,7 @@ class Button extends PureComponent<Props, ButtonState> {
       color = backgroundColor === 'transparent' ? undefined : Colors.$iconDefaultLight;
     }
 
-    if (disabled && (isLink || outline)) {
+    if (disabled && !this.isFilled) {
       return Colors.$textDisabled;
     }
 
