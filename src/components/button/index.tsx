@@ -61,18 +61,13 @@ class Button extends PureComponent<Props, ButtonState> {
     }
   };
 
-  get isOutline() {
-    const {outline, outlineColor} = this.props;
-    return Boolean(outline || outlineColor);
-  }
-
   get isLink() {
     const {link, hyperlink} = this.props;
     return link || hyperlink;
   }
 
   get isFilled() {
-    return !this.isOutline && !this.isLink;
+    return this.getBackgroundColor() !== 'transparent';
   }
 
   get isIconButton() {
@@ -116,7 +111,7 @@ class Button extends PureComponent<Props, ButtonState> {
       color = backgroundColor === 'transparent' ? undefined : Colors.$iconDefaultLight;
     }
 
-    if (disabled && (isLink || outline)) {
+    if (disabled && !this.isFilled) {
       return Colors.$textDisabled;
     }
 
