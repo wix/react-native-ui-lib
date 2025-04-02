@@ -61,11 +61,6 @@ class Button extends PureComponent<Props, ButtonState> {
     }
   };
 
-  get isOutline() {
-    const {outline, outlineColor} = this.props;
-    return Boolean(outline || outlineColor);
-  }
-
   get isLink() {
     const {link, hyperlink} = this.props;
     return link || hyperlink;
