@@ -309,6 +309,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     const error = required && !value;
     this.validationState = true; 
     this.setState({showError: error, isValid: !error});
+    return !error;
   };
 
   isValid = () => {
