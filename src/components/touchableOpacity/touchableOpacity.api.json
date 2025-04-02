@@ -35,8 +35,19 @@
     }
   ],
   "snippet": [
+    "<View flex center>",
     "<TouchableOpacity onPress={() => console.log('pressed')$1}>",
-    "   <Text text40>Click Me!</Text>",
-    "</TouchableOpacity>"
-  ]
+    "   <Text text40>Touchable</Text>",
+    "</TouchableOpacity>",
+    "</View>"
+  ],
+  "docs": {
+    "hero": {
+      "title": "TouchableOpacity",
+      "description": "An enhanced version of React Native's TouchableOpacity component providing additional features and modifiers support",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [{}]
+    }
+  }
 }
