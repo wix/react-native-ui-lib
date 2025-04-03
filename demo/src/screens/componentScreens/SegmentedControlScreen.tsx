@@ -1,6 +1,16 @@
 import React, {useCallback, useState} from 'react';
 import {StyleSheet} from 'react-native';
-import {Text, View, Colors, SegmentedControl, Assets, Spacings, BorderRadiuses, Typography, SegmentedControlItemProps} from 'react-native-ui-lib';
+import {
+  Text,
+  View,
+  Colors,
+  SegmentedControl,
+  Assets,
+  Spacings,
+  BorderRadiuses,
+  Typography,
+  SegmentedControlItemProps
+} from 'react-native-ui-lib';
 
 const segments: Record<string, Array<SegmentedControlItemProps>> = {
   first: [{label: 'Default'}, {label: 'Form'}],
@@ -8,7 +18,7 @@ const segments: Record<string, Array<SegmentedControlItemProps>> = {
   third: [
     {
       label: 'Very Long Label with icon',
-      iconSource: Assets.icons.search,
+      iconSource: Assets.icons.demo.search,
       iconStyle: {marginLeft: Spacings.s1, width: 16, height: 16},
       iconOnRight: true
     },
@@ -18,7 +28,11 @@ const segments: Record<string, Array<SegmentedControlItemProps>> = {
   fifth: [{label: 'Full'}, {label: 'Width'}],
   sixth: [{label: 'Full'}, {label: 'Width'}, {label: 'With'}, {label: 'A'}, {label: 'Very Long Segment'}],
   seventh: [{label: '$'}, {label: '%'}],
-  eighth: [{label: 'Plus', iconSource: Assets.icons.plusSmall}, {label: 'Minus', iconSource: Assets.icons.minusSmall}, {label: 'Check', iconSource: Assets.icons.checkSmall}],
+  eighth: [
+    {label: 'Plus', iconSource: Assets.icons.demo.plus},
+    {label: 'Minus', iconSource: Assets.icons.demo.minus},
+    {label: 'Check', iconSource: Assets.icons.demo.check}
+  ],
   ninth: [{label: 'with'}, {label: 'a'}, {label: 'label'}]
 };
 
@@ -72,7 +86,9 @@ const SegmentedControlScreen = () => {
           segmentLabelStyle={styles.customTypography}
           preset={screenPreset}
         />
-        <Text center marginT-s4>With Icons</Text>
+        <Text center marginT-s4>
+          With Icons
+        </Text>
         <SegmentedControl segments={segments.eighth} preset={screenPreset}/>
         <Text marginT-s4 center>
           Custom Styling

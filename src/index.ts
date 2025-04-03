@@ -121,9 +121,10 @@ export {
   PickerSearchStyle,
   RenderCustomModalProps,
   PickerItemsListProps,
-  PickerMethods
+  PickerMethods,
+  PickerSelectionStatusProps
 } from './components/picker';
-export {default as PieChart, PieChartSegmentProps} from './components/pieChart';
+export {default as PieChart, type PieChartProps, PieChartSegmentProps} from './components/pieChart';
 export {default as ProgressBar, ProgressBarProps} from './components/progressBar';
 export {default as ProgressiveImage, ProgressiveImageProps} from './components/progressiveImage';
 export {default as RadioButton, RadioButtonProps} from './components/radioButton';

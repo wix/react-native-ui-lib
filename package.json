@@ -32,13 +32,15 @@
     "pre-push": "npm run build:dev && npm run test",
     "docs:deploy": "./scripts/docs/deployDocs.sh",
     "docs:build": "node scripts/docs/buildDocs.js",
+    "docs:start": "(cd docuilib && yarn start)",
     "calendar:createMocks": "node scripts/createCalendarMockData.js",
     "snippets:build": "node scripts/generateSnippets.js",
     "release": "node ./scripts/release/release.js",
     "releaseDemo": "./scripts/release/releaseDemo.sh",
     "releaseDocs": "./scripts/release/releaseDocs.sh",
     "releaseEslint": "./scripts/release/releaseEslint.sh",
-    "releaseNative": "./scripts/release/releaseNative.sh"
+    "releaseNative": "./scripts/release/releaseNative.sh",
+    "updateWebAssets": "node scripts/assets/extractDimensions.js"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.0.2",

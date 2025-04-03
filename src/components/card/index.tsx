@@ -14,6 +14,7 @@ import {BlurViewPackage} from '../../optionalDependencies';
 import Assets from '../../assets';
 import CardContext from './CardContext';
 import * as CardPresenter from './CardPresenter';
+import {LogService} from 'services';
 
 const BlurView = BlurViewPackage?.BlurView;
 
@@ -22,7 +23,7 @@ const DEFAULT_SELECTION_PROPS = {
   borderWidth: 2,
   color: Colors.$backgroundPrimaryHeavy,
   indicatorSize: 20,
-  icon: Assets.icons.checkSmall,
+  icon: Assets.internal.icons.checkSmall,
   iconColor: Colors.$iconDefaultLight,
   hideIndicator: false
 };
@@ -122,7 +123,8 @@ class Card extends PureComponent<PropTypes, State> {
     this.styles = createStyles(this.props);
 
     if (props.enableBlur && !BlurView) {
-      console.error(`RNUILib Card's "enableBlur" prop requires installing "@react-native-community/blur" dependency`);
+      // eslint-disable-next-line max-len
+      LogService.error(`RNUILib Card's "enableBlur" prop requires installing "@react-native-community/blur" dependency`);
     }
   }
 

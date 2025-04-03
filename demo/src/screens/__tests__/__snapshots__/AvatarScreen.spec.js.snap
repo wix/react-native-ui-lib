@@ -83,6 +83,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -120,6 +121,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   "bottom": 0,
                   "justifyContent": "center",
                   "left": 0,
+                  "overflow": "hidden",
                   "position": "absolute",
                   "right": 0,
                   "top": 0,
@@ -208,6 +210,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -245,6 +248,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   "bottom": 0,
                   "justifyContent": "center",
                   "left": 0,
+                  "overflow": "hidden",
                   "position": "absolute",
                   "right": 0,
                   "top": 0,
@@ -394,6 +398,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -431,6 +436,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   "bottom": 0,
                   "justifyContent": "center",
                   "left": 0,
+                  "overflow": "hidden",
                   "position": "absolute",
                   "right": 0,
                   "top": 0,
@@ -445,6 +451,7 @@ exports[`AvatarScreen renders screen 1`] = `
           testID="undefined.container"
         >
           <Text
+            ellipsizeMode="clip"
             numberOfLines={1}
             style={
               [
@@ -622,6 +629,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -659,6 +667,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   "bottom": 0,
                   "justifyContent": "center",
                   "left": 0,
+                  "overflow": "hidden",
                   "position": "absolute",
                   "right": 0,
                   "top": 0,
@@ -673,6 +682,7 @@ exports[`AvatarScreen renders screen 1`] = `
           testID="undefined.container"
         >
           <Text
+            ellipsizeMode="clip"
             numberOfLines={1}
             style={
               [
@@ -856,6 +866,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -893,6 +904,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   "bottom": 0,
                   "justifyContent": "center",
                   "left": 0,
+                  "overflow": "hidden",
                   "position": "absolute",
                   "right": 0,
                   "top": 0,
@@ -1112,6 +1124,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={4}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1149,6 +1162,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   "bottom": 0,
                   "justifyContent": "center",
                   "left": 0,
+                  "overflow": "hidden",
                   "position": "absolute",
                   "right": 0,
                   "top": 0,
@@ -1368,6 +1382,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1405,6 +1420,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   "bottom": 0,
                   "justifyContent": "center",
                   "left": 0,
+                  "overflow": "hidden",
                   "position": "absolute",
                   "right": 0,
                   "top": 0,
@@ -1575,6 +1591,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1612,6 +1629,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   "bottom": 0,
                   "justifyContent": "center",
                   "left": 0,
+                  "overflow": "hidden",
                   "position": "absolute",
                   "right": 0,
                   "top": 0,
@@ -1831,6 +1849,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1868,6 +1887,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   "bottom": 0,
                   "justifyContent": "center",
                   "left": 0,
+                  "overflow": "hidden",
                   "position": "absolute",
                   "right": 0,
                   "top": 0,
@@ -2132,6 +2152,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -2169,6 +2190,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   "bottom": 0,
                   "justifyContent": "center",
                   "left": 0,
+                  "overflow": "hidden",
                   "position": "absolute",
                   "right": 0,
                   "top": 0,
@@ -2319,6 +2341,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -2356,6 +2379,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   "bottom": 0,
                   "justifyContent": "center",
                   "left": 0,
+                  "overflow": "hidden",
                   "position": "absolute",
                   "right": 0,
                   "top": 0,
@@ -2375,6 +2399,7 @@ exports[`AvatarScreen renders screen 1`] = `
           testID="undefined.container"
         >
           <Text
+            ellipsizeMode="clip"
             numberOfLines={1}
             style={
               [
@@ -2548,6 +2573,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -2585,6 +2611,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   "bottom": 0,
                   "justifyContent": "center",
                   "left": 0,
+                  "overflow": "hidden",
                   "position": "absolute",
                   "right": 0,
                   "top": 0,
@@ -2604,6 +2631,7 @@ exports[`AvatarScreen renders screen 1`] = `
           testID="undefined.container"
         >
           <Text
+            ellipsizeMode="clip"
             numberOfLines={1}
             style={
               [
@@ -2777,6 +2805,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -2814,6 +2843,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   "bottom": 0,
                   "justifyContent": "center",
                   "left": 0,
+                  "overflow": "hidden",
                   "position": "absolute",
                   "right": 0,
                   "top": 0,
@@ -2964,6 +2994,7 @@ exports[`AvatarScreen renders screen 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={0}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -3001,6 +3032,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   "bottom": 0,
                   "justifyContent": "center",
                   "left": 0,
+                  "overflow": "hidden",
                   "position": "absolute",
                   "right": 0,
                   "top": 0,
@@ -3015,6 +3047,7 @@ exports[`AvatarScreen renders screen 1`] = `
           testID="undefined.container"
         >
           <Text
+            ellipsizeMode="clip"
             numberOfLines={1}
             style={
               [

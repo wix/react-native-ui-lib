@@ -47,12 +47,6 @@ describe('Switch', () => {
     expect(onValueChange).not.toHaveBeenCalled();
   });
 
-  it('Accessibility value should be true when checked', async () => {
-    const driver = testCase(testID, {value: true});
-
-    expect(driver.getAccessibilityValue()).toBe(true);
-  });
-
   it('Accessibility value should be false when not checked', async () => {
     const driver = testCase(testID, {value: false});
 
@@ -63,12 +57,6 @@ describe('Switch', () => {
     const driver = testCase(testID, {value: true});
 
     expect(driver.isChecked()).toBe(true);
-  });
-
-  it('Accessibility value should be false when not checked', async () => {
-    const driver = testCase(testID, {value: false});
-
-    expect(driver.getAccessibilityValue()).toBe(false);
   });
 
   it('Should be disabled', async () => {

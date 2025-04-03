@@ -308,7 +308,7 @@ const TabBar = (props: Props) => {
         onContentSizeChange={onContentSizeChange}
         onLayout={onLayout}
       >
-        <View style={tabBarContainerStyle}>{tabBarItems}</View>
+        <View style={tabBarContainerStyle} accessibilityRole={Constants.isIOS ? 'tabbar' : 'tablist'} >{tabBarItems}</View>
         {itemsCount > 1 && (
           <Reanimated.View style={[styles.selectedIndicator, indicatorStyle, _indicatorTransitionStyle]}/>
         )}

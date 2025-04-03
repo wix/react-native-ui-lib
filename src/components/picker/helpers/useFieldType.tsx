@@ -4,14 +4,13 @@ import {Typography, Colors} from '../../../style';
 import View from '../../view';
 import Text from '../../text';
 import Icon from '../../icon';
+import Assets from '../../../assets';
 import {PickerProps, PickerFieldTypes} from '../types';
 
 type UseFieldTypeProps = Pick<
   PickerProps,
   'fieldType' | 'preset' | 'trailingAccessory' | 'value' | 'label' | 'placeholder' | 'style' | 'labelStyle' | 'testID'
 >;
-
-const dropdown = require('../assets/dropdown.png');
 
 const useFieldType = (props: UseFieldTypeProps) => {
   const {fieldType, preset, trailingAccessory, value, placeholder, style, label, labelStyle, testID} = props;
@@ -23,7 +22,7 @@ const useFieldType = (props: UseFieldTypeProps) => {
         containerStyle: {flexDirection: 'row'},
         label,
         labelStyle: {...Typography.text70, color: Colors.$textNeutral},
-        trailingAccessory: trailingAccessory ?? <Icon marginL-s1 source={dropdown}/>
+        trailingAccessory: trailingAccessory ?? <Icon marginL-s1 source={Assets.internal.icons.chevronDown}/>
       };
     } else if (fieldType === PickerFieldTypes.settings) {
       return {

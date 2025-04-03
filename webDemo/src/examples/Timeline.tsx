@@ -76,7 +76,7 @@ const TimelineWrapper = () => {
         bottomLine={{state: Timeline.states.ERROR}}
         point={{
           state: Timeline.states.ERROR,
-          icon: Assets.icons.check
+          icon: Assets.internal.icons.check
         }}
       >
         {renderContent(2)}
@@ -90,7 +90,7 @@ const TimelineWrapper = () => {
         point={{
           type: Timeline.pointTypes.OUTLINE,
           color: Colors.purple30,
-          icon: Assets.icons.search
+          icon: Assets.internal.icons.search
         }}
       >
         {renderContent(3)}

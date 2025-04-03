@@ -105,7 +105,9 @@
       "description": "The component test id"
     }
   ],
-  "snippet": ["<TabController.TabBar activeBackgroundColor={Colors.blue30$1}/>"],
+  "snippet": [
+    "<TabController.TabBar activeBackgroundColor={Colors.blue30$1}/>"
+  ],
   "docs": {
     "hero": {
       "title": "TabController.TabBar",
@@ -144,7 +146,7 @@
             "items": [
               {
                 "title": "",
-                "description": "**Inactive Tab**\nText: BodySmall $textDefault\nBackground: $backgroundElevated  \n\n**Active Tab**\nText: BodySmallBold $textPrimary\nBackground: $backgroundElevated\nIndicator: $outlinePrimary  \n\n**Shadow**\nsh10\n\n**Dark Skin**\nText: BodySmall, System White\nBackground: System Grey10\nDivider: System Grey20",
+                "description": "Markdown:\n\n**Inactive Tab**\nText: BodySmall $textDefault\nBackground: $backgroundElevated  \n\n**Active Tab**\nText: BodySmallBold $textPrimary\nBackground: $backgroundElevated\nIndicator: $outlinePrimary  \n\n**Shadow**\nsh10\n\n**Dark Skin**\nText: BodySmall, System White\nBackground: System Grey10\nDivider: System Grey20",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/TabBar/tabBar_overview_styling.png"
@@ -157,7 +159,10 @@
           },
           {
             "type": "table",
-            "columns": ["Property", "Component"],
+            "columns": [
+              "Property",
+              "Component"
+            ],
             "items": [
               {
                 "title": "Counter Badge",

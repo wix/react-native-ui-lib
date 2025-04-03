@@ -6,9 +6,8 @@ export const SwitchDriver = (props: ComponentProps) => {
   const driver = usePressableDriver(useComponentDriver(props));
   
   const getStyle = () => driver.getElement().props.style as ViewStyle;
-  const getAccessibilityValue = () => driver.getElement().props.accessibilityValue?.text === '1';
   const isDisabled = () => driver.getElement().props.accessibilityState?.disabled === true;
-  const isChecked = () => driver.getElement().props.accessibilityValue?.text === '1';
+  const isChecked = () => driver.getElement().props.accessibilityState?.checked;
   
-  return {...driver, getStyle, getAccessibilityValue, isDisabled, isChecked};
+  return {...driver, getStyle, isDisabled, isChecked};
 };

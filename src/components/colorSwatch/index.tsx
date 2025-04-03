@@ -52,10 +52,10 @@ interface Props {
 }
 export type ColorSwatchProps = Props & ColorsModifiers;
 
-const transparentImage = require('./assets/transparentSwatch/TransparentSwatch.png');
 const DEFAULT_SIZE = Constants.isTablet ? 44 : 36;
 export const SWATCH_MARGIN = 12;
 export const SWATCH_SIZE = DEFAULT_SIZE;
+const DEFAULT_COLOR = Colors.grey30;
 
 /**
  * @description: A color swatch component
@@ -124,9 +124,8 @@ class ColorSwatch extends PureComponent<Props & BaseComponentInjectedProps> {
 
   onPress = () => {
     const {value, index} = this.props;
-    const color = this.color ?? '';
     const tintColor = this.getTintColor(value);
-    const result = value || color;
+    const result = value || this.color || '';
     const hexString = Colors.getHexString(result);
     this.props.onPress?.(result, {tintColor, index, hexString});
   };
@@ -141,11 +140,13 @@ class ColorSwatch extends PureComponent<Props & BaseComponentInjectedProps> {
   }
 
   getAccessibilityInfo() {
-    const color = this.color;
-
+    const color = this.color || DEFAULT_COLOR;
+    const defaultText = !this.color ? 'default' : '';
+    
     return {
-      accessibilityLabel: color && Colors.getColorName(color),
-      accessibilityStates: this.props.selected ? ['selected'] : []
+      accessible: true,
+      accessibilityLabel: `${defaultText} color ${Colors.getColorName(color)}`,
+      accessibilityState: {selected: this.props.selected}
     };
   }
 
@@ -159,11 +160,9 @@ class ColorSwatch extends PureComponent<Props & BaseComponentInjectedProps> {
 
   renderContent() {
     const {style, onPress, unavailable, size = DEFAULT_SIZE, ...others} = this.props;
-    const color = this.color;
     const {isSelected} = this.state;
     const Container = onPress ? TouchableOpacity : View;
-    const tintColor = this.getTintColor(color);
-    const accessibilityInfo = Constants.accessibility.isScreenReaderEnabled && this.getAccessibilityInfo();
+    const tintColor = this.getTintColor(this.color);
 
     return (
       <Container
@@ -175,16 +174,20 @@ class ColorSwatch extends PureComponent<Props & BaseComponentInjectedProps> {
         onPress={this.onPress}
         style={[this.styles.container, {width: size, height: size, borderRadius: size / 2}, style]}
         onLayout={this.onLayout}
-        {...accessibilityInfo}
+        {...this.getAccessibilityInfo()}
       >
-        {Colors.isTransparent(color) && (
-          <Image source={transparentImage} style={this.styles.transparentImage} resizeMode={'cover'}/>
+        {Colors.isTransparent(this.color) && (
+          <Image
+            source={Assets.internal.images.transparentSwatch}
+            style={this.styles.transparentImage}
+            resizeMode={'cover'}
+          />
         )}
         {unavailable ? (
           <View style={[this.styles.unavailable, {backgroundColor: tintColor}]}/>
         ) : (
           <Animated.Image
-            source={Assets.icons.check}
+            source={Assets.internal.icons.check}
             style={{
               tintColor,
               opacity: isSelected,
@@ -222,11 +225,11 @@ class ColorSwatch extends PureComponent<Props & BaseComponentInjectedProps> {
 
 export default asBaseComponent<ColorSwatchProps>(ColorSwatch);
 
-function createStyles({color = Colors.grey30}) {
+function createStyles({color = DEFAULT_COLOR}) {
   return StyleSheet.create({
     container: {
       backgroundColor: color,
-      borderWidth: color === 'transparent' ? undefined : 1,
+      borderWidth: Colors.isTransparent(color) ? undefined : 1,
       borderColor: Colors.rgba(Colors.$outlineDisabledHeavy, 0.2),
       margin: SWATCH_MARGIN,
       overflow: 'hidden'
