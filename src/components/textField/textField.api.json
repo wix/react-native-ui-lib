@@ -295,8 +295,7 @@
             "type": "table",
             "columns": [
               "Property",
-              "Component",
-              "New Column"
+              "Component"
             ],
             "items": [
               {
