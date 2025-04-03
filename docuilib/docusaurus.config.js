@@ -128,6 +128,11 @@ const darkCodeTheme = themes.dracula;
         },
         colorMode: {
           disableSwitch: true
+        },
+        docs: {
+          sidebar: {
+            autoCollapseCategories: true
+          }
         }
       })
   }
