@@ -4,7 +4,7 @@ import {IFRAME_MESSAGE_TYPE} from '@site/src/components/UILivePreview';
 import ReactLiveScope from '../theme/ReactLiveScope';
 import styles from './livePreview.module.css';
 
-export default function UILivePreview() {
+export default function LivePreviewWrapper() {
   const [code, setCode] = useState(``);
 
   useEffect(() => {

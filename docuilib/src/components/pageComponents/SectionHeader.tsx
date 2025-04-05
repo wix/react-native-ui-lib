@@ -1,7 +1,9 @@
 import React, {useMemo} from 'react';
-import '../ComponentPage.module.scss';
 import showdownMarkdown from 'showdown';
 import ReactHtmlParser from 'react-html-parser';
+import {isComponentSupported} from '../../utils/componentUtils';
+import '../ComponentPage.module.scss';
+
 
 export const SectionHeader = ({section, component}) => {
   const {title, description, type} = section;
@@ -26,6 +28,7 @@ export const SectionHeader = ({section, component}) => {
   };
 
   const getUsageTitle = () => {
+    const title = isComponentSupported(component.name) ? 'Playground' : 'Usage';
     if (component.snippet) {
       return (
         <div
