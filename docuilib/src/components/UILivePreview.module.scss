@@ -1,10 +1,11 @@
-$preview-width: 350px;
+$preview-width: 340px;
 $preview-margin: 50px;
 $editor-height: 700px;
 
 .container {
   display: flex;
   background-color: #1D1E21;
+  border-radius: 8px;
   padding: 50px
 }
 
@@ -12,7 +13,6 @@ $editor-height: 700px;
   height: $editor-height;
 
   span {
-    color: #fff !important;
     font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     font-size: 14px;
     font-weight: 600;
