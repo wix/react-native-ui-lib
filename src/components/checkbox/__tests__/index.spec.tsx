@@ -158,6 +158,19 @@ describe('Checkbox renderer test', () => {
 
         expect(onChangeValidity).toHaveBeenCalledWith(false);
       });
+
+      it.each([false, true])('should return validity from validate function - initial %s', async (initialValue) => {
+        const props: CheckboxProps = {required: true, onChangeValidity, value: initialValue};
+        const renderTree = render(<TestCase {...props}/>);
+        const driver = CheckboxDriver({renderTree, testID});
+
+        expect(checkboxRef.current?.validate()).toBe(initialValue);
+
+        await driver.press();
+
+        expect(checkboxRef.current?.validate()).toBe(!initialValue);
+
+      });
     });
 
     describe('isValid', () => {
