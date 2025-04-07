@@ -137,6 +137,9 @@ export default {
   get ProgressiveImage() {
     return require('./progressiveImage').default;
   },
+  get SearchInput() {
+    return require('./searchInput').default;
+  },
   get StateScreen() {
     return require('./stateScreen').default;
   },
