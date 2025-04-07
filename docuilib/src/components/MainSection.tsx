@@ -22,7 +22,7 @@ export default () => {
   const fetchStarsCount = async () => {
     const response = await fetch('https://api.github.com/repos/wix/react-native-ui-lib');
     const data = await response.json();
-    const _starsCount = (data.stargazers_count / 1000).toFixed(1);
+    const _starsCount = data.stargazers_count ? (data.stargazers_count / 1000).toFixed(1) : starsCount;
 
     localStorage.setItem(STARS_COUNT_KEY, _starsCount.toString());
     setStarsCount(_starsCount);
