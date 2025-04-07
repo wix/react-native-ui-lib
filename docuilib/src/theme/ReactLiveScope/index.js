@@ -1,6 +1,6 @@
 import React from 'react';
 import products from '../../assets/data/products';
-import {Colors} from 'react-native-ui-lib/style';
+import {Colors, ThemeManager} from 'react-native-ui-lib/style';
 import {BorderRadiuses, Button, Image, Spacings, Text, TouchableOpacity, View} from 'react-native-ui-lib/core';
 import ActionBar from 'react-native-ui-lib/actionBar';
 import Assets from 'react-native-ui-lib/assets';
@@ -106,6 +106,7 @@ const ReactLiveScope = {
   Switch,
   Text,
   TextField,
+  ThemeManager,
   Timeline,
   TouchableOpacity,
   View,
