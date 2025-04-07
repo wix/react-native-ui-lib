@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {render} from '@testing-library/react-native';
 import Constants from '../../../commons/Constants';
 import Assets from '../../../assets';
@@ -15,6 +15,11 @@ const helperText = 'Helper Text';
 
 function TestCase(textFieldProps?: TextFieldProps) {
   const [value, setValue] = useState(textFieldProps?.value);
+
+  useEffect(() => {
+    setValue(textFieldProps?.value);
+  }, [textFieldProps?.value]);
+
   return (
     <View>
       <TextField {...textFieldProps} testID={TEXT_FIELD_TEST_ID} value={value} onChangeText={setValue}/>
@@ -214,8 +219,7 @@ describe('TextField', () => {
         expect(textFieldDriver.getValidationMessage().getText()).toEqual('mock message');
       });
 
-      // TODO: test with a future version of @testing-library/react-native
-      it.skip('should render validationMessage when input is requires after changing the value to undefined', () => {
+      it('should render validationMessage when input is requires after changing the value to undefined', () => {
         const renderTree = render(<TestCase {...defaultProps} value={'Some text'} validate={'required'} validationMessage={'mock message'} enableErrors validateOnChange/>);
         const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
 
