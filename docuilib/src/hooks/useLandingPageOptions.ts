@@ -3,6 +3,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 export interface LandingPageOptions {
   sections: string[];
   mainSectionTitle: string;
+  mainSectionTitleWidth: number;
   showStars: boolean;
   stars: number;
   showExpoButton: boolean;

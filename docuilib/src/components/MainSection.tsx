@@ -12,7 +12,7 @@ const STARS_COUNT_KEY = 'starsCount';
 export default () => {
   const {siteConfig} = useDocusaurusContext();
   const {expoSnackLink, docsMainEntry, docsDevelopmentVersion} = siteConfig.customFields;
-  const {showExpoButton, mainSectionTitle, showStars, stars} = useLandingPageOptions();
+  const {showExpoButton, mainSectionTitle, mainSectionTitleWidth, showStars, stars} = useLandingPageOptions();
   const [starsCount, setStarsCount] = useState(localStorage.getItem(STARS_COUNT_KEY) ?? stars);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default () => {
     <div className={styles.main}>
       <img src={mainCover} alt="showcase" className={styles.mainCover}/>
       <div className={styles.mainContent}>
-        <p>
+        <p style={{maxWidth: mainSectionTitleWidth}}>
           {mainSectionTitle}
           {/* <span className={styles.libName}>RNUI</span> is a UI Toolset & Components Library for React Native */}
         </p>
