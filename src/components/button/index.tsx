@@ -86,6 +86,9 @@ class Button extends PureComponent<Props, ButtonState> {
 
       return backgroundColor || modifiersBackgroundColor || Colors.$backgroundPrimaryHeavy;
     }
+    if (!outline && backgroundColor) {
+      return backgroundColor;
+    }
     return 'transparent';
   }
 
