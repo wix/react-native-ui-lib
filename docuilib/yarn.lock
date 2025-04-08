@@ -5918,11 +5918,11 @@ __metadata:
   linkType: hard
 
 "estree-util-value-to-estree@npm:^3.0.1":
-  version: 3.1.2
-  resolution: "estree-util-value-to-estree@npm:3.1.2"
+  version: 3.3.3
+  resolution: "estree-util-value-to-estree@npm:3.3.3"
   dependencies:
     "@types/estree": ^1.0.0
-  checksum: 31c4b9f3a2e64119b994a86d70070325b6ec238a21842669e79b0d6a7190150293616c8f38fee1c369c18bbef405064d883aa38c05311db5d0a211a30e9924d6
+  checksum: 73851f26715300046228cf8a36986c101d6741d7a2b024f684675e75d1191bc07b0dc069926876729efd5650343d23bffe76104221b7dc862965632302b05524
   languageName: node
   linkType: hard
 
