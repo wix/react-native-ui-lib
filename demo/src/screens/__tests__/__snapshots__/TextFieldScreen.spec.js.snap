@@ -193,7 +193,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -655,7 +655,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -1196,7 +1196,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#D2D6D8",
@@ -1562,7 +1562,7 @@ exports[`TextField Screen renders screen 1`] = `
                       "flexGrow": 1,
                       "paddingBottom": 0,
                       "paddingTop": 0,
-                      "textAlign": "left",
+                      "textAlign": undefined,
                     },
                     {
                       "color": "#20303C",
@@ -1793,7 +1793,7 @@ exports[`TextField Screen renders screen 1`] = `
                       "flexGrow": 1,
                       "paddingBottom": 0,
                       "paddingTop": 0,
-                      "textAlign": "left",
+                      "textAlign": undefined,
                     },
                     {
                       "color": "#20303C",
@@ -2158,7 +2158,7 @@ exports[`TextField Screen renders screen 1`] = `
                       "flexGrow": 1,
                       "paddingBottom": 0,
                       "paddingTop": 0,
-                      "textAlign": "left",
+                      "textAlign": undefined,
                     },
                     {
                       "color": "#20303C",
@@ -2473,7 +2473,7 @@ exports[`TextField Screen renders screen 1`] = `
                       "flexGrow": 1,
                       "paddingBottom": 0,
                       "paddingTop": 0,
-                      "textAlign": "left",
+                      "textAlign": undefined,
                     },
                     {
                       "color": "#20303C",
@@ -3039,7 +3039,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -3383,7 +3383,7 @@ exports[`TextField Screen renders screen 1`] = `
                       "flexGrow": 1,
                       "paddingBottom": 0,
                       "paddingTop": 0,
-                      "textAlign": "left",
+                      "textAlign": undefined,
                     },
                     {
                       "color": "#20303C",
@@ -3818,7 +3818,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -4248,7 +4248,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -4575,7 +4575,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -4882,7 +4882,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -5203,7 +5203,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -5942,7 +5942,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -6242,7 +6242,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -6571,7 +6571,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -6946,7 +6946,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -7226,7 +7226,7 @@ exports[`TextField Screen renders screen 1`] = `
                       "flexGrow": 1,
                       "paddingBottom": 0,
                       "paddingTop": 0,
-                      "textAlign": "left",
+                      "textAlign": undefined,
                     },
                     {
                       "color": "#20303C",
@@ -7481,7 +7481,7 @@ exports[`TextField Screen renders screen 1`] = `
                       "flexGrow": 1,
                       "paddingBottom": 0,
                       "paddingTop": 0,
-                      "textAlign": "left",
+                      "textAlign": undefined,
                     },
                     {
                       "color": "#20303C",
@@ -7752,7 +7752,7 @@ exports[`TextField Screen renders screen 1`] = `
                       "flexGrow": 1,
                       "paddingBottom": 0,
                       "paddingTop": 0,
-                      "textAlign": "left",
+                      "textAlign": undefined,
                     },
                     {
                       "color": "#20303C",

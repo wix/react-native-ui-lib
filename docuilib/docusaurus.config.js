@@ -23,6 +23,7 @@ const darkCodeTheme = themes.dracula;
       landingPage: {
         sections: ['components', 'features', 'code', 'libraries'],
         mainSectionTitle: 'RNUI is a UI Toolset & Components Library for React Native',
+        mainSectionTitleWidth: 600,
         showStars: true,
         stars: '6.8',
         showExpoButton: true

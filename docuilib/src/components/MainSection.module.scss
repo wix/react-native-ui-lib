@@ -5,10 +5,10 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 40px;
 
   @include desktop {
     height: 100vh;
+    overflow-y: hidden;
   }
 
   .mainCover {
