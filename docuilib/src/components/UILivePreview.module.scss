@@ -1,13 +1,24 @@
-$preview-width: 350px;
-$preview-margin: 60px;
+$preview-width: 340px;
+$preview-margin: 50px;
 $editor-height: 700px;
 
 .container {
   display: flex;
+  background-color: #1D1E21;
+  border-radius: 8px;
+  padding: 50px
 }
 
 .liveEditor {
   height: $editor-height;
+
+  span {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: -0.028px;
+  }
 }
 
 .codeContainer {
@@ -21,6 +32,8 @@ $editor-height: 700px;
   pre {
     min-height: 100%;
     padding: 20px !important;
+    background-color: #1D1E21 !important;
+    border-right: 1px solid #D2D6D8;
   }
 }
 
@@ -29,6 +42,11 @@ $editor-height: 700px;
   bottom: 0;
   left: 0;
   right: 0;
+
+  pre {
+    background-color: rgba(255, 255, 255, 0.80) !important;
+    margin: 10px;
+  }
 }
 
 .preview {
@@ -36,7 +54,7 @@ $editor-height: 700px;
   width: $preview-width;
   margin-left: $preview-margin;
   border-radius: 36px;
-  border: 1px solid #ddd;
+  border: 10px solid rgba(255, 255, 255, 0.20);
   box-shadow: 0 0 15px rgba(110, 120, 129, 0.05);
   overflow: hidden;
 }
@@ -49,4 +67,5 @@ $editor-height: 700px;
   left: 0;
   border: 0;
   padding: 10;
+  background-color: #fff;
 }

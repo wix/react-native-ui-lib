@@ -4,8 +4,8 @@
   border: 0;
   min-width: 180px;
   padding: 12px 24px;
-  border-radius: 100px;
-  font-size: var(--text40);
+  border-radius: 0;
+  font-size: 20px;
   font-weight: 500;
   background-color: var(--white);
   color: var(--black);
