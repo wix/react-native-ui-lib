@@ -142,11 +142,8 @@ export function ColorsTable() {
   );
 
   return (
-    <View flex>
+    <View flex marginV-40>
       <View>
-        <Text $textNeutralHeavy bodySmall>
-          Property
-        </Text>
         <SegmentedControl
           preset="form"
           containerStyle={styles.segmentedControlContainer}
@@ -251,7 +248,6 @@ const styles = StyleSheet.create({
     maxHeight: 700
   },
   segmentedControlContainer: {
-    width: '50%',
     marginTop: Spacings.s1,
     marginBottom: Spacings.s4
   },
