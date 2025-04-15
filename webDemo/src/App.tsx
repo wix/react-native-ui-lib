@@ -105,7 +105,7 @@ const itemsToRender: ItemToRender[] = [
       <Button
         label={'Press'}
         size={Button.sizes.medium}
-        iconSource={Assets.icons.check}
+        iconSource={Assets.internal.icons.check}
         iconOnRight
         onPress={() => {
           console.log('button pressed');
@@ -235,7 +235,7 @@ const itemsToRender: ItemToRender[] = [
         {label: '1'},
         {label: '2'},
         {label: '3'},
-        {label: '4', iconSource: Assets.icons.search, iconOnRight: true},
+        {label: '4', iconSource: Assets.internal.icons.search, iconOnRight: true},
         {label: '5'}
       ];
 
@@ -270,7 +270,7 @@ const itemsToRender: ItemToRender[] = [
           onValueChange={setIsChecked}
           borderRadius={2}
           size={30}
-          selectedIcon={Assets.icons.check}
+          selectedIcon={Assets.internal.icons.check}
           marginL-s5
           label={'With label'}
           iconColor={Colors.white}

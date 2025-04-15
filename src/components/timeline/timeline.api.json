@@ -29,30 +29,18 @@
     }
   ],
   "snippet": [
-    "<Timeline ",
-    "  topLine={{",
-    "    state: Timeline.states.ERROR",
-    "  }$1}",
-    "  bottomLine={{",
-    "    type: Timeline.lineTypes.DASHED,",
-    "    color: Colors.orange40",
-    "  }$2}",
-    "  point={{",
-    "    type: Timeline.pointTypes.OUTLINE,",
-    "    color: Colors.orange40,",
-    "    icon: Assets.icons.demo.camera,",
-    "    anchorRef: alignToTitle ? titleRef : undefined",
-    "  }$3}",
+    "<Timeline",
+    "  topLine={{type: Timeline.lineTypes.DASHED}}",
+    "  bottomLine={{state: Timeline.states.SUCCESS}}",
+    "  point={{state: Timeline.states.SUCCESS}}",
     ">",
-    "    <View flex centerH paddingH-20>",
-    "      <Text text70 dark10 ref={titleRef}>",
-    "        {title}",
-    "      </Text>",
-    "      <Text dark40>",
-    "        {description}",
-    "      </Text>",
-    "    </View>",
-    "</Timeline>"
+    "   <View padding-20 bg-grey60 br30>",
+    "     <Text text70BO>Title</Text>",
+    "     <View marginT-5 padding-8 bg-white br30>",
+    "       <Text>Description</Text>",
+    "     </View>",
+    "   </View>",
+    " </Timeline>"
   ],
   "docs": {
     "hero": {
@@ -138,29 +126,7 @@
                 "title": "Current",
                 "content": [
                   {
-                    "props": {
-                      "state": "current",
-                      "point": {
-                        "type": {
-                          "type": "bullet"
-                        }
-                      },
-                      "bottomLine": {
-                        "type": {
-                          "type": "solid"
-                        }
-                      }
-                    }
-                  },
-                  {
-                    "props": {
-                      "point": {
-                        "type": {
-                          "type": "bullet",
-                          "color": "#116DFF"
-                        }
-                      }
-                    }
+                    "snippet": "<Timeline topLine={{state: Timeline.states.CURRENT}} bottomLine={{state: Timeline.states.CURRENT}} point={{state: Timeline.states.CURRENT}}><View style={{height: 88}}/></Timeline>"
                   }
                 ],
                 "description": "state: current"
@@ -169,19 +135,7 @@
                 "title": "Next",
                 "content": [
                   {
-                    "props": {
-                      "state": "next",
-                      "point": {
-                        "type": {
-                          "type": "bullet"
-                        }
-                      },
-                      "bottomLine": {
-                        "type": {
-                          "type": "solid"
-                        }
-                      }
-                    }
+                    "snippet": "<Timeline topLine={{state: Timeline.states.NEXT}} bottomLine={{state: Timeline.states.NEXT}} point={{state: Timeline.states.NEXT, type: Timeline.pointTypes.CIRCLE}}><View style={{height: 88}}/></Timeline>"
                   }
                 ],
                 "description": "state: next"
@@ -190,19 +144,7 @@
                 "title": "Error",
                 "content": [
                   {
-                    "props": {
-                      "state": "error",
-                      "point": {
-                        "type": {
-                          "type": "bullet"
-                        }
-                      },
-                      "bottomLine": {
-                        "type": {
-                          "type": "solid"
-                        }
-                      }
-                    }
+                    "snippet": "<Timeline topLine={{state: Timeline.states.ERROR}} bottomLine={{state: Timeline.states.ERROR}} point={{state: Timeline.states.ERROR}}><View style={{height: 88}}/></Timeline>"
                   }
                 ],
                 "description": "state: error"
@@ -211,19 +153,7 @@
                 "title": "Success",
                 "content": [
                   {
-                    "props": {
-                      "state": "success",
-                      "point": {
-                        "type": {
-                          "type": "bullet"
-                        }
-                      },
-                      "bottomLine": {
-                        "type": {
-                          "type": "solid"
-                        }
-                      }
-                    }
+                    "snippet": "<Timeline topLine={{state: Timeline.states.SUCCESS}} bottomLine={{state: Timeline.states.SUCCESS}} point={{state: Timeline.states.SUCCESS}}><View style={{height: 88}}/></Timeline>"
                   }
                 ],
                 "description": "state: success"
@@ -238,15 +168,30 @@
             "items": [
               {
                 "title": "Bullet",
-                "description": "type: bullet"
+                "description": "type: bullet",
+                "content": [
+                  {
+                    "snippet": "<Timeline point={{type: Timeline.pointTypes.BULLET}}><View style={{height: 88}}/></Timeline>"
+                  }
+                ]
               },
               {
                 "title": "Circle",
-                "description": "type: circle"
+                "description": "type: circle",
+                "content": [
+                  {
+                    "snippet": "<Timeline point={{state: Timeline.states.NEXT, type: Timeline.pointTypes.CIRCLE}}><View style={{height: 88}}/></Timeline>"
+                  }
+                ]
               },
               {
                 "title": "Outline",
-                "description": "type: outline"
+                "description": "type: outline",
+                "content": [
+                  {
+                    "snippet": "<Timeline point={{type: Timeline.pointTypes.OUTLINE}}><View style={{height: 88}}/></Timeline>"
+                  }
+                ]
               }
             ],
             "title": "Point",
@@ -260,14 +205,7 @@
                 "title": "Text",
                 "content": [
                   {
-                    "props": {
-                      "state": "current",
-                      "bottomLine": {
-                        "type": {
-                          "type": "solid"
-                        }
-                      }
-                    }
+                    "snippet": "<Timeline point={{label: '1'}}><View style={{height: 88}}/></Timeline>"
                   }
                 ],
                 "description": "text: “1”"
@@ -276,21 +214,19 @@
                 "title": "Icon",
                 "content": [
                   {
-                    "props": {
-                      "state": "current",
-                      "bottomLine": {
-                        "type": {
-                          "type": "dashed"
-                        }
-                      }
-                    }
+                    "snippet": "<Timeline point={{state: Timeline.states.SUCCESS, icon: Assets.internal.icons.checkSmall}}><View style={{height: 88}}/></Timeline>"
                   }
                 ],
-                "description": "icon: Assets.icons.general.checkmarkSmall"
+                "description": "icon: Assets.internal.icons.general.checkmarkSmall"
               },
               {
                 "title": "Icon without background",
-                "description": "icon: Assets.icons.general.favorite, removeIconBackground: true"
+                "content": [
+                  {
+                    "snippet": "<Timeline point={{state: Timeline.states.SUCCESS, icon: Assets.internal.icons.search, removeIconBackground: true}}><View style={{height: 88}}/></Timeline>"
+                  }
+                ],
+                "description": "icon: Assets.internal.icons.general.favorite, removeIconBackground: true"
               }
             ],
             "name": "Point Accessories"
@@ -301,10 +237,20 @@
             "items": [
               {
                 "title": "Solid",
+                "content": [
+                  {
+                    "snippet": "<Timeline topLine={{state: Timeline.states.CURRENT}} point={{removeIconBackground: true}}><View style={{height: 88}}/></Timeline>"
+                  }
+                ],
                 "description": "type: solid"
               },
               {
                 "title": "Dashed",
+                "content": [
+                  {
+                    "snippet": "<Timeline topLine={{state: Timeline.states.CURRENT, type: Timeline.lineTypes.DASHED}} point={{removeIconBackground: true}}><View style={{height: 88}}/></Timeline>"
+                  }
+                ],
                 "description": "type: dashed"
               }
             ],
@@ -317,6 +263,11 @@
             "items": [
               {
                 "title": "Entry",
+                "content": [
+                  {
+                    "snippet": "<Timeline topLine={{state: Timeline.states.NEXT, entry: true}} bottomLine={{state: Timeline.states.NEXT, entry: true}} point={{removeIconBackground: true}}><View style={{height: 88}}/></Timeline>"
+                  }
+                ],
                 "description": "entry: true"
               }
             ],

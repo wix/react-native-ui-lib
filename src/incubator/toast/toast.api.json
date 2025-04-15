@@ -104,19 +104,47 @@
                   {
                     "props": {
                       "visible": true,
-                      "message": "\"Mika Or\" was saved to contacts."
+                      "message": "Mika Or was saved to contacts.",
+                      "preset": "general"
                     }
                   }
                 ]
               },
               {
-                "title": "Success"
+                "title": "Success",
+                "content": [
+                  {
+                    "props": {
+                      "visible": true,
+                      "message": "Post published.",
+                      "preset": "success"
+                    }
+                  }
+                ]
               },
               {
-                "title": "Validation"
+                "title": "Validation",
+                "content": [
+                  {
+                    "props": {
+                      "visible": true,
+                      "message": "Enter a card number.",
+                      "preset": "failure"
+                    }
+                  }
+                ]
               },
               {
-                "title": "Offline Error"
+                "title": "Offline Error",
+                "content": [
+                  {
+                    "props": {
+                      "visible": true,
+                      "message": "This action is not available offline.",
+                      "preset": "offline"
+                    }
+                  }
+                ]
               }
             ],
             "title": "Types"
@@ -126,13 +154,35 @@
             "columns": ["Prop", "Preview"],
             "items": [
               {
-                "title": "None"
+                "title": "None",
+                "content": [
+                  {
+                    "props": {
+                      "visible": true,
+                      "message": "Action completed."
+                    }
+                  }
+                ]
               },
               {
-                "title": "With action"
+                "title": "With action",
+                "content": [
+                  {
+                    "snippet": "<Incubator.Toast visible message=\"Action completed.\" action={{label: 'Undo', onPress: () => {}}}/>"
+                  }
+                ]
               },
               {
-                "title": "With loader"
+                "title": "With loader",
+                "content": [
+                  {
+                    "props": {
+                      "visible": true,
+                      "message": "Action completed.",
+                      "showLoader": true
+                    }
+                  }
+                ]
               }
             ],
             "title": "Accessories"

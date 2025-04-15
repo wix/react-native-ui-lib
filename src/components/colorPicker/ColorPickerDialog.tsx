@@ -193,7 +193,7 @@ const ColorPickerDialog = (props: ColorPickerDialogProps) => {
   );
 };
 
-ColorPickerDialog.displayName = 'ColorPicker';
+ColorPickerDialog.displayName = 'ColorPickerDialog';
 
 export default asBaseComponent<ColorPickerDialogProps>(ColorPickerDialog);
 
