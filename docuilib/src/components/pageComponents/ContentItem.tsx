@@ -1,11 +1,11 @@
 import React, {ComponentProps, useCallback, useMemo, useState} from 'react';
-import _ from 'lodash';
 import '../ComponentPage.module.scss';
 import {LiveProvider, LivePreview} from 'react-live';
 import styles from './ContentItem.module.scss';
 import ReactLiveScope from '../../theme/ReactLiveScope';
 import CodeBlock from '../CodeBlock';
-import CodeIcon from '../../assets/icons/code';
+import {isComponentSupported} from '../../utils/componentUtils';
+const showCodeIcon = require('../../assets/icons/code.png');
 
 type ComponentItemProps = {
   componentName: string;
@@ -71,8 +71,8 @@ const ComponentItem = (props: ComponentItemProps) => {
       {content}
       {showCodeButton && (
         <button onClick={toggleCode} className={styles.showCodeButton}>
-          <CodeIcon/>
-          {showCode ? 'Hide' : 'Show'} code
+          <img src={showCodeIcon} width={20}/>
+          {/* {showCode ? 'Hide' : 'Show'} code */}
         </button>
       )}
     </div>
@@ -116,9 +116,7 @@ export const ContentItem = ({item, componentName, showCodeButton, category}: Con
       name = `Incubator.${name}`;
     }
 
-    const isComponentExists = !!_.get(ReactLiveScope, name);
-
-    if (isComponentExists) {
+    if (isComponentSupported(name)) {
       return (
         <ComponentItem
           componentName={name}

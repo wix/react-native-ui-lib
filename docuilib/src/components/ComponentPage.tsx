@@ -90,7 +90,6 @@ export default function ComponentPage({component}) {
       return <Section section={section} component={component}/>;
     }
   };
-
   return (
     <div>
       {buildHero()}

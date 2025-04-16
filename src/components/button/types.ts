@@ -128,7 +128,7 @@ export type ButtonProps = TouchableOpacityProps &
      */
     round?: boolean;
     /**
-     * Control shadow visibility (iOS-only)
+     * Control shadow visibility
      */
     enableShadow?: boolean;
     /**

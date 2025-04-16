@@ -7,8 +7,8 @@ title: 'Usage'
 
 import UILivePreview from '@site/src/components/UILivePreview';
 
-This is a quick example of how to use our basic components, modifiers and presets to generate a good looking screen.  
-For detailed information please go over the other sections: [Style](../foundation/style.md), [Modifiers](../foundation/modifiers.md), Components...
+Here's a simple demonstration showcasing our core components, modifiers, and presets working together to create an elegant UI screen.  
+For comprehensive documentation, explore our guides on [Style](../foundation/style.md), [Modifiers](../foundation/modifiers.md), and individual Components.
 
 <!-- ![basic showcase](basic-showcase.png). -->
 
