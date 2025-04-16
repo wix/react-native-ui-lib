@@ -14,7 +14,7 @@ function Footer() {
       <div className="footer__container">
         <div className={'footer__links'}>
           <div className="footer__section">
-            <a href="/docs/getting-started/setup" target="_blank" rel="noreferrer noopener" aria-label="Go to docs">
+            <a href="docs/getting-started/setup" rel="noreferrer noopener" aria-label="Go to docs">
               <img
                 src="https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/site/logo_rnui_footer.png"
                 alt="rnui logo"

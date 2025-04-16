@@ -20,7 +20,14 @@ const darkCodeTheme = themes.dracula;
       docsMainEntry: 'getting-started/setup',
       docsDevelopmentVersion: 'next',
       expoSnackLink: 'https://snack.expo.io/@ethanshar/rnuilib_snack',
-      stars: '4.7'
+      landingPage: {
+        sections: ['components', 'features', 'code', 'libraries'],
+        mainSectionTitle: 'RNUI is a UI Toolset & Components Library for React Native',
+        mainSectionTitleWidth: 600,
+        showStars: true,
+        stars: '6.8',
+        showExpoButton: true
+      }
     },
     plugins: ['docusaurus-plugin-sass', '@docusaurus/theme-live-codeblock', './plugins/uilib.js'],
     presets: [
@@ -128,6 +135,11 @@ const darkCodeTheme = themes.dracula;
         },
         colorMode: {
           disableSwitch: true
+        },
+        docs: {
+          sidebar: {
+            autoCollapseCategories: true
+          }
         }
       })
   }

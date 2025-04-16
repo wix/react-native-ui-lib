@@ -16,55 +16,88 @@ Our default library Colors object is using **System Colors** and **Design Tokens
 <TabItem value="design_tokens" label="Design Tokens" default>
 ### Design Tokens
 
-Design Tokens are contextual colors based on the system colors.  
-The design token name structure is "$[property]-[semantic]-[weight]". (e.g $backgroundPrimaryHeavy, $textSuccessLight)
+Design Tokens provide semantic meaning to our color system by mapping contextual usage to system colors.
+Each token follows the naming pattern: `$[property][Semantic][Weight]`
 
-<ColorsTable />
+For example:
+- `$backgroundPrimaryHeavy`: A heavy primary background color
+- `$textSuccess`: Success-themed text color
+- `$iconWarning`: Warning-themed icon color
 
-- **Property** - The property we use this token for. The properties are:
+### Design Token Structure
 
-  - `background`
-  - `text`
-  - `icon`
-  - `outline`
+Design tokens follow a structured naming convention: `$[property][Semantic][Weight]`, where:
 
-- **Semantic** - the meaning of the color, what is the message that we want to pass using this color. The semantics are:
+#### Property
+Defines the UI element the token applies to:
+- `background` - Background colors
+- `text` - Text colors
+- `icon` - Icon colors 
+- `outline` - Border/outline colors
 
-  - `neutral`
-  - `primary` - the primary color of the app, means, blue for Spaces app and green for Fit app.
-  - `general`
-  - `success`
-  - `warning`
-  - `danger`
-  - `disabled`
-  - `inverted`
-  - `default`
+#### Semantic
+Represents the contextual meaning:
+- `neutral` - Neutral/default state
+- `primary` - App's primary brand color
+- `general` - General purpose
+- `success` - Positive/success states
+- `warning` - Warning/caution states
+- `danger` - Error/danger states
+- `disabled` - Disabled state
+- `inverted` - Reversed/contrasting colors
+- `default` - Default state
 
-- **Weight** - the weight of the color (optional). The weights are:
-  - `light`
-  - `medium`
-  - `heavy`
+#### Weight (Optional)
+Indicates the color intensity:
+- `light` - Lighter variation
+- `medium` - Medium intensity
+- `heavy` - Heavier/darker variation
 
-So, for example, a valid token can be: `$backgroundPrimaryHeavy` or `$textSuccess`.
-A full list of our design tokens can be found here -
+Examples:
+- `$backgroundPrimaryHeavy` - Dark variant of primary background
+- `$textSuccess` - Success state text color
+- `$iconWarning` - Warning state icon color
 
-### Dark Mode Support
+View all available design tokens in our [token definition files](https://github.com/wix/react-native-ui-lib/blob/master/src/style/designTokens.ts).  
 
-By using design tokens, your getting dark mode support out of the box!
-Each token is mapped to a single system color in light mode and to a (usually different) single system color in dark mode.
-For example, `$textSuccess` is mapped to `green10` in light (deafult) mode, and to `green60` in dark mode.
-All the design tokens and their mapping in light mode can be found [here](https://github.com/wix/react-native-ui-lib/blob/master/src/style/designTokens.ts), dark mode mapping can be found [here](https://github.com/wix/react-native-ui-lib/blob/master/src/style/designTokensDM.ts).
+<ColorsTable />  
 
-### Add Your Own Design Tokens
 
-Adding or overriding your own design tokens can be done by using the [loadSchemes](https://wix.github.io/react-native-ui-lib/docs/foundation/colors#loadschemes) method.
-To generate the design tokens, based on your app primary color and load them automatically into the `Colors` object, use:
+### Dark Mode Integration
+
+Design tokens provide seamless dark mode support through automatic color mapping. Each token maps to appropriate system colors for both light and dark themes:
 
 ```javascript
-Colors.loadDesignTokens({primaryColor: <your primary color>});
+// Example mapping
+$textSuccess → green10 (light mode)
+$textSuccess → green60 (dark mode)
 ```
 
-This method will update all the `primary` tokens to be based on your app primary color, both in light and dark mode.
+View the complete token mappings:
+- [Light mode tokens](https://github.com/wix/react-native-ui-lib/blob/master/src/style/designTokens.ts)
+- [Dark mode tokens](https://github.com/wix/react-native-ui-lib/blob/master/src/style/designTokensDM.ts)
+
+### Custom Design Tokens
+
+Customize the design system by:
+
+1. Using `loadSchemes()` to override existing tokens
+2. Generating tokens from your primary brand color:
+
+```javascript
+Colors.loadSchemes({
+  light: {
+    $textDefault: '#20303C'
+  },
+  dark: {
+    $textDefault: '#F8F8F8'
+  }
+});
+```
+
+This defines the default text color token for both light and dark modes.
+
+
 </TabItem>
 <TabItem value="system_colors" label="System Colors">
 

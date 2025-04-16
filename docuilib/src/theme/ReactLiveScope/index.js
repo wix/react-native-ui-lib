@@ -1,9 +1,10 @@
 import React from 'react';
 import products from '../../assets/data/products';
-import {Colors} from 'react-native-ui-lib/style';
+import {Colors, ThemeManager} from 'react-native-ui-lib/style';
 import {BorderRadiuses, Button, Image, Spacings, Text, TouchableOpacity, View} from 'react-native-ui-lib/core';
 import ActionBar from 'react-native-ui-lib/actionBar';
 import Assets from 'react-native-ui-lib/assets';
+import Avatar from 'react-native-ui-lib/avatar';
 import Badge from 'react-native-ui-lib/badge';
 import Card from 'react-native-ui-lib/card';
 import Carousel from 'react-native-ui-lib/carousel';
@@ -33,17 +34,17 @@ import * as Playground from './Playground';
 Assets.loadAssetsGroup('icons.demo', {
   // chevronDown: require('../../assets/icons/chevronDown.png').default,
   chevronRight: {
-    uri: require('../../assets/icons/chevronRight.png').default,
+    uri: require('../../assets/icons/chevronRight.png'),
     width: 24,
     height: 24
   },
   chevronDown: {
-    uri: require('../../assets/icons/chevronDown.png').default,
+    uri: require('../../assets/icons/chevronDown.png'),
     width: 14,
     height: 8
   },
   star: {
-    uri: require('../../assets/icons/star.png').default,
+    uri: require('../../assets/icons/star.png'),
     width: 24,
     height: 24
   },
@@ -52,7 +53,7 @@ Assets.loadAssetsGroup('icons.demo', {
   // close: require('../../assets/icons/close.png').default,
   // dashboard: require('../../assets/icons/dashboard.png').default,
   drag: {
-    uri: require('../../assets/icons/drag.png').default,
+    uri: require('../../assets/icons/drag.png'),
     width: 10,
     height: 16
   }
@@ -78,6 +79,7 @@ const ReactLiveScope = {
   /* UI Lib's components */
   ActionBar,
   Assets,
+  Avatar,
   Badge,
   BorderRadiuses,
   Button,
@@ -106,6 +108,7 @@ const ReactLiveScope = {
   Switch,
   Text,
   TextField,
+  ThemeManager,
   Timeline,
   TouchableOpacity,
   View,

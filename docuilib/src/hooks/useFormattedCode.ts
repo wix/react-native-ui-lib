@@ -6,7 +6,7 @@ type UseFormattedCodeOptions = {
   printWidth?: number;
 };
 const useFormattedCode = (code: string, {printWidth = 35}: UseFormattedCodeOptions = {}) => {
-  const [formattedCode, setFormattedCode] = useState<string>('formatting...');
+  const [formattedCode, setFormattedCode] = useState<string>('');
 
   useEffect(() => {
     (async () => {
@@ -16,8 +16,8 @@ const useFormattedCode = (code: string, {printWidth = 35}: UseFormattedCodeOptio
         singleQuote: true,
         printWidth
       });
-      const noLastSemiColonCode = formattedCode.trim().slice(0, -1);
-      setFormattedCode(noLastSemiColonCode);
+      // const noLastSemiColonCode = formattedCode.trim().slice(0, -1);
+      setFormattedCode(formattedCode);
     })();
   }, [code, printWidth]);
 
