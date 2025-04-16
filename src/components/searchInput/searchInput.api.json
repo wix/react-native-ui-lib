@@ -31,7 +31,7 @@
     {
       "name": "schemeColor",
       "type": "string | null",
-      "description": "The SearchInput colors (affects the search icon color, the filter icon color when 'showFilterIcon' is passed and the cancel button color)"
+      "description": "The SearchInput colors (affects the search icon color and the cancel button color)"
     },
     {
       "name": "inaccessible",
@@ -52,7 +52,6 @@
     "  testID={'searchInput'$2}",
     "  placeholder={'Search'$3}",
     "  onDismiss={onDismiss$4}",
-    "  showFilterIcon={showFilterIcon$5}",
     "/>"
   ]
 }

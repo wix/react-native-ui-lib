@@ -1,17 +1,6 @@
 import React, {useCallback, useRef, useState} from 'react';
 import {Alert} from 'react-native';
-import {
-  Colors,
-  View,
-  Text,
-  Switch,
-  SearchInput,
-  SearchInputRef,
-  SearchInputPresets,
-  Button,
-  Icon,
-  Assets
-} from 'react-native-ui-lib';
+import {Colors, View, Text, Switch, SearchInput, SearchInputRef, Button, Icon, Assets} from 'react-native-ui-lib';
 
 const SearchInputScreen = () => {
   const [showCancelBtn, setShowCancelBtn] = useState(false);
@@ -105,7 +94,7 @@ const SearchInputScreen = () => {
           placeholder="Search"
           onDismiss={showCancelBtn ? onDismiss : undefined}
           cancelButtonProps={{label: 'Cancel'}}
-          preset={SearchInputPresets.PROMINENT}
+          preset={SearchInput.presets.PROMINENT}
           customRightElement={showCustomRightElement ? customRightElement : undefined}
         />
       </View>

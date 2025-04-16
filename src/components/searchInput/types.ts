@@ -40,7 +40,7 @@ export type SearchInputProps = TextInputProps & {
   /**
    * custom loader element
    */
-  renderLoaderElement?: (props?: any) => React.ReactElement;
+  renderLoaderElement?: () => React.ReactElement;
   /**
    * converts the colors of the search's input elements, icons and button to white
    */
