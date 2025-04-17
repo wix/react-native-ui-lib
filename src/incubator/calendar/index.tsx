@@ -15,10 +15,10 @@ import {useDidUpdate} from 'hooks';
 
 const FlashList = FlashListPackage?.FlashList;
 
-const VIEWABILITY_CONFIG = {itemVisiblePercentThreshold: 95, minimumViewTime: 200};
-const YEARS_RANGE = 1;
+const VIEWABILITY_CONFIG = {itemVisiblePercentThreshold: 95, minimumViewTime: 1000};
+const YEARS_RANGE = 5;
 const PAGE_RELOAD_THRESHOLD = 3;
-const NOW = Date.now(); // so the 'initialDate' effect won't get called since the now different on every rerender
+const NOW = new Date().setHours(0, 0, 0, 0);
 
 function Calendar(props: PropsWithChildren<CalendarProps>) {
   const {
@@ -31,23 +31,23 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     showExtraDays = true
   } = props;
 
-  const [items] = useState<DateObjectWithOptionalDay[]>(() =>
+  const [monthItems] = useState<DateObjectWithOptionalDay[]>(() =>
     generateMonthItems(initialDate, YEARS_RANGE, YEARS_RANGE));
 
   const getItemIndex = useCallback((date: number) => {
     'worklet';
     const dateObject = getDateObject(date);
-    for (let i = 0; i < items.length; i++) {
-      if (items[i].month === dateObject.month && items[i].year === dateObject.year) {
+    for (let i = 0; i < monthItems.length; i++) {
+      if (monthItems[i].month === dateObject.month && monthItems[i].year === dateObject.year) {
         return i;
       }
     }
     return -1;
   },
-  [items]);
+  [monthItems]);
 
   const flashListRef = useRef();
-  const current = useSharedValue<number>(initialDate);
+  const current = useSharedValue<number>(new Date(initialDate).setHours(0, 0, 0, 0));
   const initialMonthIndex = useRef(getItemIndex(current.value));
   const lastUpdateSource = useSharedValue<UpdateSource>(UpdateSource.INIT);
   const processedData = useMemo(() => addHeaders(data), [data]);
@@ -79,7 +79,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     console.log('Update items');
     const index = getItemIndex(current.value);
     scrollToIndex(index);
-  }, [items, getItemIndex]);
+  }, [monthItems, getItemIndex]);
 
   const setHeaderHeight = useCallback((height: number) => {
     headerHeight.value = height;
@@ -122,17 +122,17 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     // const newDate = addYears(current.value, prepend ? -1 : 1);
     // const newItems = generateMonthItems(newDate, pastRange, futureRange);
     // const newArray = mergeArrays(prepend, items, newItems);
-    // setItems(newArray);
+    // setMonthItems(newArray);
     // // eslint-disable-next-line react-hooks/exhaustive-deps
   },
-  [items]);
+  [monthItems]);
 
   const shouldAddPages = useCallback((index: number) => {
     'worklet';
-    return index !== -1 && (index < PAGE_RELOAD_THRESHOLD || index > items.length - PAGE_RELOAD_THRESHOLD);
+    return index !== -1 && (index < PAGE_RELOAD_THRESHOLD || index > monthItems.length - PAGE_RELOAD_THRESHOLD);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },
-  [items]);
+  [monthItems]);
 
   useAnimatedReaction(() => {
     return current.value;
@@ -141,7 +141,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
     const index = getItemIndex(selected);
 
     if (shouldAddPages(index)) {
-      console.log('Add new pages: ', index, items.length);
+      console.log('Add new pages: ', index, monthItems.length);
       runOnJS(addPages)(/* index */);
     } else if (lastUpdateSource.value !== UpdateSource.MONTH_SCROLL) {
       if (previous && !isSameMonth(selected, previous)) {
@@ -189,7 +189,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
       <FlashList
         ref={flashListRef}
         estimatedItemSize={Constants.screenWidth}
-        data={items}
+        data={monthItems}
         initialScrollIndex={initialMonthIndex.current}
         estimatedFirstItemOffset={0}
         renderItem={renderCalendarItem}

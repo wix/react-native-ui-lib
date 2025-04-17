@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import {data} from './MockData';
 
-const PAGE_SIZE = 100;
+const PAGE_SIZE = 400;
 const FAKE_FETCH_TIME = 1500;
 
 class MockServer {
