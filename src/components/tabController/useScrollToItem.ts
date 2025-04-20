@@ -5,7 +5,7 @@ import {useSharedValue} from 'react-native-reanimated';
 import {useScrollTo, ScrollToSupportedViews, ScrollToResultProps} from 'hooks';
 import {Constants} from '../../commons/new';
 
-const FIX_RTL = Constants.isRTL && Constants.isIOS;
+const FIX_RTL = Constants.isRTL;
 
 export enum OffsetType {
   CENTER = 'CENTER',
