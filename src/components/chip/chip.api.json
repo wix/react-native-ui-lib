@@ -53,6 +53,12 @@
     {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
   ],
   "snippet": [
-    "<Chip label={'Chip'$1} onPress={() => console.log('pressed')$2}/>"
+    "<View flex center gap-s4>",
+    "<Chip label={'Chip'$1} onPress={() => console.log('pressed')$2}/>",
+    "<Chip label={'Square'$1} borderRadius={2} backgroundColor={Colors.blue50}/>",
+    "<Chip label={'Badge'$1} badgeProps={{label: '2', backgroundColor: Colors.red30}}/>",
+    "<Chip label={'Avatar'$1} avatarProps={{source: {uri: 'https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/icons/icon%20examples%20for%20docs/avatar_1.jpg'}}}/>",
+    "<Chip label={'Accessories'$1} rightElement={<Icon source={Assets.icons.demo.chevronRight}/>}/>",
+    "</View>"
   ]
 }
