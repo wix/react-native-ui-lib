@@ -58,7 +58,9 @@
     }
   ],
   "snippet": [
-    "<Stepper$1/>"
+    "<View flex center>",
+    "<Stepper$1 minValue={0} maxValue={5}/>",
+    "</View>"
   ],
   "docs": {
     "hero": {
