@@ -21,9 +21,19 @@
     {"name": "maxChips", "type": "number", "description": "The maximum chips to allow adding"}
   ],
   "snippet": [
-    "<ChipsInput",
-    "  placeholder={'Placeholder'$1}",
-    "  chips={[{label: 'Falcon 9'}, {label: 'Enterprise'}, {label: 'Challenger', borderRadius: 0}]$2}",
-    "/>"
+    "function Example(props) {",
+    "  const [chips, setChips] = useState([{label: 'Falcon 9'}, {label: 'Enterprise'}]);",
+  
+    "  return (",
+    "    <View flex padding-s5>",
+    "      <ChipsInput",
+    "        onChange={setChips}",
+    "        placeholder={'Placeholder'$1}",
+    "        defaultChipProps={{borderRadius: 0}}",
+    "        chips={chips}",
+    "      />",
+    "    </View>",
+    "  );",
+    "}"
   ]
 }
