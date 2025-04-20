@@ -25,12 +25,13 @@
     "function Example(props) {",
     "  const [currentValue, setCurrentValue] = useState('yes'$1);",
     "  return (",
-    "    <div>",
-    "      <RadioGroup initialValue={currentValue$2} onValueChange={setCurrentValue$3}>",
+    "    <View flex padding-s5>",
+    "      <RadioGroup initialValue={currentValue$2} onValueChange={setCurrentValue$3} gap-s4>",
     "        <RadioButton value={'yes'$4} label={'Yes'$5}/>",
-    "        <RadioButton marginT-10 value={'no'$6} label={'No'$7}/>",
+    "        <RadioButton value={'no'$6} label={'No'$7}/>",
+    "        <RadioButton value={'maybe'$8} label={'Maybe'$9}/>",
     "      </RadioGroup>",
-    "    </div>",
+    "    </View>",
     "  );",
     "}"
   ]

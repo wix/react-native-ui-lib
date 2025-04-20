@@ -88,10 +88,14 @@
   "snippet": [
     "function Example(props) {",
     "  const [value, setValue] = useState(false$1);",
+    "  const [value2, setValue2] = useState(false$1);",
+    "  const [value3, setValue3] = useState(false$1);",
     "  return (",
-    "    <div>",
-    "      <RadioButton label={'Individual Radio Button'} selected={value$2} onPress={() => setValue(!value)$3}/>",
-    "    </div>",
+    "    <View flex padding-s5 gap-s4>",
+    "      <RadioButton label={'Radio Button'} selected={value$2} onPress={() => setValue(!value)$3}/>",
+    "      <RadioButton label={'Green Radio Button'} color={Colors.green30} selected={value2$2} onPress={() => setValue2(!value2)$3}/>",
+    "      <RadioButton label={'Square Radio Button'} borderRadius={0} size={20} selected={value3$2} onPress={() => setValue3(!value3)$3}/>",
+    "    </View>",
     "  );",
     "}"
   ],
