@@ -47,14 +47,22 @@
     }
   ],
   "snippet": [
-    "<ColorPicker",
-    " colors={[Colors.green10, Colors.green20, Colors.green30, Colors.green40, Colors.green50, Colors.green60, Colors.green70]$1}",
-    " initialColor={Colors.green10$2}",
-    " value={currentColor$3}",
-    " onDismiss={() => console.log('dismissed')$4}",
-    " onSubmit={() => console.log('submit')$5}",
-    " onValueChange={() => console.log('value changed')$6}",
-    "/>"
+    "function Example(props) {",
+    "  const [colors, setColors] = useState([Colors.green30, Colors.yellow30, Colors.red30]);",
+    "  const [color, setColor] = useState();",
+    "  return (",
+    "    <View flex padding-s5>",
+    "     <ColorPicker",
+    "       colors={colors}",
+    "       initialColor={Colors.green10}",
+    "       value={color}",
+    "       onDismiss={() => console.log('dismissed')$4}",
+    "       onSubmit={(newColor) => setColors([newColor, ...colors])}",
+    "       onValueChange={setColor}",
+    "     />",
+    "    </View>",
+    "  );",
+    "}"
   ],
   "docs": {
     "hero": {
@@ -77,7 +85,7 @@
             "items": [
               {
                 "title": "",
-                "description": "markdown:1. Tapping 'Add New' in the Color Palette opens a color picker dialog.   \n2. Using HLS controls (or even typing actual HEX value) user can achieve any color. ",
+                "description": "markdown:  1. Tapping 'Add New' in the Color Palette opens a color picker dialog.  \n2. Using HLS controls (or even typing actual HEX value) user can achieve any color. ",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ColorPicker/ColorPicker_usage1.png"
@@ -113,7 +121,7 @@
             "items": [
               {
                 "title": "",
-                "description": "markdown:1. Tapping on the HEX value will “activate” the input field (Main Input) and display the keyboard. New color can be created either by typing a hex value or by pasting a specific value.  \n2. Until new valid hex value is provided, the initial color background is kept. Hex value is highlighted with either white at 25% or black at 25%, depending on the background color. ",
+                "description": "markdown:  1. Tapping on the HEX value will “activate” the input field (Main Input) and display the keyboard. New color can be created either by typing a hex value or by pasting a specific value.  \n2. Until new valid hex value is provided, the initial color background is kept. Hex value is highlighted with either white at 25% or black at 25%, depending on the background color. ",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ColorPicker/ColorPicker_hex1.png"
@@ -122,7 +130,7 @@
               },
               {
                 "title": "",
-                "description": "markdown:3. ‘#’ symbol is permanent and cant be deleted.  \n4. Once hex value is valid (6 characters), background color changes accordingly. ",
+                "description": "markdown:  3. ‘#’ symbol is permanent and cant be deleted.  \n4. Once hex value is valid (6 characters), background color changes accordingly. ",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ColorPicker/ColorPicker_hex2.png"

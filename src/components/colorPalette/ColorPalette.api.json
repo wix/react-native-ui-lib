@@ -79,7 +79,6 @@
     }
   ],
   "snippet": [
-
     "function Example(props) {",
     "  const [value, setValue] = useState(Colors.yellow30);",
     "  return (",
