@@ -215,6 +215,7 @@ class Card extends PureComponent<PropTypes, State> {
     const {selectionOptions = {}, selected} = this.props;
     const {animatedSelected} = this.state;
     const selectionColor = selectionOptions?.color || DEFAULT_SELECTION_PROPS.color;
+    const backgroundColor = selectionColor || this.styles.selectedIndicator.backgroundColor;
 
     if (_.isUndefined(selected)) {
       return null;
@@ -231,10 +232,14 @@ class Card extends PureComponent<PropTypes, State> {
         pointerEvents="none"
       >
         {!selectionOptions.hideIndicator && (
-          <View style={[this.styles.selectedIndicator, {backgroundColor: selectionColor}]}>
+          <View style={[this.styles.selectedIndicator, {backgroundColor}]}>
             <Icon
               source={selectionOptions?.icon || DEFAULT_SELECTION_PROPS.icon}
-              tintColor={selectionOptions?.iconColor || DEFAULT_SELECTION_PROPS.iconColor}
+              tintColor={
+                selectionOptions?.iconColor ||
+                Colors.getRelativeContentColor(selectionColor) ||
+                DEFAULT_SELECTION_PROPS.iconColor
+              }
             />
           </View>
         )}
