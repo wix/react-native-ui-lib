@@ -133,7 +133,6 @@ class Drawer extends PureComponent<DrawerProps> {
   static displayName = 'Drawer';
 
   static defaultProps = {
-    itemsTintColor: Colors.white,
     itemsIconSize: 24
   };
 
@@ -308,6 +307,7 @@ class Drawer extends PureComponent<DrawerProps> {
 
   private renderAction = ({item, index, progress, itemsCount}: any) => {
     const {itemsTintColor, itemsIconSize, itemsTextStyle, itemsMinWidth} = this.props;
+    const iconColor = itemsTintColor || Colors.getRelativeContentColor(item.background || DEFAULT_BG) || Colors.white;
     const inputRange = [index / itemsCount, (index + 1) / itemsCount];
     const outputRange = [0.2, 1];
 
@@ -347,7 +347,7 @@ class Drawer extends PureComponent<DrawerProps> {
               {
                 width: itemsIconSize,
                 height: itemsIconSize,
-                tintColor: itemsTintColor,
+                tintColor: iconColor,
                 opacity,
                 transform: [{scale}]
               }
@@ -359,7 +359,7 @@ class Drawer extends PureComponent<DrawerProps> {
             style={[
               styles.actionText,
               {
-                color: itemsTintColor,
+                color: iconColor,
                 opacity,
                 transform: [{scale}]
               },
