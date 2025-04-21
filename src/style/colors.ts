@@ -190,6 +190,12 @@ export class Colors {
   shouldReverseOnDark = (avoidReverseOnDark?: boolean) =>
     !avoidReverseOnDark && this.shouldSupportDarkMode && Scheme.isDarkMode();
 
+  getRelativeContentColor(backgroundColor: string) {
+    if (backgroundColor) {
+      return this.isDark(backgroundColor) ? colorsPalette.white : colorsPalette.grey1;
+    }
+  }
+
   getColorTint(colorValue: string | OpaqueColorValue | undefined,
     tintKey: string | number,
     options: GetColorTintOptions = {}) {

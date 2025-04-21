@@ -318,12 +318,8 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
 }
 
 function createStyles(props: CheckboxProps) {
-  const {
-    color = DEFAULT_COLOR,
-    iconColor = DEFAULT_ICON_COLOR,
-    size = DEFAULT_SIZE,
-    borderRadius = DEFAULT_BORDER_RADIUS
-  } = props;
+  const {color = DEFAULT_COLOR, iconColor, size = DEFAULT_SIZE, borderRadius = DEFAULT_BORDER_RADIUS} = props;
+  const _iconColor = iconColor || Colors.getRelativeContentColor(color) || DEFAULT_ICON_COLOR;
 
   return StyleSheet.create({
     container: {
@@ -335,7 +331,7 @@ function createStyles(props: CheckboxProps) {
       borderColor: color
     },
     selectedIcon: {
-      tintColor: iconColor,
+      tintColor: _iconColor,
       alignItems: 'center',
       justifyContent: 'center'
     },
