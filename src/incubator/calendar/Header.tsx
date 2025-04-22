@@ -14,6 +14,7 @@ import WeekDaysNames from './WeekDaysNames';
 Reanimated.addWhitelistedNativeProps({text: true});
 
 const ARROWS_THROTTLE_TIME = 300;
+const ARROWS_THROTTLE_OPTIONS = {leading: true, trailing: false};
 const WEEK_NUMBER_WIDTH = 32;
 const ARROW_NEXT = require('./assets/arrowNext.png');
 const ARROW_BACK = require('./assets/arrowBack.png');
@@ -31,12 +32,12 @@ const Header = (props: HeaderProps) => {
 
   const onLeftArrowPress = useCallback(throttle(() => {
     setDate(getNewDate(-1), UpdateSource.MONTH_ARROW);
-  }, ARROWS_THROTTLE_TIME, {leading: true, trailing: false}),
+  }, ARROWS_THROTTLE_TIME, ARROWS_THROTTLE_OPTIONS),
   [setDate, getNewDate]);
 
   const onRightArrowPress = useCallback(throttle(() => {
     setDate(getNewDate(1), UpdateSource.MONTH_ARROW);
-  }, ARROWS_THROTTLE_TIME, {leading: true, trailing: false}),
+  }, ARROWS_THROTTLE_TIME, ARROWS_THROTTLE_OPTIONS),
   [setDate, getNewDate]);
 
   const getTitle = useCallback((date: number) => {
