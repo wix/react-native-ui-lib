@@ -95,7 +95,6 @@ export default class CalendarScreen extends Component {
           <Incubator.Calendar.Agenda
             renderEvent={this.renderEvent}
             renderHeader={this.renderHeader}
-            // itemHeight={30}
             onEndReached={this.onEndReached}
             showLoader={showLoader}
           />
