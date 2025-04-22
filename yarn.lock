@@ -2616,13 +2616,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/blur@npm:4.3.0":
-  version: 4.3.0
-  resolution: "@react-native-community/blur@npm:4.3.0"
+"@react-native-community/blur@npm:4.4.1":
+  version: 4.4.1
+  resolution: "@react-native-community/blur@npm:4.4.1"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 1fb168a88d5901f0c86cf537a51e272ddd63b057cec4fb102f2e3a4b50f16d04fc0575567de7440dfab01d090fb3863cec74055538141f96e7d7bc8835101ac0
+  checksum: 1e47144b0c00dce562e72ea9f6c3e93d3bb392ec0ea001ce37ff801d9a496c9801927033ee4800bf92ea2ece9de0abe596715add3b7afe3c5d1533e260f5e09e
   languageName: node
   linkType: hard
 
@@ -10600,7 +10600,7 @@ __metadata:
     "@formatjs/intl-locale": ^3.0.3
     "@formatjs/intl-numberformat": ^8.0.4
     "@formatjs/intl-pluralrules": ^5.0.3
-    "@react-native-community/blur": 4.3.0
+    "@react-native-community/blur": 4.4.1
     "@react-native-community/datetimepicker": ^3.4.6
     "@react-native-community/netinfo": ^5.6.2
     "@react-native/babel-preset": 0.73.21
