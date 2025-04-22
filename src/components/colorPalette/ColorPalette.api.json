@@ -84,7 +84,7 @@
     "  return (",
     "    <View flex padding-s5 gap-s4>",
     "      <ColorPalette",
-    "        colors={['transparent', Colors.green30, Colors.yellow30, Colors.red30]$1}",
+    "        colors={['transparent', Colors.green30, Colors.yellow30, Colors.red30]}",
     "        value={value}",
     "        onValueChange={setValue}",
     "      />",

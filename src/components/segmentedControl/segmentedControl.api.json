@@ -103,9 +103,9 @@
   ],
   "snippet": [
     "<View flex padding-s5 gap-s4>",
-    "<SegmentedControl segments={[{label: '1st'}, {label: '2nd'}, {label: '3rd'}]$1}/>",
-    "<SegmentedControl segments={[{label: '1st'}, {label: '2nd'}, {label: '3rd'}]$1} preset='form'/>",
-    "<SegmentedControl segments={[{label: '1st'}, {label: '2nd'}, {label: '3rd'}]$1} borderRadius={12} outlineColor={Colors.yellow30} outlineWidth={3} activeColor={Colors.yellow20}/>",
+    "<SegmentedControl segments={[{label: '1st'}, {label: '2nd'}, {label: '3rd'}]}/>",
+    "<SegmentedControl segments={[{label: '1st'}, {label: '2nd'}, {label: '3rd'}]} preset='form'/>",
+    "<SegmentedControl segments={[{label: '1st'}, {label: '2nd'}, {label: '3rd'}]} borderRadius={12} outlineColor={Colors.yellow30} outlineWidth={3} activeColor={Colors.yellow20}/>",
     "</View>"
   ],
   "docs": {

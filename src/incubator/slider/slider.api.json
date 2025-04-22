@@ -100,10 +100,10 @@
   ],
   "snippet": [
     "<Incubator.Slider",
-    "  value={0$1}",
-    "  minimumValue={0$2}",
-    "  maximumValue={10$3}",
-    "  onValueChange={value => console.log(\\`value changed: \\${value}\\`)$4}",
+    "  value={0}",
+    "  minimumValue={0}",
+    "  maximumValue={10}",
+    "  onValueChange={value => console.log(\\`value changed: \\${value}\\`)}",
     "/>"
   ],
   "docs": {

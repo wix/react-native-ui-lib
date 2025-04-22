@@ -28,7 +28,7 @@
     "    <View flex padding-s5>",
     "      <ChipsInput",
     "        onChange={setChips}",
-    "        placeholder={'Placeholder'$1}",
+    "        placeholder={'Placeholder'}",
     "        defaultChipProps={{borderRadius: 0}}",
     "        chips={chips}",
     "      />",

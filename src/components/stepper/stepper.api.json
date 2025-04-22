@@ -59,7 +59,7 @@
   ],
   "snippet": [
     "<View flex center>",
-    "<Stepper$1 minValue={0} maxValue={5}/>",
+    "<Stepper minValue={0} maxValue={5}/>",
     "</View>"
   ],
   "docs": {

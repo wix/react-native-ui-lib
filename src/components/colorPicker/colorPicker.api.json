@@ -56,7 +56,7 @@
     "       colors={colors}",
     "       initialColor={Colors.green10}",
     "       value={color}",
-    "       onDismiss={() => console.log('dismissed')$4}",
+    "       onDismiss={() => console.log('dismissed')}",
     "       onSubmit={(newColor) => setColors([newColor, ...colors])}",
     "       onValueChange={setColor}",
     "     />",
