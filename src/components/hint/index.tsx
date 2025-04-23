@@ -6,6 +6,7 @@ import View from '../view';
 import Image from '../image';
 import Modal from '../modal';
 import TouchableOpacity from '../touchableOpacity';
+import Assets from '../../assets';
 import {HintPositions, HintProps, TargetAlignments} from './types';
 
 import useHintVisibility from './hooks/useHintVisibility';
@@ -15,9 +16,6 @@ import useHintPosition from './hooks/useHintPosition';
 import HintMockChildren from './HintMockChildren';
 import HintAnchor from './HintAnchor';
 import HintBubble from './HintBubble';
-
-const sideTip = require('./assets/hintTipSide.png');
-const middleTip = require('./assets/hintTipMiddle.png');
 
 const DEFAULT_COLOR = Colors.$backgroundPrimaryHeavy;
 const DEFAULT_HINT_OFFSET = Spacings.s4;
@@ -49,8 +47,6 @@ const Hint = (props: HintProps) => {
     customContent,
     testID
   } = props;
-
-  
 
   const hintRef = useRef<RNView>(null);
   const isUsingModal = Boolean(onBackgroundPress && useModal);
@@ -141,7 +137,7 @@ const Hint = (props: HintProps) => {
   };
 
   const renderHintTip = () => {
-    const source = useSideTip ? sideTip : middleTip;
+    const source = useSideTip ? Assets.internal.images.hintTipSide : Assets.internal.images.hintTipMiddle;
     const flipVertically = position === HintPositions.TOP;
     const flipHorizontally = targetAlignmentOnScreen === TargetAlignments.RIGHT;
     const flipStyle = {

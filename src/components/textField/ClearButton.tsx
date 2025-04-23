@@ -17,7 +17,7 @@ const TIMING_CONFIG = {
   easing: Easing.bezier(0.33, 1, 0.68, 1)
 };
 
-const ClearButton = ({testID, onClear, onChangeText, clearButtonStyle,ClearButtonContentComponent}: ClearButtonProps) => {
+const ClearButton = ({testID, onClear, onChangeText, clearButtonStyle, ClearButtonContentComponent}: ClearButtonProps ) => {
   const {hasValue} = useContext(FieldContext);
   const animatedValue = useSharedValue(hasValue ? VISIBLE_POSITION : NON_VISIBLE_POSITION);
   const animatedOpacity = useSharedValue(hasValue ? 1 : 0);
@@ -49,25 +49,23 @@ const ClearButton = ({testID, onClear, onChangeText, clearButtonStyle,ClearButto
 
   return (
     <View reanimated style={style} testID={`${testID}.container`}>
-
-      {ClearButtonContentComponent? 
+     {ClearButtonContentComponent? 
         <ClearButtonContentComponent 
           onPress={clear} 
           hitSlop={hitSlop}
           accessible={hasValue}
           accessibilityLabel={'clear'}
           testID={testID}/> :
-        <Button
-          link
-          iconSource={Assets.icons.xFlat}
-          iconStyle={styles.clearIcon}
-          onPress={clear}
-          hitSlop={hitSlop}
-          accessible={hasValue}
-          accessibilityLabel={'clear'}
-          testID={testID}
+      <Button
+        link
+        iconSource={Assets.internal.icons.xFlat}
+        iconStyle={styles.clearIcon}
+        onPress={clear}
+        hitSlop={hitSlop}
+        accessible={hasValue}
+        accessibilityLabel={'clear'}
+        testID={testID}
       />}
-     
     </View>
   );
 };

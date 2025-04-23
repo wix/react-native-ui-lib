@@ -95,7 +95,7 @@ const DEFAULT_SWIPE_VELOCITY = 1.8;
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/PanListenerView/PanListenerView.gif?raw=true
  */
 class PanListenerView extends PureComponent<Props> {
-  static displayName = 'PanListenerView';
+  static displayName = 'IGNORE';
   
   public static defaultProps: Partial<Props> = {
     directions: DEFAULT_DIRECTIONS,

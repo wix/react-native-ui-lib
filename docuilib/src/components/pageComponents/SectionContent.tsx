@@ -13,7 +13,15 @@ export const SectionContent = ({section, component}) => {
         {_.map(content, (item, index: number) => {
           const isLast = index === content.length - 1;
 
-          return <div style={{marginBottom: isLast ? 0 : 40, border: '1px solid #F8F9FA', background: item.background}}><ContentItem item={item} componentName={component.name}/></div>;
+          return (
+            <div style={{marginBottom: isLast ? 0 : 40, border: '1px solid #F8F9FA', background: item.background}}>
+              <ContentItem
+                item={item}
+                componentName={component.name}
+                category={component.category}
+              />
+            </div>
+          );
         })}
       </div>
     );

@@ -79,7 +79,7 @@ export interface ClearButtonProps extends Pick<TextInputProps, 'testID' | 'onCha
    */
   clearButtonStyle?: StyleProp<ViewStyle>;
   /** Pass to render a custom clear button */
-  ClearButtonContentComponent?: ReactElement;
+  ClearButtonContentComponent?: React.ComponentType<any>;
 }
 
 export interface LabelProps extends MandatoryIndication, Pick<ValidationMessageProps, 'enableErrors'> {

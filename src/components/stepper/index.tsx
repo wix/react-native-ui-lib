@@ -6,6 +6,7 @@ import {asBaseComponent} from '../../commons/new';
 import View from '../view';
 import Text from '../text';
 import Button from '../button';
+import Assets from '../../assets';
 
 enum ActionType {
   MINUS = 'minus',
@@ -14,12 +15,6 @@ enum ActionType {
 
 export type StepperType = 'default' | 'floating';
 
-const minusOutline = require('./assets/minusOutline.png');
-const minusOutlineSmall = require('./assets/minusOutlineSmall.png');
-const plusOutline = require('./assets/plusOutline.png');
-const plusOutlineSmall = require('./assets/plusOutlineSmall.png');
-const plusSmall = require('./assets/plusSmall.png');
-const minusSmall = require('./assets/minusSmall.png');
 const DEFAULT_STEP = 1;
 
 interface Props {
@@ -181,8 +176,16 @@ class Stepper extends PureComponent<Props, State> {
     const {type, disabled, small, testID} = this.props;
     const allowStepChange = this.allowStepChange(actionType);
     const isFloatingStepper = type === 'floating';
-    const minusButton = isFloatingStepper ? minusSmall : small ? minusOutlineSmall : minusOutline;
-    const plusButton = isFloatingStepper ? plusSmall : small ? plusOutlineSmall : plusOutline;
+    const minusButton = isFloatingStepper
+      ? Assets.internal.icons.minusSmall
+      : small
+        ? Assets.internal.icons.minusOutlineSmall
+        : Assets.internal.icons.minusOutline;
+    const plusButton = isFloatingStepper
+      ? Assets.internal.icons.plusSmall
+      : small
+        ? Assets.internal.icons.plusOutlineSmall
+        : Assets.internal.icons.plusOutline;
 
     return (
       <Button

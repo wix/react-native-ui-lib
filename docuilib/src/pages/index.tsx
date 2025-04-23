@@ -5,30 +5,32 @@ import BrowserOnly from '@docusaurus/BrowserOnly';
 // import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 // import HomepageFeatures from '../components/HomepageFeatures';
 
-import StandWithUkraine from '../components/StandWithUkraine';
 import MainSection from '../components/MainSection';
 import ComponentsSection from '../components/ComponentsSection';
 import FeaturesSection from '../components/FeaturesSection';
 import CodeSection from '../components/CodeSection';
 import LibrariesSection from '../components/LibrariesSection';
+import useLandingPageOptions from '../hooks/useLandingPageOptions';
 
 export default function Home(): JSX.Element {
-  // const {siteConfig} = useDocusaurusContext();
+  const {sections} = useLandingPageOptions();
+
   return (
-    <>
-      <StandWithUkraine/>
-      <Layout
-        /* title={`Hello from ${siteConfig.title}`} */ description="Description will go into a meta tag in <head />"
-      >
-        <main>
-          {/* Note: BrowserOnly allows using `localStorage` in MainSection, otherwise docusaurus build fail */}
-          <BrowserOnly>{() => <MainSection/>}</BrowserOnly>
-          <ComponentsSection/>
-          <FeaturesSection/>
-          <CodeSection/>
-          <LibrariesSection/>
-        </main>
-      </Layout>
-    </>
+    <Layout
+      /* title={`Hello from ${siteConfig.title}`} */ description="Description will go into a meta tag in <head />"
+    >
+      {/* Note: BrowserOnly allows using `localStorage` in MainSection, otherwise docusaurus build fail */}
+      <BrowserOnly>
+        {() => (
+          <main>
+            <MainSection/>
+            {sections.includes('components') && <ComponentsSection/>}
+            {sections.includes('features') && <FeaturesSection/>}
+            {sections.includes('code') && <CodeSection/>}
+            {sections.includes('libraries') && <LibrariesSection/>}
+          </main>
+        )}
+      </BrowserOnly>
+    </Layout>
   );
 }
