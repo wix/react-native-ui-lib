@@ -1,6 +1,7 @@
 import React, {useCallback, useMemo, useEffect, useState, useRef} from 'react';
 import {StyleSheet, MeasureOnSuccessCallback, LayoutChangeEvent} from 'react-native';
 import {Colors, Spacings} from '../../style';
+import {useThemeProps} from '../../hooks';
 import View from '../view';
 import Point from './Point';
 import Line from './Line';
@@ -17,9 +18,9 @@ export {
 const CONTENT_CONTAINER_PADDINGS = Spacings.s2;
 const ENTRY_POINT_HEIGHT = 2;
 
-
 const Timeline = (props: TimelineProps) => {
-  const {topLine, bottomLine, point, children} = props;
+  const themeProps = useThemeProps(props, 'Timeline');
+  const {topLine, bottomLine, point, children} = themeProps;
   const [anchorMeasurements, setAnchorMeasurements] = useState<Layout | undefined>();
   const [contentContainerMeasurements, setContentContainerMeasurements] = useState<Layout | undefined>();
   const [pointMeasurements, setPointMeasurements] = useState<Layout | undefined>();
@@ -59,7 +60,7 @@ const Timeline = (props: TimelineProps) => {
         return Colors.$backgroundDangerHeavy;
       case StateTypes.SUCCESS:
         return Colors.$backgroundSuccessHeavy;
-      default: 
+      default:
         return Colors.$backgroundPrimaryHeavy;
     }
   };
