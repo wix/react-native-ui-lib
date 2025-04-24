@@ -8,7 +8,7 @@ interface SwipeableCardsViewProps<T> {
   nextItems: T[];
   onSwipe?: SwipeableCardProps['onSwipe'];
   currentIndex: number;
-  renderPlaceHolderCard: () => JSX.Element;
+  renderNextCard: (nextItem: T) => JSX.Element;
   renderRightCard: () => JSX.Element;
   renderLeftCard: () => JSX.Element;
   renderMainCard: () => JSX.Element;
@@ -16,7 +16,7 @@ interface SwipeableCardsViewProps<T> {
 
 const SwipeableCardsView = (props: SwipeableCardsViewProps<any>) => {
   const {
-    currentItem, nextItems, onSwipe, currentIndex, renderPlaceHolderCard, 
+    currentItem, nextItems, onSwipe, currentIndex, renderNextCard, 
     renderRightCard, renderLeftCard, renderMainCard
   } = props;
 
@@ -24,17 +24,15 @@ const SwipeableCardsView = (props: SwipeableCardsViewProps<any>) => {
 
   return (
     <View flex>
-      {nextItems.map((nextItem, index) => (
-        nextItem && (
-          <SwipeableCard
-            key={index}
-            {...{onSwipe, animatedValue, currentIndex}} 
-            currentIndex={currentIndex} 
-            itemIndex={currentIndex + index + 1}
-          >
-            {renderPlaceHolderCard()}
-          </SwipeableCard>
-        )
+      {nextItems.filter(Boolean).map((nextItem, index) => (
+        <SwipeableCard
+          key={index}
+          {...{onSwipe, animatedValue, currentIndex}} 
+          currentIndex={currentIndex} 
+          itemIndex={currentIndex + index + 1}
+        >
+          {renderNextCard(nextItem)}
+        </SwipeableCard>
       ))}
       <SwipeableCard
         {...{onSwipe, animatedValue}}

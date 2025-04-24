@@ -117,26 +117,27 @@ const SwipeableCard = ({
   });
 
   return (
-    !swipeStatus &&
-    <GestureDetector gesture={pan}>
-      <Animated.View
-        style={[
-          styles.container,
-          animatedStyle,
-          {zIndex: 100 - diffFromFocusItem * 10}
-        ]}
-      >
-        <Animated.View style={[styles.card, styles.mainCard, mainContentAnimatedStyle]}>
-          {children}
+    swipeStatus ? <React.Fragment/> : (
+      <GestureDetector gesture={pan}>
+        <Animated.View
+          style={[
+            styles.container,
+            animatedStyle,
+            {zIndex: 100 - diffFromFocusItem * 10}
+          ]}
+        >
+          <Animated.View style={[styles.card, styles.mainCard, mainContentAnimatedStyle]}>
+            {children}
+          </Animated.View>
+          <Animated.View style={[styles.card, styles.acceptCard, acceptCardAnimatedStyle]}>
+            {cardContent?.right}
+          </Animated.View>
+          <Animated.View style={[styles.card, declineCardAnimatedStyle]}>
+            {cardContent?.left}
+          </Animated.View>
         </Animated.View>
-        <Animated.View style={[styles.card, styles.acceptCard, acceptCardAnimatedStyle]}>
-          {cardContent?.right}
-        </Animated.View>
-        <Animated.View style={[styles.card, declineCardAnimatedStyle]}>
-          {cardContent?.left}
-        </Animated.View>
-      </Animated.View>
-    </GestureDetector>
+      </GestureDetector>
+    )
   );
 };
 
