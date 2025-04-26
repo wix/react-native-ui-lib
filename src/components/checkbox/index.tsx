@@ -177,14 +177,13 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
   }
 
   getAccessibilityProps() {
-    const {accessibilityLabel, disabled, value} = this.props;
-    const checkedState = value ? 'checked' : 'unchecked';
+    const {accessibilityLabel = 'checkbox', disabled, value} = this.props;
 
     return {
       accessible: true,
-      accessibilityLabel: accessibilityLabel ? `${accessibilityLabel} ${checkedState}` : `${checkedState}`,
+      accessibilityLabel,
       accessibilityRole: 'checkbox',
-      accessibilityStates: disabled ? ['disabled'] : undefined
+      accessibilityState: {disabled, checked: value}
     };
   }
 
@@ -252,8 +251,13 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     };
   };
 
+  getAccessibleHitSlop(size: number) {
+    return Math.max(0, (48 - size) / 2);    
+  }
+
   renderCheckbox() {
     const {selectedIcon, label, testID, style, containerStyle, indeterminate, ...others} = this.props;
+    
     return (
       //@ts-ignore
       <TouchableOpacity
@@ -263,6 +267,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
         {...others}
         style={[this.getBorderStyle(), style, !label && containerStyle]}
         onPress={this.onPress}
+        hitSlop={this.getAccessibleHitSlop(this.props.size || DEFAULT_SIZE)}
       >
         {
           <Animated.View
@@ -274,7 +279,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
           >
             <AnimatedIcon
               style={[this.styles.selectedIcon, {transform: this.animationStyle.transform}]}
-              source={indeterminate ? Assets.icons.minusSmall : selectedIcon || Assets.icons.checkSmall}
+              source={indeterminate ? Assets.internal.icons.minusSmall : selectedIcon || Assets.internal.icons.checkSmall}
               testID={`${testID}.selected`}
               tintColor={this.getTintColor()}
             />
@@ -301,9 +306,10 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
 
   validate = () => {
     const {value, required} = this.props;
-    const error = required && !value;
-    this.validationState = true; 
-    this.setState({showError: error, isValid: !error});
+    const isValid = !(required && !value);
+    this.validationState = true;
+    this.setState({showError: !isValid, isValid});
+    return isValid;
   };
 
   isValid = () => {

@@ -1,7 +1,9 @@
 import React, {useMemo} from 'react';
-import '../ComponentPage.module.scss';
 import showdownMarkdown from 'showdown';
 import ReactHtmlParser from 'react-html-parser';
+import {isComponentSupported} from '../../utils/componentUtils';
+import '../ComponentPage.module.scss';
+
 
 export const SectionHeader = ({section, component}) => {
   const {title, description, type} = section;
@@ -23,6 +25,26 @@ export const SectionHeader = ({section, component}) => {
 
   const getDescriptionColor = type => {
     return type === 'item' ? '#6E7881' : '#495059';
+  };
+
+  const getUsageTitle = () => {
+    const title = isComponentSupported(component.name) ? 'Playground' : 'Usage';
+    if (component.snippet) {
+      return (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: 12
+          }}
+        >
+          {getTitle(type, title)}
+          {getCodeExampleLink()}
+        </div>
+      );
+    }
   };
 
   const getCodeExampleLink = () => {
@@ -66,20 +88,7 @@ export const SectionHeader = ({section, component}) => {
 
   switch (type) {
     case 'usage':
-      return (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: 12
-          }}
-        >
-          {getTitle(type, title)}
-          {getCodeExampleLink()}
-        </div>
-      );
+      return getUsageTitle();
     default:
       return (
         <div

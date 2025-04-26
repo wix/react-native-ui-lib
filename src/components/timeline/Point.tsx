@@ -1,4 +1,3 @@
-
 import React, {useMemo} from 'react';
 import {StyleSheet, LayoutChangeEvent} from 'react-native';
 import {Colors, Spacings} from '../../style';
@@ -37,18 +36,22 @@ const Point = (props: PointPropsInternal) => {
       {borderWidth: OUTLINE_WIDTH, borderColor: color && Colors.getColorTint(color, OUTLINE_TINT)};
     const circleStyle = !hasContent && isCircle && 
       {backgroundColor: 'transparent', borderWidth: CIRCLE_WIDTH, borderColor: color};
-    
+
     return [styles.point, pointSizeStyle, !removeIconBackground && pointColorStyle, outlineStyle, circleStyle];
   }, [type, color, label, removeIconBackground, icon]);
 
   const renderPointContent = () => {
-    const {removeIconBackground} = props;
+    const {removeIconBackground, labelColor} = props;
     const tintColor = removeIconBackground ? Colors.$iconDefault : Colors.$iconDefaultLight;
     const iconSize = removeIconBackground ? undefined : ICON_SIZE;
     if (icon) {
       return <Icon tintColor={tintColor} {...iconProps} size={iconSize} source={icon}/>;
     } else if (label) {
-      return <Text recorderTag={'unmask'} $textDefaultLight subtextBold>{label}</Text>;
+      return (
+        <Text recorderTag={'unmask'} $textDefaultLight subtextBold color={labelColor}>
+          {label}
+        </Text>
+      );
     }
   };
 

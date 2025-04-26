@@ -2,13 +2,8 @@
   "name": "Button",
   "category": "controls",
   "description": "Customizable button component that handles press events",
-  "extends": [
-    "basic/TouchableOpacity"
-  ],
-  "modifiers": [
-    "margin",
-    "background"
-  ],
+  "extends": ["basic/TouchableOpacity"],
+  "modifiers": ["margin", "background"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ButtonsScreen.tsx",
   "images": [
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Button/Button%20Sizes.png?raw=true",
@@ -140,7 +135,7 @@
     {
       "name": "enableShadow",
       "type": "boolean",
-      "description": "Control shadow visibility (iOS-only)"
+      "description": "Control shadow visibility"
     },
     {
       "name": "avoidInnerPadding",
@@ -169,12 +164,21 @@
     }
   ],
   "snippet": [
-    "<Button label={'Press'$1} size={Button.sizes.medium$2} backgroundColor={Colors.red30$3}/>"
+    "<View flex>",
+    "<View flex center gap-s5>",
+    "<Button label={'Press'} backgroundColor={Colors.red30}/>",
+    "<Button label={'Press'} outline size={Button.sizes.medium}/>",
+    "<Button label={'Press'}  iconSource={Assets.icons.demo.star}/>",
+    "</View>",
+    "<View flex bottom>",
+    "<Button fullWidth label='Full Width Button'/>",
+    "</View>",
+    "</View>"
   ],
   "docs": {
     "hero": {
       "title": "Button",
-      "description": "A button triggers an event or action.\n\nPrimary buttons that indicate a call to action, are the most prominent.  Secondary buttons, which indicate less commonly used actions, should be less prominent than primary buttons, second in hierarchy.\n\nButtons are placed where a user should expect them, i.e. in close proximity to the other elements that the action affects.",
+      "description": "A button triggers an event or action.\n\nPrimary buttons that indicate a call to action, are the most prominent. Secondary buttons, which indicate less commonly used actions, should be less prominent than primary buttons, second in hierarchy.\n\nButtons are placed where a user should expect them, i.e. in close proximity to the other elements that the action affects.",
       "type": "hero",
       "layout": "horizontal",
       "content": [
@@ -189,10 +193,7 @@
         "sections": [
           {
             "type": "table",
-            "columns": [
-              "Type",
-              "Component"
-            ],
+            "columns": ["Type", "Component"],
             "items": [
               {
                 "title": "Main Button",
@@ -222,29 +223,11 @@
                 ]
               },
               {
-                "title": "Floating Button",
-                "description": "The Floating Button is displayed at the bottom of the screen.",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_types_floatingButton.png"
-                  }
-                ]
-              },
-              {
                 "title": "Full-Width Button",
                 "description": "Full Width buttons are sticky on the bottom of the screens.",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_types_fullButton.png"
-                  }
-                ]
-              },
-              {
-                "title": "Toggle Button",
-                "description": "Toggle Button are mainly used to toggle between a state, f.e- favorite, like.",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_types_toggleButtons.png"
                   }
                 ]
               }
@@ -259,10 +242,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Component"
-            ],
+            "columns": ["Property", "Component"],
             "items": [
               {
                 "title": "Primary",
@@ -289,11 +269,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Primary",
-              "Secondary"
-            ],
+            "columns": ["Property", "Primary", "Secondary"],
             "items": [
               {
                 "title": "Main",
@@ -320,7 +296,7 @@
                 ]
               },
               {
-                "title": "Distructive",
+                "title": "Destructive",
                 "description": "Used for destructive actions such as Delete and Log out. ",
                 "content": [
                   {
@@ -328,18 +304,6 @@
                   },
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_distructiveSecondary.png"
-                  }
-                ]
-              },
-              {
-                "title": "Premium",
-                "description": "Used as a premium upgrade entry point.",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_premiumPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_premiumSecondary.png"
                   }
                 ]
               }
@@ -355,11 +319,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Primary",
-              "Secondary"
-            ],
+            "columns": ["Property", "Primary", "Secondary"],
             "items": [
               {
                 "title": "Active",
@@ -404,11 +364,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Primary",
-              "Secondary"
-            ],
+            "columns": ["Property", "Primary", "Secondary"],
             "items": [
               {
                 "title": "Active",
@@ -453,59 +409,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Primary",
-              "Secondary"
-            ],
-            "items": [
-              {
-                "title": "Active",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_premiumActivePrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_premiumActiveSecondary.png"
-                  }
-                ]
-              },
-              {
-                "title": "Loading",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_premiumLoadingPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_premiumLoadingSecondary.png"
-                  }
-                ]
-              },
-              {
-                "title": "Disabled",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_premiumDisabledPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_premiumDisabledSecondary.png"
-                  }
-                ],
-                "description": ""
-              }
-            ],
-            "title": "",
-            "description": "",
-            "name": "Premium"
-          },
-          {
-            "type": "table",
-            "columns": [
-              "Property",
-              "Component"
-            ],
+            "columns": ["Property", "Component"],
             "items": [
               {
                 "title": "Large",
@@ -540,10 +444,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Component"
-            ],
+            "columns": ["Property", "Component"],
             "items": [
               {
                 "title": "Icon prefix",
@@ -574,10 +475,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Component"
-            ],
+            "columns": ["Property", "Component"],
             "items": [
               {
                 "title": "Primary",
@@ -603,11 +501,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Primary",
-              "Secondary"
-            ],
+            "columns": ["Property", "Primary", "Secondary"],
             "items": [
               {
                 "title": "Main",
@@ -643,11 +537,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Primary",
-              "Secondary"
-            ],
+            "columns": ["Property", "Primary", "Secondary"],
             "items": [
               {
                 "title": "Active",
@@ -679,43 +569,6 @@
             "name": "Main"
           },
           {
-            "type": "table",
-            "columns": [
-              "Property",
-              "Primary",
-              "Secondary"
-            ],
-            "items": [
-              {
-                "title": "Active",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_presets_invertedPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_states_invertedActiveSecondary.png"
-                  }
-                ]
-              },
-              {
-                "title": "Disabled",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_states_invertedDisabledPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_states_invertedDisabledSecondary.png"
-                  }
-                ]
-              }
-            ],
-            "title": "",
-            "description": "",
-            "name": "Inverted"
-          },
-          {
             "type": "section",
             "title": "Usage Examples",
             "description": "",
@@ -732,10 +585,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Component"
-            ],
+            "columns": ["Property", "Component"],
             "items": [
               {
                 "title": "Main",
@@ -747,7 +597,7 @@
                 ]
               },
               {
-                "title": "Distructive",
+                "title": "Destructive",
                 "description": "text style: bodyBold, $textDangerLight",
                 "content": [
                   {
@@ -769,10 +619,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Component"
-            ],
+            "columns": ["Property", "Component"],
             "items": [
               {
                 "title": "Regular",
@@ -797,11 +644,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Regular",
-              "Small (bodyBoldSmall)"
-            ],
+            "columns": ["Property", "Regular", "Small (bodyBoldSmall)"],
             "items": [
               {
                 "title": "Icon prefix",
@@ -834,14 +677,11 @@
           {
             "type": "section",
             "title": "Full-Width Button",
-            "description": "Full-Width buttons are sticky on the bottom of the screens. They are usually used for primary actions on management screens, e.g. adding a new item to a list.\nThey are great to use on screens with potentially long lists, since they stick to the bottom and are always visible."
+            "description": "Full-Width buttons are sticky on the bottom of the screens.They are usually used for primary actions on management screens, e.g. adding a new item to a list.\nThey are great to use on screens with potentially long lists, since they stick to the bottom and are always visible."
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Component"
-            ],
+            "columns": ["Property", "Component"],
             "items": [
               {
                 "title": "Main",
@@ -853,7 +693,7 @@
                 ]
               },
               {
-                "title": "Distructive ",
+                "title": "Destructive ",
                 "description": "",
                 "content": [
                   {
@@ -876,10 +716,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Component"
-            ],
+            "columns": ["Property", "Component"],
             "items": [
               {
                 "title": "Active",
@@ -914,7 +751,7 @@
         ]
       },
       {
-        "title": "UX",
+        "title": "UX Guidelines",
         "sections": [
           {
             "type": "list",
@@ -939,7 +776,7 @@
               },
               {
                 "title": "Action text truncation/ellipsis",
-                "description": "Action text truncation or ellipsis should be avoided at all costs.\nActions should be clear and down to the point.  In case the action is complex, consider displaying an explanatory text outside the actual button component. ",
+                "description": "Action text truncation or ellipsis should be avoided at all costs.\nActions should be clear and down to the point. In case the action is complex, consider displaying an explanatory text outside the actual button component. ",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_UX_dosDonts_truncation.png"

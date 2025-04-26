@@ -177,6 +177,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
@@ -187,7 +193,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -632,6 +638,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
@@ -643,7 +655,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -1166,6 +1178,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={false}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
@@ -1178,7 +1196,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#D2D6D8",
@@ -1527,6 +1545,12 @@ exports[`TextField Screen renders screen 1`] = `
                   }
                 }
                 editable={true}
+                hitSlop={
+                  {
+                    "bottom": 20,
+                    "top": 20,
+                  }
+                }
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
@@ -1538,7 +1562,7 @@ exports[`TextField Screen renders screen 1`] = `
                       "flexGrow": 1,
                       "paddingBottom": 0,
                       "paddingTop": 0,
-                      "textAlign": "left",
+                      "textAlign": undefined,
                     },
                     {
                       "color": "#20303C",
@@ -1752,6 +1776,12 @@ exports[`TextField Screen renders screen 1`] = `
                   }
                 }
                 editable={true}
+                hitSlop={
+                  {
+                    "bottom": 20,
+                    "top": 20,
+                  }
+                }
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
@@ -1763,7 +1793,7 @@ exports[`TextField Screen renders screen 1`] = `
                       "flexGrow": 1,
                       "paddingBottom": 0,
                       "paddingTop": 0,
-                      "textAlign": "left",
+                      "textAlign": undefined,
                     },
                     {
                       "color": "#20303C",
@@ -2111,6 +2141,12 @@ exports[`TextField Screen renders screen 1`] = `
                   }
                 }
                 editable={true}
+                hitSlop={
+                  {
+                    "bottom": 20,
+                    "top": 20,
+                  }
+                }
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
@@ -2122,7 +2158,7 @@ exports[`TextField Screen renders screen 1`] = `
                       "flexGrow": 1,
                       "paddingBottom": 0,
                       "paddingTop": 0,
-                      "textAlign": "left",
+                      "textAlign": undefined,
                     },
                     {
                       "color": "#20303C",
@@ -2420,6 +2456,12 @@ exports[`TextField Screen renders screen 1`] = `
                   }
                 }
                 editable={true}
+                hitSlop={
+                  {
+                    "bottom": 20,
+                    "top": 20,
+                  }
+                }
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
@@ -2431,7 +2473,7 @@ exports[`TextField Screen renders screen 1`] = `
                       "flexGrow": 1,
                       "paddingBottom": 0,
                       "paddingTop": 0,
-                      "textAlign": "left",
+                      "textAlign": undefined,
                     },
                     {
                       "color": "#20303C",
@@ -2979,6 +3021,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onChangeValidity={[Function]}
@@ -2991,7 +3039,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -3317,6 +3365,12 @@ exports[`TextField Screen renders screen 1`] = `
                   }
                 }
                 editable={true}
+                hitSlop={
+                  {
+                    "bottom": 20,
+                    "top": 20,
+                  }
+                }
                 maxLength={20}
                 onBlur={[Function]}
                 onChangeText={[Function]}
@@ -3329,7 +3383,7 @@ exports[`TextField Screen renders screen 1`] = `
                       "flexGrow": 1,
                       "paddingBottom": 0,
                       "paddingTop": 0,
-                      "textAlign": "left",
+                      "textAlign": undefined,
                     },
                     {
                       "color": "#20303C",
@@ -3501,6 +3555,14 @@ exports[`TextField Screen renders screen 1`] = `
           accessible={true}
           collapsable={false}
           focusable={true}
+          hitSlop={
+            {
+              "bottom": 15,
+              "left": 0,
+              "right": 0,
+              "top": 15,
+            }
+          }
           onClick={[Function]}
           onLayout={[Function]}
           onResponderGrant={[Function]}
@@ -3739,6 +3801,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
@@ -3750,7 +3818,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -3865,7 +3933,7 @@ exports[`TextField Screen renders screen 1`] = `
                 accessible={false}
                 source={
                   {
-                    "testUri": "../../../src/assets/icons/xFlat.png",
+                    "testUri": "../../../src/assets/internal/icons/xFlat.png",
                   }
                 }
                 style={
@@ -4161,6 +4229,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               maxLength={20}
               multiline={true}
               onBlur={[Function]}
@@ -4174,7 +4248,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -4484,6 +4558,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
@@ -4495,7 +4575,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -4541,6 +4621,14 @@ exports[`TextField Screen renders screen 1`] = `
             accessible={true}
             collapsable={false}
             focusable={true}
+            hitSlop={
+              {
+                "bottom": 7.5,
+                "left": 10,
+                "right": 10,
+                "top": 7.5,
+              }
+            }
             onClick={[Function]}
             onLayout={[Function]}
             onResponderGrant={[Function]}
@@ -4776,6 +4864,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               keyboardType="numeric"
               onBlur={[Function]}
               onChangeText={[Function]}
@@ -4788,7 +4882,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -5092,6 +5186,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
@@ -5103,7 +5203,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -5825,6 +5925,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
@@ -5836,7 +5942,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -6119,6 +6225,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
@@ -6130,7 +6242,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -6442,6 +6554,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
@@ -6453,7 +6571,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -6811,6 +6929,12 @@ exports[`TextField Screen renders screen 1`] = `
                 }
               }
               editable={true}
+              hitSlop={
+                {
+                  "bottom": 20,
+                  "top": 20,
+                }
+              }
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
@@ -6822,7 +6946,7 @@ exports[`TextField Screen renders screen 1`] = `
                     "flexGrow": 1,
                     "paddingBottom": 0,
                     "paddingTop": 0,
-                    "textAlign": "left",
+                    "textAlign": undefined,
                   },
                   {
                     "color": "#20303C",
@@ -7085,6 +7209,12 @@ exports[`TextField Screen renders screen 1`] = `
                   }
                 }
                 editable={true}
+                hitSlop={
+                  {
+                    "bottom": 20,
+                    "top": 20,
+                  }
+                }
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
@@ -7096,7 +7226,7 @@ exports[`TextField Screen renders screen 1`] = `
                       "flexGrow": 1,
                       "paddingBottom": 0,
                       "paddingTop": 0,
-                      "textAlign": "left",
+                      "textAlign": undefined,
                     },
                     {
                       "color": "#20303C",
@@ -7334,6 +7464,12 @@ exports[`TextField Screen renders screen 1`] = `
                   }
                 }
                 editable={true}
+                hitSlop={
+                  {
+                    "bottom": 20,
+                    "top": 20,
+                  }
+                }
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
@@ -7345,7 +7481,7 @@ exports[`TextField Screen renders screen 1`] = `
                       "flexGrow": 1,
                       "paddingBottom": 0,
                       "paddingTop": 0,
-                      "textAlign": "left",
+                      "textAlign": undefined,
                     },
                     {
                       "color": "#20303C",
@@ -7599,6 +7735,12 @@ exports[`TextField Screen renders screen 1`] = `
                   }
                 }
                 editable={true}
+                hitSlop={
+                  {
+                    "bottom": 20,
+                    "top": 20,
+                  }
+                }
                 onBlur={[Function]}
                 onChangeText={[Function]}
                 onFocus={[Function]}
@@ -7610,7 +7752,7 @@ exports[`TextField Screen renders screen 1`] = `
                       "flexGrow": 1,
                       "paddingBottom": 0,
                       "paddingTop": 0,
-                      "textAlign": "left",
+                      "textAlign": undefined,
                     },
                     {
                       "color": "#20303C",

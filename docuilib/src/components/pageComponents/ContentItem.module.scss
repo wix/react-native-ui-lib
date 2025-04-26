@@ -1,0 +1,58 @@
+.showCodeButton {
+  position: absolute;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 4px;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  right: 4px;
+  top: 4px;
+
+  &:hover {
+    background: #eee;
+  }
+
+  img {
+    filter: grayscale(100%);
+    opacity: 0.8;
+  }
+}
+
+.blocker {
+  pointer-events: none;
+
+  &.flexed {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+  }
+
+  // Note: Extends button's (Touchable) container to match its parent width
+  button {
+    width: inherit;
+  }
+}
+
+.componentExample {
+  display: flex;
+  justify-content: space-between;
+}
+
+.componentItemContainer {
+  position: relative;
+  height: 100%;
+}
+
+.componentSpotlightStyle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

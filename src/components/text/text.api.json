@@ -25,5 +25,22 @@
     {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag"},
     {"name": "animated", "type": "boolean", "description": "Use Animated.Text as a container"}
   ],
-  "snippet": ["<Text text30$1>Text goes here$2</Text>"]
+  "snippet": [
+    "<View flex center gap-s2>",
+    "<Text text30$1>Text30</Text>",
+    "<Text text40 red30>Red</Text>",
+    "<Text text60 uppercase>uppercase</Text>",
+    "<Text text60 underline>underline</Text>",
+    "<Text text70 highlightString='be' highlightStyle={{color: Colors.$textPrimary, fontWeight: 'bold'}}>To be, or not to be</Text>",
+    "</View>"
+  ],
+  "docs": {
+    "hero": {
+      "title": "Text",
+      "description": "An enhanced version of React Native's Text component providing additional features and modifiers support",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [{}]
+    }
+  }
 }

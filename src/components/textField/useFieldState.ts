@@ -65,9 +65,9 @@ export default function useFieldState({
 
       if (validateOnChange) {
         if (validationDebounceTime) {
-          debouncedValidateField(propsValue);
+          debouncedValidateField(propsValue ?? '');
         } else {
-          validateField(propsValue);
+          validateField(propsValue ?? '');
         }
       }
     }
