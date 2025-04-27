@@ -91,132 +91,20 @@
   "docs": {
     "hero": {
       "title": "Switch",
-      "description": "Use switches to toggle a single option on or off, activate or deactivate, and switch between two different states.  \n\nConsider using switch instead of checkbox, when appropriate. \nConsider using switch instead of radio buttons if there’s only two  options to choose from. ",
-      "type": "hero",
-      "layout": "horizontal",
-      "content": [
-        {
-          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_preview.png"
-        }
-      ]
+      "description": ""
     },
     "tabs": [
       {
-        "title": "Overview",
+        "title": "UX Guidelines",
         "sections": [
           {
-            "type": "table",
-            "columns": [
-              "Property",
-              "Preview"
-            ],
-            "items": [
+            "type": "section",
+            "content": [
               {
-                "title": "Default",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_style_default.png"
-                  }
-                ]
-              },
-              {
-                "title": "Light",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_style_light.png"
-                  }
-                ]
+                "value": "https://embed.figma.com/design/Krv1pLl7kq2L52vMRwd498/MADS-Guidelines?node-id=22898-777577&embed-host=share",
+                "height": 1600
               }
-            ],
-            "title": "Styles",
-            "description": ""
-          },
-          {
-            "type": "table",
-            "columns": [
-              "Property",
-              "Default Style",
-              "Light Style"
-            ],
-            "items": [
-              {
-                "title": "ON",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_default_on.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_light_on.png"
-                  }
-                ]
-              },
-              {
-                "title": "OFF",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_default_off.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_light_off.png"
-                  }
-                ]
-              },
-              {
-                "title": "Disabled ON",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_default_disabledOn.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_light_disabledOn.png"
-                  }
-                ]
-              },
-              {
-                "title": "Disabled OFF",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_default_disabledOff.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_light_disabledOff.png"
-                  }
-                ]
-              }
-            ],
-            "title": "States",
-            "description": ""
-          },
-          {
-            "type": "list",
-            "items": [
-              {
-                "title": "",
-                "description": "markdown: \n### Size  \nOne size ",
-                "content": [
-                  {
-                    "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Docs-Assets?node-id=52-7459&embed-host=share"
-                  }
-                ]
-              },
-              {
-                "title": "",
-                "description": "markdown: \n### Haptic  \nHaptic is played on tap.\nHaptic preset: [impactMedium]",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_spec_haptic.png"
-                  }
-                ]
-              }
-            ],
-            "layout": "horizontal",
-            "title": "Spec"
+            ]
           }
         ]
       }

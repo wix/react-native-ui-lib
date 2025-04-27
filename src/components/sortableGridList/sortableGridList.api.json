@@ -3,7 +3,9 @@
   "category": "lists",
   "description": "An sortable grid list (based on GridList component)",
   "note": "This component supports square items only",
-  "extends": ["lists/GridList"],
+  "extends": [
+    "lists/GridList"
+  ],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SortableGridListScreen.tsx",
   "props": [
     {
@@ -12,7 +14,11 @@
       "note": "Do not update 'data' in 'onOrderChange' (i.e. for each order change); only update it when you change the items (i.g. adding and removing an item).",
       "description": "Data of items with an id prop as unique identifier"
     },
-    {"name": "renderItem", "type": "FlatListProps['renderItem']", "description": "Custom render item callback"},
+    {
+      "name": "renderItem",
+      "type": "FlatListProps['renderItem']",
+      "description": "Custom render item callback"
+    },
     {
       "name": "onOrderChange",
       "type": "(newData: T[], newOrder: ItemsOrder) => void",
@@ -73,5 +79,27 @@
     "      </View>",
     "  );",
     "}"
-  ]
+  ],
+  "docs": {
+    "hero": {
+      "title": "SortableGridList",
+      "description": ""
+    },
+    "tabs": [
+      {
+        "title": "UX Guidelines",
+        "sections": [
+          {
+            "type": "section",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/Krv1pLl7kq2L52vMRwd498/MADS-Guidelines?node-id=16685-543834&embed-host=share",
+                "height": 1600
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }
