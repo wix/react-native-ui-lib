@@ -132,8 +132,7 @@
   ],
   "docs": {
     "hero": {
-      "title": "Drawer",
-      "description": ""
+      "title": "Drawer"
     },
     "tabs": [
       {

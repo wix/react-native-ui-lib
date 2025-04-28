@@ -65,8 +65,7 @@
   ],
   "docs": {
     "hero": {
-      "title": "NumberInput",
-      "description": ""
+      "title": "NumberInput"
     },
     "tabs": [
       {

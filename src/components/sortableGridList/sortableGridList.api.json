@@ -82,8 +82,7 @@
   ],
   "docs": {
     "hero": {
-      "title": "SortableGridList",
-      "description": ""
+      "title": "SortableGridList"
     },
     "tabs": [
       {
