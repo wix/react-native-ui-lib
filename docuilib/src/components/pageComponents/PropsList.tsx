@@ -81,7 +81,6 @@ export const PropsList = ({props}) => {
                 fontSize: '16px',
                 fontWeight: '400',
                 backgroundColor: '#F0F2F5',
-                // padding top/bottom 24px, left/right 40px
                 padding: '24px 40px',
                 borderRadius: '8px'
               }}
