@@ -30,7 +30,8 @@
   ],
   "docs": {
     "hero": {
-      "title": "PieChart"
+      "title": "PieChart",
+      "description": "Pie Chart"
     },
     "tabs": [
       {

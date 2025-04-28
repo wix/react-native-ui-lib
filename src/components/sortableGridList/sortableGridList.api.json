@@ -82,7 +82,8 @@
   ],
   "docs": {
     "hero": {
-      "title": "SortableGridList"
+      "title": "SortableGridList",
+      "description": "An sortable grid list (based on GridList component)"
     },
     "tabs": [
       {

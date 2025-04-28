@@ -65,7 +65,8 @@
   ],
   "docs": {
     "hero": {
-      "title": "NumberInput"
+      "title": "NumberInput",
+      "description": "Number Input to create an input with a formatted number"
     },
     "tabs": [
       {

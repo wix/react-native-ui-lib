@@ -97,7 +97,8 @@
   ],
   "docs": {
     "hero": {
-      "title": "Image"
+      "title": "Image",
+      "description": "Image wrapper with extra functionality like source transform and assets support"
     },
     "tabs": [
       {

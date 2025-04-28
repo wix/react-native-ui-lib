@@ -42,7 +42,8 @@
   ],
   "docs": {
     "hero": {
-      "title": "ChipsInput"
+      "title": "ChipsInput",
+      "description": "A chips input"
     },
     "tabs": [
       {

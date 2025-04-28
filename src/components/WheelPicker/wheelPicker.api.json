@@ -100,7 +100,8 @@
   ],
   "docs": {
     "hero": {
-      "title": "WheelPicker"
+      "title": "WheelPicker",
+      "description": "A customizable WheelPicker component"
     },
     "tabs": [
       {
