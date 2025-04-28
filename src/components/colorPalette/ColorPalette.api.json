@@ -79,11 +79,18 @@
     }
   ],
   "snippet": [
-    "<ColorPalette",
-    " colors={['transparent', Colors.green30, Colors.yellow30, Colors.red30]$1}",
-    " value={selectedColor$2}",
-    " onValueChange={() => console.log('value changed')$3}",
-    "/>"
+    "function Example(props) {",
+    "  const [value, setValue] = useState(Colors.yellow30);",
+    "  return (",
+    "    <View flex padding-s5 gap-s4>",
+    "      <ColorPalette",
+    "        colors={['transparent', Colors.green30, Colors.yellow30, Colors.red30]}",
+    "        value={value}",
+    "        onValueChange={setValue}",
+    "      />",
+    "    </View>",
+    "  );",
+    "}"
   ],
   "docs": {
     "hero": {
