@@ -78,12 +78,12 @@ export const PropsList = ({props}) => {
               style={{
                 display: 'block',
                 marginBottom: 28,
-                fontFamily: 'monospace',
-                fontSize: '14',
-                fontWeight: '600',
-                backgroundColor: '#D2D6D8',
-                padding: '10px',
-                borderRadius: '4px'
+                fontSize: '16px',
+                fontWeight: '400',
+                backgroundColor: '#F0F2F5',
+                // padding top/bottom 24px, left/right 40px
+                padding: '24px 40px',
+                borderRadius: '8px'
               }}
             >
               {prop.note}
