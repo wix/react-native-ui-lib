@@ -4,8 +4,7 @@ import ReactHtmlParser from 'react-html-parser';
 import {isComponentSupported} from '../../utils/componentUtils';
 import '../ComponentPage.module.scss';
 
-
-export const SectionHeader = ({section, component}) => {
+export const SectionHeader = ({section, component, isListHeader = false}) => {
   const {title, description, type} = section;
 
   const getTitleSize = type => {
@@ -20,7 +19,7 @@ export const SectionHeader = ({section, component}) => {
   };
 
   const getTitleWeight = type => {
-    return type === 'item' ? '400' : '700';
+    return type === 'item' ? '400' : isListHeader ? '700' : '500';
   };
 
   const getDescriptionColor = type => {
@@ -63,7 +62,7 @@ export const SectionHeader = ({section, component}) => {
   const getTitle = (type, title) => {
     const size = getTitleSize(type);
     const weight = getTitleWeight(type);
-    return <span style={{fontSize: size, fontWeight: weight}}>{title}</span>;
+    return <span style={{fontSize: size, fontWeight: weight, marginBottom: '20px'}}>{title}</span>;
   };
 
   const desColor = getDescriptionColor(type);

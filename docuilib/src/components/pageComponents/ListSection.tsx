@@ -13,7 +13,7 @@ export const ListSection = ({section, component}) => {
     };
 
     return (
-      <div className="column" style={{marginBottom: isLast ? 0 : 40}}>
+      <div className="column" style={{marginBottom: isLast ? 0 : 20}}>
         <Section section={section} component={component}/>
       </div>
     );
@@ -21,7 +21,7 @@ export const ListSection = ({section, component}) => {
 
   const getList = () => {
     const items = section.items;
-  
+
     return _.map(items, (item, index: number) => {
       const isLast = index === items.length - 1;
       return getListItem(item, isLast, section.layout);
@@ -31,7 +31,7 @@ export const ListSection = ({section, component}) => {
   // return <div>{getList()}</div>;
   return (
     <div className="column">
-      <SectionHeader section={section} component={component}/>
+      <SectionHeader section={section} component={component} isListHeader/>
       {getList()}
     </div>
   );
