@@ -16,7 +16,9 @@ interface DrawerItemProps {
   width?: number;
   background?: string;
   text?: string;
+  textColor?: string;
   icon?: number;
+  iconColor?: string;
   onPress?: Function;
   keepOpen?: boolean;
   style?: ViewStyle;
@@ -347,7 +349,7 @@ class Drawer extends PureComponent<DrawerProps> {
               {
                 width: itemsIconSize,
                 height: itemsIconSize,
-                tintColor: itemsTintColor,
+                tintColor: item.iconColor || itemsTintColor,
                 opacity,
                 transform: [{scale}]
               }
@@ -359,7 +361,7 @@ class Drawer extends PureComponent<DrawerProps> {
             style={[
               styles.actionText,
               {
-                color: itemsTintColor,
+                color: item.textColor || itemsTintColor,
                 opacity,
                 transform: [{scale}]
               },

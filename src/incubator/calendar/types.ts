@@ -129,7 +129,6 @@ export interface CalendarProps {
 export interface AgendaProps {
   renderEvent?: (event: Event) => React.ReactElement | null;
   renderHeader?: (header: DateSectionHeader) => React.ReactElement | null;
-  itemHeight?: number;
   showLoader?: boolean;
   onEndReached?: (date: number) => void;
   // Type: list(events)/timeline
