@@ -121,8 +121,8 @@
                 "description": "",
                 "content": [
                   {
-                    "background": "#20303C",
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_style_light.png"
+                    "background": "#A6ACB1",
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Switch/SwitchLight.png"
                   }
                 ]
               }
@@ -146,8 +146,8 @@
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_default_on.png"
                   },
                   {
-                    "background": "#20303C",
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_light_on.png"
+                    "background": "#A6ACB1",
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Switch/SwitchLight.png"
                   }
                 ]
               },
@@ -159,8 +159,8 @@
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_default_off.png"
                   },
                   {
-                    "background": "#20303C",
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_light_off.png"
+                    "background": "#A6ACB1",
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Switch/SwitchLightOff.png"
                   }
                 ]
               },
@@ -172,8 +172,8 @@
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_default_disabledOn.png"
                   },
                   {
-                    "background": "#20303C",
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_light_disabledOn.png"
+                    "background": "#A6ACB1",
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Switch/SwitchLightDisabled.png"
                   }
                 ]
               },
@@ -185,8 +185,8 @@
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_default_disabledOff.png"
                   },
                   {
-                    "background": "#20303C",
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_light_disabledOff.png"
+                    "background": "#A6ACB1",
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Switch/SwitchLightDisabledOff.png"
                   }
                 ]
               }
