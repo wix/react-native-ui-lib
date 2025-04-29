@@ -81,17 +81,13 @@
   "snippet": [
     "function Example(props) {",
     "  const [value, setValue] = useState(false$1);",
-    "  return (",
-    "    <div>",
-    "      <Switch value={value$2} onValueChange={setValue$3}/>",
-    "    </div>",
-    "  );",
+    "  return <Switch margin-20 value={value$2} onValueChange={setValue$3}/>;",
     "}"
   ],
   "docs": {
     "hero": {
       "title": "Switch",
-      "description": "Use switches to toggle a single option on or off, activate or deactivate, and switch between two different states.  \n\nConsider using switch instead of checkbox, when appropriate. \nConsider using switch instead of radio buttons if there’s only two  options to choose from. ",
+      "description": "Use switches to toggle a single option on or off, activate or deactivate, and switch between two different states. \n\nConsider using switch instead of checkbox, when appropriate. \nConsider using switch instead of radio buttons if there’s only two  options to choose from. ",
       "type": "hero",
       "layout": "horizontal",
       "content": [
@@ -125,6 +121,7 @@
                 "description": "",
                 "content": [
                   {
+                    "background": "#20303C",
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_style_light.png"
                   }
                 ]
@@ -149,6 +146,7 @@
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_default_on.png"
                   },
                   {
+                    "background": "#20303C",
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_light_on.png"
                   }
                 ]
@@ -161,6 +159,7 @@
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_default_off.png"
                   },
                   {
+                    "background": "#20303C",
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_light_off.png"
                   }
                 ]
@@ -173,6 +172,7 @@
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_default_disabledOn.png"
                   },
                   {
+                    "background": "#20303C",
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_light_disabledOn.png"
                   }
                 ]
@@ -185,6 +185,7 @@
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_default_disabledOff.png"
                   },
                   {
+                    "background": "#20303C",
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_light_disabledOff.png"
                   }
                 ]
@@ -197,17 +198,21 @@
             "type": "list",
             "items": [
               {
-                "title": "",
-                "description": "markdown: \n### Size  \nOne size ",
+                "title": "Size",
+                "description": "Currently, only one size available for the ToggleSwitch.",
                 "content": [
                   {
-                    "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Docs-Assets?node-id=52-7459&embed-host=share"
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Switch/switch_overview_spec_size.png"
                   }
                 ]
               },
               {
-                "title": "",
-                "description": "markdown: \n### Haptic  \nHaptic is played on tap.\nHaptic preset: [impactMedium]",
+                "title": "Colors",
+                "description": "markdown:<b>ON</b><br>Background color: $backgroundPrimaryHeavy<br>Knob color: $iconDefaultLight<br><b>OFF</b><br>Background color: $backgroundNeutralHeavy<br>Knob color: $iconDefaultLight<br><b>Disabled</b><br>Background color: $backgroundDisabled<br>Knob color: $iconDefaultLight"
+              },
+              {
+                "title": "Haptic ",
+                "description": "Haptic is played on tap. Haptic preset: [impactMedium]",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_spec_haptic.png"
