@@ -51,7 +51,7 @@ export type Layout = {
   height: number;
 };
 
-export type TimelineProps = PropsWithChildren<{
+export type TimelineProps = & PropsWithChildren< {
   topLine?: LineProps;
   bottomLine?: LineProps;
   point?: PointProps;
