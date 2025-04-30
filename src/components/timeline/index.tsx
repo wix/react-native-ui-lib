@@ -20,7 +20,7 @@ const ENTRY_POINT_HEIGHT = 2;
 
 const Timeline = (props: TimelineProps) => {
   const themeProps = useThemeProps(props, 'Timeline');
-  const {topLine, bottomLine, point, children} = themeProps;
+  const {topLine, bottomLine, point, children, testID} = themeProps;
   const [anchorMeasurements, setAnchorMeasurements] = useState<Layout | undefined>();
   const [contentContainerMeasurements, setContentContainerMeasurements] = useState<Layout | undefined>();
   const [pointMeasurements, setPointMeasurements] = useState<Layout | undefined>();
@@ -96,6 +96,7 @@ const Timeline = (props: TimelineProps) => {
   const renderTopLine = () => {
     return (
       <Line
+        testID={`${testID}.topLine`}
         {...topLine}
         top
         style={topLineStyle}
@@ -108,6 +109,7 @@ const Timeline = (props: TimelineProps) => {
     if (bottomLine) {
       return (
         <Line
+          testID={`${testID}.bottomLine`}
           {...bottomLine}
           style={styles.bottomLine}
           color={bottomLine?.color || getStateColor(bottomLine?.state)}
@@ -117,10 +119,15 @@ const Timeline = (props: TimelineProps) => {
   };
 
   return (
-    <View row style={containerStyle}>
-      <View style={styles.timelineContainer}>
+    <View row style={containerStyle} testID={testID}>
+      <View style={styles.timelineContainer} testID={`${testID}.timelineContainer`}>
         {renderTopLine()}
-        <Point {...point} onLayout={onPointLayout} color={point?.color || getStateColor(point?.state)}/>
+        <Point
+          {...point}
+          onLayout={onPointLayout}
+          color={point?.color || getStateColor(point?.state)}
+          testID={`${testID}.point`}
+        />
         {renderBottomLine()}
       </View>
       <View style={styles.contentContainer} onLayout={onContentContainerLayout} ref={contentContainerRef}>
@@ -135,7 +142,6 @@ Timeline.displayName = 'Timeline';
 Timeline.states = StateTypes;
 Timeline.lineTypes = LineTypes;
 Timeline.pointTypes = PointTypes;
-
 
 const styles = StyleSheet.create({
   container: {
