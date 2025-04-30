@@ -100,10 +100,10 @@
   ],
   "snippet": [
     "<Incubator.Slider",
-    "  value={0$1}",
-    "  minimumValue={0$2}",
-    "  maximumValue={10$3}",
-    "  onValueChange={value => console.log(\\`value changed: \\${value}\\`)$4}",
+    "  value={0}",
+    "  minimumValue={0}",
+    "  maximumValue={10}",
+    "  onValueChange={value => console.log(\\`value changed: \\${value}\\`)}",
     "/>"
   ],
   "docs": {
@@ -187,7 +187,7 @@
               }
             ],
             "title": "Spec",
-            "description": "**Linear slider**\n\n**Default**\nThumb: 24px  \nOutline: 1.5px\n\n**On tap**\nThumb: 40px\nOutline: 1.5px\n\n**Disabled**"
+            "description": "markdown:  **Linear slider**\n\n**Default**\nThumb: 24px  \nOutline: 1.5px\n\n**On tap**\nThumb: 40px\nOutline: 1.5px\n\n**Disabled**"
           },
           {
             "type": "section",
@@ -197,7 +197,7 @@
                 "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Slider/slider_spec_range.png"
               }
             ],
-            "description": "**Range slider**\n\n**Initial state**\nWidest range is displayed by default.\n\n**Thumbs**\nThumbs should not cross each other and keep minimum distance between them of S2 (8px). Thumbs shouldn’t overlap each other when idle.\n\n**Spacing**\nMinimum spacing between idle Thumbs - S2"
+            "description": "markdown:  **Range slider**\n\n**Initial state**\nWidest range is displayed by default.\n\n**Thumbs**\nThumbs should not cross each other and keep minimum distance between them of S2 (8px). Thumbs shouldn’t overlap each other when idle.\n\n**Spacing**\nMinimum spacing between idle Thumbs - S2"
           }
         ]
       }

@@ -73,7 +73,20 @@ export const PropsList = ({props}) => {
             {defaultValue}
           </span>
           {prop.note && (
-            <span key={`${props.name}-note`} style={{display: 'block', marginBottom: 28, fontSize: '16px', fontWeight: '700'}}>{prop.note}</span>
+            <span
+              key={`${props.name}-note`}
+              style={{
+                display: 'block',
+                marginBottom: 28,
+                fontSize: '16px',
+                fontWeight: '400',
+                backgroundColor: '#F0F2F5',
+                padding: '24px 40px',
+                borderRadius: '8px'
+              }}
+            >
+              {prop.note}
+            </span>
           )}
         </>
       );

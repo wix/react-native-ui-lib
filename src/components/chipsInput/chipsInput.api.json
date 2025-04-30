@@ -2,12 +2,22 @@
   "name": "ChipsInput",
   "category": "form",
   "description": "A chips input",
-  "extends": ["form/TextField"],
-  "modifiers": ["margin", "color", "typography"],
+  "extends": [
+    "form/TextField"
+  ],
+  "modifiers": [
+    "margin",
+    "color",
+    "typography"
+  ],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ChipsInputScreen.tsx",
   "images": [],
   "props": [
-    {"name": "chips", "type": "ChipProps[]", "description": "List of chips to render"},
+    {
+      "name": "chips",
+      "type": "ChipProps[]",
+      "description": "List of chips to render"
+    },
     {
       "name": "defaultChipProps",
       "type": "ChipProps",
@@ -18,12 +28,48 @@
       "type": "(newChips, changeReason, updatedChip) => void",
       "description": "Callback for chips change (adding or removing chip)"
     },
-    {"name": "maxChips", "type": "number", "description": "The maximum chips to allow adding"}
+    {
+      "name": "maxChips",
+      "type": "number",
+      "description": "The maximum chips to allow adding"
+    }
   ],
   "snippet": [
-    "<ChipsInput",
-    "  placeholder={'Placeholder'$1}",
-    "  chips={[{label: 'Falcon 9'}, {label: 'Enterprise'}, {label: 'Challenger', borderRadius: 0}]$2}",
-    "/>"
-  ]
+    "function Example(props) {",
+    "  const [chips, setChips] = useState([{label: 'Falcon 9'}, {label: 'Enterprise'}]);",
+  
+    "  return (",
+    "    <View flex padding-s5>",
+    "      <ChipsInput",
+    "        onChange={setChips}",
+    "        placeholder={'Placeholder'}",
+    "        defaultChipProps={{borderRadius: 0}}",
+    "        chips={chips}",
+    "      />",
+    "    </View>",
+    "  );",
+    "}"
+  ],
+  "docs": {
+    "hero": {
+      "title": "ChipsInput",
+      "description": "A chips input"
+    },
+    "tabs": [
+      {
+        "title": "UX Guidelines",
+        "sections": [
+          {
+            "type": "section",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/Krv1pLl7kq2L52vMRwd498/MADS-Guidelines?node-id=13-114418&embed-host=share",
+                "height": 1600
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }

@@ -6,16 +6,58 @@
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/WheelPickerScreen.tsx",
   "images": [],
   "props": [
-    {"name": "initialValue", "type": "number | string", "description": "Initial value (uncontrolled)"},
-    {"name": "items", "type": "WheelPickerItemProps[]", "description": "Data source for WheelPicker"},
-    {"name": "itemHeight", "type": "number", "description": "Height of each item in the WheelPicker", "default": "44"},
-    {"name": "numberOfVisibleRows", "type": "number", "description": "Number of rows visible", "default": "5"},
-    {"name": "activeTextColor", "type": "string", "description": "Text color for the focused row"},
-    {"name": "inactiveTextColor", "type": "string", "description": "Text color for other, non-focused rows"},
-    {"name": "textStyle", "type": "TextStyle", "description": "Row text custom style"},
-    {"name": "label", "type": "string", "description": "Additional label to render next to the items text"},
-    {"name": "labelStyle", "type": "TextStyle", "description": "Additional label's style"},
-    {"name": "labelProps", "type": "TextProps", "description": "Additional label's props"},
+    {
+      "name": "initialValue",
+      "type": "number | string",
+      "description": "Initial value (uncontrolled)"
+    },
+    {
+      "name": "items",
+      "type": "WheelPickerItemProps[]",
+      "description": "Data source for WheelPicker"
+    },
+    {
+      "name": "itemHeight",
+      "type": "number",
+      "description": "Height of each item in the WheelPicker",
+      "default": "44"
+    },
+    {
+      "name": "numberOfVisibleRows",
+      "type": "number",
+      "description": "Number of rows visible",
+      "default": "5"
+    },
+    {
+      "name": "activeTextColor",
+      "type": "string",
+      "description": "Text color for the focused row"
+    },
+    {
+      "name": "inactiveTextColor",
+      "type": "string",
+      "description": "Text color for other, non-focused rows"
+    },
+    {
+      "name": "textStyle",
+      "type": "TextStyle",
+      "description": "Row text custom style"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "description": "Additional label to render next to the items text"
+    },
+    {
+      "name": "labelStyle",
+      "type": "TextStyle",
+      "description": "Additional label's style"
+    },
+    {
+      "name": "labelProps",
+      "type": "TextProps",
+      "description": "Additional label's props"
+    },
     {
       "name": "onChange",
       "type": "(item: string | number, index: number) => void",
@@ -33,8 +75,16 @@
       "description": "Align the content to center, right ot left",
       "default": "center"
     },
-    {"name": "separatorsStyle", "type": "ViewStyle", "description": "Extra style for the separators"},
-    {"name": "testID", "type": "string", "description": "test identifier"},
+    {
+      "name": "separatorsStyle",
+      "type": "ViewStyle",
+      "description": "Extra style for the separators"
+    },
+    {
+      "name": "testID",
+      "type": "string",
+      "description": "test identifier"
+    },
     {
       "name": "flatListProps",
       "type": "FlatListProps",
@@ -47,5 +97,27 @@
     "  initialValue={'yes'$2}",
     "  onChange={() => console.log('changed')$3}",
     "/>"
-  ]
+  ],
+  "docs": {
+    "hero": {
+      "title": "WheelPicker",
+      "description": "A customizable WheelPicker component"
+    },
+    "tabs": [
+      {
+        "title": "UX Guidelines",
+        "sections": [
+          {
+            "type": "section",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/Krv1pLl7kq2L52vMRwd498/MADS-Guidelines?node-id=13-134250&embed-host=share",
+                "height": 1600
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }
