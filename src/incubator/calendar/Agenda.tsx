@@ -1,9 +1,10 @@
-import React, {useContext, useCallback, useRef} from 'react';
+import React, {useContext, useCallback, useRef, useState} from 'react';
 import {ActivityIndicator, StyleSheet} from 'react-native';
 import {runOnJS, useAnimatedReaction, useSharedValue} from 'react-native-reanimated';
 import {FlashListPackage} from 'optionalDeps';
 import type {FlashList as FlashListType, ViewToken} from '@shopify/flash-list';
 import {BorderRadiuses, Colors} from 'style';
+import {useDidUpdate} from 'hooks';
 import View from '../../components/view';
 import Text from '../../components/text';
 import {isSameDay, isSameMonth} from './helpers/DateUtils';
@@ -12,29 +13,39 @@ import CalendarContext from './CalendarContext';
 
 const FlashList = FlashListPackage?.FlashList;
 
-// TODO: Fix initial scrolling
 function Agenda(props: AgendaProps) {
-  const {renderEvent, renderHeader, itemHeight = 50, onEndReached, showLoader} = props;
+  const {renderEvent, renderHeader, onEndReached, showLoader} = props;
   const {data, selectedDate, setDate, updateSource} = useContext(CalendarContext);
   const flashList = useRef<FlashListType<InternalEvent>>(null);
   const closestSectionHeader = useSharedValue<DateSectionHeader | null>(null);
   const scrolledByUser = useSharedValue<boolean>(false);
+  const [stickyHeaderIndices, setStickyHeaderIndices] = useState<number[]>([]);
+  const lastDateBeforeLoadingNewEvents = useSharedValue<number>(selectedDate.value);
 
   /* const keyExtractor = useCallback((item: InternalEvent) => {
     return item.type === 'Event' ? item.id : item.header;
   }, []); */
 
+  useDidUpdate(() => {
+    const result = findClosestDateAfter(lastDateBeforeLoadingNewEvents.value);
+    if (result?.index) {
+      setTimeout(() => scrollToIndex(result?.index, false), 200);
+    }
+
+    const headerIndices = data
+      .map((e, index) => (e.type === 'Header' ? index : undefined))
+      .filter(i => i !== undefined);
+    // @ts-expect-error
+    setStickyHeaderIndices(headerIndices);
+  }, [data]);
+
   const _renderEvent = useCallback((eventItem: Event) => {
     if (renderEvent) {
-      return (
-        <View height={itemHeight} style={styles.eventContainer}>
-          {renderEvent(eventItem)}
-        </View>
-      );
+      return <View style={styles.eventContainer}>{renderEvent(eventItem)}</View>;
     }
 
     return (
-      <View marginV-1 marginH-10 paddingH-10 height={itemHeight} centerV style={styles.event}>
+      <View marginV-1 marginH-10 paddingH-10 centerV style={styles.event}>
         <Text>
           Item for
           {new Date(eventItem.start).toLocaleString('en-GB', {
@@ -49,20 +60,20 @@ function Agenda(props: AgendaProps) {
       </View>
     );
   },
-  [renderEvent, itemHeight]);
+  [renderEvent]);
 
   const _renderHeader = useCallback((headerItem: DateSectionHeader) => {
     if (renderHeader) {
-      return <View height={itemHeight}>{renderHeader(headerItem)}</View>;
+      return <View>{renderHeader(headerItem)}</View>;
     }
 
     return (
-      <View bottom marginB-5 marginH-20 height={itemHeight}>
+      <View bg-$backgroundDefault bottom marginB-5 marginH-20>
         <Text>{headerItem.header}</Text>
       </View>
     );
   },
-  [renderHeader, itemHeight]);
+  [renderHeader]);
 
   const renderItem = useCallback(({item}: {item: InternalEvent; index: number}) => {
     switch (item.type) {
@@ -114,6 +125,10 @@ function Agenda(props: AgendaProps) {
             const _isSameMonth = isSameMonth(selected, previous);
             runOnJS(scrollToIndex)(index, _isSameMonth);
           }
+        } else {
+          // Note: We got here because we are missing future agenda events to scroll to.
+          // therefor we should expect and new events data load
+          lastDateBeforeLoadingNewEvents.value = selectedDate.value;
         }
       }
     }
@@ -146,6 +161,7 @@ function Agenda(props: AgendaProps) {
   }, []);
 
   const _onEndReached = useCallback(() => {
+    lastDateBeforeLoadingNewEvents.value = selectedDate.value;
     onEndReached?.(selectedDate.value);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onEndReached]);
@@ -160,6 +176,7 @@ function Agenda(props: AgendaProps) {
         // keyExtractor={keyExtractor}
         renderItem={renderItem}
         getItemType={getItemType}
+        stickyHeaderIndices={stickyHeaderIndices}
         onViewableItemsChanged={onViewableItemsChanged}
         onMomentumScrollBegin={onMomentumScrollBegin}
         onScrollBeginDrag={onScrollBeginDrag}
