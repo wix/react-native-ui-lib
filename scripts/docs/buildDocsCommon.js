@@ -28,7 +28,8 @@ const VALID_COMPONENTS_CATEGORIES = [
   'infra',
   // non components categories
   'services',
-  'dev' // development category for components we don't want to render in our docs (used in test.api.json)
+  'dev', // development category for components we don't want to render in our docs (used in test.api.json),
+  'composite'
 ];
 
 function buildDocs(apiFolders, componentsPreProcess) {
