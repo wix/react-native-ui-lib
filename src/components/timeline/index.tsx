@@ -120,7 +120,7 @@ const Timeline = (props: TimelineProps) => {
 
   return (
     <View row style={containerStyle} testID={testID}>
-      <View style={styles.timelineContainer} testID={`${testID}.timelineContainer`}>
+      <View style={styles.timelineContainer}>
         {renderTopLine()}
         <Point
           {...point}
