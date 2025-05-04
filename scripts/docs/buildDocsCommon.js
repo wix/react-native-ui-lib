@@ -7,6 +7,7 @@ const fs = require('fs');
 
 const COMPONENTS_DOCS_DIR = './docs/components';
 const SERVICES_DOCS_DIR = './docs/services';
+const COMPOSITE_DOCS_DIR = './docs/composite';
 const FOUNDATION_DOCS_DIR = './docs/foundation';
 
 const VALID_COMPONENTS_CATEGORIES = [
@@ -27,7 +28,8 @@ const VALID_COMPONENTS_CATEGORIES = [
   'infra',
   // non components categories
   'services',
-  'dev' // development category for components we don't want to render in our docs (used in test.api.json)
+  'dev', // development category for components we don't want to render in our docs (used in test.api.json),
+  'composite'
 ];
 
 function buildDocs(apiFolders, componentsPreProcess) {
@@ -95,6 +97,10 @@ function processComponents(components) {
 
     let dirPath;
     switch (component.category) {
+      case 'composite': {
+        dirPath = `${COMPOSITE_DOCS_DIR}`;
+        break;
+      }
       case 'services': {
         dirPath = `${SERVICES_DOCS_DIR}`;
         break;
