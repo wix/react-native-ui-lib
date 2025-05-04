@@ -44,7 +44,7 @@ export default class TextInputKeyboardManager {
 }
 
 function findNodeHandle(ref: any) {
-  return ReactNative.findNodeHandle(ref.current || ref);
+  return ref.current?.getNodeHandle?.() || ref?.getNodeHandle?.() || ReactNative.findNodeHandle(ref.current || ref);
 }
 
 const springAnimation = {
