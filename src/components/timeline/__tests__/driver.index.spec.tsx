@@ -5,6 +5,7 @@ import {TimelineProps} from '../types';
 import Timeline from '../index';
 import Text from '../../text';
 import Assets from '../../../assets';
+import Colors from '../../../style/colors';
 
 const testID = 'test-timeline';
 const labelContent = 2;
@@ -62,6 +63,32 @@ describe('Timeline', () => {
 
       expect(topLineColor).toEqual('#f13acb');
       expect(bottomLineColor).toEqual('#ef115d');
+    });
+  });
+
+  describe('Point', () => {
+    it('should render Point with custom background color', () => {
+      const timelineProps = {
+        testID,
+        point: {icon: defaultIcon, color: '#f13acb'}
+      };
+      const {timelineDriver} = getDriver(timelineProps);
+      expect(timelineDriver.getPoint().exists()).toBeTruthy();
+
+      const pointStyle = timelineDriver.getPoint().getStyle();
+      expect(pointStyle.backgroundColor).toEqual('#f13acb');
+    });
+
+    it('should render Point with background color based on State', () => {
+      const timelineProps = {
+        testID,
+        point: {icon: defaultIcon, state: Timeline.states.CURRENT}
+      };
+      const {timelineDriver} = getDriver(timelineProps);
+      expect(timelineDriver.getPoint().exists()).toBeTruthy();
+
+      const pointStyle = timelineDriver.getPoint().getStyle();
+      expect(pointStyle.backgroundColor).toEqual(Colors.$backgroundPrimaryHeavy);
     });
   });
 });

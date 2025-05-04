@@ -7,6 +7,11 @@ import {ViewDriver} from '../view/View.driver.new';
 export const TimelineDriver = (props: ComponentProps) => {
   const driver = useComponentDriver(props);
 
+  const pointDriver = ViewDriver({
+    renderTree: props.renderTree,
+    testID: `${props.testID}.point.container`
+  });
+
   const labelDriver = TextDriver({
     renderTree: props.renderTree,
     testID: `${props.testID}.point.label`
@@ -71,6 +76,16 @@ export const TimelineDriver = (props: ComponentProps) => {
     return {exists, getIconSource, getIconStyle};
   };
 
+  const getPoint = () => {
+    const exists = (): boolean => {
+      return pointDriver.exists();
+    };
+    const getStyle = () => {
+      return StyleSheet.flatten(pointDriver.getElement().props.style);
+    };
+    return {exists, getStyle};
+  };
+
   const getTopLine = () => {
     const exists = (): boolean => {
       return solidTopLineDriver.exists() || dashedTopLineDriver.exists();
@@ -107,6 +122,7 @@ export const TimelineDriver = (props: ComponentProps) => {
 
   return {
     ...driver,
+    getPoint,
     getLabel,
     getIcon,
     getTopLine,
