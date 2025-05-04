@@ -10,6 +10,7 @@ const ENTRY_POINT_HEIGHT = 2;
 type LinePropsInternal = LineProps & {
   top?: boolean;
   style?: ViewStyle;
+  testID?: string;
 };
 
 const Line = React.memo((props: LinePropsInternal) => {

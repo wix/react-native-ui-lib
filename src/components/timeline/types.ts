@@ -27,7 +27,6 @@ export type LineProps = {
   /** to mark as entry point */
   entry?: boolean;
   width?: number;
-  testID?: string;
 };
 
 export type PointProps = {
@@ -41,7 +40,6 @@ export type PointProps = {
   labelColor?: string;
   /** to align point to this view's center */
   anchorRef?: React.MutableRefObject<undefined>;
-  testID?: string;
 };
 
 export type Layout = {

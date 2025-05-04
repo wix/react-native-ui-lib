@@ -16,6 +16,7 @@ const ICON_SIZE = 16;
 
 type PointPropsInternal = PointProps & {
   onLayout?: (event: LayoutChangeEvent) => void;
+  testID?: string;
 };
 
 const Point = (props: PointPropsInternal) => {
