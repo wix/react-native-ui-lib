@@ -10,7 +10,7 @@ const SERVICES_DOCS_DIR = './docs/services';
 const COMPOSITE_DOCS_DIR = './docs/composite';
 const FOUNDATION_DOCS_DIR = './docs/foundation';
 
-const VALID_CATEGORIES = [
+const VALID_COMPONENTS_CATEGORIES = [
   'foundation',
   'basic',
   'assets',
@@ -75,7 +75,7 @@ function processComponents(components) {
     const isParentComponent = parentComponents.includes(componentName);
     const isIncubatorComponent = component.category === 'incubator';
 
-    if (!VALID_CATEGORIES.includes(component.category)) {
+    if (!VALID_COMPONENTS_CATEGORIES.includes(component.category)) {
       console.error(`${componentName} has invalid category "${component.category}"`);
     }
 
