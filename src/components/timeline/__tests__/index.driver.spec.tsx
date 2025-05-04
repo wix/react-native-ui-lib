@@ -1,0 +1,63 @@
+import React from 'react';
+import {render} from '@testing-library/react-native';
+import {TimelineDriver} from '../timeline.driver';
+import {TimelineProps} from '../types';
+import Timeline from '../index';
+import Text from '../../text';
+import Assets from '../../../assets';
+
+const testID = 'test-timeline';
+const labelContent = 2;
+const defaultIcon = Assets.internal.icons.check;
+
+const getDriver = (props: TimelineProps) => {
+  const renderTree = render(<Timeline {...props}>
+    <Text>Timeline</Text>
+  </Timeline>);
+  const timelineDriver = TimelineDriver({renderTree, testID});
+  return {timelineDriver};
+};
+
+describe('Timeline', () => {
+  describe('Label', () => {
+    const timelineProps = {testID, point: {label: labelContent, icon: undefined}};
+    it('should render Label', () => {
+      const {timelineDriver} = getDriver(timelineProps);
+      expect(timelineDriver.getLabel().exists()).toBeTruthy();
+      const content = timelineDriver.getLabel().getText();
+      expect(content).toEqual(labelContent.toString());
+    });
+
+    it('should not render Label', () => {
+      timelineProps.point.icon = defaultIcon;
+      const {timelineDriver} = getDriver(timelineProps);
+      expect(timelineDriver.getLabel().exists()).toBeFalsy();
+    });
+  });
+
+  describe('Icon', () => {
+    const timelineProps = {testID, point: {icon: defaultIcon}};
+    it('should render Icon', () => {
+      const {timelineDriver} = getDriver(timelineProps);
+      expect(timelineDriver.getIcon().exists()).toBeTruthy();
+    });
+  });
+
+  describe('Lines', () => {
+    const timelineProps = {
+      testID,
+      point: {icon: defaultIcon},
+      topLine: {color: 'red'},
+      bottomLine: {color: 'blue'}
+    };
+    it('should render top and bottom lines', () => {
+      const {timelineDriver} = getDriver(timelineProps);
+      expect(timelineDriver.getTopLine().exists()).toBeTruthy();
+      expect(timelineDriver.getBottomLine().exists()).toBeTruthy();
+      const topLineColor = timelineDriver.getTopLine().getTopLineStyle().backgroundColor;
+      const bottomLineColor = timelineDriver.getBottomLine().getBottomLineStyle().backgroundColor;
+      expect(topLineColor).toEqual('red');
+      expect(bottomLineColor).toEqual('blue');
+    });
+  });
+});

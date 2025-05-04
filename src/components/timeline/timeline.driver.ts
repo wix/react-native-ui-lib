@@ -17,9 +17,14 @@ export const TimelineDriver = (props: ComponentProps) => {
     testID: `${props.testID}.point.icon`
   });
 
-  const topLineDriver = ViewDriver({
+  const solidTopLineDriver = ViewDriver({
     renderTree: props.renderTree,
-    testID: `${props.testID}.topLine`
+    testID: `${props.testID}.topLine.solidLine`
+  });
+
+  const dashedTopLineDriver = ViewDriver({
+    renderTree: props.renderTree,
+    testID: `${props.testID}.topLine.dashedLine`
   });
 
   const topLinePointDriver = ViewDriver({
@@ -27,14 +32,19 @@ export const TimelineDriver = (props: ComponentProps) => {
     testID: `${props.testID}.topLine.startPoint`
   });
 
-  const bottomLineDriver = ViewDriver({
+  const solidBottomLineDriver = ViewDriver({
     renderTree: props.renderTree,
-    testID: `${props.testID}.topLine`
+    testID: `${props.testID}.bottomLine.solidLine`
+  });
+
+  const dashedBottomLineDriver = ViewDriver({
+    renderTree: props.renderTree,
+    testID: `${props.testID}.bottomLine.dashedLine`
   });
 
   const bottomLinePointDriver = ViewDriver({
     renderTree: props.renderTree,
-    testID: `${props.testID}.bottom.endPoint`
+    testID: `${props.testID}.bottomLine.endPoint`
   });
 
   const getLabel = () => {
@@ -62,25 +72,37 @@ export const TimelineDriver = (props: ComponentProps) => {
   };
 
   const getTopLine = () => {
-    const getTopLineStyle = () => {
-      return StyleSheet.flatten(topLineDriver.getElement().props.style);
+    const exists = (): boolean => {
+      return solidTopLineDriver.exists() || dashedTopLineDriver.exists();
     };
-
+    const getTopLineStyle = () => {
+      if (dashedTopLineDriver.exists()) {
+        return StyleSheet.flatten(dashedTopLineDriver.getElement().props.style);
+      } else if (solidTopLineDriver.exists()) {
+        return StyleSheet.flatten(solidTopLineDriver.getElement().props.style);
+      }
+    };
     const getTopLinePointStyle = () => {
       return StyleSheet.flatten(topLinePointDriver.getElement().props.style);
     };
-    return {getTopLineStyle, getTopLinePointStyle};
+    return {exists, getTopLineStyle, getTopLinePointStyle};
   };
 
   const getBottomLine = () => {
-    const getBottomLineStyle = () => {
-      return StyleSheet.flatten(bottomLineDriver.getElement().props.style);
+    const exists = (): boolean => {
+      return solidBottomLineDriver.exists() || dashedBottomLineDriver.exists();
     };
-
+    const getBottomLineStyle = () => {
+      if (dashedBottomLineDriver.exists()) {
+        return StyleSheet.flatten(dashedBottomLineDriver.getElement().props.style);
+      } else if (solidBottomLineDriver.exists()) {
+        return StyleSheet.flatten(solidBottomLineDriver.getElement().props.style);
+      }
+    };
     const getBottomLinePointStyle = () => {
       return StyleSheet.flatten(bottomLinePointDriver.getElement().props.style);
     };
-    return {getBottomLineStyle, getBottomLinePointStyle};
+    return {exists, getBottomLineStyle, getBottomLinePointStyle};
   };
 
   return {
