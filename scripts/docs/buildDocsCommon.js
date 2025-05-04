@@ -7,6 +7,7 @@ const fs = require('fs');
 
 const COMPONENTS_DOCS_DIR = './docs/components';
 const SERVICES_DOCS_DIR = './docs/services';
+const COMPOSITE_DOCS_DIR = './docs/composite';
 const FOUNDATION_DOCS_DIR = './docs/foundation';
 
 const VALID_COMPONENTS_CATEGORIES = [
@@ -95,6 +96,10 @@ function processComponents(components) {
 
     let dirPath;
     switch (component.category) {
+      case 'composite': {
+        dirPath = `${COMPOSITE_DOCS_DIR}`;
+        break;
+      }
       case 'services': {
         dirPath = `${SERVICES_DOCS_DIR}`;
         break;
