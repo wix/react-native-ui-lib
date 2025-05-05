@@ -129,7 +129,7 @@
             ],
             "items": [
               {
-                "title": "**Active**",
+                "title": "Active",
                 "description": "Border: $outlinePrimary  \nNumber: subtext, $textPrimary  \nStep label: bodySmallBold, $textNuetralHeavy  ",
                 "content": [
                   {
@@ -138,7 +138,7 @@
                 ]
               },
               {
-                "title": "**Next (enabled)**",
+                "title": "Next (enabled)",
                 "description": "Border: $outlineDisabled  \nNumber: subtext, $textNuetralHeavy  ",
                 "content": [
                   {
@@ -147,7 +147,7 @@
                 ]
               },
               {
-                "title": "**Next (disabled)**  ",
+                "title": "Next (disabled)",
                 "description": "Border: $outlineDisabled  \nNumber: subtext, $textDisabled  ",
                 "content": [
                   {
@@ -156,7 +156,7 @@
                 ]
               },
               {
-                "title": "**Completed**  ",
+                "title": "Completed",
                 "description": "Border: $outlineDisabled  \nIcon: $iconNuetral  ",
                 "content": [
                   {
@@ -165,7 +165,7 @@
                 ]
               },
               {
-                "title": "**Skipped**  ",
+                "title": "Skipped",
                 "description": "Border: $outlineDanger  \nNumber: subtext, $textDangerLight  ",
                 "content": [
                   {
@@ -174,7 +174,7 @@
                 ]
               },
               {
-                "title": "**Error**  ",
+                "title": "Error",
                 "description": "Border: $outlineDanger  \nIcon: $iconDangerLight",
                 "content": [
                   {
@@ -192,7 +192,7 @@
                 "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Wizard/wizard_overview_section_spec.png"
               }
             ],
-            "description": "**Spacing Between Steps**  \nAll steps are distributed evenly, leaving S5 margins.  \nMin spacing between steps: S3  \n\n**Maximum Step Width**  \nCurrent step’s text box shouldnt be larger than 40% of the screen’s width.  \nIf the label will be larger it will get ellipsis.  \ne.g. : For 375px screen : 40% = 150px"
+            "description": "markdown: **Spacing Between Steps**  \nAll steps are distributed evenly, leaving S5 margins.  \nMin spacing between steps: S3  \n\n**Maximum Step Width**  \nCurrent step’s text box shouldnt be larger than 40% of the screen’s width.  \nIf the label will be larger it will get ellipsis.  \ne.g. : For 375px screen : 40% = 150px"
           },
           {
             "type": "section",
