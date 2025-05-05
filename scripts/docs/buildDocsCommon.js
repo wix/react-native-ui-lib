@@ -87,6 +87,7 @@ function processComponents(components) {
     content += `id: ${component.name}\n`;
     content += `title: ${title}\n`;
     content += `sidebar_label: ${componentName}\n`;
+    content += `description: "${component.description}"\n`;
     content += '---\n\n';
 
     content += `import ComponentPage from '@site/src/components/ComponentPage';\n\n`;
