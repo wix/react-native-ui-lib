@@ -66,7 +66,6 @@ module.exports = {
             collapsed: true,
             link: {
               type: 'generated-index',
-              title: `${componentsCategories[category]}`,
               keywords: [category]
             },
             items: [
