@@ -29,7 +29,7 @@ const Line = React.memo((props: LinePropsInternal) => {
       return (
         <View
           style={[styles.entryPoint, {backgroundColor: color}]}
-          testID={`${testID}.${top ? 'startPoint' : 'endPoint'}`}
+          testID={`${testID}.entryPoint`}
         />
       );
     }
@@ -37,9 +37,9 @@ const Line = React.memo((props: LinePropsInternal) => {
 
   const renderLine = () => {
     if (type === LineTypes.DASHED) {
-      return <Dash vertical color={color} containerStyle={dashedLineStyle} testID={`${testID}.dashedLine`}/>;
+      return <Dash vertical color={color} containerStyle={dashedLineStyle} testID={`${testID}`}/>;
     }
-    return <View style={solidLineStyle} testID={`${testID}.solidLine`}/>;
+    return <View style={solidLineStyle} testID={`${testID}`}/>;
   };
 
   return (
