@@ -59,7 +59,7 @@ const Point = (props: PointPropsInternal) => {
   };
 
   return (
-    <View center style={pointStyle} onLayout={onLayout} testID={`${testID}`}>
+    <View center style={pointStyle} onLayout={onLayout} testID={testID}>
       {renderPointContent()}
     </View>
   );
