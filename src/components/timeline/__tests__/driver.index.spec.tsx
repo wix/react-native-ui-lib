@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
-import {TimelineDriver} from '../Timeline.driver';
+import {TimelineDriver} from '../timeline.driver';
 import {TimelineProps} from '../types';
 import Timeline from '../index';
 import Text from '../../text';
@@ -10,7 +10,7 @@ const testID = 'test-timeline';
 const labelContent = 2;
 const defaultIcon = Assets.internal.icons.check;
 
-const getDriver = (props: TimelineProps) => {
+const getDriver = (props?: TimelineProps) => {
   const renderTree = render(<Timeline testID={testID} {...props}>
     <Text>Timeline</Text>
   </Timeline>);
@@ -21,32 +21,62 @@ const getDriver = (props: TimelineProps) => {
 describe('Timeline', () => {
   describe('sanity', () => {
     it('should render Timeline', () => {
-      const props = {};
-      const {timelineDriver} = getDriver(props);
+      const {timelineDriver} = getDriver();
       expect(timelineDriver.exists()).toBeTruthy();
     });
 
-    it('should render Point with Icon, and custom tintColor', () => {
-      const props = {point: {icon: defaultIcon, iconProps: {tintColor: '#A2387E'}}};
-      const {timelineDriver} = getDriver(props);
+    it('should render Point', () => {
+      const {timelineDriver} = getDriver();
       expect(timelineDriver.getPoint().exists()).toBeTruthy();
-      expect(timelineDriver.getPoint().isContentExists()).toBeTruthy();
+    });
+
+    it('should render TopLine', () => {
+      const props = {topLine: {}};
+      const {timelineDriver} = getDriver(props);
+      const topLine = timelineDriver.getTopLine();
+      expect(topLine.exists()).toBeTruthy();
+    });
+
+    it('should render BottomLine', () => {
+      const props = {bottomLine: {}};
+      const {timelineDriver} = getDriver(props);
+      const bottomLine = timelineDriver.getBottomLine();
+      expect(bottomLine.exists()).toBeTruthy();
+    });
+  });
+
+  describe('Point', () => {
+    describe('with Icon', () => {
+      it('should override icon color when passing iconProps.tintColor', () => {
+        const props = {point: {icon: defaultIcon, iconProps: {tintColor: '#A2387E'}}};
+        const {timelineDriver} = getDriver(props);
+        const contentStyle = timelineDriver.getPoint().getContentStyle();
+        expect(contentStyle.tintColor).toEqual('#A2387E');
+        expect(contentStyle.color).toBeUndefined();
+      });
+    });
+
+    describe('with Label', () => {
+      it('should override label color when passing labelColor', () => {
+        const props = {point: {label: labelContent, labelColor: '#A2387E'}};
+        const {timelineDriver} = getDriver(props);
+        const contentStyle = timelineDriver.getPoint().getContentStyle();
+        expect(contentStyle.color).toEqual('#A2387E');
+        expect(contentStyle.tintColor).toBeUndefined();
+      });
+    });
+
+    it('should render Icon when icon and label passed', () => {
+      const props = {point: {icon: defaultIcon, iconProps: {tintColor: '#A2387E'}, label: labelContent}};
+      const {timelineDriver} = getDriver(props);
       const contentStyle = timelineDriver.getPoint().getContentStyle();
       expect(contentStyle.tintColor).toEqual('#A2387E');
       expect(contentStyle.color).toBeUndefined();
     });
+  });
 
-    it('should render Point with Label, and custom labelColor', () => {
-      const props = {point: {label: labelContent, labelColor: '#A2387E'}};
-      const {timelineDriver} = getDriver(props);
-      expect(timelineDriver.getPoint().exists()).toBeTruthy();
-      expect(timelineDriver.getPoint().isContentExists()).toBeTruthy();
-      const contentStyle = timelineDriver.getPoint().getContentStyle();
-      expect(contentStyle.color).toEqual('#A2387E');
-      expect(contentStyle.tintColor).toBeUndefined();
-    });
-
-    it('should render TopLine', () => {
+  describe('TopLine', () => {
+    it('should override top line color and width', () => {
       const props = {topLine: {color: '#00A87E', width: 3}};
       const {timelineDriver} = getDriver(props);
       const topLine = timelineDriver.getTopLine();
@@ -56,7 +86,16 @@ describe('Timeline', () => {
       expect(topLineStyle.width).toEqual(3);
     });
 
-    it('should render BottomLine', () => {
+    it('should render line with entryPoint', () => {
+      const props = {topLine: {entry: true}};
+      const {timelineDriver} = getDriver(props);
+      const topLine = timelineDriver.getTopLine();
+      expect(topLine.isEntryPointExists()).toBeTruthy();
+    });
+  });
+
+  describe('BottomLine', () => {
+    it('should override bottom line color and width', () => {
       const props = {bottomLine: {color: '#FFF4D3', width: 5}};
       const {timelineDriver} = getDriver(props);
       const bottomLine = timelineDriver.getBottomLine();
@@ -64,14 +103,6 @@ describe('Timeline', () => {
       const bottomLineStyle = bottomLine.getStyle();
       expect(bottomLineStyle.backgroundColor).toEqual('#FFF4D3');
       expect(bottomLineStyle.width).toEqual(5);
-    });
-
-    it('should render TopLine with entryPoint', () => {
-      const props = {topLine: {entry: true}};
-      const {timelineDriver} = getDriver(props);
-      const topLine = timelineDriver.getTopLine();
-      expect(topLine.exists()).toBeTruthy();
-      expect(topLine.isEntryPointExists()).toBeTruthy();
     });
   });
 });

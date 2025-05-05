@@ -41,18 +41,12 @@ export const PointDriver = (props: ComponentProps) => {
     const getStyle = () => {
       return StyleSheet.flatten(pointDriver.getElement().props.style);
     };
-    const isContentExists = () => {
-      return getLabel().exists() || getIcon().exists();
-    };
     const getContentStyle = () => {
       return getIcon().exists()
         ? StyleSheet.flatten(getIcon().getElement().props.style)
         : getLabel().exists() && StyleSheet.flatten(getLabel().getElement().props.style);
     };
-    const getLabelContent = () => {
-      return getLabel().getText();
-    };
-    return {exists, getStyle, isContentExists, getContentStyle, getLabelContent};
+    return {exists, getStyle, getContentStyle};
   };
 
   return {

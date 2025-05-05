@@ -24,7 +24,7 @@ export const LineDriver = (props: ComponentProps) => {
       return entryPointDriver.exists();
     };
     const getEntryPointStyle = () => {
-      return StyleSheet.flatten(entryPointDriver.getElement().props.style);
+      return entryPointDriver.getStyle();
     };
     return {exists, getStyle, isEntryPointExists, getEntryPointStyle};
   };
