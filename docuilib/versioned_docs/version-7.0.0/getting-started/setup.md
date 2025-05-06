@@ -54,8 +54,8 @@ Some of the components are using the native dependencies listed below - those ar
 
 > It's important to run `cd ios && pod install` if you are using a component that has a native dependency.
 
-- "react-native-gesture-handler": ">=1.9.0" (mandatory)
-- "react-native-reanimated": ">=2.1.0" (mandatory)
+- "react-native-gesture-handler": ">=2.22.0" (mandatory)
+- "react-native-reanimated": ">=3.16.7" (mandatory)
 - "@react-native-community/blur": ">=3.4.1" (required for Card component when passing `enableBlur` prop)
 - "@react-native-community/datetimepicker": "^2.1.0"
 - "@react-native-community/netinfo": "^5.6.2" (required for ConnectionStatusBar component)
