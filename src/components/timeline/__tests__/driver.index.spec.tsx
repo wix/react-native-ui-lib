@@ -28,20 +28,6 @@ describe('Timeline', () => {
       const timelineDriver = getDriver();
       expect(timelineDriver.getPoint().exists()).toBeTruthy();
     });
-
-    it('should render TopLine', () => {
-      const props = {topLine: {}};
-      const timelineDriver = getDriver(props);
-      const topLine = timelineDriver.getTopLine();
-      expect(topLine.exists()).toBeTruthy();
-    });
-
-    it('should render BottomLine', () => {
-      const props = {bottomLine: {}};
-      const timelineDriver = getDriver(props);
-      const bottomLine = timelineDriver.getBottomLine();
-      expect(bottomLine.exists()).toBeTruthy();
-    });
   });
 
   describe('Point', () => {
@@ -72,9 +58,23 @@ describe('Timeline', () => {
       expect(contentStyle.tintColor).toEqual('#A2387E');
       expect(contentStyle.color).toBeUndefined();
     });
+
+    it('tintColor and color should be undefined when icon and label are not passed', () => {
+      const timelineDriver = getDriver();
+      const contentStyle = timelineDriver.getPoint().getContentStyle();
+      expect(contentStyle.tintColor).toBeUndefined();
+      expect(contentStyle.color).toBeUndefined();
+    });
   });
 
   describe('TopLine', () => {
+    it('should render TopLine', () => {
+      const props = {topLine: {}};
+      const timelineDriver = getDriver(props);
+      const topLine = timelineDriver.getTopLine();
+      expect(topLine.exists()).toBeTruthy();
+    });
+
     it('should override top line color and width', () => {
       const props = {topLine: {color: '#00A87E', width: 3}};
       const timelineDriver = getDriver(props);
@@ -94,6 +94,13 @@ describe('Timeline', () => {
   });
 
   describe('BottomLine', () => {
+    it('should render BottomLine', () => {
+      const props = {bottomLine: {}};
+      const timelineDriver = getDriver(props);
+      const bottomLine = timelineDriver.getBottomLine();
+      expect(bottomLine.exists()).toBeTruthy();
+    });
+
     it('should override bottom line color and width', () => {
       const props = {bottomLine: {color: '#FFF4D3', width: 5}};
       const timelineDriver = getDriver(props);
