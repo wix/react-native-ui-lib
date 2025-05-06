@@ -22,11 +22,9 @@ describe('Timeline', () => {
     it('should render Timeline', () => {
       const timelineDriver = getDriver();
       expect(timelineDriver.exists()).toBeTruthy();
-    });
-
-    it('should render Point', () => {
-      const timelineDriver = getDriver();
       expect(timelineDriver.getPoint().exists()).toBeTruthy();
+      expect(timelineDriver.getTopLine().exists()).toBeTruthy();
+      expect(timelineDriver.getBottomLine().exists()).toBeFalsy();
     });
   });
 
