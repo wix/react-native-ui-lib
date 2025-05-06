@@ -16,6 +16,9 @@ describe('Chip', () => {
     it('should render Chip', () => {
       const driver = getDriver();
       expect(driver.exists()).toBeTruthy();
+      expect(driver.getIcon().exists()).toBeFalsy();
+      expect(driver.getLabel().exists()).toBeFalsy();
+      expect(driver.getDismissIcon().exists()).toBeFalsy();
     });
   });
 
