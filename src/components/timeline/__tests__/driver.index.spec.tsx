@@ -14,32 +14,31 @@ const getDriver = (props?: TimelineProps) => {
   const renderTree = render(<Timeline testID={testID} {...props}>
     <Text>Timeline</Text>
   </Timeline>);
-  const timelineDriver = TimelineDriver({renderTree, testID});
-  return {timelineDriver};
+  return TimelineDriver({renderTree, testID});
 };
 
 describe('Timeline', () => {
   describe('sanity', () => {
     it('should render Timeline', () => {
-      const {timelineDriver} = getDriver();
+      const timelineDriver = getDriver();
       expect(timelineDriver.exists()).toBeTruthy();
     });
 
     it('should render Point', () => {
-      const {timelineDriver} = getDriver();
+      const timelineDriver = getDriver();
       expect(timelineDriver.getPoint().exists()).toBeTruthy();
     });
 
     it('should render TopLine', () => {
       const props = {topLine: {}};
-      const {timelineDriver} = getDriver(props);
+      const timelineDriver = getDriver(props);
       const topLine = timelineDriver.getTopLine();
       expect(topLine.exists()).toBeTruthy();
     });
 
     it('should render BottomLine', () => {
       const props = {bottomLine: {}};
-      const {timelineDriver} = getDriver(props);
+      const timelineDriver = getDriver(props);
       const bottomLine = timelineDriver.getBottomLine();
       expect(bottomLine.exists()).toBeTruthy();
     });
@@ -49,7 +48,7 @@ describe('Timeline', () => {
     describe('with Icon', () => {
       it('should override icon color when passing iconProps.tintColor', () => {
         const props = {point: {icon: defaultIcon, iconProps: {tintColor: '#A2387E'}}};
-        const {timelineDriver} = getDriver(props);
+        const timelineDriver = getDriver(props);
         const contentStyle = timelineDriver.getPoint().getContentStyle();
         expect(contentStyle.tintColor).toEqual('#A2387E');
         expect(contentStyle.color).toBeUndefined();
@@ -59,7 +58,7 @@ describe('Timeline', () => {
     describe('with Label', () => {
       it('should override label color when passing labelColor', () => {
         const props = {point: {label: labelContent, labelColor: '#A2387E'}};
-        const {timelineDriver} = getDriver(props);
+        const timelineDriver = getDriver(props);
         const contentStyle = timelineDriver.getPoint().getContentStyle();
         expect(contentStyle.color).toEqual('#A2387E');
         expect(contentStyle.tintColor).toBeUndefined();
@@ -68,7 +67,7 @@ describe('Timeline', () => {
 
     it('should render Icon when icon and label passed', () => {
       const props = {point: {icon: defaultIcon, iconProps: {tintColor: '#A2387E'}, label: labelContent}};
-      const {timelineDriver} = getDriver(props);
+      const timelineDriver = getDriver(props);
       const contentStyle = timelineDriver.getPoint().getContentStyle();
       expect(contentStyle.tintColor).toEqual('#A2387E');
       expect(contentStyle.color).toBeUndefined();
@@ -78,7 +77,7 @@ describe('Timeline', () => {
   describe('TopLine', () => {
     it('should override top line color and width', () => {
       const props = {topLine: {color: '#00A87E', width: 3}};
-      const {timelineDriver} = getDriver(props);
+      const timelineDriver = getDriver(props);
       const topLine = timelineDriver.getTopLine();
       expect(topLine.exists()).toBeTruthy();
       const topLineStyle = topLine.getStyle();
@@ -88,7 +87,7 @@ describe('Timeline', () => {
 
     it('should render line with entryPoint', () => {
       const props = {topLine: {entry: true}};
-      const {timelineDriver} = getDriver(props);
+      const timelineDriver = getDriver(props);
       const topLine = timelineDriver.getTopLine();
       expect(topLine.isEntryPointExists()).toBeTruthy();
     });
@@ -97,7 +96,7 @@ describe('Timeline', () => {
   describe('BottomLine', () => {
     it('should override bottom line color and width', () => {
       const props = {bottomLine: {color: '#FFF4D3', width: 5}};
-      const {timelineDriver} = getDriver(props);
+      const timelineDriver = getDriver(props);
       const bottomLine = timelineDriver.getBottomLine();
       expect(bottomLine.exists()).toBeTruthy();
       const bottomLineStyle = bottomLine.getStyle();
