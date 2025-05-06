@@ -125,12 +125,15 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   });
 
   const accessibleFilteredItems = useMemo(() => {
-    return filteredItems.map((item: PickerItemProps) => ({
-      ...item,
-      onPress:
-        useWheelPicker && Constants.accessibility.isScreenReaderEnabled ? () => onDoneSelecting(item.value) : undefined
-    }));
-  }, [useWheelPicker, filteredItems, onDoneSelecting]);
+    if (propItems) {
+      return filteredItems.map((item: PickerItemProps) => ({
+        ...item,
+        onPress: useWheelPicker && Constants.accessibility.isScreenReaderEnabled ?
+          () => onDoneSelecting(item.value) : undefined
+      }));
+    }
+    return filteredItems;
+  }, [propItems, useWheelPicker, filteredItems, onDoneSelecting]);
 
   const {label, accessibilityInfo} = usePickerLabel({
     value,
