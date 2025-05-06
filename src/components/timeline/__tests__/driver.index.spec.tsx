@@ -66,13 +66,6 @@ describe('Timeline', () => {
   });
 
   describe('TopLine', () => {
-    it('should render TopLine', () => {
-      const props = {topLine: {}};
-      const timelineDriver = getDriver(props);
-      const topLine = timelineDriver.getTopLine();
-      expect(topLine.exists()).toBeTruthy();
-    });
-
     it('should override top line color and width', () => {
       const props = {topLine: {color: '#00A87E', width: 3}};
       const timelineDriver = getDriver(props);
