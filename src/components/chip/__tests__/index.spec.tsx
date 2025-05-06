@@ -3,6 +3,7 @@ import {render} from '@testing-library/react-native';
 import {ChipDriver} from '../chip.driver';
 import Chip, {ChipProps} from '../index';
 import Assets from '../../../assets';
+import {Colors} from '../../../style';
 
 const testID = 'test-chip';
 
@@ -27,6 +28,7 @@ describe('Chip', () => {
       const driver = getDriver({label: 'test'});
       expect(driver.getLabel().exists()).toBeTruthy();
       expect(driver.getLabel().getText()).toEqual('test');
+      expect(driver.getLabel().getStyle().color).toEqual(Colors.$textDefault);
     });
   });
 
@@ -34,6 +36,7 @@ describe('Chip', () => {
     it('should render dismiss icon', () => {
       const driver = getDriver({onDismiss: () => {}});
       expect(driver.getDismissIcon().exists()).toBeTruthy();
+      expect(driver.getDismissIcon().getStyle().tintColor).toEqual(Colors.$iconDefault);
     });
   });
 
@@ -41,6 +44,7 @@ describe('Chip', () => {
     it('should render icon', () => {
       const driver = getDriver({iconSource: Assets.internal.icons.check});
       expect(driver.getIcon().exists()).toBeTruthy();
+      expect(driver.getIcon().getStyle().tintColor).toEqual(Colors.$iconDefault);
     });
   });
 
