@@ -213,7 +213,7 @@ const SearchInput = forwardRef((props: SearchInputProps, ref: ForwardedRef<any>)
 
   const renderLoader = () => {
     const {customLoader} = props;
-    return <View>{customLoader ? customLoader() : <ActivityIndicator style={styles.loader} {...loaderProps}/>}</View>;
+    return <View>{customLoader ? customLoader : <ActivityIndicator style={styles.loader} {...loaderProps}/>}</View>;
   };
 
   const topInputTopMargin = useSafeArea && {marginTop: Constants.isIOS ? Constants.statusBarHeight : 0};
