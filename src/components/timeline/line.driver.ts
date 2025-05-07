@@ -20,13 +20,17 @@ export const LineDriver = (props: ComponentProps) => {
     const getStyle = () => {
       return StyleSheet.flatten(lineDriver.getElement().props.style);
     };
+    const isVisible = (): boolean => {
+      const height = getStyle().height;
+      return exists() && (height ?? 0) > 0;
+    };
     const isEntryPointExists = (): boolean => {
       return entryPointDriver.exists();
     };
     const getEntryPointStyle = () => {
       return entryPointDriver.getStyle();
     };
-    return {exists, getStyle, isEntryPointExists, getEntryPointStyle};
+    return {exists, getStyle, isVisible, isEntryPointExists, getEntryPointStyle};
   };
 
   return {

@@ -24,6 +24,7 @@ describe('Timeline', () => {
       expect(timelineDriver.exists()).toBeTruthy();
       expect(timelineDriver.getPoint().exists()).toBeTruthy();
       expect(timelineDriver.getTopLine().exists()).toBeTruthy();
+      expect(timelineDriver.getTopLine().isVisible()).toBeFalsy();
       expect(timelineDriver.getBottomLine().exists()).toBeFalsy();
     });
   });
