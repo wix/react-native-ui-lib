@@ -94,7 +94,7 @@ const SearchInputScreen = () => {
           placeholder="Search"
           onDismiss={showCancelBtn ? onDismiss : undefined}
           cancelButtonProps={{label: 'Cancel'}}
-          preset={SearchInput.presets.PROMINENT}
+          preset={'prominent'}
           customRightElement={showCustomRightElement ? customRightElement : undefined}
         />
       </View>
