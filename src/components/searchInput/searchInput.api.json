@@ -15,7 +15,7 @@
     },
     {
       "name": "customLoader",
-      "type": " () => React.ReactElement",
+      "type": "React.ReactElement",
       "description": "custom loader element to render instead of the default loader"
     },
     {
