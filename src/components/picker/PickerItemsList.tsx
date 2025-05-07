@@ -128,6 +128,10 @@ const PickerItemsList = (props: PickerItemsListProps) => {
     );
   };
 
+  const onDonePress = useCallback(() => {
+    context.onPress(wheelPickerValue);
+  }, [context.onPress, wheelPickerValue]);
+
   const renderPickerHeader = () => {
     const {cancelButtonProps, cancelLabel, doneLabel, title, titleStyle, containerStyle, onDone, onCancel} =
       topBarProps ?? {};
@@ -138,7 +142,14 @@ const PickerItemsList = (props: PickerItemsListProps) => {
         <View row spread padding-page style={containerStyle}>
           {(cancelButtonProps || cancelLabel) && renderCancel()}
           <Text style={titleStyle}>{title}</Text>
-          <Text text70 $textPrimary accessibilityRole={'button'} onPress={() => context.onPress(wheelPickerValue)}>
+          <Text
+            text70
+            $textPrimary
+            accessibilityElementsHidden={useWheelPicker}
+            importantForAccessibility={useWheelPicker ? 'no' : 'yes'}
+            accessibilityRole={'button'}
+            onPress={onDonePress}
+          >
             {doneLabel ?? 'Select'}
           </Text>
         </View>

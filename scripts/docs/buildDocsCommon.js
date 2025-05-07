@@ -26,7 +26,8 @@ const VALID_COMPONENTS_CATEGORIES = [
   'incubator',
   'infra',
   // non components categories
-  'services'
+  'services',
+  'dev' // development category for components we don't want to render in our docs (used in test.api.json)
 ];
 
 function buildDocs(apiFolders, componentsPreProcess) {
