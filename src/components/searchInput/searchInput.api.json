@@ -14,7 +14,7 @@
       "description": "Whether to show a loader instead of the left search icon."
     },
     {
-      "name": "renderLoaderElement",
+      "name": "customLoader",
       "type": " () => React.ReactElement",
       "description": "custom loader element to render instead of the default loader"
     },
