@@ -90,7 +90,8 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
 
   const dismissModal = useCallback(() => {
     setExpandableVisible(false);
-  }, []);
+    focusAccessibility();
+  }, [focusAccessibility]);
 
   const toggleExpandable = useCallback(() => (visible ? closeExpandable() : openExpandable()),
     [visible, openExpandable, closeExpandable]);
