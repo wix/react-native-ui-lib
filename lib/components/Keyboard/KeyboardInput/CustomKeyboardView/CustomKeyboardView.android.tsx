@@ -10,19 +10,24 @@ export default class CustomKeyboardView extends CustomKeyboardViewBase<CustomKey
   static displayName = 'IGNORE';
 
   async componentDidUpdate(prevProps: CustomKeyboardViewBaseProps) {
-    const {component, inputRef} = this.props;
+    const {component, inputRef, shouldFocus, onKeyboardDismiss} = this.props;
 
     if (prevProps.component !== component) {
+      
       if (!component) {
-        await TextInputKeyboardManager.reset();
-        if (inputRef?.current) {
-          inputRef.current.focus?.();
-        } else {
-          inputRef?.focus?.();
+        // await TextInputKeyboardManager.reset();
+        if (shouldFocus) {
+          if (inputRef?.current) {
+            inputRef.current.focus?.();
+          } else {
+            inputRef?.focus?.();
+          }
         }
       } else {
         Keyboard.dismiss();
       }
+
+      onKeyboardDismiss?.();
     }
 
     super.componentDidUpdate(prevProps);

@@ -73,10 +73,13 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
     scrollBehavior: KeyboardTrackingView.scrollBehaviors.FIXED_OFFSET
   };
 
+  static currentId = 0;
+
   // TODO: fix
   customInputControllerEventsSubscriber: any;
   trackingViewRef: any;
   subscription: any;
+  id: number = ++KeyboardAccessoryView.currentId;
 
   constructor(props: KeyboardAccessoryViewProps) {
     super(props);
@@ -92,7 +95,8 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
   }
 
   state = {
-    keyboardHeight: 0
+    keyboardHeight: 0,
+    shouldFocus: true
   };
 
   componentWillUnmount() {
@@ -176,8 +180,16 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
     this.setState({keyboardHeight});
   };
 
+  onDismiss = () => {
+    this.setState({shouldFocus: false});
+  };
+
+  onKeyboardDismiss = () => {
+    this.setState({shouldFocus: true});
+  };
+
   render() {
-    const {keyboardHeight} = this.state;
+    const {keyboardHeight, shouldFocus} = this.state;
     const {
       renderContent,
       kbInputRef,
@@ -196,10 +208,16 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
         style={styles.trackingToolbarContainer}
         onLayout={this.onContainerComponentHeightChanged}
       >
-        <KeyboardHeightListener onKeyboardHeightChange={this.onKeyboardHeightChange}/>
+        <KeyboardHeightListener
+          id={`${this.id}`}
+          onDismiss={this.onDismiss}
+          onKeyboardHeightChange={this.onKeyboardHeightChange}
+        />
         <>{renderContent?.()}</>
         <CustomKeyboardView
           keyboardHeight={keyboardHeight}
+          shouldFocus={shouldFocus}
+          onKeyboardDismiss={this.onKeyboardDismiss}
           inputRef={kbInputRef}
           component={kbComponent}
           initialProps={this.processInitialProps()}
