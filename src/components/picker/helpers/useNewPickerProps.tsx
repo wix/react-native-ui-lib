@@ -17,18 +17,28 @@ const useNewPickerProps = (props: PickerProps) => {
     renderOverlay
   } = props;
 
-  const modalProps: ExpandableOverlayProps['modalProps'] = {
+  const defaultModalProps: ExpandableOverlayProps['modalProps'] = {
     animationType: 'slide',
     transparent: Constants.isIOS && enableModalBlur,
     enableModalBlur: Constants.isIOS && enableModalBlur,
     onRequestClose: topBarProps?.onCancel
   };
 
+  const mergedModalProps = {
+    ...defaultModalProps,
+    ...(onShow && {onShow}),
+    ...pickerModalProps,
+    ...customPickerProps?.modalProps
+  };
+
   const newProps: PickerProps = {
     renderHeader: renderCustomDialogHeader || renderHeader,
     renderInput: renderPicker || renderInput,
     renderOverlay: renderCustomModal || renderOverlay,
-    customPickerProps: {modalProps: {onShow, ...modalProps, ...pickerModalProps}, ...customPickerProps}
+    customPickerProps: {
+      ...customPickerProps,
+      modalProps: mergedModalProps
+    }
   };
   return newProps;
 };
