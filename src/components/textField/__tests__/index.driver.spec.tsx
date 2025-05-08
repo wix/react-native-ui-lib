@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {render} from '@testing-library/react-native';
 import Constants from '../../../commons/Constants';
 import Assets from '../../../assets';
@@ -15,6 +15,11 @@ const helperText = 'Helper Text';
 
 function TestCase(textFieldProps?: TextFieldProps) {
   const [value, setValue] = useState(textFieldProps?.value);
+
+  useEffect(() => {
+    setValue(textFieldProps?.value);
+  }, [textFieldProps?.value]);
+
   return (
     <View>
       <TextField {...textFieldProps} testID={TEXT_FIELD_TEST_ID} value={value} onChangeText={setValue}/>
@@ -22,7 +27,7 @@ function TestCase(textFieldProps?: TextFieldProps) {
   );
 }
 
-const validate = jest.fn((value: string) => {
+const validate = jest.fn((value?: string) => {
   return !!value;
 });
 
@@ -210,6 +215,18 @@ describe('TextField', () => {
         expect(textFieldDriver.getValidationMessage().getText()).toEqual('');
 
         textFieldDriver.changeText('');
+        expect(textFieldDriver.getValidationMessage().exists()).toBe(true);
+        expect(textFieldDriver.getValidationMessage().getText()).toEqual('mock message');
+      });
+
+      it('should render validationMessage when input is requires after changing the value to undefined', () => {
+        const renderTree = render(<TestCase {...defaultProps} value={'Some text'} validate={'required'} validationMessage={'mock message'} enableErrors validateOnChange/>);
+        const textFieldDriver = TextFieldDriver({renderTree, testID: TEXT_FIELD_TEST_ID});
+
+        expect(textFieldDriver.getValidationMessage().exists()).toBe(false);
+        expect(textFieldDriver.getValidationMessage().getText()).toEqual('');
+
+        renderTree.rerender(<TestCase {...defaultProps} validate={'required'} validationMessage={'mock message'} enableErrors validateOnChange/>);
         expect(textFieldDriver.getValidationMessage().exists()).toBe(true);
         expect(textFieldDriver.getValidationMessage().getText()).toEqual('mock message');
       });
@@ -490,7 +507,7 @@ describe('TextField', () => {
       const props = {
         ...defaultProps,
         value: '10000',
-        formatter: value => priceFormatter.format(Number(value))
+        formatter: (value?: string) => priceFormatter.format(Number(value))
       };
 
       it('should format value while not focused based on formatter prop', () => {

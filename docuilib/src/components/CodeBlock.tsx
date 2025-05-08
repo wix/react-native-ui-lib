@@ -21,8 +21,8 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
 
   const containerStyle = useMemo<ComponentProps<'div'>['style']>(() => {
     return {
-      fontSize,
-      maxWidth: printWidth * fontSize
+      fontSize
+      // maxWidth: printWidth * fontSize
     };
   }, [fontSize, printWidth]);
 
@@ -31,7 +31,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
       <ThemeCodeBlock
         className={styles.codeBlock}
         language={language ?? 'jsx'}
-        showLineNumbers={showLineNumbers ?? true}
+        showLineNumbers={showLineNumbers}
         {...others}
       >
         {code}

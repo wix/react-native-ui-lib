@@ -16,7 +16,7 @@ export default () => {
           Basic components like Button, Avatar and Card and more sophisticated ones like Hints, ColorPicker and Drawer.
         </p>
         <Link to={`docs/${docsMainEntry}`}>
-          <button className={'button dark'}>View Docs</button>
+          <button className={'button dark'}>View Documentation</button>
         </Link>
       </div>
       <img src={showcase} alt="showcase"/>

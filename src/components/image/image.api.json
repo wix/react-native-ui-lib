@@ -2,10 +2,16 @@
   "name": "Image",
   "category": "media",
   "description": "Image wrapper with extra functionality like source transform and assets support",
-  "extends": ["Image"],
-  "extendsLink": ["https://reactnative.dev/docs/image"],
+  "extends": [
+    "Image"
+  ],
+  "extendsLink": [
+    "https://reactnative.dev/docs/image"
+  ],
   "note": "please note that for SVG support you need to add both `react-native-svg` and `react-native-svg-transformer` and also configure them (see `metro.config.js`)",
-  "modifiers": ["margin"],
+  "modifiers": [
+    "margin"
+  ],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ImageScreen.tsx",
   "props": [
     {
@@ -13,9 +19,21 @@
       "type": "(props: any) => ImageSourcePropType",
       "description": "custom source transform handler for manipulating the image source (great for size control)"
     },
-    {"name": "assetName", "type": "string", "description": "if provided image source will be driven from asset name"},
-    {"name": "assetGroup", "type": "string", "description": "the asset group, default is icons"},
-    {"name": "tintColor", "type": "string", "description": "the asset tint"},
+    {
+      "name": "assetName",
+      "type": "string",
+      "description": "if provided image source will be driven from asset name"
+    },
+    {
+      "name": "assetGroup",
+      "type": "string",
+      "description": "the asset group, default is icons"
+    },
+    {
+      "name": "tintColor",
+      "type": "string",
+      "description": "the asset tint"
+    },
     {
       "name": "supportRTL",
       "type": "boolean",
@@ -26,7 +44,11 @@
       "type": "boolean",
       "description": "Show image as a cover, full width, image (according to aspect ratio, default: 16:8)"
     },
-    {"name": "aspectRatio", "type": "number", "description": "The aspect ratio for the image"},
+    {
+      "name": "aspectRatio",
+      "type": "number",
+      "description": "The aspect ratio for the image"
+    },
     {
       "name": "overlayType",
       "type": "VERTICAL | TOP | BOTTOM | SOLID",
@@ -39,14 +61,60 @@
       "description": "OverlayIntensityType",
       "default": "Image.overlayIntensityType.LOW"
     },
-    {"name": "overlayColor", "type": "string", "description": "Pass a custom color for the overlay"},
-    {"name": "customOverlayContent", "type": "JSX.Element", "description": "Render an overlay with custom content"},
-    {"name": "errorSource", "type": "ImageSourcePropType", "description": "Default image source in case of an error"},
-    {"name": "imageId", "type": "string", "description": "An imageId that can be used in sourceTransformer logic"},
-    {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag"},
-    {"name": "useBackgroundContainer", "type": "boolean", "description": "Use a container for the Image, this can solve issues on Android when animation needs to be performed on the same view; i.e. animation related crashes on Android."}
+    {
+      "name": "overlayColor",
+      "type": "string",
+      "description": "Pass a custom color for the overlay"
+    },
+    {
+      "name": "customOverlayContent",
+      "type": "JSX.Element",
+      "description": "Render an overlay with custom content"
+    },
+    {
+      "name": "errorSource",
+      "type": "ImageSourcePropType",
+      "description": "Default image source in case of an error"
+    },
+    {
+      "name": "imageId",
+      "type": "string",
+      "description": "An imageId that can be used in sourceTransformer logic"
+    },
+    {
+      "name": "recorderTag",
+      "type": "'mask' | 'unmask'",
+      "description": "Recorder Tag"
+    },
+    {
+      "name": "useBackgroundContainer",
+      "type": "boolean",
+      "description": "Use a container for the Image, this can solve issues on Android when animation needs to be performed on the same view; i.e. animation related crashes on Android."
+    }
   ],
   "snippet": [
     "<Image width={50} height={50} source={{uri: 'https://images.pexels.com/photos/748837/pexels-photo-748837.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'}$1}/>"
-  ]
+  ],
+  "docs": {
+    "hero": {
+      "title": "Image",
+      "description": "Image wrapper with extra functionality like source transform and assets support"
+    },
+    "tabs": [
+      {
+        "title": "UX Guidelines",
+        "sections": [
+          {
+            "type": "section",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/Krv1pLl7kq2L52vMRwd498/MADS-Guidelines?node-id=10088-640358&embed-host=share",
+                "height": 1600
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }

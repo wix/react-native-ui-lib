@@ -33,6 +33,16 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
+main {
+  overflow-x: hidden;
+}
+
+/* Markdown pages */
+
+.container {
+  padding: 0 48px;
+}
+
 /** Docusaurus Navbar */
 
 .navbar {
@@ -58,7 +68,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   letter-spacing: 0.3px;
   line-height: 38px;
   border-bottom: 2px solid transparent;
-  transition: all 0.2s ease-out;
+  transition: all 0.18s ease-out;
 }
 .navbar__link--active {
   font-weight: 700;
@@ -207,8 +217,10 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   border-bottom: 2px solid #F0F2F5;
 }
 .single-tab {
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: 500;
   color: #6E7881;
+  border-bottom-width: 2px;
 }
 .single-tab[aria-selected='true'] {
   border-bottom-color: #20303C;

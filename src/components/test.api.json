@@ -1,6 +1,6 @@
 {
   "name": "Tests",
-  "category": "basic",
+  "category": "dev",
   "description": "This is just a tests page for the new docs component page",
   "extends": [
     "Text",

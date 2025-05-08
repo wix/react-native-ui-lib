@@ -4,29 +4,32 @@ sidebar_label: Modifiers
 title: "Modifiers"
 ---
 
-As you have probably noticed already, we translate our style presets into modifiers.  
-**Modifiers** help you create a stunning UI easily and quickly.
-
-**[!IMPORTANT]**  
-Make sure to use modifiers only on UILib components, as some modifiers can cause issues on Android when used on React Native components directly.
+Discover the power of our style presets transformed into modifiers.  
+**Modifiers** are a powerful tool designed to streamline UI development, making it both efficient and elegant.
 
 ## Layout Modifiers
-Use our alignment properties to quickly position the content of your view without getting confused calculating all those flex rules.
-- flex - apply `flex:1` on a view 
-- flex-[value] - When you want to control the flex value
-- flexS - FlexShrink 
-- flexG - FlexGrow
-- left
-- top
-- right
-- bottom
-- row - change direction to row (default is column)
-- center
-- centerH - center content horizontally
-- centerV - center content vertically
-- spread - spread content (similar to `space-between`)
+Streamline your layout design with our intuitive alignment properties. These modifiers simplify view positioning without the complexity of manual flex calculations.
 
-! Notice that the layout modifiers affect the View's children
+### Basic Flex Properties
+- `flex` - Apply `flex: 1` to expand a view
+- `flex-[value]` - Set a specific flex value
+- `flexS` - Enable flex shrink
+- `flexG` - Enable flex grow
+
+### Alignment Properties
+- `left` - Align content to the left
+- `right` - Align content to the right
+- `top` - Align content to the top
+- `bottom` - Align content to the bottom
+- `center` - Center content both horizontally and vertically
+- `centerH` - Center content horizontally
+- `centerV` - Center content vertically
+
+### Layout Direction
+- `row` - Set flex direction to row (default is column)
+- `spread` - Distribute content evenly (equivalent to `space-between`)
+
+> Note: Layout modifiers affect the positioning of the View's children elements
 
 ```jsx
 <View flex left>
@@ -52,68 +55,126 @@ Use our alignment properties to quickly position the content of your view withou
 <img src="https://cloud.githubusercontent.com/assets/1780255/24798566/4de91efc-1b9f-11e7-9974-e06e3daa7c63.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798569/50dc99a4-1b9f-11e7-8231-fbcbb139a010.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798571/52766d08-1b9f-11e7-95a3-b2b262e81170.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798572/545b7abe-1b9f-11e7-9098-409ceee6ff22.png" width="160"/> <img src="https://cloud.githubusercontent.com/assets/1780255/24798575/55e3c4f4-1b9f-11e7-998d-7986a038abb6.png" width="160"/>
 
 ## Spacing Modifiers
-It's always important to use your margins and paddings correctly, and that's also easier to do with modifiers:
+Enhance your layout consistency with our intuitive spacing modifiers for margins and paddings:
 
-- padding-[value] - will add padding to all corners (e.g. padding-30 will add 30 pt of padding)
-- paddingL-[value] - Left padding
-- paddingT-[value] - Top padding
-- paddingR-[value] - Right padding
-- paddingB-[value] - Bottom padding
-- paddingH-[value] - Horizontal padding
-- paddingV-[value] - Vertical padding
-```jsx
-<View paddingV-20 paddingH-30>...</View>
-```
-
-- margin-[value]
-- marginL-[value] - Left margin
-- marginT-[value] - Top margin
-- marginR-[value] - Right margin
-- marginB-[value] - Bottom margin
-- marginH-[value] - Horizontal margin
-- marginV-[value] - Vertical margin
+### Padding Modifiers
+Apply padding with simple, descriptive modifiers:
+- `padding-[value]` - Uniform padding on all sides
+- `paddingL-[value]` - Left padding
+- `paddingT-[value]` - Top padding
+- `paddingR-[value]` - Right padding
+- `paddingB-[value]` - Bottom padding
+- `paddingH-[value]` - Horizontal padding (left + right)
+- `paddingV-[value]` - Vertical padding (top + bottom)
 
 ```jsx
-<View marginT-5 marginB-10>...</View>
+<View paddingV-20 paddingH-30>
+  {/* Content with vertical padding of 20 and horizontal padding of 30 */}
+</View>
 ```
 
-! padding and margin modifiers can also take [Spacing](https://github.com/wix/react-native-ui-lib/blob/master/src/style/spacings.ts) constants. 
+### Margin Modifiers
+Control spacing between elements with margin modifiers:
+- `margin-[value]` - Uniform margin on all sides
+- `marginL-[value]` - Left margin
+- `marginT-[value]` - Top margin
+- `marginR-[value]` - Right margin
+- `marginB-[value]` - Bottom margin
+- `marginH-[value]` - Horizontal margin (left + right)
+- `marginV-[value]` - Vertical margin (top + bottom)
+
 ```jsx
-<View margin-s5 padding-s2>...</View>
+<View marginT-5 marginB-10>
+  {/* Content with top margin of 5 and bottom margin of 10 */}
+</View>
 ```
+
+### Gap Modifiers
+Control the spacing between child elements in a container:
+- `gap-[value]` - Uniform gap between all children
+
+```jsx
+<View row gap-10>
+  <Button label="First" />
+  <Button label="Second" />
+  <Button label="Third" />
+</View>
+```
+
+These modifiers are particularly useful for creating evenly spaced layouts without manually adding margins to individual elements.
+
+> **Note**: Spacing modifiers can use your app's predefined spacing presets for consistent design. These presets are defined in our `spacings.ts` [file](https://github.com/wix/react-native-ui-lib/blob/master/src/style/spacings.ts) and allow for uniform spacing patterns throughout your application.
+
+
+```jsx
+<View margin-s5 padding-s2>
+  {/* Using preset spacing values */}
+</View>
+```
+
+
 ## Position Modifiers
-Use the position modifiers to quickly set an absolute position for your views.
-- `abs` will set the absolute position on your View
-- `absL`, `absT`, `absR`, `absB` - set the absolute position and align to Left, Top, Right, Bottom accordingly
-- `absH` and `absV` - position absolute and stretch horizontally or vertically
-- `absF` will set the absolute position and fill the parent view (similar to StyleSheet.absoluteFillObject)
+Easily control component positioning with our absolute position modifiers:
 
-## Styling Modifiers
-The last type of modifiers is for styling your components
+### Basic Positioning
+- `abs` - Apply absolute positioning to a component
 
-- [colorKey] - Controls the color of text components
-- background-[colorKey] (or bg-[colorKey]) - Background color 
+### Edge Alignment
+- `absL` - Position absolutely and align to the left edge
+- `absT` - Position absolutely and align to the top edge
+- `absR` - Position absolutely and align to the right edge
+- `absB` - Position absolutely and align to the bottom edge
+
+### Stretch Options
+- `absH` - Position absolutely and stretch horizontally
+- `absV` - Position absolutely and stretch vertically
+- `absF` - Position absolutely and fill the entire parent container (equivalent to `StyleSheet.absoluteFillObject`)
 
 ```jsx
-<Text blue30>...</Text>
-<View bg-grey70>...</View>
-<TouchableOpacity bg-red30/>
+<View absL>
+  <Text>Left-aligned absolute content</Text>
+</View>
+
+<View absF>
+  <Text>Full-screen absolute content</Text>
+</View>
 ```
 
-- [typographyKey] - Controls the typography of text components 
+## Style Modifiers
+Enhance your components' visual appearance with our style modifiers:
+
+### Color Modifiers
+Apply colors to text and backgrounds:
+- `[colorKey]` - Set text color (for Text components)
+- `background-[colorKey]` or `bg-[colorKey]` - Set background color
+
 ```jsx
-<Text text70>...</Text>
-<TextInput text80/>
+<Text blue30>Blue text</Text>
+<View bg-grey70>Grey background</View>
+<TouchableOpacity bg-red30>Red button</TouchableOpacity>
 ```
 
-- br[borderRadiusKey] - Set the border radius for the view (e.g. `br10`, `br20`, .., `br60`)
+### Typography Modifiers
+Control text styling with typography presets:
+- `[typographyKey]` - Apply typography presets to text elements
+
 ```jsx
-<View br40>...</View>
+<Text text70>Styled text</Text>
+<TextInput text80 />
 ```
 
+### Border Radius Modifiers
+Add rounded corners with predefined sizes:
+- `br[size]` - Apply border radius (sizes: 10, 20, ..., 60)
 
-! all styling modifiers are based on our [`Colors` & `Typography` presets](/docs/foundation/style).  
-You can load your own presets and use them as modifiers. 
+```jsx
+<View br40>
+  <Text>Rounded container</Text>
+</View>
+```
+
+> **Note**: All style modifiers are based on the [`Colors` & `Typography` presets](/docs/foundation/style).
+> You can customize these presets by loading your own design tokens.
 
 
 

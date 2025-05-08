@@ -1,14 +1,16 @@
 import React from 'react';
 import products from '../../assets/data/products';
-import {Colors} from 'react-native-ui-lib/style';
+import {Colors, ThemeManager} from 'react-native-ui-lib/style';
 import {BorderRadiuses, Button, Image, Spacings, Text, TouchableOpacity, View} from 'react-native-ui-lib/core';
 import ActionBar from 'react-native-ui-lib/actionBar';
 import Assets from 'react-native-ui-lib/assets';
+import Avatar from 'react-native-ui-lib/avatar';
 import Badge from 'react-native-ui-lib/badge';
 import Card from 'react-native-ui-lib/card';
 import Carousel from 'react-native-ui-lib/carousel';
 import Checkbox from 'react-native-ui-lib/checkbox';
 import Chip from 'react-native-ui-lib/chip';
+import ChipsInput from 'react-native-ui-lib/chipsInput';
 import ColorPalette from 'react-native-ui-lib/colorPalette';
 import ColorPicker from 'react-native-ui-lib/colorPicker';
 import ColorSwatch from 'react-native-ui-lib/colorSwatch';
@@ -78,6 +80,7 @@ const ReactLiveScope = {
   /* UI Lib's components */
   ActionBar,
   Assets,
+  Avatar,
   Badge,
   BorderRadiuses,
   Button,
@@ -85,6 +88,7 @@ const ReactLiveScope = {
   Carousel,
   Checkbox,
   Chip,
+  ChipsInput,
   ColorPalette,
   ColorPicker,
   Colors,
@@ -106,6 +110,7 @@ const ReactLiveScope = {
   Switch,
   Text,
   TextField,
+  ThemeManager,
   Timeline,
   TouchableOpacity,
   View,

@@ -124,6 +124,17 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     items
   });
 
+  const accessibleFilteredItems = useMemo(() => {
+    if (propItems) {
+      return filteredItems.map((item: PickerItemProps) => ({
+        ...item,
+        onPress: useWheelPicker && Constants.accessibility.isScreenReaderEnabled ?
+          () => onDoneSelecting(item.value) : undefined
+      }));
+    }
+    return filteredItems;
+  }, [propItems, useWheelPicker, filteredItems, onDoneSelecting]);
+
   const {label, accessibilityInfo} = usePickerLabel({
     value,
     items,
@@ -247,7 +258,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         useWheelPicker={useWheelPicker}
         mode={mode}
         useDialog={useDialog}
-        items={useItems ? filteredItems : undefined}
+        items={useItems ? accessibleFilteredItems : undefined}
         topBarProps={{
           ...topBarProps,
           onCancel: cancelSelect,
@@ -266,7 +277,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
         renderCustomTopElement={renderCustomTopElement}
         selectionStatus={selectionStatus}
       >
-        {filteredItems}
+        {accessibleFilteredItems}
       </PickerItemsList>
     );
   }, [
@@ -285,7 +296,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     renderCustomSearch,
     renderHeader,
     listProps,
-    filteredItems,
+    accessibleFilteredItems,
     useSafeArea,
     useWheelPicker,
     items,

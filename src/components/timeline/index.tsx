@@ -1,6 +1,7 @@
 import React, {useCallback, useMemo, useEffect, useState, useRef} from 'react';
 import {StyleSheet, MeasureOnSuccessCallback, LayoutChangeEvent} from 'react-native';
 import {Colors, Spacings} from '../../style';
+import {useThemeProps} from '../../hooks';
 import View from '../view';
 import Point from './Point';
 import Line from './Line';
@@ -17,9 +18,9 @@ export {
 const CONTENT_CONTAINER_PADDINGS = Spacings.s2;
 const ENTRY_POINT_HEIGHT = 2;
 
-
 const Timeline = (props: TimelineProps) => {
-  const {topLine, bottomLine, point, children} = props;
+  const themeProps = useThemeProps(props, 'Timeline');
+  const {topLine, bottomLine, point, children, testID} = themeProps;
   const [anchorMeasurements, setAnchorMeasurements] = useState<Layout | undefined>();
   const [contentContainerMeasurements, setContentContainerMeasurements] = useState<Layout | undefined>();
   const [pointMeasurements, setPointMeasurements] = useState<Layout | undefined>();
@@ -59,7 +60,7 @@ const Timeline = (props: TimelineProps) => {
         return Colors.$backgroundDangerHeavy;
       case StateTypes.SUCCESS:
         return Colors.$backgroundSuccessHeavy;
-      default: 
+      default:
         return Colors.$backgroundPrimaryHeavy;
     }
   };
@@ -95,6 +96,7 @@ const Timeline = (props: TimelineProps) => {
   const renderTopLine = () => {
     return (
       <Line
+        testID={`${testID}.topLine`}
         {...topLine}
         top
         style={topLineStyle}
@@ -107,6 +109,7 @@ const Timeline = (props: TimelineProps) => {
     if (bottomLine) {
       return (
         <Line
+          testID={`${testID}.bottomLine`}
           {...bottomLine}
           style={styles.bottomLine}
           color={bottomLine?.color || getStateColor(bottomLine?.state)}
@@ -116,10 +119,15 @@ const Timeline = (props: TimelineProps) => {
   };
 
   return (
-    <View row style={containerStyle}>
+    <View row style={containerStyle} testID={testID}>
       <View style={styles.timelineContainer}>
         {renderTopLine()}
-        <Point {...point} onLayout={onPointLayout} color={point?.color || getStateColor(point?.state)}/>
+        <Point
+          {...point}
+          onLayout={onPointLayout}
+          color={point?.color || getStateColor(point?.state)}
+          testID={`${testID}.point`}
+        />
         {renderBottomLine()}
       </View>
       <View style={styles.contentContainer} onLayout={onContentContainerLayout} ref={contentContainerRef}>
@@ -134,7 +142,6 @@ Timeline.displayName = 'Timeline';
 Timeline.states = StateTypes;
 Timeline.lineTypes = LineTypes;
 Timeline.pointTypes = PointTypes;
-
 
 const styles = StyleSheet.create({
   container: {

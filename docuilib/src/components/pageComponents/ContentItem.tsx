@@ -4,8 +4,8 @@ import {LiveProvider, LivePreview} from 'react-live';
 import styles from './ContentItem.module.scss';
 import ReactLiveScope from '../../theme/ReactLiveScope';
 import CodeBlock from '../CodeBlock';
-import CodeIcon from '../../assets/icons/code';
 import {isComponentSupported} from '../../utils/componentUtils';
+const showCodeIcon = require('../../assets/icons/code.png');
 
 type ComponentItemProps = {
   componentName: string;
@@ -71,8 +71,8 @@ const ComponentItem = (props: ComponentItemProps) => {
       {content}
       {showCodeButton && (
         <button onClick={toggleCode} className={styles.showCodeButton}>
-          <CodeIcon/>
-          {showCode ? 'Hide' : 'Show'} code
+          <img src={showCodeIcon} width={20}/>
+          {/* {showCode ? 'Hide' : 'Show'} code */}
         </button>
       )}
     </div>
@@ -96,7 +96,7 @@ type ContentItemProps = {
 
 export const ContentItem = ({item, componentName, showCodeButton, category}: ContentItemProps) => {
   const getFigmaEmbed = (value: string, height = 450) => {
-    const modifiedValue = !value.includes('page-selector=') ? value + '&page-selector=false' : value;
+    const modifiedValue = !value.includes('page-selector=') ? value + '&page-selector=false&footer=false' : value;
     return <iframe width={'100%'} height={height} src={modifiedValue}/>;
   };
 

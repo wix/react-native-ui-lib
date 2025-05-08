@@ -1,4 +1,3 @@
-
 import React, {useMemo} from 'react';
 import {StyleSheet, LayoutChangeEvent} from 'react-native';
 import {Colors, Spacings} from '../../style';
@@ -17,10 +16,11 @@ const ICON_SIZE = 16;
 
 type PointPropsInternal = PointProps & {
   onLayout?: (event: LayoutChangeEvent) => void;
+  testID?: string;
 };
 
 const Point = (props: PointPropsInternal) => {
-  const {icon, iconProps, removeIconBackground, label, type, color, onLayout} = props;
+  const {icon, iconProps, removeIconBackground, label, type, color, onLayout, testID} = props;
 
   const pointStyle = useMemo(() => {
     const hasOutline = type === PointTypes.OUTLINE;
@@ -37,23 +37,29 @@ const Point = (props: PointPropsInternal) => {
       {borderWidth: OUTLINE_WIDTH, borderColor: color && Colors.getColorTint(color, OUTLINE_TINT)};
     const circleStyle = !hasContent && isCircle && 
       {backgroundColor: 'transparent', borderWidth: CIRCLE_WIDTH, borderColor: color};
-    
+
     return [styles.point, pointSizeStyle, !removeIconBackground && pointColorStyle, outlineStyle, circleStyle];
   }, [type, color, label, removeIconBackground, icon]);
 
   const renderPointContent = () => {
-    const {removeIconBackground} = props;
+    const {removeIconBackground, labelColor} = props;
     const tintColor = removeIconBackground ? Colors.$iconDefault : Colors.$iconDefaultLight;
     const iconSize = removeIconBackground ? undefined : ICON_SIZE;
     if (icon) {
-      return <Icon tintColor={tintColor} {...iconProps} size={iconSize} source={icon}/>;
+      return (
+        <Icon testID={`${testID}.icon`} tintColor={tintColor} {...iconProps} size={iconSize} source={icon}/>
+      );
     } else if (label) {
-      return <Text recorderTag={'unmask'} $textDefaultLight subtextBold>{label}</Text>;
+      return (
+        <Text testID={`${testID}.label`} recorderTag={'unmask'} $textDefaultLight subtextBold color={labelColor}>
+          {label}
+        </Text>
+      );
     }
   };
 
   return (
-    <View center style={pointStyle} onLayout={onLayout}>
+    <View center style={pointStyle} onLayout={onLayout} testID={testID}>
       {renderPointContent()}
     </View>
   );
