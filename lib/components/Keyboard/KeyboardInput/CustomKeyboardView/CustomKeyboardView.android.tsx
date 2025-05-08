@@ -1,10 +1,7 @@
 import React from 'react';
-import {Keyboard, requireNativeComponent, View} from 'react-native';
-import TextInputKeyboardManager from '../TextInputKeyboardManager/TextInputKeyboardManager.android';
+import {Keyboard, View} from 'react-native';
 import KeyboardRegistry from '../KeyboardRegistry';
 import CustomKeyboardViewBase, {CustomKeyboardViewBaseProps} from '../CustomKeyboardViewBase';
-
-const CustomKeyboardViewNativeAndroid = requireNativeComponent('CustomKeyboardViewNativeTemp');
 
 export default class CustomKeyboardView extends CustomKeyboardViewBase<CustomKeyboardViewBaseProps> {
   static displayName = 'IGNORE';
@@ -15,7 +12,6 @@ export default class CustomKeyboardView extends CustomKeyboardViewBase<CustomKey
     if (prevProps.component !== component) {
       
       if (!component) {
-        // await TextInputKeyboardManager.reset();
         if (shouldFocus) {
           if (inputRef?.current) {
             inputRef.current.focus?.();
