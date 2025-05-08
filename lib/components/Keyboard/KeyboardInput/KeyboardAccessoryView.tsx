@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import KeyboardTrackingView, {KeyboardTrackingViewProps} from '../KeyboardTracking/KeyboardTrackingView';
 import CustomKeyboardView from './CustomKeyboardView';
-import KeyboardUtils from './utils/KeyboardUtils';
+import KeyboardUtils, {KeyboardHeightListener} from './utils/KeyboardUtils';
 
 const IsIOS = Platform.OS === 'ios';
 const IsAndroid = Platform.OS === 'android';
@@ -76,6 +76,7 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
   // TODO: fix
   customInputControllerEventsSubscriber: any;
   trackingViewRef: any;
+  subscription: any;
 
   constructor(props: KeyboardAccessoryViewProps) {
     super(props);
@@ -90,12 +91,16 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
     this.registerAndroidBackHandler();
   }
 
+  state = {
+    keyboardHeight: 0
+  };
+
   componentWillUnmount() {
     if (this.customInputControllerEventsSubscriber) {
       this.customInputControllerEventsSubscriber.remove();
     }
     if (IsAndroid) {
-      BackHandler.removeEventListener('hardwareBackPress', this.onAndroidBackPressed);
+      this.subscription.remove();
     }
   }
 
@@ -146,7 +151,7 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
 
   registerAndroidBackHandler() {
     if (IsAndroid) {
-      BackHandler.addEventListener('hardwareBackPress', this.onAndroidBackPressed);
+      this.subscription = BackHandler.addEventListener('hardwareBackPress', this.onAndroidBackPressed);
     }
   }
 
@@ -167,8 +172,12 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
       this.trackingViewRef.scrollToStart();
     }
   }
+  onKeyboardHeightChange = (keyboardHeight: number) => {
+    this.setState({keyboardHeight});
+  };
 
   render() {
+    const {keyboardHeight} = this.state;
     const {
       renderContent,
       kbInputRef,
@@ -187,8 +196,10 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
         style={styles.trackingToolbarContainer}
         onLayout={this.onContainerComponentHeightChanged}
       >
+        <KeyboardHeightListener onKeyboardHeightChange={this.onKeyboardHeightChange}/>
         <>{renderContent?.()}</>
         <CustomKeyboardView
+          keyboardHeight={keyboardHeight}
           inputRef={kbInputRef}
           component={kbComponent}
           initialProps={this.processInitialProps()}
