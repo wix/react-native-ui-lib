@@ -6,12 +6,12 @@ import {listItems, gridItems, TEXT_LENGTH, OPTIONS_TYPE, State, ICONS} from './A
 
 function IncubatorActionSheetScreen() {
   const [actionSheetOptions, setActionSheetOptions] = useState<State>({
-    titleLength: TEXT_LENGTH.NO_TEXT,
+    titleLength: TEXT_LENGTH.SHORT,
     titleIsProminent: false,
     titleIsClickable: false,
-    subtitleLength: TEXT_LENGTH.NO_TEXT,
+    subtitleLength: TEXT_LENGTH.SHORT,
     showFooter: false,
-    optionsType: OPTIONS_TYPE.NONE,
+    optionsType: OPTIONS_TYPE.REGULAR,
     visible: false
   });
 
@@ -92,7 +92,7 @@ function IncubatorActionSheetScreen() {
 
   const getHeaderProps = () => {
     const {titleIsProminent, titleIsClickable} = actionSheetOptions;
-    const onPress = titleIsClickable ? clicked('Header clicked') : undefined;
+    const onPress = titleIsClickable ? () => clicked('Header clicked') : undefined;
     const titleStyle = titleIsProminent ? {...Typography.text70BO} : undefined;
 
     return {
@@ -214,7 +214,6 @@ function IncubatorActionSheetScreen() {
           centerH: true,
           width: '95%',
           height: _.isEmpty(list) && !gridOptions ? 150 : undefined,
-          //@ts-ignore
           headerProps
         }}
         gridOptions={gridOptions}
