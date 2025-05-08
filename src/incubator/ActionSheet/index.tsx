@@ -154,6 +154,7 @@ const ActionSheet = (props: ActionSheetProps) => {
         showStartFader={false}
         showEndFader
         keyboardShouldPersistTaps="always"
+        useGestureHandlerRootView={false}
         {...props}
       >
         {_gridOptions ? <GridOptions {..._gridOptions}/> : renderList()}
