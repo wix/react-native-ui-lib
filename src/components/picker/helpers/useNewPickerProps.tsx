@@ -17,12 +17,12 @@ const useNewPickerProps = (props: PickerProps) => {
     renderOverlay
   } = props;
 
-  const defaultModalProps: ExpandableOverlayProps['modalProps'] = {
+  const defaultModalProps = {
     animationType: 'slide',
     transparent: Constants.isIOS && enableModalBlur,
     enableModalBlur: Constants.isIOS && enableModalBlur,
     onRequestClose: topBarProps?.onCancel
-  };
+  } satisfies ExpandableOverlayProps['modalProps'];
 
   const mergedModalProps = {
     ...defaultModalProps,
