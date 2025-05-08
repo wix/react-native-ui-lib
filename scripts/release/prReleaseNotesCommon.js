@@ -196,7 +196,7 @@ async function generateReleaseNotes(latestVersion,
   newVersion,
   fileNamePrefix,
   repo,
-  header = '',
+  getHeader = () => '',
   tagPrefix = '',
   categories = []) {
   let latestVer, newVer;
@@ -214,6 +214,7 @@ async function generateReleaseNotes(latestVersion,
   });
 
   rl.on('close', () => {
+    const header = getHeader(newVer);
     console.info(`Current latest version is v${latestVer}`);
     console.info(`Generating release notes out or PRs for v${newVer}`);
     _generateReleaseNotes(latestVer, newVer, fileNamePrefix, repo, header, tagPrefix, categories);

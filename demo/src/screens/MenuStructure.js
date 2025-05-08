@@ -38,6 +38,7 @@ export const navigationData = {
       {title: 'Page Control', tags: 'page', screen: 'unicorn.components.PageControlScreen'},
       {title: 'ProgressBar', tags: 'progress bar animated', screen: 'unicorn.animations.ProgressBarScreen'},
       {title: 'ScrollBar', tags: 'scroll bar gradient', screen: 'unicorn.components.ScrollBarScreen'},
+      {title: 'SearchInputScreen', tags: 'search input', screen: 'unicorn.components.SearchInputScreen'},
       {
         title: 'Shared Transition',
         tags: 'shared transition element',
@@ -115,9 +116,7 @@ export const navigationData = {
   },
   Charts: {
     title: 'Charts',
-    screens: [
-      {title: 'PieChart', tags: 'pie chart data', screen: 'unicorn.components.PieChartScreen'}
-    ]
+    screens: [{title: 'PieChart', tags: 'pie chart data', screen: 'unicorn.components.PieChartScreen'}]
   },
   LayoutsAndTemplates: {
     title: 'Layouts & Templates',

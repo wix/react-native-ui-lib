@@ -260,6 +260,9 @@ module.exports = {
       get IncubatorExpandableOverlay() {
         return require('./screens/incubatorScreens/IncubatorExpandableOverlayScreen').default;
       },
+      get IncubatorCalendarScreen() {
+        return require('./screens/incubatorScreens/IncubatorCalendarScreen').default;
+      },
       // realExamples
       get AppleMusic() {
         return require('./screens/realExamples/AppleMusic').default;

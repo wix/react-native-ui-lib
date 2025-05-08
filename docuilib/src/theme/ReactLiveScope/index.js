@@ -10,6 +10,7 @@ import Card from 'react-native-ui-lib/card';
 import Carousel from 'react-native-ui-lib/carousel';
 import Checkbox from 'react-native-ui-lib/checkbox';
 import Chip from 'react-native-ui-lib/chip';
+import ChipsInput from 'react-native-ui-lib/chipsInput';
 import ColorPalette from 'react-native-ui-lib/colorPalette';
 import ColorPicker from 'react-native-ui-lib/colorPicker';
 import ColorSwatch from 'react-native-ui-lib/colorSwatch';
@@ -87,6 +88,7 @@ const ReactLiveScope = {
   Carousel,
   Checkbox,
   Chip,
+  ChipsInput,
   ColorPalette,
   ColorPicker,
   Colors,
