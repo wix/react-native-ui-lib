@@ -15,18 +15,14 @@ export default function UILivePreview({code: initialCode, componentName = undefi
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const {siteConfig} = useDocusaurusContext();
   const iframeRef = useRef(null);
-  const {code: formattedCode} = useFormattedCode(initialCode, {printWidth: 100});
-  const [code, setCode] = useState(formattedCode);
-
-  useEffect(() => {
-    setCode(formattedCode);
-  }, [formattedCode]);
+  const [rawCode, setRawCode] = useState(initialCode);
+  const {code: formattedCode} = useFormattedCode(rawCode, {printWidth: 100});
 
   useEffect(() => {
     if (iframeLoaded) {
-      sendMessageToIframe(code);
+      sendMessageToIframe(formattedCode);
     }
-  }, [iframeLoaded, code]);
+  }, [iframeLoaded, formattedCode]);
 
   const sendMessageToIframe = code => {
     const message = {type: IFRAME_MESSAGE_TYPE, code};
@@ -34,7 +30,7 @@ export default function UILivePreview({code: initialCode, componentName = undefi
   };
 
   if (!liveScopeSupport && !isComponentSupported(componentName)) {
-    return <CodeBlock language="jsx">{code}</CodeBlock>;
+    return <CodeBlock language="jsx">{formattedCode}</CodeBlock>;
   }
 
   return (
@@ -43,10 +39,10 @@ export default function UILivePreview({code: initialCode, componentName = undefi
         const iframeSource = `${window.location.origin}${siteConfig?.baseUrl}livePreview`;
 
         return (
-          <LiveProvider code={code} scope={ReactLiveScope} theme={themes.oceanicNext}>
+          <LiveProvider code={formattedCode} scope={ReactLiveScope} theme={themes.oceanicNext}>
             <div className={styles.container}>
               <div className={styles.codeContainer}>
-                <LiveEditor onChange={setCode} className={styles.liveEditor}/>
+                <LiveEditor onChange={setRawCode} className={styles.liveEditor}/>
                 <div className={styles.errorContainer}>
                   <LiveError/>
                 </div>
