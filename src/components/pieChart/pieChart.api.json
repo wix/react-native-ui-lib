@@ -4,12 +4,50 @@
   "description": "Pie Chart",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/PieChartScreen.tsx",
   "props": [
-    {"name": "segments", "type": "PieChartSegmentProps[]", "description": "Pie chart segments array"},
-    {"name": "diameter", "type": "number", "description": "Pie chart diameter"},
-    {"name": "dividerWidth", "type": "number", "description": "The width of the divider between the segments"},
-    {"name": "dividerColor", "type": "ColorValue", "description": "The color of the divider between the segments"}
+    {
+      "name": "segments",
+      "type": "PieChartSegmentProps[]",
+      "description": "Pie chart segments array"
+    },
+    {
+      "name": "diameter",
+      "type": "number",
+      "description": "Pie chart diameter"
+    },
+    {
+      "name": "dividerWidth",
+      "type": "number",
+      "description": "The width of the divider between the segments"
+    },
+    {
+      "name": "dividerColor",
+      "type": "ColorValue",
+      "description": "The color of the divider between the segments"
+    }
   ],
   "snippet": [
     "<PieChart segments={[{percentage: 50, color: Colors.blue30}, {percentage: 30, color: Colors.red30}, {percentage: 20, color: Colors.green30}]} diameter={144}/>"
-  ]
+  ],
+  "docs": {
+    "hero": {
+      "title": "PieChart",
+      "description": "Pie Chart"
+    },
+    "tabs": [
+      {
+        "title": "UX Guidelines",
+        "sections": [
+          {
+            "type": "section",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/Krv1pLl7kq2L52vMRwd498/MADS-Guidelines?node-id=22898-888932&embed-host=share",
+                "height": 1600
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }

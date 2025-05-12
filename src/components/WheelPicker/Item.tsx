@@ -25,6 +25,7 @@ interface InternalProps<T> extends WheelPickerItemProps<T> {
   inactiveColor?: string;
   style?: TextStyle;
   onSelect: (index: number) => void;
+  onPress?: () => void;
   centerH?: boolean;
   fakeLabel?: string;
   fakeLabelStyle?: TextStyle;
@@ -42,6 +43,7 @@ const WheelPickerItem = <T extends WheelPickerItemValue = number>(props: Interna
     fakeLabelProps,
     itemHeight,
     onSelect,
+    onPress,
     offset,
     activeColor = Colors.$textPrimary,
     inactiveColor = Colors.$textNeutralHeavy,
@@ -76,6 +78,11 @@ const WheelPickerItem = <T extends WheelPickerItemValue = number>(props: Interna
     return [animatedColorStyle, style, fakeLabel ? textWithLabelPaddingStyle : styles.textPadding];
   }, [style, fakeLabel, animatedColorStyle, textWithLabelPaddingStyle]);
 
+  const _onPress = useCallback(() => {
+    selectItem();
+    onPress?.();
+  }, [onPress, selectItem]);
+
   const _fakeLabelStyle = useMemo(() => StyleSheet.flatten([fakeLabelStyle, styles.hidden]), [fakeLabelStyle]);
   return (
     <AnimatedTouchableOpacity
@@ -86,7 +93,7 @@ const WheelPickerItem = <T extends WheelPickerItemValue = number>(props: Interna
       centerH={align ? align === WheelPickerAlign.CENTER : centerH}
       right={align ? align === WheelPickerAlign.RIGHT : !centerH}
       left={align === WheelPickerAlign.LEFT}
-      onPress={selectItem}
+      onPress={_onPress}
       // @ts-ignore reanimated2
       index={index}
       testID={testID}

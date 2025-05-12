@@ -96,7 +96,7 @@ type ContentItemProps = {
 
 export const ContentItem = ({item, componentName, showCodeButton, category}: ContentItemProps) => {
   const getFigmaEmbed = (value: string, height = 450) => {
-    const modifiedValue = !value.includes('page-selector=') ? value + '&page-selector=false' : value;
+    const modifiedValue = !value.includes('page-selector=') ? value + '&page-selector=false&footer=false' : value;
     return <iframe width={'100%'} height={height} src={modifiedValue}/>;
   };
 
