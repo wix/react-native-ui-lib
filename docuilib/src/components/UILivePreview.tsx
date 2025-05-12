@@ -4,6 +4,7 @@ import {themes} from 'prism-react-renderer';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import CodeBlock from '@theme/CodeBlock';
+import Button from 'react-native-ui-lib/Button';
 import ReactLiveScope from '../theme/ReactLiveScope';
 import {isComponentSupported} from '../utils/componentUtils';
 import useFormattedCode from '../hooks/useFormattedCode';
@@ -15,22 +16,26 @@ export default function UILivePreview({code: initialCode, componentName = undefi
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const {siteConfig} = useDocusaurusContext();
   const iframeRef = useRef(null);
-  const [rawCode, setRawCode] = useState(initialCode);
-  const {code: formattedCode} = useFormattedCode(rawCode, {printWidth: 100});
+  const [code, setCode] = useState(initialCode);
+  const {code: formattedCode} = useFormattedCode(code, {printWidth: 100});
 
   useEffect(() => {
     if (iframeLoaded) {
-      sendMessageToIframe(formattedCode);
+      sendMessageToIframe(code);
     }
-  }, [iframeLoaded, formattedCode]);
+  }, [iframeLoaded, code]);
 
   const sendMessageToIframe = code => {
     const message = {type: IFRAME_MESSAGE_TYPE, code};
     iframeRef.current?.contentWindow.postMessage(message, '*');
   };
 
+  const handleFormat = () => {
+    setCode(formattedCode);
+  };
+
   if (!liveScopeSupport && !isComponentSupported(componentName)) {
-    return <CodeBlock language="jsx">{formattedCode}</CodeBlock>;
+    return <CodeBlock language="jsx">{code}</CodeBlock>;
   }
 
   return (
@@ -39,10 +44,19 @@ export default function UILivePreview({code: initialCode, componentName = undefi
         const iframeSource = `${window.location.origin}${siteConfig?.baseUrl}livePreview`;
 
         return (
-          <LiveProvider code={formattedCode} scope={ReactLiveScope} theme={themes.oceanicNext}>
+          <LiveProvider code={code} scope={ReactLiveScope} theme={themes.oceanicNext}>
             <div className={styles.container}>
               <div className={styles.codeContainer}>
-                <LiveEditor onChange={setRawCode} className={styles.liveEditor}/>
+                <div className={styles.codeHeader}>
+                  <Button
+                    label="Prettify"
+                    size={Button.sizes.small}
+                    onPress={handleFormat}
+                    backgroundColor="#2d2d2d"
+                    borderRadius={4}
+                  />
+                </div>
+                <LiveEditor onChange={setCode} className={styles.liveEditor}/>
                 <div className={styles.errorContainer}>
                   <LiveError/>
                 </div>
