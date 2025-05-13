@@ -4,7 +4,7 @@ import {themes} from 'prism-react-renderer';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import CodeBlock from '@theme/CodeBlock';
-import Button from 'react-native-ui-lib/Button';
+import {Button} from 'react-native-ui-lib/core';
 import ReactLiveScope from '../theme/ReactLiveScope';
 import {isComponentSupported} from '../utils/componentUtils';
 import useFormattedCode from '../hooks/useFormattedCode';
