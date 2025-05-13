@@ -4,7 +4,6 @@ import {themes} from 'prism-react-renderer';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import CodeBlock from '@theme/CodeBlock';
-import Button from 'react-native-ui-lib/Button';
 import ReactLiveScope from '../theme/ReactLiveScope';
 import {isComponentSupported} from '../utils/componentUtils';
 import useFormattedCode from '../hooks/useFormattedCode';
@@ -48,13 +47,12 @@ export default function UILivePreview({code: initialCode, componentName = undefi
             <div className={styles.container}>
               <div className={styles.codeContainer}>
                 <div className={styles.codeHeader}>
-                  <Button
-                    label="Prettify"
-                    size={Button.sizes.small}
-                    onPress={handleFormat}
-                    backgroundColor="#2d2d2d"
-                    borderRadius={4}
-                  />
+                  <button 
+                    onClick={handleFormat}
+                    className={styles.formatButton}
+                  >
+                    Prettify
+                  </button>
                 </div>
                 <LiveEditor onChange={setCode} className={styles.liveEditor}/>
                 <div className={styles.errorContainer}>

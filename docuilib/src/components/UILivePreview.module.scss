@@ -45,6 +45,26 @@ $editor-height: 700px;
   margin-right: 24px;
   display: flex;
   justify-content: flex-end;
+  width: auto;
+}
+
+.formatButton {
+  display: inline-block;
+  width: auto;
+  min-width: 80px;
+  background-color: #2d2d2d;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: #3d3d3d;
+  }
 }
 
 .errorContainer {
