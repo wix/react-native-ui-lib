@@ -16,6 +16,8 @@ export default function UILivePreview({code: initialCode, componentName = undefi
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const {siteConfig} = useDocusaurusContext();
   const iframeRef = useRef(null);
+  // const [code, setCode] = useState(initialCode);
+  // const {code: formattedCode} = useFormattedCode(code, {printWidth: 100});
   const {code: formattedCode} = useFormattedCode(initialCode, {printWidth: 100});
   const [code, setCode] = useState(formattedCode);
 
@@ -34,13 +36,13 @@ export default function UILivePreview({code: initialCode, componentName = undefi
     iframeRef.current?.contentWindow.postMessage(message, '*');
   };
 
+  // const handleFormat = () => {
+  //   setCode(formattedCode);
+  // };
+
   if (!liveScopeSupport && !isComponentSupported(componentName)) {
     return <CodeBlock language="jsx">{code}</CodeBlock>;
   }
-
-  const handleFormat = () => {
-    setCode(formattedCode);
-  };
 
   return (
     <BrowserOnly>
@@ -51,7 +53,7 @@ export default function UILivePreview({code: initialCode, componentName = undefi
           <LiveProvider code={code} scope={ReactLiveScope} theme={themes.oceanicNext}>
             <div className={styles.container}>
               <div className={styles.codeContainer}>
-                <div className={styles.codeHeader}>
+                {/* <div className={styles.codeHeader}>
                   <Button
                     label="Prettify"
                     size={Button.sizes.small}
@@ -59,7 +61,7 @@ export default function UILivePreview({code: initialCode, componentName = undefi
                     backgroundColor="#2d2d2d"
                     borderRadius={4}
                   />
-                </div>
+                </div> */}
                 <LiveEditor onChange={setCode} className={styles.liveEditor}/>
                 <div className={styles.errorContainer}>
                   <LiveError/>
