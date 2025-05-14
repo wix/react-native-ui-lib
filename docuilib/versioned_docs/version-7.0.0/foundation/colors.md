@@ -8,8 +8,6 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import {ColorsTable, ColorsPalette} from '@site/src/components/ColorsSection'
 
-## Colors
-
 Our default library Colors object is using **System Colors** and **Design Tokens**.
 
 <Tabs>
