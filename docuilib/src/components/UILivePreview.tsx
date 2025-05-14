@@ -1,10 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {LiveProvider, LiveEditor, LiveError} from 'react-live';
 import {themes} from 'prism-react-renderer';
+// import {Button} from 'react-native-ui-lib/core';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import CodeBlock from '@theme/CodeBlock';
-import {Button} from 'react-native-ui-lib/core';
 import ReactLiveScope from '../theme/ReactLiveScope';
 import {isComponentSupported} from '../utils/componentUtils';
 import useFormattedCode from '../hooks/useFormattedCode';
@@ -16,8 +16,14 @@ export default function UILivePreview({code: initialCode, componentName = undefi
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const {siteConfig} = useDocusaurusContext();
   const iframeRef = useRef(null);
-  const [code, setCode] = useState(initialCode);
-  const {code: formattedCode} = useFormattedCode(code, {printWidth: 100});
+  const {code: formattedCode} = useFormattedCode(initialCode, {printWidth: 100});
+  const [code, setCode] = useState(formattedCode);
+  // const [code, setCode] = useState(initialCode);
+  // const {code: formattedCode} = useFormattedCode(code, {printWidth: 100});
+
+  useEffect(() => {
+    setCode(formattedCode);
+  }, [formattedCode]);
 
   useEffect(() => {
     if (iframeLoaded) {
@@ -30,9 +36,9 @@ export default function UILivePreview({code: initialCode, componentName = undefi
     iframeRef.current?.contentWindow.postMessage(message, '*');
   };
 
-  const handleFormat = () => {
-    setCode(formattedCode);
-  };
+  // const handleFormat = () => {
+  //   setCode(formattedCode);
+  // };
 
   if (!liveScopeSupport && !isComponentSupported(componentName)) {
     return <CodeBlock language="jsx">{code}</CodeBlock>;
@@ -47,7 +53,7 @@ export default function UILivePreview({code: initialCode, componentName = undefi
           <LiveProvider code={code} scope={ReactLiveScope} theme={themes.oceanicNext}>
             <div className={styles.container}>
               <div className={styles.codeContainer}>
-                <div className={styles.codeHeader}>
+                {/* <div className={styles.codeHeader}>
                   <Button
                     label="Prettify"
                     size={Button.sizes.small}
@@ -55,20 +61,22 @@ export default function UILivePreview({code: initialCode, componentName = undefi
                     backgroundColor="#2d2d2d"
                     borderRadius={4}
                   />
-                </div>
+                </div> */}
                 <LiveEditor onChange={setCode} className={styles.liveEditor}/>
                 <div className={styles.errorContainer}>
                   <LiveError/>
                 </div>
               </div>
-              <div className={styles.preview}>
-                <iframe
-                  ref={iframeRef}
-                  className={styles.iframe}
-                  src={iframeSource}
-                  title="Simulator"
-                  onLoad={() => setIframeLoaded(true)}
-                />
+              <div className={styles.previewContainer}>
+                <div className={styles.preview}>
+                  <iframe
+                    ref={iframeRef}
+                    className={styles.iframe}
+                    src={iframeSource}
+                    title="Simulator"
+                    onLoad={() => setIframeLoaded(true)}
+                  />
+                </div>
               </div>
             </div>
           </LiveProvider>
