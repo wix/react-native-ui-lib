@@ -110,7 +110,7 @@ const darkCodeTheme = themes.dracula;
             },
             {
               type: 'doc',
-              docId: 'components/basic/View',
+              docId: '/category/basic',
               position: 'left',
               label: 'COMPONENTS'
             },
