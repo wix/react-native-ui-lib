@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {LiveProvider, LiveEditor, LiveError} from 'react-live';
 import {themes} from 'prism-react-renderer';
-import {Button} from 'react-native-ui-lib/core';
+// import {Button} from 'react-native-ui-lib/core';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import CodeBlock from '@theme/CodeBlock';
@@ -16,10 +16,10 @@ export default function UILivePreview({code: initialCode, componentName = undefi
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const {siteConfig} = useDocusaurusContext();
   const iframeRef = useRef(null);
-  // const [code, setCode] = useState(initialCode);
-  // const {code: formattedCode} = useFormattedCode(code, {printWidth: 100});
   const {code: formattedCode} = useFormattedCode(initialCode, {printWidth: 100});
   const [code, setCode] = useState(formattedCode);
+  // const [code, setCode] = useState(initialCode);
+  // const {code: formattedCode} = useFormattedCode(code, {printWidth: 100});
 
   useEffect(() => {
     setCode(formattedCode);
