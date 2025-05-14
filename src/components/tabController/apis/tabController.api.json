@@ -5,8 +5,17 @@
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx",
   "images": [],
   "props": [
-    {"name": "items", "type": "TabControllerItemProps[]", "description": "The list of tab bar items"},
-    {"name": "initialIndex", "type": "number", "description": "Initial selected index", "default": "0"},
+    {
+      "name": "items",
+      "type": "TabControllerItemProps[]",
+      "description": "The list of tab bar items"
+    },
+    {
+      "name": "initialIndex",
+      "type": "number",
+      "description": "Initial selected index",
+      "default": "0"
+    },
     {
       "name": "onChangeIndex",
       "type": "(index: number, prevIndex: number | null) => void",
@@ -25,7 +34,11 @@
       "note": "Does not work with asCarousel",
       "default": "false"
     },
-    {"name": "carouselPageWidth;", "type": "number", "description": "Pass for custom carousel page width"}
+    {
+      "name": "carouselPageWidth;",
+      "type": "number",
+      "description": "Pass for custom carousel page width"
+    }
   ],
   "snippet": [
     "<TabController items={[{label: 'First'}, {label: 'Second'}, {label: 'Third'}]$1}>",
@@ -75,7 +88,7 @@
             "items": [
               {
                 "title": "",
-                "description": "**Inactive Tab**\nText: BodySmall $textDefault\nBackground: $backgroundElevated  \n\n**Active Tab**\nText: BodySmallBold $textPrimary\nBackground: $backgroundElevated\nIndicator: $outlinePrimary  \n\n**Shadow**\nsh10\n\n**Dark Skin**\nText: BodySmall, System White\nBackground: System Grey10\nDivider: System Grey20",
+                "description": "markdown: **Inactive Tab**\nText: BodySmall $textDefault\nBackground: $backgroundElevated  \n\n**Active Tab**\nText: BodySmallBold $textPrimary\nBackground: $backgroundElevated\nIndicator: $outlinePrimary  \n\n**Shadow**\nsh10\n\n**Dark Skin**\nText: BodySmall, System White\nBackground: System Grey10\nDivider: System Grey20",
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/TabBar/tabBar_overview_styling.png"
@@ -88,7 +101,10 @@
           },
           {
             "type": "table",
-            "columns": ["Property", "Component"],
+            "columns": [
+              "Property",
+              "Component"
+            ],
             "items": [
               {
                 "title": "Counter Badge",
