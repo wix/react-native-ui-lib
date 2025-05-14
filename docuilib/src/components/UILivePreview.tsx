@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {LiveProvider, LiveEditor, LiveError} from 'react-live';
 import {themes} from 'prism-react-renderer';
+import {Button} from 'react-native-ui-lib/core';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import CodeBlock from '@theme/CodeBlock';
@@ -15,12 +16,6 @@ export default function UILivePreview({code: initialCode, componentName = undefi
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const {siteConfig} = useDocusaurusContext();
   const iframeRef = useRef(null);
-  // const {code: formattedCode} = useFormattedCode(initialCode, {printWidth: 100});
-  // const [code, setCode] = useState(formattedCode);
-
-  // useEffect(() => {
-  //   setCode(formattedCode);
-  // }, [formattedCode]);
   const {code: formattedCode} = useFormattedCode(initialCode, {printWidth: 100});
   const [code, setCode] = useState(formattedCode);
 
@@ -43,6 +38,10 @@ export default function UILivePreview({code: initialCode, componentName = undefi
     return <CodeBlock language="jsx">{code}</CodeBlock>;
   }
 
+  const handleFormat = () => {
+    setCode(formattedCode);
+  };
+
   return (
     <BrowserOnly>
       {() => {
@@ -52,6 +51,15 @@ export default function UILivePreview({code: initialCode, componentName = undefi
           <LiveProvider code={code} scope={ReactLiveScope} theme={themes.oceanicNext}>
             <div className={styles.container}>
               <div className={styles.codeContainer}>
+                <div className={styles.codeHeader}>
+                  <Button
+                    label="Prettify"
+                    size={Button.sizes.small}
+                    onPress={handleFormat}
+                    backgroundColor="#2d2d2d"
+                    borderRadius={4}
+                  />
+                </div>
                 <LiveEditor onChange={setCode} className={styles.liveEditor}/>
                 <div className={styles.errorContainer}>
                   <LiveError/>
