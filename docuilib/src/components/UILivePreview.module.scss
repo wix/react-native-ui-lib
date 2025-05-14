@@ -28,6 +28,7 @@ $editor-height: 700px;
   max-width: calc(100% - ($preview-width + $preview-margin));
   border-radius: 8px;
   overflow-y: scroll;
+  scrollbar-width: none;
 
   pre {
     min-height: 100%;
@@ -71,7 +72,6 @@ $editor-height: 700px;
   border: 10px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 0 15px rgba(110, 120, 129, 0.05);
   overflow: hidden;
-  scrollbar-width: none;
 }
 
 .iframe {
