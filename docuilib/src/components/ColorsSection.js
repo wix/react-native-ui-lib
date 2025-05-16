@@ -75,10 +75,9 @@ export function ColorsTable() {
     }
   }));
 
-  const onTokenPress = value => {
-    Clipboard.setString(value);
-    const systemColorName = Colors.getSystemColorByHex(value);
-    const message = `Copied ${value} to clipboard\n System color: ${systemColorName}`;
+  const onTokenPress = ({token, value}) => {
+    Clipboard.setString(token);
+    const message = `Copied ${token} to clipboard\nHex: ${value}`;
     setMessage(message);
     toggleToastVisibility();
   };
@@ -92,7 +91,7 @@ export function ColorsTable() {
   };
 
   const TokenBox = ({token, index, mode, onPress}) => (
-    <TouchableOpacity onPress={() => onPress(Colors.getColor(token, mode))} flex marginV-s1>
+    <TouchableOpacity onPress={() => onPress({token, value: Colors.getColor(token, mode)})} flex marginV-s1>
       <View key={`${token}-${index}-${mode}-container`} center row marginB-3>
         <View
           key={`${token}-${index}-${mode}`}

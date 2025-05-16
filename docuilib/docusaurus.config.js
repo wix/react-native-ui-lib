@@ -18,7 +18,7 @@ const darkCodeTheme = themes.dracula;
     trailingSlash: false,
     customFields: {
       docsMainEntry: 'getting-started/setup',
-      docsDevelopmentVersion: 'next',
+      // docsDevelopmentVersion: 'next',
       expoSnackLink: 'https://snack.expo.io/@ethanshar/rnuilib_snack',
       landingPage: {
         sections: ['components', 'features', 'code', 'libraries'],
@@ -110,7 +110,7 @@ const darkCodeTheme = themes.dracula;
             },
             {
               type: 'doc',
-              docId: 'components/basic/View',
+              docId: '/category/basic',
               position: 'left',
               label: 'COMPONENTS'
             },
