@@ -83,8 +83,7 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
   }, [onPress, customValue]);
 
   const closeExpandable = useCallback(() => {
-    setExpandableVisible(false);
-    focusAccessibility();
+    dismissModal();
     useDialog ? dialogProps?.onDismiss?.() : modalProps?.onDismiss?.();
   }, [useDialog, dialogProps?.onDismiss, modalProps?.onDismiss, focusAccessibility]);
 
