@@ -33,7 +33,7 @@ function parsePR(prContent) {
 async function fetchMergedPRs(postMergedDate) {
   console.log('Find all merged PRs since - ', postMergedDate);
   // process.stderr.write(`Loading page ${page}..`);
-  const str = childProcess.execSync('gh pr list --json headRefName,body,title,number,mergedAt,url,labels --limit 100 --state merged --search "base:master"',
+  const str = childProcess.execSync('gh pr list --json headRefName,body,title,number,mergedAt,url --limit 100 --state merged --search "base:master"',
     {
       encoding: 'utf8'
     });
@@ -49,24 +49,20 @@ async function fetchMergedPRs(postMergedDate) {
     prs => _.sortBy(prs, 'mergedAt'),
     prs =>
       _.map(prs, pr => {
-        if (!pr.labels.some(label => label.name === 'hotfix')) {
-          try {
-            return {
-              mergedAt: pr.mergedAt,
-              url: pr.url,
-              branch: pr.headRefName,
-              number: pr.number,
-              title: pr.title,
-              info: parsePR(pr.body)
-            };
-          } catch {
-            console.error('Failed parsing PR: ', pr.url);
-            return null;
-          }
+        try {
+          return {
+            mergedAt: pr.mergedAt,
+            url: pr.url,
+            branch: pr.headRefName,
+            number: pr.number,
+            title: pr.title,
+            info: parsePR(pr.body)
+          };
+        } catch {
+          console.error('Failed parsing PR: ', pr.url);
         }
-        return null;
-      }),
-    prs => _.compact(prs))(PRs);
+      }))(PRs);
+
   return relevantPRs;
 }
 
