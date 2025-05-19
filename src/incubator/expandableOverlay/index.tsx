@@ -3,8 +3,7 @@ import {AccessibilityInfo, findNodeHandle} from 'react-native';
 import TouchableOpacity, {TouchableOpacityProps} from '../../components/touchableOpacity';
 import View from '../../components/view';
 import Modal, {ModalProps, ModalTopBarProps} from '../../components/modal';
-import DialogOld from '../../components/dialog';
-import DialogNew, {DialogMigrationProps} from '../dialog';
+import Dialog, {DialogProps} from '../../components/dialog';
 import {Colors} from 'style';
 
 export interface ExpandableOverlayMethods {
@@ -18,7 +17,6 @@ export interface RenderCustomOverlayProps extends ExpandableOverlayMethods {
 }
 
 export type ExpandableOverlayProps = TouchableOpacityProps &
-  DialogMigrationProps &
   PropsWithChildren<{
     /**
      * The content to render inside the expandable modal/dialog
@@ -28,6 +26,10 @@ export type ExpandableOverlayProps = TouchableOpacityProps &
      * Whether to use a dialog as expandable container (by default the container will be a full screen modal)
      */
     useDialog?: boolean;
+    /**
+     *  The props to pass to the dialog expandable container
+     */
+    dialogProps?: DialogProps;
     /**
      * The props to pass to the modal expandable container
      */
@@ -57,7 +59,6 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
     useDialog,
     modalProps,
     dialogProps,
-    migrateDialog,
     showTopBar,
     topBarProps,
     renderCustomOverlay,
@@ -115,7 +116,6 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
   };
 
   const renderDialog = () => {
-    const Dialog = migrateDialog ? DialogNew : DialogOld;
     return (
       <Dialog testID={`${testID}.overlay`} {...dialogProps} visible={visible} onDismiss={closeExpandable}>
         {expandableContent}
