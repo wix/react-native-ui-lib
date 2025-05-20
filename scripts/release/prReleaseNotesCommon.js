@@ -1,5 +1,6 @@
 const fs = require('fs');
 const _ = require('lodash');
+const chalk = require('chalk');
 const childProcess = require('child_process');
 const readline = require('readline');
 
@@ -46,6 +47,13 @@ async function fetchMergedPRs(postMergedDate) {
   }
 
   const relevantPRs = _.flow(prs => _.filter(prs, pr => !!pr.mergedAt && new Date(pr.mergedAt) > postMergedDate),
+    prs => _.filter(prs, pr => {
+      const isHotfix = pr.labels.some(label => label.name === 'hotfix');
+      if (isHotfix) {
+        console.log(chalk.bgYellow.black(`PR ${pr.number} is a hotfix and was excluded for the release notes.`));
+      }
+      return !isHotfix;
+    }),
     prs => _.sortBy(prs, 'mergedAt'),
     prs =>
       _.map(prs, pr => {
