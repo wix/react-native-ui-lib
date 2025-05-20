@@ -382,7 +382,7 @@ class Drawer extends PureComponent<DrawerProps> {
     const {children, style, leftItem, rightItems, onToggleSwipeLeft, ...others} = this.props;
 
     return (
-      <GestureHandlerRootView>
+      <GestureHandlerRootView style={styles.container}>
         <Swipeable
           {...others}
           ref={this._swipeableRow}
@@ -415,6 +415,9 @@ export {DrawerProps, DrawerItemProps};
 export default asBaseComponent<DrawerProps, typeof Drawer>(Drawer);
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 0
+  },
   leftAction: {
     flex: 1,
     justifyContent: 'center',

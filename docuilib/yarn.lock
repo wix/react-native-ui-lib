@@ -9173,9 +9173,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"metro-react-native-babel-preset@npm:0.76.9":
-  version: 0.76.9
-  resolution: "metro-react-native-babel-preset@npm:0.76.9"
+"metro-react-native-babel-preset@npm:0.77.0":
+  version: 0.77.0
+  resolution: "metro-react-native-babel-preset@npm:0.77.0"
   dependencies:
     "@babel/core": ^7.20.0
     "@babel/plugin-proposal-async-generator-functions": ^7.0.0
@@ -9218,7 +9218,7 @@ __metadata:
     react-refresh: ^0.4.0
   peerDependencies:
     "@babel/core": "*"
-  checksum: 344fbcbcf82a9f8425a38a910716777cf45619d7b61a1a935a903f751e3a335ff8a54f80ba9fd9a16b96ac74e68f77760cb09d2c40ec6faf113308c91b863a9e
+  checksum: 09fb64735d4517f62cb0cbd386bdfa64d0de5a4f8c85b54c36b5799b242e897295d58c9d18e124033233841d8fcd33a109dda3dd9f1e5554e516f689eef14a0d
   languageName: node
   linkType: hard
 
@@ -13524,7 +13524,7 @@ __metadata:
     clsx: ^1.1.1
     docusaurus-plugin-sass: ^0.2.1
     file-loader: ^6.2.0
-    metro-react-native-babel-preset: 0.76.9
+    metro-react-native-babel-preset: 0.77.0
     prettier: 2.8.8
     prism-react-renderer: ^2.4.1
     react: ^18.2.0
