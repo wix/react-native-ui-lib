@@ -45,26 +45,28 @@ async function fetchMergedPRs(postMergedDate) {
     return;
   }
 
-  const relevantPRs = _.flow(prs => _.filter(prs, pr => !!pr.mergedAt && new Date(pr.mergedAt) > postMergedDate),
+  function isRelevantPR(pr) {
+    const isHotfix = pr.labels.some(label => label.name === 'hotfix');
+    return !isHotfix && !!pr.mergedAt && new Date(pr.mergedAt) > postMergedDate;
+  }
+
+  const relevantPRs = _.flow(prs => _.filter(prs, pr => isRelevantPR(pr)),
     prs => _.sortBy(prs, 'mergedAt'),
     prs =>
       _.map(prs, pr => {
-        if (!pr.labels.some(label => label.name === 'hotfix')) {
-          try {
-            return {
-              mergedAt: pr.mergedAt,
-              url: pr.url,
-              branch: pr.headRefName,
-              number: pr.number,
-              title: pr.title,
-              info: parsePR(pr.body)
-            };
-          } catch {
-            console.error('Failed parsing PR: ', pr.url);
-            return null;
-          }
+        try {
+          return {
+            mergedAt: pr.mergedAt,
+            url: pr.url,
+            branch: pr.headRefName,
+            number: pr.number,
+            title: pr.title,
+            info: parsePR(pr.body)
+          };
+        } catch {
+          console.error('Failed parsing PR: ', pr.url);
+          return null;
         }
-        return null;
       }),
     prs => _.compact(prs))(PRs);
   return relevantPRs;
