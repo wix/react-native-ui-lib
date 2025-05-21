@@ -50,29 +50,26 @@ async function fetchMergedPRs(postMergedDate) {
     prs => _.filter(prs, pr => {
       const isHotfix = pr.labels.some(label => label.name === 'hotfix');
       if (isHotfix) {
-        console.log(chalk.bgYellow.black(`PR ${pr.number} is a hotfix and was excluded for the release notes.`));
+        console.log(chalk.bgYellow.black(`PR ${pr.number} is a hotfix and was excluded from the release notes.`));
       }
       return !isHotfix;
     }),
     prs => _.sortBy(prs, 'mergedAt'),
     prs =>
       _.map(prs, pr => {
-        if (!pr.labels.some(label => label.name === 'hotfix')) {
-          try {
-            return {
-              mergedAt: pr.mergedAt,
-              url: pr.url,
-              branch: pr.headRefName,
-              number: pr.number,
-              title: pr.title,
-              info: parsePR(pr.body)
-            };
-          } catch {
-            console.error('Failed parsing PR: ', pr.url);
-            return null;
-          }
+        try {
+          return {
+            mergedAt: pr.mergedAt,
+            url: pr.url,
+            branch: pr.headRefName,
+            number: pr.number,
+            title: pr.title,
+            info: parsePR(pr.body)
+          };
+        } catch {
+          console.error('Failed parsing PR: ', pr.url);
+          return null;
         }
-        return null;
       }),
     prs => _.compact(prs))(PRs);
   return relevantPRs;
