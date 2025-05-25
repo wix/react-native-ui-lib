@@ -57,6 +57,8 @@ const SortableListItem = (props: Props) => {
   const lastSwap = useSharedValue({from: -1, to: -1});
   const currIndex = useSharedValue(initialIndex.value);
   const translation = useSharedValue<number>(0);
+  const zIndex = useSharedValue(0);
+  const scale = useSharedValue(1);
 
   const isDragging = useSharedValue(false);
 
@@ -96,6 +98,16 @@ const SortableListItem = (props: Props) => {
       }
     },
     []);
+
+  useAnimatedReaction(() => isDragging.value, (isDragging, wasDragging) => {
+    if (isDragging && !wasDragging) {
+      zIndex.value = withTiming(100, animationConfig);
+      scale.value = withSpring(propsScale);
+    } else if (!isDragging && wasDragging) {
+      zIndex.value = withTiming(0, animationConfig);
+      scale.value = withSpring(1);
+    }
+  }, []);
 
   const dragOnLongPressGesture = Gesture.Pan()
     .activateAfterLongPress(250)
@@ -164,8 +176,6 @@ const SortableListItem = (props: Props) => {
     });
 
   const draggedAnimatedStyle = useAnimatedStyle(() => {
-    const scale = withSpring(isDragging.value ? propsScale : 1);
-    const zIndex = isDragging.value ? 100 : withTiming(0, animationConfig);
     const opacity = isDragging.value ? 0.95 : 1;
     const shadow = isDragging.value
       ? draggedItemShadow.value
@@ -173,8 +183,11 @@ const SortableListItem = (props: Props) => {
 
     return {
       backgroundColor: itemProps?.backgroundColor ?? LIST_ITEM_BACKGROUND, // required for elevation to work in Android
-      zIndex,
-      transform: [horizontal ? {translateX: translation.value} : {translateY: translation.value}, {scale}],
+      zIndex: Math.round(zIndex.value),
+      transform: [
+        horizontal ? {translateX: translation.value} : {translateY: translation.value},
+        {scale: scale.value}
+      ],
       opacity,
       ...itemProps?.margins,
       ...shadow
