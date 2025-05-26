@@ -47,7 +47,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-native-linear-gradient": "2.6.2",
-    "react-native-reanimated": "3.17.3",
     "react-native-shimmer-placeholder": "^2.0.9",
     "react-native-ui-lib": "snapshot",
     "shell-utils": "^1.0.10",
