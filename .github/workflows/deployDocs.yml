@@ -3,7 +3,7 @@ name: Deploy Documentation
 on:
   push:
     branches:
-      - '**'
+      - master
 
 jobs:
   build-and-deploy:
