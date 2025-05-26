@@ -118,7 +118,7 @@ const darkCodeTheme = themes.dracula;
               href: 'https://github.com/wix/react-native-ui-lib',
               position: 'right',
               html: `
-                <div style="display: flex; align-items: center;">
+                <div style="display: flex; align-items: center; font-size: 16px;">
                   <span style="margin-right: 6px;">GitHub</span>
                   <image src="https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/site/externalSmall.png" alt="external link icon" width="17" height="16" />
                 </div>
