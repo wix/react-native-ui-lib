@@ -25,14 +25,7 @@ export default function useHiddenLocation<T extends View>() {
   const [reduceMotionEnabled, setReduceMotionEnabled] = useState(false);
 
   useEffect(() => {
-    const reduceMotionChangedSubscription = AccessibilityInfo.addEventListener('reduceMotionChanged',
-      isReduceMotionEnabled => {
-        setReduceMotionEnabled(isReduceMotionEnabled);
-      });
-
-    return () => {
-      reduceMotionChangedSubscription.remove();
-    };
+    AccessibilityInfo.isReduceMotionEnabled().then(setReduceMotionEnabled);
   }, []);
 
   const getHiddenLocation = ({

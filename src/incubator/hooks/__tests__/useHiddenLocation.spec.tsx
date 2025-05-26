@@ -30,14 +30,13 @@ describe('useHiddenLocation', () => {
     expect(result.current.hiddenLocation).toEqual(defaultExpectedLocation);
   });
 
-  it('should return defaultHiddenLocation on Android when reduce motion is enabled', () => {
+  it('should return defaultHiddenLocation on Android when reduce motion is enabled', async () => {
     const originalIsAndroid = Constants.isAndroid;
     Constants.isAndroid = true;
-
+    jest.spyOn(AccessibilityInfo, 'isReduceMotionEnabled').mockResolvedValue(true);
     const {result} = renderHook(() => useHiddenLocation());
-    act(() => {
-      const callback = (AccessibilityInfo.addEventListener as jest.Mock).mock.calls[0][1];
-      callback(true);
+    await act(async () => {
+      await Promise.resolve();
     });
     expect(result.current.hiddenLocation).toEqual(defaultExpectedLocation);
     Constants.isAndroid = originalIsAndroid;
