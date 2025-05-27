@@ -326,54 +326,53 @@ class Drawer extends PureComponent<DrawerProps> {
     });
 
     return (
-      <RectButton
-        key={index}
-        testID={item.testID}
-        style={[
-          styles.action,
-          item.style,
-          {
-            backgroundColor: item.background || DEFAULT_BG,
-            width: item.width,
-            minWidth: itemsMinWidth
-          }
-        ]}
-        onPress={() => this.onActionPress(item)}
-      >
-        {item.customElement}
-        {!item.customElement && item.icon && (
-          <Animated.Image
-            source={item.icon}
-            style={[
-              styles.actionIcon,
-              {
-                width: itemsIconSize,
-                height: itemsIconSize,
-                tintColor: item.iconColor || itemsTintColor,
-                opacity,
-                transform: [{scale}]
-              }
-            ]}
-          />
-        )}
-        {!item.customElement && item.text && (
-          <Animated.Text
-            style={[
-              styles.actionText,
-              {
-                color: item.textColor || itemsTintColor,
-                opacity,
-                transform: [{scale}]
-              },
-              itemsTextStyle
-            ]}
-            accessibilityElementsHidden
-            importantForAccessibility="no-hide-descendants"
-            accessible={false}
-          >
-            {item.text}
-          </Animated.Text>
-        )}
+      <RectButton key={index} testID={item.testID} onPress={() => this.onActionPress(item)}>
+        <View
+          style={[
+            styles.action,
+            item.style,
+            {
+              backgroundColor: item.background || DEFAULT_BG,
+              width: '100%',
+              height: '100%'
+            }
+          ]}
+        >
+          {item.customElement}
+          {!item.customElement && item.icon && (
+            <Animated.Image
+              source={item.icon}
+              style={[
+                styles.actionIcon,
+                {
+                  width: itemsIconSize,
+                  height: itemsIconSize,
+                  tintColor: item.iconColor || itemsTintColor,
+                  opacity,
+                  transform: [{scale}]
+                }
+              ]}
+            />
+          )}
+          {!item.customElement && item.text && (
+            <Animated.Text
+              style={[
+                styles.actionText,
+                {
+                  color: item.textColor || itemsTintColor,
+                  opacity,
+                  transform: [{scale}]
+                },
+                itemsTextStyle
+              ]}
+              accessibilityElementsHidden
+              importantForAccessibility="no-hide-descendants"
+              accessible={false}
+            >
+              {item.text}
+            </Animated.Text>
+          )}
+        </View>
       </RectButton>
     );
   };
