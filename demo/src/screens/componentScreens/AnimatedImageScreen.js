@@ -5,7 +5,7 @@ import {AnimatedImage, Colors} from 'react-native-ui-lib'; //eslint-disable-line
 
 const SampleImages = [
   'https://images.pexels.com/photos/2529146/pexels-photo-2529146.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-  'https://images.pexels.com/photos/2529158/pexels-photo-2529158.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=50'
+  'https://images.pexels.com/photos/2529158/pexels-photo-2529158.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
 ];
 
 export default class AnimatedImageScreen extends Component {
