@@ -333,8 +333,9 @@ class Drawer extends PureComponent<DrawerProps> {
             item.style,
             {
               backgroundColor: item.background || DEFAULT_BG,
-              width: '100%',
-              height: '100%'
+              height: '100%',
+              width: item.width,
+              minWidth: itemsMinWidth
             }
           ]}
         >
