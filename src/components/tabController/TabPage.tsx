@@ -81,14 +81,21 @@ export default function TabPage({
   [currentPage, lazyLoad, isActive]);
 
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
     if (isActive && pageRef.current && shouldLoad) {
-      setTimeout(() => {
+      timeoutId = setTimeout(() => {
         const node = findNodeHandle(pageRef.current);
         if (node) {
           AccessibilityInfo.setAccessibilityFocus(node);
         }
       }, 100);
     }
+    
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
   }, [isActive, shouldLoad]);
 
   const animatedPageStyle = useAnimatedStyle(() => {
