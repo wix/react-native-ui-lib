@@ -6,13 +6,12 @@ module.exports = ({siteDir}, _options) => {
     path.resolve(siteDir, 'src'),
     path.resolve(siteDir, 'node_modules/react-native-web'),
     path.resolve(siteDir, 'node_modules/react-native-ui-lib'),
-    // // just for not getting warnings
     path.resolve(siteDir, 'node_modules/react-native-shimmer-placeholder'),
+    path.resolve(siteDir, 'node_modules/react-native-reanimated'),
     path.resolve(siteDir, 'node_modules/react-native-linear-gradient')
-    // // end just for not getting warnings
+    // just for not getting warnings
     // path.resolve(siteDir, 'node_modules/react-native-haptic-feedback'),
     // path.resolve(siteDir, 'node_modules/react-native-animatable'),
-    // path.resolve(siteDir, 'node_modules/react-native-reanimated'),
     // path.resolve(siteDir, 'node_modules/react-native-svg'),
     // path.resolve(siteDir, 'node_modules/react-native-svg-transformer'),
     // path.resolve(siteDir, 'node_modules/@react-native-community/netinfo'),
