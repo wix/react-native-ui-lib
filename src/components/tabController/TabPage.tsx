@@ -1,5 +1,5 @@
-import React, {PropsWithChildren, useCallback, useContext, useState, useMemo} from 'react';
-import {type StyleProp, StyleSheet, type ViewStyle} from 'react-native';
+import React, {PropsWithChildren, useCallback, useContext, useState, useMemo, useRef, useEffect} from 'react';
+import {type StyleProp, StyleSheet, type ViewStyle, findNodeHandle, AccessibilityInfo} from 'react-native';
 import Reanimated, {useAnimatedStyle, useAnimatedReaction, runOnJS} from 'react-native-reanimated';
 // import {Freeze} from 'react-freeze';
 import TabBarContext from './TabBarContext';
@@ -46,6 +46,8 @@ export default function TabPage({
 }: PropsWithChildren<TabControllerPageProps>) {
   const {currentPage, asCarousel, nestedInScrollView, containerWidth} = useContext(TabBarContext);
   const [shouldLoad, setLoaded] = useState(!lazy);
+  const [isActive, setIsActive] = useState(false);
+  const pageRef = useRef(null);
   // const [focused, setFocused] = useState(false);
 
   const lazyLoad = useCallback(() => {
@@ -60,13 +62,13 @@ export default function TabPage({
     return currentPage.value;
   },
   (currentPage /* , previousPage */) => {
-    const isActive = currentPage === index;
-    // const wasActive = previousPage === index;
-    // const nearActive = asCarousel && (currentPage - 1 === index || currentPage + 1 === index);
-    // const wasNearActive =
-    //     asCarousel && previousPage !== null && (previousPage - 1 === index || previousPage + 1 === index);
+    const newIsActive = currentPage === index;
 
-    if (isActive) {
+    if (newIsActive !== isActive) {
+      runOnJS(setIsActive)(newIsActive);
+    }
+
+    if (newIsActive) {
       runOnJS(lazyLoad)();
     }
 
@@ -76,7 +78,18 @@ export default function TabPage({
     //   runOnJS(setFocused)(false);
     // }
   },
-  [currentPage, lazyLoad]);
+  [currentPage, lazyLoad, isActive]);
+
+  useEffect(() => {
+    if (isActive && pageRef.current && shouldLoad) {
+      setTimeout(() => {
+        const node = findNodeHandle(pageRef.current);
+        if (node) {
+          AccessibilityInfo.setAccessibilityFocus(node);
+        }
+      }, 100);
+    }
+  }, [isActive, shouldLoad]);
 
   const animatedPageStyle = useAnimatedStyle(() => {
     const isActive = Math.round(currentPage.value) === index;
@@ -99,7 +112,7 @@ export default function TabPage({
   }, [asCarousel, animatedPageStyle, containerWidth, style]);
 
   return (
-    <Reanimated.View style={_style} testID={testID}>
+    <Reanimated.View ref={pageRef} style={_style} testID={testID} accessible={false}>
       {!shouldLoad && renderLoading?.()}
       {shouldLoad && props.children}
       {/* <Freeze freeze={!shouldLoad || !focused}>{props.children}</Freeze> */}
