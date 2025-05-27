@@ -31,6 +31,8 @@ export interface TabControllerPageProps {
   style?: StyleProp<ViewStyle>;
 }
 
+const READER_FOCUS_DELAY = 300;
+
 /**
  * @description: TabController's TabPage
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TabControllerScreen/index.tsx
@@ -88,7 +90,7 @@ export default function TabPage({
         if (node) {
           AccessibilityInfo.setAccessibilityFocus(node);
         }
-      }, 100);
+      }, READER_FOCUS_DELAY);
     }
     
     return () => {
