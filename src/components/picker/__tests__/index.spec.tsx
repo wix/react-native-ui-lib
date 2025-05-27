@@ -211,7 +211,7 @@ describe('Picker', () => {
   });
 
   describe('Dialog', () => {
-    const dialogProps = {useDialog: true, customPickerProps: {migrateDialog: true}};
+    const dialogProps = {useDialog: true};
 
     describe('Test value', () => {
       it('Get correct value of a single item', () => {
