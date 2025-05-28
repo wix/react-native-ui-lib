@@ -190,7 +190,7 @@ export default class KeyboardAccessoryViewScreen extends PureComponent {
             {message}
           </Text>
           <Text testID={'demo-message'}>{receivedKeyboardData}</Text>
-          <Button label={'Open Images Keyboard'} link onPress={this.requestShowKeyboard} style={styles.button}/>
+          <Button label={'Open Images Keyboard RN77'} link onPress={this.requestShowKeyboard} style={styles.button}/>
           {this.safeAreaSwitchToggle()}
         </ScrollView>
 

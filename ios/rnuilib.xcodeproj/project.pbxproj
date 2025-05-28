@@ -15,9 +15,9 @@
 		8E52CBDF2887DD21009D5EC5 /* DesignTokens.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E52CBDE2887DD21009D5EC5 /* DesignTokens.xcassets */; };
 		8E8B0D662744D9CD0026B520 /* void.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8B0D652744D9CD0026B520 /* void.swift */; };
 		8EA1FC8C2519E7F7008B4B36 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EA1FC8B2519E7F7008B4B36 /* LaunchScreen.storyboard */; };
+		99A3F500B4C3673B76E511BD /* libPods-rnuilib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C03719B11526419DDE63F45 /* libPods-rnuilib.a */; };
 		BD943D6D9239B59015528C14 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = DED5A85D4BF49DFA47437893 /* PrivacyInfo.xcprivacy */; };
 		C41C90B146B08809BC045295 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 411699F1CD4A37F8779A4620 /* PrivacyInfo.xcprivacy */; };
-		F5A8A09552150BF52814CEB8 /* libPods-rnuilib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B952D41BC4FD27D3D2A09A /* libPods-rnuilib.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,12 +50,12 @@
 		2D02E47B1E0B4A5D006451C7 /* rnuilib-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "rnuilib-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* rnuilib-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "rnuilib-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		411699F1CD4A37F8779A4620 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = rnuilib/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		468DD3733C9FBB986BBABFD1 /* Pods-rnuilib.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib.debug.xcconfig"; path = "Target Support Files/Pods-rnuilib/Pods-rnuilib.debug.xcconfig"; sourceTree = "<group>"; };
-		4F10B699565CF8896E45168A /* Pods-rnuilib.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib.release.xcconfig"; path = "Target Support Files/Pods-rnuilib/Pods-rnuilib.release.xcconfig"; sourceTree = "<group>"; };
+		4180654877C7A1D610D1A4FD /* Pods-rnuilib.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib.debug.xcconfig"; path = "Target Support Files/Pods-rnuilib/Pods-rnuilib.debug.xcconfig"; sourceTree = "<group>"; };
+		7C03719B11526419DDE63F45 /* libPods-rnuilib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnuilib.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E52CBDE2887DD21009D5EC5 /* DesignTokens.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = DesignTokens.xcassets; sourceTree = "<group>"; };
 		8E8B0D652744D9CD0026B520 /* void.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = void.swift; sourceTree = "<group>"; };
 		8EA1FC8B2519E7F7008B4B36 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = rnuilib/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		C0B952D41BC4FD27D3D2A09A /* libPods-rnuilib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnuilib.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDFC1EA2FC30ED8F3599A37C /* Pods-rnuilib.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnuilib.release.xcconfig"; path = "Target Support Files/Pods-rnuilib/Pods-rnuilib.release.xcconfig"; sourceTree = "<group>"; };
 		DED5A85D4BF49DFA47437893 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = rnuilib/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -73,7 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5A8A09552150BF52814CEB8 /* libPods-rnuilib.a in Frameworks */,
+				99A3F500B4C3673B76E511BD /* libPods-rnuilib.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,7 +117,7 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				C0B952D41BC4FD27D3D2A09A /* libPods-rnuilib.a */,
+				7C03719B11526419DDE63F45 /* libPods-rnuilib.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -158,8 +158,8 @@
 		D99C980AB24A05601E0007F9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				468DD3733C9FBB986BBABFD1 /* Pods-rnuilib.debug.xcconfig */,
-				4F10B699565CF8896E45168A /* Pods-rnuilib.release.xcconfig */,
+				4180654877C7A1D610D1A4FD /* Pods-rnuilib.debug.xcconfig */,
+				CDFC1EA2FC30ED8F3599A37C /* Pods-rnuilib.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -189,14 +189,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "rnuilib" */;
 			buildPhases = (
-				84FC92CFDA1A285208A02915 /* [CP] Check Pods Manifest.lock */,
+				1D400AE8648D36622ADB1857 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				EAD532FB68E4DB9CFCDA9722 /* [CP] Embed Pods Frameworks */,
-				BCF99F54E780CF23EDD3335F /* [CP] Copy Pods Resources */,
+				2A50FB6162061729E06CD6B6 /* [CP] Embed Pods Frameworks */,
+				6114567E157C55B64CDCF792 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -345,21 +345,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Bundle React Native Code And Images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
-		};
-		84FC92CFDA1A285208A02915 /* [CP] Check Pods Manifest.lock */ = {
+		1D400AE8648D36622ADB1857 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -381,7 +367,39 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BCF99F54E780CF23EDD3335F /* [CP] Copy Pods Resources */ = {
+		2A50FB6162061729E06CD6B6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-rnuilib/Pods-rnuilib-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-rnuilib/Pods-rnuilib-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native Code And Images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		6114567E157C55B64CDCF792 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -407,24 +425,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-rnuilib/Pods-rnuilib-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EAD532FB68E4DB9CFCDA9722 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-rnuilib/Pods-rnuilib-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-rnuilib/Pods-rnuilib-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -562,7 +562,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 468DD3733C9FBB986BBABFD1 /* Pods-rnuilib.debug.xcconfig */;
+			baseConfigurationReference = 4180654877C7A1D610D1A4FD /* Pods-rnuilib.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -594,7 +594,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F10B699565CF8896E45168A /* Pods-rnuilib.release.xcconfig */;
+			baseConfigurationReference = CDFC1EA2FC30ED8F3599A37C /* Pods-rnuilib.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
