@@ -127,6 +127,7 @@
     "react-native-svg-transformer": "1.5.0",
     "react-test-renderer": "18.3.1",
     "reassure": "^0.4.1",
+    "setimmediate": "^1.0.5",
     "shell-utils": "^1.0.10",
     "typescript": "5.0.4"
   },

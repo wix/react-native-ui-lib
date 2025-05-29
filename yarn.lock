@@ -10915,6 +10915,7 @@ __metadata:
     react-test-renderer: 18.3.1
     reassure: ^0.4.1
     semver: ^5.5.0
+    setimmediate: ^1.0.5
     shell-utils: ^1.0.10
     tinycolor2: ^1.4.2
     typescript: 5.0.4
@@ -11628,6 +11629,13 @@ __metadata:
     functions-have-names: ^1.2.3
     has-property-descriptors: ^1.0.2
   checksum: d6229a71527fd0404399fc6227e0ff0652800362510822a291925c9d7b48a1ca1a468b11b281471c34cd5a2da0db4f5d7ff315a61d26655e77f6e971e6d0c80f
+  languageName: node
+  linkType: hard
+
+"setimmediate@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "setimmediate@npm:1.0.5"
+  checksum: c9a6f2c5b51a2dabdc0247db9c46460152ffc62ee139f3157440bd48e7c59425093f42719ac1d7931f054f153e2d26cf37dfeb8da17a794a58198a2705e527fd
   languageName: node
   linkType: hard
 
