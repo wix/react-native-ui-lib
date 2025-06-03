@@ -1,5 +1,5 @@
 import {ModalDriver} from '../../components/modal/Modal.driver.new';
-import {DialogDriver} from '../dialog/Dialog.driver.new';
+import {DialogDriver} from '../../components/dialog/Dialog.driver.new';
 import {type ComponentProps, useComponentDriver} from '../../testkit/new/Component.driver';
 import {usePressableDriver} from '../../testkit/new/usePressable.driver';
 
