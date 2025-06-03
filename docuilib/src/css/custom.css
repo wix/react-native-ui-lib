@@ -149,6 +149,7 @@ main {
 
 .breadcrumbs__link {
   color: #4D5963;
+  font-size: 16px;
 }
 .breadcrumbs__item--active .breadcrumbs__link {
   color: #20303C;
@@ -156,6 +157,7 @@ main {
 }
 .breadcrumbHomeIcon_YNFT {
   color: #20303C;
+  transform: translateY(20%);
 }
 
 /** Custom Footer */
@@ -178,7 +180,7 @@ main {
   margin-bottom: 40px;
 }
 .footer__section {
-  width: 200px;
+  width: 250px;
   display: flex;
 }
 .footer__section__item a {
@@ -188,7 +190,7 @@ main {
 .footer__section__item span {
   margin-right: 4px;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   letter-spacing: 0.3px;
   line-height: 38px;
 }

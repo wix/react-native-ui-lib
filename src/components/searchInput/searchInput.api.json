@@ -1,0 +1,57 @@
+{
+  "name": "SearchInput",
+  "category": "form",
+  "description": "Search input for filtering purpose",
+  "example": "https://github.com/wix-private/wix-react-native-ui-lib/blob/master/example/screens/components/SearchInputScreen.tsx",
+  "extends": ["TextInput"],
+  "extendsLink": "https://reactnative.dev/docs/textinput",
+  "props": [
+    {"name": "onDismiss", "type": "() => void", "description": "callback for dismiss action"},
+    {"name": "onClear", "type": "() => void", "description": "On clear button callback."},
+    {
+      "name": "showLoader",
+      "type": "boolean",
+      "description": "Whether to show a loader instead of the left search icon."
+    },
+    {
+      "name": "customLoader",
+      "type": "React.ReactElement",
+      "description": "custom loader element to render instead of the default loader"
+    },
+    {
+      "name": "customRightElement",
+      "type": "React.ReactElement",
+      "description": "Custom right element"
+    },
+    {
+      "name": "cancelButtonProps",
+      "type": "ButtonProps",
+      "description": "Props for the cancel button"
+    },
+    {
+      "name": "schemeColor",
+      "type": "string | null",
+      "description": "The SearchInput colors (affects the search icon color and the cancel button color)"
+    },
+    {
+      "name": "inaccessible",
+      "type": "boolean",
+      "description": "Turn off accessibility for this view and its nested children"
+    },
+    {
+      "name": "useSafeArea",
+      "type": "boolean",
+      "description": "in case the SearchInput is rendered in a safe area (top of the screen)"
+    },
+    {"name": "containerStyle", "type": "ViewStyle", "description": "Override styles for the input"},
+    {"name": "style", "type": "ViewStyle", "description": "Override styles for container"}
+  ],
+  "snippet": [
+    "<SearchInput",
+    "  ref={searchInputRef$1}",
+    "  testID={'searchInput'$2}",
+    "  placeholder={'Search'$3}",
+    "  onDismiss={onDismiss$4}",
+    "/>"
+  ]
+}
