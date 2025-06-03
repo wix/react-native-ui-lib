@@ -65,9 +65,11 @@ export const PickerDriver = (props: ComponentProps, useDialog: boolean) => {
     }
   };
 
+  const itemDriver = (testID: string) => ButtonDriver({renderTree: props.renderTree, testID});
+
   const selectItem = (testID: string): void => {
-    const itemDriver = ButtonDriver({renderTree: props.renderTree, testID});
-    itemDriver.press();
+    const driver = itemDriver(testID);
+    driver.press();
   };
 
   return {
@@ -78,6 +80,7 @@ export const PickerDriver = (props: ComponentProps, useDialog: boolean) => {
     done,
     isOpen,
     dismissDialog,
+    itemDriver,
     selectItem
   };
 };

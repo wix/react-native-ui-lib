@@ -40,6 +40,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.RadioButtonScreen', () => require('./RadioButtonScreen').default);
   registrar('unicorn.components.ScrollBarScreen', () => require('./ScrollBarScreen').default);
   registrar('unicorn.components.SectionsWheelPickerScreen', () => require('./SectionsWheelPickerScreen').default);
+  registrar('unicorn.components.SearchInputScreen', () => require('./SearchInputScreen').default);
   registrar('unicorn.components.SegmentedControlScreen', () => require('./SegmentedControlScreen').default);
   registrar('unicorn.components.SharedTransitionScreen', () => require('./SharedTransitionScreen').default);
   registrar('unicorn.components.SkeletonViewScreen', () => require('./SkeletonViewScreen').default);
@@ -51,7 +52,8 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.StepperScreen', () => require('./StepperScreen').default);
   registrar('unicorn.components.SwitchScreen', () => require('./SwitchScreen').default);
   registrar('unicorn.components.TabControllerScreen', () => require('./TabControllerScreen').default);
-  registrar('unicorn.components.TabControllerWithStickyHeaderScreen', () => require('./TabControllerWithStickyHeaderScreen').default);
+  registrar('unicorn.components.TabControllerWithStickyHeaderScreen',
+    () => require('./TabControllerWithStickyHeaderScreen').default);
   registrar('unicorn.components.TextFieldScreen', () => require('./TextFieldScreen').default);
   registrar('unicorn.components.TextScreen', () => require('./TextScreen').default);
   registrar('unicorn.components.ToastsScreen', () => require('./ToastsScreen').default);

@@ -10,10 +10,11 @@ const ENTRY_POINT_HEIGHT = 2;
 type LinePropsInternal = LineProps & {
   top?: boolean;
   style?: ViewStyle;
+  testID?: string;
 };
 
 const Line = React.memo((props: LinePropsInternal) => {
-  const {type, color = 'transparent', entry, top, style, width = LINE_WIDTH} = props;
+  const {type, color = 'transparent', entry, top, style, width = LINE_WIDTH, testID} = props;
 
   const solidLineStyle = useMemo(() => {
     return [style, styles.line, {width, backgroundColor: color}];
@@ -25,15 +26,20 @@ const Line = React.memo((props: LinePropsInternal) => {
 
   const renderStartPoint = () => {
     if (entry) {
-      return <View style={[styles.entryPoint, {backgroundColor: color}]}/>;
+      return (
+        <View
+          style={[styles.entryPoint, {backgroundColor: color}]}
+          testID={`${testID}.entryPoint`}
+        />
+      );
     }
   };
 
   const renderLine = () => {
     if (type === LineTypes.DASHED) {
-      return <Dash vertical color={color} containerStyle={dashedLineStyle}/>;
+      return <Dash vertical color={color} containerStyle={dashedLineStyle} testID={testID}/>;
     }
-    return <View style={solidLineStyle}/>;
+    return <View style={solidLineStyle} testID={testID}/>;
   };
 
   return (
