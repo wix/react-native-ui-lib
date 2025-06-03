@@ -120,7 +120,7 @@
     "react-native-haptic-feedback": "^1.11.0",
     "react-native-linear-gradient": "2.6.2",
     "react-native-mmkv": "3.2.0",
-    "react-native-navigation": "8.1.0-rc01",
+    "react-native-navigation": "8.1.0-rc01-snapshot.1710",
     "react-native-reanimated": "3.16.7",
     "react-native-shimmer-placeholder": "^2.0.6",
     "react-native-svg": "15.11.2",
