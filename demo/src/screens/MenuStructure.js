@@ -183,13 +183,14 @@ export const navigationData = {
     title: 'Animations & Gestures',
     screens: [
       {title: 'Animated Image', tags: 'animated image', screen: 'unicorn.components.AnimatedImageScreen'},
+      {title: 'Card Scanner', tags: 'card scanner process', screen: 'unicorn.animations.CardScannerScreen'},
       {title: 'Haptic feedback', tags: 'haptic feedback', screen: 'unicorn.components.HapticScreen'},
+      {title: 'PanView', tags: 'pan swipe drag', screen: 'unicorn.components.PanViewScreen'},
       {
         title: 'ProgressiveImage',
         tags: 'progressive image cover overlay',
         screen: 'unicorn.components.ProgressiveImageScreen'
-      },
-      {title: 'Card Scanner', tags: 'card scanner process', screen: 'unicorn.animations.CardScannerScreen'}
+      }
     ]
   },
   Incubator: {
@@ -203,8 +204,7 @@ export const navigationData = {
         title: 'ExpandableOverlay',
         tags: 'text field expandable input picker',
         screen: 'unicorn.components.IncubatorExpandableOverlayScreen'
-      },
-      {title: 'PanView', tags: 'pan swipe drag', screen: 'unicorn.components.PanViewScreen'}
+      }
     ]
   },
   Inspirations: {
