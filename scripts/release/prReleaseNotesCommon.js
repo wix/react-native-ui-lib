@@ -1,5 +1,6 @@
 const fs = require('fs');
 const _ = require('lodash');
+const chalk = require('chalk');
 const childProcess = require('child_process');
 const readline = require('readline');
 
@@ -30,10 +31,10 @@ function parsePR(prContent) {
   return PRInfo;
 }
 
-async function fetchMergedPRs(postMergedDate) {
+async function fetchMergedPRs(postMergedDate, _repo, isPatchRelease) {
   console.log('Find all merged PRs since - ', postMergedDate);
   // process.stderr.write(`Loading page ${page}..`);
-  const str = childProcess.execSync('gh pr list --json headRefName,body,title,number,mergedAt,url --limit 100 --state merged --search "base:master"',
+  const str = childProcess.execSync('gh pr list --json headRefName,body,title,number,mergedAt,url,labels --limit 100 --state merged --search "base:master"',
     {
       encoding: 'utf8'
     });
@@ -44,8 +45,19 @@ async function fetchMergedPRs(postMergedDate) {
     console.log('\x1b[31m', 'Something went wrong', PRs.message);
     return;
   }
+  const filteringMessageStyle = chalk.bgYellow.black;
+  console.log(filteringMessageStyle(isPatchRelease
+    ? 'Patch release - only hotfix PRs will be included.'
+    : 'Non-patch release - hotfix PRs will be excluded.'));
 
   const relevantPRs = _.flow(prs => _.filter(prs, pr => !!pr.mergedAt && new Date(pr.mergedAt) > postMergedDate),
+    prs => _.filter(prs, pr => {
+      const isHotfix = pr.labels.some(label => label.name === 'hotfix');
+      if (isHotfix && !isPatchRelease) {
+        console.log(filteringMessageStyle(`PR ${pr.number} is a hotfix and was excluded from the release notes.`));
+      }
+      return isPatchRelease ? isHotfix : !isHotfix;
+    }),
     prs => _.sortBy(prs, 'mergedAt'),
     prs =>
       _.map(prs, pr => {
@@ -60,9 +72,10 @@ async function fetchMergedPRs(postMergedDate) {
           };
         } catch {
           console.error('Failed parsing PR: ', pr.url);
+          return null;
         }
-      }))(PRs);
-
+      }),
+    prs => _.compact(prs))(PRs);
   return relevantPRs;
 }
 
@@ -151,9 +164,9 @@ function getReleaseNotesForType(PRs, title) {
   return releaseNotes;
 }
 
-async function _generateReleaseNotes(latestVersion, newVersion, fileNamePrefix, repo, header, tagPrefix, categories) {
+async function _generateReleaseNotes(latestVersion, newVersion, fileNamePrefix, repo, header, tagPrefix, categories, isPatchRelease) {
   const latestReleaseDate = fetchLatestReleaseDate(tagPrefix, latestVersion);
-  const PRs = await fetchMergedPRs(latestReleaseDate, repo);
+  const PRs = await fetchMergedPRs(latestReleaseDate, repo, isPatchRelease);
   if (!PRs) {
     return;
   }
@@ -192,6 +205,13 @@ async function _generateReleaseNotes(latestVersion, newVersion, fileNamePrefix, 
   console.log(`\x1b[1m\x1b[32m✔\x1b[0m \x1b[32m${fileNamePrefix}-release-notes.txt was successfully written to ${process.env.HOME}/Downloads\x1b[0m \x1b[1m\x1b[32m✔\x1b[0m`);
 }
 
+function isPatchRelease(lastVersion, newVersion) {
+  const [lastMajor, lastMinor, lastPatch] = lastVersion.split('.').map(Number);
+  const [newMajor, newMinor, newPatch] = newVersion.split('.').map(Number);
+
+  return lastMajor === newMajor && lastMinor === newMinor && newPatch - lastPatch > 0;
+}
+
 async function generateReleaseNotes(latestVersion,
   newVersion,
   fileNamePrefix,
@@ -213,11 +233,12 @@ async function generateReleaseNotes(latestVersion,
     });
   });
 
+
   rl.on('close', () => {
     const header = getHeader(newVer);
     console.info(`Current latest version is v${latestVer}`);
     console.info(`Generating release notes out or PRs for v${newVer}`);
-    _generateReleaseNotes(latestVer, newVer, fileNamePrefix, repo, header, tagPrefix, categories);
+    _generateReleaseNotes(latestVer, newVer, fileNamePrefix, repo, header, tagPrefix, categories, isPatchRelease(latestVer, newVer));
   });
 }
 

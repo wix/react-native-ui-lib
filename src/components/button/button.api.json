@@ -237,89 +237,12 @@
           },
           {
             "type": "section",
-            "title": "Main Button",
+            "title": "Button",
             "description": ""
           },
           {
             "type": "table",
-            "columns": ["Property", "Component"],
-            "items": [
-              {
-                "title": "Primary",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_priority_primary.png"
-                  }
-                ]
-              },
-              {
-                "title": "Secondary",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_priority_secondary.png"
-                  }
-                ]
-              }
-            ],
-            "title": "",
-            "description": "",
-            "name": "Priority"
-          },
-          {
-            "type": "table",
-            "columns": ["Property", "Primary", "Secondary"],
-            "items": [
-              {
-                "title": "Main",
-                "description": "The default button style, used for most actions.",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_mainPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_mainSecondary.png"
-                  }
-                ]
-              },
-              {
-                "title": "Inverted",
-                "description": "Used on top of images and dark background. ",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_invertedPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_invertedSecondary.png"
-                  }
-                ]
-              },
-              {
-                "title": "Destructive",
-                "description": "Used for destructive actions such as Delete and Log out. ",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_distructivePrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_presets_distructiveSecondary.png"
-                  }
-                ]
-              }
-            ],
-            "title": "",
-            "description": "",
-            "name": "Presets"
-          },
-          {
-            "type": "section",
-            "title": "States",
-            "description": ""
-          },
-          {
-            "type": "table",
-            "columns": ["Property", "Primary", "Secondary"],
+            "columns": ["Property", "Default", "Outline"],
             "items": [
               {
                 "title": "Active",
@@ -330,18 +253,6 @@
                   },
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_mainActiveSecondary.png"
-                  }
-                ]
-              },
-              {
-                "title": "Loading",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_mainLoadingPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_mainLoadingSecondary.png"
                   }
                 ]
               },
@@ -361,51 +272,6 @@
             "title": "",
             "description": "",
             "name": "Main"
-          },
-          {
-            "type": "table",
-            "columns": ["Property", "Primary", "Secondary"],
-            "items": [
-              {
-                "title": "Active",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_invertedActivePrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_invertedActiveSecondary.png"
-                  }
-                ]
-              },
-              {
-                "title": "Loading",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_invertedLoadingPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_invertedLoadingSecondary.png"
-                  }
-                ]
-              },
-              {
-                "title": "Disabled",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_invertedDisabledPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_states_invertedDisabledSecondary.png"
-                  }
-                ]
-              }
-            ],
-            "title": "",
-            "description": "",
-            "name": "Inverted"
           },
           {
             "type": "table",
@@ -478,7 +344,7 @@
             "columns": ["Property", "Component"],
             "items": [
               {
-                "title": "Primary",
+                "title": "Default",
                 "description": "",
                 "content": [
                   {
@@ -487,7 +353,7 @@
                 ]
               },
               {
-                "title": "Secondary",
+                "title": "Outline",
                 "description": "",
                 "content": [
                   {
@@ -500,44 +366,13 @@
             "description": ""
           },
           {
-            "type": "table",
-            "columns": ["Property", "Primary", "Secondary"],
-            "items": [
-              {
-                "title": "Main",
-                "description": "The default button style, used for most actions.",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_presets_mainPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_presets_mainSecondary.png"
-                  }
-                ]
-              },
-              {
-                "title": "Inverted",
-                "description": "Used on top of images and dark background. ",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_presets_invertedPrimary.png"
-                  },
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_iconButton_presets_invertedSecondary.png"
-                  }
-                ]
-              }
-            ],
-            "title": "Presets"
-          },
-          {
             "type": "section",
             "title": "States",
             "description": ""
           },
           {
             "type": "table",
-            "columns": ["Property", "Primary", "Secondary"],
+            "columns": ["Property", "Default", "Outline"],
             "items": [
               {
                 "title": "Active",
@@ -593,15 +428,6 @@
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_linkButton_presets_main.png"
-                  }
-                ]
-              },
-              {
-                "title": "Destructive",
-                "description": "text style: bodyBold, $textDangerLight",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_linkButton_presets_distructive.png"
                   }
                 ]
               },
@@ -689,24 +515,6 @@
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_fullWidth_presets_main.png"
-                  }
-                ]
-              },
-              {
-                "title": "Destructive ",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_fullWidth_presets_destructive.png"
-                  }
-                ]
-              },
-              {
-                "title": "Premium",
-                "description": "",
-                "content": [
-                  {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Button/button_overview_fullWidth_presets_premium.png"
                   }
                 ]
               }
