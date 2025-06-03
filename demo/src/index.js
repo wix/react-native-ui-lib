@@ -1,8 +1,7 @@
-import {UIManager, I18nManager} from 'react-native';
+import {I18nManager} from 'react-native';
 import {navigationData as menuStructure} from './screens/MenuStructure';
 import {loadDemoConfigurations} from './configurations';
 
-UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true); // eslint-disable-line
 I18nManager.allowRTL(true);
 
 module.exports = {

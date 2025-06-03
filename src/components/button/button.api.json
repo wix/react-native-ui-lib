@@ -155,7 +155,7 @@
     {
       "name": "animateLayout",
       "type": "boolean",
-      "description": "should animate layout change. Note: For Android you must set 'setLayoutAnimationEnabledExperimental(true)' via RN's 'UIManager'"
+      "description": "should animate layout change"
     },
     {
       "name": "animateTo",

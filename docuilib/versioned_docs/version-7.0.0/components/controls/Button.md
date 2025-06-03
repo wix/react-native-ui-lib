@@ -38,7 +38,7 @@ This component support **margin, background** modifiers.
 ```
 ## API
 ### animateLayout
-should animate layout change. Note: For Android you must set 'setLayoutAnimationEnabledExperimental(true)' via RN's 'UIManager'
+should animate layout change
 `boolean ` 
 
 ### animateTo
