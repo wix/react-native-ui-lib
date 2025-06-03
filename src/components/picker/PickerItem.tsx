@@ -31,8 +31,7 @@ const PickerItem = (props: PickerItemProps) => {
   const context = useContext(PickerContext);
   const customRenderItem = props.renderItem || context.renderItem;
 
-  const itemValue = value;
-  const isSelected = isItemSelected(itemValue, context.value);
+  const isSelected = isItemSelected(value, context.value);
   const itemLabel = getItemLabel(label, value, props.getItemLabel || context.getItemLabel);
   const selectedCounter = context.selectionLimit && _.isArray(context.value) && context.value?.length;
   const accessibilityProps = {
