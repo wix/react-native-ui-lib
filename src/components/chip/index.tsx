@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, ViewProps, ImageStyle, TextStyle, ImageSourcePropType} from 'react-native';
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
@@ -198,7 +198,7 @@ const Chip = ({
       <TouchableOpacity
         style={[getMargins('dismiss'), dismissContainerStyle]}
         onPress={onDismiss}
-        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+        hitSlop={{top: 16, bottom: 16, left: 10, right: 10}}
         testID={`${testID}.dismiss`}
       >
         <Icon
@@ -303,22 +303,30 @@ const Chip = ({
   [avatarProps, badgeProps, iconSource, rightIconSource, onDismiss]);
 
   const getContainerSize = useCallback(() => {
-    const width = useSizeAsMinimum ? 'minWidth' : 'width';
-    const height = useSizeAsMinimum ? 'minHeight' : 'height';
-
-    return typeof size === 'object'
-      ? {[width]: _.get(size, 'width'), [height]: _.get(size, 'height')}
-      : {[width]: size, [height]: size};
+    const width = typeof size === 'object' ? _.get(size, 'width') : size;
+    const height = typeof size === 'object' ? _.get(size, 'height') : size;
+    return useSizeAsMinimum ? {minWidth: width, minHeight: height} : {width, height};
   }, [size]);
 
   const Container = onPress ? TouchableOpacity : View;
-
+  const hitSlop = useMemo(() => {
+    const containerSize = getContainerSize();
+    const height = ('height' in containerSize ? containerSize.height : containerSize?.minHeight) ?? 0;
+    const width = containerSize?.width ?? 48;
+    return {
+      top: Math.max(0, (48 - height) / 2),
+      bottom: Math.max(0, (48 - height) / 2),
+      left: Math.max(0, (48 - width) / 2),
+      right: Math.max(0, (48 - width) / 2)
+    };
+  }, [getContainerSize]);
   return (
     <Container
       activeOpacity={1}
       onPress={onPress}
       style={[styles.container, {backgroundColor}, {borderRadius}, containerStyle, getContainerSize()]}
       testID={testID}
+      hitSlop={onPress ? hitSlop : undefined}
       {...others}
     >
       {avatarProps && renderAvatar()}
