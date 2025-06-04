@@ -1,8 +1,6 @@
 import {renderHook, act} from '@testing-library/react-hooks';
 
-// Mock the commons/new module since that's what useOrientation imports
 jest.mock('../../../commons/new', () => {
-  // We need to mock the Constants export from commons/new
   return {
     Constants: {
       orientation: 'portrait',

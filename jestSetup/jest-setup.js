@@ -100,7 +100,6 @@ jest.mock('react-native', () => {
   reactNative.NativeModules.KeyboardTrackingViewTempManager = {};
   reactNative.NativeModules.StatusBarManager = {getHeight: jest.fn()};
   
-  // Mock AccessibilityInfo methods properly
   reactNative.AccessibilityInfo = {
     ...reactNative.AccessibilityInfo,
     isScreenReaderEnabled: jest.fn(() => Promise.resolve(false)),
