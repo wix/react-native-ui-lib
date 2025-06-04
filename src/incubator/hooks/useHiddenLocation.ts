@@ -1,6 +1,6 @@
 import {isEqual} from 'lodash';
-import {useCallback, useRef, useState, RefCallback, useEffect} from 'react';
-import {View, LayoutChangeEvent, LayoutRectangle, AccessibilityInfo} from 'react-native';
+import {useCallback, useRef, useState, RefCallback} from 'react';
+import {View, LayoutChangeEvent, LayoutRectangle} from 'react-native';
 import {Constants} from '../../commons/new';
 import {PanningDirectionsEnum} from '../panView';
 
@@ -13,21 +13,7 @@ export interface HiddenLocation extends HiddenLocationRecord {
 // Adding this for headless tests that are not triggering onLayout
 const wasMeasuredDefaultValue = global._UILIB_TESTING ?? false;
 
-const defaultHiddenLocation = {
-  up: -Constants.windowHeight,
-  down: Constants.windowHeight,
-  left: -Constants.screenWidth,
-  right: Constants.screenWidth,
-  wasMeasured: wasMeasuredDefaultValue
-};
-
 export default function useHiddenLocation<T extends View>() {
-  const [reduceMotionEnabled, setReduceMotionEnabled] = useState(false);
-
-  useEffect(() => {
-    AccessibilityInfo.isReduceMotionEnabled().then(setReduceMotionEnabled);
-  }, []);
-
   const getHiddenLocation = ({
     x = 0,
     y = 0,
@@ -35,10 +21,6 @@ export default function useHiddenLocation<T extends View>() {
     height = Constants.windowHeight,
     wasMeasured = wasMeasuredDefaultValue
   }): HiddenLocation => {
-    if (Constants.isAndroid && reduceMotionEnabled) {
-      return defaultHiddenLocation;
-    }
-
     return {
       up: -y - height,
       down: Constants.windowHeight - y,
