@@ -95,13 +95,15 @@ function ExpandableSection(props: ExpandableSectionProps) {
     );
   };
 
+  const Container = onPress ? TouchableOpacity : View;
+
   if (shouldShowSectionHeader) {
     return (
       <View style={styles.hidden}>
         {top && renderChildren()}
-        <TouchableOpacity onPress={onPress} testID={testID} accessibilityState={accessibilityState}>
+        <Container onPress={onPress} testID={testID} accessibilityState={accessibilityState}>
           {sectionHeader}
-        </TouchableOpacity>
+        </Container>
         {!top && renderChildren()}
       </View>
     );
