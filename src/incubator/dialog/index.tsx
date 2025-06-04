@@ -91,13 +91,22 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
 
   const close = useCallback(() => {
     'worklet';
-    visibility.value = withTiming(0, undefined, _onDismiss);
+    if (Constants.accessibility.isReduceMotionEnabled) {
+      visibility.value = 0;
+      _onDismiss();
+    } else {
+      visibility.value = withTiming(0, undefined, _onDismiss);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [_onDismiss]);
 
   const open = useCallback(() => {
     'worklet';
-    visibility.value = withSpring(1);
+    if (Constants.accessibility.isReduceMotionEnabled) {
+      visibility.value = 1;
+    } else {
+      visibility.value = withSpring(1);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
