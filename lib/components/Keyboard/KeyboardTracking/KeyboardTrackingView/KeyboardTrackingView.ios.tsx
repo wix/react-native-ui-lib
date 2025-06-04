@@ -29,17 +29,21 @@ class KeyboardTrackingView extends PureComponent<KeyboardTrackingViewProps> {
   render() {
     return <NativeKeyboardTrackingView {...this.props} ref={r => (this.ref = r)}/>;
   }
+    
+  findNodeHandle(ref) {
+    return ref.current?.getNodeHandle?.() || ref?.getNodeHandle?.() || ReactNative.findNodeHandle(ref.current || ref);
+  }
 
   async getNativeProps() {
     if (this.ref && KeyboardTrackingViewTempManager && KeyboardTrackingViewTempManager.getNativeProps) {
-      return await KeyboardTrackingViewTempManager.getNativeProps(ReactNative.findNodeHandle(this.ref));
+      return await KeyboardTrackingViewTempManager.getNativeProps(this.findNodeHandle(this.ref));
     }
     return {};
   }
 
   scrollToStart() {
     if (this.ref && KeyboardTrackingViewTempManager && KeyboardTrackingViewTempManager.scrollToStart) {
-      KeyboardTrackingViewTempManager.scrollToStart(ReactNative.findNodeHandle(this.ref));
+      KeyboardTrackingViewTempManager.scrollToStart(this.findNodeHandle(this.ref));
     }
   }
 }
