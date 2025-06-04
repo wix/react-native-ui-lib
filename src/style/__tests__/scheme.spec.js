@@ -1,7 +1,13 @@
+import {AccessibilityInfo} from 'react-native';
+
 let Scheme;
 describe('Scheme', () => {
   beforeEach(() => {
     jest.resetModules();
+    // Re-apply the AccessibilityInfo mocks after resetModules
+    jest.spyOn(AccessibilityInfo, 'isScreenReaderEnabled').mockImplementation(() => Promise.resolve(false));
+    jest.spyOn(AccessibilityInfo, 'isReduceMotionEnabled').mockImplementation(() => Promise.resolve(false));
+    
     Scheme = require('../scheme').default;
   });
 

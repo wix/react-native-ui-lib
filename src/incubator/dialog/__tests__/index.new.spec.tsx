@@ -1,5 +1,6 @@
 import React, {useRef, useState, useEffect, useCallback} from 'react';
 import {render, act} from '@testing-library/react-native';
+import {AccessibilityInfo} from 'react-native';
 import Dialog, {DialogProps} from '../index';
 import {DialogDriver} from '../Dialog.driver.new';
 import View from '../../../components/view';
@@ -22,7 +23,7 @@ const defaultProps = {
   centerH: true
 };
 
-const TestCase2 = props => {
+const TestCase2 = (props: any) => {
   const [visible, setVisible] = useState(props.visible);
 
   useEffect(() => {
@@ -107,5 +108,17 @@ describe('Incubator.Dialog sanity checks', () => {
     const {dialogDriver} = getDriver(component);
     expect(dialogDriver.exists()).toBeFalsy();
     expect(dialogDriver.isVisible()).toBeFalsy();
+  });
+
+  it('Should show and dismiss dialog immediately when reduce motion is enabled', async () => {
+    jest.spyOn(AccessibilityInfo, 'isReduceMotionEnabled').mockResolvedValue(true);
+    const dismissFn = jest.fn();
+    const {dialogDriver} = getDriver(<TestCase1 visible onDismiss={dismissFn}/>);
+    expect(dialogDriver.isVisible()).toBeTruthy();
+    expect(dismissFn).not.toHaveBeenCalled();
+    dialogDriver.pressOnBackground();
+    expect(dialogDriver.isVisible()).toBeFalsy();
+    expect(dismissFn).toHaveBeenCalledTimes(1);
+    jest.restoreAllMocks();
   });
 });

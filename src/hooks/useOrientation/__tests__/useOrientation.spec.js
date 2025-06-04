@@ -1,20 +1,35 @@
 import {renderHook, act} from '@testing-library/react-hooks';
 
+// Mock the commons/new module since that's what useOrientation imports
+jest.mock('../../../commons/new', () => {
+  // We need to mock the Constants export from commons/new
+  return {
+    Constants: {
+      orientation: 'portrait',
+      addDimensionsEventListener: jest.fn(),
+      removeDimensionsEventListener: jest.fn()
+    }
+  };
+});
+
 let Constants;
 let useOrientation;
 let orientationChangeListeners;
 
 describe('useOrientation hook', () => {
   beforeEach(() => {
-    jest.mock('../../../commons/Constants');
-    Constants = require('../../../commons/Constants').default;
+    const {Constants: MockedConstants} = require('../../../commons/new');
+    Constants = MockedConstants;
     useOrientation = require('../index').default;
 
     orientationChangeListeners = [];
 
     Constants.addDimensionsEventListener = jest.fn(callback => {
       orientationChangeListeners.push(callback);
+      return {remove: jest.fn()};
     });
+    
+    Constants.removeDimensionsEventListener = jest.fn();
   });
 
   it('should return current orientation', () => {
