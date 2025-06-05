@@ -9,9 +9,9 @@ import {
   BackHandler,
   LayoutChangeEvent
 } from 'react-native';
-import KeyboardTrackingView, {KeyboardTrackingViewProps} from '../KeyboardTracking/KeyboardTrackingView';
-import CustomKeyboardView from './CustomKeyboardView';
-import KeyboardUtils, {KeyboardHeightListener} from './utils/KeyboardUtils';
+import KeyboardTrackingView, {KeyboardTrackingViewProps} from '../KeyboardTrackingView';
+import CustomKeyboardView from '../CustomKeyboardView';
+import KeyboardUtils, {KeyboardHeightListener} from '../KeyboardUtils';
 
 const IsIOS = Platform.OS === 'ios';
 const IsAndroid = Platform.OS === 'android';

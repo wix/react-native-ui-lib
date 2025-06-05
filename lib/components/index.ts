@@ -1,5 +1,5 @@
 import DynamicFonts, {FontExtension} from './DynamicFonts';
-import HighlighterOverlayView from './HighlighterOverlayView';
+import HighlighterOverlayView from './HighlighterOverlay';
 import SafeAreaSpacerView from './SafeArea/SafeAreaSpacerView';
 import SafeAreaInsetsManager from './SafeArea/SafeAreaInsetsManager';
 import Keyboard, {KeyboardTrackingViewProps, KeyboardAccessoryViewProps} from './Keyboard';
