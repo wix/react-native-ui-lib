@@ -1,7 +1,7 @@
 import React from 'react';
 import {Keyboard, View} from 'react-native';
 import KeyboardRegistry from '../KeyboardRegistry';
-import CustomKeyboardViewBase, {CustomKeyboardViewBaseProps} from '../CustomKeyboardViewBase';
+import CustomKeyboardViewBase, {CustomKeyboardViewBaseProps} from './CustomKeyboardViewBase';
 
 export default class CustomKeyboardView extends CustomKeyboardViewBase<CustomKeyboardViewBaseProps> {
   static displayName = 'IGNORE';

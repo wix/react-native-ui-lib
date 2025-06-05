@@ -1,7 +1,7 @@
 import React from 'react';
 import {requireNativeComponent, processColor, Platform, StyleSheet, Modal, ViewStyle} from 'react-native';
 
-const NativeHighlighterView = requireNativeComponent('HighlighterView');
+const HighlighterView = requireNativeComponent('HighlighterView');
 const DefaultOverlayColor = 'rgba(0, 0, 0, 0.5)';
 
 type HighlightFrameType = {
@@ -68,7 +68,7 @@ const HighlighterOverlayView = (props: HighlighterOverlayViewProps) => {
       transparent
       onRequestClose={() => onRequestClose?.()}
     >
-      <NativeHighlighterView
+      <HighlighterView
         // @ts-ignore, this became private, not sure if I should remove it 
         highlightFrame={highlightFrame}
         style={[style, {...StyleSheet.absoluteFillObject, backgroundColor: 'transparent'}]}
