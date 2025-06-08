@@ -302,17 +302,20 @@ const Chip = ({
   },
   [avatarProps, badgeProps, iconSource, rightIconSource, onDismiss]);
 
-  const getContainerSize = useCallback(() => {
+  const chipSize = useMemo(() => {
     const width = typeof size === 'object' ? _.get(size, 'width') : size;
     const height = typeof size === 'object' ? _.get(size, 'height') : size;
-    return useSizeAsMinimum ? {minWidth: width, minHeight: height} : {width, height};
+    return {width, height};
   }, [size]);
+
+  const containerSizeStyle = useMemo(() => {
+    const {width, height} = chipSize;
+    return useSizeAsMinimum ? {minWidth: width, minHeight: height} : {width, height};
+  }, [chipSize]);
 
   const Container = onPress ? TouchableOpacity : View;
   const hitSlop = useMemo(() => {
-    const containerSize = getContainerSize();
-    const height = ('height' in containerSize ? containerSize.height : containerSize?.minHeight) ?? 0;
-    const width = containerSize?.width ?? 48;
+    const {width = 48, height = 48} = chipSize;
     const verticalHitSlop = Math.max(0, (48 - height) / 2);
     const horizontalHitSlop = Math.max(0, (48 - width) / 2);
     return {
@@ -321,12 +324,13 @@ const Chip = ({
       left: horizontalHitSlop,
       right: horizontalHitSlop
     };
-  }, [getContainerSize]);
+  }, [chipSize]);
+
   return (
     <Container
       activeOpacity={1}
       onPress={onPress}
-      style={[styles.container, {backgroundColor}, {borderRadius}, containerStyle, getContainerSize()]}
+      style={[styles.container, {backgroundColor}, {borderRadius}, containerStyle, containerSizeStyle]}
       testID={testID}
       hitSlop={hitSlop}
       {...others}
