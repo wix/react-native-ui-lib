@@ -67,8 +67,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     listProps,
     value,
     getLabel,
-    getItemLabel,
-    getItemValue,
     renderItem,
     children,
     useSafeArea,
@@ -88,9 +86,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   const pickerExpandable = useRef<ExpandableOverlayMethods>(null);
   const pickerRef = useImperativePickerHandle(ref, pickerExpandable);
 
-  // TODO: Remove this when migration is completed, starting of v8
-  // usePickerMigrationWarnings({children, getItemLabel, getItemValue});
-
   useEffect(() => {
     if (propItems) {
       setItems(propItems);
@@ -101,7 +96,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     filteredItems,
     setSearchValue,
     onSearchChange: _onSearchChange
-  } = usePickerSearch({showSearch, onSearchChange, getItemLabel, children, items});
+  } = usePickerSearch({showSearch, onSearchChange, children, items});
   const {
     multiDraftValue,
     onDoneSelecting,
@@ -114,7 +109,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     value,
     onChange,
     pickerExpandableRef: pickerExpandable,
-    getItemValue,
     topBarProps,
     setSearchValue,
     mode,
@@ -137,7 +131,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
   const {label, accessibilityInfo} = usePickerLabel({
     value,
     items,
-    getItemLabel,
     getLabel,
     accessibilityLabel,
     accessibilityHint,
@@ -166,8 +159,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
       value: mode === PickerModes.MULTI ? multiDraftValue : value,
       onPress: mode === PickerModes.MULTI ? toggleItemSelection : onDoneSelecting,
       isMultiMode: mode === PickerModes.MULTI,
-      getItemValue,
-      getItemLabel,
       onSelectedLayout: onSelectedItemLayout,
       renderItem,
       selectionLimit,
@@ -180,8 +171,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     value,
     multiDraftValue,
     renderItem,
-    getItemValue,
-    getItemLabel,
     selectionLimit,
     onSelectedItemLayout,
     toggleItemSelection,

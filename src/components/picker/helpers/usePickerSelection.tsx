@@ -3,13 +3,13 @@ import _ from 'lodash';
 import {PickerProps, PickerValue, PickerSingleValue, PickerMultiValue, PickerModes} from '../types';
 
 interface UsePickerSelectionProps
-  extends Pick<PickerProps, 'value' | 'onChange' | 'getItemValue' | 'topBarProps' | 'mode' | 'items'> {
+  extends Pick<PickerProps, 'value' | 'onChange' | 'topBarProps' | 'mode' | 'items'> {
   pickerExpandableRef: RefObject<any>;
   setSearchValue: (searchValue: string) => void;
 }
 
 const usePickerSelection = (props: UsePickerSelectionProps) => {
-  const {value, onChange, topBarProps, pickerExpandableRef, getItemValue, setSearchValue, mode, items} = props;
+  const {value, onChange, topBarProps, pickerExpandableRef, setSearchValue, mode, items} = props;
   const [multiDraftValue, setMultiDraftValue] = useState(value as PickerMultiValue);
   const [multiFinalValue, setMultiFinalValue] = useState(value as PickerMultiValue);
 
@@ -33,7 +33,7 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     const newValue = _.xor(multiDraftValue, itemAsArray);
     setMultiDraftValue(newValue);
   },
-  [multiDraftValue, getItemValue]);
+  [multiDraftValue]);
 
   const cancelSelect = useCallback(() => {
     setSearchValue('');

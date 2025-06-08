@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import {PickerProps, PickerSingleValue, PickerValue} from './types';
+import {PickerProps, PickerSingleValue, PickerValue, PickerItemProps} from './types';
 
 export function extractPickerItems(props: PickerProps) {
   const {children} = props;
@@ -36,12 +36,10 @@ export function isItemSelected(childValue: PickerSingleValue, selectedValue?: Pi
 //   return _.invoke(props, 'getItemValue', props.value) || _.get(props.value, 'value');
 // }
 
-export function getItemLabel(label: string, value: PickerValue, getItemLabel?: PickerProps['getItemLabel']) {
-  if (_.isObject(value)) {
-    if (getItemLabel) {
-      return getItemLabel(value);
-    }
-    return _.get(value, 'label');
+export function getItemLabel(label: string, value: PickerValue, getItemLabel?: PickerItemProps['getItemLabel']) {
+  if (getItemLabel) {
+    const customLabel = getItemLabel(value);
+    return customLabel !== undefined ? customLabel : label;
   }
   return label;
 }

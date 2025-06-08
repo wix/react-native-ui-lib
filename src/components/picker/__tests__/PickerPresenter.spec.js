@@ -40,19 +40,18 @@ describe('components/PickerPresenter', () => {
   // });
 
   describe('getItemLabel', () => {
-    it('should return item label when value is not an object', () => {
-      expect(uut.getItemLabel('label', 'value', undefined)).toEqual('label');
+    it('should return item label when no custom getItemLabel function is provided', () => {
+      expect(uut.getItemLabel('JavaScript', 'js', undefined)).toEqual('JavaScript');
     });
 
-    it('should return item label when value is an object', () => {
-      const itemProps = {value: {value: 'value', label: 'label'}};
-      expect(uut.getItemLabel(undefined, itemProps.value, undefined)).toEqual('label');
+    it('should return custom label when getItemLabel function is provided', () => {
+      const customGetItemLabel = (value) => `Custom: ${value}`;
+      expect(uut.getItemLabel('JavaScript', 'js', customGetItemLabel)).toEqual('Custom: js');
     });
 
-    it('should return item label according to getLabel function ', () => {
-      const getLabel = itemValue => `${itemValue.value} - ${itemValue.label}`;
-      const itemProps = {value: {value: 'value', label: 'label'}, getLabel};
-      expect(uut.getItemLabel(undefined, itemProps.value, getLabel)).toEqual('value - label');
+    it('should return original label when getItemLabel function returns undefined', () => {
+      const customGetItemLabel = () => undefined;
+      expect(uut.getItemLabel('JavaScript', 'js', customGetItemLabel)).toEqual('JavaScript');
     });
   });
 });

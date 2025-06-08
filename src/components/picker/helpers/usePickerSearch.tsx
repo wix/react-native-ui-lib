@@ -3,23 +3,23 @@ import _ from 'lodash';
 import {PickerProps} from '../types';
 import {getItemLabel as getItemLabelPresenter, shouldFilterOut} from '../PickerPresenter';
 
-type UsePickerSearchProps = Pick<PickerProps, 'showSearch' | 'onSearchChange' | 'children' | 'getItemLabel' | 'items'>;
+type UsePickerSearchProps = Pick<PickerProps, 'showSearch' | 'onSearchChange' | 'children' | 'items'>;
 
 const usePickerSearch = (props: UsePickerSearchProps) => {
-  const {showSearch, onSearchChange, children, getItemLabel, items} = props;
+  const {showSearch, onSearchChange, children, items} = props;
   const [searchValue, setSearchValue] = useState('');
 
   const filterItems = useCallback((items: any) => {
     if (showSearch && !_.isEmpty(searchValue)) {
       return _.filter(items, item => {
-        const {label, value, getItemLabel: childGetItemLabel} = item.props || item;
-        const itemLabel = getItemLabelPresenter(label, value, childGetItemLabel || getItemLabel);
+        const {label, value, getItemLabel} = item.props || item;
+        const itemLabel = getItemLabelPresenter(label, value, getItemLabel);
         return !shouldFilterOut(searchValue, itemLabel);
       });
     }
     return items;
   },
-  [showSearch, searchValue, getItemLabel]);
+  [showSearch, searchValue]);
 
   const filteredItems = useMemo(() => {
     return filterItems(children || items);
