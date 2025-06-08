@@ -328,7 +328,7 @@ const Chip = ({
       onPress={onPress}
       style={[styles.container, {backgroundColor}, {borderRadius}, containerStyle, getContainerSize()]}
       testID={testID}
-      hitSlop={onPress ? hitSlop : undefined}
+      hitSlop={hitSlop}
       {...others}
     >
       {avatarProps && renderAvatar()}
