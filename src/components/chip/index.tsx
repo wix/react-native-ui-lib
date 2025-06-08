@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, {useCallback, useMemo} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, ViewProps, ImageStyle, TextStyle, ImageSourcePropType} from 'react-native';
 import Assets from '../../assets';
@@ -303,8 +302,8 @@ const Chip = ({
   [avatarProps, badgeProps, iconSource, rightIconSource, onDismiss]);
 
   const chipSize = useMemo(() => {
-    const width = typeof size === 'object' ? _.get(size, 'width') : size;
-    const height = typeof size === 'object' ? _.get(size, 'height') : size;
+    const width = typeof size === 'object' ? size.width : size;
+    const height = typeof size === 'object' ? size.height : size;
     return {width, height};
   }, [size]);
 
