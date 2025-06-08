@@ -313,11 +313,13 @@ const Chip = ({
     const containerSize = getContainerSize();
     const height = ('height' in containerSize ? containerSize.height : containerSize?.minHeight) ?? 0;
     const width = containerSize?.width ?? 48;
+    const verticalHitSlop = Math.max(0, (48 - height) / 2);
+    const horizontalHitSlop = Math.max(0, (48 - width) / 2);
     return {
-      top: Math.max(0, (48 - height) / 2),
-      bottom: Math.max(0, (48 - height) / 2),
-      left: Math.max(0, (48 - width) / 2),
-      right: Math.max(0, (48 - width) / 2)
+      top: verticalHitSlop,
+      bottom: verticalHitSlop,
+      left: horizontalHitSlop,
+      right: horizontalHitSlop
     };
   }, [getContainerSize]);
   return (
