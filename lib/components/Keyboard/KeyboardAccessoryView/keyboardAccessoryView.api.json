@@ -2,7 +2,6 @@
   "name": "KeyboardAccessoryView",
   "category": "infra",
   "description": "View that allows replacing the default keyboard with other components",
-  "note": "This view is useful only for iOS",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/nativeComponentScreens/keyboardAccessory/KeyboardAccessoryViewScreen.js",
   "images": [
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/KeyboardAccessoryView/KeyboardAccessoryView.gif?raw=true"
@@ -17,12 +16,13 @@
       "name": "kbInputRef",
       "type": "any",
       "description": "The reference to the actual text input (or the keyboard may not reset when instructed to, etc.)",
+      "note": "iOS only",
       "required": true
     },
     {
       "name": "kbComponent",
       "type": "string",
-      "description": "The keyboard ID (the componentID sent to KeyboardRegistry)"
+      "description": "The keyboard ID (the componentID sent to KeyboardRegistry)",
     },
     {"name": "kbInitialProps", "type": "any", "description": "The props that will be sent to the KeyboardComponent"},
     {
