@@ -73,7 +73,6 @@ const StackAggregator = (props: StackAggregatorProps) => {
     backgroundColor,
     contentContainerStyle,
     itemBorderRadius = 0,
-    backgroundColor,
     onCollapseWillChange,
     onCollapseChanged
   } = props;
