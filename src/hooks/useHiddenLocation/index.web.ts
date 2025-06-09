@@ -2,7 +2,7 @@ import {isEqual} from 'lodash';
 import {useCallback, useRef, useState, RefCallback} from 'react';
 import {View, LayoutChangeEvent, LayoutRectangle} from 'react-native';
 import {Constants} from '../../commons/new';
-import {PanningDirectionsEnum} from '../panView';
+import {PanningDirectionsEnum} from '../../components/panView';
 
 type HiddenLocationRecord = Record<PanningDirectionsEnum, number>;
 

@@ -72,6 +72,7 @@ const StackAggregator = (props: StackAggregatorProps) => {
     onItemPress,
     contentContainerStyle,
     itemBorderRadius = 0,
+    backgroundColor,
     onCollapseWillChange,
     onCollapseChanged
   } = props;
@@ -83,11 +84,11 @@ const StackAggregator = (props: StackAggregatorProps) => {
     setIsCollapsed(collapsed);
   }, [collapsed]);
 
-  useDidUpdate(() => {
+  useDidUpdate(async () => {
     onCollapseWillChange?.(isCollapsed);
-    animate();
+    await animate();
     onCollapseChanged?.(isCollapsed);
-  }, [isCollapsed, onCollapseWillChange, onCollapseChanged]);
+  }, [isCollapsed, itemsCount]);
 
   /** Animations */
 
@@ -100,10 +101,11 @@ const StackAggregator = (props: StackAggregatorProps) => {
 
   const getItemScale = useCallback((index: number) => {
     if (isCollapsed) {
-      if (index === itemsCount - 2) {
+      if (index === 1) {
         return 0.95;
       }
-      if (index === itemsCount - 1) {
+
+      if (index === 2) {
         return 0.9;
       }
     }
@@ -185,10 +187,11 @@ const StackAggregator = (props: StackAggregatorProps) => {
   const getTop = (index: number) => {
     let start = 0;
 
-    if (index === itemsCount - 2) {
+    if (index === 1) {
       start += PEEP;
     }
-    if (index === itemsCount - 1) {
+
+    if (index === 2) {
       start += PEEP * 2;
     }
 
@@ -217,6 +220,10 @@ const StackAggregator = (props: StackAggregatorProps) => {
       }
     ];
   }, [firstItemHeight, itemsCount]);
+
+  const cardStyle = useMemo(() => {
+    return backgroundColor ? [styles.card, {backgroundColor}] : styles.card;
+  }, [backgroundColor]);
 
   /** Events */
 
@@ -256,7 +263,7 @@ const StackAggregator = (props: StackAggregatorProps) => {
         ]}
         collapsable={false}
       >
-        <Card style={styles.card} onPress={() => _onItemPress(index)} borderRadius={itemBorderRadius} elevation={5}>
+        <Card style={cardStyle} onPress={() => _onItemPress(index)} borderRadius={itemBorderRadius} elevation={5}>
           <Animated.View style={index !== 0 ? {opacity: animatedContentOpacity} : undefined} collapsable={false}>
             {item}
           </Animated.View>
@@ -319,8 +326,7 @@ const styles = StyleSheet.create({
   },
   card: {
     overflow: 'hidden',
-    flexShrink: 1,
-    backgroundColor: 'transparent'
+    flexShrink: 1
   },
   button: {
     zIndex: 100
