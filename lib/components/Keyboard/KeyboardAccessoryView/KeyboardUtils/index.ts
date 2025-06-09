@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useState} from 'react';
 import {Keyboard, KeyboardEvent, Platform} from 'react-native';
-import TextInputKeyboardManager from './TextInputKeyboardManager';
+import TextInputKeyboardManager from '../TextInputKeyboardManager';
 
 const IS_IOS = Platform.OS === 'ios';
 const DEFAULT_KEYBOARD_HEIGHT = IS_IOS ? 216 : 312; // TODO: verify this value for iOS
