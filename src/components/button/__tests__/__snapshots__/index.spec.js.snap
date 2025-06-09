@@ -310,7 +310,7 @@ exports[`Button backgroundColor should return theme disabled color if button is 
   }
   accessible={true}
   collapsable={false}
-  focusable={true}
+  focusable={false}
   hitSlop={
     {
       "bottom": 7.5,
@@ -3029,7 +3029,7 @@ exports[`Button icon should return icon style according to different variations 
   }
   accessible={true}
   collapsable={false}
-  focusable={true}
+  focusable={false}
   hitSlop={
     {
       "bottom": 7.5,
@@ -4191,7 +4191,7 @@ exports[`Button labelColor should return disabled text color according to theme 
   }
   accessible={true}
   collapsable={false}
-  focusable={true}
+  focusable={false}
   hitSlop={
     {
       "bottom": 7.5,
@@ -4947,7 +4947,7 @@ exports[`Button outline should return disabled color for outline if button is di
   }
   accessible={true}
   collapsable={false}
-  focusable={true}
+  focusable={false}
   hitSlop={
     {
       "bottom": 7.5,
