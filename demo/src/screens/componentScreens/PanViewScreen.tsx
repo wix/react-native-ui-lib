@@ -6,7 +6,7 @@ import {
   View,
   Text,
   Colors,
-  Incubator,
+  PanView,
   Card,
   Constants,
   Modal,
@@ -14,7 +14,6 @@ import {
   Icon,
   TouchableOpacity
 } from 'react-native-ui-lib';
-const {PanView} = Incubator;
 
 interface Item {
   value: string;

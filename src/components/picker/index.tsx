@@ -31,7 +31,7 @@ import {
   PickerMethods,
   PickerSelectionStatusProps
 } from './types';
-import {DialogProps} from '../../incubator/dialog';
+import {DialogProps} from '../dialog';
 
 const DEFAULT_DIALOG_PROPS: DialogProps = {
   bottom: true,
@@ -310,7 +310,6 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
           ref={pickerExpandable}
           useDialog={useDialog || useWheelPicker}
           dialogProps={DEFAULT_DIALOG_PROPS}
-          migrateDialog
           expandableContent={expandableModalContent}
           renderCustomOverlay={renderOverlay ? _renderOverlay : undefined}
           onPress={onPress}
