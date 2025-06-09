@@ -1,5 +1,4 @@
-import _ from 'lodash';
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, ViewProps, ImageStyle, TextStyle, ImageSourcePropType} from 'react-native';
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
@@ -198,7 +197,7 @@ const Chip = ({
       <TouchableOpacity
         style={[getMargins('dismiss'), dismissContainerStyle]}
         onPress={onDismiss}
-        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+        hitSlop={{top: 16, bottom: 16, left: 10, right: 10}}
         testID={`${testID}.dismiss`}
       >
         <Icon
@@ -302,23 +301,37 @@ const Chip = ({
   },
   [avatarProps, badgeProps, iconSource, rightIconSource, onDismiss]);
 
-  const getContainerSize = useCallback(() => {
-    const width = useSizeAsMinimum ? 'minWidth' : 'width';
-    const height = useSizeAsMinimum ? 'minHeight' : 'height';
-
-    return typeof size === 'object'
-      ? {[width]: _.get(size, 'width'), [height]: _.get(size, 'height')}
-      : {[width]: size, [height]: size};
+  const chipSize = useMemo(() => {
+    const width = typeof size === 'object' ? size.width : size;
+    const height = typeof size === 'object' ? size.height : size;
+    return {width, height};
   }, [size]);
 
+  const containerSizeStyle = useMemo(() => {
+    const {width, height} = chipSize;
+    return useSizeAsMinimum ? {minWidth: width, minHeight: height} : {width, height};
+  }, [chipSize]);
+
   const Container = onPress ? TouchableOpacity : View;
+  const hitSlop = useMemo(() => {
+    const {width = 48, height = 48} = chipSize;
+    const verticalHitSlop = Math.max(0, (48 - height) / 2);
+    const horizontalHitSlop = Math.max(0, (48 - width) / 2);
+    return {
+      top: verticalHitSlop,
+      bottom: verticalHitSlop,
+      left: horizontalHitSlop,
+      right: horizontalHitSlop
+    };
+  }, [chipSize]);
 
   return (
     <Container
       activeOpacity={1}
       onPress={onPress}
-      style={[styles.container, {backgroundColor}, {borderRadius}, containerStyle, getContainerSize()]}
+      style={[styles.container, {backgroundColor}, {borderRadius}, containerStyle, containerSizeStyle]}
       testID={testID}
+      hitSlop={hitSlop}
       {...others}
     >
       {avatarProps && renderAvatar()}
