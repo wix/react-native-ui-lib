@@ -1,6 +1,6 @@
 import {Carousel, Constants, Text, View, Colors} from 'react-native-ui-lib';
 import React, {Component} from 'react';
-import {StyleSheet, Animated, TextStyle} from 'react-native';
+import {StyleSheet, Animated} from 'react-native';
 import _ from 'lodash';
 import {renderBooleanOption, renderSliderOption} from '../ExampleScreenPresenter';
 
@@ -58,7 +58,7 @@ class CarouselVerticalScreen extends Component<{}, State> {
     return (
       <View absT>
         {_.times(numberOfPagesShown, page => (
-          <Text key={page} h1 animated style={[styles.animatedPageCounter, animatedStyles[page]] as TextStyle}>
+          <Text key={page} h1 animated style={[styles.animatedPageCounter, animatedStyles[page]]}>
             {page}
           </Text>
         ))}
