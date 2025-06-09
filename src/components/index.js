@@ -143,10 +143,6 @@ export default {
   get RadioGroup() {
     return require('./radioButton').RadioGroup;
   },
-
-  get SharedTransition() {
-    return require('./sharedTransition').default;
-  },
   get StackAggregator() {
     return require('./stackAggregator').default;
   },

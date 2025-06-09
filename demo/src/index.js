@@ -99,9 +99,6 @@ module.exports = {
       get SegmentedControlScreen() {
         return require('./screens/componentScreens/SegmentedControlScreen').default;
       },
-      get SharedTransitionScreen() {
-        return require('./screens/componentScreens/SharedTransitionScreen').default;
-      },
       get SkeletonViewScreen() {
         return require('./screens/componentScreens/SkeletonViewScreen').default;
       },

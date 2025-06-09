@@ -42,7 +42,6 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.SectionsWheelPickerScreen', () => require('./SectionsWheelPickerScreen').default);
   registrar('unicorn.components.SearchInputScreen', () => require('./SearchInputScreen').default);
   registrar('unicorn.components.SegmentedControlScreen', () => require('./SegmentedControlScreen').default);
-  registrar('unicorn.components.SharedTransitionScreen', () => require('./SharedTransitionScreen').default);
   registrar('unicorn.components.SkeletonViewScreen', () => require('./SkeletonViewScreen').default);
   registrar('unicorn.components.SliderScreen', () => require('./SliderScreen').default);
   registrar('unicorn.components.SortableGridListScreen', () => require('./SortableGridListScreen').default);
