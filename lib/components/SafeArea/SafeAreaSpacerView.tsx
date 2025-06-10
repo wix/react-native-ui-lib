@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, requireNativeComponent, ViewStyle, Platform} from 'react-native';
+import {View, ViewStyle, Platform} from 'react-native';
+// Import the Codegen specification for New Architecture
+import SafeAreaSpacerViewNativeComponent from './SafeAreaSpacerViewNativeComponent';
 
-const NativeSafeAreaSpacerView = requireNativeComponent('SafeAreaSpacerView');
 const isIOS = Platform.OS === 'ios';
 
 export type SafeAreaSpacerViewProps = {
@@ -10,8 +11,7 @@ export type SafeAreaSpacerViewProps = {
 
 const SafeAreaSpacerView = ({style}: SafeAreaSpacerViewProps) => {
   return (
-    // @ts-ignore
-    isIOS ? <NativeSafeAreaSpacerView style={style}/> : <View style={style}/>
+    isIOS ? <SafeAreaSpacerViewNativeComponent style={style}/> : <View style={style}/>
   );
 };
 
