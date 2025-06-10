@@ -38,20 +38,4 @@ describe('components/PickerPresenter', () => {
   //     expect(uut.getItemValue(itemProps)).toEqual('item-value');
   //   });
   // });
-
-  describe('getItemLabel', () => {
-    it('should return item label when no custom getItemLabel function is provided', () => {
-      expect(uut.getItemLabel('JavaScript', 'js', undefined)).toEqual('JavaScript');
-    });
-
-    it('should return custom label when getItemLabel function is provided', () => {
-      const customGetItemLabel = (value) => `Custom: ${value}`;
-      expect(uut.getItemLabel('JavaScript', 'js', customGetItemLabel)).toEqual('Custom: js');
-    });
-
-    it('should return original label when getItemLabel function returns undefined', () => {
-      const customGetItemLabel = () => undefined;
-      expect(uut.getItemLabel('JavaScript', 'js', customGetItemLabel)).toEqual('JavaScript');
-    });
-  });
 });

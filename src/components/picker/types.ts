@@ -301,10 +301,6 @@ export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValu
    */
   labelStyle?: StyleProp<TextStyle>;
   /**
-   * Custom function for the item label (e.g (value) => customLabel)
-   */
-  getItemLabel?: (value: PickerValue) => string;
-  /**
    * Render custom item
    */
   renderItem?: PickerProps['renderItem'];

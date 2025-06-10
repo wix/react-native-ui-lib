@@ -9,7 +9,7 @@ import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 import Text from '../text';
-import {getItemLabel, isItemSelected} from './PickerPresenter';
+import {isItemSelected} from './PickerPresenter';
 import PickerContext from './PickerContext';
 import {PickerItemProps} from './types';
 
@@ -31,7 +31,6 @@ const PickerItem = (props: PickerItemProps) => {
   const context = useContext(PickerContext);
   const customRenderItem = props.renderItem || context.renderItem;
   const isSelected = isItemSelected(value, context.value);
-  const itemLabel = getItemLabel(label, value, props.getItemLabel);
   const selectedCounter = context.selectionLimit && _.isArray(context.value) && context.value?.length;
   const accessibilityProps = {
     accessibilityState: isSelected ? {selected: true} : undefined,
@@ -77,7 +76,7 @@ const PickerItem = (props: PickerItemProps) => {
     return (
       <View style={styles.container} flex row spread centerV>
         <Text numberOfLines={1} style={itemLabelStyle}>
-          {itemLabel}
+          {label}
         </Text>
         {selectedIndicator}
       </View>
@@ -95,7 +94,7 @@ const PickerItem = (props: PickerItemProps) => {
       customValue={props.customValue}
       {...accessibilityProps}
     >
-      {customRenderItem ? customRenderItem(value, {...props, isSelected, isItemDisabled}, itemLabel) : _renderItem()}
+      {customRenderItem ? customRenderItem(value, {...props, isSelected, isItemDisabled}, label) : _renderItem()}
     </TouchableOpacity>
   );
 };
