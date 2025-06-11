@@ -1,47 +1,24 @@
 /* eslint no-underscore-dangle: 0 */
 
-import {NativeModules, NativeEventEmitter} from 'react-native';
 import _ from 'lodash';
 
-type SafeAreaInsetsType = { top: number; left: number; bottom: number; right: number; } | null 
-
-let SafeAreaInsetsCache: SafeAreaInsetsType = null;
-
-const NativeSafeAreaManager = NativeModules.SafeAreaManager;
+type SafeAreaInsetsType = { top: number; left: number; bottom: number; right: number; } | null;
 
 class SafeAreaInsetsManager {
 
-  _defaultInsets: SafeAreaInsetsType = {top: 0, left: 0, bottom: 0, right: 0};
-  _safeAreaInsets: SafeAreaInsetsType = {top: 0, left: 0, bottom: 0, right: 0};
+  _defaultInsets: SafeAreaInsetsType = {top: 47, left: 0, bottom: 34, right: 0}; // Common iPhone safe area values
+  _safeAreaInsets: SafeAreaInsetsType = {top: 47, left: 0, bottom: 34, right: 0};
   _safeAreaChangedDelegates: Array<any> = [];
 
   constructor() {
-    this.addSafeAreaChangedListener();
-  }
-
-  addSafeAreaChangedListener() {
-    if (!NativeSafeAreaManager) {
-      return;
-    }
-    const NativeSafeAreaEvents = new NativeEventEmitter(NativeSafeAreaManager);
-    NativeSafeAreaEvents.addListener('SafeAreaInsetsDidChangeEvent', (safeAreaInsets) => {
-      SafeAreaInsetsCache = safeAreaInsets;
-      this._safeAreaInsets = SafeAreaInsetsCache;
-      _.forEach(this._safeAreaChangedDelegates, (delegate) => {
-        if (delegate.onSafeAreaInsetsDidChangeEvent) {
-          delegate.onSafeAreaInsetsDidChangeEvent(this._safeAreaInsets);
-        } else {
-          console.warn('ERROR', 'SafeAreaInsetsManager', 'safe area changed delegate was added, but it does not implement the onSafeAreaInsetsDidChangeEvent method'); //eslint-disable-line
-        }
-      });
-    });
+    // Initialize with default values
+    this._safeAreaInsets = this._defaultInsets;
+    console.log('SafeAreaInsetsManager: Using hardcoded safe area insets:', this._defaultInsets);
   }
 
   async _updateInsets() {
-    if (NativeSafeAreaManager && SafeAreaInsetsCache === null) {
-      SafeAreaInsetsCache = await NativeSafeAreaManager.getSafeAreaInsets();
-      this._safeAreaInsets = SafeAreaInsetsCache;
-    }
+    // Temporarily disabled TurboModule usage - using hardcoded values
+    this._safeAreaInsets = this._defaultInsets;
   }
 
   async getSafeAreaInsets() {
@@ -49,6 +26,8 @@ class SafeAreaInsetsManager {
     return this._safeAreaInsets;
   }
 
+  // For backwards compatibility - delegates can still be added but won't receive events
+  // until proper event handling is implemented in the native side for TurboModules
   addSafeAreaChangedDelegate(delegate: any) {
     this._safeAreaChangedDelegates.push(delegate);
   }
@@ -62,6 +41,23 @@ class SafeAreaInsetsManager {
   get defaultInsets() {
     return this._defaultInsets;
   }
+
+  // Method to manually refresh safe area insets and notify delegates
+  async refreshSafeAreaInsets() {
+    const previousInsets = this._safeAreaInsets;
+    await this._updateInsets();
+    
+    // Notify delegates if insets changed
+    if (!_.isEqual(previousInsets, this._safeAreaInsets)) {
+      _.forEach(this._safeAreaChangedDelegates, (delegate) => {
+        if (delegate.onSafeAreaInsetsDidChangeEvent) {
+          delegate.onSafeAreaInsetsDidChangeEvent(this._safeAreaInsets);
+        }
+      });
+    }
+  }
 }
 
-export default new SafeAreaInsetsManager();
+const instance = new SafeAreaInsetsManager();
+
+export default instance;
