@@ -1,24 +1,50 @@
 /* eslint no-underscore-dangle: 0 */
 
 import _ from 'lodash';
+import {TurboModuleRegistry, TurboModule} from 'react-native';
 
 type SafeAreaInsetsType = { top: number; left: number; bottom: number; right: number; } | null;
 
-class SafeAreaInsetsManager {
+// TurboModule interface for the new architecture
+interface Spec extends TurboModule {
+  getSafeAreaInsets(): Promise<SafeAreaInsetsType>;
+}
 
-  _defaultInsets: SafeAreaInsetsType = {top: 47, left: 0, bottom: 34, right: 0}; // Common iPhone safe area values
-  _safeAreaInsets: SafeAreaInsetsType = {top: 47, left: 0, bottom: 34, right: 0};
+let SafeAreaInsetsCache: SafeAreaInsetsType = null;
+
+// Try to get the native module with proper error handling
+let NativeSafeAreaManager: Spec | null = null;
+
+try {
+  NativeSafeAreaManager = TurboModuleRegistry.getEnforcing<Spec>('SafeAreaManager');
+} catch (error) {
+  console.warn('SafeAreaInsetsManager: Failed to load TurboModule SafeAreaManager:', error);
+}
+class SafeAreaInsetsManager {
+  _defaultInsets: SafeAreaInsetsType = {top: 44, left: 0, bottom: 34, right: 0}; // Common iPhone safe area values as fallback
+  _safeAreaInsets: SafeAreaInsetsType = {top: 44, left: 0, bottom: 34, right: 0};
   _safeAreaChangedDelegates: Array<any> = [];
 
   constructor() {
     // Initialize with default values
     this._safeAreaInsets = this._defaultInsets;
-    console.log('SafeAreaInsetsManager: Using hardcoded safe area insets:', this._defaultInsets);
   }
 
   async _updateInsets() {
-    // Temporarily disabled TurboModule usage - using hardcoded values
-    this._safeAreaInsets = this._defaultInsets;
+    if (NativeSafeAreaManager && SafeAreaInsetsCache === null) {
+      try {
+        SafeAreaInsetsCache = await NativeSafeAreaManager.getSafeAreaInsets();
+        this._safeAreaInsets = SafeAreaInsetsCache;
+      } catch (error) {
+        console.warn('SafeAreaInsetsManager: Failed to get safe area insets:', error);
+        // Fallback to default values
+        this._safeAreaInsets = this._defaultInsets;
+      }
+    } else if (SafeAreaInsetsCache !== null) {
+      this._safeAreaInsets = SafeAreaInsetsCache;
+    } else {
+      this._safeAreaInsets = this._defaultInsets;
+    }
   }
 
   async getSafeAreaInsets() {
@@ -45,6 +71,7 @@ class SafeAreaInsetsManager {
   // Method to manually refresh safe area insets and notify delegates
   async refreshSafeAreaInsets() {
     const previousInsets = this._safeAreaInsets;
+    SafeAreaInsetsCache = null; // Force refresh
     await this._updateInsets();
     
     // Notify delegates if insets changed
