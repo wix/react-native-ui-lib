@@ -82,13 +82,9 @@ function handleScreenReaderChanged(isScreenReaderEnabled: AccessibilityChangeEve
 AccessibilityInfo.addEventListener('reduceMotionChanged', handleReduceMotionChanged);
 AccessibilityInfo.addEventListener('screenReaderChanged', handleScreenReaderChanged);
 
-function setAccessibility() {
-  AccessibilityInfo.isReduceMotionEnabled().then(isReduceMotionEnabled => {
-    accessibility.isReduceMotionEnabled = isReduceMotionEnabled;
-  });
-  AccessibilityInfo.isScreenReaderEnabled().then(isScreenReaderEnabled => {
-    accessibility.isScreenReaderEnabled = isScreenReaderEnabled;
-  });
+async function setAccessibility() {
+  accessibility.isReduceMotionEnabled = await AccessibilityInfo.isReduceMotionEnabled();
+  accessibility.isScreenReaderEnabled = await AccessibilityInfo.isScreenReaderEnabled();
 }
 
 setAccessibility();
