@@ -27,6 +27,10 @@ function getNumberOfPagesShown(props: PageControlProps) {
   return Math.min(MAX_SHOWN_PAGES, props.numOfPages);
 }
 
+function getAccessibleHitSlop(size: number) {
+  return Math.max(0, (48 - size) / 2);
+}
+
 export interface PageControlProps {
   /**
    * Limit the number of page indicators shown.
@@ -114,14 +118,12 @@ class PageControl extends PureComponent<PageControlProps, State> {
 
     if (Array.isArray(props.size)) {
       if (props.size[0] >= props.size[1] || props.size[1] >= props.size[2]) {
-        console.warn(
-          'It is recommended that largeSize > mediumSize > smallSize, currently: smallSize=',
+        console.warn('It is recommended that largeSize > mediumSize > smallSize, currently: smallSize=',
           props.size[0],
           'mediumSize=',
           props.size[1],
           'largeSize=',
-          props.size[2]
-        );
+          props.size[2]);
       }
     }
   }
@@ -201,6 +203,7 @@ class PageControl extends PureComponent<PageControlProps, State> {
           getColorStyle(index === currentPage, color, inactiveColor),
           getSizeStyle(size, index, currentPage, enlargeActive)
         ]}
+        hitSlop={getAccessibleHitSlop(size)}
       />
     );
   }
