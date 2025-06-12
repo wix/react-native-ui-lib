@@ -190,17 +190,6 @@ class PageControl extends PureComponent<PageControlProps, State> {
   renderIndicator(index: number, size: number, enlargeActive?: boolean) {
     const {currentPage, color, inactiveColor, onPagePress, spacing = PageControl.DEFAULT_SPACING} = this.props;
 
-    const baseHitSlop = StyleUtils.getAccessibleHitSlop(size);
-    const maxHorizontalHitSlop = Math.max(0, spacing / 2 - 1); // Leave 1px gap to prevent overlap
-    const horizontalHitSlop = Math.min(baseHitSlop, maxHorizontalHitSlop);
-
-    const hitSlop = {
-      top: baseHitSlop,
-      bottom: baseHitSlop,
-      left: horizontalHitSlop,
-      right: horizontalHitSlop
-    };
-
     return (
       <TouchableOpacity
         customValue={index}
@@ -212,7 +201,10 @@ class PageControl extends PureComponent<PageControlProps, State> {
           getColorStyle(index === currentPage, color, inactiveColor),
           getSizeStyle(size, index, currentPage, enlargeActive)
         ]}
-        hitSlop={hitSlop}
+        hitSlop={{
+          top: StyleUtils.getAccessibleHitSlop(size),
+          bottom: StyleUtils.getAccessibleHitSlop(size)
+        }}
       />
     );
   }
