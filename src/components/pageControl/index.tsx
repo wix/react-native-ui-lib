@@ -189,6 +189,7 @@ class PageControl extends PureComponent<PageControlProps, State> {
 
   renderIndicator(index: number, size: number, enlargeActive?: boolean) {
     const {currentPage, color, inactiveColor, onPagePress, spacing = PageControl.DEFAULT_SPACING} = this.props;
+    const hitSlopValue = StyleUtils.getAccessibleHitSlop(size);
 
     return (
       <TouchableOpacity
@@ -202,8 +203,8 @@ class PageControl extends PureComponent<PageControlProps, State> {
           getSizeStyle(size, index, currentPage, enlargeActive)
         ]}
         hitSlop={{
-          top: StyleUtils.getAccessibleHitSlop(size),
-          bottom: StyleUtils.getAccessibleHitSlop(size)
+          top: hitSlopValue,
+          bottom: hitSlopValue
         }}
       />
     );
