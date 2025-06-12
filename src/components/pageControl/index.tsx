@@ -3,6 +3,7 @@ import React, {PureComponent} from 'react';
 import {StyleSheet, LayoutAnimation, StyleProp, ViewStyle} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
 import {Colors} from '../../style';
+import {StyleUtils} from '../../utils';
 import TouchableOpacity, {TouchableOpacityProps} from '../touchableOpacity';
 import View from '../view';
 
@@ -25,10 +26,6 @@ function getSizeStyle(size: number, index: number, currentPage: number, enlargeA
 
 function getNumberOfPagesShown(props: PageControlProps) {
   return Math.min(MAX_SHOWN_PAGES, props.numOfPages);
-}
-
-function getAccessibleHitSlop(size: number) {
-  return Math.max(0, (48 - size) / 2);
 }
 
 export interface PageControlProps {
@@ -192,6 +189,18 @@ class PageControl extends PureComponent<PageControlProps, State> {
 
   renderIndicator(index: number, size: number, enlargeActive?: boolean) {
     const {currentPage, color, inactiveColor, onPagePress, spacing = PageControl.DEFAULT_SPACING} = this.props;
+
+    const baseHitSlop = StyleUtils.getAccessibleHitSlop(size);
+    const maxHorizontalHitSlop = Math.max(0, spacing / 2 - 1); // Leave 1px gap to prevent overlap
+    const horizontalHitSlop = Math.min(baseHitSlop, maxHorizontalHitSlop);
+
+    const hitSlop = {
+      top: baseHitSlop,
+      bottom: baseHitSlop,
+      left: horizontalHitSlop,
+      right: horizontalHitSlop
+    };
+
     return (
       <TouchableOpacity
         customValue={index}
@@ -203,7 +212,7 @@ class PageControl extends PureComponent<PageControlProps, State> {
           getColorStyle(index === currentPage, color, inactiveColor),
           getSizeStyle(size, index, currentPage, enlargeActive)
         ]}
-        hitSlop={getAccessibleHitSlop(size)}
+        hitSlop={hitSlop}
       />
     );
   }
