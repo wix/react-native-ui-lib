@@ -8,7 +8,6 @@ type SafeAreaInsetsType = { top: number; left: number; bottom: number; right: nu
 let SafeAreaInsetsCache: SafeAreaInsetsType = null;
 
 class SafeAreaInsetsManager {
-
   _defaultInsets: SafeAreaInsetsType = {top: 47, left: 0, bottom: 34, right: 0}; // Common iPhone safe area values
   _safeAreaInsets: SafeAreaInsetsType = {top: 47, left: 0, bottom: 34, right: 0};
   _safeAreaChangedDelegates: Array<any> = [];
@@ -27,9 +26,7 @@ class SafeAreaInsetsManager {
       // Access the native module directly without causing getConstants
       this._nativeModule = NativeModules.SafeAreaManager;
       
-      if (this._nativeModule) {
-        console.log('SafeAreaInsetsManager: Connected to native SafeAreaManager');
-        
+      if (this._nativeModule) {        
         // Set up event listener using DeviceEventEmitter instead of NativeEventEmitter
         // This avoids getConstants issues
         this.setupEventListener();
@@ -50,19 +47,14 @@ class SafeAreaInsetsManager {
     }
 
     try {
-      // Use DeviceEventEmitter instead of NativeEventEmitter to avoid getConstants
-      console.log('SafeAreaInsetsManager: Setting up DeviceEventEmitter listener...');
-      
+      // Use DeviceEventEmitter instead of NativeEventEmitter to avoid getConstants      
       DeviceEventEmitter.addListener('SafeAreaInsetsDidChangeEvent', (data) => {
-        console.log('SafeAreaInsetsManager: Received safe area change event:', data);
         if (data) {
           SafeAreaInsetsCache = data;
           this._safeAreaInsets = data;
           this.notifyDelegates(data);
         }
       });
-      
-      console.log('SafeAreaInsetsManager: DeviceEventEmitter listener setup complete');
     } catch (error) {
       console.warn('SafeAreaInsetsManager: Failed to setup event listener:', error);
     }
@@ -74,9 +66,7 @@ class SafeAreaInsetsManager {
     }
 
     try {
-      console.log('SafeAreaInsetsManager: Getting initial insets from native...');
       const insets = await this._nativeModule.getSafeAreaInsets();
-      console.log('SafeAreaInsetsManager: Received initial insets:', insets);
       
       if (insets) {
         SafeAreaInsetsCache = insets;
@@ -89,7 +79,6 @@ class SafeAreaInsetsManager {
   }
 
   notifyDelegates(insets: SafeAreaInsetsType) {
-    console.log('SafeAreaInsetsManager: Notifying', this._safeAreaChangedDelegates.length, 'delegates');
     _.forEach(this._safeAreaChangedDelegates, (delegate) => {
       if (delegate.onSafeAreaInsetsDidChangeEvent) {
         delegate.onSafeAreaInsetsDidChangeEvent(insets);
@@ -119,7 +108,6 @@ class SafeAreaInsetsManager {
   }
 
   addSafeAreaChangedDelegate(delegate: any) {
-    console.log('SafeAreaInsetsManager: Adding delegate, total will be:', this._safeAreaChangedDelegates.length + 1);
     this._safeAreaChangedDelegates.push(delegate);
   }
 
