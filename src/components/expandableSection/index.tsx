@@ -53,7 +53,7 @@ function ExpandableSection(props: ExpandableSectionProps) {
   const onLayout = (event: LayoutChangeEvent) => {
     const layoutHeight = event.nativeEvent.layout.height;
 
-    if (layoutHeight > 0 && height !== layoutHeight) {
+    if (layoutHeight > 0 && Math.abs(height - layoutHeight) > 1) {
       setHeight(layoutHeight);
     }
   };
