@@ -27,15 +27,6 @@ export function isItemSelected(childValue: PickerSingleValue, selectedValue?: Pi
   return isSelected;
 }
 
-// export function getItemValue(props) {
-//   if (_.isArray(props.value)) {
-//     return props.getItemValue ? _.map(props.value, item => props.getItemValue(item)) : _.map(props.value, 'value');
-//   } else if (!_.isObject(props.value)) {
-//     return props.value;
-//   }
-//   return _.invoke(props, 'getItemValue', props.value) || _.get(props.value, 'value');
-// }
-
 export function shouldFilterOut(searchValue: string, itemLabel?: string) {
   return !_.includes(_.lowerCase(itemLabel), _.lowerCase(searchValue));
 }
