@@ -1,5 +1,5 @@
 import React, {forwardRef} from 'react';
-import {Platform, NativeModules, ViewStyle, ViewProps} from 'react-native';
+import {Platform, NativeModules, StyleProp, ViewStyle, ViewProps} from 'react-native';
 import {default as KeyboardTrackingViewIOS} from './KeyboardTrackingView.ios';
 import {default as KeyboardTrackingViewAndroid} from './KeyboardTrackingView.android';
 
@@ -78,7 +78,7 @@ export type KeyboardTrackingViewProps = ViewProps & {
    */
   usesBottomTabs?: boolean;
   ref?: any;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   children?: React.ReactChild | React.ReactChild[];
 };
 
