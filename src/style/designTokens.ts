@@ -22,7 +22,7 @@ export default {
   $backgroundWarningLight: colorsPalette.yellow70,
   $backgroundMajorLight: colorsPalette.orange80,
   $backgroundMajorHeavy: colorsPalette.orange30,
-  $backgroundDangerHeavy: colorsPalette.red30,
+  $backgroundDangerHeavy: colorsPalette.red10,
   $backgroundDangerLight: colorsPalette.red80,
   $backgroundDisabled: colorsPalette.grey50,
   $backgroundDark: colorsPalette.grey10,
@@ -43,7 +43,7 @@ export default {
   $textSuccessLight: colorsPalette.green30,
   $textMajor: colorsPalette.orange10,
   $textDanger: colorsPalette.red10,
-  $textDangerLight: colorsPalette.red30,
+  $textDangerLight: colorsPalette.red10,
 
   // ICON
   $iconDefault: colorsPalette.grey10,
@@ -57,7 +57,7 @@ export default {
   $iconSuccessLight: colorsPalette.green30,
   $iconMajor: colorsPalette.orange10,
   $iconDanger: colorsPalette.red10,
-  $iconDangerLight: colorsPalette.red30,
+  $iconDangerLight: colorsPalette.red10,
   $iconDisabled: colorsPalette.grey50,
 
   // OUTLINE
@@ -70,7 +70,7 @@ export default {
   $outlinePrimaryMedium: colorsPalette.blue70,
   $outlineGeneral: colorsPalette.blue30,
   $outlineWarning: colorsPalette.yellow30,
-  $outlineDanger: colorsPalette.red30,
+  $outlineDanger: colorsPalette.red10,
   $outlineInverted: colorsPalette.white,
 
   // BLACK AND WHITE
