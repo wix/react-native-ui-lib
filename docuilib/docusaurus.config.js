@@ -53,7 +53,8 @@ const darkCodeTheme = themes.dracula;
               require.resolve('./src/css/presets.css'),
               require.resolve('./src/css/components.css')
             ]
-          }
+          },
+          sitemap: {}
         })
       ]
     ],
