@@ -21,3 +21,5 @@ export {PickerDriver} from '../components/picker/Picker.driver.new';
 export {ExpandableOverlayDriver} from '../incubator/expandableOverlay/ExpandableOverlay.driver';
 export {ToastDriver} from '../incubator/toast/Toast.driver.new';
 export {DateTimePickerDriver} from '../components/dateTimePicker/DateTimePicker.driver';
+export {TimelineDriver} from '../components/timeline/timeline.driver';
+export {ChipDriver} from '../components/chip/chip.driver';
