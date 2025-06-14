@@ -132,8 +132,6 @@ export {
   SegmentedControlItemProps,
   SegmentedControlPreset
 } from './components/segmentedControl';
-// @ts-expect-error
-export {default as SharedTransition} from './components/sharedTransition';
 export {default as SkeletonView, SkeletonViewProps} from './components/skeletonView';
 export {default as SortableGridList, SortableGridListProps} from './components/sortableGridList';
 export {default as SortableList, SortableListProps, SortableListItemProps} from './components/sortableList';

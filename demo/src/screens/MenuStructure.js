@@ -39,11 +39,6 @@ export const navigationData = {
       {title: 'ProgressBar', tags: 'progress bar animated', screen: 'unicorn.animations.ProgressBarScreen'},
       {title: 'ScrollBar', tags: 'scroll bar gradient', screen: 'unicorn.components.ScrollBarScreen'},
       {title: 'SearchInputScreen', tags: 'search input', screen: 'unicorn.components.SearchInputScreen'},
-      {
-        title: 'Shared Transition',
-        tags: 'shared transition element',
-        screen: 'unicorn.components.SharedTransitionScreen'
-      },
       {title: 'Stack Aggregator', tags: 'stack aggregator', screen: 'unicorn.components.StackAggregatorScreen'},
       {title: 'Marquee', tags: 'sliding text', screen: 'unicorn.components.MarqueeScreen'}
     ]
