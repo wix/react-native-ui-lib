@@ -37,6 +37,58 @@ describe('Picker', () => {
     jest.clearAllMocks();
   });
 
+  describe('Items', () => {
+    const testItems = [{key: 'one', value: 1, label: 'One', testID: 'item_one'}, {key: 'two', value: 2, label: 'Two', testID: 'item_two'}];
+    const testItemExists = (TestCase: () => React.JSX.Element) => {
+      const renderTree = render(<TestCase/>);
+      const driver = PickerDriver({renderTree, testID}, false);
+      driver.open();
+      const item = driver.itemDriver(testItems[0].testID);
+      expect(item.exists()).toBeTruthy();
+    };
+
+    it('should render picker items when passing children', () => {
+      const TestCase = () => {
+        return (
+          <Picker testID={testID}>
+            <Picker.Item {...testItems[0]}/>
+            <Picker.Item {...testItems[1]}/>
+          </Picker>
+        );
+      };
+      testItemExists(TestCase);
+    });
+
+    it('should render picker items when passing items', () => {
+      const TestCase = () => {
+        return (
+          <Picker testID={testID} items={testItems}/>
+        );
+      };
+      testItemExists(TestCase);
+    });
+
+    it('should render picker items with one option when passing one child', () => {
+      const TestCase = () => {
+        return (
+          <Picker testID={testID}>
+            <Picker.Item {...testItems[0]}/>
+          </Picker>
+        );
+      };
+      testItemExists(TestCase);
+    });
+
+    it('should render picker with one option when passing one item', () => {
+      const TestCase = () => {
+        return (
+          <Picker testID={testID} items={[testItems[0]]}/>
+        );
+      };
+      testItemExists(TestCase);
+    });
+  });
+
   describe('Modal', () => {
     describe('Test open', () => {
       it('Should open when enabled', () => {
