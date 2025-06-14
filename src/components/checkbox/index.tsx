@@ -10,6 +10,7 @@ import {
   ImageStyle
 } from 'react-native';
 import {Colors, Spacings} from '../../style';
+import {StyleUtils} from '../../utils';
 //@ts-ignore
 import Assets from '../../assets';
 import {asBaseComponent} from '../../commons/new';
@@ -251,9 +252,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
     };
   };
 
-  getAccessibleHitSlop(size: number) {
-    return Math.max(0, (48 - size) / 2);    
-  }
+
 
   renderCheckbox() {
     const {selectedIcon, label, testID, style, containerStyle, indeterminate, ...others} = this.props;
@@ -267,7 +266,7 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
         {...others}
         style={[this.getBorderStyle(), style, !label && containerStyle]}
         onPress={this.onPress}
-        hitSlop={this.getAccessibleHitSlop(this.props.size || DEFAULT_SIZE)}
+        hitSlop={StyleUtils.getAccessibleHitSlop(this.props.size || DEFAULT_SIZE)}
       >
         {
           <Animated.View

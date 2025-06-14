@@ -10,6 +10,7 @@ import {
   ViewStyle
 } from 'react-native';
 import {Colors} from '../../style';
+import {StyleUtils} from '../../utils';
 import {asBaseComponent, forwardRef, BaseComponentInjectedProps, ForwardRefInjectedProps} from '../../commons/new';
 import TouchableOpacity from '../touchableOpacity';
 import View, {ViewProps} from '../view';
@@ -257,18 +258,12 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
     );
   }
 
-  getAccessibleHitSlop(size: number) {
-    const verticalPadding = Math.max(0, (48 - size) / 2);
-    
-    return {
-      top: verticalPadding,
-      bottom: verticalPadding
-    };
-  }
+
 
   render() {
     const {onPress, onValueChange, containerStyle, contentOnLeft, ...others} = this.props;
     const Container = onPress || onValueChange ? TouchableOpacity : View;
+    const hitSlopValue = StyleUtils.getAccessibleHitSlop(this.props.size || DEFAULT_SIZE);
 
     return (
       // @ts-ignore
@@ -280,7 +275,10 @@ class RadioButton extends PureComponent<Props, RadioButtonState> {
         style={containerStyle}
         onPress={this.onPress}
         {...this.getAccessibilityProps()}
-        hitSlop={this.getAccessibleHitSlop(this.props.size || DEFAULT_SIZE)}
+        hitSlop={{
+          top: hitSlopValue,
+          bottom: hitSlopValue
+        }}
       >
         {!contentOnLeft && this.renderButton()}
         {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
