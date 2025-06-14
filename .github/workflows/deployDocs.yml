@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - release
 
 jobs:
   build-and-deploy:
@@ -28,6 +29,7 @@ jobs:
         run: yarn docs:build
 
       - name: Deploy documentation
+        if: github.ref == 'refs/heads/release'
         env:
           GIT_USER: github-actions[bot]
           GIT_PASS: ${{ secrets.GITHUB_TOKEN }}
@@ -38,3 +40,8 @@ jobs:
           cd docuilib
           yarn install
           yarn deploy
+
+      - name: Deploy disclaimer
+        if: github.ref != 'refs/heads/release'
+        run: |
+          echo "Deploying will only happen on release branch"

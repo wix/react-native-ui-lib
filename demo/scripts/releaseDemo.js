@@ -17,8 +17,11 @@ const VERSION_INC = 'patch';
 
 function run() {
   if (!validateEnv()) {
+    console.log('Do not release demo');
     return;
   }
+
+  console.log('Release demo');
   createNpmRc();
   versionTagAndPublish();
 }
@@ -27,7 +30,11 @@ function validateEnv() {
   if (!process.env.CI) {
     throw new Error('releasing is only available from CI');
   }
-  return true;
+  return (
+    process.env.BUILDKITE_BRANCH === 'master' ||
+    process.env.BUILDKITE_BRANCH === 'release' ||
+    process.env.BUILDKITE_MESSAGE === 'snapshot'
+  );
 }
 
 function createNpmRc() {
