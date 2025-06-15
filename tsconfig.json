@@ -14,7 +14,6 @@
     // "noEmit": true,
     // "checkJs": true,
     "allowJs": false,
-    "emitDeclarationOnly": true,
     // "noImplicitAny": false
     "declaration": true,
     // "declarationDir": "./generatedTypes",

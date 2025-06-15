@@ -1,6 +1,6 @@
-import TextInputKeyboardManager from './../TextInputKeyboardManager/TextInputKeyboardManager.ios';
-import KeyboardRegistry from './../KeyboardRegistry';
-import CustomKeyboardViewBase, {CustomKeyboardViewBaseProps} from './../CustomKeyboardViewBase';
+import TextInputKeyboardManager from '../TextInputKeyboardManager/TextInputKeyboardManager.ios';
+import KeyboardRegistry from '../KeyboardRegistry';
+import CustomKeyboardViewBase, {CustomKeyboardViewBaseProps} from './CustomKeyboardViewBase';
 
 export type CustomKeyboardViewProps = CustomKeyboardViewBaseProps & {
   /**

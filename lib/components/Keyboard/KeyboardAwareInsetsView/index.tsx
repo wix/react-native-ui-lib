@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Dimensions} from 'react-native';
-import KeyboardTrackingView, {KeyboardTrackingViewProps} from './KeyboardTrackingView';
+import KeyboardTrackingView, {KeyboardTrackingViewProps} from '../KeyboardTrackingView';
 
 type Props = KeyboardTrackingViewProps & {
   offset?: number;
