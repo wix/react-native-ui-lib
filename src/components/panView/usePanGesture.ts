@@ -10,7 +10,7 @@ import {
   getDismissVelocity,
   DEFAULT_THRESHOLD
 } from './panningUtil';
-import type {HiddenLocation} from '../hooks/useHiddenLocation';
+import type {HiddenLocation} from '../../hooks/useHiddenLocation';
 
 export type PanViewDirections = PanningDirections;
 export const PanViewDirectionsEnum = PanningDirectionsEnum;
