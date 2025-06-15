@@ -3,9 +3,11 @@ const p = require('path');
 
 function run() {
   if (!validateEnv()) {
+    console.log('Do not release docs');
     return;
   }
 
+  console.log('Release docs');
   const currentPublished = findCurrentPublishedVersion();
   const packageJson = require('../package.json');
   const newVersion = packageJson.version;
@@ -20,7 +22,7 @@ function validateEnv() {
   if (!process.env.CI) {
     throw new Error('releasing is only available from CI');
   }
-  return true;
+  return process.env.BUILDKITE_BRANCH === 'master';
 }
 
 function createNpmRc() {
