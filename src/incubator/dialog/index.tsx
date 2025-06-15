@@ -212,7 +212,14 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
 
   const renderDialog = () => (
     <GestureDetector gesture={panGesture}>
-      <View {...containerProps} reanimated style={style} onLayout={onLayout} ref={setRef} testID={testID}>
+      <View
+        {...containerProps}
+        reanimated={!Constants.accessibility.isReduceMotionEnabled}
+        style={style}
+        onLayout={onLayout}
+        ref={setRef}
+        testID={testID}
+      >
         {renderDialogContent()}
       </View>
     </GestureDetector>
