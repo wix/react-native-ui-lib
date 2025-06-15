@@ -72,19 +72,24 @@ export function updateConstants(dimensions: any) {
 }
 
 const accessibility = {
+  isReduceMotionEnabled: false,
   isScreenReaderEnabled: false
 };
+
+function handleReduceMotionChanged(isReduceMotionEnabled: AccessibilityChangeEvent) {
+  accessibility.isReduceMotionEnabled = isReduceMotionEnabled as boolean;
+}
 
 function handleScreenReaderChanged(isScreenReaderEnabled: AccessibilityChangeEvent) {
   accessibility.isScreenReaderEnabled = isScreenReaderEnabled as boolean;
 }
 
+AccessibilityInfo.addEventListener('reduceMotionChanged', handleReduceMotionChanged);
 AccessibilityInfo.addEventListener('screenReaderChanged', handleScreenReaderChanged);
 
-function setAccessibility() {
-  AccessibilityInfo.isScreenReaderEnabled().then(isScreenReaderEnabled => {
-    accessibility.isScreenReaderEnabled = isScreenReaderEnabled;
-  });
+async function setAccessibility() {
+  accessibility.isReduceMotionEnabled = await AccessibilityInfo.isReduceMotionEnabled();
+  accessibility.isScreenReaderEnabled = await AccessibilityInfo.isScreenReaderEnabled();
 }
 
 setAccessibility();
