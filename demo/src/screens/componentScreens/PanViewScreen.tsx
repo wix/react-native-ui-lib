@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
+import {FlatList, GestureHandlerRootView} from 'react-native-gesture-handler';
 import {
   Assets,
   View,
   Text,
   Colors,
-  Incubator,
+  PanView,
   Card,
   Constants,
   Modal,
@@ -14,7 +14,6 @@ import {
   Icon,
   TouchableOpacity
 } from 'react-native-ui-lib';
-const {PanView} = Incubator;
 
 interface Item {
   value: string;
@@ -147,7 +146,7 @@ class PanViewScreen extends Component {
   render() {
     const {showToast, showDialog} = this.state;
     return (
-      <View style={styles.root}>
+      <GestureHandlerRootView style={styles.root}>
         <View marginL-page height={50} centerV>
           <Text text50>New Pan View</Text>
         </View>
@@ -163,7 +162,7 @@ class PanViewScreen extends Component {
         </ScrollView>
         {showToast && this.renderToast()}
         {showDialog && this.renderDialog()}
-      </View>
+      </GestureHandlerRootView>
     );
   }
 }

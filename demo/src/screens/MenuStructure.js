@@ -39,11 +39,6 @@ export const navigationData = {
       {title: 'ProgressBar', tags: 'progress bar animated', screen: 'unicorn.animations.ProgressBarScreen'},
       {title: 'ScrollBar', tags: 'scroll bar gradient', screen: 'unicorn.components.ScrollBarScreen'},
       {title: 'SearchInputScreen', tags: 'search input', screen: 'unicorn.components.SearchInputScreen'},
-      {
-        title: 'Shared Transition',
-        tags: 'shared transition element',
-        screen: 'unicorn.components.SharedTransitionScreen'
-      },
       {title: 'Stack Aggregator', tags: 'stack aggregator', screen: 'unicorn.components.StackAggregatorScreen'},
       {title: 'Marquee', tags: 'sliding text', screen: 'unicorn.components.MarqueeScreen'}
     ]
@@ -183,16 +178,14 @@ export const navigationData = {
     title: 'Animations & Gestures',
     screens: [
       {title: 'Animated Image', tags: 'animated image', screen: 'unicorn.components.AnimatedImageScreen'},
+      {title: 'Card Scanner', tags: 'card scanner process', screen: 'unicorn.animations.CardScannerScreen'},
       {title: 'Haptic feedback', tags: 'haptic feedback', screen: 'unicorn.components.HapticScreen'},
+      {title: 'PanView', tags: 'pan swipe drag', screen: 'unicorn.components.PanViewScreen'},
       {
         title: 'ProgressiveImage',
         tags: 'progressive image cover overlay',
         screen: 'unicorn.components.ProgressiveImageScreen'
-      },
-      {title: 'Card Scanner', tags: 'card scanner process', screen: 'unicorn.animations.CardScannerScreen'},
-      {title: 'Pan Dismissible', tags: 'pan swipe drag dismiss', screen: 'unicorn.components.PanDismissibleScreen'},
-      {title: 'Pan Listener', tags: 'pan swipe drag listener', screen: 'unicorn.components.PanListenerScreen'},
-      {title: 'Pan Responder', tags: 'pan swipe drag responder', screen: 'unicorn.components.PanResponderScreen'}
+      }
     ]
   },
   Incubator: {
@@ -201,14 +194,12 @@ export const navigationData = {
       {title: 'Calendar', tags: 'calendar', screen: 'unicorn.components.IncubatorCalendarScreen'},
       {title: 'ChipsInput', tags: 'chips input', screen: 'unicorn.components.ChipsInputScreen'},
       {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'},
-      {title: 'Dialog (New)', tags: 'dialog modal popup alert', screen: 'unicorn.incubator.IncubatorDialogScreen'},
       {title: 'Toast (New)', tags: 'toast', screen: 'unicorn.components.IncubatorToastScreen'},
       {
         title: 'ExpandableOverlay',
         tags: 'text field expandable input picker',
         screen: 'unicorn.components.IncubatorExpandableOverlayScreen'
-      },
-      {title: 'PanView', tags: 'pan swipe drag', screen: 'unicorn.incubator.PanViewScreen'}
+      }
     ]
   },
   Inspirations: {
