@@ -1,301 +1,275 @@
-import _ from 'lodash';
-import React, {Component} from 'react';
-import {StyleSheet, StyleProp, ViewStyle, ModalPropsIOS, AccessibilityProps, type DimensionValue} from 'react-native';
-import {Colors} from '../../style';
-import {AlignmentModifiers, extractAlignmentsValues} from '../../commons/modifiers';
-import {Constants, asBaseComponent} from '../../commons/new';
-import Modal, {ModalProps} from '../modal';
-import View from '../view';
-import PanListenerView from '../panningViews/panListenerView';
-import DialogDismissibleView from './DialogDismissibleView';
-import OverlayFadingBackground from './OverlayFadingBackground';
-import PanningProvider, {PanningDirections, PanningDirectionsEnum} from '../panningViews/panningProvider';
-export {PanningDirections as DialogDirections, PanningDirectionsEnum as DialogDirectionsEnum};
+import React, {useMemo, useCallback, useImperativeHandle, forwardRef, ForwardedRef, useEffect, useState} from 'react';
+import {StyleSheet, View as RNView} from 'react-native';
+import hoistStatics from 'hoist-non-react-statics';
+import {
+  Extrapolation,
+  interpolate,
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming
+} from 'react-native-reanimated';
+import {
+  Gesture,
+  GestureDetector,
+  GestureStateChangeEvent,
+  PanGestureHandlerEventPayload
+} from 'react-native-gesture-handler';
+import {Spacings, Colors, BorderRadiuses} from '../../style';
+import {useDidUpdate} from '../../hooks';
+import {asBaseComponent, Constants} from '../../commons/new';
+import View from '../../components/view';
+import Modal from '../../components/modal';
+import {extractAlignmentsValues} from '../../commons/modifiers';
+import useHiddenLocation from '../../hooks/useHiddenLocation';
+import DialogHeader from './DialogHeader';
+import useDialogContent from './useDialogContent';
+import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps} from './types';
+export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};
 
-// TODO: KNOWN ISSUES
-// 1. iOS pressing on the background while enter animation is happening will not call onDismiss
-//    Touch events are not registered?
-// 2. SafeArea is transparent
-// 3. Check why we need the state change in DialogDismissibleView -> onLayout -> animateTo
+const THRESHOLD_VELOCITY = 750;
 
-interface RNPartialProps
-  extends Pick<ModalPropsIOS, 'supportedOrientations'>,
-    Pick<AccessibilityProps, 'accessibilityLabel'> {}
-
-export interface DialogProps extends AlignmentModifiers, RNPartialProps {
-  /**
-   * Control visibility of the dialog
-   */
-  visible?: boolean;
-  /**
-   * Dismiss callback for when clicking on the background
-   */
-  onDismiss?: (props?: any) => void;
-  /**
-   * Whether or not to ignore background press
-   */
-  ignoreBackgroundPress?: boolean;
-  /**
-   * The color of the overlay background
-   */
-  overlayBackgroundColor?: string;
-  /**
-   * The dialog width (default: 90%)
-   */
-  width?: DimensionValue;
-  /**
-   * The dialog height (default: undefined)
-   */
-  height?: DimensionValue;
-  /**
-   * The direction of the allowed pan (default is DOWN).
-   * Types: UP, DOWN, LEFT and RIGHT (using PanningProvider.Directions.###).
-   * Pass null to remove pan.
-   */
-  panDirection?: PanningDirections;
-  /**
-   * Whether or not to handle SafeArea
-   */
-  useSafeArea?: boolean;
-  /**
-   * Called once the dialog has been dismissed completely
-   */
-  onDialogDismissed?: (props: any) => void;
-  /**
-   * If this is added only the header will be pannable;
-   * this allows for scrollable content (the children of the dialog)
-   * props are transferred to the renderPannableHeader
-   */
-  renderPannableHeader?: (props: any) => JSX.Element;
-  /**
-   * The props that will be passed to the pannable header
-   */
-  pannableHeaderProps?: any;
-  /**
-   * Additional props for the modal.
-   */
-  modalProps?: ModalProps;
-  /**
-   * The Dialog`s container style
-   */
-  containerStyle?: StyleProp<ViewStyle>;
-  /**
-   * Used as a testing identifier
-   */
-  testID?: string;
-  children?: React.ReactNode;
+export interface DialogStatics {
+  directions: typeof DialogDirectionsEnum;
+  Header: typeof DialogHeader;
 }
 
-interface DialogState {
-  alignments: AlignmentModifiers;
-  modalVisibility?: boolean;
-  dialogVisibility?: boolean;
-  fadeOut?: boolean;
+export interface DialogImperativeMethods {
+  dismiss: () => void;
 }
 
-const DEFAULT_OVERLAY_BACKGROUND_COLOR = Colors.rgba(Colors.$backgroundInverted, 0.3);
+const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) => {
+  const {
+    visible = false,
+    headerProps,
+    showCloseButton,
+    closeButtonProps,
+    containerStyle: propsContainerStyle,
+    containerProps: propsContainerProps,
+    width,
+    height,
+    onDismiss,
+    direction = DialogDirectionsEnum.DOWN,
+    ignoreBackgroundPress,
+    modalProps = {},
+    useSafeArea,
+    testID,
+    children
+  } = props;
+  const {overlayBackgroundColor = Colors.rgba(Colors.grey10, 0.65), ...otherModalProps} = modalProps;
 
-/**
- * @description: Dialog component for displaying custom content inside a popup dialog
- * @notes: Use alignment modifiers to control the dialog position
- * (top, bottom, centerV, centerH, etc... by default the dialog is aligned to center)
- * @modifiers: alignment
- * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DialogScreen.js
- * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Dialog/Dialog.gif?raw=true
- */
-class Dialog extends Component<DialogProps, DialogState> {
-  static displayName = 'Dialog';
-  static directions = PanningDirectionsEnum;
+  const visibility = useSharedValue(0); // value between 0 (closed) and 1 (open)
+  const initialTranslation = useSharedValue(0);
+  const [modalVisibility, setModalVisibility] = useState(visible); // unfortunately this is needed when changing visibility by the user (clicking on an option etc)
 
-  static defaultProps = {
-    overlayBackgroundColor: DEFAULT_OVERLAY_BACKGROUND_COLOR
-  };
+  const {setRef, onLayout, hiddenLocation: _hiddenLocation} = useHiddenLocation<RNView>();
+  const hiddenLocation = _hiddenLocation[direction];
+  const wasMeasured = _hiddenLocation.wasMeasured;
 
-  private styles: any;
+  const isVertical = useMemo(() => {
+    'worklet';
+    return direction === DialogDirectionsEnum.DOWN || direction === DialogDirectionsEnum.UP;
+  }, [direction]);
 
-  constructor(props: DialogProps) {
-    super(props);
+  const getTranslationInterpolation = useCallback((value: number) => {
+    'worklet';
+    return interpolate(value, [0, 1], [hiddenLocation, 0], Extrapolation.CLAMP);
+  },
+  [hiddenLocation]);
 
-    this.state = {
-      alignments: extractAlignmentsValues(props),
-      modalVisibility: props.visible,
-      dialogVisibility: props.visible
-    };
+  const getTranslationReverseInterpolation = useCallback((value: number) => {
+    'worklet';
+    return interpolate(value, [hiddenLocation, 0], [0, 1]);
+  },
+  [hiddenLocation]);
 
-    this.styles = createStyles(this.props);
-    this.setAlignment();
-  }
+  const _onDismiss = useCallback(() => {
+    'worklet';
+    runOnJS(setModalVisibility)(false);
+  }, []);
 
-  UNSAFE_componentWillReceiveProps(nextProps: DialogProps) {
-    const {visible: nexVisible} = nextProps;
-    const {visible} = this.props;
+  const close = useCallback(() => {
+    'worklet';
+    visibility.value = withTiming(0, undefined, _onDismiss);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [_onDismiss]);
 
-    if (nexVisible && !visible) {
-      this.setState({modalVisibility: true, dialogVisibility: true});
-    } else if (visible && !nexVisible) {
-      this.hideDialogView();
+  const open = useCallback(() => {
+    'worklet';
+    visibility.value = withSpring(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (visible) {
+      setModalVisibility(true);
+    } else if (wasMeasured && modalVisibility) {
+      // Close when sending visible = false
+      close();
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible, wasMeasured]);
 
-  setAlignment() {
-    const {alignments} = this.state;
-    if (_.isEmpty(alignments)) {
-      this.styles.alignments = this.styles.centerContent;
-    } else {
-      this.styles.alignments = alignments;
-    }
-  }
-
-  // TODO: revert adding this workaround once RN fixes https://github.com/facebook/react-native/issues/29455
-  onFadeDone = () => {
-    if (!this.state.modalVisibility) {
-      setTimeout(() => {
-        // unfortunately this is needed if a modal needs to open on iOS
-        this.props.onDialogDismissed?.(this.props);
-      }, 100);
-    }
-  };
-
-  _onDismiss = () => {
-    this.setState({modalVisibility: false, fadeOut: false}, () => {
-      const props = this.props;
-      if (props.visible) {
-        props.onDismiss?.(props);
+  useDidUpdate(() => {
+    if (wasMeasured) {
+      if (modalVisibility) {
+        open();
+      } else if (Constants.isAndroid) {
+        onDismiss?.();
       }
-      // Parity with iOS Modal's onDismiss
-      if (Constants.isAndroid) {
-        props.onDialogDismissed?.(props);
-      }
-    });
-  };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [modalVisibility, wasMeasured]);
 
-  onDismiss = () => {
-    const fadeOut = Constants.isIOS && this.props.visible;
+  const alignmentStyle = useMemo(() => {
+    return {flex: 1, alignItems: 'center', ...extractAlignmentsValues(props)};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    if (fadeOut) {
-      this.setState({fadeOut}, this._onDismiss);
+  const {renderDialogContent, containerProps, containerStyle} = useDialogContent({
+    showCloseButton,
+    close,
+    closeButtonProps,
+    containerStyle: propsContainerStyle,
+    containerProps: propsContainerProps,
+    headerProps,
+    children
+  });
+
+  const animatedStyle = useAnimatedStyle(() => {
+    if (isVertical) {
+      return {
+        transform: [{translateY: getTranslationInterpolation(visibility.value)}]
+      };
     } else {
-      this._onDismiss();
-    }
-  };
-
-  hideDialogView = () => {
-    this.setState({dialogVisibility: false});
-  };
-
-  renderPannableHeader = (directions: PanningDirections[]) => {
-    const {renderPannableHeader, pannableHeaderProps} = this.props;
-    if (renderPannableHeader) {
-      return <PanListenerView directions={directions}>{renderPannableHeader(pannableHeaderProps)}</PanListenerView>;
-    }
-  };
-
-  getContainerType = () => {
-    const {panDirection, renderPannableHeader} = this.props;
-    if (!panDirection || renderPannableHeader) {
-      return View;
-    }
-    return PanListenerView;
-  };
-
-  renderDialogView = () => {
-    const {children, panDirection = PanningProvider.Directions.DOWN, containerStyle, testID} = this.props;
-    const {dialogVisibility} = this.state;
-    const Container = this.getContainerType();
-
-    return (
-      <View testID={testID} style={[this.styles.dialogViewSize]} pointerEvents="box-none">
-        <PanningProvider>
-          <DialogDismissibleView
-            direction={panDirection}
-            visible={dialogVisibility}
-            onDismiss={this.onDismiss}
-            containerStyle={this.styles.flexType}
-            style={this.styles.flexType}
-          >
-            <Container
-              directions={[panDirection]}
-              style={[this.styles.overflow, !Constants.isWeb && this.styles.flexType, containerStyle]}
-            >
-              {this.renderPannableHeader([panDirection])}
-              {children}
-            </Container>
-          </DialogDismissibleView>
-        </PanningProvider>
-      </View>
-    );
-  };
-
-  // TODO: renderOverlay {_.invoke(this.props, 'renderOverlay')}
-  renderDialogContainer = () => {
-    const {modalVisibility, dialogVisibility, fadeOut} = this.state;
-    const {useSafeArea, bottom, overlayBackgroundColor, testID} = this.props;
-    const addBottomSafeArea = Constants.isIphoneX && useSafeArea && bottom;
-    const bottomInsets = Constants.getSafeAreaInsets().bottom - 8; // TODO: should this be here or in the input style?
-    const onFadeDone = Constants.isIOS ? this.onFadeDone : undefined;
-
-    return (
-      <View
-        useSafeArea={useSafeArea}
-        style={[this.styles.centerHorizontal, this.styles.alignments, this.styles.container]}
-        pointerEvents="box-none"
-      >
-        <OverlayFadingBackground
-          testID={`${testID}.overlayFadingBackground`}
-          modalVisibility={modalVisibility}
-          dialogVisibility={dialogVisibility}
-          overlayBackgroundColor={overlayBackgroundColor}
-          onFadeDone={onFadeDone}
-          fadeOut={fadeOut}
-        />
-        {this.renderDialogView()}
-        {addBottomSafeArea && <View style={{marginTop: bottomInsets}}/>}
-      </View>
-    );
-  };
-
-  render = () => {
-    const {modalVisibility} = this.state;
-    const {testID, supportedOrientations, accessibilityLabel, ignoreBackgroundPress, modalProps} = this.props;
-    const onBackgroundPress = !ignoreBackgroundPress ? this.hideDialogView : undefined;
-
-    return (
-      <Modal
-        testID={`${testID}.modal`}
-        transparent
-        visible={modalVisibility}
-        animationType={'none'}
-        onBackgroundPress={onBackgroundPress}
-        onRequestClose={onBackgroundPress}
-        supportedOrientations={supportedOrientations}
-        accessibilityLabel={accessibilityLabel}
-        {...modalProps}
-      >
-        {this.renderDialogContainer()}
-      </Modal>
-    );
-  };
-}
-
-function createStyles(props: DialogProps) {
-  const {width = '90%', height} = props;
-  const flexType = height ? {flex: 1} : {flex: 0};
-  return StyleSheet.create({
-    dialogViewSize: {width, height: height ?? undefined},
-    flexType,
-    container: {
-      flex: 1
-    },
-    centerHorizontal: {
-      alignItems: 'center'
-    },
-    centerContent: {
-      justifyContent: 'center'
-    },
-    overflow: {
-      overflow: 'hidden'
+      return {
+        transform: [{translateX: getTranslationInterpolation(visibility.value)}]
+      };
     }
   });
-}
 
-export default asBaseComponent<DialogProps, typeof Dialog>(Dialog);
+  const style = useMemo(() => {
+    return [
+      styles.defaultDialogStyle,
+      {backgroundColor: Colors.$backgroundDefault},
+      containerStyle,
+      animatedStyle,
+      width ? {width} : undefined,
+      height ? {height} : undefined
+    ];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [containerStyle, width, height]);
+
+  const shouldClose = (event: GestureStateChangeEvent<PanGestureHandlerEventPayload>) => {
+    'worklet';
+    const wasPannedOverThreshold =
+      Math.abs(getTranslationInterpolation(visibility.value)) >= Math.abs(hiddenLocation / 3);
+
+    let velocity;
+    switch (direction) {
+      case DialogDirectionsEnum.DOWN:
+      default:
+        velocity = event.velocityY;
+        break;
+      case DialogDirectionsEnum.UP:
+        velocity = -event.velocityY;
+        break;
+      case DialogDirectionsEnum.LEFT:
+        velocity = -event.velocityX;
+        break;
+      case DialogDirectionsEnum.RIGHT:
+        velocity = event.velocityX;
+        break;
+    }
+
+    const wasFlung = velocity >= THRESHOLD_VELOCITY;
+
+    return wasPannedOverThreshold || wasFlung;
+  };
+
+  const panGesture = Gesture.Pan()
+    .onStart(event => {
+      initialTranslation.value =
+        getTranslationReverseInterpolation(isVertical ? event.translationY : event.translationX) - visibility.value;
+    })
+    .onUpdate(event => {
+      visibility.value =
+        getTranslationReverseInterpolation(isVertical ? event.translationY : event.translationX) -
+        initialTranslation.value;
+    })
+    .onEnd(event => {
+      if (shouldClose(event)) {
+        close();
+      } else {
+        open();
+      }
+    });
+
+  useImperativeHandle(ref, () => ({
+    dismiss: close
+  }));
+
+  const renderDialog = () => (
+    <GestureDetector gesture={panGesture}>
+      <View
+        {...containerProps}
+        reanimated={!Constants.accessibility.isReduceMotionEnabled}
+        style={style}
+        onLayout={onLayout}
+        ref={setRef}
+        testID={testID}
+      >
+        {renderDialogContent()}
+      </View>
+    </GestureDetector>
+  );
+
+  const overlayStyle = useAnimatedStyle(() => {
+    return {
+      opacity: visibility.value,
+      backgroundColor: overlayBackgroundColor
+    };
+  }, [overlayBackgroundColor]);
+
+  const renderOverlayView = () => (
+    <View testID={`${testID}.overlayFadingBackground`} absF reanimated style={overlayStyle} pointerEvents="none"/>
+  );
+
+  return (
+    <Modal
+      transparent
+      animationType={'none'}
+      {...otherModalProps}
+      testID={`${testID}.modal`}
+      useGestureHandlerRootView
+      visible={modalVisibility}
+      onBackgroundPress={ignoreBackgroundPress ? undefined : close}
+      onRequestClose={ignoreBackgroundPress ? undefined : close}
+      onDismiss={onDismiss}
+    >
+      {renderOverlayView()}
+      <View useSafeArea={useSafeArea} pointerEvents={'box-none'} style={alignmentStyle}>
+        {renderDialog()}
+      </View>
+    </Modal>
+  );
+};
+
+Dialog.displayName = 'Dialog';
+Dialog.directions = DialogDirectionsEnum;
+Dialog.Header = DialogHeader;
+
+const _Dialog = forwardRef<DialogImperativeMethods, DialogProps>(Dialog);
+hoistStatics(_Dialog, Dialog);
+export default asBaseComponent<DialogProps, DialogStatics>(_Dialog);
+
+const styles = StyleSheet.create({
+  defaultDialogStyle: {
+    marginBottom: Spacings.s5,
+    maxHeight: '60%',
+    width: 250,
+    borderRadius: BorderRadiuses.br20,
+    overflow: 'hidden'
+  }
+});

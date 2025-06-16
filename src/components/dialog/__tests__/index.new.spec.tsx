@@ -55,7 +55,7 @@ const getDriver = (Element: React.JSX.Element) => {
   return {renderTree, dialogDriver};
 };
 
-describe('Incubator.Dialog sanity checks', () => {
+describe('Dialog sanity checks', () => {
   it('Should show dialog', () => {
     const {dialogDriver} = getDriver(<TestCase1 visible/>);
     expect(dialogDriver.isVisible()).toBeTruthy();
