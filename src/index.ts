@@ -162,8 +162,7 @@ export {
   TimelinePointProps,
   TimelineLineProps,
   TimelineStateTypes,
-  TimelinePointTypes,
-  TimelineLineTypes
+  TimelinePointTypes
 } from './components/timeline';
 export {default as Text, TextProps} from './components/text';
 // @ts-expect-error
