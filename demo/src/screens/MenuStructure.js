@@ -81,7 +81,7 @@ export const navigationData = {
     screens: [
       {title: 'Action Sheet', tags: 'action sheet cross-platform', screen: 'unicorn.components.ActionSheetScreen'},
       {title: 'Dialog', tags: 'dialog modal popup alert', screen: 'unicorn.components.DialogScreen'},
-      {title: 'Feature Highlight', tags: 'feature overlay', screen: 'unicorn.components.FeatureHighlightScreen'},
+      {title: 'Feature Highlight', tags: 'native feature overlay', screen: 'unicorn.components.FeatureHighlightScreen'},
       {title: 'Floating Button', tags: 'floating button', screen: 'unicorn.components.FloatingButtonScreen'},
       {title: 'Hint', tags: 'hints tooltip', screen: 'unicorn.components.HintsScreen'},
       {title: 'Toast', tags: 'toast top bottom snackbar', screen: 'unicorn.components.ToastsScreen'}
@@ -117,10 +117,10 @@ export const navigationData = {
       {title: 'LoadingScreen', tags: 'loading screen', screen: 'unicorn.screens.LoadingScreen'},
       {title: 'Modal', tags: 'modal topbar screen', screen: 'unicorn.screens.ModalScreen'},
       {title: 'StateScreen', tags: 'empty state screen', screen: 'unicorn.screens.EmptyStateScreen'},
-      {title: 'TabController', tags: 'tabbar controller native', screen: 'unicorn.components.TabControllerScreen'},
+      {title: 'TabController', tags: 'tabbar controller', screen: 'unicorn.components.TabControllerScreen'},
       {
         title: 'TabControllerWithStickyHeader',
-        tags: 'tabbar controller native sticky header',
+        tags: 'tabbar controller sticky header',
         screen: 'unicorn.components.TabControllerWithStickyHeaderScreen'
       },
       {title: 'Timeline', tags: 'timeline', screen: 'unicorn.components.TimelineScreen'},
@@ -148,28 +148,28 @@ export const navigationData = {
     screens: [
       {
         title: 'KeyboardAwareScrollView',
-        tags: 'KeyboardAwareScrollView',
+        tags: 'native KeyboardAwareScrollView',
         screen: 'unicorn.components.KeyboardAwareScrollViewScreen'
       },
       {
         title: 'Dynamic Fonts',
-        tags: 'dynamic fonts load download',
+        tags: 'native dynamic fonts load download',
         screen: 'unicorn.nativeComponents.DynamicFontsScreen'
       },
       {
         title: 'Highlight Overlay',
-        tags: 'native overlay',
+        tags: 'native native overlay',
         screen: 'unicorn.nativeComponents.HighlightOverlayViewScreen'
       },
-      {title: 'SafeArea Spacer', tags: 'native safe area', screen: 'unicorn.nativeComponents.SafeAreaSpacerViewScreen'},
+      {title: 'SafeArea Spacer', tags: 'native native safe area', screen: 'unicorn.nativeComponents.SafeAreaSpacerViewScreen'},
       {
         title: 'KeyboardTracking (iOS)',
-        tags: 'KeyboardTracking',
+        tags: 'native KeyboardTracking',
         screen: 'unicorn.nativeComponents.KeyboardTrackingViewScreen'
       },
       {
         title: 'KeyboardAccessoryView',
-        tags: 'KeyboardInput',
+        tags: 'native KeyboardInput',
         screen: 'unicorn.nativeComponents.KeyboardAccessoryViewScreen'
       }
     ]
@@ -193,7 +193,7 @@ export const navigationData = {
     screens: [
       {title: 'Calendar', tags: 'calendar', screen: 'unicorn.components.IncubatorCalendarScreen'},
       {title: 'ChipsInput', tags: 'chips input', screen: 'unicorn.components.ChipsInputScreen'},
-      {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'},
+      {title: 'Native TouchableOpacity', tags: 'native touchable', screen: 'unicorn.incubator.TouchableOpacityScreen'},
       {title: 'Toast (New)', tags: 'toast', screen: 'unicorn.components.IncubatorToastScreen'},
       {
         title: 'ExpandableOverlay',
