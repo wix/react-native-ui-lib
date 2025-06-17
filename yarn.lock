@@ -10738,9 +10738,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-navigation@npm:8.1.0-rc01-snapshot.1710":
-  version: 8.1.0-rc01-snapshot.1710
-  resolution: "react-native-navigation@npm:8.1.0-rc01-snapshot.1710"
+"react-native-navigation@npm:8.1.0-rc02":
+  version: 8.1.0-rc02
+  resolution: "react-native-navigation@npm:8.1.0-rc02"
   dependencies:
     hoist-non-react-statics: 3.x.x
     lodash: 4.17.x
@@ -10759,7 +10759,7 @@ __metadata:
       optional: true
   bin:
     rnn-link: autolink/postlink/run.js
-  checksum: 9535c77e5127e3ebe137fba783500ddb69359545d7f3dec71a86f1c6650f7205987e2ed25c1c5305046678659653d33b7d0ea2497c5a1693d540d5d0ba2c4e36
+  checksum: e54c97c14d1c9b1396f24932704c104a44ec13f30f14c6c8d5e0a16c84aaab76a137ffac5f5946528cdb588637fd470661e0cbd61b861804eb58907280ae0887
   languageName: node
   linkType: hard
 
@@ -10915,7 +10915,7 @@ __metadata:
     react-native-haptic-feedback: ^1.11.0
     react-native-linear-gradient: 2.6.2
     react-native-mmkv: 3.2.0
-    react-native-navigation: 8.1.0-rc01-snapshot.1710
+    react-native-navigation: 8.1.0-rc02
     react-native-reanimated: 3.16.7
     react-native-redash: ^12.0.3
     react-native-shimmer-placeholder: ^2.0.6
