@@ -5,6 +5,9 @@ import {EventSubscription} from 'react-native';
 export type CustomKeyboardViewBaseProps = {
   inputRef?: any;
   initialProps?: any;
+  keyboardHeight?: number;
+  onKeyboardDismiss?: () => void;
+  shouldFocus?: boolean;
   component?: string;
   onItemSelected?: (component?: string, args?: any) => void;
   onRequestShowKeyboard?: (keyboardId: string) => void;
