@@ -3,7 +3,7 @@
   "category": "status",
   "description": "Allows showing a temporary skeleton view while your real view is loading",
   "modifiers": ["margin"],
-  "note": "Requires installing the 'react-native-shimmer-placeholder' and 'react-native-linear-gradient' libraries",
+  "note": "Requires installing the 'react-native-gradients' library",
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SkeletonViewScreen.tsx",
   "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Skeleton/Skeleton.gif?raw=true"],
   "props": [
@@ -40,7 +40,7 @@
     {
       "name": "colors",
       "type": "string[]",
-      "description": "The colors of the skeleton view, the array length has to be >=2",
+      "description": "The colors of the skeleton view, the array length has to be 3",
       "default": "[Colors.grey70, Colors.grey60, Colors.grey70]"
     },
     {"name": "borderRadius", "type": "number", "description": "The border radius of the skeleton view"},

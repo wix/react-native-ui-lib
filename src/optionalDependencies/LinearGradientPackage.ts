@@ -1,6 +1,6 @@
 let LinearGradientPackage: any;
 try {
-  LinearGradientPackage = require('react-native-linear-gradient');
+  LinearGradientPackage = require('react-native-gradients')?.LinearGradient;
 } catch (error) {}
 
 export default LinearGradientPackage;

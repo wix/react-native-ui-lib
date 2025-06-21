@@ -9,8 +9,7 @@ const baseProjectSource = [
   path.resolve(appDirectory, 'src'),
   path.resolve(appDirectory, 'node_modules/react-native-web'),
   // just for not getting warnings
-  path.resolve(appDirectory, 'node_modules/react-native-shimmer-placeholder'),
-  path.resolve(appDirectory, 'node_modules/react-native-linear-gradient'),
+  path.resolve(appDirectory, 'node_modules/react-native-gradients'),
   // end just for not getting warnings
   path.resolve(appDirectory, 'node_modules/react-native-haptic-feedback'),
   path.resolve(appDirectory, 'node_modules/react-native-animatable'),

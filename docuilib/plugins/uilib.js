@@ -6,9 +6,8 @@ module.exports = ({siteDir}, _options) => {
     path.resolve(siteDir, 'src'),
     path.resolve(siteDir, 'node_modules/react-native-web'),
     path.resolve(siteDir, 'node_modules/react-native-ui-lib'),
-    path.resolve(siteDir, 'node_modules/react-native-shimmer-placeholder'),
     path.resolve(siteDir, 'node_modules/react-native-reanimated'),
-    path.resolve(siteDir, 'node_modules/react-native-linear-gradient')
+    path.resolve(siteDir, 'node_modules/react-native-gradients')
     // just for not getting warnings
     // path.resolve(siteDir, 'node_modules/react-native-haptic-feedback'),
     // path.resolve(siteDir, 'node_modules/react-native-animatable'),

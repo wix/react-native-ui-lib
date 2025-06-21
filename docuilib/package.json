@@ -46,8 +46,7 @@
     "metro-react-native-babel-preset": "0.77.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-native-linear-gradient": "2.6.2",
-    "react-native-shimmer-placeholder": "^2.0.9",
+    "react-native-gradients": "2.1.1",
     "react-native-ui-lib": "snapshot",
     "shell-utils": "^1.0.10",
     "typescript": "~5.2.2"

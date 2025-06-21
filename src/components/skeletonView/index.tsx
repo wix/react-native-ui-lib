@@ -2,13 +2,12 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {StyleSheet, Animated, Easing, StyleProp, ViewStyle, AccessibilityProps} from 'react-native';
 import memoize from 'memoize-one';
-import {BorderRadiuses, Colors, Dividers, Spacings} from '../../style';
-import {createShimmerPlaceholder, LinearGradientPackage} from 'optionalDeps';
+import {LinearGradientPackage} from 'optionalDeps';
+import ShimmerPlaceholderTemp, {ShimmerPlaceholderProps} from './ShimmerPlaceholder';
+import {BorderRadiuses, Dividers, Spacings} from '../../style';
 import View from '../view';
-import {Constants, AlignmentModifiers, PaddingModifiers, MarginModifiers} from '../../commons/new';
+import {AlignmentModifiers, PaddingModifiers, MarginModifiers} from '../../commons/new';
 import {LogService} from 'services';
-
-const LinearGradient = LinearGradientPackage?.default;
 
 let ShimmerPlaceholder: any;
 
@@ -54,7 +53,12 @@ export interface SkeletonListProps {
   renderEndContent?: () => React.ReactElement | undefined;
 }
 
-export interface SkeletonViewProps extends AccessibilityProps, AlignmentModifiers, PaddingModifiers, MarginModifiers {
+export interface SkeletonViewProps
+  extends ShimmerPlaceholderProps,
+    AccessibilityProps,
+    AlignmentModifiers,
+    PaddingModifiers,
+    MarginModifiers {
   /**
    * The content has been loaded, start fading out the skeleton and fading in the content
    */
@@ -90,19 +94,6 @@ export interface SkeletonViewProps extends AccessibilityProps, AlignmentModifier
    */
   timesKey?: string;
   /**
-   * The height of the skeleton view
-   */
-  height?: number;
-  /**
-   * The width of the skeleton view
-   */
-  width?: number;
-  /**
-   * The colors of the skeleton view, the array length has to be >=2
-   * default: [Colors.grey70, Colors.grey60, Colors.grey70]
-   */
-  colors?: string[];
-  /**
    * The border radius of the skeleton view
    */
   borderRadius?: number;
@@ -110,14 +101,6 @@ export interface SkeletonViewProps extends AccessibilityProps, AlignmentModifier
    * Whether the skeleton is a circle (will override the borderRadius)
    */
   circle?: boolean;
-  /**
-   * Additional style to the skeleton view
-   */
-  shimmerStyle?: StyleProp<ViewStyle>;
-  /**
-   * Override container styles
-   */
-  style?: StyleProp<ViewStyle>;
   /**
    * Used to locate this view in end-to-end tests
    */
@@ -134,7 +117,7 @@ interface SkeletonState {
  * @description: Allows showing a temporary skeleton view while your real view is loading.
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SkeletonViewScreen.tsx
  * @image: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Skeleton/Skeleton.gif?raw=true
- * @notes: View requires installing the 'react-native-shimmer-placeholder' and 'react-native-linear-gradient' library
+ * @notes: View requires installing the 'react-native-gradients' library
  */
 class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
   static displayName = 'SkeletonView';
@@ -174,12 +157,10 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
       opacity: new Animated.Value(0)
     };
 
-    if (_.isUndefined(LinearGradientPackage?.default)) {
-      LogService.error(`RNUILib SkeletonView's requires installing "react-native-linear-gradient" dependency`);
-    } else if (_.isUndefined(createShimmerPlaceholder)) {
-      LogService.error(`RNUILib SkeletonView's requires installing "react-native-shimmer-placeholder" dependency`);
+    if (_.isUndefined(LinearGradientPackage)) {
+      LogService.error(`RNUILib SkeletonView's requires installing "react-native-gradients" dependency`);
     } else if (ShimmerPlaceholder === undefined) {
-      ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
+      ShimmerPlaceholder = ShimmerPlaceholderTemp;
     }
 
     this.setAccessibilityProps(props.template);
@@ -226,8 +207,7 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
     }
 
     return {
-      shimmerColors: colors || [Colors.$backgroundNeutral, Colors.$backgroundNeutralMedium, Colors.$backgroundNeutral],
-      isReversed: Constants.isRTL,
+      colors,
       style: [{borderRadius}, style],
       width: size || width,
       height: size || height,
@@ -378,7 +358,7 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
   renderNothing = () => null;
 
   render() {
-    if (_.isUndefined(LinearGradientPackage?.default) || _.isUndefined(createShimmerPlaceholder)) {
+    if (LinearGradientPackage === undefined) {
       return null;
     }
 

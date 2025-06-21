@@ -44,8 +44,7 @@ UILib supports additional features through optional dependencies. These packages
 | @react-native-community/netinfo | Network connectivity features |
 | react-native-haptic-feedback | Haptic feedback functionality |
 | react-native-svg | SVG-based components |
-| react-native-shimmer-placeholder | Shimmer loading effects |
-| react-native-linear-gradient | Gradient-based components |
+| react-native-gradients | Gradient-based components & Shimmer loading effects |
 | moment | Date manipulation utilities |
 
 Install only the dependencies you need based on the components you plan to use in your application.
