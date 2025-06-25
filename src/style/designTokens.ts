@@ -22,6 +22,7 @@ export default {
   $backgroundWarningLight: colorsPalette.yellow70,
   $backgroundMajorLight: colorsPalette.orange80,
   $backgroundMajorHeavy: colorsPalette.orange30,
+  //backgroundDangerHeavy should be changed to backgroundDanger
   $backgroundDangerHeavy: colorsPalette.red10,
   $backgroundDangerLight: colorsPalette.red80,
   $backgroundDisabled: colorsPalette.grey50,
@@ -43,6 +44,7 @@ export default {
   $textSuccessLight: colorsPalette.green30,
   $textMajor: colorsPalette.orange10,
   $textDanger: colorsPalette.red10,
+  //textDangerLight should be deprecated
   $textDangerLight: colorsPalette.red10,
 
   // ICON
@@ -57,6 +59,7 @@ export default {
   $iconSuccessLight: colorsPalette.green30,
   $iconMajor: colorsPalette.orange10,
   $iconDanger: colorsPalette.red10,
+  //iconDangerLight should be deprecated
   $iconDangerLight: colorsPalette.red10,
   $iconDisabled: colorsPalette.grey50,
 
