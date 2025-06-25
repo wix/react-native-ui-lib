@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     })
   },
   webStyle: {
+    // @ts-expect-error
     outlineWidth: 0
   }
 });
