@@ -28,7 +28,7 @@ export type HighlighterOverlayViewProps = {
   onRequestClose?: () => void;
   highlightFrame?: HighlightFrameType;
   style?: ViewStyle;
-  highlightViewTag?: number | null;
+  highlightViewTag?: number | undefined;
   children?: JSX.Element[] | JSX.Element;
   highlightViewTagParams?: HighlightViewTagParams;
   minimumRectSize?: Pick<HighlightFrameType, 'width' | 'height'>;
@@ -86,7 +86,7 @@ const HighlighterOverlayView = (props: HighlighterOverlayViewProps) => {
         borderRadius={borderRadius}
         strokeColor={strokeColorToUse}
         strokeWidth={strokeWidth}
-        highlightViewTag={highlightViewTag || undefined}
+        highlightViewTag={highlightViewTag}
         highlightViewTagParams={nativeHighlightViewTagParams}
         minimumRectSize={minimumRectSize}
         innerPadding={innerPadding}
