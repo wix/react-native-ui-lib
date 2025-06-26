@@ -17,7 +17,7 @@ const universe = 'Hello Universe';
 
 const TestCase = (props: Omit<ExpandableOverlayProps, 'testID'>) => {
   return (
-    <ExpandableOverlay migrateDialog expandableContent={<Text>{universe}</Text>} {...props} testID={testID}>
+    <ExpandableOverlay expandableContent={<Text>{universe}</Text>} {...props} testID={testID}>
       <View>
         <Text>{helloWorld}</Text>
       </View>

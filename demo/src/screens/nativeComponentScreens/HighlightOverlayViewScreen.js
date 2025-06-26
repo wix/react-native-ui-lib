@@ -16,7 +16,10 @@ export default class HighlightOverlayViewScreen extends PureComponent {
   }
 
   componentDidMount() {
-    this.setState({showFTE: true});
+    // setting timeout to allow Android's transition animation to complete
+    setTimeout(() => {
+      this.setState({showFTE: true});
+    }, 1000);
   }
 
   onRefUpdated(ref) {

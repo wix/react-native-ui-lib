@@ -10,7 +10,7 @@ export {TextDriver} from '../components/text/Text.driver.new';
 export {TextFieldDriver} from '../components/textField/TextField.driver.new';
 export {ViewDriver} from '../components/view/View.driver.new';
 export {ModalDriver} from '../components/modal/Modal.driver.new';
-export {DialogDriver} from '../incubator/dialog/Dialog.driver.new';
+export {DialogDriver} from '../components/dialog/Dialog.driver.new';
 export {ButtonDriver} from '../components/button/Button.driver.new';
 export {ImageDriver} from '../components/image/Image.driver.new';
 export {SwitchDriver} from '../components/switch/switch.driver';
