@@ -1,6 +1,6 @@
-import {AppRegistry} from 'react-native';
 import _ from 'lodash';
-import EventEmitterManager from './utils/EventEmitterManager';
+import {AppRegistry} from 'react-native';
+import EventEmitterManager from './EventEmitterManager';
 
 /*
  * Tech debt: how to deal with multiple registries in the app?

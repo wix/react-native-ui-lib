@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import KeyboardRegistry from './KeyboardRegistry';
 import {EventSubscription} from 'react-native';
+import KeyboardRegistry from '../KeyboardRegistry';
 
 export type CustomKeyboardViewBaseProps = {
   inputRef?: any;
