@@ -97,6 +97,7 @@
     "babel-jest": "^29.6.3",
     "babel-plugin-lodash": "^3.3.4",
     "babel-plugin-module-resolver": "^5.0.0",
+    "detox": "^20.39.0",
     "eslint": "8.19.0",
     "eslint-config-wix": "2.0.0",
     "eslint-plugin-react": "^7.24.0",
