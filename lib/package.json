@@ -1,6 +1,6 @@
 {
   "name": "uilib-native",
-  "version": "4.5.2",
+  "version": "4.5.3",
   "homepage": "https://github.com/wix/react-native-ui-lib",
   "description": "uilib native components (separated from js components)",
   "main": "components/index",

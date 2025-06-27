@@ -1,7 +1,7 @@
 import {ComponentProps} from '../../testkit/new/Component.driver';
 import {TextFieldDriver} from '../textField/TextField.driver.new';
 import {ModalDriver} from '../modal/Modal.driver.new';
-import {DialogDriver} from '../../incubator/dialog/Dialog.driver.new';
+import {DialogDriver} from '../dialog/Dialog.driver.new';
 import {ButtonDriver} from '../button/Button.driver.new';
 import {ExpandableOverlayDriver} from '../../incubator/expandableOverlay/ExpandableOverlay.driver';
 

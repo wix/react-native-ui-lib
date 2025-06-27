@@ -10,11 +10,9 @@ module.exports = {
         sourceDir: '../uilib-native/android/',
         packageImportPath: `import com.wix.reactnativeuilib.dynamicfont.DynamicFontPackage;
 import com.wix.reactnativeuilib.highlighterview.HighlighterViewPackage;
-import com.wix.reactnativeuilib.keyboardinput.KeyboardInputPackage;
-import com.wix.reactnativeuilib.textinput.TextInputDelKeyHandlerPackage;`,
+import com.wix.reactnativeuilib.keyboardinput.KeyboardInputPackage;`,
         packageInstance: `new DynamicFontPackage(),
       new HighlighterViewPackage(),
-      new TextInputDelKeyHandlerPackage(),
       new KeyboardInputPackage(getApplication())`
       }
     }
