@@ -32,10 +32,8 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.MarqueeScreen', () => require('./MarqueeScreen').default);
   registrar('unicorn.components.NumberInputScreen', () => require('./NumberInputScreen').default);
   registrar('unicorn.components.OverlaysScreen', () => require('./OverlaysScreen').default);
+  registrar('unicorn.components.PanViewScreen', () => require('./PanViewScreen').default);
   registrar('unicorn.components.PageControlScreen', () => require('./PageControlScreen').default);
-  registrar('unicorn.components.PanDismissibleScreen', () => require('./PanDismissibleScreen').default);
-  registrar('unicorn.components.PanListenerScreen', () => require('./PanListenerScreen').default);
-  registrar('unicorn.components.PanResponderScreen', () => require('./PanResponderScreen').default);
   registrar('unicorn.components.PickerScreen', () => require('./PickerScreen').default);
   registrar('unicorn.animations.ProgressBarScreen', () => require('../componentScreens/ProgressBarScreen').default);
   registrar('unicorn.components.ProgressiveImageScreen', () => require('./ProgressiveImageScreen').default);
@@ -44,7 +42,6 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.SectionsWheelPickerScreen', () => require('./SectionsWheelPickerScreen').default);
   registrar('unicorn.components.SearchInputScreen', () => require('./SearchInputScreen').default);
   registrar('unicorn.components.SegmentedControlScreen', () => require('./SegmentedControlScreen').default);
-  registrar('unicorn.components.SharedTransitionScreen', () => require('./SharedTransitionScreen').default);
   registrar('unicorn.components.SkeletonViewScreen', () => require('./SkeletonViewScreen').default);
   registrar('unicorn.components.SliderScreen', () => require('./SliderScreen').default);
   registrar('unicorn.components.SortableGridListScreen', () => require('./SortableGridListScreen').default);
