@@ -3,7 +3,7 @@ import {processColor, StyleSheet, Modal, ViewStyle} from 'react-native';
 // Import the Codegen specification for New Architecture
 import HighlighterViewNativeComponent, {
   HighlightViewTagParams as NativeHighlightViewTagParams
-} from './HighlighterViewNativeComponent';
+} from '../../specs/HighlighterViewNativeComponent';
 
 const DefaultOverlayColor = 'rgba(0, 0, 0, 0.5)';
 
