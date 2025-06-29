@@ -1,13 +1,14 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import {View, ViewStyle, Dimensions} from 'react-native';
+import React, {useState, useCallback, useEffect, useMemo} from 'react';
+import {View, ViewStyle, Dimensions, StyleProp} from 'react-native';
 import SafeAreaInsetsManager from './SafeAreaInsetsManager';
 
 export type SafeAreaSpacerViewProps = {
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
 };
 
 const SafeAreaSpacerView = ({style}: SafeAreaSpacerViewProps) => {  
   const [safeAreaInsets, setSafeAreaInsets] = useState({top: 0, left: 0, bottom: 0, right: 0});
+  const [componentHeight, setComponentHeight] = useState(0);
   const [spacerHeight, setSpacerHeight] = useState(0);
 
   useEffect(() => {    
@@ -43,25 +44,26 @@ const SafeAreaSpacerView = ({style}: SafeAreaSpacerViewProps) => {
   // Position detection with useCallback
   const handleLayout = useCallback((event: any) => {    
     const {y} = event.nativeEvent.layout;
+    setComponentHeight(y);
+  }, []);
+
+  useEffect(() => {
     const screenHeight = Dimensions.get('window').height;
         
     let height = 0;
     // Check if positioned within safe area bounds
-    if (y < safeAreaInsets.top) {
+    if (componentHeight < safeAreaInsets.top) {
       height = safeAreaInsets.top;
-    } else if (y > screenHeight - safeAreaInsets.bottom) {
+    } else if (componentHeight > screenHeight - safeAreaInsets.bottom) {
       height = safeAreaInsets.bottom;
     }
     
     if (height !== spacerHeight) {
       setSpacerHeight(height);
     }
-  }, [safeAreaInsets, spacerHeight]);
+  }, [componentHeight, safeAreaInsets, spacerHeight]);
 
-  const spacerStyle = {
-    height: spacerHeight,
-    ...style
-  };
+  const spacerStyle = useMemo(() => [{height: spacerHeight}, style], [spacerHeight, style]);
 
   return <View style={spacerStyle} onLayout={handleLayout}/>;
 };

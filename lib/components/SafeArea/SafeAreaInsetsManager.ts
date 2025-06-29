@@ -1,7 +1,7 @@
 /* eslint no-underscore-dangle: 0 */
 
 import _ from 'lodash';
-import {NativeModules, DeviceEventEmitter, Platform} from 'react-native';
+import {NativeModules, DeviceEventEmitter} from 'react-native';
 
 type SafeAreaInsetsType = { top: number; left: number; bottom: number; right: number; } | null;
 
@@ -42,10 +42,6 @@ class SafeAreaInsetsManager {
   }
 
   setupEventListener() {
-    if (Platform.OS !== 'ios') {
-      return;
-    }
-
     try {
       // Use DeviceEventEmitter instead of NativeEventEmitter to avoid getConstants      
       DeviceEventEmitter.addListener('SafeAreaInsetsDidChangeEvent', (data) => {
