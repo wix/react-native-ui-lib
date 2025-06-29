@@ -5,3 +5,6 @@
 *.d.js
 # include the .d.ts files
 !*.d.ts
+# ignore the .js files in the specs folder and include the .ts files and include the .ts files
+specs/**/*.js
+!specs/**/*.ts

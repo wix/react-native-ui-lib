@@ -22,7 +22,7 @@ export type HighlighterOverlayViewProps = {
   onRequestClose?: () => void;
   highlightFrame?: HighlightFrameType;
   style?: ViewStyle;
-  highlightViewTag?: number | null;
+  highlightViewTag?: number;
   children?: JSX.Element[] | JSX.Element;
   highlightViewTagParams?: HighlightViewTagParams;
   minimumRectSize?: Pick<HighlightFrameType, 'width' | 'height'>;

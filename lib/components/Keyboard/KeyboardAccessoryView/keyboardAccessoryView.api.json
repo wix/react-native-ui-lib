@@ -15,9 +15,9 @@
     {
       "name": "kbInputRef",
       "type": "any",
-      "description": "The reference to the actual text input (or the keyboard may not reset when instructed to, etc.).",
-      "required": true,
-      "note": "iOS only"
+      "description": "The reference to the actual text input (or the keyboard may not reset when instructed to, etc.)",
+      "note": "iOS only",
+      "required": true
     },
     {
       "name": "kbComponent",
@@ -33,12 +33,12 @@
     {
       "name": "onItemSelected",
       "type": "() => void",
-      "description": "Callback that will be called when an item on the keyboard has been pressed."
+      "description": "Callback that will be called when an item on the keyboard has been pressed"
     },
     {
       "name": "onRequestShowKeyboard",
       "type": "() => void",
-      "description": "Callback that will be called if KeyboardRegistry.requestShowKeyboard is called."
+      "description": "Callback that will be called if KeyboardRegistry.requestShowKeyboard is called"
     },
     {
       "name": "onKeyboardResigned",

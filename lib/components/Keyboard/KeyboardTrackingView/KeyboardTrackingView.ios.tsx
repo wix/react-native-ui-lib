@@ -1,16 +1,13 @@
-/**
- * Created by artald on 15/05/2016.
- */
-
 import React, {PureComponent} from 'react';
-import ReactNative, {requireNativeComponent, NativeModules} from 'react-native';
+import ReactNative, {NativeModules} from 'react-native';
+// Import the Codegen specification for New Architecture
+import KeyboardTrackingViewNativeComponent from '../../../specs/KeyboardTrackingViewNativeComponent';
 import {KeyboardTrackingViewProps} from './index';
 
-const NativeKeyboardTrackingView = requireNativeComponent('KeyboardTrackingViewTemp');
 const KeyboardTrackingViewTempManager = NativeModules.KeyboardTrackingViewTempManager;
 
 /**
- * @description: A UI component that enables “keyboard tracking" for this view and it's sub-views.
+ * @description: A UI component that enables "keyboard tracking" for this view and it's sub-views.
  * Would typically be used when you have a TextField or TextInput inside this view.
  *
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/nativeComponentScreens/KeyboardTrackingViewScreen.js
@@ -27,7 +24,7 @@ class KeyboardTrackingView extends PureComponent<KeyboardTrackingViewProps> {
   ref?: any;
 
   render() {
-    return <NativeKeyboardTrackingView {...this.props} ref={r => (this.ref = r)}/>;
+    return <KeyboardTrackingViewNativeComponent {...this.props} ref={r => (this.ref = r)}/>;
   }
 
   async getNativeProps() {
