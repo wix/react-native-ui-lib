@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import ReactNative, {NativeModules} from 'react-native';
 // Import the Codegen specification for New Architecture
-import KeyboardTrackingViewNativeComponent from './KeyboardTrackingViewNativeComponent';
+import KeyboardTrackingViewNativeComponent from '../../../specs/KeyboardTrackingViewNativeComponent';
 import {KeyboardTrackingViewProps} from './index';
 
 const KeyboardTrackingViewTempManager = NativeModules.KeyboardTrackingViewTempManager;

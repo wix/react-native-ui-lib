@@ -1,11 +1,7 @@
-// import type {ViewProps} from 'react-native';
-import {requireNativeComponent, type ViewProps} from 'react-native';
-import type {
-  Float,
-  Int32,
-  WithDefault
-} from 'react-native/Libraries/Types/CodegenTypes';
-// import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
+import type {ViewProps} from 'react-native';
+// import {requireNativeComponent, type ViewProps} from 'react-native';
+import type {Float, Int32, WithDefault} from 'react-native/Libraries/Types/CodegenTypes';
+import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
 
 export interface HighlightFrame {
   x: Float;
@@ -75,8 +71,8 @@ export interface NativeProps extends ViewProps {
   innerPadding?: WithDefault<Float, 0>;
 }
 
-// export default codegenNativeComponent<NativeProps>('HighlighterView');
+export default codegenNativeComponent<NativeProps>('HighlighterView');
 
-const HighlighterViewNativeComponent = requireNativeComponent<NativeProps>('HighlighterView');
+// const HighlighterViewNativeComponent = requireNativeComponent<NativeProps>('HighlighterView');
 
-export default HighlighterViewNativeComponent;
+// export default HighlighterViewNativeComponent;

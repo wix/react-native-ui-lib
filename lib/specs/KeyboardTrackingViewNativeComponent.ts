@@ -1,7 +1,7 @@
-// import type {ViewProps} from 'react-native';
-import {requireNativeComponent, type ViewProps} from 'react-native';
+import type {ViewProps} from 'react-native';
+// import {requireNativeComponent, type ViewProps} from 'react-native';
 import type {Int32, WithDefault} from 'react-native/Libraries/Types/CodegenTypes';
-// import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
+import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
 
 export interface NativeProps extends ViewProps {
   /**
@@ -67,8 +67,8 @@ export interface NativeProps extends ViewProps {
   usesBottomTabs?: WithDefault<boolean, false>;
 }
 
-// export default codegenNativeComponent<NativeProps>('KeyboardTrackingViewTemp');
+export default codegenNativeComponent<NativeProps>('KeyboardTrackingViewTemp');
 
-const KeyboardTrackingViewNativeComponent = requireNativeComponent<NativeProps>('KeyboardTrackingViewTemp');
+// const KeyboardTrackingViewNativeComponent = requireNativeComponent<NativeProps>('KeyboardTrackingViewTemp');
 
-export default KeyboardTrackingViewNativeComponent;
+// export default KeyboardTrackingViewNativeComponent;

@@ -30,6 +30,6 @@
       "style": ["./src/style"]
     }
   },
-  "include": ["src/**/*", "typings/**/*", "demo/**/*", "lib/components/**/*"] ,
+  "include": ["src/**/*", "typings/**/*", "demo/**/*", "lib/components/**/*", "lib/specs/**/*"] ,
   "exclude": ["node_modules"]
 }
