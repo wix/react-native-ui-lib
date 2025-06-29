@@ -85,6 +85,11 @@ export const navigationData = {
     title: 'Overlays',
     screens: [
       {title: 'Action Sheet', tags: 'action sheet cross-platform', screen: 'unicorn.components.ActionSheetScreen'},
+      {
+        title: 'Action Sheet (Incubator)',
+        tags: 'action sheet',
+        screen: 'unicorn.components.IncubatorActionSheetScreen'
+      },
       {title: 'Dialog', tags: 'dialog modal popup alert', screen: 'unicorn.components.DialogScreen'},
       {title: 'Feature Highlight', tags: 'feature overlay', screen: 'unicorn.components.FeatureHighlightScreen'},
       {title: 'Floating Button', tags: 'floating button', screen: 'unicorn.components.FloatingButtonScreen'},

@@ -16,7 +16,7 @@
     {
       "name": "cancelButtonIndex",
       "type": "number",
-      "description": "Index of the option represents the cancel action (to be displayed as the separated bottom bold button)"
+      "description": "Index of the option represents the cancel action (to be displayed as the separated bottom bold button). Relevant for Native IOS ActionSheet only."
     },
     {
       "name": "destructiveButtonIndex",
