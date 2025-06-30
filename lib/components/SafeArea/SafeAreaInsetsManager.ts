@@ -3,20 +3,23 @@
 import _ from 'lodash';
 import {NativeModules, DeviceEventEmitter} from 'react-native';
 
-type SafeAreaInsetsType = { top: number; left: number; bottom: number; right: number; } | null;
+export type SafeAreaInsetsType = {top: number; left: number; bottom: number; right: number} | null;
+export type SafeAreaChangedDelegateType = {
+  onSafeAreaInsetsDidChangeEvent?: (insets: SafeAreaInsetsType) => void;
+};
 
 let SafeAreaInsetsCache: SafeAreaInsetsType = null;
 
 class SafeAreaInsetsManager {
   _defaultInsets: SafeAreaInsetsType = {top: 47, left: 0, bottom: 34, right: 0}; // Common iPhone safe area values
-  _safeAreaInsets: SafeAreaInsetsType = {top: 47, left: 0, bottom: 34, right: 0};
-  _safeAreaChangedDelegates: Array<any> = [];
+  _safeAreaInsets: SafeAreaInsetsType;
+  _safeAreaChangedDelegates: Array<SafeAreaChangedDelegateType> = [];
   _nativeModule: any = null;
 
   constructor() {
     // Initialize with default values
     this._safeAreaInsets = this._defaultInsets;
-    
+
     // Try to connect to native module
     this.setupNativeConnection();
   }
@@ -25,12 +28,12 @@ class SafeAreaInsetsManager {
     try {
       // Access the native module directly without causing getConstants
       this._nativeModule = NativeModules.SafeAreaManager;
-      
-      if (this._nativeModule) {        
+
+      if (this._nativeModule) {
         // Set up event listener using DeviceEventEmitter instead of NativeEventEmitter
         // This avoids getConstants issues
         this.setupEventListener();
-        
+
         // Get initial safe area insets
         this.getInitialInsets();
       } else {
@@ -43,8 +46,8 @@ class SafeAreaInsetsManager {
 
   setupEventListener() {
     try {
-      // Use DeviceEventEmitter instead of NativeEventEmitter to avoid getConstants      
-      DeviceEventEmitter.addListener('SafeAreaInsetsDidChangeEvent', (data) => {
+      // Use DeviceEventEmitter instead of NativeEventEmitter to avoid getConstants
+      DeviceEventEmitter.addListener('SafeAreaInsetsDidChangeEvent', (data: SafeAreaInsetsType) => {
         if (data) {
           SafeAreaInsetsCache = data;
           this._safeAreaInsets = data;
@@ -63,7 +66,6 @@ class SafeAreaInsetsManager {
 
     try {
       const insets = await this._nativeModule.getSafeAreaInsets();
-      
       if (insets) {
         SafeAreaInsetsCache = insets;
         this._safeAreaInsets = insets;
@@ -75,7 +77,7 @@ class SafeAreaInsetsManager {
   }
 
   notifyDelegates(insets: SafeAreaInsetsType) {
-    _.forEach(this._safeAreaChangedDelegates, (delegate) => {
+    _.forEach(this._safeAreaChangedDelegates, (delegate: SafeAreaChangedDelegateType) => {
       if (delegate.onSafeAreaInsetsDidChangeEvent) {
         delegate.onSafeAreaInsetsDidChangeEvent(insets);
       }
@@ -85,8 +87,13 @@ class SafeAreaInsetsManager {
   async _updateInsets() {
     if (this._nativeModule && SafeAreaInsetsCache === null) {
       try {
-        SafeAreaInsetsCache = await this._nativeModule.getSafeAreaInsets();
-        this._safeAreaInsets = SafeAreaInsetsCache;
+        const insets = await this._nativeModule.getSafeAreaInsets();
+        if (insets) {
+          SafeAreaInsetsCache = insets;
+          this._safeAreaInsets = SafeAreaInsetsCache;
+        } else {
+          this._safeAreaInsets = this._defaultInsets;
+        }
       } catch (error) {
         console.warn('SafeAreaInsetsManager: Failed to get native insets:', error);
         this._safeAreaInsets = this._defaultInsets;
@@ -103,12 +110,12 @@ class SafeAreaInsetsManager {
     return this._safeAreaInsets;
   }
 
-  addSafeAreaChangedDelegate(delegate: any) {
+  addSafeAreaChangedDelegate(delegate: SafeAreaChangedDelegateType) {
     this._safeAreaChangedDelegates.push(delegate);
   }
 
-  removeSafeAreaChangedDelegate(delegateToRemove: any) {
-    _.remove(this._safeAreaChangedDelegates, (currentDelegate) => {
+  removeSafeAreaChangedDelegate(delegateToRemove: SafeAreaChangedDelegateType) {
+    _.remove(this._safeAreaChangedDelegates, (currentDelegate: SafeAreaChangedDelegateType) => {
       return currentDelegate === delegateToRemove;
     });
   }
@@ -122,7 +129,7 @@ class SafeAreaInsetsManager {
     const previousInsets = this._safeAreaInsets;
     SafeAreaInsetsCache = null; // Force refresh
     await this._updateInsets();
-    
+
     // Notify delegates if insets changed
     if (!_.isEqual(previousInsets, this._safeAreaInsets)) {
       this.notifyDelegates(this._safeAreaInsets);
