@@ -70,7 +70,6 @@ const StackAggregator = (props: StackAggregatorProps) => {
     collapsed = true,
     disablePresses = false,
     onItemPress,
-    backgroundColor,
     contentContainerStyle,
     itemBorderRadius = 0,
     backgroundColor,
