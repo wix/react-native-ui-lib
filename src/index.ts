@@ -27,15 +27,7 @@ export {
 export {BaseComponent, PureBaseComponent} from './commons';
 
 import * as Incubator from './incubator';
-export {
-  ExpandableOverlayProps,
-  ExpandableOverlayMethods,
-  ToastProps,
-  ToastPresets,
-  PanViewProps,
-  PanViewDirections,
-  PanViewDismissThreshold
-} from './incubator';
+export {ExpandableOverlayProps, ExpandableOverlayMethods, ToastProps, ToastPresets} from './incubator';
 import * as Hooks from './hooks';
 import * as Modifiers from './commons/modifiers';
 export {default as LogService} from './services/LogService';
@@ -64,7 +56,15 @@ export {default as ColorSwatch, ColorSwatchProps, ColorInfo} from './components/
 export {default as ConnectionStatusBar, ConnectionStatusBarProps} from './components/connectionStatusBar';
 export {default as Dash, DashProps} from './components/dash';
 export {default as DateTimePicker, DateTimePickerProps, DateTimePickerMode} from './components/dateTimePicker';
-export {default as Dialog, DialogProps, DialogDirections, DialogDirectionsEnum} from './components/dialog';
+export {
+  default as Dialog,
+  DialogProps,
+  DialogHeaderProps,
+  DialogStatics,
+  DialogImperativeMethods,
+  DialogDirections,
+  DialogDirectionsEnum
+} from './components/dialog';
 export {default as Drawer, DrawerProps, DrawerItemProps} from './components/drawer';
 export {default as ExpandableSection, ExpandableSectionProps} from './components/expandableSection';
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
@@ -95,23 +95,6 @@ export {default as NumberInput, NumberInputProps, NumberInputData} from './compo
 export {default as Overlay, OverlayTypes} from './components/overlay';
 export {default as PageControl, PageControlProps} from './components/pageControl';
 export {
-  default as PanDismissibleView,
-  PanDismissibleViewProps,
-  DismissibleAnimationProps
-} from './components/panningViews/panDismissibleView';
-export {default as PanGestureView, PanGestureViewProps} from './components/panningViews/panGestureView';
-export {default as PanListenerView, PanListenerViewProps} from './components/panningViews/panListenerView';
-export {default as PanningContext} from './components/panningViews/panningContext';
-export {
-  default as PanningProvider,
-  PanningDirections,
-  PanLocationProps,
-  PanAmountsProps,
-  PanDirectionsProps
-} from './components/panningViews/panningProvider';
-export {default as PanResponderView, PanResponderViewProps} from './components/panningViews/panResponderView';
-export {default as asPanViewConsumer} from './components/panningViews/asPanViewConsumer';
-export {
   default as Picker,
   PickerProps,
   PickerItemProps,
@@ -124,6 +107,15 @@ export {
   PickerMethods,
   PickerSelectionStatusProps
 } from './components/picker';
+export {
+  default as PanView,
+  PanViewProps,
+  PanningDirections,
+  PanningDirectionsEnum,
+  PanViewDirections,
+  PanViewDirectionsEnum,
+  PanViewDismissThreshold
+} from './components/panView';
 export {default as PieChart, type PieChartProps, PieChartSegmentProps} from './components/pieChart';
 export {default as ProgressBar, ProgressBarProps} from './components/progressBar';
 export {default as ProgressiveImage, ProgressiveImageProps} from './components/progressiveImage';
@@ -140,8 +132,6 @@ export {
   SegmentedControlItemProps,
   SegmentedControlPreset
 } from './components/segmentedControl';
-// @ts-expect-error
-export {default as SharedTransition} from './components/sharedTransition';
 export {default as SkeletonView, SkeletonViewProps} from './components/skeletonView';
 export {default as SortableGridList, SortableGridListProps} from './components/sortableGridList';
 export {default as SortableList, SortableListProps, SortableListItemProps} from './components/sortableList';

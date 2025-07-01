@@ -1,8 +1,8 @@
 {
   "name": "Dialog.Header",
-  "category": "incubator",
+  "category": "overlays",
   "description": "Component for displaying the header of a popup dialog",
-  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/incubatorScreens/IncubatorDialogScreen.tsx",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DialogScreen.tsx",
   "props": [
     {"name": "title", "type": "string", "description": "Title"},
     {"name": "titleStyle", "type": "StyleProp<TextStyle>", "description": "Title text style"},

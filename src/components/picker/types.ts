@@ -52,21 +52,6 @@ export interface PickerSearchStyle {
 type PickerPropsDeprecation = {
   /**
    * @deprecated
-   * Temporary prop required for migration to Picker's new API
-   */
-  migrate?: boolean;
-  /**
-   * @deprecated
-   * A function that extract the unique value out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
-   */
-  getItemValue?: (value: PickerValue) => any;
-  /**
-   * @deprecated
-   * A function that extract the label out of the value prop in case value has a custom structure (e.g. {myValue, myLabel})
-   */
-  getItemLabel?: (value: PickerValue) => string;
-  /**
-   * @deprecated
    * Callback for modal onShow event
    * Instead pass onShow via customPickerProps.modalProps.onShow
    */
@@ -316,14 +301,6 @@ export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValu
    */
   labelStyle?: StyleProp<TextStyle>;
   /**
-   * Custom function for the item label (e.g (value) => customLabel)
-   */
-  getItemLabel?: (value: PickerValue) => string;
-  /**
-   * @deprecated Function to return the value out of the item value prop when value is custom shaped.
-   */
-  getItemValue?: PickerProps['getItemValue'];
-  /**
    * Render custom item
    */
   renderItem?: PickerProps['renderItem'];
@@ -351,8 +328,7 @@ export interface PickerItemProps extends Pick<TouchableOpacityProps, 'customValu
   testID?: string;
 }
 
-export interface PickerContextProps
-  extends Pick<PickerProps, 'migrate' | 'value' | 'getItemValue' | 'getItemLabel' | 'renderItem' | 'selectionLimit'> {
+export interface PickerContextProps extends Pick<PickerProps, 'value' | 'renderItem' | 'selectionLimit'> {
   onPress: (value: PickerSingleValue) => void;
   isMultiMode: boolean;
   onSelectedLayout: (event: any) => any;
