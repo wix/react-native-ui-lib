@@ -382,7 +382,7 @@ class Drawer extends PureComponent<DrawerProps> {
     const {children, style, leftItem, rightItems, onToggleSwipeLeft, ...others} = this.props;
 
     return (
-      <GestureHandlerRootView>
+      <GestureHandlerRootView style={{flex: 0}}>
         <Swipeable
           {...others}
           ref={this._swipeableRow}

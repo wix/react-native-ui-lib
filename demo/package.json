@@ -23,7 +23,7 @@
   },
   "peerDependencies": {
     "react": "^18.2.0",
-    "react-native": "^0.71.2",
+    "react-native": "^0.76.9",
     "react-native-ui-lib": "*",
     "semver": "^5.5.0"
   }
