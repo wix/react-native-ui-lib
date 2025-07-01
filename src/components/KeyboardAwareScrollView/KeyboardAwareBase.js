@@ -107,7 +107,7 @@ export default class KeyboardAwareBase extends Component {
           setTimeout(() => {
             this._keyboardAwareView
               .getScrollResponder()
-              .scrollResponderScrollNativeHandleToKeyboard(ReactNative.findNodeHandle(textInputRef),
+              .scrollResponderScrollNativeHandleToKeyboard(this.findNodeHandle(textInputRef),
                 this.props.scrollToInputAdditionalOffset,
                 true);
           }, 0);
@@ -115,6 +115,10 @@ export default class KeyboardAwareBase extends Component {
         return isFocused;
       });
     }
+  }
+
+  findNodeHandle(ref) {
+    return ref.current?.getNodeHandle?.() || ref?.getNodeHandle?.() || ReactNative.findNodeHandle(ref.current || ref);
   }
 
   _onKeyboardWillShow(event) {

@@ -44,8 +44,13 @@ function setStatusBarHeight() {
   statusBarHeight = (StatusBar.currentHeight ?? StatusBarManager?.HEIGHT) || 0;
 
   if (isIOS && StatusBarManager) {
-    // override guesstimate height with the actual height from StatusBarManager
-    StatusBarManager.getHeight((data:{height:number}) => (statusBarHeight = data.height));
+    try {
+      // override guesstimate height with the actual height from StatusBarManager
+      StatusBarManager.getHeight((data:{height:number}) => (statusBarHeight = data.height));
+    } catch (error) {
+      console.warn('Constants: StatusBarManager.getHeight not available in new architecture, using fallback');
+      // Keep the fallback height we already set above
+    }
   }
 }
 

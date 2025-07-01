@@ -2,6 +2,7 @@ import React, {useCallback, useRef, useImperativeHandle} from 'react';
 import {
   ScrollView as RNScrollView,
   ScrollViewProps,
+  StyleSheet,
   NativeSyntheticEvent,
   NativeScrollEvent,
   LayoutChangeEvent
@@ -107,7 +108,7 @@ const FadedScrollView = (props: Props) => {
 
   if (children) {
     return (
-      <GestureHandlerRootView>
+      <GestureHandlerRootView style={styles.container}>
         <ScrollView
           scrollEventThrottle={16}
           decelerationRate={'fast'}
@@ -138,6 +139,12 @@ const FadedScrollView = (props: Props) => {
 
   return null;
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 0
+  }
+});
 
 FadedScrollView.displayName = 'IGNORE';
 export default forwardRef<FadedScrollViewProps, ComponentStatics<FadedScrollViewProps>, FadedScrollViewRef>(FadedScrollView);
