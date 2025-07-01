@@ -144,7 +144,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     labelProps
   } = useSegmentedControlPreset(props);
   const animatedSelectedIndex = useSharedValue(initialIndex);
-  const segmentsStyle = useSharedValue([] as {x: number; width: number}[]);
+  const segmentsStyle = useSharedValue<{x: number; width: number}[]>([]);
   // const shouldResetOnDimensionsOnNextLayout = useRef(false); // use this flag if there bugs with onLayout being called more than once.
   const segmentsDimensions = useRef<{x: number; width: number}[]>([]);
   const containerHeight = useSharedValue(0);
