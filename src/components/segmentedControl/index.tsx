@@ -105,7 +105,7 @@ export type SegmentedControlProps = {
   labelProps?: TextProps;
 };
 
-const nonAreUndefined = <T, >(array: Array<T | undefined>): array is Array<T> => {
+const noneAreUndefined = <T, >(array: Array<T | undefined>): array is Array<T> => {
   'worklet';
   for (const item of array) {
     if (item === undefined) {
@@ -183,7 +183,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
     // }
     const {x, width} = event.nativeEvent.layout;
     segmentsDimensions.current[index] = {x, width};
-    if (segmentsDimensions.current.length === segments.length && nonAreUndefined(segmentsDimensions.current)) {
+    if (segmentsDimensions.current.length === segments.length && noneAreUndefined(segmentsDimensions.current)) {
       segmentsStyle.value = [...segmentsDimensions.current];
       // shouldResetOnDimensionsOnNextLayout.current = true;// in case onLayout will be called again (orientation change etc.)
     }
@@ -198,7 +198,7 @@ const SegmentedControl = (props: SegmentedControlProps) => {
   const animatedStyle = useAnimatedStyle(() => {
     const {value} = segmentsStyle;
     const {value: height} = containerHeight;
-    if (height !== 0 && value.length === segments.length && nonAreUndefined(value)) {
+    if (height !== 0 && value.length === segments.length && noneAreUndefined(value)) {
       const isFirstElementSelected = animatedSelectedIndex.value === 0;
       const isLastElementSelected = animatedSelectedIndex.value === value.length - 1;
       const isMiddleSelected = !isFirstElementSelected && !isLastElementSelected;
