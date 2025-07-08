@@ -3507,12 +3507,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/datetimepicker@npm:^3.4.6":
-  version: 3.5.2
-  resolution: "@react-native-community/datetimepicker@npm:3.5.2"
+"@react-native-community/datetimepicker@npm:8.2.0":
+  version: 8.2.0
+  resolution: "@react-native-community/datetimepicker@npm:8.2.0"
   dependencies:
     invariant: ^2.2.4
-  checksum: 8f0d3bc7014b17c696a415565c6fc591591b29ba5a438f2c1692a96ffc185693266eb950229ed3e9bf6b035d61a720ee402cbe9750d5bef81fd19e7647a24229
+  peerDependencies:
+    expo: ">=50.0.0"
+    react: "*"
+    react-native: "*"
+    react-native-windows: "*"
+  peerDependenciesMeta:
+    expo:
+      optional: true
+    react-native-windows:
+      optional: true
+  checksum: 3adc9346f8948abed246da3bfa3a223e44c2c5903070178a82e583ce6f8273607fe5a542af834b3a27aff81980c555e5f72bf0e87c85e3f00856a0de21525374
   languageName: node
   linkType: hard
 
@@ -10861,7 +10871,7 @@ __metadata:
     "@react-native-community/cli": 15.0.1
     "@react-native-community/cli-platform-android": 15.0.1
     "@react-native-community/cli-platform-ios": 15.0.1
-    "@react-native-community/datetimepicker": ^3.4.6
+    "@react-native-community/datetimepicker": 8.2.0
     "@react-native-community/netinfo": 11.3.3
     "@react-native/babel-preset": 0.77.2
     "@react-native/eslint-config": 0.77.2
