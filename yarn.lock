@@ -3507,12 +3507,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/datetimepicker@npm:^3.4.6":
-  version: 3.5.2
-  resolution: "@react-native-community/datetimepicker@npm:3.5.2"
+"@react-native-community/datetimepicker@npm:8.2.0":
+  version: 8.2.0
+  resolution: "@react-native-community/datetimepicker@npm:8.2.0"
   dependencies:
     invariant: ^2.2.4
-  checksum: 8f0d3bc7014b17c696a415565c6fc591591b29ba5a438f2c1692a96ffc185693266eb950229ed3e9bf6b035d61a720ee402cbe9750d5bef81fd19e7647a24229
+  peerDependencies:
+    expo: ">=50.0.0"
+    react: "*"
+    react-native: "*"
+    react-native-windows: "*"
+  peerDependenciesMeta:
+    expo:
+      optional: true
+    react-native-windows:
+      optional: true
+  checksum: 3adc9346f8948abed246da3bfa3a223e44c2c5903070178a82e583ce6f8273607fe5a542af834b3a27aff81980c555e5f72bf0e87c85e3f00856a0de21525374
   languageName: node
   linkType: hard
 
@@ -10738,9 +10748,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-navigation@npm:8.1.0-rc01-snapshot.1710":
-  version: 8.1.0-rc01-snapshot.1710
-  resolution: "react-native-navigation@npm:8.1.0-rc01-snapshot.1710"
+"react-native-navigation@npm:8.1.0":
+  version: 8.1.0
+  resolution: "react-native-navigation@npm:8.1.0"
   dependencies:
     hoist-non-react-statics: 3.x.x
     lodash: 4.17.x
@@ -10759,7 +10769,7 @@ __metadata:
       optional: true
   bin:
     rnn-link: autolink/postlink/run.js
-  checksum: 9535c77e5127e3ebe137fba783500ddb69359545d7f3dec71a86f1c6650f7205987e2ed25c1c5305046678659653d33b7d0ea2497c5a1693d540d5d0ba2c4e36
+  checksum: 48bce9912b98b5139acda8be2e4a019aaa83035ba328fc487f6bf141fe25f42515ac1976c90fcefcf22ce4a9c948a6b1121bd2180fad09dd3983fe4c0bc23254
   languageName: node
   linkType: hard
 
@@ -10861,7 +10871,7 @@ __metadata:
     "@react-native-community/cli": 15.0.1
     "@react-native-community/cli-platform-android": 15.0.1
     "@react-native-community/cli-platform-ios": 15.0.1
-    "@react-native-community/datetimepicker": ^3.4.6
+    "@react-native-community/datetimepicker": 8.2.0
     "@react-native-community/netinfo": 11.3.3
     "@react-native/babel-preset": 0.77.2
     "@react-native/eslint-config": 0.77.2
@@ -10915,7 +10925,7 @@ __metadata:
     react-native-haptic-feedback: ^1.11.0
     react-native-linear-gradient: 2.6.2
     react-native-mmkv: 3.2.0
-    react-native-navigation: 8.1.0-rc01-snapshot.1710
+    react-native-navigation: 8.1.0
     react-native-reanimated: 3.16.7
     react-native-redash: ^12.0.3
     react-native-shimmer-placeholder: ^2.0.6
@@ -10928,7 +10938,7 @@ __metadata:
     shell-utils: ^1.0.10
     tinycolor2: ^1.4.2
     typescript: 5.0.4
-    uilib-native: 5.0.0-snapshot.7216
+    uilib-native: 5.0.0-snapshot.7240
     url-parse: ^1.2.0
     wix-react-native-text-size: 1.0.9
   peerDependencies:
@@ -12560,16 +12570,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uilib-native@npm:5.0.0-snapshot.7216":
-  version: 5.0.0-snapshot.7216
-  resolution: "uilib-native@npm:5.0.0-snapshot.7216"
+"uilib-native@npm:5.0.0-snapshot.7240":
+  version: 5.0.0-snapshot.7240
+  resolution: "uilib-native@npm:5.0.0-snapshot.7240"
   dependencies:
     lodash: ^4.17.21
     prop-types: ^15.5.10
   peerDependencies:
     react: ">=17.0.1"
     react-native: ">=0.64.1"
-  checksum: 3ca207bae3865fc4275393135f5cd4a46c52678100d4308fe1008d0167d8d5ae8bd1cab558b364d7ad60e5c96cb38497cd10b0109e15376c623ef9849cfb3a32
+  checksum: e18a273800b231479aea3fac4a43c7f2c4a6f74c995f44e7b9ab5642b666d94060ff09a2c0f76cf6e871cbd8fc57baaee92a4879c28e20be3358fbb4fd02dc0f
   languageName: node
   linkType: hard
 
