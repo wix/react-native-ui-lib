@@ -447,7 +447,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
         <PageControl
           size={size}
           spacing={spacing}
-          containerStyle={containerStyle}
+          containerStyle={[containerStyle, Constants.isRTL && styles.flip]}
           inactiveColor={inactiveColor}
           color={color}
           {...others}
@@ -549,6 +549,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 12,
     right: 12
+  },
+  flip: {
+    transform: [{scaleX: -1}]
   },
   pageControlContainerStyle: {
     position: 'absolute',
