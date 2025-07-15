@@ -447,7 +447,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
         <PageControl
           size={size}
           spacing={spacing}
-          containerStyle={[containerStyle, Constants.isRTL && styles.flip]}
+          containerStyle={[containerStyle, Constants.isRTL && Constants.isIOS && styles.flip]}
           inactiveColor={inactiveColor}
           color={color}
           {...others}
