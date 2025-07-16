@@ -133,7 +133,7 @@ export type FeatureHighlightProps = {
 interface State {
   fadeAnim: Animated.Value;
   contentTopPosition?: number;
-  node?: number | null;
+  node?: number;
   getTarget?: () => any;
 }
 
