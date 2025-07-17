@@ -360,7 +360,13 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
     >
       <View testID={`${testID}.container`} style={textContainerStyle}>
         {!_.isUndefined(text) && (
-          <Text numberOfLines={1} ellipsizeMode={labelEllipsizeMode} style={textStyle} testID={`${testID}.label`}>
+          <Text
+            numberOfLines={1}
+            ellipsizeMode={labelEllipsizeMode}
+            style={textStyle}
+            testID={`${testID}.label`}
+            accessibilityLabel={accessibilityProps?.accessibilityLabel}
+          >
             {text}
           </Text>
         )}
