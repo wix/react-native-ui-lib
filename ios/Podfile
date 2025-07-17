@@ -15,6 +15,7 @@ if linkage != nil
 end
 
 target 'rnuilib' do
+  pod 'ReactNativeUiLib', :path => "../lib/ReactNativeUiLib.podspec"
   config = use_native_modules!
 
   use_react_native!(

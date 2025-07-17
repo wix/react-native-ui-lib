@@ -4,7 +4,7 @@ const _ = require('lodash');
 const packages = [
   {
     filename: 'keyboard.js',
-    content: `module.exports = require('uilib-native').Keyboard;\n`
+    content: `module.exports = require('./lib/components/Keyboard').default;\n`
   },
   {
     filename: 'assets.js',

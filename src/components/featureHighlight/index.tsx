@@ -10,7 +10,7 @@ import {
   TouchableWithoutFeedbackProps,
   LayoutChangeEvent
 } from 'react-native';
-import {HighlighterOverlayView} from 'uilib-native';
+import {HighlighterOverlayView} from '../../../lib/components';
 import {Colors, Typography} from '../../style';
 import {Constants, asBaseComponent} from '../../commons/new';
 import View from '../view';
