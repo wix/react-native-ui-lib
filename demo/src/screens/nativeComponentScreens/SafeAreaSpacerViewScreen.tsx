@@ -23,6 +23,7 @@ export default class SafeAreaSpacerViewScreen extends PureComponent {
               <Text red50> SafeAreaSpacerView </Text>
               {'can be used as a BOTTOM or TOP spacer and will get the height of the safe area insets'}
             </Text>
+            <SafeAreaSpacerView style={{width: 100, backgroundColor: 'red'}}/>
           </View>
         </ScrollView>
         <View style={styles.topView}>

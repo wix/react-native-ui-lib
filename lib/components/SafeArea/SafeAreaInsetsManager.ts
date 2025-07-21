@@ -1,46 +1,100 @@
 /* eslint no-underscore-dangle: 0 */
 
-import {NativeModules, NativeEventEmitter} from 'react-native';
 import _ from 'lodash';
+import {NativeModules, DeviceEventEmitter} from 'react-native';
 
-type SafeAreaInsetsType = { top: number; left: number; bottom: number; right: number; } | null 
+type SafeAreaInsetsType = { top: number; left: number; bottom: number; right: number; } | null;
 
 let SafeAreaInsetsCache: SafeAreaInsetsType = null;
 
-const NativeSafeAreaManager = NativeModules.SafeAreaManager;
-
 class SafeAreaInsetsManager {
-
-  _defaultInsets: SafeAreaInsetsType = {top: 0, left: 0, bottom: 0, right: 0};
-  _safeAreaInsets: SafeAreaInsetsType = {top: 0, left: 0, bottom: 0, right: 0};
+  _defaultInsets: SafeAreaInsetsType = {top: 47, left: 0, bottom: 34, right: 0}; // Common iPhone safe area values
+  _safeAreaInsets: SafeAreaInsetsType = {top: 47, left: 0, bottom: 34, right: 0};
   _safeAreaChangedDelegates: Array<any> = [];
+  _nativeModule: any = null;
 
   constructor() {
-    this.addSafeAreaChangedListener();
+    // Initialize with default values
+    this._safeAreaInsets = this._defaultInsets;
+    
+    // Try to connect to native module
+    this.setupNativeConnection();
   }
 
-  addSafeAreaChangedListener() {
-    if (!NativeSafeAreaManager) {
-      return;
+  setupNativeConnection() {
+    try {
+      // Access the native module directly without causing getConstants
+      this._nativeModule = NativeModules.SafeAreaManager;
+      
+      if (this._nativeModule) {        
+        // Set up event listener using DeviceEventEmitter instead of NativeEventEmitter
+        // This avoids getConstants issues
+        this.setupEventListener();
+        
+        // Get initial safe area insets
+        this.getInitialInsets();
+      } else {
+        console.log('SafeAreaInsetsManager: Native SafeAreaManager not available, using defaults');
+      }
+    } catch (error) {
+      console.warn('SafeAreaInsetsManager: Failed to connect to native module:', error);
     }
-    const NativeSafeAreaEvents = new NativeEventEmitter(NativeSafeAreaManager);
-    NativeSafeAreaEvents.addListener('SafeAreaInsetsDidChangeEvent', (safeAreaInsets) => {
-      SafeAreaInsetsCache = safeAreaInsets;
-      this._safeAreaInsets = SafeAreaInsetsCache;
-      _.forEach(this._safeAreaChangedDelegates, (delegate) => {
-        if (delegate.onSafeAreaInsetsDidChangeEvent) {
-          delegate.onSafeAreaInsetsDidChangeEvent(this._safeAreaInsets);
-        } else {
-          console.warn('ERROR', 'SafeAreaInsetsManager', 'safe area changed delegate was added, but it does not implement the onSafeAreaInsetsDidChangeEvent method'); //eslint-disable-line
+  }
+
+  setupEventListener() {
+    try {
+      // Use DeviceEventEmitter instead of NativeEventEmitter to avoid getConstants      
+      DeviceEventEmitter.addListener('SafeAreaInsetsDidChangeEvent', (data) => {
+        if (data) {
+          SafeAreaInsetsCache = data;
+          this._safeAreaInsets = data;
+          this.notifyDelegates(data);
         }
       });
+    } catch (error) {
+      console.warn('SafeAreaInsetsManager: Failed to setup event listener:', error);
+    }
+  }
+
+  async getInitialInsets() {
+    if (!this._nativeModule) {
+      return;
+    }
+
+    try {
+      const insets = await this._nativeModule.getSafeAreaInsets();
+      
+      if (insets) {
+        SafeAreaInsetsCache = insets;
+        this._safeAreaInsets = insets;
+        // Don't notify delegates yet as components might not be ready
+      }
+    } catch (error) {
+      console.warn('SafeAreaInsetsManager: Failed to get initial insets:', error);
+    }
+  }
+
+  notifyDelegates(insets: SafeAreaInsetsType) {
+    _.forEach(this._safeAreaChangedDelegates, (delegate) => {
+      if (delegate.onSafeAreaInsetsDidChangeEvent) {
+        delegate.onSafeAreaInsetsDidChangeEvent(insets);
+      }
     });
   }
 
   async _updateInsets() {
-    if (NativeSafeAreaManager && SafeAreaInsetsCache === null) {
-      SafeAreaInsetsCache = await NativeSafeAreaManager.getSafeAreaInsets();
+    if (this._nativeModule && SafeAreaInsetsCache === null) {
+      try {
+        SafeAreaInsetsCache = await this._nativeModule.getSafeAreaInsets();
+        this._safeAreaInsets = SafeAreaInsetsCache;
+      } catch (error) {
+        console.warn('SafeAreaInsetsManager: Failed to get native insets:', error);
+        this._safeAreaInsets = this._defaultInsets;
+      }
+    } else if (SafeAreaInsetsCache !== null) {
       this._safeAreaInsets = SafeAreaInsetsCache;
+    } else {
+      this._safeAreaInsets = this._defaultInsets;
     }
   }
 
@@ -62,6 +116,20 @@ class SafeAreaInsetsManager {
   get defaultInsets() {
     return this._defaultInsets;
   }
+
+  // Method to manually refresh safe area insets and notify delegates
+  async refreshSafeAreaInsets() {
+    const previousInsets = this._safeAreaInsets;
+    SafeAreaInsetsCache = null; // Force refresh
+    await this._updateInsets();
+    
+    // Notify delegates if insets changed
+    if (!_.isEqual(previousInsets, this._safeAreaInsets)) {
+      this.notifyDelegates(this._safeAreaInsets);
+    }
+  }
 }
 
-export default new SafeAreaInsetsManager();
+const instance = new SafeAreaInsetsManager();
+
+export default instance;
