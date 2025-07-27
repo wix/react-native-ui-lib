@@ -8,10 +8,11 @@ export type SafeAreaChangedDelegateType = {
   onSafeAreaInsetsDidChangeEvent?: (insets: SafeAreaInsetsType) => void;
 };
 
+export const DEFAULT_INSETS = {top: 47, left: 0, bottom: 34, right: 0};
 let SafeAreaInsetsCache: SafeAreaInsetsType = null;
 
 class SafeAreaInsetsManager {
-  _defaultInsets: SafeAreaInsetsType = {top: 47, left: 0, bottom: 34, right: 0}; // Common iPhone safe area values
+  _defaultInsets: SafeAreaInsetsType = DEFAULT_INSETS; // Common iPhone safe area values
   _safeAreaInsets: SafeAreaInsetsType;
   _safeAreaChangedDelegates: Array<SafeAreaChangedDelegateType> = [];
   _nativeModule: any = null;
