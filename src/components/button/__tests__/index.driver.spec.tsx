@@ -66,6 +66,11 @@ describe('Button', () => {
       buttonDriver.press();
       await waitFor(() => expect(onPressCallback).toHaveBeenCalledTimes(0));
     });
+    it.each([true, false])(`button should be disabled when disabled is %s`, (disabled) => {
+      const renderTree = render(<WrapperScreenWithButton disabled={disabled}/>);
+      const buttonDriver = ButtonDriver({renderTree, testID: 'button_test_id'});
+      expect(buttonDriver.isDisabled()).toBe(disabled);
+    });
   });
 
   describe('label', () => {
