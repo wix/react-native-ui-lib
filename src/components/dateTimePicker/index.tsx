@@ -318,10 +318,10 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
 
   const renderIOSExpandableOverlay = () => {
     return (
-      <>
+      <View>
         {renderHeader()}
         {renderDateTimePicker()}
-      </>
+      </View>
     );
   };
 
