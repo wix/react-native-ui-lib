@@ -193,28 +193,28 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
             if(_scrollViewToManage == nil)
             {
                 if ([NSStringFromClass([subview class]) isEqualToString:@"RCTScrollViewComponentView"]) {
-                  UIScrollView *scrollView = [self extractUIScrollView:subview];
-                  
+                    UIScrollView *scrollView = [self extractUIScrollView:subview];
+                    
                     if ([scrollView isKindOfClass:[UIScrollView class]])
                     {
                         if(_requiresSameParentToManageScrollView && subview.superview == self.superview)
                         {
-                          _scrollViewToManage = scrollView;
+                            _scrollViewToManage = scrollView;
                         }
                         else if(!_requiresSameParentToManageScrollView)
                         {
-                          _scrollViewToManage = scrollView;
+                            _scrollViewToManage = scrollView;
                         }
                         
                         if(_scrollViewToManage != nil)
                         {
-                          _scrollIsInverted = CGAffineTransformEqualToTransform(subview.superview.transform, CGAffineTransformMakeScale(1, -1));
+                            _scrollIsInverted = CGAffineTransformEqualToTransform(subview.superview.transform, CGAffineTransformMakeScale(1, -1));
                         }
                     }
                 }
             }
         }
-          
+        
         
         if ([subview isKindOfClass:NSClassFromString(@"RCTTextField")])
         {
@@ -238,17 +238,30 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
         {
             [self setupTextView:[subview valueForKey:@"_backedTextInputView"]];
         }
-        else if ([subview isKindOfClass:NSClassFromString(@"RCTTextView")])
+        else if ([subview isKindOfClass:NSClassFromString(@"RCTTextView")] ||
+                 [subview isKindOfClass:NSClassFromString(@"RCTTextInputComponentView")])
         {
+            
             UITextView *textView = nil;
-            Ivar backedTextInputIvar = class_getInstanceVariable([subview class], "_backedTextInput");
-            if (backedTextInputIvar != NULL)
-            {
-                textView = [subview valueForKey:@"_backedTextInput"];
-            }
-            else if([subview isKindOfClass:[UITextView class]])
-            {
-                textView = (UITextView*)subview;
+            
+            if ([subview isKindOfClass:NSClassFromString(@"RCTTextInputComponentView")]) {
+                Ivar textFieldIvar = class_getInstanceVariable([subview class], "_backedTextInputView");
+                if (textFieldIvar != NULL)
+                {
+                    textView = [subview valueForKey:@"_backedTextInputView"];
+                }
+                
+            } else {
+                
+                Ivar backedTextInputIvar = class_getInstanceVariable([subview class], "_backedTextInput");
+                if (backedTextInputIvar != NULL)
+                {
+                    textView = [subview valueForKey:@"_backedTextInput"];
+                }
+                else if([subview isKindOfClass:[UITextView class]])
+                {
+                    textView = (UITextView*)subview;
+                }
             }
             [self setupTextView:textView];
         }
@@ -283,6 +296,8 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
     _originalHeight = _ObservingInputAccessoryViewTemp.height;
     
     [self addBottomViewIfNecessary];
+    
+    [self ensureLegacyViewManagerTouchDelegation];
 }
 
 - (void)setupTextView:(UITextView*)textView
@@ -564,7 +579,46 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
     [self updateBottomViewFrame];
     
     self.transform = CGAffineTransformMakeTranslation(0, accessoryTranslation);
+    
     [self _updateScrollViewInsets];
+}
+
+- (void)ensureLegacyViewManagerTouchDelegation {
+    UIView *superview = self.superview;
+    if (superview) {
+        if ([NSStringFromClass([superview class]) isEqualToString:@"RCTLegacyViewManagerInteropComponentView"]) {
+            [self changeLegacyViewManagerHitTestDelegation:superview];
+        }
+    }
+}
+
+- (void)changeLegacyViewManagerHitTestDelegation:(UIView *)wrapperView {
+    static dispatch_once_t onceToken;
+    static IMP originalHitTestIMP = NULL;
+    
+    dispatch_once(&onceToken, ^{
+        Class wrapperClass = [wrapperView class];
+        
+        Method originalMethod = class_getInstanceMethod(wrapperClass, @selector(hitTest:withEvent:));
+        if (originalMethod) {
+            originalHitTestIMP = method_getImplementation(originalMethod);
+            
+            IMP customHitTest = imp_implementationWithBlock(^UIView*(id self, CGPoint point, UIEvent *event) {
+                UIView *subview = [self subviews].firstObject;
+                if (subview &&
+                    [subview isKindOfClass:[KeyboardTrackingViewTemp class]]) {
+                    CGPoint convertedPoint = [self convertPoint:point toView:subview];
+                    UIView *result = [subview hitTest:convertedPoint withEvent:event];
+                    return result;
+                }
+                
+                UIView* (*originalFunc)(id, SEL, CGPoint, UIEvent*) = (void*)originalHitTestIMP;
+                return originalFunc(self, @selector(hitTest:withEvent:), point, event);
+            });
+            
+            method_setImplementation(originalMethod, customHitTest);
+        }
+    });
 }
 
 - (void)performScrollToFocusedInput
@@ -748,3 +802,4 @@ RCT_EXPORT_METHOD(scrollToStart:(nonnull NSNumber *)reactTag)
 }
 
 @end
+
