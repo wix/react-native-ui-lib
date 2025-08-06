@@ -57,6 +57,11 @@ export interface ModalProps extends RNModalProps {
    * Send additional props to the KeyboardAvoidingView (iOS only)
    */
   keyboardAvoidingViewProps?: KeyboardAvoidingViewProps;
+  /**
+   * Fix RNModal's interaction with react-native-reanimated (Android only, default: true)
+   * See this https://github.com/software-mansion/react-native-reanimated/issues/6659#issuecomment-2704931585
+   */
+  fixReanimatedInteraction?: boolean;
 }
 
 /**
@@ -105,6 +110,7 @@ class Modal extends Component<ModalProps> {
 
   render() {
     const {
+      fixReanimatedInteraction = true,
       blurView,
       enableModalBlur,
       visible,
@@ -122,18 +128,21 @@ class Modal extends Component<ModalProps> {
       ? {behavior: 'padding', ...keyboardAvoidingViewProps, style: [styles.fill, keyboardAvoidingViewProps?.style]}
       : {};
     const Container: any = blurView ? blurView : defaultContainer;
+    const HackContainer = fixReanimatedInteraction && Constants.isAndroid ? View : React.Fragment;
 
     return (
-      <RNModal visible={Boolean(visible)} {...others}>
-        <GestureContainer {...gestureContainerProps}>
-          <KeyboardAvoidingContainer {...keyboardAvoidingContainerProps}>
-            <Container style={styles.fill} blurType="light">
-              {this.renderTouchableOverlay()}
-              {this.props.children}
-            </Container>
-          </KeyboardAvoidingContainer>
-        </GestureContainer>
-      </RNModal>
+      <HackContainer>
+        <RNModal visible={Boolean(visible)} {...others}>
+          <GestureContainer {...gestureContainerProps}>
+            <KeyboardAvoidingContainer {...keyboardAvoidingContainerProps}>
+              <Container style={styles.fill} blurType="light">
+                {this.renderTouchableOverlay()}
+                {this.props.children}
+              </Container>
+            </KeyboardAvoidingContainer>
+          </GestureContainer>
+        </RNModal>
+      </HackContainer>
     );
   }
 }

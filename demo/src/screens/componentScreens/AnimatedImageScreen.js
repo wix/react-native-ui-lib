@@ -4,8 +4,8 @@ import _ from 'lodash';
 import {AnimatedImage, Colors} from 'react-native-ui-lib'; //eslint-disable-line
 
 const SampleImages = [
-  'https://static.pexels.com/photos/50721/pencils-crayons-colourful-rainbow-50721.jpeg',
-  'https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg'
+  'https://images.pexels.com/photos/2529146/pexels-photo-2529146.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+  'https://images.pexels.com/photos/2529158/pexels-photo-2529158.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
 ];
 
 export default class AnimatedImageScreen extends Component {

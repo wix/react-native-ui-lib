@@ -7,18 +7,12 @@
 
 #import <UIKit/UIKit.h>
 
-#if __has_include(<React/RCTRootView.h>)
-#import <React/RCTRootView.h>
-#else
-#import "RCTRootView.h"
-#endif
-
 @interface RCTCustomKeyboardViewControllerTemp : UIInputViewController
 
 - (void) setAllowsSelfSizing:(BOOL)allowsSelfSizing;
 - (instancetype)initWithUsingSafeArea:(BOOL)useSafeArea;
 
 @property (nonatomic, strong) NSLayoutConstraint *heightConstraint;
-@property (nonatomic, strong) RCTRootView *rootView;
+@property (nonatomic, strong) UIView *rootView;
 
 @end

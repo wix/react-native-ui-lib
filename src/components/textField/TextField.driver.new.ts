@@ -1,15 +1,15 @@
 import _ from 'lodash';
 import {StyleSheet} from 'react-native';
 import {fireEvent} from '@testing-library/react-native';
-import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
+import {useComponentDriver, ComponentProps, ComponentDriverOptions} from '../../testkit/new/Component.driver';
 import {usePressableDriver} from '../../testkit/new/usePressable.driver';
 import {TextDriver} from '../text/Text.driver.new';
 import {ImageDriver} from '../image/Image.driver.new';
 import {ButtonDriver} from '../button/Button.driver.new';
 import {ViewDriver} from '../view/View.driver.new';
 
-export const TextFieldDriver = (props: ComponentProps) => {
-  const driver = usePressableDriver(useComponentDriver(props));
+export const TextFieldDriver = (props: ComponentProps, options?: ComponentDriverOptions) => {
+  const driver = usePressableDriver(useComponentDriver(props, options));
 
   const floatingPlaceholderDriver = TextDriver({
     renderTree: props.renderTree,
