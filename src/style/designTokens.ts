@@ -42,7 +42,7 @@ export default {
   $textGeneral: colorsPalette.blue30,
   $textSuccess: colorsPalette.green5,
   $textSuccessLight: colorsPalette.green30,
-  $textMajor: colorsPalette.orange10,
+  $textMajor: colorsPalette.orange5,
   $textDanger: colorsPalette.red5,
   $textDangerLight: colorsPalette.red10,
 
@@ -56,7 +56,7 @@ export default {
   $iconGeneralLight: colorsPalette.blue50,
   $iconSuccess: colorsPalette.green5,
   $iconSuccessLight: colorsPalette.green30,
-  $iconMajor: colorsPalette.orange10,
+  $iconMajor: colorsPalette.orange5,
   $iconDanger: colorsPalette.red5,
   $iconDangerLight: colorsPalette.red10,
   $iconDisabled: colorsPalette.grey50,

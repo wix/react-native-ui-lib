@@ -477,11 +477,11 @@ exports[`AvatarScreen renders screen 1`] = `
                   },
                   {
                     "backgroundColor": "transparent",
-                    "color": "#CD4700",
+                    "color": "#9E3900",
                     "lineHeight": undefined,
                   },
                   {
-                    "color": "#CD4700",
+                    "color": "#9E3900",
                   },
                 ],
               ]
