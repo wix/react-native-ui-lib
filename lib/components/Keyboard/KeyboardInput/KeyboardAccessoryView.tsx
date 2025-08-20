@@ -62,6 +62,7 @@ export type KeyboardAccessoryViewProps = kbTrackingViewProps & {
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/KeyboardAccessoryView/KeyboardAccessoryView.gif?raw=true
  */
 class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
+  androidBackHandlerSubscription?: { remove: () => void };
   static scrollBehaviors = KeyboardTrackingView.scrollBehaviors;
 
   static defaultProps = {
@@ -94,8 +95,8 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
     if (this.customInputControllerEventsSubscriber) {
       this.customInputControllerEventsSubscriber.remove();
     }
-    if (IsAndroid) {
-      BackHandler.removeEventListener('hardwareBackPress', this.onAndroidBackPressed);
+    if (IsAndroid && this.androidBackHandlerSubscription) {
+      this.androidBackHandlerSubscription.remove();
     }
   }
 
@@ -146,7 +147,7 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
 
   registerAndroidBackHandler() {
     if (IsAndroid) {
-      BackHandler.addEventListener('hardwareBackPress', this.onAndroidBackPressed);
+      this.androidBackHandlerSubscription = BackHandler.addEventListener('hardwareBackPress', this.onAndroidBackPressed);
     }
   }
 
