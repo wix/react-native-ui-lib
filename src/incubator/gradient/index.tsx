@@ -14,7 +14,7 @@ const Gradient = (props: GradientProps) => {
 
   useEffect(() => {
     if (LinearGradient === undefined) {
-      LogService.error(`RNUILib SkeletonView's requires installing "react-native-linear-gradient" dependency`);
+      LogService.error(`RNUILib Gradient requires installing "react-native-linear-gradient" dependency`);
     }
   }, []);
 
