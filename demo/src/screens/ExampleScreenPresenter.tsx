@@ -16,22 +16,27 @@ import {
   View
 } from 'react-native-ui-lib';
 
-interface RadioGroupOptions {
+interface StateOptions {
+  state?: string;
+  setState?: React.Dispatch<React.SetStateAction<any /** no suitable solution for enum */>>;
+}
+
+interface RadioGroupBaseOptions {
   isRow?: boolean;
-  afterValueChanged?: () => void;
   useValueAsLabel?: boolean;
 }
+
+type RadioGroupOptions =
+  | (RadioGroupBaseOptions & {
+      afterValueChanged?: () => void;
+    })
+  | (RadioGroupBaseOptions & StateOptions);
 
 interface BooleanGroupOptions {
   spread?: boolean;
   afterValueChanged?: () => void;
   state?: boolean;
   setState?: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-interface SegmentsExtraOptions {
-  state?: string;
-  setState?: React.Dispatch<React.SetStateAction<any /** no suitable solution for enum */>>;
 }
 
 export function renderHeader(title: string, others?: TextProps) {
@@ -103,9 +108,10 @@ export function renderBooleanGroup(title: string, options: string[]) {
 export function renderRadioGroup(title: string,
   key: string,
   options: object,
-  {isRow, afterValueChanged, useValueAsLabel}: RadioGroupOptions = {}) {
   // @ts-ignore
-  const value = this.state[key];
+  {isRow, afterValueChanged, useValueAsLabel, state, setState}: RadioGroupOptions = {}) {
+  // @ts-ignore
+  const value = state ?? this.state[key];
   return (
     <View marginB-s2>
       {!_.isUndefined(title) && (
@@ -118,7 +124,18 @@ export function renderRadioGroup(title: string,
         style={isRow && styles.rowWrap}
         initialValue={value}
         // @ts-ignore
-        onValueChange={value => this.setState({[key]: value}, afterValueChanged)}
+        onValueChange={value => {
+          if (setState) {
+            setState(value);
+            if (afterValueChanged) {
+              // eslint-disable-next-line no-restricted-syntax
+              console.error('afterValueChanged is not supported together with the state option');
+            }
+          } else {
+            // @ts-ignore
+            this.setState({[key]: value}, afterValueChanged);
+          }
+        }}
       >
         {_.map(options, (value, key) => {
           return (
@@ -159,9 +176,25 @@ export function renderColorOption(title: string,
 
 export function renderSliderOption(title: string,
   key: string,
-  {min = 0, max = 10, step = 1, initial = 0, sliderText = ''}) {
+  {
+    min = 0,
+    max = 10,
+    step = 1,
+    initial = 0,
+    sliderText = '',
+    state,
+    setState
+  }: {
+    min?: number;
+    max?: number;
+    step?: number;
+    initial?: number;
+    sliderText?: string;
+    state?: number;
+    setState?: React.Dispatch<React.SetStateAction<number>>;
+  }) {
   // @ts-ignore
-  const value = this.state[key] || initial;
+  const value = state ?? this.state[key] ?? initial;
   return (
     <View marginV-s2>
       <Text marginB-s1 text70M $textDefault>
@@ -177,7 +210,14 @@ export function renderSliderOption(title: string,
           maximumValue={max}
           step={step}
           // @ts-ignore
-          onValueChange={value => this.setState({[key]: value})}
+          onValueChange={value => {
+            if (setState) {
+              setState(value);
+            } else {
+              // @ts-ignore
+              this.setState({[key]: value});
+            }
+          }}
         />
         <Text marginL-s4 text70 $textDefault style={styles.text}>
           {sliderText}
@@ -191,7 +231,7 @@ export function renderSliderOption(title: string,
 export function renderMultipleSegmentOptions(title: string,
   key: string,
   options: (SegmentedControlItemProps & {value: any})[],
-  {state, setState}: SegmentsExtraOptions = {}) {
+  {state, setState}: StateOptions = {}) {
   // @ts-ignore
   const value = state ?? this.state[key];
   const index = _.findIndex(options, {value});
