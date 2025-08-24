@@ -18,20 +18,15 @@ const Gradient = (props: GradientProps) => {
     }
   }, []);
 
-  if (!LinearGradient) {
-    return null;
-  }
-
-  if (type === 'rectangle') {
-    return <RectangleGradient {...(others as RectangleGradientProps)}/>;
-  }
-
-  if (type === 'circle') {
-    return <CircleGradient {...(others as CircleGradientProps)}/>;
-  }
-
-  if (type === 'border') {
-    return <BorderGradient {...(others as BorderGradientProps)}/>;
+  switch (type) {
+    case 'rectangle':
+      return <RectangleGradient {...(others as RectangleGradientProps)}/>;
+    case 'circle':
+      return <CircleGradient {...(others as CircleGradientProps)}/>;
+    case 'border':
+      return <BorderGradient {...(others as BorderGradientProps)}/>;
+    default:
+      return null;
   }
 };
 

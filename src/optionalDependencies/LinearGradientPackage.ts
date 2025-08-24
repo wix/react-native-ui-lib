@@ -1,8 +1,6 @@
-let LinearGradientPackage: typeof import('react-native-linear-gradient') | {default: () => null};
+let LinearGradientPackage: typeof import('react-native-linear-gradient') | undefined;
 try {
   LinearGradientPackage = require('react-native-linear-gradient');
-} catch (error) {
-  LinearGradientPackage = {default: () => null};
-}
+} catch (error) {}
 
 export default LinearGradientPackage;

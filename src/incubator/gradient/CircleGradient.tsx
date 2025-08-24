@@ -11,6 +11,10 @@ const CircleGradient = (props: CircleGradientProps) => {
   const internalDiameter = radius ? radius * 2 : undefined;
   const {start, end} = useAngleTransform({angle});
 
+  if (!LinearGradient) {
+    return null;
+  }
+
   return (
     <View width={internalDiameter} height={internalDiameter} style={{borderRadius: 999, overflow: 'hidden'}}>
       <LinearGradient colors={colors} start={start} end={end}>

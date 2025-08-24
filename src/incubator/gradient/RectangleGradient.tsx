@@ -10,6 +10,10 @@ const RectangleGradient = (props: RectangleGradientProps) => {
 
   const {start, end} = useAngleTransform({angle});
 
+  if (!LinearGradient) {
+    return null;
+  }
+
   return (
     <View width={width} height={height}>
       <LinearGradient colors={colors} start={start} end={end}>

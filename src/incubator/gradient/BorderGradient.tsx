@@ -14,6 +14,10 @@ const BorderGradient = (props: BorderGradientProps) => {
   const innerHeight = height ? height - borderWidth * 2 : undefined;
   const {start, end} = useAngleTransform({angle});
 
+  if (!LinearGradient) {
+    return null;
+  }
+
   return (
     <View width={width} height={height}>
       <LinearGradient colors={colors} start={start} end={end} style={{borderRadius}}>
