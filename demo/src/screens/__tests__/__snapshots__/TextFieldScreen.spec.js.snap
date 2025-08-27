@@ -4387,7 +4387,7 @@ exports[`TextField Screen renders screen 1`] = `
                       "textAlign": "right",
                     },
                     {
-                      "color": "#0A62EE",
+                      "color": "#0F62E6",
                     },
                   ],
                 ]
@@ -5144,7 +5144,7 @@ exports[`TextField Screen renders screen 1`] = `
                   "lineHeight": 24,
                 },
                 {
-                  "color": "#0A62EE",
+                  "color": "#0F62E6",
                 },
                 undefined,
                 undefined,
