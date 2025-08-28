@@ -5,20 +5,20 @@ import {PickerProps, PickerValue} from '../types';
 interface UsePickerLabelProps
   extends Pick<
     PickerProps,
-    'value' | 'getLabel' | 'getItemLabel' | 'placeholder' | 'accessibilityLabel' | 'accessibilityHint'
+    'value' | 'getLabel' | 'placeholder' | 'accessibilityLabel' | 'accessibilityHint'
   > {
   items: {value: string | number; label: string}[] | null | undefined;
 }
 
 const usePickerLabel = (props: UsePickerLabelProps) => {
-  const {value, items, getLabel, getItemLabel, placeholder, accessibilityLabel, accessibilityHint} = props;
+  const {value, items, getLabel, placeholder, accessibilityLabel, accessibilityHint} = props;
 
   const getLabelsFromArray = useCallback((value: PickerValue) => {
     const itemsByValue = _.keyBy(items, 'value');
     return _.flow(arr =>
-      _.map(arr, item => (_.isPlainObject(item) ? getItemLabel?.(item) || item?.label : itemsByValue[item]?.label)),
+      _.map(arr, item => (_.isPlainObject(item) ? item?.label : itemsByValue[item]?.label)),
     arr => _.join(arr, ', '))(value);
-  }, [getItemLabel, items]);
+  }, [items]);
 
   const _getLabel = useCallback((value: PickerValue) => {
     if (_.isFunction(getLabel) && !_.isUndefined(getLabel(value))) {
