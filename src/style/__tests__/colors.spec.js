@@ -283,7 +283,7 @@ describe('style/Colors', () => {
     });
 
     it('should return undefined if the color is not included in validColors', () => {
-      expect(uut.getSystemColorByHex('#0A62EE', GetColorsByHexOptions)).toEqual(undefined);
+      expect(uut.getSystemColorByHex('#0F62E6', GetColorsByHexOptions)).toEqual(undefined);
       expect(uut.getSystemColorByHex('#00A87E', GetColorsByHexOptions)).toEqual(undefined);
     });
 
