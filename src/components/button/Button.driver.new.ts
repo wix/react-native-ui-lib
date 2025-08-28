@@ -34,5 +34,9 @@ export const ButtonDriver = (props: ComponentProps) => {
     return StyleSheet.flatten(driver.getElement().props.style);
   };
 
-  return {getStyle, getLabel, getLabelStyle, getIconStyle, getIcon, ...driver};
+  const isDisabled = () => {
+    return !!driver.getElement().props.accessibilityState?.disabled;
+  };
+
+  return {getStyle, getLabel, getLabelStyle, getIconStyle, getIcon, isDisabled, ...driver};
 };
