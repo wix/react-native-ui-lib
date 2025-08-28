@@ -40,11 +40,10 @@ export default {
   $textDefaultLight: colorsPalette.white,
   $textPrimary: colorsPalette.violet30,
   $textGeneral: colorsPalette.blue30,
-  $textSuccess: colorsPalette.green10,
+  $textSuccess: colorsPalette.green5,
   $textSuccessLight: colorsPalette.green30,
-  $textMajor: colorsPalette.orange10,
-  $textDanger: colorsPalette.red10,
-  //textDangerLight should be deprecated
+  $textMajor: colorsPalette.orange5,
+  $textDanger: colorsPalette.red5,
   $textDangerLight: colorsPalette.red10,
 
   // ICON
@@ -55,11 +54,10 @@ export default {
   $iconPrimaryLight: colorsPalette.violet50,
   $iconGeneral: colorsPalette.blue30,
   $iconGeneralLight: colorsPalette.blue50,
-  $iconSuccess: colorsPalette.green10,
+  $iconSuccess: colorsPalette.green5,
   $iconSuccessLight: colorsPalette.green30,
-  $iconMajor: colorsPalette.orange10,
-  $iconDanger: colorsPalette.red10,
-  //iconDangerLight should be deprecated
+  $iconMajor: colorsPalette.orange5,
+  $iconDanger: colorsPalette.red5,
   $iconDangerLight: colorsPalette.red10,
   $iconDisabled: colorsPalette.grey50,
 
