@@ -278,17 +278,17 @@ describe('style/Colors', () => {
     it('should return the system color, if the color is included in the validColors array', () => {
       expect(uut.getSystemColorByHex('#FFFFFF', GetColorsByHexOptions)).toEqual('white');
       expect(uut.getSystemColorByHex('#000000', GetColorsByHexOptions)).toEqual('black');
-      expect(uut.getSystemColorByHex('#116DFF', {validColors: [...SYSTEM_COLORS, 'blue']})).toEqual('blue30');
+      expect(uut.getSystemColorByHex('#0F62E6', {validColors: [...SYSTEM_COLORS, 'blue']})).toEqual('blue30');
       expect(uut.getSystemColorByHex('#FB6413', {validColors: [...SYSTEM_COLORS, 'orange']})).toEqual('orange30');
     });
 
     it('should return undefined if the color is not included in validColors', () => {
-      expect(uut.getSystemColorByHex('#116DFF', GetColorsByHexOptions)).toEqual(undefined);
+      expect(uut.getSystemColorByHex('#0F62E6', GetColorsByHexOptions)).toEqual(undefined);
       expect(uut.getSystemColorByHex('#00A87E', GetColorsByHexOptions)).toEqual(undefined);
     });
 
     it('without validColors array the function will return the first system color name match the color', () => {
-      expect(uut.getSystemColorByHex('#116DFF')).toEqual('blue30');
+      expect(uut.getSystemColorByHex('#0F62E6')).toEqual('blue30');
       expect(uut.getSystemColorByHex('#00A87E')).toEqual('green30');
     });
 

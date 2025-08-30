@@ -477,11 +477,11 @@ exports[`AvatarScreen renders screen 1`] = `
                   },
                   {
                     "backgroundColor": "transparent",
-                    "color": "#CD4700",
+                    "color": "#9E3900",
                     "lineHeight": undefined,
                   },
                   {
-                    "color": "#CD4700",
+                    "color": "#9E3900",
                   },
                 ],
               ]
@@ -776,7 +776,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   {
                     "alignItems": "center",
                     "alignSelf": "flex-start",
-                    "backgroundColor": "#116DFF",
+                    "backgroundColor": "#0F62E6",
                     "borderRadius": 999,
                     "justifyContent": "center",
                     "overflow": "hidden",
@@ -1034,7 +1034,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   {
                     "alignItems": "center",
                     "alignSelf": "flex-start",
-                    "backgroundColor": "#116DFF",
+                    "backgroundColor": "#0F62E6",
                     "borderRadius": 999,
                     "justifyContent": "center",
                     "overflow": "hidden",
@@ -1292,7 +1292,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   {
                     "alignItems": "center",
                     "alignSelf": "flex-start",
-                    "backgroundColor": "#116DFF",
+                    "backgroundColor": "#0F62E6",
                     "borderRadius": 999,
                     "justifyContent": "center",
                     "overflow": "hidden",
@@ -1759,7 +1759,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   {
                     "alignItems": "center",
                     "alignSelf": "flex-start",
-                    "backgroundColor": "#116DFF",
+                    "backgroundColor": "#0F62E6",
                     "borderRadius": 999,
                     "justifyContent": "center",
                     "overflow": "hidden",
@@ -2617,7 +2617,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   "top": 0,
                 },
                 {
-                  "backgroundColor": "#116DFF",
+                  "backgroundColor": "#0F62E6",
                 },
                 {
                   "bottom": 1,
@@ -3142,7 +3142,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   {
                     "alignItems": "center",
                     "alignSelf": "flex-start",
-                    "backgroundColor": "#116DFF",
+                    "backgroundColor": "#0F62E6",
                     "borderRadius": 999,
                     "justifyContent": "center",
                     "overflow": "hidden",
