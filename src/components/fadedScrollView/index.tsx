@@ -34,6 +34,11 @@ export type FadedScrollViewProps = ScrollViewProps & {
    * Use the react-native-gesture-handler version, useful when using react-native-reanimated
    */
   useGesture?: boolean;
+  /**
+   * Whether to wrap the ScrollView with GestureHandlerRootView
+   * Set to false when using the component inside another GestureHandlerRootView
+   */
+  useGestureHandlerRootView?: boolean;
   children?: React.ReactNode | React.ReactNode[];
 };
 
@@ -59,6 +64,7 @@ const FadedScrollView = (props: Props) => {
     showEndFader,
     endFaderProps,
     useGesture,
+    useGestureHandlerRootView = true,
     ...others
   } = props;
   const ScrollView = useGesture ? GestureScrollView : RNScrollView;
@@ -106,22 +112,32 @@ const FadedScrollView = (props: Props) => {
   }));
 
   if (children) {
+    const scrollView = (
+      <ScrollView
+        scrollEventThrottle={16}
+        decelerationRate={'fast'}
+        {...others}
+        horizontal={horizontal}
+        scrollEnabled={scrollEnabled}
+        onContentSizeChange={_onContentSizeChange}
+        onLayout={_onLayout}
+        onScroll={onScroll}
+        // @ts-expect-error
+        ref={scrollViewRef}
+      >
+        {children}
+      </ScrollView>
+    );
+
     return (
-      <GestureHandlerRootView>
-        <ScrollView
-          scrollEventThrottle={16}
-          decelerationRate={'fast'}
-          {...others}
-          horizontal={horizontal}
-          scrollEnabled={scrollEnabled}
-          onContentSizeChange={_onContentSizeChange}
-          onLayout={_onLayout}
-          onScroll={onScroll}
-          // @ts-expect-error
-          ref={scrollViewRef}
-        >
-          {children}
-        </ScrollView>
+      <>
+        {useGestureHandlerRootView ? (
+          <GestureHandlerRootView>
+            {scrollView}
+          </GestureHandlerRootView>
+        ) : (
+          scrollView
+        )}
         <Fader
           visible={showStart}
           position={horizontal ? Fader.position.START : Fader.position.TOP}
@@ -132,7 +148,7 @@ const FadedScrollView = (props: Props) => {
           position={horizontal ? Fader.position.END : Fader.position.BOTTOM}
           {...endFaderProps}
         />
-      </GestureHandlerRootView>
+      </>
     );
   }
 
