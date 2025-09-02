@@ -68,7 +68,7 @@ const GradientScreen = () => {
   }, [children, size, type]);
 
   return (
-    <View>
+    <View padding-page>
       {renderRadioGroup('Select type',
         'type',
         {Rectangle: 'rectangle', Circle: 'circle', Border: 'border'},
@@ -77,7 +77,7 @@ const GradientScreen = () => {
         'children',
         {No: 'none', 'Short text': 'shortText', Text: 'text', Icon: 'icon'},
         {isRow: true, state: children, setState: setChildren})}
-      {renderRadioGroup('Select alignment',
+      {renderRadioGroup('Select children`s alignment',
         'alignment',
         {None: 'none', Center: 'center', CenterH: 'centerH', CenterV: 'centerV'},
         {isRow: true, state: alignment, setState: setAlignment})}
