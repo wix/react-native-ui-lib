@@ -15,6 +15,7 @@ export const BorderRadiusesLiterals /* : IBorderRadiusesLiterals  */ = {
   br40: 12,
   br50: Constants.isIOS ? 15 : 16,
   br60: 20,
+  br70: 24,
   br90: 32,
   br100: 999
 };
