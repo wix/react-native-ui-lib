@@ -25,7 +25,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    resourcePrefix "rnuilib_"
 }
+
+afterEvaluate {
+    android.libraryVariants.all { variant ->
+        def variantName = variant.name.capitalize()
+        
+        tasks.matching { 
+            it.name == "generate${variantName}RFile" 
+        }.configureEach {
+            dependsOn "parse${variantName}LocalResources"
+        }
+    }
+}
+
 
 dependencies {
     implementation 'com.facebook.react:react-native:+'
