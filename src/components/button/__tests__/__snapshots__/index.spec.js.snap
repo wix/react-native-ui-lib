@@ -2292,6 +2292,272 @@ exports[`Button container size should return style for xSmall button 2`] = `
 </View>
 `;
 
+exports[`Button customBackground should render button with custom background element 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
+  onClick={[Function]}
+  onLayout={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "transparent",
+      "borderRadius": 999,
+      "flexDirection": "row",
+      "justifyContent": "center",
+      "minWidth": 90,
+      "opacity": 1,
+      "paddingHorizontal": 20,
+      "paddingVertical": 9.5,
+    }
+  }
+>
+  <View
+    style={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "borderRadius": 999,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        [
+          undefined,
+          undefined,
+          undefined,
+          {
+            "flex": 1,
+          },
+          undefined,
+          {},
+          {},
+          {},
+          {
+            "backgroundColor": "red",
+          },
+        ]
+      }
+    />
+  </View>
+  <Text
+    fsTagName="unmask"
+    numberOfLines={1}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "color": "#20303C",
+          "writingDirection": "ltr",
+        },
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        [
+          {
+            "backgroundColor": "transparent",
+            "flexDirection": "row",
+            "fontFamily": "System",
+            "fontSize": 16,
+            "fontWeight": "400",
+            "lineHeight": 24,
+          },
+          {
+            "color": "#FFFFFF",
+          },
+          undefined,
+          undefined,
+          undefined,
+        ],
+      ]
+    }
+    testID="undefined.label"
+  >
+    Button
+  </Text>
+</View>
+`;
+
+exports[`Button customBackground should render custom background element with transparent backgroundColor when provided 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  hitSlop={
+    {
+      "bottom": 7.5,
+      "left": 0,
+      "right": 0,
+      "top": 7.5,
+    }
+  }
+  onClick={[Function]}
+  onLayout={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "transparent",
+      "borderRadius": 999,
+      "flexDirection": "row",
+      "justifyContent": "center",
+      "minWidth": 90,
+      "opacity": 1,
+      "paddingHorizontal": 20,
+      "paddingVertical": 9.5,
+    }
+  }
+>
+  <View
+    style={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "borderRadius": 999,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        [
+          undefined,
+          undefined,
+          undefined,
+          {
+            "flex": 1,
+          },
+          undefined,
+          {},
+          {},
+          {},
+          {
+            "backgroundColor": "blue",
+          },
+        ]
+      }
+    />
+  </View>
+  <Text
+    fsTagName="unmask"
+    numberOfLines={1}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "color": "#20303C",
+          "writingDirection": "ltr",
+        },
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        [
+          {
+            "backgroundColor": "transparent",
+            "flexDirection": "row",
+            "fontFamily": "System",
+            "fontSize": 16,
+            "fontWeight": "400",
+            "lineHeight": 24,
+          },
+          {
+            "color": "#FFFFFF",
+          },
+          undefined,
+          undefined,
+          undefined,
+        ],
+      ]
+    }
+    testID="undefined.label"
+  >
+    Button
+  </Text>
+</View>
+`;
+
 exports[`Button hyperlink should render button as a hyperlink 1`] = `
 <View
   accessibilityRole="button"

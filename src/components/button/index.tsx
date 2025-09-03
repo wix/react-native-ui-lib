@@ -1,6 +1,15 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, TextStyle, StyleProp} from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  LayoutAnimation,
+  LayoutChangeEvent,
+  ImageStyle,
+  TextStyle,
+  StyleProp,
+  View
+} from 'react-native';
 import {asBaseComponent, forwardRef, Constants} from '../../commons/new';
 import {Colors, Typography, BorderRadiuses} from 'style';
 import TouchableOpacity from '../touchableOpacity';
@@ -362,6 +371,15 @@ class Button extends PureComponent<Props, ButtonState> {
     };
   }
 
+  renderCustomBackground() {
+    const {customBackground} = this.props;
+
+    if (customBackground) {
+      const borderRadiusStyle = this.getBorderRadiusStyle();
+      return <View style={[this.styles.backgroundElement, borderRadiusStyle]}>{customBackground}</View>;
+    }
+  }
+
   render() {
     const {
       onPress,
@@ -372,11 +390,12 @@ class Button extends PureComponent<Props, ButtonState> {
       modifiers,
       forwardedRef,
       hitSlop: hitSlopProp,
+      customBackground,
       ...others
     } = this.props;
     const shadowStyle = this.getShadowStyle();
     const {margins, paddings} = modifiers;
-    const backgroundColor = this.getBackgroundColor();
+    const backgroundColor = customBackground ? 'transparent' : this.getBackgroundColor();
     const outlineStyle = this.getOutlineStyle();
     const containerSizeStyle = this.getContainerSizeStyle();
     const borderRadiusStyle = this.getBorderRadiusStyle();
@@ -408,6 +427,7 @@ class Button extends PureComponent<Props, ButtonState> {
         {...others}
         ref={forwardedRef}
       >
+        {this.renderCustomBackground()}
         {this.props.children}
         {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
         {this.props.iconOnRight ? this.renderIcon() : this.renderLabel()}
@@ -440,6 +460,14 @@ function createStyles() {
       backgroundColor: 'transparent',
       flexDirection: 'row',
       ...Typography.text70
+    },
+    backgroundElement: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      overflow: 'hidden'
     }
   });
 }
