@@ -41,6 +41,7 @@ afterEvaluate {
 }
 
 
+
 dependencies {
     implementation 'com.facebook.react:react-native:+'
 }
