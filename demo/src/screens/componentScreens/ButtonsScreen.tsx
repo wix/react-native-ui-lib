@@ -1,6 +1,17 @@
 import React, {Component} from 'react';
-import {ScrollView, StyleSheet, Alert, Image} from 'react-native';
-import {Text, View, Assets, Constants, Button, Colors, Typography, ButtonProps} from 'react-native-ui-lib';
+import {ScrollView, StyleSheet, Alert} from 'react-native';
+import {
+  Text,
+  View,
+  Assets,
+  Constants,
+  Button,
+  Colors,
+  Typography,
+  ButtonProps,
+  Incubator,
+  Image
+} from 'react-native-ui-lib';
 
 const ButtonSpace = 20;
 const plusIcon = Assets.getAssetByPath('icons.demo.plus');
@@ -267,6 +278,31 @@ export default class ButtonsScreen extends Component {
             <Button label="hyperlink button" hyperlink style={{marginBottom: ButtonSpace}}/>
 
             <Button label="Icon on right" iconSource={plusIcon} iconOnRight/>
+
+            <Text style={styles.header}>Custom Backgrounds</Text>
+            <Button
+              label="Gradient Background"
+              customBackground={
+                <Incubator.Gradient
+                  colors={[Colors.$backgroundPrimaryHeavy, Colors.$backgroundPrimaryMedium]}
+                  type="rectangle"
+                  width={200}
+                  height={50}
+                />
+              }
+              style={{marginBottom: ButtonSpace}}
+            />
+            <Button
+              label="Image Background"
+              customBackground={
+                <Image
+                  source={{uri: 'https://picsum.photos/300'}}
+                  style={{width: 200, height: 50}}
+                  resizeMode="cover"
+                />
+              }
+              style={{marginBottom: ButtonSpace}}
+            />
           </View>
 
           <View marginT-20>
