@@ -2334,7 +2334,7 @@ exports[`Button customBackground should render button with custom background ele
   style={
     {
       "alignItems": "center",
-      "backgroundColor": "transparent",
+      "backgroundColor": undefined,
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2346,19 +2346,31 @@ exports[`Button customBackground should render button with custom background ele
   }
 >
   <View
+    absF={true}
     style={
       [
+        undefined,
+        undefined,
+        undefined,
+        undefined,
         {
           "bottom": 0,
           "left": 0,
-          "overflow": "hidden",
           "position": "absolute",
           "right": 0,
           "top": 0,
         },
-        {
-          "borderRadius": 999,
-        },
+        {},
+        {},
+        {},
+        [
+          {
+            "overflow": "hidden",
+          },
+          {
+            "borderRadius": 999,
+          },
+        ],
       ]
     }
   >
@@ -2467,7 +2479,7 @@ exports[`Button customBackground should render custom background element with tr
   style={
     {
       "alignItems": "center",
-      "backgroundColor": "transparent",
+      "backgroundColor": undefined,
       "borderRadius": 999,
       "flexDirection": "row",
       "justifyContent": "center",
@@ -2479,19 +2491,31 @@ exports[`Button customBackground should render custom background element with tr
   }
 >
   <View
+    absF={true}
     style={
       [
+        undefined,
+        undefined,
+        undefined,
+        undefined,
         {
           "bottom": 0,
           "left": 0,
-          "overflow": "hidden",
           "position": "absolute",
           "right": 0,
           "top": 0,
         },
-        {
-          "borderRadius": 999,
-        },
+        {},
+        {},
+        {},
+        [
+          {
+            "overflow": "hidden",
+          },
+          {
+            "borderRadius": 999,
+          },
+        ],
       ]
     }
   >

@@ -296,12 +296,15 @@ export default class ButtonsScreen extends Component {
               label="Image Background"
               customBackground={
                 <Image
-                  source={{uri: 'https://picsum.photos/300'}}
+                  source={{
+                    uri: 'https://images.pexels.com/photos/748837/pexels-photo-748837.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+                  }}
                   style={{width: 200, height: 50}}
                   resizeMode="cover"
                 />
               }
               style={{marginBottom: ButtonSpace}}
+              $textNeutralHeavy
             />
           </View>
 

@@ -1,18 +1,10 @@
 import _ from 'lodash';
 import React, {PureComponent} from 'react';
-import {
-  Platform,
-  StyleSheet,
-  LayoutAnimation,
-  LayoutChangeEvent,
-  ImageStyle,
-  TextStyle,
-  StyleProp,
-  View
-} from 'react-native';
+import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, TextStyle, StyleProp} from 'react-native';
 import {asBaseComponent, forwardRef, Constants} from '../../commons/new';
 import {Colors, Typography, BorderRadiuses} from 'style';
 import TouchableOpacity from '../touchableOpacity';
+import View from '../view';
 import type {Dictionary, ComponentStatics} from '../../typings/common';
 import Text from '../text';
 import Icon from '../icon';
@@ -376,7 +368,11 @@ class Button extends PureComponent<Props, ButtonState> {
 
     if (customBackground) {
       const borderRadiusStyle = this.getBorderRadiusStyle();
-      return <View style={[this.styles.backgroundElement, borderRadiusStyle]}>{customBackground}</View>;
+      return (
+        <View absF style={[this.styles.backgroundElement, borderRadiusStyle]}>
+          {customBackground}
+        </View>
+      );
     }
   }
 
@@ -395,7 +391,7 @@ class Button extends PureComponent<Props, ButtonState> {
     } = this.props;
     const shadowStyle = this.getShadowStyle();
     const {margins, paddings} = modifiers;
-    const backgroundColor = customBackground ? 'transparent' : this.getBackgroundColor();
+    const backgroundColor = customBackground ? undefined : this.getBackgroundColor();
     const outlineStyle = this.getOutlineStyle();
     const containerSizeStyle = this.getContainerSizeStyle();
     const borderRadiusStyle = this.getBorderRadiusStyle();
@@ -462,11 +458,6 @@ function createStyles() {
       ...Typography.text70
     },
     backgroundElement: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
       overflow: 'hidden'
     }
   });
