@@ -199,7 +199,8 @@ export const navigationData = {
         title: 'ExpandableOverlay',
         tags: 'text field expandable input picker',
         screen: 'unicorn.components.IncubatorExpandableOverlayScreen'
-      }
+      },
+      {title: 'Gradient', tags: 'gradient', screen: 'unicorn.components.IncubatorGradientScreen'}
     ]
   },
   Inspirations: {

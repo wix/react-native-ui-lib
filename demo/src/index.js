@@ -247,6 +247,9 @@ module.exports = {
       get IncubatorCalendarScreen() {
         return require('./screens/incubatorScreens/IncubatorCalendarScreen').default;
       },
+      get IncubatorGradient() {
+        return require('./screens/incubatorScreens/IncubatorGradientScreen').default;
+      },
       // realExamples
       get AppleMusic() {
         return require('./screens/realExamples/AppleMusic').default;
