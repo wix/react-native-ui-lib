@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import URL from 'url-parse';
 import Colors from '../style/colors';
-import {Typography} from 'style';
+import {Typography} from '../style';
 
 export function getInitialsTypography(size: number) {
   let typography;
