@@ -1,6 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import Button from '../index';
+import View from '../../view';
 import {Colors, ThemeManager} from '../../../style';
 import {Constants} from '../../../commons';
 
@@ -228,6 +229,20 @@ describe('Button', () => {
 
     it('should return style for round button', () => {
       expect(renderer.create(<Button label="Button" round/>).toJSON()).toMatchSnapshot();
+    });
+  });
+
+  describe('customBackground', () => {
+    it('should render button with custom background element', () => {
+      const CustomBackground = () => <View flex style={{backgroundColor: 'red'}}/>;
+      const tree = renderer.create(<Button label="Button" customBackground={<CustomBackground/>}/>).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+
+    it('should render custom background element with transparent backgroundColor when provided', () => {
+      const CustomBackground = () => <View flex style={{backgroundColor: 'blue'}}/>;
+      const tree = renderer.create(<Button label="Button" backgroundColor="green" customBackground={<CustomBackground/>}/>).toJSON();
+      expect(tree).toMatchSnapshot();
     });
   });
 

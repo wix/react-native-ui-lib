@@ -4,6 +4,7 @@ import {Platform, StyleSheet, LayoutAnimation, LayoutChangeEvent, ImageStyle, Te
 import {asBaseComponent, forwardRef, Constants} from '../../commons/new';
 import {Colors, Typography, BorderRadiuses} from 'style';
 import TouchableOpacity from '../touchableOpacity';
+import View from '../view';
 import type {Dictionary, ComponentStatics} from '../../typings/common';
 import Text from '../text';
 import Icon from '../icon';
@@ -362,6 +363,19 @@ class Button extends PureComponent<Props, ButtonState> {
     };
   }
 
+  renderCustomBackground() {
+    const {customBackground} = this.props;
+
+    if (customBackground) {
+      const borderRadiusStyle = this.getBorderRadiusStyle();
+      return (
+        <View absF style={[this.styles.backgroundElement, borderRadiusStyle]}>
+          {customBackground}
+        </View>
+      );
+    }
+  }
+
   render() {
     const {
       onPress,
@@ -372,11 +386,12 @@ class Button extends PureComponent<Props, ButtonState> {
       modifiers,
       forwardedRef,
       hitSlop: hitSlopProp,
+      customBackground,
       ...others
     } = this.props;
     const shadowStyle = this.getShadowStyle();
     const {margins, paddings} = modifiers;
-    const backgroundColor = this.getBackgroundColor();
+    const backgroundColor = customBackground ? undefined : this.getBackgroundColor();
     const outlineStyle = this.getOutlineStyle();
     const containerSizeStyle = this.getContainerSizeStyle();
     const borderRadiusStyle = this.getBorderRadiusStyle();
@@ -408,6 +423,7 @@ class Button extends PureComponent<Props, ButtonState> {
         {...others}
         ref={forwardedRef}
       >
+        {this.renderCustomBackground()}
         {this.props.children}
         {this.props.iconOnRight ? this.renderLabel() : this.renderIcon()}
         {this.props.iconOnRight ? this.renderIcon() : this.renderLabel()}
@@ -440,6 +456,9 @@ function createStyles() {
       backgroundColor: 'transparent',
       flexDirection: 'row',
       ...Typography.text70
+    },
+    backgroundElement: {
+      overflow: 'hidden'
     }
   });
 }
