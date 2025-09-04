@@ -1,11 +1,11 @@
-import {ComponentProps} from '../../testkit/new/Component.driver';
+import {ComponentDriverOptions, ComponentProps} from '../../testkit/new/Component.driver';
 import {TextFieldDriver} from '../textField/TextField.driver.new';
 import {ModalDriver} from '../modal/Modal.driver.new';
-import {DialogDriver} from '../../incubator/dialog/Dialog.driver.new';
+import {DialogDriver} from '../dialog/Dialog.driver.new';
 import {ButtonDriver} from '../button/Button.driver.new';
 import {ExpandableOverlayDriver} from '../../incubator/expandableOverlay/ExpandableOverlay.driver';
 
-export const PickerDriver = (props: ComponentProps, useDialog: boolean) => {
+export const PickerDriver = (props: ComponentProps, useDialog: boolean, options?: ComponentDriverOptions) => {
   const expandableOverlayDriver = ExpandableOverlayDriver({
     renderTree: props.renderTree,
     testID: props.testID
@@ -14,7 +14,7 @@ export const PickerDriver = (props: ComponentProps, useDialog: boolean) => {
   const textFieldDriver = TextFieldDriver({
     renderTree: props.renderTree,
     testID: `${props.testID}.input`
-  });
+  }, options);
   const modalDriver = ModalDriver({
     renderTree: props.renderTree,
     testID: `${props.testID}.overlay`

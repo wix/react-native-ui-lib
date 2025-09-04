@@ -57,7 +57,7 @@
     }
 }
 
--(void)setRootView:(RCTRootView*)rootView
+-(void)setRootView:(UIView*)rootView
 {
     if(_rootView != nil)
     {
