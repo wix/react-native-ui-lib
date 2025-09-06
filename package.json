@@ -1,7 +1,7 @@
 {
   "name": "react-native-ui-lib",
   "version": "7.0.0",
-  "main": "src/index.ts",
+  "main": "src/index.js",
   "types": "src/index.d.ts",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
   "homepage": "https://github.com/wix/react-native-ui-lib",
@@ -14,6 +14,7 @@
     "url": "https://github.com/wix/react-native-ui-lib"
   },
   "scripts": {
+    "postinstall": "npm run build:helpers",
     "start": "watchman watch-del-all && react-native start",
     "start:web": "npm --prefix webDemo run start",
     "ios": "react-native run-ios",
@@ -28,6 +29,7 @@
     "xcode": "xed ios",
     "build:dev": "tsc --p tsconfig.dev.json",
     "build": "node scripts/build/build.js",
+    "build:helpers": "node scripts/build/buildHelpers.js",
     "build:local": "./scripts/build/createLocalPackage.sh",
     "pre-push": "npm run build:dev && npm run test",
     "docs:deploy": "./scripts/docs/deployDocs.sh",
@@ -127,7 +129,7 @@
     "react-test-renderer": "18.2.0",
     "reassure": "^0.4.1",
     "shell-utils": "^1.0.10",
-    "typescript": "5.0.4"
+    "typescript": "^5.0.4"
   },
   "peerDependencies": {
     "react": ">=17.0.1",

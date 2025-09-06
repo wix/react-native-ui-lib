@@ -1,0 +1,34 @@
+import { ComponentProps } from '../../testkit';
+export declare const ButtonDriver: (props: ComponentProps) => {
+    press: () => void;
+    hasOnPress: () => boolean;
+    onPressIn: () => void;
+    hasOnPressIn: () => boolean;
+    onPressOut: () => void;
+    hasOnPressOut: () => boolean;
+    onLongPress: () => void;
+    hasOnLongPress: () => boolean;
+    getElement: () => import("react-test-renderer").ReactTestInstance;
+    queryElement: () => import("react-test-renderer").ReactTestInstance | undefined;
+    exists: () => boolean;
+    getStyle: () => any;
+    getLabel: () => {
+        getText: () => string | (string | import("react-test-renderer").ReactTestInstance)[];
+        getStyle: () => import("react-native").TextStyle;
+        press: () => void;
+        hasOnPress: () => boolean;
+        onPressIn: () => void;
+        hasOnPressIn: () => boolean;
+        onPressOut: () => void;
+        hasOnPressOut: () => boolean;
+        onLongPress: () => void;
+        hasOnLongPress: () => boolean;
+        getElement: () => import("react-test-renderer").ReactTestInstance;
+        queryElement: () => import("react-test-renderer").ReactTestInstance | undefined;
+        exists: () => boolean;
+    };
+    getLabelStyle: () => import("react-native").TextStyle;
+    getIconStyle: () => any;
+    getIcon: () => import("../../testkit/new/Component.driver").ComponentDriverResult;
+    isDisabled: () => boolean;
+};

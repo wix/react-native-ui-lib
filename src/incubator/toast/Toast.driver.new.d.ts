@@ -1,0 +1,54 @@
+import { ComponentProps } from '../../testkit/new/Component.driver';
+export declare const ToastDriver: (props: ComponentProps) => {
+    getMessage: () => {
+        getText: () => string | (string | import("react-test-renderer").ReactTestInstance)[];
+        getStyle: () => import("react-native/types").TextStyle;
+        press: () => void;
+        hasOnPress: () => boolean;
+        onPressIn: () => void;
+        hasOnPressIn: () => boolean;
+        onPressOut: () => void;
+        hasOnPressOut: () => boolean;
+        onLongPress: () => void;
+        hasOnLongPress: () => boolean;
+        getElement: () => import("react-test-renderer").ReactTestInstance;
+        queryElement: () => import("react-test-renderer").ReactTestInstance | undefined;
+        exists: () => boolean;
+    };
+    getAction: () => {
+        press: () => void;
+        hasOnPress: () => boolean;
+        onPressIn: () => void;
+        hasOnPressIn: () => boolean;
+        onPressOut: () => void;
+        hasOnPressOut: () => boolean;
+        onLongPress: () => void;
+        hasOnLongPress: () => boolean;
+        getElement: () => import("react-test-renderer").ReactTestInstance;
+        queryElement: () => import("react-test-renderer").ReactTestInstance | undefined;
+        exists: () => boolean;
+        getStyle: () => any;
+        getLabel: () => {
+            getText: () => string | (string | import("react-test-renderer").ReactTestInstance)[];
+            getStyle: () => import("react-native/types").TextStyle;
+            press: () => void;
+            hasOnPress: () => boolean;
+            onPressIn: () => void;
+            hasOnPressIn: () => boolean;
+            onPressOut: () => void;
+            hasOnPressOut: () => boolean;
+            onLongPress: () => void;
+            hasOnLongPress: () => boolean;
+            getElement: () => import("react-test-renderer").ReactTestInstance;
+            queryElement: () => import("react-test-renderer").ReactTestInstance | undefined;
+            exists: () => boolean;
+        };
+        getLabelStyle: () => import("react-native/types").TextStyle;
+        getIconStyle: () => any;
+        getIcon: () => import("../../testkit/new/Component.driver").ComponentDriverResult;
+        isDisabled: () => boolean;
+    };
+    getElement: () => import("react-test-renderer").ReactTestInstance;
+    queryElement: () => import("react-test-renderer").ReactTestInstance | undefined;
+    exists: () => boolean;
+};

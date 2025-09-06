@@ -1,0 +1,114 @@
+import React from 'react';
+import { TextFieldProps, ValidationMessagePosition, FieldContextType, TextFieldMethods, TextFieldRef, Validator, ValidationMessagePositionType, MandatoryIndication, Presets } from './types';
+import TextFieldValidators from './validators';
+interface StaticMembers {
+    validationMessagePositions: typeof ValidationMessagePosition;
+    presets: typeof Presets;
+}
+export { TextFieldProps, FieldContextType, StaticMembers as TextFieldStaticMembers, TextFieldMethods, TextFieldRef, ValidationMessagePosition as TextFieldValidationMessagePosition, Validator as TextFieldValidator, ValidationMessagePositionType as TextFieldValidationMessagePositionType, MandatoryIndication as TextFieldMandatoryIndication, TextFieldValidators };
+declare const _default: React.ForwardRefExoticComponent<((Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & Partial<Record<"padding" | "paddingL" | "paddingT" | "paddingR" | "paddingB" | "paddingH" | "paddingV", boolean>> & Partial<Record<"text10" | "text20" | "text30" | "text40" | "text50" | "text60" | "text65" | "text70" | "text80" | "text90" | "text100" | "text10T" | "text10L" | "text10R" | "text10M" | "text10BO" | "text10H" | "text10BL" | "text20T" | "text20L" | "text20R" | "text20M" | "text20BO" | "text20H" | "text20BL" | "text30T" | "text30L" | "text30R" | "text30M" | "text30BO" | "text30H" | "text30BL" | "text40T" | "text40L" | "text40R" | "text40M" | "text40BO" | "text40H" | "text40BL" | "text50T" | "text50L" | "text50R" | "text50M" | "text50BO" | "text50H" | "text50BL" | "text60T" | "text60L" | "text60R" | "text60M" | "text60BO" | "text60H" | "text60BL" | "text65T" | "text65L" | "text65R" | "text65M" | "text65BO" | "text65H" | "text65BL" | "text70T" | "text70L" | "text70R" | "text70M" | "text70BO" | "text70H" | "text70BL" | "text80T" | "text80L" | "text80R" | "text80M" | "text80BO" | "text80H" | "text80BL" | "text90T" | "text90L" | "text90R" | "text90M" | "text90BO" | "text90H" | "text90BL" | "text100T" | "text100L" | "text100R" | "text100M" | "text100BO" | "text100H" | "text100BL", boolean>> & Partial<Record<"transparent" | "black" | "white" | "dark" | "$backgroundDefault" | "$backgroundElevated" | "$backgroundElevatedLight" | "$backgroundNeutralHeavy" | "$backgroundNeutralIdle" | "$backgroundNeutralMedium" | "$backgroundNeutral" | "$backgroundNeutralLight" | "$backgroundPrimaryHeavy" | "$backgroundPrimaryMedium" | "$backgroundPrimaryLight" | "$backgroundGeneralHeavy" | "$backgroundGeneralMedium" | "$backgroundGeneralLight" | "$backgroundSuccessHeavy" | "$backgroundSuccessLight" | "$backgroundWarningHeavy" | "$backgroundWarningLight" | "$backgroundMajorLight" | "$backgroundMajorHeavy" | "$backgroundDangerHeavy" | "$backgroundDangerLight" | "$backgroundDisabled" | "$backgroundDark" | "$backgroundDarkElevated" | "$backgroundDarkActive" | "$backgroundInverted" | "$textDisabled" | "$textDefault" | "$textNeutralHeavy" | "$textNeutral" | "$textNeutralLight" | "$textDefaultLight" | "$textPrimary" | "$textGeneral" | "$textSuccess" | "$textSuccessLight" | "$textMajor" | "$textDanger" | "$textDangerLight" | "$iconDefault" | "$iconNeutral" | "$iconDefaultLight" | "$iconPrimary" | "$iconPrimaryLight" | "$iconGeneral" | "$iconGeneralLight" | "$iconSuccess" | "$iconSuccessLight" | "$iconMajor" | "$iconDanger" | "$iconDangerLight" | "$iconDisabled" | "$outlineDefault" | "$outlineDisabled" | "$outlineDisabledHeavy" | "$outlineNeutral" | "$outlineNeutralHeavy" | "$outlinePrimary" | "$outlinePrimaryMedium" | "$outlineGeneral" | "$outlineWarning" | "$outlineDanger" | "$outlineInverted" | "$black" | "$white" | "grey1" | "grey5" | "grey10" | "grey20" | "grey30" | "grey40" | "grey50" | "grey60" | "grey70" | "grey80" | "blue1" | "blue5" | "blue10" | "blue20" | "blue30" | "blue40" | "blue50" | "blue60" | "blue70" | "blue80" | "cyan10" | "cyan20" | "cyan30" | "cyan40" | "cyan50" | "cyan60" | "cyan70" | "cyan80" | "green1" | "green5" | "green10" | "green20" | "green30" | "green40" | "green50" | "green60" | "green70" | "green80" | "yellow1" | "yellow5" | "yellow10" | "yellow20" | "yellow30" | "yellow40" | "yellow50" | "yellow60" | "yellow70" | "yellow80" | "orange1" | "orange5" | "orange10" | "orange20" | "orange30" | "orange40" | "orange50" | "orange60" | "orange70" | "orange80" | "red1" | "red5" | "red10" | "red20" | "red30" | "red40" | "red50" | "red60" | "red70" | "red80" | "purple1" | "purple5" | "purple10" | "purple20" | "purple30" | "purple40" | "purple50" | "purple60" | "purple70" | "purple80" | "violet1" | "violet5" | "violet10" | "violet20" | "violet30" | "violet40" | "violet50" | "violet60" | "violet70" | "violet80", boolean>> & import("./types").InputProps & import("./types").LabelProps & Omit<import("./types").FloatingPlaceholderProps, "testID"> & MandatoryIndication & Omit<import("./types").ClearButtonProps, "testID" | "onChangeText"> & import("./types").ValidationMessageProps & Omit<import("./types").CharCounterProps, "testID" | "maxLength"> & {
+    leadingAccessory?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
+    trailingAccessory?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
+    topTrailingAccessory?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
+    bottomAccessory?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
+    showClearButton?: boolean | undefined;
+    helperText?: string | undefined;
+    floatingPlaceholder?: boolean | undefined;
+    floatingPlaceholderStyle?: import("react-native").TextStyle | undefined;
+    validate?: Validator | Validator[] | undefined;
+    validateOnStart?: boolean | undefined;
+    validateOnChange?: boolean | undefined;
+    validationDebounceTime?: number | undefined;
+    validateOnBlur?: boolean | undefined;
+    onValidationFailed?: ((failedValidatorIndex: number) => void) | undefined;
+    onChangeValidity?: ((isValid: boolean) => void) | undefined;
+    validationMessagePosition?: ValidationMessagePositionType | undefined;
+    fieldStyle?: import("react-native").StyleProp<import("react-native").ViewStyle>;
+    dynamicFieldStyle?: ((context: FieldContextType, props: {
+        preset: string | null | undefined;
+    }) => import("react-native").StyleProp<import("react-native").ViewStyle>) | undefined;
+    containerProps?: Omit<import("../view").ViewProps, "style"> | undefined;
+    containerStyle?: import("react-native").StyleProp<import("react-native").ViewStyle>;
+    preset?: string | null | undefined;
+    centered?: boolean | undefined;
+    innerFlexBehavior?: boolean | undefined;
+}) | Omit<Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & Partial<Record<"padding" | "paddingL" | "paddingT" | "paddingR" | "paddingB" | "paddingH" | "paddingV", boolean>> & import("../../commons/modifiers").CustomModifier & import("./types").InputProps & import("./types").LabelProps & Omit<import("./types").FloatingPlaceholderProps, "testID"> & MandatoryIndication & Omit<import("./types").ClearButtonProps, "testID" | "onChangeText"> & import("./types").ValidationMessageProps & Omit<import("./types").CharCounterProps, "testID" | "maxLength"> & {
+    leadingAccessory?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
+    trailingAccessory?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
+    topTrailingAccessory?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
+    bottomAccessory?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
+    showClearButton?: boolean | undefined;
+    helperText?: string | undefined;
+    floatingPlaceholder?: boolean | undefined;
+    floatingPlaceholderStyle?: import("react-native").TextStyle | undefined;
+    validate?: Validator | Validator[] | undefined;
+    validateOnStart?: boolean | undefined;
+    validateOnChange?: boolean | undefined;
+    validationDebounceTime?: number | undefined;
+    validateOnBlur?: boolean | undefined;
+    onValidationFailed?: ((failedValidatorIndex: number) => void) | undefined;
+    onChangeValidity?: ((isValid: boolean) => void) | undefined;
+    validationMessagePosition?: ValidationMessagePositionType | undefined;
+    fieldStyle?: import("react-native").StyleProp<import("react-native").ViewStyle>;
+    dynamicFieldStyle?: ((context: FieldContextType, props: {
+        preset: string | null | undefined;
+    }) => import("react-native").StyleProp<import("react-native").ViewStyle>) | undefined;
+    containerProps?: Omit<import("../view").ViewProps, "style"> | undefined;
+    containerStyle?: import("react-native").StyleProp<import("react-native").ViewStyle>;
+    preset?: string | null | undefined;
+    centered?: boolean | undefined;
+    innerFlexBehavior?: boolean | undefined;
+}, "ref"> | Omit<Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & Partial<Record<"padding" | "paddingL" | "paddingT" | "paddingR" | "paddingB" | "paddingH" | "paddingV", boolean>> & import("../../commons/modifiers").CustomModifier & Partial<Record<"transparent" | "black" | "white" | "dark" | "$backgroundDefault" | "$backgroundElevated" | "$backgroundElevatedLight" | "$backgroundNeutralHeavy" | "$backgroundNeutralIdle" | "$backgroundNeutralMedium" | "$backgroundNeutral" | "$backgroundNeutralLight" | "$backgroundPrimaryHeavy" | "$backgroundPrimaryMedium" | "$backgroundPrimaryLight" | "$backgroundGeneralHeavy" | "$backgroundGeneralMedium" | "$backgroundGeneralLight" | "$backgroundSuccessHeavy" | "$backgroundSuccessLight" | "$backgroundWarningHeavy" | "$backgroundWarningLight" | "$backgroundMajorLight" | "$backgroundMajorHeavy" | "$backgroundDangerHeavy" | "$backgroundDangerLight" | "$backgroundDisabled" | "$backgroundDark" | "$backgroundDarkElevated" | "$backgroundDarkActive" | "$backgroundInverted" | "$textDisabled" | "$textDefault" | "$textNeutralHeavy" | "$textNeutral" | "$textNeutralLight" | "$textDefaultLight" | "$textPrimary" | "$textGeneral" | "$textSuccess" | "$textSuccessLight" | "$textMajor" | "$textDanger" | "$textDangerLight" | "$iconDefault" | "$iconNeutral" | "$iconDefaultLight" | "$iconPrimary" | "$iconPrimaryLight" | "$iconGeneral" | "$iconGeneralLight" | "$iconSuccess" | "$iconSuccessLight" | "$iconMajor" | "$iconDanger" | "$iconDangerLight" | "$iconDisabled" | "$outlineDefault" | "$outlineDisabled" | "$outlineDisabledHeavy" | "$outlineNeutral" | "$outlineNeutralHeavy" | "$outlinePrimary" | "$outlinePrimaryMedium" | "$outlineGeneral" | "$outlineWarning" | "$outlineDanger" | "$outlineInverted" | "$black" | "$white" | "grey1" | "grey5" | "grey10" | "grey20" | "grey30" | "grey40" | "grey50" | "grey60" | "grey70" | "grey80" | "blue1" | "blue5" | "blue10" | "blue20" | "blue30" | "blue40" | "blue50" | "blue60" | "blue70" | "blue80" | "cyan10" | "cyan20" | "cyan30" | "cyan40" | "cyan50" | "cyan60" | "cyan70" | "cyan80" | "green1" | "green5" | "green10" | "green20" | "green30" | "green40" | "green50" | "green60" | "green70" | "green80" | "yellow1" | "yellow5" | "yellow10" | "yellow20" | "yellow30" | "yellow40" | "yellow50" | "yellow60" | "yellow70" | "yellow80" | "orange1" | "orange5" | "orange10" | "orange20" | "orange30" | "orange40" | "orange50" | "orange60" | "orange70" | "orange80" | "red1" | "red5" | "red10" | "red20" | "red30" | "red40" | "red50" | "red60" | "red70" | "red80" | "purple1" | "purple5" | "purple10" | "purple20" | "purple30" | "purple40" | "purple50" | "purple60" | "purple70" | "purple80" | "violet1" | "violet5" | "violet10" | "violet20" | "violet30" | "violet40" | "violet50" | "violet60" | "violet70" | "violet80", boolean>> & import("./types").InputProps & import("./types").LabelProps & Omit<import("./types").FloatingPlaceholderProps, "testID"> & MandatoryIndication & Omit<import("./types").ClearButtonProps, "testID" | "onChangeText"> & import("./types").ValidationMessageProps & Omit<import("./types").CharCounterProps, "testID" | "maxLength"> & {
+    leadingAccessory?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
+    trailingAccessory?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
+    topTrailingAccessory?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
+    bottomAccessory?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
+    showClearButton?: boolean | undefined;
+    helperText?: string | undefined;
+    floatingPlaceholder?: boolean | undefined;
+    floatingPlaceholderStyle?: import("react-native").TextStyle | undefined;
+    validate?: Validator | Validator[] | undefined;
+    validateOnStart?: boolean | undefined;
+    validateOnChange?: boolean | undefined;
+    validationDebounceTime?: number | undefined;
+    validateOnBlur?: boolean | undefined;
+    onValidationFailed?: ((failedValidatorIndex: number) => void) | undefined;
+    onChangeValidity?: ((isValid: boolean) => void) | undefined;
+    validationMessagePosition?: ValidationMessagePositionType | undefined;
+    fieldStyle?: import("react-native").StyleProp<import("react-native").ViewStyle>;
+    dynamicFieldStyle?: ((context: FieldContextType, props: {
+        preset: string | null | undefined;
+    }) => import("react-native").StyleProp<import("react-native").ViewStyle>) | undefined;
+    containerProps?: Omit<import("../view").ViewProps, "style"> | undefined;
+    containerStyle?: import("react-native").StyleProp<import("react-native").ViewStyle>;
+    preset?: string | null | undefined;
+    centered?: boolean | undefined;
+    innerFlexBehavior?: boolean | undefined;
+}, "ref"> | Omit<Partial<Record<"margin" | "marginL" | "marginT" | "marginR" | "marginB" | "marginH" | "marginV", boolean>> & Partial<Record<"padding" | "paddingL" | "paddingT" | "paddingR" | "paddingB" | "paddingH" | "paddingV", boolean>> & Partial<Record<"text10" | "text20" | "text30" | "text40" | "text50" | "text60" | "text65" | "text70" | "text80" | "text90" | "text100" | "text10T" | "text10L" | "text10R" | "text10M" | "text10BO" | "text10H" | "text10BL" | "text20T" | "text20L" | "text20R" | "text20M" | "text20BO" | "text20H" | "text20BL" | "text30T" | "text30L" | "text30R" | "text30M" | "text30BO" | "text30H" | "text30BL" | "text40T" | "text40L" | "text40R" | "text40M" | "text40BO" | "text40H" | "text40BL" | "text50T" | "text50L" | "text50R" | "text50M" | "text50BO" | "text50H" | "text50BL" | "text60T" | "text60L" | "text60R" | "text60M" | "text60BO" | "text60H" | "text60BL" | "text65T" | "text65L" | "text65R" | "text65M" | "text65BO" | "text65H" | "text65BL" | "text70T" | "text70L" | "text70R" | "text70M" | "text70BO" | "text70H" | "text70BL" | "text80T" | "text80L" | "text80R" | "text80M" | "text80BO" | "text80H" | "text80BL" | "text90T" | "text90L" | "text90R" | "text90M" | "text90BO" | "text90H" | "text90BL" | "text100T" | "text100L" | "text100R" | "text100M" | "text100BO" | "text100H" | "text100BL", boolean>> & import("../../commons/modifiers").CustomModifier & import("./types").InputProps & import("./types").LabelProps & Omit<import("./types").FloatingPlaceholderProps, "testID"> & MandatoryIndication & Omit<import("./types").ClearButtonProps, "testID" | "onChangeText"> & import("./types").ValidationMessageProps & Omit<import("./types").CharCounterProps, "testID" | "maxLength"> & {
+    leadingAccessory?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
+    trailingAccessory?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
+    topTrailingAccessory?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
+    bottomAccessory?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
+    showClearButton?: boolean | undefined;
+    helperText?: string | undefined;
+    floatingPlaceholder?: boolean | undefined;
+    floatingPlaceholderStyle?: import("react-native").TextStyle | undefined;
+    validate?: Validator | Validator[] | undefined;
+    validateOnStart?: boolean | undefined;
+    validateOnChange?: boolean | undefined;
+    validationDebounceTime?: number | undefined;
+    validateOnBlur?: boolean | undefined;
+    onValidationFailed?: ((failedValidatorIndex: number) => void) | undefined;
+    onChangeValidity?: ((isValid: boolean) => void) | undefined;
+    validationMessagePosition?: ValidationMessagePositionType | undefined;
+    fieldStyle?: import("react-native").StyleProp<import("react-native").ViewStyle>;
+    dynamicFieldStyle?: ((context: FieldContextType, props: {
+        preset: string | null | undefined;
+    }) => import("react-native").StyleProp<import("react-native").ViewStyle>) | undefined;
+    containerProps?: Omit<import("../view").ViewProps, "style"> | undefined;
+    containerStyle?: import("react-native").StyleProp<import("react-native").ViewStyle>;
+    preset?: string | null | undefined;
+    centered?: boolean | undefined;
+    innerFlexBehavior?: boolean | undefined;
+}, "ref">) & React.RefAttributes<TextFieldRef>> & StaticMembers;
+export default _default;
