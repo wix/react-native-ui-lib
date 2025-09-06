@@ -1,0 +1,44 @@
+import { ComponentProps } from '../../testkit/new/Component.driver';
+export declare const PickerDriver: (props: ComponentProps, useDialog: boolean) => {
+    exists: () => boolean;
+    getValue: () => string | undefined;
+    open: () => void;
+    cancel: () => void;
+    done: () => void;
+    isOpen: () => boolean;
+    dismissDialog: () => void;
+    itemDriver: (testID: string) => {
+        press: () => void;
+        hasOnPress: () => boolean;
+        onPressIn: () => void;
+        hasOnPressIn: () => boolean;
+        onPressOut: () => void;
+        hasOnPressOut: () => boolean;
+        onLongPress: () => void;
+        hasOnLongPress: () => boolean;
+        getElement: () => import("react-test-renderer").ReactTestInstance;
+        queryElement: () => import("react-test-renderer").ReactTestInstance | undefined;
+        exists: () => boolean;
+        getStyle: () => any;
+        getLabel: () => {
+            getText: () => string | (string | import("react-test-renderer").ReactTestInstance)[];
+            getStyle: () => import("react-native/types").TextStyle;
+            press: () => void;
+            hasOnPress: () => boolean;
+            onPressIn: () => void;
+            hasOnPressIn: () => boolean;
+            onPressOut: () => void;
+            hasOnPressOut: () => boolean;
+            onLongPress: () => void;
+            hasOnLongPress: () => boolean;
+            getElement: () => import("react-test-renderer").ReactTestInstance;
+            queryElement: () => import("react-test-renderer").ReactTestInstance | undefined;
+            exists: () => boolean;
+        };
+        getLabelStyle: () => import("react-native/types").TextStyle;
+        getIconStyle: () => any;
+        getIcon: () => import("../../testkit/new/Component.driver").ComponentDriverResult;
+        isDisabled: () => boolean;
+    };
+    selectItem: (testID: string) => void;
+};
