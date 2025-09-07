@@ -4,14 +4,27 @@ const childProcess = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-console.info('## Building helpers directory for React Native UI Lib ##');
+console.info('## Building react-native-ui-lib for Metro bundler ##');
 
 const BABEL_OPTIONS = `--config-file ./src/.babelrc.json --extensions '.ts,.tsx' --ignore "src/**/*.d.ts"`;
 
+const directories = [
+  'src/helpers',
+  'src/commons',
+  'src/style', 
+  'src/services',
+  'src/incubator',
+  'src/hooks',
+  'src/assets',
+  'src/components'
+];
+
 try {
-  // Build helpers directory
-  console.info('## Transpiling helpers directory ##');
-  childProcess.execSync(`./node_modules/.bin/babel src/helpers --out-dir src/helpers ${BABEL_OPTIONS}`, {stdio: 'inherit'});
+  // Build all source directories
+  for (const dir of directories) {
+    console.info(`## Transpiling ${dir} ##`);
+    childProcess.execSync(`./node_modules/.bin/babel ${dir} --out-dir ${dir} ${BABEL_OPTIONS}`, {stdio: 'inherit'});
+  }
 
   // Build main index file
   console.info('## Transpiling main index file ##');
@@ -42,10 +55,10 @@ try {
     console.info('## package.json main entry already correct ##');
   }
 
-  console.info('## ✅ Helpers build complete! ##');
+  console.info('## ✅ Complete build successful! ##');
   console.info('## The library should now work correctly with Metro bundler ##');
 } catch (error) {
-  console.error('## ❌ Helpers build failed ##');
+  console.error('## ❌ Build failed ##');
   console.error(error.message);
   process.exit(1);
 }
