@@ -366,7 +366,8 @@ export function getComponentName(componentDisplayName: string) {
 
 //@ts-ignore
 export function getThemeProps<T extends object>(props: T = this.props, context = this.context, componentDisplayName = ''): T {
-  const componentName = getComponentName(componentDisplayName);
+  //@ts-ignore
+  const componentName = getComponentName.call(this, componentDisplayName);
 
   let themeProps;
   if (_.isFunction(ThemeManager.components[componentName])) {
