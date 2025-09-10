@@ -53,7 +53,7 @@ const WheelPickerItem = <T extends WheelPickerItemValue = number>(props: Interna
     align,
     disableRTL
   } = themeProps;
-  
+
   const selectItem = useCallback(() => onSelect(index), [index]);
   const itemOffset = index * itemHeight;
   const _activeColor = useRef(activeColor.toString());
