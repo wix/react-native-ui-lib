@@ -15,6 +15,7 @@ export interface WheelPickerItemProps<T = WheelPickerItemValue> {
   value: T;
   align?: WheelPickerAlign;
   disableRTL?: boolean;
+  testID?: string;
 }
 
 interface InternalProps<T> extends WheelPickerItemProps<T> {
@@ -53,7 +54,7 @@ const WheelPickerItem = <T extends WheelPickerItemValue = number>(props: Interna
     align,
     disableRTL
   } = themeProps;
-  
+
   const selectItem = useCallback(() => onSelect(index), [index]);
   const itemOffset = index * itemHeight;
   const _activeColor = useRef(activeColor.toString());
