@@ -15,7 +15,6 @@ export interface WheelPickerItemProps<T = WheelPickerItemValue> {
   value: T;
   align?: WheelPickerAlign;
   disableRTL?: boolean;
-  testID?: string;
 }
 
 interface InternalProps<T> extends WheelPickerItemProps<T> {

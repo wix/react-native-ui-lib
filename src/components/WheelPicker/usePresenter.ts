@@ -30,7 +30,7 @@ const usePresenter = <T extends WheelPickerItemValue>({
 
   const extractItemsFromChildren = (): WheelPickerItemProps<T>[] => {
     const items = React.Children.map(children, child => {
-      const childAsType: WheelPickerItemProps<T> = {value: child?.props.value, label: child?.props.label, testID: child?.props.testID};
+      const childAsType: WheelPickerItemProps<T> = {value: child?.props.value, label: child?.props.label};
       return childAsType;
     });
     return items || [];
