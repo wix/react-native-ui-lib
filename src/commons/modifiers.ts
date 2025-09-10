@@ -359,11 +359,15 @@ export function extractComponentProps(component: any, props: Dictionary<any>, ig
   return componentProps;
 }
 
+export function getComponentName(componentDisplayName: string) {
+  //@ts-ignore
+  return componentDisplayName || this.displayName || this.constructor.displayName || this.constructor.name;
+}
+
 //@ts-ignore
 export function getThemeProps<T extends object>(props: T = this.props, context = this.context, componentDisplayName = ''): T {
-  const componentName =
-    //@ts-ignore
-    componentDisplayName || this.displayName || this.constructor.displayName || this.constructor.name;
+  //@ts-ignore
+  const componentName = getComponentName.call(this, componentDisplayName);
 
   let themeProps;
   if (_.isFunction(ThemeManager.components[componentName])) {
