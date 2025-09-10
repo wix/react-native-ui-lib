@@ -8,7 +8,9 @@ export function extractPickerItems(props: PickerProps) {
     // @ts-expect-error handle use PickerItemProps once exist
     value: child?.props.value,
     // @ts-expect-error handle use PickerItemProps once exist
-    label: child?.props.label
+    label: child?.props.label,
+    // @ts-expect-error handle use PickerItemProps once exist
+    testID: child?.props.testID,
   }));
   return items ?? [];
 }
