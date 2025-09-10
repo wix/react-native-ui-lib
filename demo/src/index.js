@@ -1,8 +1,7 @@
-import {UIManager, I18nManager} from 'react-native';
+import {I18nManager} from 'react-native';
 import {navigationData as menuStructure} from './screens/MenuStructure';
 import {loadDemoConfigurations} from './configurations';
 
-UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true); // eslint-disable-line
 I18nManager.allowRTL(true);
 
 module.exports = {
@@ -87,15 +86,6 @@ module.exports = {
       get PageControlScreen() {
         return require('./screens/componentScreens/PageControlScreen').default;
       },
-      get PanDismissibleScreen() {
-        return require('./screens/componentScreens/PanDismissibleScreen').default;
-      },
-      get PanListenerScreen() {
-        return require('./screens/componentScreens/PanListenerScreen').default;
-      },
-      get PanResponderScreen() {
-        return require('./screens/componentScreens/PanResponderScreen').default;
-      },
       get PickerScreen() {
         return require('./screens/componentScreens/PickerScreen').default;
       },
@@ -107,9 +97,6 @@ module.exports = {
       },
       get SegmentedControlScreen() {
         return require('./screens/componentScreens/SegmentedControlScreen').default;
-      },
-      get SharedTransitionScreen() {
-        return require('./screens/componentScreens/SharedTransitionScreen').default;
       },
       get SkeletonViewScreen() {
         return require('./screens/componentScreens/SkeletonViewScreen').default;
@@ -244,15 +231,12 @@ module.exports = {
       get SortableGridList() {
         return require('./screens/componentScreens/SortableGridListScreen').default;
       },
-      // Incubator
       get PanViewScreen() {
-        return require('./screens/incubatorScreens/PanViewScreen').default;
+        return require('./screens/componentScreens/PanViewScreen').default;
       },
+      // Incubator
       get IncubatorSlider() {
         return require('./screens/incubatorScreens/IncubatorSliderScreen').default;
-      },
-      get IncubatorDialog() {
-        return require('./screens/incubatorScreens/IncubatorDialogScreen').default;
       },
       get IncubatorToast() {
         return require('./screens/incubatorScreens/IncubatorToastScreen').default;

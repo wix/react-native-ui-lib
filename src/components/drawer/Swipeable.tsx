@@ -76,7 +76,7 @@ class Swipeable extends Component<Props, State> {
   static defaultProps = {
     friction: 1,
     overshootFriction: 1,
-    useNativeAnimations: false, // issue in iPhone5
+    useNativeAnimations: true,
     fullLeftThreshold: 0.45,
     fullRightThreshold: 0.45
   };

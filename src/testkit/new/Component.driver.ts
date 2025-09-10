@@ -11,11 +11,15 @@ export interface ComponentDriverResult {
   exists: () => boolean;
 }
 
-export const useComponentDriver = (props: ComponentProps): ComponentDriverResult => {
+export type ComponentDriverOptions = {
+  includeHiddenElements?: boolean;
+};
+
+export const useComponentDriver = (props: ComponentProps, options?: ComponentDriverOptions): ComponentDriverResult => {
   const {renderTree, testID} = props;
 
   const getElement = (): ReactTestInstance => {
-    const elements = renderTree.queryAllByTestId(testID);
+    const elements = renderTree.queryAllByTestId(testID, options);
     if (elements.length > 1) {
       throw new Error(`Found more than one element with testID: ${testID}`);
     }
@@ -29,7 +33,7 @@ export const useComponentDriver = (props: ComponentProps): ComponentDriverResult
   };
 
   const queryElement = (): ReactTestInstance => {
-    const elements = renderTree.queryAllByTestId(testID);
+    const elements = renderTree.queryAllByTestId(testID, options);
     if (elements.length > 1) {
       console.warn(`Found more than one element with testID: ${testID}`);
     }

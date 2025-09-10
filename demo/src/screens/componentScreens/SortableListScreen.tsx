@@ -129,7 +129,7 @@ export default SortableListScreen;
 const styles = StyleSheet.create({
   itemContainer: {
     height: 52,
-    borderColor: Colors.$outlineDefault,
+    borderBottomColor: Colors.$outlineDefault,
     borderBottomWidth: 1
   },
   selectedItemContainer: {

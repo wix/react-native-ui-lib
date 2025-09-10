@@ -9,9 +9,9 @@ import View from '../view';
 import TouchableOpacity from '../touchableOpacity';
 import Image from '../image';
 import Text from '../text';
-import {getItemLabel, isItemSelected} from './PickerPresenter';
+import {isItemSelected} from './PickerPresenter';
 import PickerContext from './PickerContext';
-import {PickerItemProps, PickerSingleValue} from './types';
+import {PickerItemProps} from './types';
 
 /**
  * @description: Picker.Item, for configuring the Picker's selectable options
@@ -29,12 +29,8 @@ const PickerItem = (props: PickerItemProps) => {
     testID
   } = props;
   const context = useContext(PickerContext);
-  const {migrate} = context;
   const customRenderItem = props.renderItem || context.renderItem;
-  // @ts-expect-error TODO: fix after removing migrate prop completely
-  const itemValue = !migrate && typeof value === 'object' ? value?.value : value;
-  const isSelected = isItemSelected(itemValue, context.value);
-  const itemLabel = getItemLabel(label, value, props.getItemLabel || context.getItemLabel);
+  const isSelected = isItemSelected(value, context.value);
   const selectedCounter = context.selectionLimit && _.isArray(context.value) && context.value?.length;
   const accessibilityProps = {
     accessibilityState: isSelected ? {selected: true} : undefined,
@@ -65,16 +61,12 @@ const PickerItem = (props: PickerItemProps) => {
   const _onPress = useCallback(async (props: any) => {
     // Using !(await onPress?.(item)) does not work properly when onPress is not sent
     // We have to explicitly state `false` so a synchronous void (undefined) will still work as expected
-    if (onPress && await onPress(context.isMultiMode ? !isSelected : undefined, props) === false) {
+    if (onPress && (await onPress(context.isMultiMode ? !isSelected : undefined, props)) === false) {
       return;
     }
-    if (migrate) {
-      context.onPress(value);
-    } else {
-      // @ts-expect-error TODO: fix after removing migrate prop completely
-      context.onPress(typeof value === 'object' || context.isMultiMode ? value : ({value, label: itemLabel}) as PickerSingleValue);
-    }
-  }, [migrate, value, context.onPress, onPress]);
+    context.onPress(value);
+  },
+  [value, context.onPress, onPress]);
 
   const onSelectedLayout = useCallback((...args: any[]) => {
     _.invoke(context, 'onSelectedLayout', ...args);
@@ -84,7 +76,7 @@ const PickerItem = (props: PickerItemProps) => {
     return (
       <View style={styles.container} flex row spread centerV>
         <Text numberOfLines={1} style={itemLabelStyle}>
-          {itemLabel}
+          {label}
         </Text>
         {selectedIndicator}
       </View>
@@ -102,7 +94,7 @@ const PickerItem = (props: PickerItemProps) => {
       customValue={props.customValue}
       {...accessibilityProps}
     >
-      {customRenderItem ? customRenderItem(value, {...props, isSelected, isItemDisabled}, itemLabel) : _renderItem()}
+      {customRenderItem ? customRenderItem(value, {...props, isSelected, isItemDisabled}, label) : _renderItem()}
     </TouchableOpacity>
   );
 };

@@ -146,7 +146,6 @@ export type ButtonProps = TouchableOpacityProps &
     getActiveBackgroundColor?: (backgroundColor: string, props: any) => string;
     /**
      * should animate layout change
-     * Note?: For Android you must set 'setLayoutAnimationEnabledExperimental(true)' via RN's 'UIManager'
      */
     animateLayout?: boolean;
     /**

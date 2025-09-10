@@ -26,7 +26,6 @@ describe('usePickerLabel hook tests', () => {
     value,
     items,
     getLabel
-    // getItemLabel,
     // accessibilityLabel,
     // accessibilityHint,
     // placeholder
@@ -36,7 +35,6 @@ describe('usePickerLabel hook tests', () => {
         value,
         items,
         getLabel
-        // getItemLabel,
         // accessibilityLabel,
         // accessibilityHint,
         // placeholder
