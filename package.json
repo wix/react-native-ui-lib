@@ -164,7 +164,7 @@
   },
   "packageManager": "yarn@3.4.1",
   "files": [
-    "*.js",
+    "*.js","*.ts",
     "*.d.ts",
     "!scripts",
     "scripts/release/prReleaseNotesCommon.js",
