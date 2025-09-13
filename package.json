@@ -172,7 +172,7 @@
     "src",
     "testkit",
     "ReactNativeUILib.podspec",
-    "!src/**/*.ts",
+    "src/**/*.ts",
     "src/**/*.d.ts",
     "!src/**/*.tsx",
     "!src/**/__tests__",
