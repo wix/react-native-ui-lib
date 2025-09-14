@@ -10728,6 +10728,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-is-edge-to-edge@npm:1.1.7":
+  version: 1.1.7
+  resolution: "react-native-is-edge-to-edge@npm:1.1.7"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 4cdf2b2fb5b131f2015c26d2cb7688b4a0c5f3c8474b1bf0ddfa9eabb0263df440c87262ae8f812a6ecab0d5310df0373bddad4b51f53dabb2ffee01e9ef0f44
+  languageName: node
+  linkType: hard
+
 "react-native-linear-gradient@npm:2.6.2":
   version: 2.6.2
   resolution: "react-native-linear-gradient@npm:2.6.2"
@@ -10773,9 +10783,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-reanimated@npm:3.16.7":
-  version: 3.16.7
-  resolution: "react-native-reanimated@npm:3.16.7"
+"react-native-reanimated@npm:3.17.5":
+  version: 3.17.5
+  resolution: "react-native-reanimated@npm:3.17.5"
   dependencies:
     "@babel/plugin-transform-arrow-functions": ^7.0.0-0
     "@babel/plugin-transform-class-properties": ^7.0.0-0
@@ -10788,11 +10798,12 @@ __metadata:
     "@babel/preset-typescript": ^7.16.7
     convert-source-map: ^2.0.0
     invariant: ^2.2.4
+    react-native-is-edge-to-edge: 1.1.7
   peerDependencies:
     "@babel/core": ^7.0.0-0
     react: "*"
     react-native: "*"
-  checksum: 108095709cd7a3effc5b5d276d94e161b399bd2d06e32140834168a0051545401bb09228071447e5925571da3f86f335d2a82c76751cdae07f66faf50b25c97f
+  checksum: fe667e4764f691b2e752eaedb7527fd8ac251637ae9e7dd9ab124abae85627839b5daea064befc5e09ca710ef673d5501ed11286eb39dfcb04f5d57b2d47e49c
   languageName: node
   linkType: hard
 
@@ -10926,7 +10937,7 @@ __metadata:
     react-native-linear-gradient: 2.6.2
     react-native-mmkv: 3.2.0
     react-native-navigation: 8.1.2
-    react-native-reanimated: 3.16.7
+    react-native-reanimated: 3.17.5
     react-native-redash: ^12.0.3
     react-native-shimmer-placeholder: ^2.0.6
     react-native-svg: 15.11.2
@@ -10945,7 +10956,7 @@ __metadata:
     react: ">=17.0.1"
     react-native: ">=0.76.0"
     react-native-gesture-handler: ">=2.22.0"
-    react-native-reanimated: ">=3.16.7"
+    react-native-reanimated: ">=3.17.5"
     react-native-ui-lib: "*"
   languageName: unknown
   linkType: soft
