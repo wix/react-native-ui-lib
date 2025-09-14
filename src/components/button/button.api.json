@@ -161,6 +161,11 @@
       "name": "animateTo",
       "type": "ButtonAnimationDirection",
       "description": "the direction of the animation ('left' and 'right' will effect the button's own alignment)"
+    },
+    {
+      "name": "customBackground",
+      "type": "React.ReactElement",
+      "description": "Custom element to render as button background (takes precedence over backgroundColor)"
     }
   ],
   "snippet": [

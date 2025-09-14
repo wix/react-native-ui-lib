@@ -152,6 +152,10 @@ export type ButtonProps = TouchableOpacityProps &
      * the direction of the animation ('left' and 'right' will effect the button's own alignment)
      */
     animateTo?: ButtonAnimationDirectionProp;
+    /**
+     * Custom element to render as button background (takes precedence over backgroundColor)
+     */
+    customBackground?: React.ReactElement;
   };
 
 export type ButtonState = {
