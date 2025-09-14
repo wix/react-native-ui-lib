@@ -10954,7 +10954,7 @@ __metadata:
     wix-react-native-text-size: 1.0.9
   peerDependencies:
     react: ">=17.0.1"
-    react-native: ">=0.76.0"
+    react-native: ">=0.77.0"
     react-native-gesture-handler: ">=2.22.0"
     react-native-reanimated: ">=3.17.5"
     react-native-ui-lib: "*"
