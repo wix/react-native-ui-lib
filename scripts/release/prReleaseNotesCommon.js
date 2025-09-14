@@ -71,6 +71,7 @@ async function fetchMergedPRs(postMergedDate, _repo, isPatchRelease) {
             info: parsePR(pr.body)
           };
         } catch {
+          // eslint-disable-next-line no-restricted-syntax
           console.error('Failed parsing PR: ', pr.url);
           return null;
         }
@@ -164,9 +165,7 @@ function getReleaseNotesForType(PRs, title) {
   return releaseNotes;
 }
 
-async function _generateReleaseNotes(latestVersion, newVersion, fileNamePrefix, repo, header, tagPrefix, categories, isPatchRelease) {
-  const latestReleaseDate = fetchLatestReleaseDate(tagPrefix, latestVersion);
-  const PRs = await fetchMergedPRs(latestReleaseDate, repo, isPatchRelease);
+function generateReleaseNotesFromPRs(PRs, categories, header) {
   if (!PRs) {
     return;
   }
@@ -198,10 +197,20 @@ async function _generateReleaseNotes(latestVersion, newVersion, fileNamePrefix, 
 
   releaseNotes += getTitle(':bulb: Deprecations & Migrations');
 
+  return releaseNotes;
+}
+
+// eslint-disable-next-line max-len, max-params
+async function _generateReleaseNotes(latestVersion, newVersion, fileNamePrefix, repo, header, tagPrefix, categories, isPatchRelease) {
+  const latestReleaseDate = fetchLatestReleaseDate(tagPrefix, latestVersion);
+  const PRs = await fetchMergedPRs(latestReleaseDate, repo, isPatchRelease);
+  const releaseNotes = generateReleaseNotesFromPRs(PRs, categories, header);
+
   fs.writeFileSync(`${process.env.HOME}/Downloads/${fileNamePrefix}-release-notes_${newVersion}.txt`, releaseNotes, {
     encoding: 'utf8'
   });
 
+  // eslint-disable-next-line max-len
   console.log(`\x1b[1m\x1b[32m✔\x1b[0m \x1b[32m${fileNamePrefix}-release-notes.txt was successfully written to ${process.env.HOME}/Downloads\x1b[0m \x1b[1m\x1b[32m✔\x1b[0m`);
 }
 
@@ -212,6 +221,7 @@ function isPatchRelease(lastVersion, newVersion) {
   return lastMajor === newMajor && lastMinor === newMinor && newPatch - lastPatch > 0;
 }
 
+// eslint-disable-next-line max-params
 async function generateReleaseNotes(latestVersion,
   newVersion,
   fileNamePrefix,
@@ -238,8 +248,9 @@ async function generateReleaseNotes(latestVersion,
     const header = getHeader(newVer);
     console.info(`Current latest version is v${latestVer}`);
     console.info(`Generating release notes out or PRs for v${newVer}`);
+    // eslint-disable-next-line max-len
     _generateReleaseNotes(latestVer, newVer, fileNamePrefix, repo, header, tagPrefix, categories, isPatchRelease(latestVer, newVer));
   });
 }
 
-module.exports = {generateReleaseNotes};
+module.exports = {generateReleaseNotes, generateReleaseNotesFromPRs, parsePR};
