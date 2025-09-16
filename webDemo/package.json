@@ -26,7 +26,7 @@
     "react-native-shimmer-placeholder": "^2.0.8",
     "react-native-svg": "15.11.2",
     "react-native-svg-transformer": "1.5.0",
-    "react-native-ui-lib": "snapshot",
+    "react-native-ui-lib": "7.46.3-snapshot.7341",
     "react-native-web": "^0.18.6",
     "typescript": "^4.4.2",
     "postcss": "^8.4.21",

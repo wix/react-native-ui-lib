@@ -75,7 +75,9 @@ module.exports =
   resolve: {
     // This will only alias the exact import "react-native"
     alias: {
-      'react-native$': 'react-native-web'
+      'react-native$': 'react-native-web',
+      '@shopify/flash-list': path.resolve(appDirectory, './src/alias/flash-list.ts'),
+      'react-native-fs': path.resolve(appDirectory, './src/alias/react-native-fs.ts')
     },
     // If you're working on a multi-platform React Native app, web-specific
     // module implementations should be written in files using the extension

@@ -18,7 +18,7 @@
     "light-date": "^1.2.0"
   },
   "devDependencies": {
-    "react-native-ui-lib": "7.1.0",
+    "react-native-ui-lib": "7.46.3-snapshot.7341",
     "shell-utils": "^1.0.10"
   },
   "peerDependencies": {
