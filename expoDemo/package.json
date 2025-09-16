@@ -16,9 +16,9 @@
     "fuzzysearch": "^1.0.3",
     "lodash": "^4.17.21",
     "metro-config": "^0.75.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-native": "0.77.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-native": "0.77.3",
     "react-native-gesture-handler": "2.24.0",
     "react-native-haptic-feedback": "^1.14.0",
     "react-native-navigation": "8.0.0",
@@ -36,7 +36,7 @@
     "@react-native-community/cli": "15.0.1",
     "@react-native-community/cli-platform-android": "15.0.1",
     "@react-native-community/cli-platform-ios": "15.0.1",
-    "@types/react": "~18.0.28",
+    "@types/react": "~18.3.24",
     "typescript": "^4.9.5"
   },
   "private": true

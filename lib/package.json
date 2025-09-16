@@ -17,7 +17,7 @@
     "shell-utils": "^1.0.10"
   },
   "peerDependencies": {
-    "react": ">=17.0.1",
-    "react-native": ">=0.64.1"
+    "react": ">=18.3.1",
+    "react-native": ">=0.77.3"
   }
 }
