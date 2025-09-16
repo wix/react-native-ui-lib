@@ -9533,9 +9533,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-gesture-handler@npm:2.22.1":
-  version: 2.22.1
-  resolution: "react-native-gesture-handler@npm:2.22.1"
+"react-native-gesture-handler@npm:2.24.0":
+  version: 2.24.0
+  resolution: "react-native-gesture-handler@npm:2.24.0"
   dependencies:
     "@egjs/hammerjs": ^2.0.17
     hoist-non-react-statics: ^3.3.0
@@ -9543,7 +9543,7 @@ __metadata:
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 31be1a30d35b20dc72426147b3c5b8a2bf23a4666a4208208c423baec098850564e8cb555d360b87435ffe65a4f51f84e5471bf2140979c84589bd787cf5cfe0
+  checksum: 65abaeef68180fee2811d01d88ff50c231a91faca05279222fcaaa55349e758b68a7d6a9ac3eddfb1887f6b4c4790ac195b99989f1ad8a2a1f3f3bdff3ba0a76
   languageName: node
   linkType: hard
 
@@ -9760,7 +9760,7 @@ __metadata:
     react-freeze: ^1.0.0
     react-native: 0.77.2
     react-native-fs: ^2.20.0
-    react-native-gesture-handler: 2.22.1
+    react-native-gesture-handler: 2.24.0
     react-native-haptic-feedback: ^1.11.0
     react-native-linear-gradient: 2.6.2
     react-native-mmkv: 3.2.0
@@ -9783,7 +9783,7 @@ __metadata:
   peerDependencies:
     react: ">=17.0.1"
     react-native: ">=0.77.0"
-    react-native-gesture-handler: ">=2.22.0"
+    react-native-gesture-handler: ">=2.24.0"
     react-native-reanimated: ">=3.17.5"
     react-native-ui-lib: "*"
   languageName: unknown

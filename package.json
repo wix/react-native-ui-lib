@@ -116,7 +116,7 @@
     "react-dom": "^18.2.0",
     "react-native": "0.77.2",
     "react-native-fs": "^2.20.0",
-    "react-native-gesture-handler": "2.22.1",
+    "react-native-gesture-handler": "2.24.0",
     "react-native-haptic-feedback": "^1.11.0",
     "react-native-linear-gradient": "2.6.2",
     "react-native-mmkv": "3.2.0",
@@ -134,7 +134,7 @@
   "peerDependencies": {
     "react": ">=17.0.1",
     "react-native": ">=0.77.0",
-    "react-native-gesture-handler": ">=2.22.0",
+    "react-native-gesture-handler": ">=2.24.0",
     "react-native-reanimated": ">=3.17.5",
     "react-native-ui-lib": "*"
   },

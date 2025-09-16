@@ -58,8 +58,8 @@ UILib uses several native dependencies to support its functionality. Some of the
 #### Core Dependencies 
 These packages are required for basic functionality:
 ```bash
-"react-native-gesture-handler": ">=2.22.0"
-"react-native-reanimated": ">=3.16.7"
+"react-native-gesture-handler": ">=2.24.0"
+"react-native-reanimated": ">=3.17.5"
 ```
 
 #### Component-Specific Dependencies
