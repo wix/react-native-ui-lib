@@ -1468,7 +1468,7 @@ exports[`AvatarScreen renders screen 1`] = `
             onLoad={[Function]}
             source={
               {
-                "uri": "https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg",
+                "uri": "https://lh3.googleusercontent.com/-CMM0GmT5tiI/AAAAAAAAAAI/AAAAAAAAAAA/-o9gKbC6FVo/s181-c/111308920004613908895.jpg",
               }
             }
             style={
