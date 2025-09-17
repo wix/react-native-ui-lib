@@ -1,5 +1,5 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import renderer, {act} from 'react-test-renderer';
 
 describe('AvatarScreen', () => {
   let AvatarScreen;
@@ -9,7 +9,14 @@ describe('AvatarScreen', () => {
   });
 
   it('renders screen', () => {
-    const tree = renderer.create(<AvatarScreen/>).toJSON();
+    let testRenderer;
+    act(() => {
+      testRenderer = renderer.create(<AvatarScreen/>);
+    });
+    const tree = testRenderer.toJSON();
     expect(tree).toMatchSnapshot();
+    act(() => {
+      testRenderer.unmount();
+    });
   });
 });
