@@ -1,5 +1,5 @@
 // TODO: consider unify this component functionality with our Image component
-import React, {useState, useCallback, useMemo} from 'react';
+import React, {useState, useCallback, useMemo, useEffect} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, NativeSyntheticEvent, ImageLoadEventData} from 'react-native';
 import Animated, {useSharedValue, useAnimatedStyle, withTiming} from 'react-native-reanimated';
 import View from '../../components/view';
@@ -51,6 +51,12 @@ const AnimatedImage = (props: AnimatedImageProps) => {
     }
   }, [loader]);
 
+  useEffect(() => {
+    setIsLoading(true);
+    propsOnLoadStart?.();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [source]);
+
   const onLoad = useCallback((event: NativeSyntheticEvent<ImageLoadEventData>) => {
     setIsLoading(false);
     propsOnLoad?.(event);
@@ -62,10 +68,11 @@ const AnimatedImage = (props: AnimatedImageProps) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   [setIsLoading, propsOnLoad, animationDuration]);
 
-  const onLoadStart = useCallback(() => {
-    setIsLoading(true);
-    propsOnLoadStart?.();
-  }, [setIsLoading, propsOnLoadStart, animationDuration]);
+  // TODO: revert to this solution when iOS is fixed (RN77 bug)
+  // const onLoadStart = useCallback(() => {
+  //   setIsLoading(true);
+  //   propsOnLoadStart?.();
+  // }, [setIsLoading, propsOnLoadStart, animationDuration]);
 
   const fadeInStyle = useAnimatedStyle(() => {
     return {opacity: opacity.value};
@@ -81,7 +88,7 @@ const AnimatedImage = (props: AnimatedImageProps) => {
         style={_style}
         source={source}
         onLoad={onLoad}
-        onLoadStart={onLoadStart}
+        // onLoadStart={onLoadStart}
         testID={testID}
         imageStyle={undefined}
       />
