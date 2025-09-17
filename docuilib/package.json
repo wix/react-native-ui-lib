@@ -48,7 +48,7 @@
     "react-dom": "18.3.1",
     "react-native-linear-gradient": "2.6.2",
     "react-native-shimmer-placeholder": "^2.0.9",
-    "react-native-ui-lib": "7.46.3-snapshot.7341",
+    "react-native-ui-lib": "7.46.3-snapshot.7352",
     "shell-utils": "^1.0.10",
     "typescript": "~5.2.2"
   },
