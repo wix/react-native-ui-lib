@@ -1,8 +1,11 @@
 import _ from 'lodash';
-import {useState, useCallback, useEffect, useRef} from 'react';
+import {useState, useCallback, useEffect, useRef, RefObject} from 'react';
 import {LayoutChangeEvent} from 'react-native';
-import useScrollTo, {ScrollToProps, ScrollToSupportedViews, ScrollToResultProps} from '../useScrollTo';
+import {useSharedValue} from 'react-native-reanimated';
+import {useScrollTo, ScrollToSupportedViews, ScrollToResultProps} from 'hooks';
 import {Constants} from '../../commons/new';
+
+const FIX_RTL = Constants.isRTL;
 
 export enum OffsetType {
   CENTER = 'CENTER',
@@ -11,7 +14,8 @@ export enum OffsetType {
   RIGHT = 'RIGHT'
 }
 
-export type ScrollToItemProps<T extends ScrollToSupportedViews> = Pick<ScrollToProps<T>, 'scrollViewRef'> & {
+export type ScrollToItemProps<T extends ScrollToSupportedViews> = {
+  scrollViewRef?: RefObject<T>;
   /**
    * The number of items
    */
@@ -20,6 +24,10 @@ export type ScrollToItemProps<T extends ScrollToSupportedViews> = Pick<ScrollToP
    * The selected item's index
    */
   selectedIndex?: number;
+  /**
+   * The container width, should update on orientation change
+   */
+  containerWidth: number;
   /**
    * Where would the item be located (default to CENTER)
    */
@@ -47,19 +55,30 @@ type Offsets = {
   RIGHT: number[];
 };
 
-export type ScrollToItemResultProps<T extends ScrollToSupportedViews> = Pick<ScrollToResultProps<T>, 'scrollViewRef'> & {
+export type ScrollToItemResultProps<T extends ScrollToSupportedViews> = Pick<
+  ScrollToResultProps<T>,
+  'scrollViewRef'
+> & {
   /**
    * This should be called by each ot the items' onLayout
    */
   onItemLayout: (event: LayoutChangeEvent, index: number) => void;
   /**
-   * The items' width
+   * The items' width as share animated value
    */
-  itemsWidths: number[];
+  itemsWidthsAnimated: any; //TODO: should be SharedValue<number[]>
+  /**
+   * The items' offsets as share animated value
+   */
+  itemsOffsetsAnimated: any; //TODO: should be SharedValue<number[]>
   /**
    * Use in order to focus the item with the specified index (use when the selectedIndex is not changed)
    */
   focusIndex: (index: number, animated?: boolean) => void;
+  /**
+   * Use in order to reset the data.
+   */
+  reset: () => void;
   /**
    * onContentSizeChange callback (should be set to your onContentSizeChange).
    * Needed for RTL support on Android.
@@ -77,12 +96,15 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
     scrollViewRef: propsScrollViewRef,
     itemsCount,
     selectedIndex,
+    containerWidth,
     offsetType = OffsetType.CENTER,
     addOffsetMargin = true,
     outerSpacing = 0,
     innerSpacing = 0
   } = props;
   const itemsWidths = useRef<(number | null)[]>(_.times(itemsCount, () => null));
+  const itemsWidthsAnimated = useSharedValue<number[]>(_.times(itemsCount, () => 0));
+  const itemsOffsetsAnimated = useSharedValue<number[]>(_.times(itemsCount, () => 0));
   const currentIndex = useRef<number>(selectedIndex || 0);
   const [offsets, setOffsets] = useState<Offsets>({CENTER: [], LEFT: [], RIGHT: []});
   const {scrollViewRef, scrollTo, onContentSizeChange, onLayout} = useScrollTo<T>({scrollViewRef: propsScrollViewRef});
@@ -95,39 +117,57 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
   // const contentWidth = _.sum(itemsWidths);
   // TODO: const scrollEnabled = contentWidth.current > containerWidth;
 
-  const setSnapBreakpoints = useCallback((itemsWidths: number[]) => {
-    if (_.isEmpty(itemsWidths)) {
+  const setSnapBreakpoints = useCallback((widths: number[]) => {
+    if (_.isEmpty(widths)) {
       return;
     }
 
-    const screenCenter = Constants.screenWidth / 2; // TODO: change to something more dynamic?
+    const screenCenter = containerWidth / 2;
     let index = 0;
     const centeredOffsets = [];
     let currentCenterOffset = outerSpacing;
     const leftOffsets = [];
     leftOffsets.push(outerSpacing - innerSpacing);
     const rightOffsets = [];
-    rightOffsets.push(-Constants.screenWidth + itemsWidths[0] + outerSpacing + innerSpacing);
+    rightOffsets.push(-containerWidth + widths[0] + outerSpacing + innerSpacing);
     while (index < itemsCount) {
-      centeredOffsets[index] = currentCenterOffset - screenCenter + itemsWidths[index] / 2;
+      /* calc center, left and right offsets */
+      centeredOffsets[index] = currentCenterOffset - screenCenter + widths[index] / 2;
       ++index;
-      currentCenterOffset += itemsWidths[index - 1] + innerSpacing;
-      leftOffsets[index] = leftOffsets[index - 1] + itemsWidths[index - 1] + innerSpacing;
-      rightOffsets[index] = rightOffsets[index - 1] + itemsWidths[index] + innerSpacing;
+      currentCenterOffset += widths[index - 1] + innerSpacing;
+      leftOffsets[index] = leftOffsets[index - 1] + widths[index - 1] + innerSpacing;
+      rightOffsets[index] = rightOffsets[index - 1] + widths[index] + innerSpacing;
     }
 
     if (addOffsetMargin) {
-      index = 1; 
+      index = 1;
       while (index < itemsCount - 1) {
-        leftOffsets[index] -= itemsWidths[index - 1];
-        rightOffsets[index] += itemsWidths[index + 1] + innerSpacing;
+        leftOffsets[index] -= widths[index - 1];
+        rightOffsets[index] += widths[index + 1] + innerSpacing;
         ++index;
       }
     }
 
     setOffsets({CENTER: centeredOffsets, LEFT: leftOffsets, RIGHT: rightOffsets}); // default for DYNAMIC is CENTER
+
+    // Update shared values
+    // @ts-expect-error pretty sure this is a bug in reanimated since itemsWidthsAnimated is defined as SharedValue<number[]>
+    itemsWidthsAnimated.modify((value) => {
+      'worklet';
+      return value.map((_, index) => widths[index]);
+    });
+
+    itemsOffsetsAnimated.modify((value) => {
+      'worklet';
+      value.forEach((_, index) => {
+        if (index > 0) {
+          value[index] = value[index - 1] + widths[index - 1];
+        }
+      });
+      return value;
+    });
   },
-  [itemsCount, outerSpacing, innerSpacing, addOffsetMargin]);
+  [itemsCount, outerSpacing, innerSpacing, addOffsetMargin, containerWidth]);
 
   const onItemLayout = useCallback((event: LayoutChangeEvent, index: number) => {
     const {width} = event.nativeEvent.layout;
@@ -140,12 +180,13 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
 
   const focusIndex = useCallback((index: number, animated = true) => {
     if (index >= 0 && offsets.CENTER.length > index) {
+      const rtlIndex = FIX_RTL ? itemsCount - index - 1 : index;
       if (offsetType !== OffsetType.DYNAMIC) {
-        scrollTo(offsets[offsetType][index], animated);
+        scrollTo(offsets[offsetType][rtlIndex], animated);
       } else {
         const movingLeft = index < currentIndex.current;
-        currentIndex.current = index;
-        scrollTo(movingLeft ? offsets[OffsetType.RIGHT][index] : offsets[OffsetType.LEFT][index], animated);
+        currentIndex.current = rtlIndex;
+        scrollTo(movingLeft ? offsets[OffsetType.RIGHT][rtlIndex] : offsets[OffsetType.LEFT][rtlIndex], animated);
       }
     }
   },
@@ -153,15 +194,27 @@ const useScrollToItem = <T extends ScrollToSupportedViews>(props: ScrollToItemPr
 
   useEffect(() => {
     if (!_.isUndefined(selectedIndex)) {
-      focusIndex(selectedIndex);
+      focusIndex(selectedIndex, false);
     }
   }, [selectedIndex, focusIndex]);
+
+  const reset = useCallback(() => {
+    for (let i = 0; i < itemsCount; ++i) {
+      itemsWidths.current[i] = null;
+      itemsWidthsAnimated.value[i] = 0;
+      itemsOffsetsAnimated.value[i] = 0;
+    }
+
+    setOffsets({CENTER: [], LEFT: [], RIGHT: []});
+  }, [itemsCount]);
 
   return {
     scrollViewRef,
     onItemLayout,
-    itemsWidths: offsets.CENTER.length > 0 ? (itemsWidths.current as number[]) : [],
+    itemsWidthsAnimated,
+    itemsOffsetsAnimated,
     focusIndex,
+    reset,
     onContentSizeChange,
     onLayout
   };
