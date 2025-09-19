@@ -94,7 +94,7 @@ class ProgressBar extends PureComponent<Props, State> {
       return {
         accessible: true,
         accessibilityLabel: `progress bar. ${Math.round(progress)}%`,
-        ...extractAccessibilityProps()
+        ...extractAccessibilityProps(this.props)
       };
     }
   }
