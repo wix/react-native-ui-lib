@@ -130,12 +130,12 @@ jobs:
               commentBody += '### Required Sections:\n';
               commentBody += '- [ ] **Description** - Explain what changes are being made and why\n';
               commentBody += '- [ ] **Changelog** - User-facing summary, this will show in the release notes (include component names, relevant props, and general purpose)\n';
-              commentBody += '- [ ] **Additional info** - Links to related issues, Jira tickets (e.g., https://wix.atlassian.net/browse/MADS-XXXX)\n\n';
+              commentBody += '- [ ] **Additional info** - Links to related issues, Jira tickets\n\n';
               commentBody += 'Please update your PR description to include all required sections with meaningful content.\n';
             }
             
             commentBody += '\n---\n';
-            commentBody += '_This validation ensures all sections from the [PR template](/wix-private/wix-react-native-ui-lib/blob/master/.github/pull_request_template.md) are properly filled._';
+            commentBody += '_This validation ensures all sections from the [PR template](/wix/react-native-ui-lib/blob/master/.github/pull_request_template.md) are properly filled._';
             
             // Find existing validation comment to update it
             const { data: comments } = await github.rest.issues.listComments({
