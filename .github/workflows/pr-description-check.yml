@@ -1,0 +1,179 @@
+name: PR Description Validation
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  validate-pr-description:
+    runs-on: ubuntu-latest
+    name: Validate PR Description
+    
+    steps:
+      - name: Validate PR Description
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prBody = context.payload.pull_request.body || '';
+            console.log('Validating PR body...');
+            
+            // Define required sections from the PR template
+            const requiredSections = [
+              {
+                name: 'Description',
+                header: '## Description',
+                placeholder: 'Enter description to help the reviewer understand what\'s the change about...'
+              },
+              {
+                name: 'Changelog',
+                header: '## Changelog', 
+                placeholder: 'Add a quick message for our users about this change'
+              },
+              {
+                name: 'Additional info',
+                header: '## Additional info',
+                placeholder: 'If applicable, add additional info such as link to the bug being fixed by this PR'
+              }
+            ];
+            
+            const missingOrEmptySections = [];
+            const completedSections = [];
+            
+            // Validate each required section
+            for (const section of requiredSections) {
+              console.log(`Checking section: ${section.name}`);
+              
+              // Check if section header exists
+              if (!prBody.includes(section.header)) {
+                missingOrEmptySections.push({
+                  name: section.name,
+                  issue: 'Section is missing completely'
+                });
+                continue;
+              }
+              
+              // Extract content after the section header
+              const sectionRegex = new RegExp(
+                `${section.header.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*(?:<!--[\\s\\S]*?-->)?\\s*([\\s\\S]*?)(?=##|$)`,
+                'i'
+              );
+              
+              const match = prBody.match(sectionRegex);
+              
+              if (!match) {
+                missingOrEmptySections.push({
+                  name: section.name,
+                  issue: 'Section header found but no content detected'
+                });
+                continue;
+              }
+              
+              let content = match[1].trim();
+              
+              // Remove HTML comments from content for validation
+              content = content.replace(/<!--[\s\S]*?-->/g, '').trim();
+              
+              // Check if section is empty or contains only template text
+              if (!content || content.length === 0) {
+                missingOrEmptySections.push({
+                  name: section.name,
+                  issue: 'Section is empty - please add content'
+                });
+              } else if (content.includes(section.placeholder)) {
+                missingOrEmptySections.push({
+                  name: section.name,
+                  issue: 'Section contains template placeholder text - please replace with actual content'
+                });
+              } else {
+                completedSections.push(section.name);
+                console.log(`✅ ${section.name} section is properly filled`);
+              }
+            }
+            
+            // Create feedback message
+            let commentBody = '';
+            let statusIcon = '';
+            let statusTitle = '';
+            
+            if (missingOrEmptySections.length === 0) {
+              // All sections are complete
+              statusIcon = '✅';
+              statusTitle = 'PR Description Validation Passed';
+              commentBody += `## ${statusIcon} ${statusTitle}\n\n`;
+              commentBody += 'All required sections are properly filled out:\n\n';
+              
+              completedSections.forEach(section => {
+                commentBody += `- ✅ **${section}**\n`;
+              });
+              
+              commentBody += '\nYour PR is good for review! 🚀\n';
+              
+            } else {
+              // Some sections are missing or incomplete
+              statusIcon = '❌';
+              statusTitle = 'PR Description Validation Failed';
+              commentBody += `## ${statusIcon} ${statusTitle}\n\n`;
+              commentBody += 'The following required sections need attention:\n\n';
+              
+              missingOrEmptySections.forEach(section => {
+                commentBody += `- ❌ **${section.name}**: ${section.issue}\n`;
+              });
+              
+              if (completedSections.length > 0) {
+                commentBody += '\n**Completed sections:**\n';
+                completedSections.forEach(section => {
+                  commentBody += `- ✅ **${section}**\n`;
+                });
+              }
+              
+              commentBody += '\n---\n\n';
+              commentBody += '### Required Sections:\n';
+              commentBody += '- [ ] **Description** - Explain what changes are being made and why\n';
+              commentBody += '- [ ] **Changelog** - User-facing summary, this will show in the release notes (include component names, relevant props, and general purpose)\n';
+              commentBody += '- [ ] **Additional info** - Links to related issues, Jira tickets (e.g., https://wix.atlassian.net/browse/MADS-XXXX)\n\n';
+              commentBody += 'Please update your PR description to include all required sections with meaningful content.\n';
+            }
+            
+            commentBody += '\n---\n';
+            commentBody += '_This validation ensures all sections from the [PR template](/wix-private/wix-react-native-ui-lib/blob/master/.github/pull_request_template.md) are properly filled._';
+            
+            // Find existing validation comment to update it
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+            });
+            
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('PR Description Validation')
+            );
+            
+            if (botComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: commentBody
+              });
+              console.log('Updated existing validation comment');
+            } else {
+              // Create new comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body: commentBody
+              });
+              console.log('Created new validation comment');
+            }
+            
+            // Set workflow status
+            if (missingOrEmptySections.length > 0) {
+              const failureMessage = `Missing or incomplete sections: ${missingOrEmptySections.map(s => s.name).join(', ')}`;
+              core.setFailed(failureMessage);
+              console.log(`❌ Validation failed: ${failureMessage}`);
+            } else {
+              console.log('✅ PR description validation passed - all sections complete!');
+            }
