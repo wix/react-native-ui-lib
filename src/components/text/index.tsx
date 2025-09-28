@@ -194,10 +194,7 @@ const styles = StyleSheet.create({
     ...(Constants.isIOS
       ? {
         writingDirection: Constants.isRTL ? writingDirectionTypes.RTL : writingDirectionTypes.LTR
-      }
-      : {
-        textAlign: 'left'
-      })
+      } : undefined)
   },
   centered: {
     textAlign: 'center'
