@@ -18,12 +18,12 @@
     "light-date": "^1.2.0"
   },
   "devDependencies": {
-    "react-native-ui-lib": "7.1.0",
+    "react-native-ui-lib": "7.46.3-snapshot.7352",
     "shell-utils": "^1.0.10"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-native": "^0.71.2",
+    "react": "^18.3.1",
+    "react-native": "^0.77.3",
     "react-native-ui-lib": "*",
     "semver": "^5.5.0"
   }

@@ -39,11 +39,6 @@ export const navigationData = {
       {title: 'ProgressBar', tags: 'progress bar animated', screen: 'unicorn.animations.ProgressBarScreen'},
       {title: 'ScrollBar', tags: 'scroll bar gradient', screen: 'unicorn.components.ScrollBarScreen'},
       {title: 'SearchInputScreen', tags: 'search input', screen: 'unicorn.components.SearchInputScreen'},
-      {
-        title: 'Shared Transition',
-        tags: 'shared transition element',
-        screen: 'unicorn.components.SharedTransitionScreen'
-      },
       {title: 'Stack Aggregator', tags: 'stack aggregator', screen: 'unicorn.components.StackAggregatorScreen'},
       {title: 'Marquee', tags: 'sliding text', screen: 'unicorn.components.MarqueeScreen'}
     ]
@@ -86,7 +81,7 @@ export const navigationData = {
     screens: [
       {title: 'Action Sheet', tags: 'action sheet cross-platform', screen: 'unicorn.components.ActionSheetScreen'},
       {title: 'Dialog', tags: 'dialog modal popup alert', screen: 'unicorn.components.DialogScreen'},
-      {title: 'Feature Highlight', tags: 'feature overlay', screen: 'unicorn.components.FeatureHighlightScreen'},
+      {title: 'Feature Highlight', tags: 'native feature overlay', screen: 'unicorn.components.FeatureHighlightScreen'},
       {title: 'Floating Button', tags: 'floating button', screen: 'unicorn.components.FloatingButtonScreen'},
       {title: 'Hint', tags: 'hints tooltip', screen: 'unicorn.components.HintsScreen'},
       {title: 'Toast', tags: 'toast top bottom snackbar', screen: 'unicorn.components.ToastsScreen'}
@@ -122,10 +117,10 @@ export const navigationData = {
       {title: 'LoadingScreen', tags: 'loading screen', screen: 'unicorn.screens.LoadingScreen'},
       {title: 'Modal', tags: 'modal topbar screen', screen: 'unicorn.screens.ModalScreen'},
       {title: 'StateScreen', tags: 'empty state screen', screen: 'unicorn.screens.EmptyStateScreen'},
-      {title: 'TabController', tags: 'tabbar controller native', screen: 'unicorn.components.TabControllerScreen'},
+      {title: 'TabController', tags: 'tabbar controller', screen: 'unicorn.components.TabControllerScreen'},
       {
         title: 'TabControllerWithStickyHeader',
-        tags: 'tabbar controller native sticky header',
+        tags: 'tabbar controller sticky header',
         screen: 'unicorn.components.TabControllerWithStickyHeaderScreen'
       },
       {title: 'Timeline', tags: 'timeline', screen: 'unicorn.components.TimelineScreen'},
@@ -153,28 +148,28 @@ export const navigationData = {
     screens: [
       {
         title: 'KeyboardAwareScrollView',
-        tags: 'KeyboardAwareScrollView',
+        tags: 'native KeyboardAwareScrollView',
         screen: 'unicorn.components.KeyboardAwareScrollViewScreen'
       },
       {
         title: 'Dynamic Fonts',
-        tags: 'dynamic fonts load download',
+        tags: 'native dynamic fonts load download',
         screen: 'unicorn.nativeComponents.DynamicFontsScreen'
       },
       {
         title: 'Highlight Overlay',
-        tags: 'native overlay',
+        tags: 'native native overlay',
         screen: 'unicorn.nativeComponents.HighlightOverlayViewScreen'
       },
       {title: 'SafeArea Spacer', tags: 'native safe area', screen: 'unicorn.nativeComponents.SafeAreaSpacerViewScreen'},
       {
         title: 'KeyboardTracking (iOS)',
-        tags: 'KeyboardTracking',
+        tags: 'native KeyboardTracking',
         screen: 'unicorn.nativeComponents.KeyboardTrackingViewScreen'
       },
       {
         title: 'KeyboardAccessoryView',
-        tags: 'KeyboardInput',
+        tags: 'native KeyboardInput',
         screen: 'unicorn.nativeComponents.KeyboardAccessoryViewScreen'
       }
     ]
@@ -183,16 +178,14 @@ export const navigationData = {
     title: 'Animations & Gestures',
     screens: [
       {title: 'Animated Image', tags: 'animated image', screen: 'unicorn.components.AnimatedImageScreen'},
+      {title: 'Card Scanner', tags: 'card scanner process', screen: 'unicorn.animations.CardScannerScreen'},
       {title: 'Haptic feedback', tags: 'haptic feedback', screen: 'unicorn.components.HapticScreen'},
+      {title: 'PanView', tags: 'pan swipe drag', screen: 'unicorn.components.PanViewScreen'},
       {
         title: 'ProgressiveImage',
         tags: 'progressive image cover overlay',
         screen: 'unicorn.components.ProgressiveImageScreen'
-      },
-      {title: 'Card Scanner', tags: 'card scanner process', screen: 'unicorn.animations.CardScannerScreen'},
-      {title: 'Pan Dismissible', tags: 'pan swipe drag dismiss', screen: 'unicorn.components.PanDismissibleScreen'},
-      {title: 'Pan Listener', tags: 'pan swipe drag listener', screen: 'unicorn.components.PanListenerScreen'},
-      {title: 'Pan Responder', tags: 'pan swipe drag responder', screen: 'unicorn.components.PanResponderScreen'}
+      }
     ]
   },
   Incubator: {
@@ -200,15 +193,13 @@ export const navigationData = {
     screens: [
       {title: 'Calendar', tags: 'calendar', screen: 'unicorn.components.IncubatorCalendarScreen'},
       {title: 'ChipsInput', tags: 'chips input', screen: 'unicorn.components.ChipsInputScreen'},
-      {title: 'Native TouchableOpacity', tags: 'touchable native', screen: 'unicorn.incubator.TouchableOpacityScreen'},
-      {title: 'Dialog (New)', tags: 'dialog modal popup alert', screen: 'unicorn.incubator.IncubatorDialogScreen'},
+      {title: 'Native TouchableOpacity', tags: 'native touchable', screen: 'unicorn.incubator.TouchableOpacityScreen'},
       {title: 'Toast (New)', tags: 'toast', screen: 'unicorn.components.IncubatorToastScreen'},
       {
         title: 'ExpandableOverlay',
         tags: 'text field expandable input picker',
         screen: 'unicorn.components.IncubatorExpandableOverlayScreen'
       },
-      {title: 'PanView', tags: 'pan swipe drag', screen: 'unicorn.incubator.PanViewScreen'},
       {title: 'Gradient', tags: 'gradient', screen: 'unicorn.components.IncubatorGradientScreen'}
     ]
   },

@@ -199,6 +199,7 @@ exports[`Hint Screen component test Different positions and scenarios center pos
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -477,6 +478,7 @@ exports[`Hint Screen component test Different positions and scenarios center pos
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -756,6 +758,7 @@ exports[`Hint Screen component test Different positions and scenarios left posit
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -1034,6 +1037,7 @@ exports[`Hint Screen component test Different positions and scenarios left posit
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -1313,6 +1317,7 @@ exports[`Hint Screen component test Different positions and scenarios right posi
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -1591,6 +1596,7 @@ exports[`Hint Screen component test Different positions and scenarios right posi
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,

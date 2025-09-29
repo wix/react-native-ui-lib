@@ -58,15 +58,15 @@ UILib uses several native dependencies to support its functionality. Some of the
 #### Core Dependencies 
 These packages are required for basic functionality:
 ```bash
-"react-native-gesture-handler": "<=2.14.1"
-"react-native-reanimated": "<=3.16.7"
+"react-native-gesture-handler": ">=2.24.0"
+"react-native-reanimated": ">=3.17.5"
 ```
 
 #### Component-Specific Dependencies
 Install these based on the components you plan to use:
 ```bash
 "@react-native-community/blur": ">=4.4.1"
-"@react-native-community/datetimepicker": "^3.4.6"
+"@react-native-community/datetimepicker": "^8.2.0"
 "@react-native-community/netinfo": "^5.6.2" # Required for ConnectionStatusBar
 ```
 
