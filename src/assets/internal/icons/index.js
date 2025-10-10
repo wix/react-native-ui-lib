@@ -46,5 +46,11 @@ export const icons = {
   },
   get xSmall() {
     return require('./xSmall.png');
+  },
+  get addFlat() {
+    return require('./addFlat.svg').default;
+  },
+  get heart() {
+    return require('./heart.svg').default;
   }
 };
