@@ -9786,6 +9786,7 @@ __metadata:
     react-native-gesture-handler: ">=2.24.0"
     react-native-reanimated: ">=3.17.5"
     react-native-ui-lib: "*"
+    uilib-native: 5.0.0-snapshot.7358
   languageName: unknown
   linkType: soft
 
