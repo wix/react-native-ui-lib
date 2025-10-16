@@ -13,7 +13,7 @@ npm install react-native-ui-lib
 
 2. Install mandatory peer dependencies
 ```bash
-npm install react-native-reanimated react-native-gesture-handler
+npm install react-native-reanimated react-native-gesture-handler uilib-native
 ```
 
 3. For iOS, install pods
