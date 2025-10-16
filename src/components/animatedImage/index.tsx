@@ -68,7 +68,7 @@ const AnimatedImage = (props: AnimatedImageProps) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   [setIsLoading, propsOnLoad, animationDuration]);
 
-  // TODO: revert to this solution when iOS is fixed (RN77 bug)
+  // TODO: RN 77 - revert to this solution when iOS is fixed in future RN releases
   // const onLoadStart = useCallback(() => {
   //   setIsLoading(true);
   //   propsOnLoadStart?.();
