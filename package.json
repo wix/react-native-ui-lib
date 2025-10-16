@@ -56,7 +56,6 @@
     "react-native-redash": "^12.0.3",
     "semver": "^5.5.0",
     "tinycolor2": "^1.4.2",
-    "uilib-native": "5.0.0-snapshot.7358",
     "url-parse": "^1.2.0",
     "wix-react-native-text-size": "1.0.9"
   },
@@ -129,14 +128,16 @@
     "reassure": "^0.4.1",
     "setimmediate": "^1.0.5",
     "shell-utils": "^1.0.10",
-    "typescript": "5.0.4"
+    "typescript": "5.0.4",
+    "uilib-native": "5.0.0-snapshot.7358"
   },
   "peerDependencies": {
     "react": ">=18.3.1",
     "react-native": ">=0.77.3",
     "react-native-gesture-handler": ">=2.24.0",
     "react-native-reanimated": ">=3.17.5",
-    "react-native-ui-lib": "*"
+    "react-native-ui-lib": "*",
+    "uilib-native": "5.0.0-snapshot.7358"
   },
   "jest": {
     "preset": "react-native",
