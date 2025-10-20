@@ -5,6 +5,7 @@ import Animated, {useSharedValue, useAnimatedStyle, withTiming} from 'react-nati
 import View from '../../components/view';
 import Image, {ImageProps} from '../../components/image';
 import {useDidUpdate} from '../../hooks';
+import Constants from '../../commons/Constants';
 
 const UIAnimatedImage = Animated.createAnimatedComponent<ImageProps>(Image);
 
@@ -52,8 +53,10 @@ const AnimatedImage = (props: AnimatedImageProps) => {
   }, [loader]);
 
   useEffect(() => {
-    setIsLoading(true);
-    propsOnLoadStart?.();
+    if (Constants.isIOS) {
+      setIsLoading(true);
+      propsOnLoadStart?.();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [source]);
 
@@ -69,10 +72,10 @@ const AnimatedImage = (props: AnimatedImageProps) => {
   [setIsLoading, propsOnLoad, animationDuration]);
 
   // TODO: RN 77 - revert to this solution when iOS is fixed in future RN releases
-  // const onLoadStart = useCallback(() => {
-  //   setIsLoading(true);
-  //   propsOnLoadStart?.();
-  // }, [setIsLoading, propsOnLoadStart, animationDuration]);
+  const onLoadStart = useCallback(() => {
+    setIsLoading(true);
+    propsOnLoadStart?.();
+  }, [setIsLoading, propsOnLoadStart, animationDuration]);
 
   const fadeInStyle = useAnimatedStyle(() => {
     return {opacity: opacity.value};
@@ -88,7 +91,7 @@ const AnimatedImage = (props: AnimatedImageProps) => {
         style={_style}
         source={source}
         onLoad={onLoad}
-        // onLoadStart={onLoadStart}
+        onLoadStart={Constants.isAndroid ? onLoadStart : undefined}
         testID={testID}
         imageStyle={undefined}
       />
