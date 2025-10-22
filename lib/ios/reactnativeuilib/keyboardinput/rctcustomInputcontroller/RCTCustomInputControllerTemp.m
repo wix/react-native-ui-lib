@@ -13,7 +13,11 @@
 
 #import "LNAnimatorTemp.h"
 
-#import "RNNAppDelegate.h"
+#if __has_include(<React-RCTAppDelegate/RCTAppDelegate.h>)
+#import <React-RCTAppDelegate/RCTAppDelegate.h>
+#elif __has_include(<React_RCTAppDelegate/RCTAppDelegate.h>)
+#import <React_RCTAppDelegate/RCTAppDelegate.h>
+#endif
 
 #define kHlperViewTag 0x1f1f1f
 
@@ -145,7 +149,7 @@ RCT_EXPORT_METHOD(presentCustomInputComponent:(nonnull NSNumber*)inputFieldTag p
     UIView* inputField = [self.bridge.uiManager viewForReactTag:inputFieldTag];
     NSDictionary *initialProps = params[@"initialProps"];
     
-    RNNAppDelegate* appDelegate = (RNNAppDelegate*)[UIApplication sharedApplication].delegate;
+    RCTAppDelegate* appDelegate = (RCTAppDelegate*)[UIApplication sharedApplication].delegate;
     UIView *rv = [appDelegate.rootViewFactory viewWithModuleName:params[@"component"]
                                                       initialProperties:initialProps];
     
