@@ -168,6 +168,18 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
 -(void)layoutSubviews
 {
     [super layoutSubviews];
+    
+    // Preserving the AccessoryView's Y position within its superview
+    CGFloat bottomSafeArea = [self getBottomSafeArea];
+    CGFloat tabBarHeight = [self getTabBarHeight];
+    CGFloat yOffset = MIN(-bottomSafeArea, -_ObservingInputAccessoryViewTemp.keyboardHeight + tabBarHeight);
+    if (self.frame.origin.y != yOffset) {
+        self.frame = CGRectMake(self.frame.origin.x,
+                                yOffset,
+                                self.frame.size.width,
+                                self.frame.size.height);
+    }
+    
     [self updateBottomViewFrame];
 }
 
