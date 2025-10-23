@@ -129,7 +129,7 @@
     "setimmediate": "^1.0.5",
     "shell-utils": "^1.0.10",
     "typescript": "5.0.4",
-    "uilib-native": "5.0.0-snapshot.7358"
+    "uilib-native": "5.0.0-snapshot.7390"
   },
   "peerDependencies": {
     "react": ">=18.3.1",
@@ -137,7 +137,7 @@
     "react-native-gesture-handler": ">=2.24.0",
     "react-native-reanimated": ">=3.17.5",
     "react-native-ui-lib": "*",
-    "uilib-native": "5.0.0-snapshot.7358"
+    "uilib-native": "5.0.0-snapshot.7390"
   },
   "jest": {
     "preset": "react-native",
