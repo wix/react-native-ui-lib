@@ -54,6 +54,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     ignoreBackgroundPress,
     modalProps = {},
     useSafeArea,
+    disableAnimation = false,
     testID,
     children
   } = props;
@@ -154,7 +155,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
       styles.defaultDialogStyle,
       {backgroundColor: Colors.$backgroundDefault},
       containerStyle,
-      animatedStyle,
+      disableAnimation ? undefined : animatedStyle,
       width ? {width} : undefined,
       height ? {height} : undefined
     ];
