@@ -122,6 +122,13 @@ export interface _DialogProps extends AlignmentModifiers, Pick<ViewProps, 'useSa
    */
   modalProps?: ModalProps;
   /**
+   * Disable animation (default is false)
+   * In some cases you might want to disable the animation (probably for Android only), this is when the dialog is scrollable and has touchable items in the scrollable area.
+   * This is a temporary solution for a reanimated + RN77\8 bug.
+   * See https://github.com/software-mansion/react-native-reanimated/issues/6659 and https://github.com/facebook/react-native/issues/49694
+   */
+  disableAnimation?: boolean;
+  /**
    * Used to locate this view in end-to-end tests
    * The container has the unchanged id.
    * Currently supported inner IDs:
