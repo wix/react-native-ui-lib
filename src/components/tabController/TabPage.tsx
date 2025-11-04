@@ -93,12 +93,14 @@ export default function TabPage({
   });
 
   const _style = useMemo(() => {
-    return [!asCarousel && styles.page, animatedPageStyle, {width: asCarousel ? containerWidth : undefined}, style];
-  }, [asCarousel, animatedPageStyle, containerWidth, style]);
-
-  if (!isActive && !asCarousel) {
-    return null;
-  }
+    return [
+      !asCarousel && styles.page,
+      animatedPageStyle,
+      {width: asCarousel ? containerWidth : undefined},
+      style,
+      !isActive && !asCarousel ? {opacity: 0, zIndex: 0} : {opacity: 1, zIndex: 1}
+    ];
+  }, [asCarousel, animatedPageStyle, containerWidth, style, isActive]);
 
   return (
     <Reanimated.View style={_style} testID={testID}>
