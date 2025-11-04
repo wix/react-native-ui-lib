@@ -13,11 +13,6 @@
     {"name": "value", "type": "string | number", "description": "Item's value"},
     {"name": "label", "type": "string", "description": "Item's label"},
     {"name": "labelStyle", "type": "ViewStyle", "description": "Item's label style"},
-    {
-      "name": "getItemLabel",
-      "type": "(value: string | number) => string",
-      "description": "Custom function for the item label"
-    },
     {"name": "isSelected", "type": "boolean", "description": "Is the item selected"},
     {"name": "selectedIcon", "type": "string", "description": "Pass to change the selected icon"},
     {"name": "selectedIconColor", "type": "ImageSource", "description": "Pass to change the selected icon color"},

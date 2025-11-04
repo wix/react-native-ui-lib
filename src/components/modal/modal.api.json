@@ -38,6 +38,11 @@
       "name": "keyboardAvoidingViewProps",
       "type": "object",
       "description": "Send additional props to the KeyboardAvoidingView (iOS only)"
+    },
+    {
+      "name": "fixReanimatedInteraction",
+      "type": "boolean",
+      "description": "Fix RNModal's interaction with react-native-reanimated (Android only, default: true)"
     }
   ],
   "snippet": [

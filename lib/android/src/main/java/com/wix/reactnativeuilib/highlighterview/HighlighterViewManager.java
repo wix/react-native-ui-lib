@@ -8,12 +8,15 @@ import android.util.SizeF;
 import android.view.View;
 
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.UIManager;
 import com.facebook.react.uimanager.IllegalViewOperationException;
 import com.facebook.react.uimanager.NativeViewHierarchyManager;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
+import com.facebook.react.uimanager.UIManagerHelper;
 import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.uimanager.annotations.ReactProp;
+import com.facebook.react.uimanager.common.UIManagerType;
 
 import javax.annotation.Nullable;
 
@@ -75,33 +78,38 @@ class HighlighterViewManager extends SimpleViewManager<HighlighterView> {
 
     @ReactProp(name = "highlightViewTag")
     public void setHighlightViewTag(final HighlighterView view, Integer highlightViewTag) {
-        try {
-            NativeViewHierarchyManager nativeViewHierarchyManager = ReactHacks.getNativeViewHierarchyManager(context.getNativeModule(UIManagerModule.class));
-            if (nativeViewHierarchyManager == null) {
-                return;
-            }
-
-            final View resolvedView = nativeViewHierarchyManager.resolveView(highlightViewTag);
-            if (resolvedView != null) {
-                if (resolvedView.getWidth() == 0 || resolvedView.getHeight() == 0) {
-                    resolvedView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-                        @Override
-                        public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                            float width = right - left;
-                            float height = bottom - top;
-                            if (width > 0 && height > 0) {
-                                setViewBasedHighlightFrame(view, resolvedView);
-                                resolvedView.removeOnLayoutChangeListener(this);
-                            }
+        if (highlightViewTag != null) {
+            try {
+                UIManager uiManager = UIManagerHelper.getUIManagerForReactTag(context, highlightViewTag);
+                if (uiManager != null) {
+                    final View resolvedView = uiManager.resolveView(highlightViewTag);
+                    if (resolvedView != null) {
+                        if (resolvedView.getWidth() == 0 || resolvedView.getHeight() == 0) {
+                            resolvedView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                                @Override
+                                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                                    float width = right - left;
+                                    float height = bottom - top;
+                                    if (width > 0 && height > 0) {
+                                        setViewBasedHighlightFrame(view, resolvedView);
+                                        resolvedView.removeOnLayoutChangeListener(this);
+                                    }
+                                }
+                            });
+                        } else {
+                            setViewBasedHighlightFrame(view, resolvedView);
                         }
-                    });
+                    } else {
+                        Log.e("HighlighterView", "was not able to resolve highlightViewTag: " + highlightViewTag.toString());
+                    }
                 } else {
-                    setViewBasedHighlightFrame(view, resolvedView);
+                    Log.e("HighlighterView", "was not able to resolve get uiManager for highlightViewTag: " + highlightViewTag.toString());
                 }
+            } catch (IllegalViewOperationException e) {
+                Log.e("HighlighterView", "invalid highlightViewTag: " + highlightViewTag.toString() + " " + e.toString());
             }
-        }
-        catch (IllegalViewOperationException e) {
-            Log.e("HighlighterView", "invalid highlightViewTag: " + highlightViewTag.toString() + " " + e.toString());
+        } else {
+            Log.e("HighlighterView", "highlightViewTag is null");
         }
     }
 

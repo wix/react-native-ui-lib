@@ -193,11 +193,10 @@ const styles = StyleSheet.create({
     color: Colors.$textDefault,
     ...(Constants.isIOS
       ? {
+        textAlign: 'left',
         writingDirection: Constants.isRTL ? writingDirectionTypes.RTL : writingDirectionTypes.LTR
       }
-      : {
-        textAlign: 'left'
-      })
+      : undefined)
   },
   centered: {
     textAlign: 'center'

@@ -21,7 +21,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
-ios/.xcode.env.local
+**/.xcode.env.local
 
 # Android/IntelliJ
 #
@@ -43,11 +43,17 @@ expoDemo/android/gradlew.bat
 node_modules/
 npm-debug.log
 
-# yarn
+# Yarn
+.yarn/*
 yarn-error.log
 **/.yarn/cache
 **/.yarn/install-state.gz
 **/.yarn/yarn.build.json
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 .vscode
 
@@ -74,7 +80,7 @@ docs/components/**
 !scripts/build
 
 # Ruby / CocoaPods
-/ios/Pods/
+**/Pods/
 /vendor/bundle/
 /ios/Podfile.lock
 expoDemo/ios/Pods

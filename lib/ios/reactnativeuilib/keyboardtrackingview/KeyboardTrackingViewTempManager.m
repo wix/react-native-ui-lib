@@ -11,11 +11,12 @@
 #import "UIResponder+FirstResponderTemp.h"
 
 #import <WebKit/WebKit.h>
-#import <React/RCTScrollView.h>
+
 #import <React/RCTBridge.h>
 #import <React/RCTUIManager.h>
 #import <React/UIView+React.h>
 #import <React/RCTUIManagerUtils.h>
+#import <React/RCTSurfaceHostingView.h>
 
 #import <objc/runtime.h>
 
@@ -70,7 +71,7 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
     
     if (self)
     {
-        [self addObserver:self forKeyPath:@"bounds" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:NULL];
+        [self addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:NULL];
         _inputViewsMap = [NSMapTable weakToWeakObjectsMapTable];
         _deferedInitializeAccessoryViewsCount = 0;
         
@@ -93,20 +94,21 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
     return self;
 }
 
--(RCTRootView*)getRootView
+-(UIView*)getRootView
 {
     UIView *view = self;
     while (view.superview != nil)
     {
         view = view.superview;
-        if ([view isKindOfClass:[RCTRootView class]])
+        if ([view isKindOfClass:[RCTSurfaceHostingView class]]) {
             break;
+        }
     }
     
-    if ([view isKindOfClass:[RCTRootView class]])
-    {
-        return (RCTRootView*)view;
+    if ([view isKindOfClass:[RCTSurfaceHostingView class]]) {
+        return view;
     }
+    
     return nil;
 }
 
@@ -166,13 +168,35 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
 -(void)layoutSubviews
 {
     [super layoutSubviews];
+    
+    // Preserving the AccessoryView's Y position within its superview
+    CGFloat bottomSafeArea = [self getBottomSafeArea];
+    CGFloat tabBarHeight = [self getTabBarHeight];
+    CGFloat yOffset = MIN(-bottomSafeArea, -_ObservingInputAccessoryViewTemp.keyboardHeight + tabBarHeight);
+    if (self.frame.origin.y != yOffset) {
+        self.frame = CGRectMake(self.frame.origin.x,
+                                yOffset,
+                                self.frame.size.width,
+                                self.frame.size.height);
+    }
+    
     [self updateBottomViewFrame];
+}
+
+- (UIScrollView*)extractUIScrollView:(UIView*)view
+{
+    for (UIView* subview in view.subviews) {
+        if ([subview isKindOfClass:[UIScrollView class]]) {
+            return (UIScrollView*)subview;
+        }
+    }
+    
+    return nil;
 }
 
 - (void)initializeAccessoryViewsAndHandleInsets
 {
     NSArray<UIView*>* allSubviews = [self getBreadthFirstSubviewsForView:[self getRootView]];
-    NSMutableArray<RCTScrollView*>* rctScrollViewsArray = [NSMutableArray array];
     
     for (UIView* subview in allSubviews)
     {
@@ -180,26 +204,29 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
         {
             if(_scrollViewToManage == nil)
             {
-                if(_requiresSameParentToManageScrollView && [subview isKindOfClass:[RCTScrollView class]] && subview.superview == self.superview)
-                {
-                    _scrollViewToManage = ((RCTScrollView*)subview).scrollView;
+                if ([NSStringFromClass([subview class]) isEqualToString:@"RCTScrollViewComponentView"]) {
+                    UIScrollView *scrollView = [self extractUIScrollView:subview];
+                    
+                    if ([scrollView isKindOfClass:[UIScrollView class]])
+                    {
+                        if(_requiresSameParentToManageScrollView && subview.superview == self.superview)
+                        {
+                            _scrollViewToManage = scrollView;
+                        }
+                        else if(!_requiresSameParentToManageScrollView)
+                        {
+                            _scrollViewToManage = scrollView;
+                        }
+                        
+                        if(_scrollViewToManage != nil)
+                        {
+                            _scrollIsInverted = CGAffineTransformEqualToTransform(subview.superview.transform, CGAffineTransformMakeScale(1, -1));
+                        }
+                    }
                 }
-                else if(!_requiresSameParentToManageScrollView && [subview isKindOfClass:[UIScrollView class]])
-                {
-                    _scrollViewToManage = (UIScrollView*)subview;
-                }
-                
-                if(_scrollViewToManage != nil)
-                {
-                    _scrollIsInverted = CGAffineTransformEqualToTransform(_scrollViewToManage.superview.transform, CGAffineTransformMakeScale(1, -1));
-                }
-            }
-            
-            if([subview isKindOfClass:[RCTScrollView class]])
-            {
-                [rctScrollViewsArray addObject:(RCTScrollView*)subview];
             }
         }
+        
         
         if ([subview isKindOfClass:NSClassFromString(@"RCTTextField")])
         {
@@ -223,17 +250,30 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
         {
             [self setupTextView:[subview valueForKey:@"_backedTextInputView"]];
         }
-        else if ([subview isKindOfClass:NSClassFromString(@"RCTTextView")])
+        else if ([subview isKindOfClass:NSClassFromString(@"RCTTextView")] ||
+                 [subview isKindOfClass:NSClassFromString(@"RCTTextInputComponentView")])
         {
+            
             UITextView *textView = nil;
-            Ivar backedTextInputIvar = class_getInstanceVariable([subview class], "_backedTextInput");
-            if (backedTextInputIvar != NULL)
-            {
-                textView = [subview valueForKey:@"_backedTextInput"];
-            }
-            else if([subview isKindOfClass:[UITextView class]])
-            {
-                textView = (UITextView*)subview;
+            
+            if ([subview isKindOfClass:NSClassFromString(@"RCTTextInputComponentView")]) {
+                Ivar textFieldIvar = class_getInstanceVariable([subview class], "_backedTextInputView");
+                if (textFieldIvar != NULL)
+                {
+                    textView = [subview valueForKey:@"_backedTextInputView"];
+                }
+                
+            } else {
+                
+                Ivar backedTextInputIvar = class_getInstanceVariable([subview class], "_backedTextInput");
+                if (backedTextInputIvar != NULL)
+                {
+                    textView = [subview valueForKey:@"_backedTextInput"];
+                }
+                else if([subview isKindOfClass:[UITextView class]])
+                {
+                    textView = (UITextView*)subview;
+                }
             }
             [self setupTextView:textView];
         }
@@ -247,13 +287,11 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
         }
     }
     
-    for (RCTScrollView *scrollView in rctScrollViewsArray)
+    if(_scrollViewToManage != nil)
     {
-        if(scrollView.scrollView == _scrollViewToManage)
+        if(_scrollViewToManage.delegate == nil)
         {
-            [scrollView removeScrollListener:self];
-            [scrollView addScrollListener:self];
-            break;
+            _scrollViewToManage.delegate = self;
         }
     }
     
@@ -270,6 +308,8 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
     _originalHeight = _ObservingInputAccessoryViewTemp.height;
     
     [self addBottomViewIfNecessary];
+    
+    [self ensureLegacyViewManagerTouchDelegation];
 }
 
 - (void)setupTextView:(UITextView*)textView
@@ -338,12 +378,12 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
 
 -(void)dealloc
 {
-    [self removeObserver:self forKeyPath:@"bounds"];
+    [self removeObserver:self forKeyPath:@"frame"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
 {
-    _ObservingInputAccessoryViewTemp.height = self.bounds.size.height;
+    _ObservingInputAccessoryViewTemp.height = self.frame.size.height;
 }
 
 - (void)ObservingInputAccessoryViewTempKeyboardWillDisappear:(ObservingInputAccessoryViewTemp *)ObservingInputAccessoryViewTemp
@@ -551,7 +591,46 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
     [self updateBottomViewFrame];
     
     self.transform = CGAffineTransformMakeTranslation(0, accessoryTranslation);
+    
     [self _updateScrollViewInsets];
+}
+
+- (void)ensureLegacyViewManagerTouchDelegation {
+    UIView *superview = self.superview;
+    if (superview) {
+        if ([NSStringFromClass([superview class]) isEqualToString:@"RCTLegacyViewManagerInteropComponentView"]) {
+            [self changeLegacyViewManagerHitTestDelegation:superview];
+        }
+    }
+}
+
+- (void)changeLegacyViewManagerHitTestDelegation:(UIView *)wrapperView {
+    static dispatch_once_t onceToken;
+    static IMP originalHitTestIMP = NULL;
+    
+    dispatch_once(&onceToken, ^{
+        Class wrapperClass = [wrapperView class];
+        
+        Method originalMethod = class_getInstanceMethod(wrapperClass, @selector(hitTest:withEvent:));
+        if (originalMethod) {
+            originalHitTestIMP = method_getImplementation(originalMethod);
+            
+            IMP customHitTest = imp_implementationWithBlock(^UIView*(id self, CGPoint point, UIEvent *event) {
+                UIView *subview = [self subviews].firstObject;
+                if (subview &&
+                    [subview isKindOfClass:[KeyboardTrackingViewTemp class]]) {
+                    CGPoint convertedPoint = [self convertPoint:point toView:subview];
+                    UIView *result = [subview hitTest:convertedPoint withEvent:event];
+                    return result;
+                }
+                
+                UIView* (*originalFunc)(id, SEL, CGPoint, UIEvent*) = (void*)originalHitTestIMP;
+                return originalFunc(self, @selector(hitTest:withEvent:), point, event);
+            });
+            
+            method_setImplementation(originalMethod, customHitTest);
+        }
+    });
 }
 
 - (void)performScrollToFocusedInput
@@ -735,3 +814,4 @@ RCT_EXPORT_METHOD(scrollToStart:(nonnull NSNumber *)reactTag)
 }
 
 @end
+
