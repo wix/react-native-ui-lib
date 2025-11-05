@@ -46,6 +46,9 @@ export default function TabPage({
 }: PropsWithChildren<TabControllerPageProps>) {
   const {currentPage, asCarousel, nestedInScrollView, containerWidth} = useContext(TabBarContext);
   const [shouldLoad, setLoaded] = useState(!lazy);
+
+  // TODO: RN 77 hack - remove the state in future RN\reanimated release (ticket 4838 \ https://github.com/software-mansion/react-native-reanimated/issues/8517) when fixed we should revert to the original logic (see this PR: https://github.com/wix/react-native-ui-lib/pull/3829)
+  const [isActive, setIsActive] = useState(currentPage.value === index);
   // const [focused, setFocused] = useState(false);
 
   const lazyLoad = useCallback(() => {
@@ -61,6 +64,7 @@ export default function TabPage({
   },
   (currentPage /* , previousPage */) => {
     const isActive = currentPage === index;
+    runOnJS(setIsActive)(isActive);
     // const wasActive = previousPage === index;
     // const nearActive = asCarousel && (currentPage - 1 === index || currentPage + 1 === index);
     // const wasNearActive =
@@ -79,24 +83,24 @@ export default function TabPage({
   [currentPage, lazyLoad]);
 
   const animatedPageStyle = useAnimatedStyle(() => {
-    const isActive = Math.round(currentPage.value) === index;
-
-    // TODO: Fix to proper animated style once Reanimated export AnimatedStyleProp
-    const style: any = {
-      opacity: isActive || asCarousel ? 1 : 0,
-      zIndex: isActive || asCarousel ? 1 : 0
-    };
-
-    if (nestedInScrollView) {
-      style.position = isActive ? 'relative' : 'absolute';
+    if (!nestedInScrollView) {
+      return {};
     }
 
-    return style;
+    const isActive = Math.round(currentPage.value) === index;
+
+    return {position: isActive ? 'relative' : 'absolute'};
   });
 
   const _style = useMemo(() => {
-    return [!asCarousel && styles.page, animatedPageStyle, {width: asCarousel ? containerWidth : undefined}, style];
-  }, [asCarousel, animatedPageStyle, containerWidth, style]);
+    return [
+      !asCarousel && styles.page,
+      animatedPageStyle,
+      {width: asCarousel ? containerWidth : undefined},
+      style,
+      !isActive && !asCarousel ? {opacity: 0, zIndex: 0} : {opacity: 1, zIndex: 1}
+    ];
+  }, [asCarousel, animatedPageStyle, containerWidth, style, isActive]);
 
   return (
     <Reanimated.View style={_style} testID={testID}>
@@ -108,7 +112,5 @@ export default function TabPage({
 }
 
 const styles = StyleSheet.create({
-  page: {
-    ...StyleSheet.absoluteFillObject
-  }
+  page: StyleSheet.absoluteFillObject
 });
