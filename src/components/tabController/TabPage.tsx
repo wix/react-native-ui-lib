@@ -47,7 +47,7 @@ export default function TabPage({
   const {currentPage, asCarousel, nestedInScrollView, containerWidth} = useContext(TabBarContext);
   const [shouldLoad, setLoaded] = useState(!lazy);
 
-  // TODO: RN 77 hack - remove the state in future RN\reanimated release (ticket 4838 \ https://github.com/software-mansion/react-native-reanimated/issues/8517)
+  // TODO: RN 77 hack - remove the state in future RN\reanimated release (ticket 4838 \ https://github.com/software-mansion/react-native-reanimated/issues/8517) when fixed we should revert to the original logic (see this PR: https://github.com/wix/react-native-ui-lib/pull/3829)
   const [isActive, setIsActive] = useState(currentPage.value === index);
   // const [focused, setFocused] = useState(false);
 
