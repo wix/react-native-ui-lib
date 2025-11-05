@@ -305,4 +305,5 @@ Hint.positions = HintPositions;
 
 export {HintProps, Hint};
 
+// @ts-expect-error
 export default asBaseComponent<HintProps, typeof Hint>(Hint);
