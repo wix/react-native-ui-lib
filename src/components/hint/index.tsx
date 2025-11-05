@@ -25,8 +25,8 @@ const HINT_MIN_WIDTH = 68;
 const Hint = (props: HintProps) => {
   const {
     visible,
-    useModal,
-    position,
+    useModal = true,
+    position = HintPositions.BOTTOM,
     children,
     message,
     containerWidth = Constants.windowWidth,
@@ -206,7 +206,8 @@ const Hint = (props: HintProps) => {
   };
 
   if (!visible && hintUnmounted) {
-    return children || null;
+    // Type assertion needed: children is React.ReactNode but asBaseComponent expects ReactElement | null
+    return (children || null) as React.ReactElement | null;
   }
 
   return (
@@ -299,13 +300,8 @@ const styles = StyleSheet.create({
 });
 
 Hint.displayName = 'Hint';
-Hint.defaultProps = {
-  position: HintPositions.BOTTOM,
-  useModal: true
-};
 Hint.positions = HintPositions;
 
 export {HintProps, Hint};
 
-// @ts-expect-error
 export default asBaseComponent<HintProps, typeof Hint>(Hint);
