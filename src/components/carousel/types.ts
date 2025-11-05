@@ -67,6 +67,10 @@ export interface CarouselProps extends ScrollViewProps {
    */
   showCounter?: boolean;
   /**
+   * the counter's style
+   */
+  counterStyle?: StyleProp<ViewStyle>;
+  /**
    * the counter's text style
    */
   counterTextStyle?: StyleProp<ViewStyle>;
