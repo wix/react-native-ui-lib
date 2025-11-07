@@ -173,11 +173,14 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
     CGFloat bottomSafeArea = [self getBottomSafeArea];
     CGFloat tabBarHeight = [self getTabBarHeight];
     CGFloat yOffset = MIN(-bottomSafeArea, -_ObservingInputAccessoryViewTemp.keyboardHeight + tabBarHeight);
+    
     if (self.frame.origin.y != yOffset) {
+        [self removeObserver:self forKeyPath:@"frame"];
         self.frame = CGRectMake(self.frame.origin.x,
                                 yOffset,
                                 self.frame.size.width,
                                 self.frame.size.height);
+        [self addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:NULL];
     }
     
     [self updateBottomViewFrame];
@@ -431,7 +434,9 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
 
 - (void)_updateScrollViewInsets
 {
-    if(self.scrollViewToManage != nil)
+    // Because our view is now being transformed inside it's superview (from RN77 it inherited a RCTLegacyViewManagerInteropComponentView as superview) we no longer need the scrollview to also update because it's inside our view
+    return;
+    /*if(self.scrollViewToManage != nil)
     {
         UIEdgeInsets insets = self.scrollViewToManage.contentInset;
         CGFloat bottomSafeArea = [self getBottomSafeArea];
@@ -441,6 +446,7 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
         CGPoint originalOffset = self.scrollViewToManage.contentOffset;
         
         bottomInset += (_ObservingInputAccessoryViewTemp.keyboardHeight == 0 ? bottomSafeArea : 0);
+        
         if(self.scrollIsInverted)
         {
             insets.top = bottomInset;
@@ -477,7 +483,7 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
             insets.bottom = bottomInset;
         }
         self.scrollViewToManage.scrollIndicatorInsets = insets;
-    }
+    }*/
 }
 
 #pragma mark - bottom view
@@ -590,7 +596,11 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
     }
     [self updateBottomViewFrame];
     
-    self.transform = CGAffineTransformMakeTranslation(0, accessoryTranslation);
+    CGAffineTransform oldTransform = self.transform;
+    CGAffineTransform newTransform = CGAffineTransformMakeTranslation(0, accessoryTranslation);
+    if (oldTransform.tx != newTransform.tx || oldTransform.ty != newTransform.ty) {
+        self.transform = CGAffineTransformMakeTranslation(0, accessoryTranslation);
+    }
     
     [self _updateScrollViewInsets];
 }
