@@ -459,7 +459,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   }
 
   renderCounter() {
-    const {pageWidth, showCounter, counterStyle, counterTextStyle} = this.props;
+    const {pageWidth, showCounter, counterContainerStyle, counterTextStyle} = this.props;
     const {currentStandingPage} = this.state;
     const pagesCount = presenter.getChildrenLength(this.props);
 
