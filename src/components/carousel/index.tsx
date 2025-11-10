@@ -465,7 +465,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
 
     if (showCounter && !pageWidth) {
       return (
-        <View center style={[styles.counter, counterStyle]}>
+        <View center style={[styles.counter, counterContainerStyle]}>
           <Text grey80 text90 style={[{fontWeight: 'bold'}, counterTextStyle]}>
             {currentStandingPage + 1}/{pagesCount}
           </Text>
