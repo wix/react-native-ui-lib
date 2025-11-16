@@ -33,7 +33,7 @@ const packages = [
   },
   {
     filename: 'incubator.js',
-    incubatorComponents: ['Dialog', 'ExpandableOverlay', 'Slider', 'Toast']
+    incubatorComponents: ['ExpandableOverlay', 'Slider', 'Toast']
   },
   {
     filename: 'style.js',
