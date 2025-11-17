@@ -2,24 +2,28 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = ({siteDir}, _options) => {
-  const baseProjectSource = [
-    path.resolve(siteDir, 'src'),
-    path.resolve(siteDir, 'node_modules/react-native-web'),
-    path.resolve(siteDir, 'node_modules/react-native-ui-lib'),
-    path.resolve(siteDir, 'node_modules/react-native-shimmer-placeholder'),
-    path.resolve(siteDir, 'node_modules/react-native-reanimated'),
-    path.resolve(siteDir, 'node_modules/react-native-linear-gradient')
-    // just for not getting warnings
-    // path.resolve(siteDir, 'node_modules/react-native-haptic-feedback'),
-    // path.resolve(siteDir, 'node_modules/react-native-animatable'),
-    // path.resolve(siteDir, 'node_modules/react-native-svg'),
-    // path.resolve(siteDir, 'node_modules/react-native-svg-transformer'),
-    // path.resolve(siteDir, 'node_modules/@react-native-community/netinfo'),
-    // path.resolve(siteDir, 'node_modules/@react-native-community/datetimepicker'),
-    // path.resolve(siteDir, 'node_modules/react-native-color'),
+  // RN modules that must be transpiled (regardless of hoisted location)
+  const rnModules = [
+    'react-native-web',
+    'react-native-ui-lib',
+    'react-native-reanimated',
+    'react-native-shimmer-placeholder',
+    'react-native-linear-gradient'
+  ];
+  const makeNodeModulesRegex = (name) => new RegExp(`node_modules[\\\\/]${name}[\\\\/]`);
 
-    // path.resolve(siteDir, 'node_modules/postcss'),
-    // path.resolve(siteDir, 'node_modules/postcss-js')
+  // Absolute paths (when packages are installed inside docuilib)
+  const inSiteNodeModules = rnModules.map(m => path.resolve(siteDir, 'node_modules', m));
+  // Regex match to also catch hoisted locations (e.g. root/node_modules)
+  const hoistedNodeModulesRegexes = rnModules.map(makeNodeModulesRegex);
+
+  const baseProjectSource = [
+    // Project sources
+    path.resolve(siteDir, 'src'),
+    // Specific absolute locations
+    ...inSiteNodeModules,
+    // And any hoisted locations matching these node_modules
+    ...hoistedNodeModulesRegexes
   ];
 
   const useBabelForRN = {
