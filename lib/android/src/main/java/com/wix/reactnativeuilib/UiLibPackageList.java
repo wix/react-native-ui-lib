@@ -6,7 +6,6 @@ import com.facebook.react.ReactPackage;
 import com.wix.reactnativeuilib.dynamicfont.DynamicFontPackage;
 import com.wix.reactnativeuilib.highlighterview.HighlighterViewPackage;
 import com.wix.reactnativeuilib.keyboardinput.KeyboardInputPackage;
-import com.wix.reactnativeuilib.textinput.TextInputDelKeyHandlerPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +22,6 @@ public class UiLibPackageList {
         return Arrays.asList(
                 new DynamicFontPackage(),
                 new HighlighterViewPackage(),
-                new TextInputDelKeyHandlerPackage(),
                 new KeyboardInputPackage(application)
         );
     }

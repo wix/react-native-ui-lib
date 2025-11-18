@@ -33,6 +33,8 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
   const currIndex = useSharedValue(initialIndex.value);
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
+  const zIndex = useSharedValue(0);
+  const scale = useSharedValue(1);
 
   const isDragging = useSharedValue(false);
   const tempItemsOrder = useSharedValue(itemsOrder.value);
@@ -99,6 +101,18 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
 
         translateX.value = withTiming(translation.x, animationConfig);
         translateY.value = withTiming(translation.y, animationConfig);
+      }
+    },
+    []);
+
+  useAnimatedReaction(() => isDragging.value,
+    (isDragging, wasDragging) => {
+      if (isDragging && !wasDragging) {
+        zIndex.value = withTiming(100, animationConfig);
+        scale.value = withSpring(1.1);
+      } else if (!isDragging && wasDragging) {
+        zIndex.value = withTiming(0, animationConfig);
+        scale.value = withSpring(1);
       }
     },
     []);
@@ -172,12 +186,13 @@ function SortableItem(props: PropsWithChildren<SortableItemProps & ReturnType<ty
     });
 
   const animatedStyle = useAnimatedStyle(() => {
-    const scale = withSpring(isDragging.value ? 1.1 : 1);
-    const zIndex = isDragging.value ? 100 : withTiming(0, animationConfig);
-
     return {
-      zIndex,
-      transform: [{translateX: translateX.value}, {translateY: translateY.value}, {scale}]
+      zIndex: Math.round(zIndex.value),
+      transform: [
+        {translateX: translateX.value},
+        {translateY: translateY.value},
+        {scale: scale.value}
+      ]
     };
   });
 

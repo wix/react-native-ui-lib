@@ -33,7 +33,7 @@ const packages = [
   },
   {
     filename: 'incubator.js',
-    incubatorComponents: ['Dialog', 'ExpandableOverlay', 'Slider', 'Toast']
+    incubatorComponents: ['ExpandableOverlay', 'Slider', 'Toast']
   },
   {
     filename: 'style.js',
@@ -94,8 +94,8 @@ packages.forEach((package) => {
 
     content += '};\n';
 
-    typings = `import {Dialog, ExpandableOverlay, Slider, Toast} from './src/incubator';\n`;
-    typings += `export {Dialog, ExpandableOverlay, Slider, Toast};\n`;
+    typings = `import {ExpandableOverlay, Slider, Toast} from './src/incubator';\n`;
+    typings += `export {ExpandableOverlay, Slider, Toast};\n`;
   }
 
   fs.writeFileSync(package.filename, content);

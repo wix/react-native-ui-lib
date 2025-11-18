@@ -194,6 +194,10 @@ class Image extends PureComponent<Props, State> {
 
   onError = (event: NativeSyntheticEvent<ImageErrorEventData>) => {
     if (event.nativeEvent.error) {
+      // TODO: RN 77 hack - test in future releases (ticket 4835)
+      if (Constants.isIOS && this.props.source === undefined) {
+        return;
+      }
       this.setState({error: true});
       this.props.onError?.(event);
     }

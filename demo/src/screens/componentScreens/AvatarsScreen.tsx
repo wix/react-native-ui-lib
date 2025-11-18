@@ -43,7 +43,7 @@ const examples = [
     size: 60,
     animate: true,
     imageProps: {animationDuration: 1000},
-    source: {uri: 'https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg'}
+    source: {uri: 'https://lh3.googleusercontent.com/-CMM0GmT5tiI/AAAAAAAAAAI/AAAAAAAAAAA/-o9gKbC6FVo/s181-c/111308920004613908895.jpg'}
   },
   {
     title: 'Big pimple',
