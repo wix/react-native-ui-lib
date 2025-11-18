@@ -1,9 +1,9 @@
 import {StyleSheet, TextStyle} from 'react-native';
-import {useComponentDriver, ComponentProps} from '../../testkit/new/Component.driver';
+import {useComponentDriver, ComponentProps, ComponentDriverOptions} from '../../testkit/new/Component.driver';
 import {usePressableDriver} from '../../testkit/new/usePressable.driver';
 
-export const TextDriver = (props: ComponentProps) => {
-  const driver = usePressableDriver(useComponentDriver(props));
+export const TextDriver = (props: ComponentProps, options?: ComponentDriverOptions) => {
+  const driver = usePressableDriver(useComponentDriver(props, options));
 
   const getText = () => {
     const textChildren = driver.getElement().children;

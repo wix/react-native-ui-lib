@@ -1,0 +1,39 @@
+{
+  "name": "Dialog.Header",
+  "category": "overlays",
+  "description": "Component for displaying the header of a popup dialog",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DialogScreen.tsx",
+  "props": [
+    {"name": "title", "type": "string", "description": "Title"},
+    {"name": "titleStyle", "type": "StyleProp<TextStyle>", "description": "Title text style"},
+    {"name": "titleProps", "type": "TextProps", "description": "Title extra props"},
+    {"name": "subtitle", "type": "string", "description": "Subtitle"},
+    {"name": "subtitleStyle", "type": "StyleProp<TextStyle>", "description": "Subtitle text style"},
+    {"name": "subtitleProps", "type": "TextProps", "description": "Subtitle extra props"},
+    {"name": "showKnob", "type": "boolean", "description": "Show the header's knob", "default": "true"},
+    {"name": "showDivider", "type": "boolean", "description": "Show the header's divider", "default": "true"},
+    {"name": "leadingAccessory", "type": "ReactElement", "description": "Pass to render a leading element"},
+    {"name": "trailingAccessory", "type": "ReactElement", "description": "Pass to render a trailing element"},
+    {
+      "name": "topAccessory",
+      "type": "ReactElement",
+      "description": "Pass to render a top element above the title"
+    },
+    {
+      "name": "bottomAccessory",
+      "type": "ReactElement",
+      "description": "Pass to render a bottom element below the subtitle"
+    },
+    {
+      "name": "contentContainerStyle",
+      "type": "ViewProps['style']",
+      "description": "Style for the leading + content + trailing components (without the bottomAccessory)"
+    },
+    {
+      "name": "onPress",
+      "type": "() => void",
+      "description": "onPress callback for the inner content"
+    }
+  ],
+  "snippet": ["<Dialog.Header title={'Title'$1} subtitle={'Subtitle'$2} trailingAccessory={renderAccessory$3}/>"]
+}

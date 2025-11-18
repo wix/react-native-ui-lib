@@ -25,8 +25,8 @@ const HINT_MIN_WIDTH = 68;
 const Hint = (props: HintProps) => {
   const {
     visible,
-    useModal,
-    position,
+    useModal = true,
+    position = HintPositions.BOTTOM,
     children,
     message,
     containerWidth = Constants.windowWidth,
@@ -60,6 +60,7 @@ const Hint = (props: HintProps) => {
     if (targetRef.current && hintRef.current) {
       focusAccessibilityOnHint(targetRef.current, hintRef.current);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const targetLayout = useMemo(() => {
@@ -71,6 +72,7 @@ const Hint = (props: HintProps) => {
     if (hintRef.current) {
       focusAccessibilityOnHint(targetRef.current, hintRef.current);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const showHint = !!targetLayout;
@@ -299,10 +301,6 @@ const styles = StyleSheet.create({
 });
 
 Hint.displayName = 'Hint';
-Hint.defaultProps = {
-  position: HintPositions.BOTTOM,
-  useModal: true
-};
 Hint.positions = HintPositions;
 
 export {HintProps, Hint};

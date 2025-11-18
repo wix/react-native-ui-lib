@@ -32,6 +32,7 @@ exports[`TextField Screen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             {
@@ -63,6 +64,7 @@ exports[`TextField Screen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             {
@@ -290,6 +292,7 @@ exports[`TextField Screen renders screen 1`] = `
               {
                 "backgroundColor": "transparent",
                 "color": "#20303C",
+                "textAlign": "left",
                 "writingDirection": "ltr",
               },
               {
@@ -724,6 +727,7 @@ exports[`TextField Screen renders screen 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
+                    "textAlign": "left",
                     "writingDirection": "ltr",
                   },
                   undefined,
@@ -793,6 +797,7 @@ exports[`TextField Screen renders screen 1`] = `
               {
                 "backgroundColor": "transparent",
                 "color": "#20303C",
+                "textAlign": "left",
                 "writingDirection": "ltr",
               },
               {
@@ -1091,6 +1096,7 @@ exports[`TextField Screen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -1265,6 +1271,7 @@ exports[`TextField Screen renders screen 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
+                    "textAlign": "left",
                     "writingDirection": "ltr",
                   },
                   undefined,
@@ -1318,6 +1325,7 @@ exports[`TextField Screen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             {
@@ -1411,6 +1419,7 @@ exports[`TextField Screen renders screen 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
+                    "textAlign": "left",
                     "writingDirection": "ltr",
                   },
                   undefined,
@@ -1522,16 +1531,39 @@ exports[`TextField Screen renders screen 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "backgroundColor": "transparent",
-                      "color": "#6E7881",
-                      "fontFamily": "System",
-                      "fontSize": 16,
-                      "fontWeight": "400",
-                      "lineHeight": 24,
-                      "opacity": 0,
-                      "writingDirection": "ltr",
-                    }
+                    [
+                      {
+                        "backgroundColor": "transparent",
+                        "color": "#20303C",
+                        "textAlign": "left",
+                        "writingDirection": "ltr",
+                      },
+                      undefined,
+                      {
+                        "color": "#6E7881",
+                      },
+                      undefined,
+                      undefined,
+                      {},
+                      undefined,
+                      undefined,
+                      undefined,
+                      [
+                        {},
+                        [
+                          {},
+                          {
+                            "fontFamily": "System",
+                            "fontSize": 16,
+                            "fontWeight": "400",
+                            "lineHeight": 24,
+                          },
+                        ],
+                        {
+                          "opacity": 0,
+                        },
+                      ],
+                    ]
                   }
                   testID="undefined.floatingPlaceholder"
                 >
@@ -1631,6 +1663,7 @@ exports[`TextField Screen renders screen 1`] = `
                     {
                       "backgroundColor": "transparent",
                       "color": "#20303C",
+                      "textAlign": "left",
                       "writingDirection": "ltr",
                     },
                     undefined,
@@ -1862,6 +1895,7 @@ exports[`TextField Screen renders screen 1`] = `
                     {
                       "backgroundColor": "transparent",
                       "color": "#20303C",
+                      "textAlign": "left",
                       "writingDirection": "ltr",
                     },
                     undefined,
@@ -1915,6 +1949,7 @@ exports[`TextField Screen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             {
@@ -2007,6 +2042,7 @@ exports[`TextField Screen renders screen 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
+                    "textAlign": "left",
                     "writingDirection": "ltr",
                   },
                   undefined,
@@ -2118,16 +2154,39 @@ exports[`TextField Screen renders screen 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "backgroundColor": "transparent",
-                      "color": "#20303C",
-                      "fontFamily": "System",
-                      "fontSize": 16,
-                      "fontWeight": "400",
-                      "lineHeight": 24,
-                      "opacity": 0,
-                      "writingDirection": "ltr",
-                    }
+                    [
+                      {
+                        "backgroundColor": "transparent",
+                        "color": "#20303C",
+                        "textAlign": "left",
+                        "writingDirection": "ltr",
+                      },
+                      undefined,
+                      {
+                        "color": "#20303C",
+                      },
+                      undefined,
+                      undefined,
+                      {},
+                      undefined,
+                      undefined,
+                      undefined,
+                      [
+                        {},
+                        [
+                          {},
+                          {
+                            "fontFamily": "System",
+                            "fontSize": 16,
+                            "fontWeight": "400",
+                            "lineHeight": 24,
+                          },
+                        ],
+                        {
+                          "opacity": 0,
+                        },
+                      ],
+                    ]
                   }
                   testID="undefined.floatingPlaceholder"
                 >
@@ -2227,6 +2286,7 @@ exports[`TextField Screen renders screen 1`] = `
                     {
                       "backgroundColor": "transparent",
                       "color": "#20303C",
+                      "textAlign": "left",
                       "writingDirection": "ltr",
                     },
                     undefined,
@@ -2322,6 +2382,7 @@ exports[`TextField Screen renders screen 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
+                    "textAlign": "left",
                     "writingDirection": "ltr",
                   },
                   undefined,
@@ -2433,16 +2494,39 @@ exports[`TextField Screen renders screen 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    {
-                      "backgroundColor": "transparent",
-                      "color": "#20303C",
-                      "fontFamily": "System",
-                      "fontSize": 16,
-                      "fontWeight": "400",
-                      "lineHeight": 24,
-                      "opacity": 0,
-                      "writingDirection": "ltr",
-                    }
+                    [
+                      {
+                        "backgroundColor": "transparent",
+                        "color": "#20303C",
+                        "textAlign": "left",
+                        "writingDirection": "ltr",
+                      },
+                      undefined,
+                      {
+                        "color": "#20303C",
+                      },
+                      undefined,
+                      undefined,
+                      {},
+                      undefined,
+                      undefined,
+                      undefined,
+                      [
+                        {},
+                        [
+                          {},
+                          {
+                            "fontFamily": "System",
+                            "fontSize": 16,
+                            "fontWeight": "400",
+                            "lineHeight": 24,
+                          },
+                        ],
+                        {
+                          "opacity": 0,
+                        },
+                      ],
+                    ]
                   }
                   testID="undefined.floatingPlaceholder"
                 >
@@ -2543,6 +2627,7 @@ exports[`TextField Screen renders screen 1`] = `
                     {
                       "backgroundColor": "transparent",
                       "color": "#20303C",
+                      "textAlign": "left",
                       "writingDirection": "ltr",
                     },
                     undefined,
@@ -2607,6 +2692,7 @@ exports[`TextField Screen renders screen 1`] = `
               {
                 "backgroundColor": "transparent",
                 "color": "#20303C",
+                "textAlign": "left",
                 "writingDirection": "ltr",
               },
               {
@@ -2658,6 +2744,7 @@ exports[`TextField Screen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -2934,6 +3021,7 @@ exports[`TextField Screen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -3122,6 +3210,7 @@ exports[`TextField Screen renders screen 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
+                    "textAlign": "left",
                     "writingDirection": "ltr",
                   },
                   undefined,
@@ -3241,6 +3330,7 @@ exports[`TextField Screen renders screen 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
+                    "textAlign": "left",
                     "writingDirection": "ltr",
                   },
                   undefined,
@@ -3459,6 +3549,7 @@ exports[`TextField Screen renders screen 1`] = `
                     {
                       "backgroundColor": "transparent",
                       "color": "#20303C",
+                      "textAlign": "left",
                       "writingDirection": "ltr",
                     },
                     undefined,
@@ -3505,6 +3596,7 @@ exports[`TextField Screen renders screen 1`] = `
                     {
                       "backgroundColor": "transparent",
                       "color": "#20303C",
+                      "textAlign": "left",
                       "writingDirection": "ltr",
                     },
                     undefined,
@@ -3596,6 +3688,7 @@ exports[`TextField Screen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -3643,6 +3736,7 @@ exports[`TextField Screen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             {
@@ -3714,6 +3808,7 @@ exports[`TextField Screen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -4019,6 +4114,7 @@ exports[`TextField Screen renders screen 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
+                    "textAlign": "left",
                     "writingDirection": "ltr",
                   },
                   undefined,
@@ -4071,6 +4167,7 @@ exports[`TextField Screen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             {
@@ -4142,6 +4239,7 @@ exports[`TextField Screen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -4319,6 +4417,7 @@ exports[`TextField Screen renders screen 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
+                    "textAlign": "left",
                     "writingDirection": "ltr",
                   },
                   {
@@ -4369,6 +4468,7 @@ exports[`TextField Screen renders screen 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
+                    "textAlign": "left",
                     "writingDirection": "ltr",
                   },
                   undefined,
@@ -4408,6 +4508,7 @@ exports[`TextField Screen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             {
@@ -4440,6 +4541,7 @@ exports[`TextField Screen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             undefined,
@@ -4722,6 +4824,7 @@ exports[`TextField Screen renders screen 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
+                    "textAlign": "left",
                     "writingDirection": "ltr",
                   },
                   undefined,
@@ -4913,6 +5016,7 @@ exports[`TextField Screen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 {
@@ -4982,6 +5086,7 @@ exports[`TextField Screen renders screen 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
+                    "textAlign": "left",
                     "writingDirection": "ltr",
                   },
                   undefined,
@@ -5034,6 +5139,7 @@ exports[`TextField Screen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             undefined,
@@ -5135,6 +5241,7 @@ exports[`TextField Screen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 {
@@ -5272,6 +5379,7 @@ exports[`TextField Screen renders screen 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
+                    "textAlign": "left",
                     "writingDirection": "ltr",
                   },
                   undefined,
@@ -5364,6 +5472,7 @@ exports[`TextField Screen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 {
@@ -5838,6 +5947,7 @@ exports[`TextField Screen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -6013,6 +6123,7 @@ exports[`TextField Screen renders screen 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
+                    "textAlign": "left",
                     "writingDirection": "ltr",
                   },
                   undefined,
@@ -6065,6 +6176,7 @@ exports[`TextField Screen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             {
@@ -6136,6 +6248,7 @@ exports[`TextField Screen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -6314,6 +6427,7 @@ exports[`TextField Screen renders screen 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
+                    "textAlign": "left",
                     "writingDirection": "ltr",
                   },
                   undefined,
@@ -6367,6 +6481,7 @@ exports[`TextField Screen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             {
@@ -6439,6 +6554,7 @@ exports[`TextField Screen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -6509,6 +6625,7 @@ exports[`TextField Screen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -6643,6 +6760,7 @@ exports[`TextField Screen renders screen 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
+                    "textAlign": "left",
                     "writingDirection": "ltr",
                   },
                   undefined,
@@ -6695,6 +6813,7 @@ exports[`TextField Screen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             {
@@ -6726,6 +6845,7 @@ exports[`TextField Screen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             undefined,
@@ -6798,6 +6918,7 @@ exports[`TextField Screen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -7019,6 +7140,7 @@ exports[`TextField Screen renders screen 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
+                    "textAlign": "left",
                     "writingDirection": "ltr",
                   },
                   undefined,
@@ -7073,6 +7195,7 @@ exports[`TextField Screen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             undefined,
@@ -7295,6 +7418,7 @@ exports[`TextField Screen renders screen 1`] = `
                     {
                       "backgroundColor": "transparent",
                       "color": "#20303C",
+                      "textAlign": "left",
                       "writingDirection": "ltr",
                     },
                     undefined,
@@ -7348,6 +7472,7 @@ exports[`TextField Screen renders screen 1`] = `
               {
                 "backgroundColor": "transparent",
                 "color": "#20303C",
+                "textAlign": "left",
                 "writingDirection": "ltr",
               },
               undefined,
@@ -7550,6 +7675,7 @@ exports[`TextField Screen renders screen 1`] = `
                     {
                       "backgroundColor": "transparent",
                       "color": "#20303C",
+                      "textAlign": "left",
                       "writingDirection": "ltr",
                     },
                     undefined,
@@ -7603,6 +7729,7 @@ exports[`TextField Screen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             undefined,
@@ -7840,6 +7967,7 @@ exports[`TextField Screen renders screen 1`] = `
                     {
                       "backgroundColor": "transparent",
                       "color": "#20303C",
+                      "textAlign": "left",
                       "writingDirection": "ltr",
                     },
                     undefined,

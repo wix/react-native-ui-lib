@@ -37,6 +37,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             undefined,
@@ -164,6 +165,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             undefined,
@@ -298,6 +300,7 @@ exports[`AvatarScreen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 {
@@ -352,6 +355,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             undefined,
@@ -458,6 +462,7 @@ exports[`AvatarScreen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -529,6 +534,7 @@ exports[`AvatarScreen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 {
@@ -583,6 +589,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             undefined,
@@ -689,6 +696,7 @@ exports[`AvatarScreen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -820,6 +828,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             undefined,
@@ -1078,6 +1087,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             undefined,
@@ -1336,6 +1346,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             undefined,
@@ -1466,10 +1477,9 @@ exports[`AvatarScreen renders screen 1`] = `
             assetGroup="icons"
             onError={[Function]}
             onLoad={[Function]}
-            onLoadStart={[Function]}
             source={
               {
-                "uri": "https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg",
+                "uri": "https://lh3.googleusercontent.com/-CMM0GmT5tiI/AAAAAAAAAAI/AAAAAAAAAAA/-o9gKbC6FVo/s181-c/111308920004613908895.jpg",
               }
             }
             style={
@@ -1545,6 +1555,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             undefined,
@@ -1803,6 +1814,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             undefined,
@@ -2106,6 +2118,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             undefined,
@@ -2295,6 +2308,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             undefined,
@@ -2406,6 +2420,7 @@ exports[`AvatarScreen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -2527,6 +2542,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             undefined,
@@ -2638,6 +2654,7 @@ exports[`AvatarScreen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -2759,6 +2776,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             undefined,
@@ -2948,6 +2966,7 @@ exports[`AvatarScreen renders screen 1`] = `
             {
               "backgroundColor": "transparent",
               "color": "#20303C",
+              "textAlign": "left",
               "writingDirection": "ltr",
             },
             undefined,
@@ -3054,6 +3073,7 @@ exports[`AvatarScreen renders screen 1`] = `
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -3166,6 +3186,7 @@ exports[`AvatarScreen renders screen 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "color": "#20303C",
+                    "textAlign": "left",
                     "writingDirection": "ltr",
                   },
                   undefined,

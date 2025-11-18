@@ -71,13 +71,13 @@ describe('Text', () => {
         setConstants(true, true);
         const {textDriver} = getDriver();
         const textStyle = textDriver.getElement().props.style;
-        expect(StyleSheet.flatten(textStyle).textAlign).toEqual('left');
+        expect(StyleSheet.flatten(textStyle).textAlign).toEqual(undefined);
       });
       jest.isolateModules(() => {
         setConstants(true, false);
         const {textDriver} = getDriver();
         const textStyle = textDriver.getElement().props.style;
-        expect(StyleSheet.flatten(textStyle).textAlign).toEqual('left');
+        expect(StyleSheet.flatten(textStyle).textAlign).toEqual(undefined);
       });
     });
     
