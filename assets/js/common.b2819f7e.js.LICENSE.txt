@@ -5,19 +5,6 @@
  * @license  MIT
  */
 
-/*! Bundled license information:
-
-prismjs/prism.js:
-  (**
-   * Prism: Lightweight, robust, elegant syntax highlighting
-   *
-   * @license MIT <https://opensource.org/licenses/MIT>
-   * @author Lea Verou <https://lea.verou.me>
-   * @namespace
-   * @public
-   *)
-*/
-
 /*! Hammer.JS - v2.0.17-rc - 2019-12-16
  * http://naver.github.io/egjs
  *
@@ -28,8 +15,6 @@ prismjs/prism.js:
 /*! https://mths.be/punycode v1.4.1 by @mathias */
 
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
-
-/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
 
 /*! showdown v 2.1.0 - 21-04-2022 */
 
