@@ -27,9 +27,9 @@
     "react-native-screens": "~3.20.0",
     "react-native-svg": "15.11.2",
     "react-native-svg-transformer": "1.5.0",
-    "react-native-ui-lib": "7.46.3-snapshot.7426",
+    "react-native-ui-lib": "8.0.0",
     "react-native-web": "~0.18.12",
-    "unicorn-demo-app": "7.46.3-snapshot.7426"
+    "unicorn-demo-app": "8.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
