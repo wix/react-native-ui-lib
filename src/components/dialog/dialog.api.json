@@ -2,59 +2,58 @@
   "name": "Dialog",
   "category": "overlays",
   "description": "Component for displaying custom content inside a popup dialog",
-  "note": "Use alignment modifiers to control the dialog position (top, bottom, centerV, centerH, etc... by default the dialog is aligned to center)",
+  "note": "Use alignment modifiers to control the dialog position (top, bottom, centerV, centerH, etc... by default the dialog is aligned to center).  \nWhen adding a `FlatList` \\ `ScrollView` to the content be sure to use one from `react-native-gesture-handler` (see [this link](https://github.com/software-mansion/react-native-gesture-handler/issues/1380) for `SectionList`).",
   "modifiers": ["alignment"],
-  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DialogScreen.js",
-  "images": ["https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Dialog/Dialog.gif?raw=true"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/DialogScreen.tsx",
   "props": [
-    {"name": "visible", "type": "boolean", "description": "Control visibility of the component"},
-    {"name": "ignoreBackgroundPress", "type": "boolean", "description": "Whether or not to ignore background press"},
+    {"name": "visible", "type": "boolean", "description": "The visibility of the dialog"},
+    {"name": "headerProps", "type": "DialogHeaderProps", "description": "The Dialog's header (title, subtitle etc)"},
     {
-      "name": "overlayBackgroundColor",
-      "type": "string",
-      "description": "The color of the overlay background",
-      "default": "Colors.rgba(Colors.grey10, 0.6)"
-    },
-    {"name": "width", "type": "string | number", "description": "Width", "default": "90%"},
-    {"name": "height", "type": "string | number", "description": "Height", "default": "undefined"},
-    {
-      "name": "panDirection",
-      "type": "UP | DOWN | LEFT | RIGHT",
-      "description": "The direction of the allowed pan",
-      "default": "PanningProvider.Directions.DOWN"
-    },
-    {"name": "onDismiss", "type": "(props?: any) => void", "description": "Called when clicking on the background"},
-    {
-      "name": "onDialogDismissed",
-      "type": "(props: any) => void",
-      "description": "Called once the dialog has been dismissed completely"
+      "name": "containerStyle",
+      "type": "ViewStyle",
+      "description": "The Dialog`s container style (it is set to {position: 'absolute'})"
     },
     {
-      "name": "renderPannableHeader",
-      "type": "(props: any) => JSX.Element",
-      "description": "For scrollable content (the children of the dialog)",
-      "note": "If this is added only the header will be pannable. Props are transferred to the 'renderPannableHeader'"
+      "name": "containerProps",
+      "type": "ViewProps",
+      "description": "Extra props for the container"
     },
     {
-      "name": "pannableHeaderProps",
-      "type": "any",
-      "description": "The props that will be passed to the pannable header"
+      "name": "onDismiss",
+      "type": "(props?: DialogProps) => void",
+      "description": "Callback that is called after the dialog's dismiss (after the animation has ended)."
     },
     {
-      "name": "useSafeArea",
+      "name": "direction",
+      "type": "up | down | left | right",
+      "description": "The direction from which and to which the dialog is animating \\ panning (default down).",
+      "default": "down"
+    },
+    {
+      "name": "showClose",
       "type": "boolean",
-      "description": "In iOS, use safe area, in case component attached to the bottom"
+      "description": "Show the close button"
     },
-    {"name": "containerStyle", "type": "ViewStyle", "description": "Component's container style"},
-    {"name": "testID", "type": "string", "description": "The test id for e2e tests"}
+    {"name": "ignoreBackgroundPress", "type": "boolean", "description": "Whether or not to ignore background press."},
+    {"name": "modalProps", "type": "ModalProps", "description": "Pass props to the dialog modal"},
+    {
+      "name": "disableAnimation",
+      "type": "boolean",
+      "description": "Disable animation (default is false)  \nIn some cases you might want to disable the animation (probably for Android only), this is when the dialog is scrollable and has touchable items in the scrollable area.  \nThis is a temporary solution for a reanimated + RN77\\8 bug.  \nSee https://github.com/software-mansion/react-native-reanimated/issues/6659 and https://github.com/facebook/react-native/issues/49694"
+    },
+    {
+      "name": "testID",
+      "type": "string",
+      "description": "Used to locate this view in end-to-end tests.  \nThe container has the original id.  \nSupported inner elements IDs:  \n`${TestID}.modal` - the Modal's id.  \n`${TestID}.overlayFadingBackground` - the fading background id."
+    }
   ],
   "snippet": [
-    "<Dialog", 
-    " visible={isVisible$1}",
-    " onDismiss={() => console.log('dismissed')$2}",
-    " panDirection={PanningProvider.Directions.DOWN$3}",
+    "<Dialog",
+    "  visible={isVisible$1}",
+    "  onDismiss={() => console.log('dismissed')$2}",
+    "  direction={Dialog.directions.DOWN$3}",
     ">",
-    " <Text text60>Content</Text>$4",
+    "  <Text text60>Content</Text>$4",
     "</Dialog>"
   ]
 }

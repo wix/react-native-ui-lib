@@ -110,21 +110,6 @@ export default {
   get PageControl() {
     return require('./pageControl').default;
   },
-  get PanningProvider() {
-    return require('./panningViews/panningProvider').default;
-  },
-  get PanGestureView() {
-    return require('./panningViews/panGestureView').default;
-  },
-  get PanListenerView() {
-    return require('./panningViews/panListenerView').default;
-  },
-  get PanDismissibleView() {
-    return require('./panningViews/panDismissibleView').default;
-  },
-  get PanResponderView() {
-    return require('./panningViews/panResponderView').default;
-  },
   get Picker() {
     return require('./picker').default;
   },
@@ -157,10 +142,6 @@ export default {
   },
   get RadioGroup() {
     return require('./radioButton').RadioGroup;
-  },
-
-  get SharedTransition() {
-    return require('./sharedTransition').default;
   },
   get StackAggregator() {
     return require('./stackAggregator').default;

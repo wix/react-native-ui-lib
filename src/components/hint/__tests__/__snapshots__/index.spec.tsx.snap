@@ -56,7 +56,6 @@ exports[`Hint Screen component test Different positions and scenarios center pos
         "typography": undefined,
       }
     }
-    position="bottom"
     style={
       [
         undefined,
@@ -91,7 +90,6 @@ exports[`Hint Screen component test Different positions and scenarios center pos
         "y": 200,
       }
     }
-    useModal={true}
     useSideTip={true}
     visible={true}
   >
@@ -199,6 +197,7 @@ exports[`Hint Screen component test Different positions and scenarios center pos
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -335,7 +334,6 @@ exports[`Hint Screen component test Different positions and scenarios center pos
         "typography": undefined,
       }
     }
-    position="bottom"
     style={
       [
         undefined,
@@ -370,7 +368,6 @@ exports[`Hint Screen component test Different positions and scenarios center pos
         "y": 200,
       }
     }
-    useModal={true}
     visible={true}
   >
     <View
@@ -477,6 +474,7 @@ exports[`Hint Screen component test Different positions and scenarios center pos
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -613,7 +611,6 @@ exports[`Hint Screen component test Different positions and scenarios left posit
         "typography": undefined,
       }
     }
-    position="bottom"
     style={
       [
         undefined,
@@ -648,7 +645,6 @@ exports[`Hint Screen component test Different positions and scenarios left posit
         "y": 370,
       }
     }
-    useModal={true}
     useSideTip={true}
     visible={true}
   >
@@ -756,6 +752,7 @@ exports[`Hint Screen component test Different positions and scenarios left posit
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -892,7 +889,6 @@ exports[`Hint Screen component test Different positions and scenarios left posit
         "typography": undefined,
       }
     }
-    position="bottom"
     style={
       [
         undefined,
@@ -927,7 +923,6 @@ exports[`Hint Screen component test Different positions and scenarios left posit
         "y": 370,
       }
     }
-    useModal={true}
     visible={true}
   >
     <View
@@ -1034,6 +1029,7 @@ exports[`Hint Screen component test Different positions and scenarios left posit
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -1170,7 +1166,6 @@ exports[`Hint Screen component test Different positions and scenarios right posi
         "typography": undefined,
       }
     }
-    position="bottom"
     style={
       [
         undefined,
@@ -1205,7 +1200,6 @@ exports[`Hint Screen component test Different positions and scenarios right posi
         "y": 150,
       }
     }
-    useModal={true}
     useSideTip={true}
     visible={true}
   >
@@ -1313,6 +1307,7 @@ exports[`Hint Screen component test Different positions and scenarios right posi
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,
@@ -1449,7 +1444,6 @@ exports[`Hint Screen component test Different positions and scenarios right posi
         "typography": undefined,
       }
     }
-    position="bottom"
     style={
       [
         undefined,
@@ -1484,7 +1478,6 @@ exports[`Hint Screen component test Different positions and scenarios right posi
         "y": 150,
       }
     }
-    useModal={true}
     visible={true}
   >
     <View
@@ -1591,6 +1584,7 @@ exports[`Hint Screen component test Different positions and scenarios right posi
                 {
                   "backgroundColor": "transparent",
                   "color": "#20303C",
+                  "textAlign": "left",
                   "writingDirection": "ltr",
                 },
                 undefined,

@@ -1,10 +1,11 @@
 // TODO: consider unify this component functionality with our Image component
-import React, {useState, useCallback, useMemo} from 'react';
+import React, {useState, useCallback, useMemo, useEffect} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, NativeSyntheticEvent, ImageLoadEventData} from 'react-native';
 import Animated, {useSharedValue, useAnimatedStyle, withTiming} from 'react-native-reanimated';
 import View from '../../components/view';
 import Image, {ImageProps} from '../../components/image';
 import {useDidUpdate} from '../../hooks';
+import Constants from '../../commons/Constants';
 
 const UIAnimatedImage = Animated.createAnimatedComponent<ImageProps>(Image);
 
@@ -51,19 +52,26 @@ const AnimatedImage = (props: AnimatedImageProps) => {
     }
   }, [loader]);
 
-  const onLoad = useCallback(
-    (event: NativeSyntheticEvent<ImageLoadEventData>) => {
-      setIsLoading(false);
-      propsOnLoad?.(event);
-      // did not start the animation already
-      if (opacity.value === 0) {
-        opacity.value = withTiming(1, {duration: animationDuration});
-      }
-    },
+  useEffect(() => {
+    if (Constants.isIOS) {
+      setIsLoading(true);
+      propsOnLoadStart?.();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [setIsLoading, propsOnLoad, animationDuration]
-  );
+  }, [source]);
 
+  const onLoad = useCallback((event: NativeSyntheticEvent<ImageLoadEventData>) => {
+    setIsLoading(false);
+    propsOnLoad?.(event);
+    // did not start the animation already
+    if (opacity.value === 0) {
+      opacity.value = withTiming(1, {duration: animationDuration});
+    }
+  },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  [setIsLoading, propsOnLoad, animationDuration]);
+
+  // TODO: RN 77 - revert to this solution when iOS is fixed in future RN releases
   const onLoadStart = useCallback(() => {
     setIsLoading(true);
     propsOnLoadStart?.();
@@ -83,7 +91,7 @@ const AnimatedImage = (props: AnimatedImageProps) => {
         style={_style}
         source={source}
         onLoad={onLoad}
-        onLoadStart={onLoadStart}
+        onLoadStart={Constants.isAndroid ? onLoadStart : undefined}
         testID={testID}
         imageStyle={undefined}
       />

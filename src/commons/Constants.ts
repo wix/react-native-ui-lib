@@ -41,12 +41,8 @@ isTablet =
 
 function setStatusBarHeight() {
   const {StatusBarManager} = NativeModules;
-  statusBarHeight = (StatusBar.currentHeight ?? StatusBarManager?.HEIGHT) || 0;
-
-  if (isIOS && StatusBarManager) {
-    // override guesstimate height with the actual height from StatusBarManager
-    StatusBarManager.getHeight((data:{height:number}) => (statusBarHeight = data.height));
-  }
+  // override guesstimate height with the actual height from StatusBarManager
+  statusBarHeight = (StatusBar.currentHeight ?? StatusBarManager?.getConstants?.()?.HEIGHT) || 0;
 }
 
 function getAspectRatio() {

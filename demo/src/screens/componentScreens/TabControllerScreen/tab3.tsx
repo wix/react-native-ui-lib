@@ -62,7 +62,7 @@ class Tab2 extends Component {
                   <Avatar
                     size={50}
                     source={{
-                      uri: 'https://static.pexels.com/photos/60628/flower-garden-blue-sky-hokkaido-japan-60628.jpeg'
+                      uri: 'https://images.pexels.com/photos/2529159/pexels-photo-2529159.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
                     }}
                   />
                   <Text text40 marginL-20>

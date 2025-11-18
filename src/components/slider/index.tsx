@@ -151,7 +151,7 @@ class Slider extends PureComponent<InternalSliderProps, State> {
 
   checkProps(props: InternalSliderProps) {
     const {useRange, minimumValue, maximumValue, value} = props;
-    if (minimumValue >= maximumValue) {
+    if (minimumValue > maximumValue) {
       console.warn('Slider minimumValue must be lower than maximumValue');
     }
     if (!useRange && (value < minimumValue || value > maximumValue)) {
