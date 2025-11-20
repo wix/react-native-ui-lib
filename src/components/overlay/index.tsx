@@ -86,7 +86,7 @@ class Overlay extends PureComponent<OverlayTypes> {
   };
 
   renderImage = (style: any, source: ImageSourcePropType) => {
-    return <Image style={[styles.container, Constants.isWeb && styles.containerWeb, style]} resizeMode={'stretch'} source={source}/>;
+    return <Image style={[styles.container, style]} resizeMode={'stretch'} source={source}/>;
   };
 
   getImageSource = (type?: OverlayTypeType, intensity?: OverlayTypes['intensity']) => {
@@ -127,10 +127,7 @@ class Overlay extends PureComponent<OverlayTypes> {
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    width: undefined
-  },
-  containerWeb: {
-    width: '100%'
+    width: Constants.isWeb ? '100%' : undefined
   },
   top: {
     bottom: undefined,
