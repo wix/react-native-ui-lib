@@ -10,6 +10,7 @@ import Slider from 'react-native-ui-lib/Slider';
 import Stepper from 'react-native-ui-lib/Stepper';
 import Icon from 'react-native-ui-lib/Icon';
 import DateTimePicker from 'react-native-ui-lib/DateTimePicker';
+import UIImage from 'react-native-ui-lib/Image';
 // import FloatingButton from 'react-native-ui-lib/FloatingButton'
 import Chip from 'react-native-ui-lib/Chip';
 import Badge from 'react-native-ui-lib/Badge';
@@ -306,6 +307,59 @@ const itemsToRender: ItemToRender[] = [
   {
     title: 'Image',
     FC: Image
+  },
+  {
+    title: 'Image with Overlay',
+    FC: () => {
+      const imageSource = {
+        uri: 'https://images.pexels.com/photos/248412/pexels-photo-248412.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=200'
+      };
+
+      return (
+        <View row spread gap-s2>
+          <View center>
+            <Text marginB-5 text80>Top</Text>
+            <UIImage
+              source={imageSource}
+              width={100}
+              height={100}
+              overlayType={UIImage.overlayTypes.TOP}
+              overlayIntensity={UIImage.overlayIntensityType.MEDIUM}
+            />
+          </View>
+          <View center>
+            <Text marginB-5 text80>Bottom</Text>
+            <UIImage
+              source={imageSource}
+              width={100}
+              height={100}
+              overlayType={UIImage.overlayTypes.BOTTOM}
+              overlayIntensity={UIImage.overlayIntensityType.MEDIUM}
+            />
+          </View>
+          <View center>
+            <Text marginB-5 text80>Vertical</Text>
+            <UIImage
+              source={imageSource}
+              width={100}
+              height={100}
+              overlayType={UIImage.overlayTypes.VERTICAL}
+              overlayIntensity={UIImage.overlayIntensityType.MEDIUM}
+            />
+          </View>
+          <View center>
+            <Text marginB-5 text80>Solid</Text>
+            <UIImage
+              source={imageSource}
+              width={100}
+              height={100}
+              overlayType={UIImage.overlayTypes.SOLID}
+              overlayIntensity={UIImage.overlayIntensityType.MEDIUM}
+            />
+          </View>
+        </View>
+      );
+    }
   },
   {
     title: 'Progressive Image',
