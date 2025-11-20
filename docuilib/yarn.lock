@@ -11293,9 +11293,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-ui-lib@npm:7.46.3-snapshot.7426":
-  version: 7.46.3-snapshot.7426
-  resolution: "react-native-ui-lib@npm:7.46.3-snapshot.7426"
+"react-native-ui-lib@npm:8.0.0":
+  version: 8.0.0
+  resolution: "react-native-ui-lib@npm:8.0.0"
   dependencies:
     babel-plugin-transform-inline-environment-variables: ^0.0.2
     color: ^3.1.0
@@ -11318,8 +11318,8 @@ __metadata:
     react-native-gesture-handler: ">=2.24.0"
     react-native-reanimated: ">=3.17.5"
     react-native-ui-lib: "*"
-    uilib-native: 5.0.0-snapshot.7390
-  checksum: 3505464044b97fa9c35525fa54063e6a4f9ad116baa4e7a50718e6bb468eaf2b318fb1dbbe8a715859da0a1249f8b3f0c0211e192676e8c61eac7ff4f4f84726
+    uilib-native: 5.0.0
+  checksum: fbed64ac48b08ecd79f5c45f0ab4fd4faaf276ea6ede3860c5694a3ee3f5f29c3e93eb949e200957f6cfdea2e9bffee61bfc5b2a485f78cbaf86ed38a5763e08
   languageName: node
   linkType: hard
 
@@ -13187,7 +13187,7 @@ __metadata:
     react-html-parser: ^2.0.2
     react-native-linear-gradient: 2.6.2
     react-native-shimmer-placeholder: ^2.0.9
-    react-native-ui-lib: 7.46.3-snapshot.7426
+    react-native-ui-lib: 8.0.0
     react-native-web: ^0.19.12
     sass: ^1.39.0
     shell-utils: ^1.0.10
