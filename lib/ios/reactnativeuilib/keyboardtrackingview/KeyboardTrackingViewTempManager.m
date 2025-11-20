@@ -207,7 +207,9 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
         {
             if(_scrollViewToManage == nil)
             {
-                if ([NSStringFromClass([subview class]) isEqualToString:@"RCTScrollViewComponentView"]) {
+                if ([NSStringFromClass([subview class]) isEqualToString:@"RCTScrollViewComponentView"] &&
+                    subview.superview != self) {
+                    
                     UIScrollView *scrollView = [self extractUIScrollView:subview];
                     
                     if ([scrollView isKindOfClass:[UIScrollView class]])
@@ -434,9 +436,7 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
 
 - (void)_updateScrollViewInsets
 {
-    // Because our view is now being transformed inside it's superview (from RN77 it inherited a RCTLegacyViewManagerInteropComponentView as superview) we no longer need the scrollview to also update because it's inside our view
-    return;
-    /*if(self.scrollViewToManage != nil)
+    if(self.scrollViewToManage != nil)
     {
         UIEdgeInsets insets = self.scrollViewToManage.contentInset;
         CGFloat bottomSafeArea = [self getBottomSafeArea];
@@ -483,7 +483,7 @@ typedef NS_ENUM(NSUInteger, KeyboardTrackingScrollBehavior) {
             insets.bottom = bottomInset;
         }
         self.scrollViewToManage.scrollIndicatorInsets = insets;
-    }*/
+    }
 }
 
 #pragma mark - bottom view
