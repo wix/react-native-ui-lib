@@ -4,6 +4,7 @@ import {StyleSheet, Image, ImageProps, ImageSourcePropType} from 'react-native';
 import {Colors} from '../../style';
 import View from '../view';
 import Assets from '../../assets';
+import Constants from '../../commons/Constants';
 
 const OVERLY_TYPES = {
   VERTICAL: 'vertical',
@@ -126,7 +127,7 @@ class Overlay extends PureComponent<OverlayTypes> {
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    width: undefined
+    width: Constants.isWeb ? '100%' : undefined
   },
   top: {
     bottom: undefined,
