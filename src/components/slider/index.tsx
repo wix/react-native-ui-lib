@@ -564,13 +564,13 @@ class Slider extends PureComponent<InternalSliderProps, State> {
     const {thumbSize} = this.state;
 
     const calculatedHitSlop = thumbSize.width > 0
-    ? {
-      top: Math.max(0, (48 - thumbSize.height) / 2),
-      bottom: Math.max(0, (48 - thumbSize.height) / 2),
-      left: Math.max(0, (48 - thumbSize.width) / 2),
-      right: Math.max(0, (48 - thumbSize.width) / 2)
-    }
-  : undefined; 
+      ? {
+        top: Math.max(0, (48 - thumbSize.height) / 2),
+        bottom: Math.max(0, (48 - thumbSize.height) / 2),
+        left: Math.max(0, (48 - thumbSize.width) / 2),
+        right: Math.max(0, (48 - thumbSize.width) / 2)
+      }
+      : undefined;
 
     return {
       disabled,
@@ -578,7 +578,7 @@ class Slider extends PureComponent<InternalSliderProps, State> {
       thumbStyle,
       activeThumbStyle,
       disableActiveStyling,
-    thumbHitSlop: thumbHitSlop ?? calculatedHitSlop, // User override takes precedence
+      thumbHitSlop: thumbHitSlop ?? calculatedHitSlop,
       onLayout: this.onThumbLayout
     };
   };

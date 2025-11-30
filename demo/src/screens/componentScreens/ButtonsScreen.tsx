@@ -274,13 +274,7 @@ export default class ButtonsScreen extends Component {
             />
             <Button link premium marginB-20 label="Button"/>
 
-            <Button
-            margin-20
-            size={Button.sizes.xSmall}
-            round
-            iconSource={Assets.icons.general.optionsSmall}
-            />
-            <Button label="n" link style={{marginBottom: ButtonSpace}}/>
+            <Button label="link button" link style={{marginBottom: ButtonSpace}}/>
 
             <Button label="hyperlink button" hyperlink style={{marginBottom: ButtonSpace}}/>
 
