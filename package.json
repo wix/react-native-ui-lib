@@ -185,5 +185,6 @@
     "!lib/scripts",
     "lib/package.json",
     "lib/ReactNativeUILib.podspec"
-  ]
+  ],
+  "packageManager": "yarn@4.12.0"
 }
