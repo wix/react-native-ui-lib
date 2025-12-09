@@ -29,12 +29,6 @@ While we don’t have a timeline yet, this is part of our roadmap.
 - [Discord Channel](https://discord.gg/2eW4g6Z)
 
 
-Download our Expo demo app <br>
-<img height="120" src="https://qr.expo.dev/expo-go?owner=vn.chemgio&slug=rnuilib&releaseChannel=default&host=exp.host"> <br>
-(You will need the Expo App)
-or open link in your devices
-[expo ] [exp://exp.host/@vn.chemgio/rnuilib?release-channel=default](exp://exp.host/@vn.chemgio/rnuilib?release-channel=default)
-
 ## Installing
 
 See setup instructions [here](https://wix.github.io/react-native-ui-lib/docs/getting-started/setup).
@@ -138,6 +132,28 @@ class MyScreen extends Component {
   }
 }
 ```
+## Demo with Expo 
+Step 1: Clone this repository
+```
+https://github.com/Vn-ChemGio/react-native-ui-lib
+```
+
+and install required package in package.json and install expo-cli
+```
+ npm install eas-cli@latest
+ npm install
+```
+Step 2: Run cli to prebuild and link the module with expo
+```
+ npx expo prebuild
+ cd ios && pod install
+```
+Step 3: Run the project 
+```
+ npm start
+-> then press i to run with sumulator in Xcode or scan QR Code to run with Expo Go in real devices
+```
+Note: I've only tested in iOs with Expo Go, but you can try with Android devices
 
 ## Contributing
  See [Contribution Guide](https://github.com/wix/react-native-ui-lib/blob/master/CONTRIBUTING.md)
