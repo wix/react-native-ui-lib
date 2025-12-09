@@ -43,4 +43,12 @@ export interface SortableListProps<ItemT extends SortableListItemProps>
    * Temporary migration flag for enabling flex on the container of the list (like it should be by default)
    */
   flexMigration?: boolean;
+  /**
+  * A callback triggered when the user starts dragging an item.
+  */
+  onDragStart?: () => void;
+  /**
+   * A callback triggered when the user finishes dragging an item.
+   */
+  onDragEnd?: () => void;
 }
