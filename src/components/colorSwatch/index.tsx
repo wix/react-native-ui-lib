@@ -230,7 +230,7 @@ function createStyles({color = DEFAULT_COLOR}) {
     container: {
       backgroundColor: color,
       borderWidth: Colors.isTransparent(color) ? undefined : 1,
-      borderColor: Colors.rgba(Colors.$outlineDisabledHeavy, 0.2),
+      borderColor: Colors.rgba(Colors.$outlineNeutralHeavy, 1),
       margin: SWATCH_MARGIN,
       overflow: 'hidden'
     },
