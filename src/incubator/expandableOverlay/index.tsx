@@ -84,10 +84,14 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
   }, [onPress, customValue]);
 
   const closeExpandable = useCallback(() => {
-    setExpandableVisible(false);
-    focusAccessibility();
+    dismissModal();
     useDialog ? dialogProps?.onDismiss?.() : modalProps?.onDismiss?.();
   }, [useDialog, dialogProps?.onDismiss, modalProps?.onDismiss, focusAccessibility]);
+
+  const dismissModal = useCallback(() => {
+    setExpandableVisible(false);
+    focusAccessibility();
+  }, [focusAccessibility]);
 
   const toggleExpandable = useCallback(() => (visible ? closeExpandable() : openExpandable()),
     [visible, openExpandable, closeExpandable]);
@@ -105,7 +109,7 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
         overlayBackgroundColor={Colors.$backgroundDefault}
         {...modalProps}
         visible={visible}
-        onDismiss={closeExpandable}
+        onDismiss={dismissModal}
         onRequestClose={closeExpandable}
         onBackgroundPress={closeExpandable}
       >
