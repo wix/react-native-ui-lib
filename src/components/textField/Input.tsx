@@ -1,5 +1,5 @@
 import React, {useContext, useMemo} from 'react';
-import {StyleSheet, Platform, View} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 import {TextInput as RNTextInput} from './textInput';
 import {Constants, ForwardRefInjectedProps} from '../../commons/new';
 import {InputProps} from './types';
@@ -52,7 +52,7 @@ const Input = ({
     if (value) return undefined;
 
     const parts = [];
-    if (props.placeholder) parts.push(placeholder);
+    if (props.placeholder && !props.multiline) parts.push(placeholder);
     if (props.accessibilityLabel) parts.push(props.accessibilityLabel);
 
     return parts.join(', ');
@@ -69,7 +69,7 @@ const Input = ({
     }
   }, [useGestureHandlerInput]);
 
-  const textInputElement = (
+  return (
     <TextInput
       fsTagName={recorderTag}
       style={[styles.input, !!inputColor && {color: inputColor}, style, Constants.isWeb && styles.webStyle]}
@@ -83,24 +83,10 @@ const Input = ({
       underlineColorAndroid="transparent"
       accessibilityState={{disabled}}
       pointerEvents={disabled ? 'none' : pointerEvents}
-      accessible={!props.multiline}
-      accessibilityValue={!props.multiline && !value ? {text: ' '} : undefined}
-      accessibilityLabel={!props.multiline ? getAccessibilityLabel() : undefined}
+      accessibilityValue={!value ? {text: ' '} : undefined}
+      accessibilityLabel={getAccessibilityLabel()}
     />
   );
-
-  if (props.multiline) {
-    return (
-      <View
-        accessible
-        accessibilityLabel={getAccessibilityLabel()}
-      >
-        {textInputElement}
-      </View>
-    );
-  }
-
-  return textInputElement;
 };
 
 const styles = StyleSheet.create({
