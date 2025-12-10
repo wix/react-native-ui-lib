@@ -272,7 +272,6 @@ export default class ButtonsScreen extends Component {
               iconSource={plusIcon}
               label="disabled link"
             />
-            <Button link premium marginB-20 label="Button"/>
 
             <Button label="link button" link style={{marginBottom: ButtonSpace}}/>
 
