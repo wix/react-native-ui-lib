@@ -51,12 +51,12 @@ const Input = ({
   const getAccessibilityLabel = () => {
     if (value) return undefined;
 
-    const parts = [];
-    if (props.placeholder && !props.multiline) parts.push(placeholder);
-    if (props.accessibilityLabel) parts.push(props.accessibilityLabel);
+    if (props.accessibilityLabel) {
+      return props.accessibilityLabel;
+    }
 
-    return parts.join(', ');
-  }
+    return props.placeholder;
+  };
 
   const TextInput = useMemo(() => {
     if (useGestureHandlerInput) {

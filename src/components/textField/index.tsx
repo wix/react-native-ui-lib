@@ -206,7 +206,11 @@ const TextField = (props: InternalTextFieldProps) => {
                 placeholder={placeholder}
                 hint={hint}
                 showMandatoryIndication={showMandatoryIndication && !label}
-                accessibilityLabel={showCharCounter ? `you can enter up to ${props.maxLength} characters` : undefined}
+                accessibilityLabel={
+                  showCharCounter
+                    ? `${label ? `${label}, ` : ''}you can enter up to ${props.maxLength} characters`
+                    : label
+                }
               />
             </View>
           )}
