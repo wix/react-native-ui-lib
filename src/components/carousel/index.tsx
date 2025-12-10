@@ -308,10 +308,9 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     // finished full page scroll
     const {currentStandingPage, currentPage} = this.state;
     const pagesCount = presenter.getChildrenLength(this.props);
-
+  
     if (currentPage < pagesCount) {
       this.setState({currentStandingPage: currentPage});
-
       if (currentStandingPage !== currentPage) {
         this.props.onChangePage?.(currentPage, currentStandingPage, {isAutoScrolled: this.isAutoScrolled});
         this.isAutoScrolled = false;
@@ -511,7 +510,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           decelerationRate="fast"
-          scrollEventThrottle={200}
+          scrollEventThrottle={Constants.isAndroid ? 16 : 200} // Android needs 16ms throttle to reliably catch loop boundary during fast swipes
           {...others}
           ref={this.carousel}
           onScroll={animatedScrollOffset ? this.onScrollEvent : this.onScroll}
