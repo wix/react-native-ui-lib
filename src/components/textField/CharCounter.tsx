@@ -8,12 +8,14 @@ import {CharCounterProps} from './types';
 const CharCounter = ({maxLength, charCounterStyle, testID}: CharCounterProps) => {
   const {value} = useContext(FieldContext);
   const length = value?.length ?? 0;
+  const ch = length === 1 ? 'character' : 'characters';
+  const accessibilityLabel = `${length} ${ch} out of ${maxLength}`;
   if (_.isUndefined(maxLength)) {
     return null;
   }
 
   return (
-    <Text $textNeutral style={[styles.container, charCounterStyle]} recorderTag={'unmask'} testID={testID}>
+    <Text $textNeutral style={[styles.container, charCounterStyle]} recorderTag={'unmask'} testID={testID} accessible accessibilityLabel={accessibilityLabel}>
       {`${length}/${maxLength}`}
     </Text>
   );
