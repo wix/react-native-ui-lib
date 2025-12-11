@@ -561,6 +561,18 @@ class Slider extends PureComponent<InternalSliderProps, State> {
 
   getThumbProps = () => {
     const {thumbStyle, activeThumbStyle, disableActiveStyling, disabled, thumbTintColor, thumbHitSlop} = this.props;
+    const {thumbSize} = this.state;
+    const verticalHitslop = Math.max(0, (48 - thumbSize.height) / 2);
+    const horizontalHitslop = Math.max(0, (48 - thumbSize.width) / 2);
+
+    const calculatedHitSlop = thumbSize.width > 0
+      ? {
+        top: verticalHitslop,
+        bottom: verticalHitslop,
+        left: horizontalHitslop,
+        right: horizontalHitslop
+      }
+      : undefined;
 
     return {
       disabled,
@@ -568,7 +580,7 @@ class Slider extends PureComponent<InternalSliderProps, State> {
       thumbStyle,
       activeThumbStyle,
       disableActiveStyling,
-      thumbHitSlop,
+      thumbHitSlop: thumbHitSlop ?? calculatedHitSlop,
       onLayout: this.onThumbLayout
     };
   };

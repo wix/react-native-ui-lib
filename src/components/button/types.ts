@@ -162,6 +162,7 @@ export type ButtonState = {
   size?: number;
   borderRadius?: number;
   isLandscape?: boolean;
+  measuredSize?: {width: number; height: number};
 };
 
 export type Props = ButtonProps & BaseComponentInjectedProps & ForwardRefInjectedProps;

@@ -36,7 +36,7 @@ class Button extends PureComponent<Props, ButtonState> {
     super(props);
   }
 
-  state: Record<'size', undefined | number> = {
+  state: ButtonState = {
     size: undefined
   };
   styles = createStyles();
@@ -49,18 +49,25 @@ class Button extends PureComponent<Props, ButtonState> {
 
   // This method will be called more than once in case of layout change!
   onLayout = (event: LayoutChangeEvent) => {
-    const height = event.nativeEvent.layout.height;
+    const {width, height} = event.nativeEvent.layout;
 
     if (this.props.round) {
-      const width = event.nativeEvent.layout.width;
       const size = height >= width ? height : width;
       this.setState({size});
+    }
+    if (this.needsHitslopMeasurement()) {
+      this.setState({measuredSize: {width, height}});
     }
 
     if (Constants.isAndroid && (Platform.Version as number) <= 17) {
       this.setState({borderRadius: height / 2});
     }
   };
+
+  needsHitslopMeasurement() {
+    const {avoidMinWidth, avoidInnerPadding, round} = this.props;
+    return this.isLink || (this.isIconButton && !round) || avoidMinWidth || avoidInnerPadding;
+  }
 
   get isLink() {
     const {link, hyperlink} = this.props;
@@ -346,15 +353,17 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   getAccessibleHitSlop() {
+    const {measuredSize} = this.state;
     const containerStyle = this.getContainerSizeStyle();
-    const isWidthSet = containerStyle.width !== undefined || containerStyle.minWidth !== undefined;
-    const width = containerStyle.width || containerStyle.minWidth || 0;
-    const widthWithPadding = width + (containerStyle.paddingHorizontal || containerStyle.padding || 0) * 2;
-    const horizontalHitslop = isWidthSet ? Math.max(0, (48 - widthWithPadding) / 2) : 10;
-    const verticalHitslop =
-      (containerStyle.height
-        ? Math.max(0, 48 - containerStyle.height)
-        : SIZE_TO_VERTICAL_HITSLOP[this.props.size || DEFAULT_SIZE]) / 2;
+
+    const buttonWidth = measuredSize?.width ?? containerStyle.width ?? containerStyle.minWidth ?? 0;
+    const buttonHeight = measuredSize?.height ?? containerStyle.height ?? 0;
+
+    const horizontalHitslop = Math.max(0, (48 - buttonWidth) / 2);
+    const verticalHitslop = buttonHeight
+      ? Math.max(0, (48 - buttonHeight) / 2)
+      : SIZE_TO_VERTICAL_HITSLOP[this.props.size || DEFAULT_SIZE] / 2;
+
     return {
       top: verticalHitslop,
       bottom: verticalHitslop,
