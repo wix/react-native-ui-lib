@@ -282,3 +282,6 @@ function mockIOS() {
   Constants.isIOS = true;
   Constants.isAndroid = false;
 }
+});
+
+
