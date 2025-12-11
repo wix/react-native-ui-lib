@@ -35,12 +35,16 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
   },
   [multiDraftValue]);
 
-  const cancelSelect = useCallback(() => {
+  const handleCancelAction = useCallback(() => {
     setSearchValue('');
     setMultiDraftValue(multiFinalValue);
-    pickerExpandableRef.current?.closeExpandable?.();
     topBarProps?.onCancel?.();
-  }, [multiFinalValue, topBarProps]);
+  }, [multiFinalValue, topBarProps])
+
+  const cancelSelect = useCallback(() => {
+    handleCancelAction();
+    pickerExpandableRef.current?.closeExpandable?.();
+  }, [handleCancelAction]);
 
   const availableItems: PickerMultiValue = useMemo(() => {
     return items?.filter(item => !item.disabled).map(item => item.value) || [];
@@ -66,7 +70,8 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     cancelSelect,
     areAllItemsSelected,
     selectedCount,
-    toggleAllItemsSelection
+    toggleAllItemsSelection,
+    handleCancelAction
   };
 };
 
