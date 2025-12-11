@@ -276,12 +276,12 @@ describe('Button', () => {
         .create(<Button iconSource={12} iconProps={{tintColor: 'red'}} iconStyle={{tintColor: '#ffee22'}}/>)
         .toJSON()).toMatchSnapshot();
     });
-});
+  });
 
-function mockIOS() {
-  Constants.isIOS = true;
-  Constants.isAndroid = false;
-}
+  function mockIOS() {
+    Constants.isIOS = true;
+    Constants.isAndroid = false;
+  }
 });
 
 
