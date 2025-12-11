@@ -39,7 +39,7 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     setSearchValue('');
     setMultiDraftValue(multiFinalValue);
     topBarProps?.onCancel?.();
-  }, [multiFinalValue, topBarProps])
+  }, [multiFinalValue, topBarProps]);
 
   const cancelSelect = useCallback(() => {
     handleCancelAction();
