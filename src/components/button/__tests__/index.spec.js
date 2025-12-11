@@ -276,7 +276,6 @@ describe('Button', () => {
         .create(<Button iconSource={12} iconProps={{tintColor: 'red'}} iconStyle={{tintColor: '#ffee22'}}/>)
         .toJSON()).toMatchSnapshot();
     });
-  });
 });
 
 function mockIOS() {

@@ -414,8 +414,8 @@ exports[`Button backgroundColor should return undefined if this button is link 1
   hitSlop={
     {
       "bottom": 7.5,
-      "left": 10,
-      "right": 10,
+      "left": 24,
+      "right": 24,
       "top": 7.5,
     }
   }
@@ -901,8 +901,8 @@ exports[`Button container size should avoid minWidth limitation if avoidMinWidth
   hitSlop={
     {
       "bottom": 10,
-      "left": 10,
-      "right": 10,
+      "left": 24,
+      "right": 24,
       "top": 10,
     }
   }
@@ -1105,8 +1105,8 @@ exports[`Button container size should have no padding of button is a link nor mi
   hitSlop={
     {
       "bottom": 10,
-      "left": 10,
-      "right": 10,
+      "left": 24,
+      "right": 24,
       "top": 10,
     }
   }
@@ -1832,8 +1832,8 @@ exports[`Button container size should return style for round button 1`] = `
   hitSlop={
     {
       "bottom": 7.5,
-      "left": 10,
-      "right": 10,
+      "left": 24,
+      "right": 24,
       "top": 7.5,
     }
   }
@@ -2633,8 +2633,8 @@ exports[`Button hyperlink should render button as a hyperlink 1`] = `
   hitSlop={
     {
       "bottom": 7.5,
-      "left": 10,
-      "right": 10,
+      "left": 24,
+      "right": 24,
       "top": 7.5,
     }
   }
@@ -2732,8 +2732,8 @@ exports[`Button icon should apply color on icon 1`] = `
   hitSlop={
     {
       "bottom": 7.5,
-      "left": 10,
-      "right": 10,
+      "left": 24,
+      "right": 24,
       "top": 7.5,
     }
   }
@@ -2808,8 +2808,8 @@ exports[`Button icon should apply color on icon 2`] = `
   hitSlop={
     {
       "bottom": 7.5,
-      "left": 10,
-      "right": 10,
+      "left": 24,
+      "right": 24,
       "top": 7.5,
     }
   }
@@ -2884,8 +2884,8 @@ exports[`Button icon should apply the right icon color 1`] = `
   hitSlop={
     {
       "bottom": 7.5,
-      "left": 10,
-      "right": 10,
+      "left": 24,
+      "right": 24,
       "top": 7.5,
     }
   }
@@ -2960,8 +2960,8 @@ exports[`Button icon should apply the right icon color 2`] = `
   hitSlop={
     {
       "bottom": 7.5,
-      "left": 10,
-      "right": 10,
+      "left": 24,
+      "right": 24,
       "top": 7.5,
     }
   }
@@ -3038,8 +3038,8 @@ exports[`Button icon should apply the right icon color 3`] = `
   hitSlop={
     {
       "bottom": 7.5,
-      "left": 10,
-      "right": 10,
+      "left": 24,
+      "right": 24,
       "top": 7.5,
     }
   }
@@ -3116,8 +3116,8 @@ exports[`Button icon should include custom iconStyle provided as a prop 1`] = `
   hitSlop={
     {
       "bottom": 7.5,
-      "left": 10,
-      "right": 10,
+      "left": 24,
+      "right": 24,
       "top": 7.5,
     }
   }
@@ -3195,8 +3195,8 @@ exports[`Button icon should return icon style according to different variations 
   hitSlop={
     {
       "bottom": 7.5,
-      "left": 10,
-      "right": 10,
+      "left": 24,
+      "right": 24,
       "top": 7.5,
     }
   }
@@ -3273,8 +3273,8 @@ exports[`Button icon should return icon style according to different variations 
   hitSlop={
     {
       "bottom": 7.5,
-      "left": 10,
-      "right": 10,
+      "left": 24,
+      "right": 24,
       "top": 7.5,
     }
   }
@@ -3349,8 +3349,8 @@ exports[`Button icon should return icon style according to different variations 
   hitSlop={
     {
       "bottom": 7.5,
-      "left": 10,
-      "right": 10,
+      "left": 24,
+      "right": 24,
       "top": 7.5,
     }
   }
@@ -4231,8 +4231,8 @@ exports[`Button labelColor should return Theme linkColor color for link 1`] = `
   hitSlop={
     {
       "bottom": 7.5,
-      "left": 10,
-      "right": 10,
+      "left": 24,
+      "right": 24,
       "top": 7.5,
     }
   }
@@ -4522,8 +4522,8 @@ exports[`Button labelColor should return disabled text color according to theme 
   hitSlop={
     {
       "bottom": 7.5,
-      "left": 10,
-      "right": 10,
+      "left": 24,
+      "right": 24,
       "top": 7.5,
     }
   }
@@ -4619,8 +4619,8 @@ exports[`Button labelColor should return linkColor color for link 1`] = `
   hitSlop={
     {
       "bottom": 7.5,
-      "left": 10,
-      "right": 10,
+      "left": 24,
+      "right": 24,
       "top": 7.5,
     }
   }
@@ -4716,8 +4716,8 @@ exports[`Button labelColor should return undefined color if this is an icon butt
   hitSlop={
     {
       "bottom": 7.5,
-      "left": 10,
-      "right": 10,
+      "left": 24,
+      "right": 24,
       "top": 7.5,
     }
   }
@@ -4792,8 +4792,8 @@ exports[`Button link should render button as a link 1`] = `
   hitSlop={
     {
       "bottom": 7.5,
-      "left": 10,
-      "right": 10,
+      "left": 24,
+      "right": 24,
       "top": 7.5,
     }
   }
@@ -5384,8 +5384,8 @@ exports[`Button outline should return undefined when link is true, even when out
   hitSlop={
     {
       "bottom": 7.5,
-      "left": 10,
-      "right": 10,
+      "left": 24,
+      "right": 24,
       "top": 7.5,
     }
   }

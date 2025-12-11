@@ -4726,8 +4726,8 @@ exports[`TextField Screen renders screen 1`] = `
             hitSlop={
               {
                 "bottom": 7.5,
-                "left": 10,
-                "right": 10,
+                "left": 24,
+                "right": 24,
                 "top": 7.5,
               }
             }
