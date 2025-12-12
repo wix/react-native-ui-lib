@@ -20,7 +20,6 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
-project.xcworkspace
 **/.xcode.env.local
 
 # Android/IntelliJ
@@ -82,7 +81,6 @@ docs/components/**
 # Ruby / CocoaPods
 **/Pods/
 /vendor/bundle/
-/ios/Podfile.lock
 expoDemo/ios/Pods
 
 .reassure 

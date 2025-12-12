@@ -5,7 +5,9 @@
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "yarn workspace react-native-ui-lib start"
+    "start": "yarn workspace react-native-ui-lib start",
+    "pod-install": "yarn workspace react-native-ui-lib pod-install",
+    "ios": "yarn workspace react-native-ui-lib ios"
   },
   "workspaces": {
     "packages": [
