@@ -27,10 +27,11 @@ DerivedData
 build/
 .idea
 .gradle
+.kotlin
 local.properties
 *.iml
 *.hprof
-android/gradlew.bat
+packages/react-native-ui-lib/android/gradlew.bat
 expoDemo/android/gradlew.bat
 .cxx/
 *.keystore

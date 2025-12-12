@@ -7,7 +7,9 @@
   "scripts": {
     "start": "yarn workspace react-native-ui-lib start",
     "pod-install": "yarn workspace react-native-ui-lib pod-install",
-    "ios": "yarn workspace react-native-ui-lib ios"
+    "ios": "yarn workspace react-native-ui-lib ios",
+    "android": "yarn workspace react-native-ui-lib android",
+    "iPad": "yarn workspace react-native-ui-lib iPad"
   },
   "workspaces": {
     "packages": [
