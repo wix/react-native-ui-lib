@@ -12,7 +12,8 @@
     "iPad": "yarn workspace react-native-ui-lib iPad",
     "test": "yarn lint && yarn workspace react-native-ui-lib test",
     "lint": "eslint packages -c .eslintrc.js --ext .tsx,.ts,.js",
-    "lint:fix": "eslint packages -c .eslintrc.js --fix"
+    "lint:fix": "eslint packages -c .eslintrc.js --fix",
+    "build:dev": "tsc --p tsconfig.dev.json"
   },
   "workspaces": {
     "packages": [

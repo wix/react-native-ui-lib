@@ -20,16 +20,20 @@
     // "declarationDir": "./generatedTypes",
     "baseUrl": ".",
     "paths": {
-      "react-native-ui-lib": ["./src/index.ts"],
-      "commons": ["./src/commons"],
-      "helpers": ["./src/helpers"],
-      "utils": ["./src/utils"],
-      "hooks": ["./src/hooks"],
-      "optionalDeps": ["./src/optionalDependencies"],
-      "services": ["./src/services"],
-      "style": ["./src/style"]
+      "commons": ["packages/react-native-ui-lib/src/commons"],
+      "helpers": ["packages/react-native-ui-lib/src/helpers"],
+      "utils": ["packages/react-native-ui-lib/src/utils"],
+      "hooks": ["packages/react-native-ui-lib/src/hooks"],
+      "optionalDeps": ["packages/react-native-ui-lib/src/optionalDependencies"],
+      "services": ["packages/react-native-ui-lib/src/services"],
+      "style": ["packages/react-native-ui-lib/src/style"]
     }
   },
-  "include": ["src/**/*", "typings/**/*", "demo/**/*", "lib/components/**/*"] ,
-  "exclude": ["node_modules"]
+  "include": [
+    "packages/react-native-ui-lib/src/**/*",
+    "typings/**/*",
+    "packages/unicorn-demo-app/**/*",
+    "packages/uilib-native/components/**/*"
+  ],
+  "exclude": ["node_modules", "packages/react-native-ui-lib/src/**/__tests__"]
 }
