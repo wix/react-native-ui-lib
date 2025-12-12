@@ -12,92 +12,95 @@ export const WEIGHT_TYPES: {[key: string]: TextStyle['fontWeight']} = {
   BLACK: '900' as const
 };
 
+// Check if platform supports full range of font weights
+const supportsFullFontWeights = Constants.isIOS || (Constants.isAndroid && Number(Platform.Version) >= 28);
+
 // text10
 const text10: TextStyle = {
   fontSize: 64,
-  fontWeight: Constants.isIOS ? WEIGHT_TYPES.THIN : undefined,
+  fontWeight: supportsFullFontWeights ? WEIGHT_TYPES.THIN : undefined,
   lineHeight: 76,
-  fontFamily: 'System'
+  fontFamily: Constants.isIOS ? 'System' : undefined
 };
 
 // text20
 const text20: TextStyle = {
   fontSize: 48,
-  fontWeight: Constants.isIOS ? WEIGHT_TYPES.REGULAR : undefined,
+  fontWeight: supportsFullFontWeights ? WEIGHT_TYPES.REGULAR : undefined,
   lineHeight: Constants.isIOS ? 60 : 62,
-  fontFamily: 'System'
+  fontFamily: Constants.isIOS ? 'System' : undefined
 };
 
 // text30
 const text30: TextStyle = {
   fontSize: 36,
-  fontWeight: Constants.isIOS ? WEIGHT_TYPES.REGULAR : undefined,
+  fontWeight: supportsFullFontWeights ? WEIGHT_TYPES.REGULAR : undefined,
   lineHeight: Constants.isIOS ? 43 : 46,
-  fontFamily: 'System'
+  fontFamily: Constants.isIOS ? 'System' : undefined
 };
 
 // text40
 const text40: TextStyle = {
   fontSize: 28,
-  fontWeight: Constants.isIOS ? WEIGHT_TYPES.HEAVY : 'bold',
+  fontWeight: supportsFullFontWeights ? WEIGHT_TYPES.HEAVY : 'bold',
   lineHeight: 32,
-  fontFamily: 'System'
+  fontFamily: Constants.isIOS ? 'System' : undefined
 };
 
 // text50
 const text50: TextStyle = {
   fontSize: 24,
-  fontWeight: Constants.isIOS ? WEIGHT_TYPES.HEAVY : 'bold',
+  fontWeight: supportsFullFontWeights ? WEIGHT_TYPES.HEAVY : 'bold',
   lineHeight: 28,
-  fontFamily: 'System'
+  fontFamily: Constants.isIOS ? 'System' : undefined
 };
 
 // text60
 const text60: TextStyle = {
   fontSize: 20,
-  fontWeight: Constants.isIOS ? WEIGHT_TYPES.HEAVY : 'bold',
+  fontWeight: supportsFullFontWeights ? WEIGHT_TYPES.HEAVY : 'bold',
   lineHeight: 24,
-  fontFamily: 'System'
+  fontFamily: Constants.isIOS ? 'System' : undefined
 };
 
 // text65
 const text65: TextStyle = {
   fontSize: 18,
-  fontWeight: Constants.isIOS ? WEIGHT_TYPES.MEDIUM : undefined,
+  fontWeight: supportsFullFontWeights ? WEIGHT_TYPES.MEDIUM : undefined,
   lineHeight: 24,
-  fontFamily: 'System'
+  fontFamily: Constants.isIOS ? 'System' : undefined
 };
 
 // text70
 const text70: TextStyle = {
   fontSize: 16,
-  fontWeight: Constants.isIOS ? WEIGHT_TYPES.REGULAR : undefined,
+  fontWeight: supportsFullFontWeights ? WEIGHT_TYPES.REGULAR : undefined,
   lineHeight: 24,
-  fontFamily: 'System'
+  fontFamily: Constants.isIOS ? 'System' : undefined
 };
 
 // text80
 const text80: TextStyle = {
   fontSize: 14,
-  fontWeight: Constants.isIOS ? WEIGHT_TYPES.REGULAR : undefined,
+  fontWeight: supportsFullFontWeights ? WEIGHT_TYPES.REGULAR : undefined,
   lineHeight: 20,
-  fontFamily: 'System'
+  fontFamily: Constants.isIOS ? 'System' : undefined
 };
 
 // text90
 const text90: TextStyle = {
   fontSize: 12,
-  fontWeight: Constants.isIOS ? WEIGHT_TYPES.BOLD : 'bold',
+  fontWeight: supportsFullFontWeights ? WEIGHT_TYPES.BOLD : 'bold',
   lineHeight: 16,
-  fontFamily: 'System'
+  fontFamily: Constants.isIOS ? 'System' : undefined
 };
 
 // text100
 const text100: TextStyle = {
   fontSize: 10,
-  fontWeight: Constants.isIOS ? WEIGHT_TYPES.BOLD : 'bold',
+  fontWeight: supportsFullFontWeights ? WEIGHT_TYPES.BOLD : 'bold',
   lineHeight: 16,
-  fontFamily: 'System'
+  fontFamily: Constants.isIOS ? 'System' : undefined
 };
 
 export type TypographyKeys = Record<
@@ -222,7 +225,7 @@ _.forEach(keys, key => {
     const fontWeightKey = `${fontKey}${weightValue}` as keyof TypographyKeys;
     Typography[fontWeightKey] = {
       ...Typography[fontKey],
-      fontWeight: Constants.isIOS
+      fontWeight: supportsFullFontWeights
         ? WEIGHT_TYPES[weightKey]
         : ['BO', 'H', 'BL'].includes(weightValue)
           ? 'bold'
