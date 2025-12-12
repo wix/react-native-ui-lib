@@ -1,0 +1,23 @@
+{
+  "presets": ["@babel/preset-typescript" /* , "@babel/preset-react" */],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./src", "./testkit"],
+        "alias": {
+          "commons": "./src/commons",
+          "helpers": "./src/helpers",
+          "utils": "./src/utils",
+          "hooks": "./src/hooks",
+          "optionalDeps": "./src/optionalDependencies",
+          "services": "./src/services",
+          "style": "./src/style"
+        }
+      }
+    ],
+    ["lodash"]
+  ],
+  "compact": false,
+  "minified": false
+}

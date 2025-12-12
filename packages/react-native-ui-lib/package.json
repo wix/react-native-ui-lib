@@ -152,10 +152,18 @@
         "src",
         "testkit",
         "ReactNativeUILib.podspec",
+        "!babel.config.js",
         "!src/**/*.ts",
         "src/**/*.d.ts",
         "!src/**/*.tsx",
         "!src/**/__tests__",
-        "!**/.DS_Store"
+        "!**/.DS_Store",
+        "lib/components",
+        "lib/ios",
+        "lib/android",
+        "!lib/android/build",
+        "!lib/scripts",
+        "lib/package.json",
+        "lib/ReactNativeUILib.podspec"
     ]
 }

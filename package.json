@@ -13,7 +13,9 @@
     "test": "yarn lint && yarn workspace react-native-ui-lib test",
     "lint": "eslint packages -c .eslintrc.js --ext .tsx,.ts,.js",
     "lint:fix": "eslint packages -c .eslintrc.js --fix",
-    "build:dev": "tsc --p tsconfig.dev.json"
+    "build:dev": "tsc --p tsconfig.dev.json",
+    "build": "yarn workspace react-native-ui-lib build",
+    "build:local": "yarn workspace react-native-ui-lib build:local"
   },
   "workspaces": {
     "packages": [

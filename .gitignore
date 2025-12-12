@@ -77,7 +77,7 @@ dist
 dist-ts
 package-lock.json
 docs/components/**
-!scripts/build
+!packages/react-native-ui-lib/scripts/build
 
 # Ruby / CocoaPods
 **/Pods/
