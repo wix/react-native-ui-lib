@@ -1,0 +1,20 @@
+{
+  "name": "TabController.PageCarousel",
+  "category": "navigation",
+  "description": "TabController's PageCarousel component",
+  "note": "You must pass `asCarousel` flag to TabController and render your TabPages inside a PageCarousel",
+  "extends": ["ScrollView"],
+  "extendsLink": ["https://reactnative.dev/docs/scrollview"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/screens/componentScreens/TabControllerScreen/index.tsx",
+  "images": [],
+  "props": [],
+  "snippet": [
+    "<TabController>",
+    "  <TabController.PageCarousel>",
+    "    {_.map(items, (item, key) => {",
+    "     return <TabController.TabPage index={key}/>;",
+    "    })}",
+    "  </TabController.PageCarousel>",
+    "</TabController>"
+  ]
+}

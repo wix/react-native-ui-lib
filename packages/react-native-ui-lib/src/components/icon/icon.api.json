@@ -1,0 +1,20 @@
+{
+  "name": "Icon",
+  "category": "media",
+  "description": "Icon component",
+  "extends": ["Image"],
+  "extendsLink": ["https://reactnative.dev/docs/image"],
+  "modifiers": ["margin"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/screens/componentScreens/IconScreen.tsx",
+  "props": [
+    {"name": "assetName", "type": "string", "description": "if provided icon source will be driven from asset name"},
+    {"name": "assetGroup", "type": "string", "description": "the asset group, default is icons"},
+    {"name": "tintColor", "type": "string", "description": "The icon tint"},
+    {"name": "size", "type": "number", "description": "The icon size"},
+    {"name": "supportRTL", "type": "boolean", "description": "whether the image should flip horizontally on RTL locals"},
+    {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag"}
+  ],
+  "snippet": [
+    "<Icon source={Assets.icons.demo.drag} tintColor={Colors.grey40}/>"
+  ]
+}

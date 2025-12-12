@@ -1,0 +1,19 @@
+{
+  "name": "Card.Image",
+  "category": "layout",
+  "description": "Inner component for the Card component (better be a direct child)",
+  "extends": ["media/Image"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/screens/componentScreens/CardsScreen.tsx",
+  "props": [
+    {"name": "width", "type": "number", "description": "Width"},
+    {"name": "height", "type": "number", "description": "Height"},
+    {
+      "name": "position",
+      "type": "string[]",
+      "description": "The Image position which determines the appropriate flex-ness of the image and border radius (for Android) this prop derived automatically from Card parent component if it rendered as a direct child of the Card component"
+    }
+  ],
+  "snippet": [
+    "<Card.Image source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/assets/images/card-example.jpg'$1}} height={115$2}/>"
+  ]
+}

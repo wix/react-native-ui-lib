@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pushd eslint-rules
+pushd packages/eslint-rules
 yarn
 yarn test
 yarn releaseEslint

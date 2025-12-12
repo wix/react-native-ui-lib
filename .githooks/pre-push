@@ -1,0 +1,10 @@
+#!/bin/bash
+
+COMMAND="yarn prepush"
+
+$COMMAND
+RESULT=$?
+if [ $RESULT -ne 0 ]; then
+	echo "pre-push hook failed $COMMAND"
+	exit 1
+fi

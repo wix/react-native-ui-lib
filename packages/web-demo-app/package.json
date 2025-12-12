@@ -1,0 +1,68 @@
+{
+  "name": "web-demo-app",
+  "private": true,
+  "version": "0.1.0",
+  "author": "Ethan Sharabi <ethan.shar@gmail.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wix/react-native-ui-lib.git"
+  },
+  "scripts": {
+    "build": "webpack --config ./webpack.config.js",
+    "start": "webpack-dev-server --config ./webpack.config.js"
+  },
+  "dependencies": {
+    "@react-native-community/datetimepicker": "8.2.0",
+    "@react-native-community/netinfo": "11.4.1",
+    "postcss": "^8.4.21",
+    "postcss-js": "^4.0.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-native-gesture-handler": "2.24.0",
+    "react-native-haptic-feedback": "^1.14.0",
+    "react-native-linear-gradient": "^2.6.2",
+    "react-native-reanimated": "3.18.0",
+    "react-native-shimmer-placeholder": "^2.0.6",
+    "react-native-svg": "15.11.2",
+    "react-native-svg-transformer": "1.5.0",
+    "react-native-ui-lib": "workspace:*",
+    "react-native-web": "^0.19.12",
+    "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/preset-typescript": "^7.14.5",
+    "@react-native-community/cli": "15.0.1",
+    "@react-native-community/cli-platform-android": "15.0.1",
+    "@react-native-community/cli-platform-ios": "15.0.1",
+    "@react-native/babel-preset": "0.77.3",
+    "@types/node": "^16.7.13",
+    "@types/react": "18.3.24",
+    "@types/react-dom": "^18.3.1",
+    "@typescript-eslint/eslint-plugin": "^5.3.1",
+    "@typescript-eslint/parser": "^5.3.1",
+    "babel-loader": "9.2.1",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "babel-plugin-react-native-web": "^0.19.12",
+    "babel-preset-react": "^6.24.1",
+    "clean-webpack-plugin": "^4.0.0",
+    "concat-with-sourcemaps": "^1.1.0",
+    "eslint": "8.19.0",
+    "eslint-plugin-react": "7.24.0",
+    "eslint-plugin-react-hooks": "^4.0.4",
+    "html-webpack-plugin": "^4.0.0",
+    "metro-react-native-babel-preset": "0.77.0",
+    "process": "^0.11.10",
+    "ts-loader": "^9.3.1",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.2"
+  }
+}

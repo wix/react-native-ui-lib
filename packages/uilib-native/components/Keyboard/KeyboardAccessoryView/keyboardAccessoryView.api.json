@@ -1,0 +1,58 @@
+{
+  "name": "KeyboardAccessoryView",
+  "category": "infra",
+  "description": "View that allows replacing the default keyboard with other components",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/screens/nativeComponentScreens/keyboardAccessory/KeyboardAccessoryViewScreen.js",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/showcase/KeyboardAccessoryView/KeyboardAccessoryView.gif?raw=true"
+  ],
+  "props": [
+    {
+      "name": "renderContent",
+      "type": "() => React.ReactElement",
+      "description": "Content to be rendered above the keyboard"
+    },
+    {
+      "name": "kbInputRef",
+      "type": "any",
+      "description": "The reference to the actual text input (or the keyboard may not reset when instructed to, etc.)",
+      "note": "iOS only",
+      "required": true
+    },
+    {
+      "name": "kbComponent",
+      "type": "string",
+      "description": "The keyboard ID (the componentID sent to KeyboardRegistry)"
+    },
+    {"name": "kbInitialProps", "type": "any", "description": "The props that will be sent to the KeyboardComponent"},
+    {
+      "name": "onHeightChanged",
+      "type": "(height: number) => void",
+      "description": "A callback for when the height is changed"
+    },
+    {
+      "name": "onItemSelected",
+      "type": "() => void",
+      "description": "Callback that will be called when an item on the keyboard has been pressed"
+    },
+    {
+      "name": "onRequestShowKeyboard",
+      "type": "() => void",
+      "description": "Callback that will be called if KeyboardRegistry.requestShowKeyboard is called"
+    },
+    {
+      "name": "onKeyboardResigned",
+      "type": "() => void",
+      "description": "Callback that will be called once the keyboard has been closed"
+    }
+  ],
+  "snippet": [
+    "<KeyboardAccessoryView",
+    " renderContent={this.renderContent()}",
+    " kbInputRef={this.inputRef}",
+    " kbComponent={$1}",
+    " kbInitialProps={$2}",
+    " onHeightChanged={this.onHeightChanged()}",
+    " scrollBehavior={KeyboardAccessoryView.scrollBehaviors.NONE$3}",
+    "/>"
+  ]}

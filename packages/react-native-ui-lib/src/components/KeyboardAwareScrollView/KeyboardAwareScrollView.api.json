@@ -1,0 +1,40 @@
+{
+  "name": "KeyboardAwareScrollView",
+  "category": "form",
+  "description": "A wrapper component which handles the ScrollView insets properly when the keyboard is shown and hides the content, scrolling content above the keybaord.",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/screens/componentScreens/KeyboardAwareScrollViewScreen.js",
+  "props": [
+    {
+      "name": "getTextInputRefs",
+      "type": "function",
+      "description": "Function that returns an array of TextInput refs"
+    },
+    {
+      "name": "onScroll",
+      "type": "function",
+      "description": "Callback for scroll events"
+    },
+    {
+      "name": "startScrolledToBottom",
+      "type": "boolean",
+      "description": "Whether to start scrolled to bottom"
+    },
+    {
+      "name": "scrollToBottomOnKBShow",
+      "type": "boolean",
+      "description": "Whether to scroll to bottom when keyboard shows"
+    },
+    {
+      "name": "scrollToInputAdditionalOffset",
+      "type": "number",
+      "description": "Additional offset when scrolling to input"
+    }
+  ],
+  "snippet": [
+    "<KeyboardAwareScrollView>",
+    "  <View>",
+    "    <TextField placeholder=\"Input with scrolling\" />",
+    "  </View>",
+    "</KeyboardAwareScrollView>"
+  ]
+}

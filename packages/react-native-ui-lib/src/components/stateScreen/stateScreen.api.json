@@ -1,0 +1,119 @@
+{
+  "name": "StateScreen",
+  "category": "layout",
+  "description": "Component that shows a full screen for a certain state, like an empty state",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/screens/componentScreens/EmptyStateScreen.tsx",
+  "images": [
+    "https://user-images.githubusercontent.com/33805983/34672894-f262ab84-f488-11e7-83f0-4ee0f0ac34ba.png"
+  ],
+  "props": [
+    {
+      "name": "imageSource",
+      "type": "ImageURISource",
+      "description": "The image source that's showing at the top. use an image that was required locally"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "description": "To to show as the title"
+    },
+    {
+      "name": "ctaLabel",
+      "type": "string",
+      "description": "Text to to show in the CTA button"
+    },
+    {
+      "name": "onCtaPress",
+      "type": "() => void",
+      "description": "Action handler for CTA button"
+    },
+    {
+      "name": "testID",
+      "type": "string",
+      "description": "Use to identify the container in tests"
+    }
+  ],
+  "snippet": [
+    "<StateScreen",
+    "  title={'Title'$1}",
+    "  subtitle={'Subtitle'$2}",
+    "  ctaLabel={'Done'$3}",
+    "  imageSource={source$4}",
+    "/>"
+  ],
+  "docs": {
+    "hero": {
+      "title": "StateScreen",
+      "description": "State screens are pre-designed layouts created for various purposes, including FTEs, empty states, success messages, error screens, and more.\n\nState screens can occupy a full screen or a portion of it. They can be used in both modals and pushed screens.",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/StateScreen/stateScreen_overview_preview.png"
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "section",
+            "title": "Overview",
+            "description": "The State screen component is composed of a visual, title, subtitle, CTA, link button, and disclaimer. Each element is optional and they all can be combined in various ways to meet different needs.\n\nState screens can occupy a full screen or a portion of it. They can be used in both modals and pushed screens.",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/StateScreen/stateScreen_overview.png"
+              }
+            ],
+            "layout": "horizontal"
+          },
+          {
+            "type": "section",
+            "title": "Visual Types",
+            "description": "The State Screen component can be used with or without a visual. A visual can be an illustration, marketing visual, cover image or an icon. ",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/StateScreen/stateScreen_overview_visualTypes.png"
+              }
+            ]
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "title": "Alignment",
+                "description": "Content aligned to the center of the screen.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/StateScreen/stateScreen_overview_structure_alignment.png"
+                  }
+                ]
+              },
+              {
+                "title": "Cover Image Implementation ",
+                "description": "markdown:\nWhen using the State Screen with a cover image, in a full screen, the component is split into 2 sections; cover image and content.\n\n**Default Containers Ratio**\nMobile Phone:\n50% - Cover Image\n50% - Content\n\nTablet:\n60% - Cover Image\n40% - Content\n(Max 70% for Image container)\n\n**Image Implementation**\n-  Do not scale the image at any size.\n-  Image is pinned to bottom of the container.\n-  Image is aligned to center of the screen.\n-  Excess height+Width is being cropped.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/StateScreen/stateScreen_overview_structure_alignment-1.png"
+                  }
+                ]
+              }
+            ],
+            "title": "Structure"
+          },
+          {
+            "type": "section",
+            "title": "Tablet",
+            "description": "markdown:\n**Image Artboard Size**\n50% Image Container - 1366x640\n60% Image Container (default) - 1366x765\n70% Image Container - 1366x895  \n\n**Safe Area** - 768x430  \n\n**Recommended Area** - 672x356",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/StateScreen/stateScreen_overview_tablet.png"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "Overlay",
+  "category": "infra",
+  "description": "Overlay view with types",
+  "extends": ["Image"],
+  "extendsLink": ["https://reactnative.dev/docs/image"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/screens/componentScreens/OverlaysScreen.tsx",
+  "props": [
+    {
+      "name": "type",
+      "type": "vertical | top | bottom | solid (OverlayTypeType)",
+      "description": "The type of overlay to set on top of the image"
+    },
+    {
+      "name": "intensity",
+      "type": "low | medium | high",
+      "description": "The intensity of the gradient.",
+      "default": "OverlayIntensityType.LOW"
+    },
+    {"name": "color", "type": "string", "description": "The overlay color"},
+    {
+      "name": "customContent",
+      "type": "JSX.Element",
+      "description": "Custom overlay content to be rendered on top of the image"
+    }
+  ],
+  "snippet": [
+    "<Image",
+    " source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/assets/images/card-example.jpg'}$1}",
+    " overlayType={Image.overlayTypes.BOTTOM$2}",
+    "/>"
+  ]
+}

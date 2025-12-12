@@ -1,0 +1,230 @@
+{
+  "name": "Switch",
+  "category": "controls",
+  "description": "Switch component for toggling boolean value related to some context",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/screens/componentScreens/SwitchScreen.tsx",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/showcase/Switch/Switch.gif?raw=true"
+  ],
+  "props": [
+    {
+      "name": "value",
+      "type": "boolean",
+      "description": "The value of the switch. If true the switch will be turned on. Default value is false"
+    },
+    {
+      "name": "onValueChange",
+      "type": "(value: boolean) => void",
+      "description": "Invoked with the new value when the value changes"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Whether the switch should be disabled"
+    },
+    {
+      "name": "width",
+      "type": "number",
+      "description": "The Switch width"
+    },
+    {
+      "name": "height",
+      "type": "number",
+      "description": "The Switch height"
+    },
+    {
+      "name": "onColor",
+      "type": "string",
+      "description": "The Switch background color when it's turned on"
+    },
+    {
+      "name": "offColor",
+      "type": "string",
+      "description": "The Switch background color when it's turned off"
+    },
+    {
+      "name": "disabledColor",
+      "type": "string",
+      "description": "The Switch background color when it's disabled"
+    },
+    {
+      "name": "thumbColor",
+      "type": "string",
+      "description": "The Switch's thumb color"
+    },
+    {
+      "name": "thumbSize",
+      "type": "number",
+      "description": "The Switch's thumb size (width & height)"
+    },
+    {
+      "name": "thumbStyle",
+      "type": "ViewStyle",
+      "description": "The Switch's thumb style"
+    },
+    {
+      "name": "style",
+      "type": "ViewStyle",
+      "description": "Custom style"
+    },
+    {
+      "name": "testID",
+      "type": "string",
+      "description": "Component test id"
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "description": "Component id"
+    }
+  ],
+  "snippet": [
+    "function Example(props) {",
+    "  const [value, setValue] = useState(false$1);",
+    "  return <Switch margin-20 value={value$2} onValueChange={setValue$3}/>;",
+    "}"
+  ],
+  "docs": {
+    "hero": {
+      "title": "Switch",
+      "description": "Use switches to toggle a single option on or off, activate or deactivate, and switch between two different states. \n\nConsider using switch instead of checkbox, when appropriate. \nConsider using switch instead of radio buttons if there’s only two  options to choose from. ",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_preview.png"
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "table",
+            "columns": [
+              "Property",
+              "Preview"
+            ],
+            "items": [
+              {
+                "title": "Default",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_style_default.png"
+                  }
+                ]
+              },
+              {
+                "title": "Light",
+                "description": "",
+                "content": [
+                  {
+                    "background": "#A6ACB1",
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Switch/SwitchLight.png"
+                  }
+                ]
+              }
+            ],
+            "title": "Styles",
+            "description": ""
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Property",
+              "Default Style",
+              "Light Style"
+            ],
+            "items": [
+              {
+                "title": "ON",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_default_on.png"
+                  },
+                  {
+                    "background": "#A6ACB1",
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Switch/SwitchLight.png"
+                  }
+                ]
+              },
+              {
+                "title": "OFF",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_default_off.png"
+                  },
+                  {
+                    "background": "#A6ACB1",
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Switch/SwitchLightOff.png"
+                  }
+                ]
+              },
+              {
+                "title": "Disabled ON",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_default_disabledOn.png"
+                  },
+                  {
+                    "background": "#A6ACB1",
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Switch/SwitchLightDisabled.png"
+                  }
+                ]
+              },
+              {
+                "title": "Disabled OFF",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_state_default_disabledOff.png"
+                  },
+                  {
+                    "background": "#A6ACB1",
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Switch/SwitchLightDisabledOff.png"
+                  }
+                ]
+              }
+            ],
+            "title": "States",
+            "description": ""
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "title": "Size",
+                "description": "Currently, only one size available for the ToggleSwitch.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Switch/switch_overview_spec_size.png"
+                  }
+                ]
+              },
+              {
+                "title": "Colors",
+                "description": "markdown:<b>ON</b><br>Background color: $backgroundPrimaryHeavy<br>Knob color: $iconDefaultLight<br><b>OFF</b><br>Background color: $backgroundNeutralHeavy<br>Knob color: $iconDefaultLight<br><b>Disabled</b><br>Background color: $backgroundDisabled<br>Knob color: $iconDefaultLight"
+              },
+              {
+                "title": "Haptic ",
+                "description": "Haptic is played on tap. Haptic preset: [impactMedium]",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Switch/switch_overview_spec_haptic.png"
+                  }
+                ]
+              }
+            ],
+            "layout": "horizontal",
+            "title": "Spec"
+          }
+        ]
+      }
+    ]
+  }
+}

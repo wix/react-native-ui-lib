@@ -1,6 +1,7 @@
 import 'setimmediate';
-require('./demo/src/index');
-require('./demo/src/demoApp'); // this is separated from demo/src/index by purpose
+require('./packages/unicorn-demo-app/src/index');
+// this is separated from packages/unicorn-demo-app/src/index by purpose
+require('./packages/unicorn-demo-app/src/demoApp');
 
 // comment out when measuring performance
 // if (process.env.NODE_ENV !== 'production') {

@@ -1,0 +1,122 @@
+import _ from 'lodash';
+import React, {useCallback, useEffect, useMemo, useContext} from 'react';
+import {StyleSheet} from 'react-native';
+import {LogService} from '../../services';
+import {Colors, Typography} from '../../style';
+import * as Modifiers from '../../commons/modifiers';
+import Assets from '../../assets';
+import View from '../view';
+import TouchableOpacity from '../touchableOpacity';
+import Image from '../image';
+import Text from '../text';
+import {isItemSelected} from './PickerPresenter';
+import PickerContext from './PickerContext';
+import {PickerItemProps} from './types';
+
+/**
+ * @description: Picker.Item, for configuring the Picker's selectable options
+ * @example: https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/screens/componentScreens/PickerScreen.tsx
+ */
+const PickerItem = (props: PickerItemProps) => {
+  const {
+    value,
+    label,
+    labelStyle,
+    disabled,
+    selectedIcon = Assets.internal.icons.check,
+    selectedIconColor = Colors.$iconPrimary,
+    onPress,
+    testID
+  } = props;
+  const context = useContext(PickerContext);
+  const customRenderItem = props.renderItem || context.renderItem;
+  const isSelected = isItemSelected(value, context.value);
+  const selectedCounter = context.selectionLimit && _.isArray(context.value) && context.value?.length;
+  const accessibilityProps = {
+    accessibilityState: isSelected ? {selected: true} : undefined,
+    accessibilityHint: 'Double click to select this suggestion',
+    ...Modifiers.extractAccessibilityProps(props)
+  };
+
+  const isItemDisabled = useMemo(() => {
+    return !!(disabled || (!isSelected && context.selectionLimit && context.selectionLimit === selectedCounter));
+  }, [selectedCounter, disabled]);
+
+  useEffect(() => {
+    if (_.isPlainObject(value)) {
+      LogService.warn('UILib Picker.Item will stop supporting passing object as value & label (e.g {value, label}) in the next major version. Please pass separate label and value props');
+    }
+  }, [value]);
+
+  const selectedIndicator = useMemo(() => {
+    if (isSelected) {
+      return <Image source={selectedIcon} tintColor={isItemDisabled ? Colors.$iconDisabled : selectedIconColor}/>;
+    }
+  }, [isSelected, isItemDisabled, selectedIcon, selectedIconColor]);
+
+  const itemLabelStyle = useMemo(() => {
+    return [styles.labelText, isItemDisabled ? styles.labelTextDisabled : undefined, labelStyle];
+  }, [isItemDisabled, labelStyle]);
+
+  const _onPress = useCallback(async (props: any) => {
+    // Using !(await onPress?.(item)) does not work properly when onPress is not sent
+    // We have to explicitly state `false` so a synchronous void (undefined) will still work as expected
+    if (onPress && (await onPress(context.isMultiMode ? !isSelected : undefined, props)) === false) {
+      return;
+    }
+    context.onPress(value);
+  },
+  [value, context.onPress, onPress]);
+
+  const onSelectedLayout = useCallback((...args: any[]) => {
+    _.invoke(context, 'onSelectedLayout', ...args);
+  }, []);
+
+  const _renderItem = () => {
+    return (
+      <View style={styles.container} flex row spread centerV>
+        <Text numberOfLines={1} style={itemLabelStyle}>
+          {label}
+        </Text>
+        {selectedIndicator}
+      </View>
+    );
+  };
+
+  return (
+    <TouchableOpacity
+      activeOpacity={0.5}
+      onPress={_onPress}
+      onLayout={isSelected ? onSelectedLayout : undefined}
+      disabled={isItemDisabled}
+      testID={testID}
+      throttleTime={0}
+      customValue={props.customValue}
+      {...accessibilityProps}
+    >
+      {customRenderItem ? customRenderItem(value, {...props, isSelected, isItemDisabled}, label) : _renderItem()}
+    </TouchableOpacity>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    height: 56.5,
+    paddingHorizontal: 23,
+    borderColor: Colors.$outlineDefault,
+    borderBottomWidth: 1
+  },
+  labelText: {
+    ...Typography.text70,
+    color: Colors.$textDefault,
+    flex: 1,
+    textAlign: 'left'
+  },
+  labelTextDisabled: {
+    color: Colors.$textDisabled
+  }
+});
+
+PickerItem.displayName = 'Picker.Item';
+
+export default PickerItem;

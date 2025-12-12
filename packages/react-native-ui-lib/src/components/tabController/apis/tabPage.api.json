@@ -1,0 +1,25 @@
+{
+  "name": "TabController.TabPage",
+  "category": "navigation",
+  "description": "TabController's TabPage component",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/screens/componentScreens/TabControllerScreen/index.tsx",
+  "images": [],
+  "props": [
+    {"name": "index", "type": "number", "description": "The index of the the TabPage"},
+    {"name": "lazy", "type": "boolean", "description": "Whether this page should be loaded lazily"},
+    {
+      "name": "lazyLoadTime",
+      "type": "number",
+      "description": "How long to wait till lazy load complete (good for showing loader screens)"
+    },
+    {
+      "name": "renderLoading",
+      "type": "() => JSX.Element",
+      "description": "Render a custom loading page when lazy loading"
+    },
+    {"name": "testID", "type": "string", "description": "The component test id"}
+  ],
+  "snippet": [
+    "<TabController.TabPage key={'key1'$1} lazy$2 index={index$3}>"
+  ]
+}

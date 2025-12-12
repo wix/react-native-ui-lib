@@ -1,0 +1,47 @@
+{
+  "name": "View",
+  "category": "basic",
+  "description": "An enhanced View component",
+  "extends": ["View"],
+  "extendsLink": ["https://reactnative.dev/docs/view"],
+  "modifiers": ["margins", "paddings", "alignments", "background", "borderRadius"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/screens/componentScreens/ViewScreen.js",
+  "images": [],
+  "props": [
+    {"name": "useSafeArea", "type": "boolean", "description": "If true, will render as SafeAreaView"},
+    {"name": "animated", "type": "boolean", "description": "Use Animate.View as a container"},
+    {
+      "name": "reanimated",
+      "type": "boolean",
+      "description": "Use Animate.View (from react-native-reanimated) as a container"
+    },
+    {
+      "name": "inaccessible",
+      "type": "boolean",
+      "description": "Turn off accessibility for this view and its nested children"
+    },
+    {"name": "renderDelay", "type": "number", "description": "Experimental: Pass time in ms to delay render"},
+    {"name": "backgroundColor", "type": "string", "description": "Set background color"},
+    {"name": "recorderTag", "type": "'mask' | 'unmask'", "description": "Recorder Tag"},
+    {"name": "style", "type": "ViewStyle", "description": "Custom style"}
+  ],
+  "snippet": [
+    "<View row gap-s5 centerV>",
+    "  <View style={{width: 200, height: 200}} bg-purple40 centerH>",
+    "  <View style={{width: 60, height: 60}} bg-green20/>",
+    "  </View>",
+    "  <View style={{width: 150, height: 150}} bg-orange30 bottom right>",
+    "  <View style={{width: 50, height: 50}} bg-yellow40 br100 margin-s2/>",
+    "  </View>",
+    "</View>"
+  ],
+  "docs": {
+    "hero": {
+      "title": "View",
+      "description": "An enhanced version of React Native's View component providing additional features and modifiers support",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [{}]
+    }
+  }
+}

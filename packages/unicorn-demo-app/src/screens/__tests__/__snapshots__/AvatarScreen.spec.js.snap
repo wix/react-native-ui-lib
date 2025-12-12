@@ -1,0 +1,3224 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AvatarScreen renders screen 1`] = `
+<RCTScrollView
+  contentContainerStyle={
+    {
+      "backgroundColor": "#FFFFFF",
+      "padding": 25,
+    }
+  }
+>
+  <View>
+    <View
+      style={
+        [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 15,
+          },
+        ]
+      }
+    >
+      <Text
+        $textDefault={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "textAlign": "left",
+              "writingDirection": "ltr",
+            },
+            undefined,
+            {
+              "color": "#20303C",
+            },
+            undefined,
+            undefined,
+            {},
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "400",
+              "lineHeight": 20,
+            },
+          ]
+        }
+      >
+        Custom Background
+      </Text>
+      <View
+        accessibilityLabel="Avatar"
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={0}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "borderRadius": 999,
+            "height": 50,
+            "justifyContent": "center",
+            "marginVertical": 5,
+            "opacity": 1,
+            "width": 50,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "bottom": 0,
+                  "justifyContent": "center",
+                  "left": 0,
+                  "overflow": "hidden",
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "backgroundColor": "#D1CCFF",
+                },
+                false,
+              ],
+            ]
+          }
+          testID="undefined.container"
+        />
+      </View>
+    </View>
+    <View
+      style={
+        [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 15,
+          },
+        ]
+      }
+    >
+      <Text
+        $textDefault={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "textAlign": "left",
+              "writingDirection": "ltr",
+            },
+            undefined,
+            {
+              "color": "#20303C",
+            },
+            undefined,
+            undefined,
+            {},
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "400",
+              "lineHeight": 20,
+            },
+          ]
+        }
+      >
+        Empty Avatar with ribbon
+      </Text>
+      <View
+        accessibilityLabel="Avatar"
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={0}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "borderRadius": 999,
+            "height": 50,
+            "justifyContent": "center",
+            "marginVertical": 5,
+            "opacity": 1,
+            "width": 50,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "bottom": 0,
+                  "justifyContent": "center",
+                  "left": 0,
+                  "overflow": "hidden",
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "backgroundColor": "#F8f9FA",
+                },
+                false,
+              ],
+            ]
+          }
+          testID="undefined.container"
+        />
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                {
+                  "borderRadius": 25,
+                  "left": 29.411764705882355,
+                  "position": "absolute",
+                  "top": "10%",
+                },
+                {
+                  "backgroundColor": "#5A48F5",
+                  "paddingHorizontal": 6,
+                  "paddingVertical": 3,
+                },
+                undefined,
+              ],
+            ]
+          }
+        >
+          <Text
+            $textDefaultLight={true}
+            numberOfLines={1}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "textAlign": "left",
+                  "writingDirection": "ltr",
+                },
+                {
+                  "fontFamily": "System",
+                  "fontSize": 10,
+                  "fontWeight": "700",
+                  "lineHeight": 16,
+                },
+                {
+                  "color": "#FFFFFF",
+                },
+                undefined,
+                undefined,
+                {},
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+            text100={true}
+          >
+            New
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 15,
+          },
+        ]
+      }
+    >
+      <Text
+        $textDefault={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "textAlign": "left",
+              "writingDirection": "ltr",
+            },
+            undefined,
+            {
+              "color": "#20303C",
+            },
+            undefined,
+            undefined,
+            {},
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "400",
+              "lineHeight": 20,
+            },
+          ]
+        }
+      >
+        Initials with Color
+      </Text>
+      <View
+        accessibilityLabel="Avatar"
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={0}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "borderRadius": 999,
+            "height": 50,
+            "justifyContent": "center",
+            "marginVertical": 5,
+            "opacity": 1,
+            "width": 50,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "bottom": 0,
+                  "justifyContent": "center",
+                  "left": 0,
+                  "overflow": "hidden",
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "backgroundColor": "#FFF4D3",
+                },
+                false,
+              ],
+            ]
+          }
+          testID="undefined.container"
+        >
+          <Text
+            ellipsizeMode="clip"
+            numberOfLines={1}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "textAlign": "left",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "fontFamily": "System",
+                    "fontSize": 14,
+                    "fontWeight": "700",
+                    "lineHeight": 20,
+                  },
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#9E3900",
+                    "lineHeight": undefined,
+                  },
+                  {
+                    "color": "#9E3900",
+                  },
+                ],
+              ]
+            }
+            testID="undefined.label"
+          >
+            AD
+          </Text>
+        </View>
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                {
+                  "borderRadius": 25,
+                  "left": 29.411764705882355,
+                  "position": "absolute",
+                  "top": "10%",
+                },
+                {
+                  "backgroundColor": "#5A48F5",
+                  "paddingHorizontal": 6,
+                  "paddingVertical": 3,
+                },
+                {
+                  "backgroundColor": "#9f42bd",
+                },
+              ],
+            ]
+          }
+        >
+          <Text
+            $textDefaultLight={true}
+            numberOfLines={1}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "textAlign": "left",
+                  "writingDirection": "ltr",
+                },
+                {
+                  "fontFamily": "System",
+                  "fontSize": 10,
+                  "fontWeight": "700",
+                  "lineHeight": 16,
+                },
+                {
+                  "color": "#FFFFFF",
+                },
+                undefined,
+                undefined,
+                {},
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+            text100={true}
+          >
+            New
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 15,
+          },
+        ]
+      }
+    >
+      <Text
+        $textDefault={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "textAlign": "left",
+              "writingDirection": "ltr",
+            },
+            undefined,
+            {
+              "color": "#20303C",
+            },
+            undefined,
+            undefined,
+            {},
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "400",
+              "lineHeight": 20,
+            },
+          ]
+        }
+      >
+        Initials, badge ("online")
+      </Text>
+      <View
+        accessibilityLabel="Avatar"
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={0}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "borderRadius": 999,
+            "height": 50,
+            "justifyContent": "center",
+            "marginVertical": 5,
+            "opacity": 1,
+            "width": 50,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "bottom": 0,
+                  "justifyContent": "center",
+                  "left": 0,
+                  "overflow": "hidden",
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "backgroundColor": "#F8f9FA",
+                },
+                false,
+              ],
+            ]
+          }
+          testID="undefined.container"
+        >
+          <Text
+            ellipsizeMode="clip"
+            numberOfLines={1}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "textAlign": "left",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "fontFamily": "System",
+                    "fontSize": 14,
+                    "fontWeight": "700",
+                    "lineHeight": 20,
+                  },
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "lineHeight": undefined,
+                  },
+                  {
+                    "color": "#20303C",
+                  },
+                ],
+              ]
+            }
+            testID="undefined.label"
+          >
+            ES
+          </Text>
+        </View>
+        <View
+          accessibilityLabel="badge"
+          accessibilityRole="text"
+          accessible={false}
+          iconProps={
+            {
+              "tintColor": null,
+            }
+          }
+          modifiers={{}}
+          size={10}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "position": "absolute",
+                "right": 2.322330470336313,
+                "top": 2.322330470336313,
+              },
+            ]
+          }
+        >
+          <View
+            pointerEvents="none"
+            row={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "flexDirection": "row",
+                },
+                [
+                  {
+                    "height": 10,
+                    "minWidth": undefined,
+                    "paddingHorizontal": 0,
+                    "width": 10,
+                  },
+                  {
+                    "alignItems": "center",
+                    "alignSelf": "flex-start",
+                    "backgroundColor": "#0F62E6",
+                    "borderRadius": 999,
+                    "justifyContent": "center",
+                    "overflow": "hidden",
+                  },
+                  {},
+                  {
+                    "backgroundColor": "#00A87E",
+                  },
+                ],
+              ]
+            }
+            testID="undefined.onlineBadge"
+          />
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 15,
+          },
+        ]
+      }
+    >
+      <Text
+        $textDefault={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "textAlign": "left",
+              "writingDirection": "ltr",
+            },
+            undefined,
+            {
+              "color": "#20303C",
+            },
+            undefined,
+            undefined,
+            {},
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "400",
+              "lineHeight": 20,
+            },
+          ]
+        }
+      >
+        Image, badge ("away")
+      </Text>
+      <View
+        accessibilityLabel="Avatar"
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={0}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "borderRadius": 999,
+            "height": 50,
+            "justifyContent": "center",
+            "marginVertical": 5,
+            "opacity": 1,
+            "width": 50,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "bottom": 0,
+                  "justifyContent": "center",
+                  "left": 0,
+                  "overflow": "hidden",
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "backgroundColor": "#F8f9FA",
+                },
+                {
+                  "bottom": 1,
+                  "left": 1,
+                  "right": 1,
+                  "top": 1,
+                },
+              ],
+            ]
+          }
+          testID="undefined.container"
+        />
+        <Image
+          accessibilityRole="image"
+          accessible={false}
+          assetGroup="icons"
+          containerStyle={
+            {
+              "alignItems": "center",
+              "borderRadius": 999,
+              "height": 50,
+              "justifyContent": "center",
+              "width": 50,
+            }
+          }
+          onError={[Function]}
+          source={
+            {
+              "uri": "https://lh3.googleusercontent.com/-cw77lUnOvmI/AAAAAAAAAAI/AAAAAAAAAAA/WMNck32dKbc/s181-c/104220521160525129167.jpg",
+            }
+          }
+          style={
+            [
+              undefined,
+              undefined,
+              {
+                "width": 50,
+              },
+              {
+                "height": 50,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              false,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "height": 50,
+                  "justifyContent": "center",
+                  "width": 50,
+                },
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                undefined,
+              ],
+              false,
+            ]
+          }
+          testID="undefined.image"
+        />
+        <View
+          accessibilityLabel="badge"
+          accessibilityRole="text"
+          accessible={false}
+          iconProps={
+            {
+              "tintColor": null,
+            }
+          }
+          modifiers={{}}
+          size={10}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "bottom": 2.322330470336313,
+                "position": "absolute",
+                "right": 2.322330470336313,
+              },
+            ]
+          }
+        >
+          <View
+            pointerEvents="none"
+            row={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "flexDirection": "row",
+                },
+                [
+                  {
+                    "height": 10,
+                    "minWidth": undefined,
+                    "paddingHorizontal": 0,
+                    "width": 10,
+                  },
+                  {
+                    "alignItems": "center",
+                    "alignSelf": "flex-start",
+                    "backgroundColor": "#0F62E6",
+                    "borderRadius": 999,
+                    "justifyContent": "center",
+                    "overflow": "hidden",
+                  },
+                  {},
+                  {
+                    "backgroundColor": "#FFC50D",
+                  },
+                ],
+              ]
+            }
+            testID="undefined.onlineBadge"
+          />
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 15,
+          },
+        ]
+      }
+    >
+      <Text
+        $textDefault={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "textAlign": "left",
+              "writingDirection": "ltr",
+            },
+            undefined,
+            {
+              "color": "#20303C",
+            },
+            undefined,
+            undefined,
+            {},
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "400",
+              "lineHeight": 20,
+            },
+          ]
+        }
+      >
+        Smaller size, Badge ("offline")
+      </Text>
+      <View
+        accessibilityLabel="Avatar"
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={4}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "borderRadius": 999,
+            "height": 40,
+            "justifyContent": "center",
+            "marginVertical": 5,
+            "opacity": 1,
+            "width": 40,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "bottom": 0,
+                  "justifyContent": "center",
+                  "left": 0,
+                  "overflow": "hidden",
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "backgroundColor": "#F8f9FA",
+                },
+                {
+                  "bottom": 1,
+                  "left": 1,
+                  "right": 1,
+                  "top": 1,
+                },
+              ],
+            ]
+          }
+          testID="undefined.container"
+        />
+        <Image
+          accessibilityRole="image"
+          accessible={false}
+          assetGroup="icons"
+          containerStyle={
+            {
+              "alignItems": "center",
+              "borderRadius": 999,
+              "height": 40,
+              "justifyContent": "center",
+              "width": 40,
+            }
+          }
+          onError={[Function]}
+          source={
+            {
+              "uri": "https://lh3.googleusercontent.com/-CMM0GmT5tiI/AAAAAAAAAAI/AAAAAAAAAAA/-o9gKbC6FVo/s181-c/111308920004613908895.jpg",
+            }
+          }
+          style={
+            [
+              undefined,
+              undefined,
+              {
+                "width": 40,
+              },
+              {
+                "height": 40,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              false,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "height": 40,
+                  "justifyContent": "center",
+                  "width": 40,
+                },
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                undefined,
+              ],
+              false,
+            ]
+          }
+          testID="undefined.image"
+        />
+        <View
+          accessibilityLabel="badge"
+          accessibilityRole="text"
+          accessible={false}
+          iconProps={
+            {
+              "tintColor": null,
+            }
+          }
+          modifiers={{}}
+          size={10}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "bottom": 0.8578643762690499,
+                "left": 0.8578643762690499,
+                "position": "absolute",
+              },
+            ]
+          }
+        >
+          <View
+            pointerEvents="none"
+            row={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "flexDirection": "row",
+                },
+                [
+                  {
+                    "height": 10,
+                    "minWidth": undefined,
+                    "paddingHorizontal": 0,
+                    "width": 10,
+                  },
+                  {
+                    "alignItems": "center",
+                    "alignSelf": "flex-start",
+                    "backgroundColor": "#0F62E6",
+                    "borderRadius": 999,
+                    "justifyContent": "center",
+                    "overflow": "hidden",
+                  },
+                  {},
+                  {
+                    "backgroundColor": "#D2D6D8",
+                  },
+                ],
+              ]
+            }
+            testID="undefined.onlineBadge"
+          />
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 15,
+          },
+        ]
+      }
+    >
+      <Text
+        $textDefault={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "textAlign": "left",
+              "writingDirection": "ltr",
+            },
+            undefined,
+            {
+              "color": "#20303C",
+            },
+            undefined,
+            undefined,
+            {},
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "400",
+              "lineHeight": 20,
+            },
+          ]
+        }
+      >
+        Image with fade in animation
+      </Text>
+      <View
+        accessibilityLabel="Avatar"
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={0}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "borderRadius": 999,
+            "height": 60,
+            "justifyContent": "center",
+            "marginVertical": 5,
+            "opacity": 1,
+            "width": 60,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "bottom": 0,
+                  "justifyContent": "center",
+                  "left": 0,
+                  "overflow": "hidden",
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "backgroundColor": "#F8f9FA",
+                },
+                {
+                  "bottom": 1,
+                  "left": 1,
+                  "right": 1,
+                  "top": 1,
+                },
+              ],
+            ]
+          }
+          testID="undefined.container"
+        />
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "alignItems": "center",
+                "borderRadius": 999,
+                "height": 60,
+                "justifyContent": "center",
+                "width": 60,
+              },
+            ]
+          }
+        >
+          <Image
+            accessibilityRole="image"
+            accessible={false}
+            assetGroup="icons"
+            onError={[Function]}
+            onLoad={[Function]}
+            source={
+              {
+                "uri": "https://lh3.googleusercontent.com/-CMM0GmT5tiI/AAAAAAAAAAI/AAAAAAAAAAA/-o9gKbC6FVo/s181-c/111308920004613908895.jpg",
+              }
+            }
+            style={
+              [
+                undefined,
+                undefined,
+                {
+                  "width": 60,
+                },
+                {
+                  "height": 60,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                false,
+                [
+                  [
+                    {
+                      "alignItems": "center",
+                      "borderRadius": 999,
+                      "height": 60,
+                      "justifyContent": "center",
+                      "width": 60,
+                    },
+                    {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    },
+                    undefined,
+                  ],
+                  {
+                    "opacity": 0,
+                  },
+                ],
+                false,
+              ]
+            }
+            testID="undefined.image"
+          />
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 15,
+          },
+        ]
+      }
+    >
+      <Text
+        $textDefault={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "textAlign": "left",
+              "writingDirection": "ltr",
+            },
+            undefined,
+            {
+              "color": "#20303C",
+            },
+            undefined,
+            undefined,
+            {},
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "400",
+              "lineHeight": 20,
+            },
+          ]
+        }
+      >
+        Big pimple
+      </Text>
+      <View
+        accessibilityLabel="Avatar"
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={0}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "borderRadius": 999,
+            "height": 70,
+            "justifyContent": "center",
+            "marginVertical": 5,
+            "opacity": 1,
+            "width": 70,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "bottom": 0,
+                  "justifyContent": "center",
+                  "left": 0,
+                  "overflow": "hidden",
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "backgroundColor": "red",
+                },
+                {
+                  "bottom": 1,
+                  "left": 1,
+                  "right": 1,
+                  "top": 1,
+                },
+              ],
+            ]
+          }
+          testID="undefined.container"
+        />
+        <Image
+          accessibilityRole="image"
+          accessible={false}
+          assetGroup="icons"
+          containerStyle={
+            {
+              "alignItems": "center",
+              "borderRadius": 999,
+              "height": 70,
+              "justifyContent": "center",
+              "width": 70,
+            }
+          }
+          onError={[Function]}
+          source={
+            {
+              "uri": "https://randomuser.me/api/portraits/women/24.jpg",
+            }
+          }
+          style={
+            [
+              undefined,
+              undefined,
+              {
+                "width": 70,
+              },
+              {
+                "height": 70,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              false,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "height": 70,
+                  "justifyContent": "center",
+                  "width": 70,
+                },
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                undefined,
+              ],
+              false,
+            ]
+          }
+          testID="undefined.image"
+        />
+        <View
+          accessibilityLabel="badge"
+          accessibilityRole="text"
+          accessible={false}
+          iconProps={
+            {
+              "tintColor": null,
+            }
+          }
+          modifiers={{}}
+          size={14}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "left": 3.2512626584708375,
+                "position": "absolute",
+                "top": 3.2512626584708375,
+              },
+            ]
+          }
+        >
+          <View
+            pointerEvents="none"
+            row={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "flexDirection": "row",
+                },
+                [
+                  {
+                    "height": 14,
+                    "minWidth": undefined,
+                    "paddingHorizontal": 0,
+                    "width": 14,
+                  },
+                  {
+                    "alignItems": "center",
+                    "alignSelf": "flex-start",
+                    "backgroundColor": "#0F62E6",
+                    "borderRadius": 999,
+                    "justifyContent": "center",
+                    "overflow": "hidden",
+                  },
+                  {},
+                  {
+                    "backgroundColor": "#00A87E",
+                  },
+                ],
+              ]
+            }
+            testID="undefined.onlineBadge"
+          />
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 15,
+          },
+        ]
+      }
+    >
+      <Text
+        $textDefault={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "textAlign": "left",
+              "writingDirection": "ltr",
+            },
+            undefined,
+            {
+              "color": "#20303C",
+            },
+            undefined,
+            undefined,
+            {},
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "400",
+              "lineHeight": 20,
+            },
+          ]
+        }
+      >
+        Icon badge
+      </Text>
+      <View
+        accessibilityLabel="Avatar"
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={0}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "borderRadius": 999,
+            "height": 60,
+            "justifyContent": "center",
+            "marginVertical": 5,
+            "opacity": 1,
+            "width": 60,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "bottom": 0,
+                  "justifyContent": "center",
+                  "left": 0,
+                  "overflow": "hidden",
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "backgroundColor": "#F8f9FA",
+                },
+                {
+                  "bottom": 1,
+                  "left": 1,
+                  "right": 1,
+                  "top": 1,
+                },
+              ],
+            ]
+          }
+          testID="undefined.container"
+        />
+        <Image
+          accessibilityRole="image"
+          accessible={false}
+          assetGroup="icons"
+          containerStyle={
+            {
+              "alignItems": "center",
+              "borderRadius": 999,
+              "height": 60,
+              "justifyContent": "center",
+              "width": 60,
+            }
+          }
+          onError={[Function]}
+          source={
+            {
+              "uri": "https://randomuser.me/api/portraits/women/24.jpg",
+            }
+          }
+          style={
+            [
+              undefined,
+              undefined,
+              {
+                "width": 60,
+              },
+              {
+                "height": 60,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              false,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "height": 60,
+                  "justifyContent": "center",
+                  "width": 60,
+                },
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                undefined,
+              ],
+              false,
+            ]
+          }
+          testID="undefined.image"
+        />
+        <View
+          accessibilityLabel="badge"
+          accessibilityRole="image"
+          accessible={false}
+          borderColor="#FFFFFF"
+          icon={
+            {
+              "testUri": "../../../packages/unicorn-demo-app/src/assets/icons/star.png",
+            }
+          }
+          iconProps={
+            {
+              "tintColor": null,
+            }
+          }
+          iconStyle={
+            {
+              "backgroundColor": "#FFC50D",
+            }
+          }
+          modifiers={{}}
+          size={14}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "position": "absolute",
+                "right": 0.28679656440357526,
+                "top": 0.28679656440357526,
+              },
+            ]
+          }
+        >
+          <View
+            pointerEvents="none"
+            row={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "flexDirection": "row",
+                },
+                [
+                  {
+                    "height": 17,
+                    "minWidth": undefined,
+                    "paddingHorizontal": 0,
+                    "width": 17,
+                  },
+                  {
+                    "alignItems": "center",
+                    "alignSelf": "flex-start",
+                    "backgroundColor": undefined,
+                    "borderRadius": 999,
+                    "justifyContent": "center",
+                    "overflow": "hidden",
+                  },
+                  {
+                    "borderColor": "#FFFFFF",
+                    "borderWidth": 1.5,
+                  },
+                  undefined,
+                ],
+              ]
+            }
+            testID="undefined.onlineBadge"
+          >
+            <Image
+              accessibilityRole="image"
+              accessible={false}
+              assetGroup="icons"
+              borderColor="#FFFFFF"
+              onError={[Function]}
+              resizeMode="contain"
+              source={
+                {
+                  "testUri": "../../../packages/unicorn-demo-app/src/assets/icons/star.png",
+                }
+              }
+              style={
+                [
+                  null,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  false,
+                  {
+                    "backgroundColor": "#FFC50D",
+                    "flex": 1,
+                  },
+                  false,
+                ]
+              }
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 15,
+          },
+        ]
+      }
+    >
+      <Text
+        $textDefault={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "textAlign": "left",
+              "writingDirection": "ltr",
+            },
+            undefined,
+            {
+              "color": "#20303C",
+            },
+            undefined,
+            undefined,
+            {},
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "400",
+              "lineHeight": 20,
+            },
+          ]
+        }
+      >
+        GIF
+      </Text>
+      <View
+        accessibilityLabel="Avatar"
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={0}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "borderRadius": 999,
+            "height": 48,
+            "justifyContent": "center",
+            "marginVertical": 5,
+            "opacity": 1,
+            "width": 48,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "bottom": 0,
+                  "justifyContent": "center",
+                  "left": 0,
+                  "overflow": "hidden",
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "backgroundColor": "#F8f9FA",
+                },
+                {
+                  "bottom": 1,
+                  "left": 1,
+                  "right": 1,
+                  "top": 1,
+                },
+              ],
+            ]
+          }
+          testID="undefined.container"
+        />
+        <Image
+          accessibilityRole="image"
+          accessible={false}
+          assetGroup="icons"
+          containerStyle={
+            {
+              "alignItems": "center",
+              "borderRadius": 999,
+              "height": 48,
+              "justifyContent": "center",
+              "width": 48,
+            }
+          }
+          onError={[Function]}
+          source={
+            {
+              "uri": "https://media.giphy.com/media/3oEdv8elIVRa3daNl6/giphy.gif",
+            }
+          }
+          style={
+            [
+              undefined,
+              undefined,
+              {
+                "width": 48,
+              },
+              {
+                "height": 48,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              false,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "height": 48,
+                  "justifyContent": "center",
+                  "width": 48,
+                },
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                undefined,
+              ],
+              false,
+            ]
+          }
+          testID="undefined.image"
+        />
+      </View>
+    </View>
+    <View
+      style={
+        [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 15,
+          },
+        ]
+      }
+    >
+      <Text
+        $textDefault={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "textAlign": "left",
+              "writingDirection": "ltr",
+            },
+            undefined,
+            {
+              "color": "#20303C",
+            },
+            undefined,
+            undefined,
+            {},
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "400",
+              "lineHeight": 20,
+            },
+          ]
+        }
+      >
+        Invalid Gravatar (see logs)
+      </Text>
+      <View
+        accessibilityLabel="Avatar"
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={0}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "borderRadius": 999,
+            "height": 50,
+            "justifyContent": "center",
+            "marginVertical": 5,
+            "opacity": 1,
+            "width": 50,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "bottom": 0,
+                  "justifyContent": "center",
+                  "left": 0,
+                  "overflow": "hidden",
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "backgroundColor": "#E8ECF0",
+                },
+                {
+                  "bottom": 1,
+                  "left": 1,
+                  "right": 1,
+                  "top": 1,
+                },
+              ],
+            ]
+          }
+          testID="undefined.container"
+        >
+          <Text
+            ellipsizeMode="clip"
+            numberOfLines={1}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "textAlign": "left",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "fontFamily": "System",
+                    "fontSize": 14,
+                    "fontWeight": "700",
+                    "lineHeight": 20,
+                  },
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "lineHeight": undefined,
+                  },
+                  {
+                    "color": "#20303C",
+                  },
+                ],
+              ]
+            }
+            testID="undefined.label"
+          >
+            🤦
+          </Text>
+        </View>
+        <Image
+          accessibilityRole="image"
+          accessible={false}
+          assetGroup="icons"
+          containerStyle={
+            {
+              "alignItems": "center",
+              "borderRadius": 999,
+              "height": 50,
+              "justifyContent": "center",
+              "width": 50,
+            }
+          }
+          onError={[Function]}
+          onLoadEnd={[Function]}
+          onLoadStart={[Function]}
+          source={
+            {
+              "uri": "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=404",
+            }
+          }
+          style={
+            [
+              undefined,
+              undefined,
+              {
+                "width": 50,
+              },
+              {
+                "height": 50,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              false,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "height": 50,
+                  "justifyContent": "center",
+                  "width": 50,
+                },
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                undefined,
+              ],
+              false,
+            ]
+          }
+          testID="undefined.image"
+        />
+      </View>
+    </View>
+    <View
+      style={
+        [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 15,
+          },
+        ]
+      }
+    >
+      <Text
+        $textDefault={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "textAlign": "left",
+              "writingDirection": "ltr",
+            },
+            undefined,
+            {
+              "color": "#20303C",
+            },
+            undefined,
+            undefined,
+            {},
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "400",
+              "lineHeight": 20,
+            },
+          ]
+        }
+      >
+        Monitored Avatar (see logs)
+      </Text>
+      <View
+        accessibilityLabel="Avatar"
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={0}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "borderRadius": 999,
+            "height": 50,
+            "justifyContent": "center",
+            "marginVertical": 5,
+            "opacity": 1,
+            "width": 50,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "bottom": 0,
+                  "justifyContent": "center",
+                  "left": 0,
+                  "overflow": "hidden",
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "backgroundColor": "#0F62E6",
+                },
+                {
+                  "bottom": 1,
+                  "left": 1,
+                  "right": 1,
+                  "top": 1,
+                },
+              ],
+            ]
+          }
+          testID="undefined.container"
+        >
+          <Text
+            ellipsizeMode="clip"
+            numberOfLines={1}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "textAlign": "left",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "fontFamily": "System",
+                    "fontSize": 14,
+                    "fontWeight": "700",
+                    "lineHeight": 20,
+                  },
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "lineHeight": undefined,
+                  },
+                  {
+                    "color": "#20303C",
+                  },
+                ],
+              ]
+            }
+            testID="undefined.label"
+          >
+            ?!
+          </Text>
+        </View>
+        <Image
+          accessibilityRole="image"
+          accessible={false}
+          assetGroup="icons"
+          containerStyle={
+            {
+              "alignItems": "center",
+              "borderRadius": 999,
+              "height": 50,
+              "justifyContent": "center",
+              "width": 50,
+            }
+          }
+          onError={[Function]}
+          onLoadEnd={[Function]}
+          onLoadStart={[Function]}
+          source={
+            {
+              "uri": "https://static.altomusic.com/media/catalog/product/M/A/MAJ100SBK_0.jpg",
+            }
+          }
+          style={
+            [
+              undefined,
+              undefined,
+              {
+                "width": 50,
+              },
+              {
+                "height": 50,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              false,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "height": 50,
+                  "justifyContent": "center",
+                  "width": 50,
+                },
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                undefined,
+              ],
+              false,
+            ]
+          }
+          testID="undefined.image"
+        />
+      </View>
+    </View>
+    <View
+      style={
+        [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 15,
+          },
+        ]
+      }
+    >
+      <Text
+        $textDefault={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "textAlign": "left",
+              "writingDirection": "ltr",
+            },
+            undefined,
+            {
+              "color": "#20303C",
+            },
+            undefined,
+            undefined,
+            {},
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "400",
+              "lineHeight": 20,
+            },
+          ]
+        }
+      >
+        Empty Gravatar
+      </Text>
+      <View
+        accessibilityLabel="Avatar"
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={0}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "borderRadius": 999,
+            "height": 50,
+            "justifyContent": "center",
+            "marginVertical": 5,
+            "opacity": 1,
+            "width": 50,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "bottom": 0,
+                  "justifyContent": "center",
+                  "left": 0,
+                  "overflow": "hidden",
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "backgroundColor": "#FFEDEC",
+                },
+                {
+                  "bottom": 1,
+                  "left": 1,
+                  "right": 1,
+                  "top": 1,
+                },
+              ],
+            ]
+          }
+          testID="undefined.container"
+        />
+        <Image
+          accessibilityRole="image"
+          accessible={false}
+          assetGroup="icons"
+          containerStyle={
+            {
+              "alignItems": "center",
+              "borderRadius": 999,
+              "height": 50,
+              "justifyContent": "center",
+              "width": 50,
+            }
+          }
+          onError={[Function]}
+          source={
+            {
+              "uri": "https://www.gravatar.com/avatar/2497473d558a37020c558bf26e380a7c?d=blank",
+            }
+          }
+          style={
+            [
+              undefined,
+              undefined,
+              {
+                "width": 50,
+              },
+              {
+                "height": 50,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              false,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "height": 50,
+                  "justifyContent": "center",
+                  "width": 50,
+                },
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                undefined,
+              ],
+              false,
+            ]
+          }
+          testID="undefined.image"
+        />
+      </View>
+    </View>
+    <View
+      style={
+        [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 15,
+          },
+        ]
+      }
+    >
+      <Text
+        $textDefault={true}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "color": "#20303C",
+              "textAlign": "left",
+              "writingDirection": "ltr",
+            },
+            undefined,
+            {
+              "color": "#20303C",
+            },
+            undefined,
+            undefined,
+            {},
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "400",
+              "lineHeight": 20,
+            },
+          ]
+        }
+      >
+        With custom badge label
+      </Text>
+      <View
+        accessibilityLabel="Avatar"
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={0}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "borderRadius": 999,
+            "height": 50,
+            "justifyContent": "center",
+            "marginVertical": 5,
+            "opacity": 1,
+            "width": 50,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 999,
+                  "bottom": 0,
+                  "justifyContent": "center",
+                  "left": 0,
+                  "overflow": "hidden",
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                {
+                  "backgroundColor": "#FFEDEC",
+                },
+                false,
+              ],
+            ]
+          }
+          testID="undefined.container"
+        >
+          <Text
+            ellipsizeMode="clip"
+            numberOfLines={1}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#20303C",
+                  "textAlign": "left",
+                  "writingDirection": "ltr",
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [
+                  {
+                    "fontFamily": "System",
+                    "fontSize": 14,
+                    "fontWeight": "700",
+                    "lineHeight": 20,
+                  },
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "lineHeight": undefined,
+                  },
+                  {
+                    "color": "#20303C",
+                  },
+                ],
+              ]
+            }
+            testID="undefined.label"
+          >
+            LD
+          </Text>
+        </View>
+        <View
+          accessibilityLabel="+2 new items"
+          accessibilityRole="text"
+          accessible={true}
+          borderColor="#FFFFFF"
+          iconProps={
+            {
+              "tintColor": null,
+            }
+          }
+          label="+2"
+          modifiers={{}}
+          size={24}
+          style={
+            [
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {},
+              {},
+              {},
+              {
+                "bottom": -6.177669529663687,
+                "position": "absolute",
+                "right": -6.177669529663687,
+              },
+            ]
+          }
+        >
+          <View
+            pointerEvents="none"
+            row={true}
+            style={
+              [
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {},
+                {},
+                {
+                  "flexDirection": "row",
+                },
+                [
+                  {
+                    "height": 27,
+                    "minWidth": 27,
+                    "paddingHorizontal": 6,
+                  },
+                  {
+                    "alignItems": "center",
+                    "alignSelf": "flex-start",
+                    "backgroundColor": "#0F62E6",
+                    "borderRadius": 999,
+                    "justifyContent": "center",
+                    "overflow": "hidden",
+                  },
+                  {
+                    "borderColor": "#FFFFFF",
+                    "borderWidth": 1.5,
+                  },
+                  undefined,
+                ],
+              ]
+            }
+            testID="undefined.onlineBadge"
+          >
+            <Text
+              allowFontScaling={false}
+              fsTagName="unmask"
+              numberOfLines={1}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                    "color": "#20303C",
+                    "textAlign": "left",
+                    "writingDirection": "ltr",
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "color": "#FFFFFF",
+                      "fontFamily": "System",
+                      "fontSize": 12,
+                      "fontWeight": "700",
+                      "lineHeight": 16,
+                    },
+                    false,
+                    undefined,
+                  ],
+                ]
+              }
+              testID="badge"
+            >
+              +2
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</RCTScrollView>
+`;

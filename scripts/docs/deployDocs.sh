@@ -5,7 +5,7 @@ echo "Building components docs files..."
 npm run docs:build;
 
 echo "Building docs site..."
-(cd ./docuilib && npm run build)
+(cd ./packages/uilib-docs && npm run build)
 
 echo "Deploying docs..."
-(cd ./docuilib && GIT_USER=$username USE_SSH=true npm run deploy)
+(cd ./packages/uilib-docs && GIT_USER=$username USE_SSH=true npm run deploy)

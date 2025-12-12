@@ -1,0 +1,34 @@
+{
+  "name": "ExpandableSection",
+  "category": "infra",
+  "description": "Component to render expanded section below or above the SectionHeader",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/screens/componentScreens/ExpandableSectionScreen.tsx",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/showcase/ExpandableSection/ExpandableSection.gif?raw=true"
+  ],
+  "props": [
+    {"name": "sectionHeader", "type": "JSX.Element", "description": "Header element"},
+    {"name": "children", "type": "React.ReactNode", "description": "The expandable's children"},
+    {"name": "expanded", "type": "boolean", "description": "Should the ExpandableSection be expanded"},
+    {"name": "top", "type": "boolean", "description": "Should it open above the 'sectionHeader'"},
+    {
+      "name": "onPress",
+      "type": "() => void",
+      "description": "Called when pressing the header of the ExpandableSection"
+    },
+    {
+      "name": "minHeight",
+      "type": "number",
+      "description": "Set a minimum height for the expandableSection. If the children height is less than the minHeight, the expandableSection will collapse to that height. If the children height is greater than the minHeight, the expandableSection will result with only the children rendered (sectionHeader will not be rendered)"
+    },
+    {"name": "testID", "type": "string", "description": "testing identifier"}
+  ],
+  "snippet": [
+    "<ExpandableSection",
+    " top$1",
+    " expanded={false$2}",
+    " sectionHeader={<Text grey10 text60>The section header</Text>$3}",
+    " onPress={() => console.log('pressed')$4}",
+    ">"
+  ]
+}

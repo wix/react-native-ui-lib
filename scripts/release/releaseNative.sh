@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pushd lib
-npm install
-npm run releaseNative
+pushd packages/uilib-native
+yarn
+yarn releaseNative
 popd

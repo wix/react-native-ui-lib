@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pushd docuilib
+pushd packages/uilib-docs
 yarn
 yarn build
 yarn releaseDocs

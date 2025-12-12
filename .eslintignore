@@ -1,1 +1,6 @@
-/src/style/typography.js
+# TODO: lint all packages
+packages/web-demo-app/**/*
+packages/unicorn-demo-app/**/*
+packages/uilib-native/components/**/*
+packages/uilib-docs/**/*
+packages/eslint-plugin-uilib/**/*

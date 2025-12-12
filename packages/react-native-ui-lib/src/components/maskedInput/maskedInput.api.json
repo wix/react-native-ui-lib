@@ -1,0 +1,59 @@
+{
+  "name": "MaskedInput",
+  "category": "form",
+  "description": "Mask Input to create custom looking inputs with custom formats",
+  "extends": ["TextInput"],
+  "extendsLink": ["https://reactnative.dev/docs/textinput"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/screens/componentScreens/MaskedInputScreen.tsx",
+  "images": [
+    "https://camo.githubusercontent.com/61eedb65e968845d5eac713dcd21a69691571fb1/68747470733a2f2f6d656469612e67697068792e636f6d2f6d656469612f4b5a5a7446666f486f454b334b2f67697068792e676966"
+  ],
+  "props": [
+    {
+      "name": "renderMaskedText",
+      "type": "React.ReactElement",
+      "required": true,
+      "description": "callback for rendering the custom input out of the value returns from the actual input"
+    },
+    {
+      "name": "containerStyle",
+      "type": "ViewStyle",
+      "description": "container style for the masked input container"
+    }
+  ],
+  "snippet": [
+    "function Example(props) {",
+    "  const [value, setValue] = useState('15$1');",
+    "",
+    "  const renderTimeText = useCallback((value) => {",
+    "    const paddedValue = _.padStart(value, 4, '0');",
+    "    const hours = paddedValue.substr(0, 2);",
+    "    const minutes = paddedValue.substr(2, 2);",
+    "",
+    "    return (",
+    "      <Text text20 grey20 center>",
+    "        {hours}",
+    "        <Text red10>h</Text>",
+    "        {minutes}",
+    "        <Text red10>m</Text>",
+    "      </Text>",
+    "    );",
+    "  }, []);",
+    "",
+    "  const formatter = useCallback(value => value?.replace(/\\D/g, ''), []);",
+    "  return (",
+    "    <div>",
+    "      <MaskedInput",
+    "        migrate",
+    "        renderMaskedText={renderTimeText}",
+    "        formatter={formatter}",
+    "        keyboardType={'numeric'}",
+    "        maxLength={4$2}",
+    "        initialValue={value}",
+    "        // onChangeText={setValue}",
+    "      />",
+    "    </div>",
+    "  );",
+    "}"
+  ]
+}

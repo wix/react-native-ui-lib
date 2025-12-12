@@ -1,0 +1,171 @@
+{
+  "name": "Avatar",
+  "category": "media",
+  "description": "Avatar component for displaying user profile images",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/showcase/Avatar/Avarat_1.png?raw=true",
+    "https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/showcase/Avatar/Avarat_2.png?raw=true"
+  ],
+  "extends": ["basic/TouchableOpacity", "media/Image"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/screens/componentScreens/AvatarsScreen.tsx",
+  "props": [
+    {
+      "name": "animate",
+      "type": "boolean",
+      "description": "Adds fade in animation when Avatar image loads. This prop isn't supported on web (will be set to false by default when using web).",
+      "default": "false"
+    },
+    {"name": "backgroundColor", "type": "string", "description": "Background color for Avatar"},
+    {
+      "name": "badgePosition",
+      "type": "TOP_RIGHT | TOP_LEFT | BOTTOM_RIGHT | BOTTOM_LEFT",
+      "description": "Badge location on Avatar",
+      "default": "BadgePosition.TOP_RIGHT"
+    },
+    {"name": "badgeProps", "type": "BadgeProps", "description": "Badge props passed down to Badge component"},
+    {
+      "name": "containerStyle",
+      "type": "ViewStyle",
+      "description": "Additional spacing styles for the container"
+    },
+    {"name": "source", "type": "ImageSourcePropType", "description": "The image source (external or from assets)"},
+    {"name": "imageProps", "type": "ImageProps", "description": "Image props object"},
+    {
+      "name": "imageStyle",
+      "type": "ImageStyle",
+      "description": "Image style object used to pass additional style props by components which render image"
+    },
+    {
+      "name": "onImageLoadStart",
+      "type": "ImagePropsBase['onLoadStart']",
+      "description": "Listener-callback for when an image's (uri) loading starts (equiv. to Image.onLoadStart())."
+    },
+    {
+      "name": "onImageLoadEnd",
+      "type": "ImagePropsBase['onLoadEnd']",
+      "description": "Listener-callback for when an image's (uri) loading either succeeds or fails (equiv. to Image.onLoadEnd())."
+    },
+    {
+      "name": "onImageLoadError",
+      "type": "ImagePropsBase['onError']",
+      "description": "Listener-callback for when an image's (uri) loading fails (equiv. to Image.onError())."
+    },
+
+    {
+      "name": "name",
+      "type": "string",
+      "description": "The name of the avatar user. If no label is provided, the initials will be generated from the name. autoColorsConfig will use the name to create the background color of the Avatar."
+    },
+    {
+      "name": "useAutoColors",
+      "type": "boolean",
+      "description": "Hash the name (or label) to get a color, so each name will have a specific color. Default is false."
+    },
+    {
+      "name": "autoColorsConfig",
+      "type": "AutoColorsProps",
+      "description": "Send this to use the name to infer a backgroundColor"
+    },
+    {"name": "label", "type": "string", "description": "Label that can represent initials"},
+    {"name": "labelColor", "type": "string", "description": "The label color", "default": "Colors.grey10"},
+    {"name": "ribbonLabel", "type": "string", "description": "Ribbon label to display on the avatar"},
+    {"name": "ribbonStyle", "type": "ViewStyle", "description": "Ribbon custom style"},
+    {"name": "ribbonLabelStyle", "type": "TextStyle", "description": "Ribbon label custom style"},
+    {"name": "customRibbon", "type": "JSX.Element", "description": "Custom ribbon"},
+    {"name": "size", "type": " number", "description": "Custom size for the Avatar", "default": "50"},
+    {"name": "onPress", "type": "(props: any) => void", "description": "Press handler"},
+    {"name": "testID", "type": "string", "description": "Test identifier"}
+  ],
+  "snippet": [
+    "<View flex center row gap-s5>",
+    "<Avatar",
+    "  size={60$2}",
+    "  source={{uri: 'https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/icons/icon%20examples%20for%20docs/avatar_1.jpg'}$3}",
+    "  badgeProps={{label: '2'}$4}",
+    "  badgePosition={'BOTTOM_RIGHT'}",
+    "  onPress={() => {}}",
+    "/>",
+    "<Avatar",
+    "  size={60}",
+    "  source={{uri: 'https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/icons/icon%20examples%20for%20docs/avatar_1.jpg'}}",
+    "  ribbonLabel='NEW'",
+    "/>",
+    "</View>"
+  ],
+  "docs": {
+    "hero": {
+      "title": "Avatar",
+      "description": "An Avatar component is a visual representation of a user or entity, often displayed as a circular image, icon, or placeholder with initials. In mobile app design systems, it is used to personalize the interface by representing users in profiles, chats, notifications, or lists. Avatars help users quickly recognize people, accounts, or items, enhancing both engagement and navigational clarity.",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Avatar/avatar_hero.png"
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "table",
+            "columns": ["Property", "Component"],
+            "items": [
+              {
+                "title": "Image",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Avatar/avatar_table01.png"
+                  }
+                ]
+              },
+              {
+                "title": "Initials",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Avatar/avatar_table04.png"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "table",
+            "columns": ["Property", "Component"],
+            "items": [
+              {
+                "title": "Badge (online indication)",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Avatar/avatarPlaceholder_overview_table.png"
+                  }
+                ]
+              },
+              {
+                "title": "Badge with icon",
+                "description": "Not supported in XXSmall and 3Xsmall.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Avatar/avatarPlaceholder_overview_table02.png"
+                  }
+                ]
+              },
+              {
+                "title": "Label",
+                "description": "Supported only in XLarge, Large and Medium.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components Docs/Avatar/avatarPlaceholder_overview_table03.png"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

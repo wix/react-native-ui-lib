@@ -77,7 +77,7 @@
     "prefix": "card.Image",
     "description": "Inner component for the Card component (better be a direct child)",
     "body": [
-      "<Card.Image source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/images/card-example.jpg'$1}} height={115$2}/>"
+      "<Card.Image source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/assets/images/card-example.jpg'$1}} height={115$2}/>"
     ]
   },
   "Card.Section": {
@@ -95,7 +95,7 @@
     "description": "Customizable card component that handles press events",
     "body": [
       "<Card flex center onPress={() => console.log('pressed')}$1>",
-      " <Card.Image source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/images/card-example.jpg'$2}}/>",
+      " <Card.Image source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/assets/images/card-example.jpg'$2}}/>",
       "</Card>"
     ]
   },
@@ -285,7 +285,7 @@
     "prefix": "image",
     "description": "Image wrapper with extra functionality like source transform and assets support",
     "body": [
-      "<Image source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/images/card-example.jpg'}$1}/>"
+      "<Image source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/assets/images/card-example.jpg'}$1}/>"
     ]
   },
   "ListItem": {
@@ -354,7 +354,7 @@
     "prefix": "animatedImage",
     "description": "Image component that fades-in the image with animation once it's loaded",
     "body": [
-      "<AnimatedImage source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/images/card-example.jpg'$1}}/>"
+      "<AnimatedImage source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/assets/images/card-example.jpg'$1}}/>"
     ]
   },
   "SegmentedControl": {
@@ -457,7 +457,7 @@
     "prefix": "icon",
     "description": "Icon component",
     "body": [
-      "<Icon source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/icons/delete.png'}$1} size={24$2} tintColor={Colors.grey40$3}/>"
+      "<Icon source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/assets/icons/delete.png'}$1} size={24$2} tintColor={Colors.grey40$3}/>"
     ]
   },
   "ChipsInput": {
@@ -519,7 +519,7 @@
     "description": "Overlay view with types",
     "body": [
       "<Image",
-      " source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/demo/src/assets/images/card-example.jpg'}$1}",
+      " source={{uri: 'https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/assets/images/card-example.jpg'}$1}",
       " overlayType={Image.overlayTypes.BOTTOM$2}",
       "/>"
     ]

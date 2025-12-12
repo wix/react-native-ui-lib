@@ -1,0 +1,300 @@
+{
+  "name": "Timeline",
+  "category": "lists",
+  "description": "A timeline item to render as part of a timeline list",
+  "extends": ["View"],
+  "extendsLink": ["https://reactnative.dev/docs/view"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/packages/unicorn-demo-app/src/screens/componentScreens/TimelineScreen.tsx",
+  "images": [],
+  "props": [
+    {
+      "name": "topLine",
+      "type": "LineProps",
+      "description": "The top line props"
+    },
+    {
+      "name": "bottomLine",
+      "type": "LineProps",
+      "description": "The bottom line props"
+    },
+    {
+      "name": "point",
+      "type": "PointProps",
+      "description": "The point props"
+    },
+    {
+      "name": "testID",
+      "type": "string",
+      "description": "The test id for testing"
+    }
+  ],
+  "snippet": [
+    "<Timeline",
+    "  topLine={{type: Timeline.lineTypes.DASHED}}",
+    "  bottomLine={{state: Timeline.states.SUCCESS}}",
+    "  point={{state: Timeline.states.SUCCESS}}",
+    ">",
+    "   <View padding-20 bg-grey60 br30>",
+    "     <Text text70BO>Title</Text>",
+    "     <View marginT-5 padding-8 bg-white br30>",
+    "       <Text>Description</Text>",
+    "     </View>",
+    "   </View>",
+    " </Timeline>"
+  ],
+  "docs": {
+    "hero": {
+      "title": "Timeline",
+      "description": "markdown:\nThe timeline displays a vertical list of events or steps.   \nIt provides the user with a sense of awareness around the progress and the remaining steps.",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_overview_cover.png"
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "list",
+            "items": [
+              {
+                "title": "Log Timeline",
+                "description": "A log of past and future activities or events. The list starts with an empty state, and it keeps on updating and changing.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_overview_usageExamples1.png"
+                  }
+                ]
+              },
+              {
+                "title": "Steps Timeline",
+                "description": "A list of suggested steps to take to achieve a certain goal. Users usually need to take action with these steps.The steps are usually decided in advance, meaning that the initial state is not empty.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_overview_usageExamples2.png"
+                  }
+                ]
+              }
+            ],
+            "title": "Usage Examples",
+            "description": "The timeline displays a vertical list of events or steps. \nIt provides the user with a sense of awareness around the progress and the remaining steps.",
+            "layout": "horizontal"
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "title": "",
+                "description": "markdown:\nThe Timeline consists of points and lines, each with different styles and states. These elements can be combined in various ways to suit different product goals.  \nPoints create visual breakpoints that make your timeline easier to read, they act as bullet points, representing each step or activity. The icons and colors can be customized.  \nLines can either match the state and color of the points or be styled differently or in neutral tokens to emphasize the points.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_structure.png"
+                  }
+                ]
+              },
+              {
+                "title": "Points aligned to center (default)",
+                "description": "The timeline points are aligned with the center of the element on the right.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_structure_center.png"
+                  }
+                ]
+              },
+              {
+                "title": "Points aligned to anchor ref",
+                "description": "The Timeline can be configured to align its points to one of the elements on the right. In the example, the points are aligned with the titles in the cards.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_structure_anchorRef.png"
+                  }
+                ]
+              }
+            ],
+            "layout": "horizontal",
+            "title": "Structure"
+          },
+          {
+            "type": "table",
+            "columns": ["Property", "Preview"],
+            "items": [
+              {
+                "title": "Current",
+                "content": [
+                  {
+                    "snippet": "<Timeline topLine={{state: Timeline.states.CURRENT}} bottomLine={{state: Timeline.states.CURRENT}} point={{state: Timeline.states.CURRENT}}><View style={{height: 88}}/></Timeline>"
+                  }
+                ],
+                "description": "state: current"
+              },
+              {
+                "title": "Next",
+                "content": [
+                  {
+                    "snippet": "<Timeline topLine={{state: Timeline.states.NEXT}} bottomLine={{state: Timeline.states.NEXT}} point={{state: Timeline.states.NEXT, type: Timeline.pointTypes.CIRCLE}}><View style={{height: 88}}/></Timeline>"
+                  }
+                ],
+                "description": "state: next"
+              },
+              {
+                "title": "Error",
+                "content": [
+                  {
+                    "snippet": "<Timeline topLine={{state: Timeline.states.ERROR}} bottomLine={{state: Timeline.states.ERROR}} point={{state: Timeline.states.ERROR}}><View style={{height: 88}}/></Timeline>"
+                  }
+                ],
+                "description": "state: error"
+              },
+              {
+                "title": "Success",
+                "content": [
+                  {
+                    "snippet": "<Timeline topLine={{state: Timeline.states.SUCCESS}} bottomLine={{state: Timeline.states.SUCCESS}} point={{state: Timeline.states.SUCCESS}}><View style={{height: 88}}/></Timeline>"
+                  }
+                ],
+                "description": "state: success"
+              }
+            ],
+            "title": "States",
+            "name": ""
+          },
+          {
+            "type": "table",
+            "columns": ["Property", "Preview"],
+            "items": [
+              {
+                "title": "Bullet",
+                "description": "type: bullet",
+                "content": [
+                  {
+                    "snippet": "<Timeline point={{type: Timeline.pointTypes.BULLET}}><View style={{height: 88}}/></Timeline>"
+                  }
+                ]
+              },
+              {
+                "title": "Circle",
+                "description": "type: circle",
+                "content": [
+                  {
+                    "snippet": "<Timeline point={{state: Timeline.states.NEXT, type: Timeline.pointTypes.CIRCLE}}><View style={{height: 88}}/></Timeline>"
+                  }
+                ]
+              },
+              {
+                "title": "Outline",
+                "description": "type: outline",
+                "content": [
+                  {
+                    "snippet": "<Timeline point={{type: Timeline.pointTypes.OUTLINE}}><View style={{height: 88}}/></Timeline>"
+                  }
+                ]
+              }
+            ],
+            "title": "Point",
+            "name": "Point Types"
+          },
+          {
+            "type": "table",
+            "columns": ["Property", "Preview"],
+            "items": [
+              {
+                "title": "Text",
+                "content": [
+                  {
+                    "snippet": "<Timeline point={{label: '1'}}><View style={{height: 88}}/></Timeline>"
+                  }
+                ],
+                "description": "text: “1”"
+              },
+              {
+                "title": "Icon",
+                "content": [
+                  {
+                    "snippet": "<Timeline point={{state: Timeline.states.SUCCESS, icon: Assets.internal.icons.checkSmall}}><View style={{height: 88}}/></Timeline>"
+                  }
+                ],
+                "description": "icon: Assets.internal.icons.general.checkmarkSmall"
+              },
+              {
+                "title": "Icon without background",
+                "content": [
+                  {
+                    "snippet": "<Timeline point={{state: Timeline.states.SUCCESS, icon: Assets.internal.icons.search, removeIconBackground: true}}><View style={{height: 88}}/></Timeline>"
+                  }
+                ],
+                "description": "icon: Assets.internal.icons.general.favorite, removeIconBackground: true"
+              }
+            ],
+            "name": "Point Accessories"
+          },
+          {
+            "type": "table",
+            "columns": ["Property", "Preview"],
+            "items": [
+              {
+                "title": "Solid",
+                "content": [
+                  {
+                    "snippet": "<Timeline topLine={{state: Timeline.states.CURRENT}} point={{removeIconBackground: true}}><View style={{height: 88}}/></Timeline>"
+                  }
+                ],
+                "description": "type: solid"
+              },
+              {
+                "title": "Dashed",
+                "content": [
+                  {
+                    "snippet": "<Timeline topLine={{state: Timeline.states.CURRENT, type: Timeline.lineTypes.DASHED}} point={{removeIconBackground: true}}><View style={{height: 88}}/></Timeline>"
+                  }
+                ],
+                "description": "type: dashed"
+              }
+            ],
+            "title": "Line",
+            "name": "Line Types"
+          },
+          {
+            "type": "table",
+            "columns": ["Property", "Preview"],
+            "items": [
+              {
+                "title": "Entry",
+                "content": [
+                  {
+                    "snippet": "<Timeline topLine={{state: Timeline.states.NEXT, entry: true}} bottomLine={{state: Timeline.states.NEXT, entry: true}} point={{removeIconBackground: true}}><View style={{height: 88}}/></Timeline>"
+                  }
+                ],
+                "description": "entry: true"
+              }
+            ],
+            "name": "Line Accessories"
+          },
+          {
+            "type": "section",
+            "title": "Orientation",
+            "description": "markdown:\nThe Timeline can be displayed in either ascending or descending order, depending on the context:  \n\n - **Ascending:** Numbers increase as you move forward.   \n - **Descending:** Numbers decrease as you move forward.",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=2325-449060&embed-host=share"
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "title": "Spec",
+            "description": "markdown:\n**Key rules:**  \n- Maintain a minimum distance of S2 between the Timeline and the elements on the right. \n- Points can be aligned either to the top or the center of the elements on the right. \n- When points are center-aligned with the elements, set the line length to auto, with a minimum of 20px.",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Timeline/timeline_spec.png"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
