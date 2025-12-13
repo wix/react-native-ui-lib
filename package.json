@@ -14,6 +14,7 @@
     "lint": "eslint packages -c .eslintrc.js --ext .tsx,.ts,.js",
     "lint:fix": "eslint packages -c .eslintrc.js --fix",
     "build:dev": "tsc --p tsconfig.dev.json",
+    "pre-push": "yarn build:dev && yarn test",
     "build": "yarn workspace react-native-ui-lib build",
     "build:local": "yarn workspace react-native-ui-lib build:local"
   },
