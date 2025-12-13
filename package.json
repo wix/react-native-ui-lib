@@ -19,7 +19,11 @@
     "build:local": "yarn workspace react-native-ui-lib build:local",
     "updateWebAssets": "node scripts/updateWebAssets.js",
     "calendar:createMocks": "node scripts/createCalendarMockData.js",
-    "release": "./scripts/release/releaseUiLib.sh"
+    "release": "./scripts/release/releaseUiLib.sh",
+    "releaseDemo": "./scripts/release/releaseDemo.sh",
+    "releaseDocs": "./scripts/release/releaseDocs.sh",
+    "releaseEslint": "./scripts/release/releaseEslint.sh",
+    "releaseNative": "./scripts/release/releaseNative.sh"
   },
   "workspaces": {
     "packages": [
