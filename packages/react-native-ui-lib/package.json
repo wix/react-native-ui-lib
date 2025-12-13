@@ -25,7 +25,6 @@
         "xcode": "xed ios",
         "build": "node scripts/build/build.js",
         "build:local": "./scripts/build/createLocalPackage.sh",
-        "calendar:createMocks": "node scripts/createCalendarMockData.js",
         "snippets:build": "node scripts/generateSnippets.js",
         "release": "node ./scripts/release/release.js",
         "updateWebAssets": "node scripts/assets/extractDimensions.js"
