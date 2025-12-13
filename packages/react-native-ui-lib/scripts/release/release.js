@@ -8,7 +8,7 @@ const p = require('path');
 
 // Export buildkite variables for Release build
 // We cast toString() because function returns 'object'
-const isRelease = process.env.BUILDKITE_MESSAGE.match(/^release$/i);
+const isRelease = process.env.BUILDKITE_MESSAGE?.match?.(/^release$/i);
 let VERSION;
 if (isRelease) {
   VERSION = cp.execSync(`buildkite-agent meta-data get version`).toString();
@@ -17,12 +17,13 @@ if (isRelease) {
 const VERSION_TAG = isRelease ? 'latest' : 'snapshot';
 const VERSION_INC = 'patch';
 function run() {
+  console.log('Release UI Lib');
   if (!validateEnv()) {
-    console.log('Do not release');
+    console.log('Not a valid environment to release in!');
     return;
   }
 
-  console.log('Release');
+  console.log('Valid environment - releasing...');
   setupGit();
   createNpmRc();
   versionTagAndPublish();

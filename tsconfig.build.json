@@ -2,7 +2,5 @@
   "extends": "./tsconfig",
   "compilerOptions": {
     "emitDeclarationOnly": true
-  },
-  "include": ["src/**/*", "typings/**/*", "lib/components/**/*", "testkit/**/*"],
-  "exclude": [ "node_modules", "src/**/__tests__/*.*"]
+  }
 }

@@ -1,5 +1,6 @@
 {
     "name": "rnuilib-snippets",
+    "version": "1.0.3",
     "displayName": "React Native UILIB Snippets",
     "description": "Code snippets for react-native-ui-lib components",
     "author": "Inbal Tish <inbaltish@gmail.com>",
@@ -9,8 +10,10 @@
         "type": "git",
         "url": "https://github.com/wix/react-native-ui-lib"
     },
+    "scripts": {
+        "snippets:build": "node scripts/generateSnippets.js"
+    },
     "icon": "assets/icon.png",
-    "version": "1.0.3",
     "engines": {
         "vscode": "^1.64.0"
     },
