@@ -78,6 +78,7 @@ dist-ts
 package-lock.json
 docs/components/**
 !packages/react-native-ui-lib/scripts/build
+demo/src/screens/incubatorScreens/IncubatorCalendarScreen/MockData.ts
 
 # Ruby / CocoaPods
 **/Pods/
