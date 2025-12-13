@@ -25,8 +25,7 @@
         "xcode": "xed ios",
         "build": "node scripts/build/build.js",
         "build:local": "./scripts/build/createLocalPackage.sh",
-        "release": "node ./scripts/release/release.js",
-        "updateWebAssets": "node scripts/assets/extractDimensions.js"
+        "release": "node ./scripts/release/release.js"
     },
     "dependencies": {
         "babel-plugin-transform-inline-environment-variables": "^0.0.2",

@@ -17,6 +17,7 @@
     "pre-push": "yarn build:dev && yarn test",
     "build": "yarn workspace react-native-ui-lib build",
     "build:local": "yarn workspace react-native-ui-lib build:local",
+    "updateWebAssets": "node scripts/updateWebAssets.js",
     "calendar:createMocks": "node scripts/createCalendarMockData.js"
   },
   "workspaces": {

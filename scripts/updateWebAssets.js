@@ -4,8 +4,8 @@ const mime = require('mime-types');
 const {imageSize: sizeOf} = require('image-size');
 
 // Base paths
-const ICONS_PATH = path.resolve(__dirname, '../../src/assets/internal/icons');
-const IMAGES_PATH = path.resolve(__dirname, '../../src/assets/internal/images');
+const ICONS_PATH = path.resolve(__dirname, '../packages/react-native-ui-lib/src/assets/internal/icons');
+const IMAGES_PATH = path.resolve(__dirname, '../packages/react-native-ui-lib/src/assets/internal/images');
 
 // Function to check if file is an image
 function isImageFile(filePath) {
