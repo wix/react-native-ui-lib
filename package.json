@@ -18,7 +18,8 @@
     "build": "yarn workspace react-native-ui-lib build",
     "build:local": "yarn workspace react-native-ui-lib build:local",
     "updateWebAssets": "node scripts/updateWebAssets.js",
-    "calendar:createMocks": "node scripts/createCalendarMockData.js"
+    "calendar:createMocks": "node scripts/createCalendarMockData.js",
+    "release": "./scripts/release/releaseUiLib.sh"
   },
   "workspaces": {
     "packages": [
