@@ -7,6 +7,7 @@ interface State {
   showButton: boolean;
   showSecondary: boolean;
   showVertical: boolean;
+  renderOnlySecondary: boolean;
 }
 
 export default class FloatingButtonScreen extends Component<{}, State> {
@@ -14,7 +15,8 @@ export default class FloatingButtonScreen extends Component<{}, State> {
     showButton: true,
     showSecondary: true,
     showVertical: true,
-    fullWidth: false
+    fullWidth: false,
+    renderOnlySecondary: false
   };
 
   notNow = () => {
@@ -38,6 +40,7 @@ export default class FloatingButtonScreen extends Component<{}, State> {
         {renderBooleanOption.call(this, 'Full Width Button', 'fullWidth')}
         {renderBooleanOption.call(this, 'Show Secondary Button', 'showSecondary')}
         {renderBooleanOption.call(this, 'Button Layout Vertical', 'showVertical')}
+        {renderBooleanOption.call(this, 'Render Only Secondary', 'renderOnlySecondary')}
 
         <ScrollView showsVerticalScrollIndicator={false}>
           <View paddingT-20>
@@ -67,10 +70,14 @@ export default class FloatingButtonScreen extends Component<{}, State> {
         <FloatingButton
           visible={this.state.showButton}
           fullWidth={this.state.fullWidth}
-          button={{
-            label: 'Approve',
-            onPress: this.close
-          }}
+          button={
+            this.state.renderOnlySecondary
+              ? undefined
+              : {
+                label: 'Approve',
+                onPress: this.close
+              }
+          }
           secondaryButton={
             showSecondary
               ? {
