@@ -48,7 +48,9 @@ const SortableListItem = (props: Props) => {
     lockedIds,
     onChange,
     enableHaptic,
-    scale: propsScale = 1
+    scale: propsScale = 1,
+    onDragStart,
+    onDragEnd
   } = useContext(SortableListContext);
   const {getTranslationByIndexChange, getItemIndexById, getIndexByPosition, getIdByItemIndex} = usePresenter();
   const id: string = data[index].id;
@@ -118,6 +120,7 @@ const SortableListItem = (props: Props) => {
       lastSwap.value = {...lastSwap.value, from: currIndex.value};
       tempTranslation.value = translation.value;
       tempItemsOrder.value = itemsOrder.value;
+      runOnJS(onDragStart)();
     })
     .onTouchesMove(() => {
       if (enableHaptic && !isDragging.value) {
@@ -168,6 +171,7 @@ const SortableListItem = (props: Props) => {
           runOnJS(onChange)({...lastSwap.value});
         }
       });
+      runOnJS(onDragEnd)();
     })
     .onFinalize(() => {
       if (isDragging.value) {
