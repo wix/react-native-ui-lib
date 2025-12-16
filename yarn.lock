@@ -2908,9 +2908,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@topcli/spinner@patch:@topcli/spinner@npm%3A2.1.2#./.yarn/patches/@topcli-spinner-npm-2.1.2-262b584167.patch::locator=unicorn-components%40workspace%3A.":
+"@topcli/spinner@patch:@topcli/spinner@npm%3A2.1.2#./.yarn/patches/@topcli-spinner-npm-2.1.2-262b584167.patch::locator=react-native-ui-lib-components%40workspace%3A.":
   version: 2.1.2
-  resolution: "@topcli/spinner@patch:@topcli/spinner@npm%3A2.1.2#./.yarn/patches/@topcli-spinner-npm-2.1.2-262b584167.patch::version=2.1.2&hash=a05f52&locator=unicorn-components%40workspace%3A."
+  resolution: "@topcli/spinner@patch:@topcli/spinner@npm%3A2.1.2#./.yarn/patches/@topcli-spinner-npm-2.1.2-262b584167.patch::version=2.1.2&hash=a05f52&locator=react-native-ui-lib-components%40workspace%3A."
   dependencies:
     "@topcli/wcwidth": "npm:^1.0.1"
     ansi-regex: "npm:^6.0.1"
@@ -9653,6 +9653,42 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-ui-lib-components@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "react-native-ui-lib-components@workspace:."
+  dependencies:
+    "@react-native/eslint-config": "npm:0.77.3"
+    "@react-native/metro-config": "npm:0.77.3"
+    "@react-native/typescript-config": "npm:0.77.3"
+    "@shopify/flash-list": "npm:1.7.6"
+    "@testing-library/react-hooks": "npm:^8.0.1"
+    "@testing-library/react-native": "npm:^11.5.1"
+    "@topcli/spinner": "patch:@topcli/spinner@npm%3A2.1.2#./.yarn/patches/@topcli-spinner-npm-2.1.2-262b584167.patch"
+    "@types/hoist-non-react-statics": "npm:^3.3.1"
+    "@types/jest": "npm:^29.5.13"
+    "@types/lodash": "npm:^4.0.0"
+    "@types/prop-types": "npm:^15.5.3"
+    "@types/react": "npm:18.3.24"
+    "@types/react-test-renderer": "npm:^18.3.0"
+    "@types/tinycolor2": "npm:^1.4.2"
+    "@types/url-parse": "npm:^1.4.3"
+    "@typescript-eslint/eslint-plugin": "npm:^5.3.1"
+    "@typescript-eslint/parser": "npm:^5.3.1"
+    "@welldone-software/why-did-you-render": "npm:^3.2.1"
+    "@yarnpkg/types": "npm:^4.0.1"
+    babel-plugin-lodash: "npm:^3.3.4"
+    babel-plugin-module-resolver: "npm:^5.0.0"
+    chalk: "npm:^4.1.2"
+    eslint: "npm:8.57.1"
+    eslint-config-wix: "npm:2.0.0"
+    eslint-plugin-react: "npm:^7.24.0"
+    eslint-plugin-react-hooks: "npm:^4.0.4"
+    eslint-plugin-react-native: "npm:^4.0.0"
+    prettier-eslint: "npm:16.3.0"
+    typescript: "npm:5.0.4"
+  languageName: unknown
+  linkType: soft
+
 "react-native-ui-lib@workspace:packages/react-native-ui-lib":
   version: 0.0.0-use.local
   resolution: "react-native-ui-lib@workspace:packages/react-native-ui-lib"
@@ -11362,42 +11398,6 @@ __metadata:
   checksum: 10c0/50ded3f8c963c7785e48c510a3b7c6bc4e08a579551489aa0349680a35b1ceceec122e33b2b6c1b579d0be2250f34bb163ac35f5f8695fe10bbc67fb757f0af8
   languageName: node
   linkType: hard
-
-"unicorn-components@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "unicorn-components@workspace:."
-  dependencies:
-    "@react-native/eslint-config": "npm:0.77.3"
-    "@react-native/metro-config": "npm:0.77.3"
-    "@react-native/typescript-config": "npm:0.77.3"
-    "@shopify/flash-list": "npm:1.7.6"
-    "@testing-library/react-hooks": "npm:^8.0.1"
-    "@testing-library/react-native": "npm:^11.5.1"
-    "@topcli/spinner": "patch:@topcli/spinner@npm%3A2.1.2#./.yarn/patches/@topcli-spinner-npm-2.1.2-262b584167.patch"
-    "@types/hoist-non-react-statics": "npm:^3.3.1"
-    "@types/jest": "npm:^29.5.13"
-    "@types/lodash": "npm:^4.0.0"
-    "@types/prop-types": "npm:^15.5.3"
-    "@types/react": "npm:18.3.24"
-    "@types/react-test-renderer": "npm:^18.3.0"
-    "@types/tinycolor2": "npm:^1.4.2"
-    "@types/url-parse": "npm:^1.4.3"
-    "@typescript-eslint/eslint-plugin": "npm:^5.3.1"
-    "@typescript-eslint/parser": "npm:^5.3.1"
-    "@welldone-software/why-did-you-render": "npm:^3.2.1"
-    "@yarnpkg/types": "npm:^4.0.1"
-    babel-plugin-lodash: "npm:^3.3.4"
-    babel-plugin-module-resolver: "npm:^5.0.0"
-    chalk: "npm:^4.1.2"
-    eslint: "npm:8.57.1"
-    eslint-config-wix: "npm:2.0.0"
-    eslint-plugin-react: "npm:^7.24.0"
-    eslint-plugin-react-hooks: "npm:^4.0.4"
-    eslint-plugin-react-native: "npm:^4.0.0"
-    prettier-eslint: "npm:16.3.0"
-    typescript: "npm:5.0.4"
-  languageName: unknown
-  linkType: soft
 
 "unique-filename@npm:^3.0.0":
   version: 3.0.0
