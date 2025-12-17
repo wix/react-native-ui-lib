@@ -308,9 +308,10 @@ class Carousel extends Component<CarouselProps, CarouselState> {
     // finished full page scroll
     const {currentStandingPage, currentPage} = this.state;
     const pagesCount = presenter.getChildrenLength(this.props);
-  
+
     if (currentPage < pagesCount) {
       this.setState({currentStandingPage: currentPage});
+
       if (currentStandingPage !== currentPage) {
         this.props.onChangePage?.(currentPage, currentStandingPage, {isAutoScrolled: this.isAutoScrolled});
         this.isAutoScrolled = false;
