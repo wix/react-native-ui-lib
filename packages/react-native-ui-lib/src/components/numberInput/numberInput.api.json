@@ -66,7 +66,14 @@
   "docs": {
     "hero": {
       "title": "NumberInput",
-      "description": "Number Input to create an input with a formatted number"
+      "description": "Number Input allows users to enter numeric values (e.g., amount, price, quantity.) in a single line input field, using a masked input.\nNumber Input comes as a stand alone input- as main or only input in a screen.",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_Hero.png"
+        }
+      ]
     },
     "tabs": [
       {
@@ -74,10 +81,141 @@
         "sections": [
           {
             "type": "section",
+            "title": "Usage Examples",
+            "description": "markdown:The number input uses masked input, it allows the user to easily enter fixed set input where a certain format is needed (in this case- numeric values for prices with decimals, amounts, weight).  \\n  \\n\nThe masked input allows a more focused typing format, compared to the Main Input which allows the user to type more freely.",
             "content": [
               {
-                "value": "https://embed.figma.com/design/Krv1pLl7kq2L52vMRwd498/MADS-Guidelines?node-id=8539-460248&embed-host=share",
-                "height": 1600
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=14802-145014&m=dev&embed-host=share"
+              },
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=14802-145037&m=dev&embed-host=share"
+              },
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=14802-145069&m=dev&embed-host=share"
+              }
+            ]
+          },
+          {
+            "type": "table",
+            "columns": [
+              "State",
+              "Component"
+            ],
+            "items": [
+              {
+                "title": "Currency",
+                "description": "",
+                "content": [
+                  {
+                    "props": {
+                      "textFieldProps": {
+                        "label": "Enter Amount"
+                      },
+                      "leadingText": "$"
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Percentage",
+                "description": "",
+                "content": [
+                  {
+                    "props": {
+                      "textFieldProps": {
+                        "label": "Enter Amount"
+                      },
+                      "leadingText": "%"
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Weight",
+                "description": "",
+                "content": [
+                  {
+                    "props": {
+                      "textFieldProps": {
+                        "label": "Enter Amount"
+                      },
+                      "trailingText": "kg"
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Number only",
+                "description": "",
+                "content": [
+                  {
+                    "props": {
+                      "textFieldProps": {
+                        "label": "Enter Amount"
+                      }
+                    }
+                  }
+                ]
+              }
+            ],
+            "title": "Number Types",
+            "description": "markdown:The price input supports the usage of prefix, sufix or none; depending on the case.  The supported number types presets are: Currency, Percentage, Weight, or number only.  \\n  \\n\nDon’t use it to enter unique numeric values such as phone numbers or dates."
+          },
+          {
+            "type": "table",
+            "columns": [
+              "State",
+              "Preview"
+            ],
+            "items": [
+              {
+                "title": "Inactive",
+                "description": "Label - $textDefault\\n\nValue - $textDefault\\n\nDivider - $outlineDisabled",
+                "content": [
+                  {
+                    "props": {
+                      "textFieldProps": {
+                        "label": "Enter Amount"
+                      },
+                      "leadingText": "$"
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Active / Typing",
+                "description": "Once in focus, Keyboard opens\\n\nLabel - $textDefault\\n\nValue - $textDefault\\n\nDivider - $outlinePrimary"
+              },
+              {
+                "title": "Disabled",
+                "description": "Label - $textDisabled\\n\nValue - $textDisabled\\n\nDivider - $outlineDisabled",
+                "content": [
+                  {
+                    "props": {
+                      "textFieldProps": {
+                        "label": "Enter Amount"
+                      },
+                      "leadingText": "$",
+                      "editable": false
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Validation error",
+                "description": "markdown:An error can be caused when the entered amount is higher than the max value.  \\n  \\n\nLabel - $textDefault\\n\nValue - $textDefault\\n\nValidation message - $textDangerLight Validation\\n\nicon - $iconDangerLight\\n\nDivider - $outlineDanger"
+              }
+            ],
+            "title": "States",
+            "description": "markdown:NumberInput comes as stand alone Input, as Main or only input in a screen  \\n  \\n\n**Style:**  \\n  \\n\nLabel is optional\\n\nLabel & error message- “bodySmallMedium”\\n\nNumber - “text30M”\\n\nCurrency / Percentage- “text50M”\\n"
+          },
+          {
+            "type": "section",
+            "title": "Specs",
+            "description": "markdown:Max width S5 padding from screen’s edge.\\n\nS4 inside padding.",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_Specs.png"
               }
             ]
           }
