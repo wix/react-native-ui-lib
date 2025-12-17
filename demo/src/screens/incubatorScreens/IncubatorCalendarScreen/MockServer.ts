@@ -1,5 +1,11 @@
 import _ from 'lodash';
-import {data} from './MockData';
+let data;
+try {
+  data = require('./MockData').data;
+} catch (error) {
+  console.warn('Error loading MockData', error);
+  data = [];
+}
 
 const PAGE_SIZE = 400;
 const FAKE_FETCH_TIME = 1500;
