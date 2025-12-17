@@ -2,8 +2,12 @@
   "name": "SortableList",
   "category": "lists",
   "description": "A sortable list component",
-  "extends": ["FlatList"],
-  "extendsLink": ["https://reactnative.dev/docs/flatlist"],
+  "extends": [
+    "FlatList"
+  ],
+  "extendsLink": [
+    "https://reactnative.dev/docs/flatlist"
+  ],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SortableListScreen.tsx",
   "note": "We've seen a case where not all items are rendered on some Android devices, this appears to be a bug with `FlatList` that is using `CellRendererComponent`, our current workaround is for you to add `initialNumToRender={data.length}`.",
   "props": [
@@ -93,5 +97,46 @@
     "    </View>",
     "  )",
     "};"
-  ]
+  ],
+  "docs": {
+    "hero": {
+      "title": "SortableList",
+      "description": "Draggable List is a behavior of a list which allows re-arrangement\nof its items.  The drag-and-drop functionality is a preferred method of organization for most users. It’s more organic with the gesture controls of mobile and intuitive. Drag-and-drop provides a level of direct manipulation that other methods can’t match.\nDraggable list is less appropriate in long lists with scrolling. ",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/SortableList/SortableList_Overview_Hero.png"
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "section",
+            "title": "Usage Examples",
+            "description": "",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=15065-37832&m=dev&embed-host=share"
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "layout": "horizontal",
+            "title": "Spec",
+            "description": "Animation in Google Material Design:\nhttps://storage.googleapis.com/spec-host-backup/mio-design%2Fassets%2F1dtprsH4jZ2nOnjBCJeJXd7n4U-jmWyas%2F03-list-reorder.mp4",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=15065-38298&m=dev&embed-host=share"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }
