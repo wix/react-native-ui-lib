@@ -223,7 +223,18 @@
       },
       {
         "title": "UX Guidelines",
-        "sections": []
+        "sections": [
+          {
+            "type": "section",
+            "title": "Do’s & Don'ts",
+            "description": "",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_UXGuidelines_DosAndDonts.png"
+              }
+            ]
+          }
+        ]
       }
     ]
   }
