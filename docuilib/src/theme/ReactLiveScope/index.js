@@ -20,6 +20,7 @@ import Hint from 'react-native-ui-lib/hint';
 import Icon from 'react-native-ui-lib/icon';
 import * as Incubator from 'react-native-ui-lib/incubator';
 import MaskedInput from 'react-native-ui-lib/maskedInput';
+import NumberInput from 'react-native-ui-lib/numberInput';
 import RadioButton from 'react-native-ui-lib/radioButton';
 import RadioGroup from 'react-native-ui-lib/radioGroup';
 import SegmentedControl from 'react-native-ui-lib/segmentedControl';
@@ -100,6 +101,7 @@ const ReactLiveScope = {
   Image,
   Incubator,
   MaskedInput,
+  NumberInput,
   RadioButton,
   RadioGroup,
   SegmentedControl,
