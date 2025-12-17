@@ -77,7 +77,7 @@
     },
     "tabs": [
       {
-        "title": "UX Guidelines",
+        "title": "Overview",
         "sections": [
           {
             "type": "section",
@@ -222,7 +222,7 @@
         ]
       },
       {
-        "title": "Oops",
+        "title": "UX Guidelines",
         "sections": []
       }
     ]
