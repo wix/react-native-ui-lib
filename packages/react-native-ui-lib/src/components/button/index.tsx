@@ -37,7 +37,9 @@ class Button extends PureComponent<Props, ButtonState> {
   }
 
   state: ButtonState = {
-    size: undefined
+    size: undefined,
+    measuredSize: undefined,
+    borderRadius: undefined
   };
   styles = createStyles();
 
