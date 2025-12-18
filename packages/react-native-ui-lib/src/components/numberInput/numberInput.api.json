@@ -60,9 +60,7 @@
       "description": "Most of TextField's props can be applied, except for ones that are passed directly via named props."
     }
   ],
-  "snippet": [
-    "<NumberInput initialValue={1506$1} onChange={onChange$2} placeholder={'Price$3'}/>"
-  ],
+  "snippet": ["<NumberInput initialValue={1506$1} onChange={onChange$2} placeholder={'Price$3'}/>"],
   "docs": {
     "hero": {
       "title": "NumberInput",
@@ -97,18 +95,14 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Type",
-              "Component"
-            ],
+            "columns": ["Type", "Component"],
             "items": [
               {
                 "title": "Currency",
                 "description": "",
                 "content": [
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_Type_Currency.png",
-                    "props": {}
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_Type_Currency.png"
                   }
                 ]
               },
@@ -117,8 +111,7 @@
                 "description": "",
                 "content": [
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_Type_Percentage.png",
-                    "props": {}
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_Type_Percentage.png"
                   }
                 ]
               },
@@ -127,8 +120,7 @@
                 "description": "",
                 "content": [
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_Type_Weight.png",
-                    "props": {}
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_Type_Weight.png"
                   }
                 ]
               },
@@ -137,8 +129,7 @@
                 "description": "",
                 "content": [
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_Type_NumberOnly.png",
-                    "props": {}
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_Type_NumberOnly.png"
                   }
                 ]
               }
@@ -148,18 +139,14 @@
           },
           {
             "type": "table",
-            "columns": [
-              "State",
-              "Component"
-            ],
+            "columns": ["State", "Component"],
             "items": [
               {
                 "title": "Inactive",
                 "description": "Label - $textDefault\\n\nValue - $textDefault\\n\nDivider - $outlineDisabled",
                 "content": [
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_State_Inactive.png",
-                    "props": {}
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_State_Inactive.png"
                   }
                 ]
               },
@@ -177,8 +164,7 @@
                 "description": "Label - $textDisabled\\n\nValue - $textDisabled\\n\nDivider - $outlineDisabled",
                 "content": [
                   {
-                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_State_Disabled.png",
-                    "props": {}
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_State_Disabled.png"
                   }
                 ]
               },
