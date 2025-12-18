@@ -277,9 +277,11 @@ describe('Button', () => {
         .toJSON()).toMatchSnapshot();
     });
   });
+
+  function mockIOS() {
+    Constants.isIOS = true;
+    Constants.isAndroid = false;
+  }
 });
 
-function mockIOS() {
-  Constants.isIOS = true;
-  Constants.isAndroid = false;
-}
+
