@@ -98,7 +98,9 @@
   "docs": {
     "hero": {
       "title": "Image",
-      "description": "Image wrapper with extra functionality like source transform and assets support"
+      "description": "Renders images responsively, offers an optional contrast overlay, and displays placeholder on load errors.",
+      "type": "hero",
+      "layout": "horizontal"
     },
     "tabs": [
       {
@@ -110,6 +112,26 @@
               {
                 "value": "https://embed.figma.com/design/Krv1pLl7kq2L52vMRwd498/MADS-Guidelines?node-id=10088-640358&embed-host=share",
                 "height": 1600
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "section",
+            "title": "Image Overlays",
+            "description": "Overlays are added on top of an image in cases when extra contrast is needed to increase legebility of the content above the image."
+          },
+          {
+            "type": "section",
+            "title": "Usage Examples",
+            "description": "",
+            "content": [
+              {
+                "value": "\"https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=14016-35810&embed-host=share\""
               }
             ]
           }
