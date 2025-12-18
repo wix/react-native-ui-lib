@@ -99,6 +99,42 @@
             ]
           }
         ]
+      },
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "section",
+            "title": "Usage Examples",
+            "description": "",
+            "content": [
+              {
+                "value": "\"https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=14331-62322&embed-host=share\" "
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "title": "Spec",
+            "description": "Markdown:\n**Grid Columns Calculation**\nOption 1 - Max Item Width:\nSet maximum width of a single item, and amount of items in a row will be set automatically, according to screen width.\nOption 2 - Num Columns:\nSet amount of Columns, and items width will be automatic according to screen width.\n**Rearranging items**\nPress and hold an item and to move it around and reorder the grid, the item expands by 10% to indicate that it has been selected. ",
+            "layout": "horizontal",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/SortableGridList/spec.png"
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "title": "Tablet",
+            "description": "The tablet version will keep it’s proportions and will allow displaying up to 6 columns of items, to avoid a cluttered screen.",
+            "content": [
+              {
+                "value": "\"https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=14331-63246&embed-host=share\""
+              }
+            ]
+          }
+        ]
       }
     ]
   }
