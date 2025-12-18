@@ -511,7 +511,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           decelerationRate="fast"
-          scrollEventThrottle={200}
+          scrollEventThrottle={Constants.isAndroid ? 16 : 200} // Android needs 16ms throttle to reliably catch loop boundary during fast swipes (Ticket 4885)
           {...others}
           ref={this.carousel}
           onScroll={animatedScrollOffset ? this.onScrollEvent : this.onScroll}
