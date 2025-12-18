@@ -98,7 +98,9 @@
   "docs": {
     "hero": {
       "title": "Image",
-      "description": "Image wrapper with extra functionality like source transform and assets support"
+      "description": "Renders images responsively, offers an optional contrast overlay, and displays placeholder on load errors.",
+      "type": "hero",
+      "layout": "horizontal"
     },
     "tabs": [
       {
@@ -112,6 +114,56 @@
                 "height": 1600
               }
             ]
+          }
+        ]
+      },
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "section",
+            "title": "Image Overlays",
+            "description": "Overlays are added on top of an image in cases when extra contrast is needed to increase legebility of the content above the image."
+          },
+          {
+            "type": "section",
+            "title": "Usage Examples",
+            "description": "",
+            "content": [
+              {
+                "value": "\"https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=14016-35810&embed-host=share\""
+              }
+            ]
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Type",
+              "Preview"
+            ],
+            "items": [
+              {
+                "title": "Black Overlay (default)",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Type%20tabel/Black%20Overlay%20(default).png"
+                  }
+                ]
+              },
+              {
+                "title": "White Overlay",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Type%20tabel/White%20Overlay.png",
+                    "background": "A6ACB1"
+                  }
+                ]
+              }
+            ],
+            "title": "Types",
+            "description": ""
           }
         ]
       }
