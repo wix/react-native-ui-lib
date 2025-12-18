@@ -98,7 +98,7 @@
           {
             "type": "table",
             "columns": [
-              "State",
+              "Type",
               "Component"
             ],
             "items": [
@@ -107,12 +107,8 @@
                 "description": "",
                 "content": [
                   {
-                    "props": {
-                      "textFieldProps": {
-                        "label": "Enter Amount"
-                      },
-                      "leadingText": "$"
-                    }
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_Type_Currency.png",
+                    "props": {}
                   }
                 ]
               },
@@ -121,12 +117,8 @@
                 "description": "",
                 "content": [
                   {
-                    "props": {
-                      "textFieldProps": {
-                        "label": "Enter Amount"
-                      },
-                      "leadingText": "%"
-                    }
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_Type_Percentage.png",
+                    "props": {}
                   }
                 ]
               },
@@ -135,12 +127,8 @@
                 "description": "",
                 "content": [
                   {
-                    "props": {
-                      "textFieldProps": {
-                        "label": "Enter Amount"
-                      },
-                      "trailingText": "kg"
-                    }
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_Type_Weight.png",
+                    "props": {}
                   }
                 ]
               },
@@ -149,11 +137,8 @@
                 "description": "",
                 "content": [
                   {
-                    "props": {
-                      "textFieldProps": {
-                        "label": "Enter Amount"
-                      }
-                    }
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_Type_NumberOnly.png",
+                    "props": {}
                   }
                 ]
               }
@@ -165,7 +150,7 @@
             "type": "table",
             "columns": [
               "State",
-              "Preview"
+              "Component"
             ],
             "items": [
               {
@@ -173,37 +158,38 @@
                 "description": "Label - $textDefault\\n\nValue - $textDefault\\n\nDivider - $outlineDisabled",
                 "content": [
                   {
-                    "props": {
-                      "textFieldProps": {
-                        "label": "Enter Amount"
-                      },
-                      "leadingText": "$"
-                    }
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_State_Inactive.png",
+                    "props": {}
                   }
                 ]
               },
               {
                 "title": "Active / Typing",
-                "description": "Once in focus, Keyboard opens\\n\nLabel - $textDefault\\n\nValue - $textDefault\\n\nDivider - $outlinePrimary"
+                "description": "Once in focus, Keyboard opens\\n\nLabel - $textDefault\\n\nValue - $textDefault\\n\nDivider - $outlinePrimary",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_State_Active.png"
+                  }
+                ]
               },
               {
                 "title": "Disabled",
                 "description": "Label - $textDisabled\\n\nValue - $textDisabled\\n\nDivider - $outlineDisabled",
                 "content": [
                   {
-                    "props": {
-                      "textFieldProps": {
-                        "label": "Enter Amount"
-                      },
-                      "leadingText": "$",
-                      "editable": false
-                    }
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_State_Disabled.png",
+                    "props": {}
                   }
                 ]
               },
               {
                 "title": "Validation error",
-                "description": "markdown:An error can be caused when the entered amount is higher than the max value.  \\n  \\n\nLabel - $textDefault\\n\nValue - $textDefault\\n\nValidation message - $textDangerLight Validation\\n\nicon - $iconDangerLight\\n\nDivider - $outlineDanger"
+                "description": "markdown:An error can be caused when the entered amount is higher than the max value.  \\n  \\n\nLabel - $textDefault\\n\nValue - $textDefault\\n\nValidation message - $textDangerLight Validation\\n\nicon - $iconDangerLight\\n\nDivider - $outlineDanger",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_State_ValidationError.png"
+                  }
+                ]
               }
             ],
             "title": "States",
