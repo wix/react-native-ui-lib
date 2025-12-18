@@ -1,0 +1,142 @@
+{
+  "name": "SortableList",
+  "category": "lists",
+  "description": "A sortable list component",
+  "extends": [
+    "FlatList"
+  ],
+  "extendsLink": [
+    "https://reactnative.dev/docs/flatlist"
+  ],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SortableListScreen.tsx",
+  "note": "We've seen a case where not all items are rendered on some Android devices, this appears to be a bug with `FlatList` that is using `CellRendererComponent`, our current workaround is for you to add `initialNumToRender={data.length}`.",
+  "props": [
+    {
+      "name": "data",
+      "type": "ItemT[] (ItemT extends {id: string})",
+      "description": "The data of the list, with an id prop as unique identifier.",
+      "note": "Do not update 'data' in 'onOrderChange' (i.e. for each order change); only update it when you change the items (i.g. adding and removing an item).",
+      "required": true
+    },
+    {
+      "name": "onOrderChange",
+      "type": "(data: ItemT[], info: OrderChangeInfo) => void",
+      "description": "A callback to get the new order (or swapped items) and info about the change (from and to indices).",
+      "required": true
+    },
+    {
+      "name": "enableHaptic",
+      "type": "boolean",
+      "description": "Whether to enable the haptic feedback.\n(please note that react-native-haptic-feedback does not support the specific haptic type on Android starting on an unknown version, you can use 1.8.2 for it to work properly)"
+    },
+    {
+      "name": "scale",
+      "type": "number",
+      "default": "1",
+      "description": "Scale the item once dragged."
+    },
+    {
+      "name": "itemProps",
+      "type": "{margins?: {marginTop?: number; marginBottom?: number; marginLeft?: number; marginRight?: number}}",
+      "description": "Extra props for the item."
+    },
+    {
+      "name": "flexMigration",
+      "type": "boolean",
+      "description": "A temporary migration flag for enabling flex on the list's container (like it should be by default)"
+    }
+  ],
+  "snippet": [
+    "function Example(props) {",
+    "  const data = Array.from({length: 10}, (_, index) => {",
+    "    let text = `${index}`;",
+    "    if (index === 3) {",
+    "      text = 'Locked item';",
+    "    }",
+    "  ",
+    "    return {",
+    "      text,",
+    "      id: `${index}`,",
+    "      locked: index === 3",
+    "    };",
+    "  });",
+    "",
+    "  const renderItem = useCallback(({item, index: _index}: {item: Item; index: number}) => {",
+    "    const {locked} = item;",
+    "    return (",
+    "      <View",
+    "        style={{height: 52, borderColor: Colors.$outlineDefault, borderBottomWidth: 1}}",
+    "        centerV",
+    "        centerH={locked}",
+    "        paddingH-10",
+    "      >",
+    "        <View flex row spread centerV>",
+    "          {!locked && <Icon source={Assets.icons.demo.drag} tintColor={Colors.$iconDisabled}/>}",
+    "          <Text center $textDefault={!locked} $textNeutralLight={locked}>",
+    "            {item.text}",
+    "          </Text>",
+    "          {!locked && <Icon source={Assets.icons.demo.chevronRight} tintColor={Colors.$iconDefault}/>}",
+    "        </View>",
+    "      </View>",
+    "    );",
+    "  }, []);",
+    "",
+    "  const keyExtractor = useCallback((item: Item) => {",
+    "    return `${item.id}`;",
+    "  }, []);",
+    "",
+    "  return (",
+    "    <View>",
+    "      <SortableList",
+    "        data={data$1}",
+    "        flexMigration",
+    "        // onOrderChange={onOrderChange$2}",
+    "        renderItem={renderItem$3}",
+    "        keyExtractor={keyExtractor$4}",
+    "      />",
+    "    </View>",
+    "  )",
+    "};"
+  ],
+  "docs": {
+    "hero": {
+      "title": "SortableList",
+      "description": "Draggable List is a behavior of a list which allows re-arrangement\nof its items.  The drag-and-drop functionality is a preferred method of organization for most users. It’s more organic with the gesture controls of mobile and intuitive. Drag-and-drop provides a level of direct manipulation that other methods can’t match.\nDraggable list is less appropriate in long lists with scrolling. ",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/SortableList/SortableList_Overview_Hero.png"
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "section",
+            "title": "Usage Examples",
+            "description": "",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=15065-37832&m=dev&embed-host=share"
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "layout": "horizontal",
+            "title": "Spec",
+            "description": "Animation in Google Material Design:\nhttps://storage.googleapis.com/spec-host-backup/mio-design%2Fassets%2F1dtprsH4jZ2nOnjBCJeJXd7n4U-jmWyas%2F03-list-reorder.mp4",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=15065-38298&m=dev&embed-host=share"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

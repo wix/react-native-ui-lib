@@ -1,1 +1,1 @@
-require('./buildDocsCommon').buildDocs('./src ./lib/components');
+require('./buildDocsCommon').buildDocs('./packages/react-native-ui-lib/src ./lib/components');
