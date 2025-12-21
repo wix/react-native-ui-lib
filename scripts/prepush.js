@@ -18,7 +18,7 @@ const TEST_ARG = 'test';
 const TEST_COMMAND = 'yarn test';
 
 const PRE_PUSH_COMMANDS = [
-  'yarn yarnConstraints',
+  'yarn constraints',
   'yarn dedupe --check',
   'yarn lint --quiet',
   'yarn build:dev >/dev/null'
