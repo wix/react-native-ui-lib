@@ -31,14 +31,14 @@ describe('FloatingButton', () => {
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
       expect(await buttonDriver.exists()).not.toBeTruthy();
       
-      renderTree.rerender(<TestCase visible button={button}/>);
+      renderTree.rerender(<TestCase visible/>);
       expect(await buttonDriver.exists()).toBeTruthy();
     });
   });
 
   describe('buttons', () => {
     it('should render a button', async () => {
-      const props = {visible: true, button};
+      const props = {visible: true};
       const renderTree = render(<TestCase {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
       expect(await buttonDriver.exists()).toBeTruthy();
@@ -68,7 +68,7 @@ describe('FloatingButton', () => {
 
   describe('bottomMargin', () => {
     it('should have default bottom margin', () => {
-      const props = {visible: true, button};
+      const props = {visible: true};
       const renderTree = render(<TestCase {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
 
@@ -86,7 +86,7 @@ describe('FloatingButton', () => {
     });
 
     it('should have bottom margin that match bottomMargin prop', () => {
-      const props = {visible: true, button, bottomMargin: 10};
+      const props = {visible: true, bottomMargin: 10};
       const renderTree = render(<TestCase {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
 

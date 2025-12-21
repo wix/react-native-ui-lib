@@ -137,6 +137,8 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   renderButton() {
     const {bottomMargin, button, fullWidth, testID} = this.props;
 
+    // Note: renderButton is called unconditionally for backward compatibility
+    // When button is undefined, Button component handles it gracefully
     const bottom = this.isSecondaryVertical ? Spacings.s4 : bottomMargin || Spacings.s8;
     const left = this.isSecondaryHorizontal || fullWidth ? Spacings.s4 : undefined;
     const right = this.isSecondaryHorizontal ? 20 : fullWidth ? Spacings.s4 : undefined;
@@ -200,7 +202,7 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   }
 
   render() {
-    const {withoutAnimation, visible, fullWidth, testID, button, secondaryButton} = this.props;
+    const {withoutAnimation, visible, fullWidth, testID} = this.props;
     // NOTE: keep this.firstLoad as true as long as the visibility changed to true
     this.firstLoad && !visible ? (this.firstLoad = true) : (this.firstLoad = false);
 
@@ -212,24 +214,22 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
       return false;
     }
 
-    if (button || secondaryButton) {
-      const shouldUseHorizontalLayout = this.isSecondaryHorizontal || this.isSecondaryOnly;
-      return (
-        <View
-          row={shouldUseHorizontalLayout}
-          center={shouldUseHorizontalLayout || !fullWidth}
-          pointerEvents="box-none"
-          animated
-          style={[styles.container, this.getAnimatedStyle()]}
-          testID={testID}
-        >
-          {this.renderOverlay()}
-          {shouldUseHorizontalLayout && this.renderSecondaryButton()}
-          {button && this.renderButton()}
-          {this.isSecondaryVertical && this.renderSecondaryButton()}
-        </View>
-      );
-    }
+    const shouldUseHorizontalLayout = this.isSecondaryHorizontal || this.isSecondaryOnly;
+    return (
+      <View
+        row={shouldUseHorizontalLayout}
+        center={shouldUseHorizontalLayout || !fullWidth}
+        pointerEvents="box-none"
+        animated
+        style={[styles.container, this.getAnimatedStyle()]}
+        testID={testID}
+      >
+        {this.renderOverlay()}
+        {shouldUseHorizontalLayout && this.renderSecondaryButton()}
+        {this.renderButton()}
+        {this.isSecondaryVertical && this.renderSecondaryButton()}
+      </View>
+    );
   }
 }
 
