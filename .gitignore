@@ -20,7 +20,6 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
-project.xcworkspace
 **/.xcode.env.local
 
 # Android/IntelliJ
@@ -28,10 +27,11 @@ project.xcworkspace
 build/
 .idea
 .gradle
+.kotlin
 local.properties
 *.iml
 *.hprof
-android/gradlew.bat
+packages/react-native-ui-lib/android/gradlew.bat
 expoDemo/android/gradlew.bat
 .cxx/
 *.keystore
@@ -77,12 +77,12 @@ dist
 dist-ts
 package-lock.json
 docs/components/**
-!scripts/build
+!packages/react-native-ui-lib/scripts/build
+demo/src/screens/incubatorScreens/IncubatorCalendarScreen/MockData.ts
 
 # Ruby / CocoaPods
 **/Pods/
 /vendor/bundle/
-/ios/Podfile.lock
 expoDemo/ios/Pods
 
 .reassure 
