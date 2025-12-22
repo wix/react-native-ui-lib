@@ -238,6 +238,17 @@
               }
             ],
             "description": "markdown:\n\n**Range slider**\n\n**Initial state**\nWidest range is displayed by default.\n\n**Thumbs**\nThumbs should not cross each other and keep minimum distance between them of S2 (8px). Thumbs shouldn’t overlap each other when idle.\n\n**Spacing**\nMinimum spacing between idle Thumbs - S2"
+          },
+          {
+            "type": "section",
+            "layout": "horizontal",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Slider/Color%20slider.png"
+              }
+            ],
+            "title": "Spec",
+            "description": "Markdown:\n**Default**\nThumb: 24px\nOutline: 1.5px"
           }
         ]
       }
