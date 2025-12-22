@@ -8,7 +8,6 @@ import {CharCounterProps} from './types';
 const CharCounter = ({maxLength, charCounterStyle, testID}: CharCounterProps) => {
   const {value} = useContext(FieldContext);
   const length = value?.length ?? 0;
-
   if (_.isUndefined(maxLength)) {
     return null;
   }

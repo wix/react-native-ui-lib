@@ -48,18 +48,6 @@ const Input = ({
   const disabled = props.editable === false || readonly;
   const shouldRenderIndication = context.isMandatory && showMandatoryIndication;
 
-  // const getAccessibilityLabel = () => {
-  //   if (value) {
-  //     return undefined;
-  //   }
-
-  //   if (props.accessibilityLabel) {
-  //     return props.accessibilityLabel;
-  //   }
-
-  //   return props.placeholder;
-  // };
-
   const TextInput = useMemo(() => {
     if (useGestureHandlerInput) {
       const {
