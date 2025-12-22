@@ -1,0 +1,213 @@
+{
+  "name": "NumberInput",
+  "category": "form",
+  "description": "Number Input to create an input with a formatted number",
+  "note": "This requires RN67 to work on Android.",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/NumberInputScreen.tsx",
+  "props": [
+    {
+      "name": "onChangeNumber",
+      "type": "(data: NumberInputData) => void",
+      "description": "Callback that is called when the number value has changed.",
+      "required": true
+    },
+    {
+      "name": "initialNumber",
+      "type": "number",
+      "description": "A valid number (in en locale, i.e. only digits and a decimal point)."
+    },
+    {
+      "name": "fractionDigits",
+      "type": "number",
+      "description": "Number of digits after the decimal point. Must be in the range 0 - 20, inclusive.",
+      "default": "2"
+    },
+    {
+      "name": "leadingText",
+      "type": "string",
+      "description": "A leading text"
+    },
+    {
+      "name": "leadingTextStyle",
+      "type": "TextStyle",
+      "description": "The style of the leading text"
+    },
+    {
+      "name": "trailingText",
+      "type": "string",
+      "description": "A trailing text"
+    },
+    {
+      "name": "trailingTextStyle",
+      "type": "TextStyle",
+      "description": "The style of the trailing text"
+    },
+    {
+      "name": "containerStyle",
+      "type": "ViewStyle",
+      "description": "Container style of the whole component"
+    },
+    {
+      "name": "contextMenuHidden",
+      "type": "boolean",
+      "description": "If true, context menu is hidden.",
+      "default": true,
+      "note": "Requires @react-native-community/clipboard to be installed."
+    },
+    {
+      "name": "textFieldProps",
+      "type": "TextFieldProps",
+      "description": "Most of TextField's props can be applied, except for ones that are passed directly via named props."
+    }
+  ],
+  "snippet": ["<NumberInput initialValue={1506$1} onChange={onChange$2} placeholder={'Price$3'}/>"],
+  "docs": {
+    "hero": {
+      "title": "NumberInput",
+      "description": "Number Input allows users to enter numeric values (e.g., amount, price, quantity.) in a single line input field, using a masked input.\nNumber Input comes as a stand alone input- as main or only input in a screen.",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_Hero.png"
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "section",
+            "title": "Usage Examples",
+            "description": "markdown:The number input uses masked input, it allows the user to easily enter fixed set input where a certain format is needed (in this case- numeric values for prices with decimals, amounts, weight).  \\n  \\n\nThe masked input allows a more focused typing format, compared to the Main Input which allows the user to type more freely.",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=14802-145014&m=dev&embed-host=share"
+              },
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=14802-145037&m=dev&embed-host=share"
+              },
+              {
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=14802-145069&m=dev&embed-host=share"
+              }
+            ]
+          },
+          {
+            "type": "table",
+            "columns": ["Type", "Component"],
+            "items": [
+              {
+                "title": "Currency",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_Type_Currency.png"
+                  }
+                ]
+              },
+              {
+                "title": "Percentage",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_Type_Percentage.png"
+                  }
+                ]
+              },
+              {
+                "title": "Weight",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_Type_Weight.png"
+                  }
+                ]
+              },
+              {
+                "title": "Number only",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_Type_NumberOnly.png"
+                  }
+                ]
+              }
+            ],
+            "title": "Number Types",
+            "description": "markdown:The price input supports the usage of prefix, sufix or none; depending on the case.  The supported number types presets are: Currency, Percentage, Weight, or number only.  \\n  \\n\nDon’t use it to enter unique numeric values such as phone numbers or dates."
+          },
+          {
+            "type": "table",
+            "columns": ["State", "Component"],
+            "items": [
+              {
+                "title": "Inactive",
+                "description": "Label - $textDefault\\n\nValue - $textDefault\\n\nDivider - $outlineDisabled",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_State_Inactive.png"
+                  }
+                ]
+              },
+              {
+                "title": "Active / Typing",
+                "description": "Once in focus, Keyboard opens\\n\nLabel - $textDefault\\n\nValue - $textDefault\\n\nDivider - $outlinePrimary",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_State_Active.png"
+                  }
+                ]
+              },
+              {
+                "title": "Disabled",
+                "description": "Label - $textDisabled\\n\nValue - $textDisabled\\n\nDivider - $outlineDisabled",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_State_Disabled.png"
+                  }
+                ]
+              },
+              {
+                "title": "Validation error",
+                "description": "markdown:An error can be caused when the entered amount is higher than the max value.  \\n  \\n\nLabel - $textDefault\\n\nValue - $textDefault\\n\nValidation message - $textDangerLight Validation\\n\nicon - $iconDangerLight\\n\nDivider - $outlineDanger",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_State_ValidationError.png"
+                  }
+                ]
+              }
+            ],
+            "title": "States",
+            "description": "markdown:NumberInput comes as stand alone Input, as Main or only input in a screen  \\n  \\n\n**Style:**  \\n  \\n\nLabel is optional\\n\nLabel & error message- “bodySmallMedium”\\n\nNumber - “text30M”\\n\nCurrency / Percentage- “text50M”\\n"
+          },
+          {
+            "type": "section",
+            "title": "Specs",
+            "description": "markdown:Max width S5 padding from screen’s edge.\\n\nS4 inside padding.",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_Overview_Specs.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "UX Guidelines",
+        "sections": [
+          {
+            "type": "section",
+            "title": "Do’s & Don'ts",
+            "description": "",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/NumberInput/NumberInput_UXGuidelines_DosAndDonts.png"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

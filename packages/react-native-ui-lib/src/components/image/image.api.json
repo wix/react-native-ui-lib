@@ -1,0 +1,312 @@
+{
+  "name": "Image",
+  "category": "media",
+  "description": "Image wrapper with extra functionality like source transform and assets support",
+  "extends": [
+    "Image"
+  ],
+  "extendsLink": [
+    "https://reactnative.dev/docs/image"
+  ],
+  "note": "please note that for SVG support you need to add both `react-native-svg` and `react-native-svg-transformer` and also configure them (see `metro.config.js`)",
+  "modifiers": [
+    "margin"
+  ],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ImageScreen.tsx",
+  "props": [
+    {
+      "name": "sourceTransformer",
+      "type": "(props: any) => ImageSourcePropType",
+      "description": "custom source transform handler for manipulating the image source (great for size control)"
+    },
+    {
+      "name": "assetName",
+      "type": "string",
+      "description": "if provided image source will be driven from asset name"
+    },
+    {
+      "name": "assetGroup",
+      "type": "string",
+      "description": "the asset group, default is icons"
+    },
+    {
+      "name": "tintColor",
+      "type": "string",
+      "description": "the asset tint"
+    },
+    {
+      "name": "supportRTL",
+      "type": "boolean",
+      "description": "whether the image should flip horizontally on RTL locals"
+    },
+    {
+      "name": "cover",
+      "type": "boolean",
+      "description": "Show image as a cover, full width, image (according to aspect ratio, default: 16:8)"
+    },
+    {
+      "name": "aspectRatio",
+      "type": "number",
+      "description": "The aspect ratio for the image"
+    },
+    {
+      "name": "overlayType",
+      "type": "VERTICAL | TOP | BOTTOM | SOLID",
+      "description": "The type of overlay to place on top of the image.",
+      "note": "the image MUST have proper size, see examples in: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/OverlaysScreen.tsx"
+    },
+    {
+      "name": "overlayIntensity",
+      "type": "LOW | MEDIUM | HIGH",
+      "description": "OverlayIntensityType",
+      "default": "Image.overlayIntensityType.LOW"
+    },
+    {
+      "name": "overlayColor",
+      "type": "string",
+      "description": "Pass a custom color for the overlay"
+    },
+    {
+      "name": "customOverlayContent",
+      "type": "JSX.Element",
+      "description": "Render an overlay with custom content"
+    },
+    {
+      "name": "errorSource",
+      "type": "ImageSourcePropType",
+      "description": "Default image source in case of an error"
+    },
+    {
+      "name": "imageId",
+      "type": "string",
+      "description": "An imageId that can be used in sourceTransformer logic"
+    },
+    {
+      "name": "recorderTag",
+      "type": "'mask' | 'unmask'",
+      "description": "Recorder Tag"
+    },
+    {
+      "name": "useBackgroundContainer",
+      "type": "boolean",
+      "description": "Use a container for the Image, this can solve issues on Android when animation needs to be performed on the same view; i.e. animation related crashes on Android."
+    }
+  ],
+  "snippet": [
+    "<Image width={50} height={50} source={{uri: 'https://images.pexels.com/photos/748837/pexels-photo-748837.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'}$1}/>"
+  ],
+  "docs": {
+    "hero": {
+      "title": "Image",
+      "description": "Renders images responsively, offers an optional contrast overlay, and displays placeholder on load errors.",
+      "type": "hero",
+      "layout": "horizontal"
+    },
+    "tabs": [
+      {
+        "title": "UX Guidelines",
+        "sections": [
+          {
+            "type": "section",
+            "content": [
+              {
+                "value": "https://embed.figma.com/design/Krv1pLl7kq2L52vMRwd498/MADS-Guidelines?node-id=10088-640358&embed-host=share",
+                "height": 1600
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "section",
+            "title": "Image Overlays",
+            "description": "Overlays are added on top of an image in cases when extra contrast is needed to increase legebility of the content above the image."
+          },
+          {
+            "type": "section",
+            "title": "Usage Examples",
+            "description": "",
+            "content": [
+              {
+                "value": "\"https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=14016-35810&embed-host=share\""
+              }
+            ]
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Type",
+              "Preview"
+            ],
+            "items": [
+              {
+                "title": "Black Overlay (default)",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Type%20tabel/Black%20Overlay%20(default).png"
+                  }
+                ]
+              },
+              {
+                "title": "White Overlay",
+                "description": "",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Type%20tabel/White%20Overlay.png",
+                    "background": "A6ACB1"
+                  }
+                ]
+              }
+            ],
+            "title": "Types",
+            "description": ""
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Type",
+              "Black Overlay (default)",
+              "White Overlay"
+            ],
+            "items": [
+              {
+                "title": "Gradient Top",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20Types/Gradient%20Top%20-%20black.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20Types/Gradient%20Top%20-%20white.png",
+                    "background": "A6ACB1"
+                  }
+                ],
+                "description": "markdown:\n**Black height:** 75% of image\n**White height:** 70% of image"
+              },
+              {
+                "title": "Gradient Bottom",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20Types/Gradient%20Bottom%20-%20black.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20Types/Gradient%20Bottom%20-%20white.png",
+                    "background": "A6ACB1"
+                  }
+                ],
+                "description": "markdown:\n**Black height:** 75% of image\n**White height:** 70% of image"
+              },
+              {
+                "title": "Gradient Both",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20Types/Gradient%20Both%20-%20black.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20Types/Gradient%20Both%20-%20white.png",
+                    "background": "A6ACB1"
+                  }
+                ],
+                "description": "markdown:\n**Black height:** 40% of image\n**White height:** 50% of image"
+              },
+              {
+                "title": "Flat Overlay",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20Types/Flat%20Overlay%20-%20black.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20Types/Flat%20Overlay%20-%20white.png",
+                    "background": "A6ACB1"
+                  }
+                ],
+                "description": "markdown:\n**Black opacity:** 45%\n**White opacity:** 40%"
+              }
+            ],
+            "title": "Overlay Types",
+            "description": ""
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Property",
+              "Black Overlay (default)",
+              "White Overlay"
+            ],
+            "items": [
+              {
+                "title": "Low Intensity",
+                "description": "Image:  GradientOverlay.png",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20intensity/Low%20Intensity%20-%20black.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20intensity/Low%20Intensity%20-%20white.png",
+                    "background": "A6ACB1"
+                  }
+                ]
+              },
+              {
+                "title": "Medium Intensity",
+                "description": "image:  GradientOverlayMedium.png",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20intensity/Medium%20Intensity%20-%20black.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20intensity/Medium%20Intensity%20-%20white.png",
+                    "background": "A6ACB1"
+                  }
+                ]
+              },
+              {
+                "title": "High Intensity",
+                "description": "Image:  GradientOverlayHigh.png",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20intensity/High%20Intensity%20-%20black.png"
+                  },
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20intensity/High%20Intensity%20-%20white.png",
+                    "background": "A6ACB1"
+                  }
+                ]
+              }
+            ],
+            "title": "Overlay intensity",
+            "description": ""
+          },
+          {
+            "type": "section",
+            "title": "Image Error",
+            "description": "Add a fallback to the Image component that displays the “placeholderMissingImage” illustration, in one of the following scenarios:\n- URL is invalid (broken)\n- Image that is not cached + offline mode\n- Failed fetching from server"
+          },
+          {
+            "type": "section",
+            "title": "Usage Examples",
+            "description": "",
+            "content": [
+              {
+                "value": "\"https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=14016-36419&embed-host=share\""
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "title": "Spec",
+            "description": "",
+            "content": [
+              {
+                "value": "\"https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=16054-57603&embed-host=share\""
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,257 @@
+{
+  "name": "Slider",
+  "category": "controls",
+  "description": "A Slider component",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/SliderScreen.tsx",
+  "images": [
+    "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/Slider/Slider.gif?raw=true"
+  ],
+  "props": [
+    {
+      "name": "value",
+      "type": "number",
+      "description": "Initial value"
+    },
+    {
+      "name": "minimumValue",
+      "type": "number",
+      "description": "Track minimum value"
+    },
+    {
+      "name": "maximumValue",
+      "type": "number",
+      "description": "Track maximum value"
+    },
+    {
+      "name": "initialMinimumValue",
+      "type": "number",
+      "description": "Initial minimum value",
+      "note": "Only when `useRange` is true"
+    },
+    {
+      "name": "initialMaximumValue",
+      "type": "number",
+      "description": "Initial maximum value",
+      "note": "Only when `useRange` is true"
+    },
+    {
+      "name": "step",
+      "type": "number",
+      "description": "Step value of the slider. The value should be between 0 and (maximumValue - minimumValue)"
+    },
+    {
+      "name": "useRange",
+      "type": "boolean",
+      "description": "If true the Slider will display a second thumb for the min value"
+    },
+    {
+      "name": "useGap",
+      "type": "boolean",
+      "description": "If true the min and max thumbs will not overlap",
+      "default": "true"
+    },
+    {
+      "name": "minimumTrackTintColor",
+      "type": "string",
+      "description": "The color used for the track from minimum value to current value"
+    },
+    {
+      "name": "maximumTrackTintColor",
+      "type": "string",
+      "description": "The track color"
+    },
+    {
+      "name": "renderTrack",
+      "type": "() => ReactElement | ReactElement[]",
+      "description": "Custom render instead of rendering the track"
+    },
+    {
+      "name": "thumbTintColor",
+      "type": "string",
+      "description": "Thumb color"
+    },
+    {
+      "name": "onValueChange",
+      "type": "SliderOnValueChange",
+      "description": "Callback for onValueChange"
+    },
+    {
+      "name": "onRangeChange",
+      "type": "SliderOnRangeChange",
+      "description": "Callback for onRangeChange. Returns values object with the min and max values"
+    },
+    {
+      "name": "onSeekStart",
+      "type": "() => void",
+      "description": "Callback that notifies about slider seeking is started"
+    },
+    {
+      "name": "onSeekEnd",
+      "type": "() => void",
+      "description": "Callback that notifies about slider seeking is finished"
+    },
+    {
+      "name": "onReset",
+      "type": "() => void",
+      "description": "Callback that notifies when the reset function was invoked"
+    },
+    {
+      "name": "containerStyle",
+      "type": "ViewStyle",
+      "description": "The container style"
+    },
+    {
+      "name": "trackStyle",
+      "type": "ViewStyle",
+      "description": "The track style"
+    },
+    {
+      "name": "thumbStyle",
+      "type": "ViewStyle",
+      "description": "The thumb style"
+    },
+    {
+      "name": "activeThumbStyle",
+      "type": "ViewStyle",
+      "description": "The active (during press) thumb style"
+    },
+    {
+      "name": "disableActiveStyling",
+      "type": "boolean",
+      "description": "If true the Slider will not change it's style on press"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "If true the Slider will be disabled and will appear in disabled color"
+    },
+    {
+      "name": "disableRTL",
+      "type": "boolean",
+      "description": "If true the Slider will stay in LTR mode even if the app is on RTL mode"
+    },
+    {
+      "name": "accessible",
+      "type": "boolean",
+      "description": "If true the component will have accessibility features enabled"
+    },
+    {
+      "name": "testID",
+      "type": "string",
+      "description": "The component test id"
+    },
+    {
+      "name": "migrate",
+      "type": "boolean",
+      "description": "Temporary prop required for migration to the Slider's new implementation"
+    }
+  ],
+  "docs": {
+    "hero": {
+      "title": "Slider",
+      "description": "Sliders allow users to make selections from a range of values in a quick and interactive way.\nSliders reflect a range of values along a bar, from which users may select a single value. They are ideal for adjusting settings such as volume, brightness, or applying image filters.",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Slider/slider_hero.png"
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "section",
+            "title": "Usage examples",
+            "description": "Sliders can be used for various types of user input and controls, for example an amount, or a specific setting.",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Slider/slider_section_examples.png"
+              }
+            ]
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Slider type",
+              "Preview"
+            ],
+            "items": [
+              {
+                "title": "Linear slider",
+                "description": "Use this slider to allow the user to select a numeric value from a range of numbers.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Slider/slider_table_linear.png"
+                  }
+                ]
+              },
+              {
+                "title": "Centered slider",
+                "description": "This type allows the user to select negative values.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Slider/slider_table_centered.png"
+                  }
+                ]
+              },
+              {
+                "title": "Range slider",
+                "description": "Use this slider to allow the user to select a range of values.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Slider/slider_table_range.png"
+                  }
+                ]
+              },
+              {
+                "title": "Color slider",
+                "description": "Use this slider to allow the user to select a color from a gradient range of colors.",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Slider/slider_table_color.png"
+                  }
+                ]
+              }
+            ],
+            "title": "Slider types"
+          },
+          {
+            "type": "section",
+            "layout": "horizontal",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Slider/slider_spec_linear.png"
+              }
+            ],
+            "title": "Spec",
+            "description": "markdown:\n\n**Linear slider**\n\n**Default**\nThumb: 24px  \nOutline: 1.5px\n\n**On tap**\nThumb: 40px\nOutline: 1.5px\n\n**Disabled**"
+          },
+          {
+            "type": "section",
+            "layout": "horizontal",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Slider/slider_spec_range.png"
+              }
+            ],
+            "description": "markdown:\n\n**Range slider**\n\n**Initial state**\nWidest range is displayed by default.\n\n**Thumbs**\nThumbs should not cross each other and keep minimum distance between them of S2 (8px). Thumbs shouldn’t overlap each other when idle.\n\n**Spacing**\nMinimum spacing between idle Thumbs - S2"
+          },
+          {
+            "type": "section",
+            "layout": "horizontal",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Slider/Color%20slider.png"
+              }
+            ],
+            "title": "Spec",
+            "description": "Markdown:\n**Default**\nThumb: 24px\nOutline: 1.5px"
+          }
+        ]
+      }
+    ]
+  }
+}
