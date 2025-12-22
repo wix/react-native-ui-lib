@@ -138,9 +138,35 @@ const TextField = (props: InternalTextFieldProps) => {
     [typographyStyle, colorStyle, others.style, centeredTextStyle, hasValue]);
   const dummyPlaceholderStyle = useMemo(() => [inputStyle, styles.dummyPlaceholder], [inputStyle]);
 
+  const accessibilityLabel = useMemo(() => {
+    const parts: string[] = [];
+
+    if (label) {
+      parts.push(label);
+    }
+
+    if (context.isMandatory) {
+      parts.push('required');
+    }
+
+    parts.push('textField');
+
+    if (helperText) {
+      parts.push(helperText);
+    } else if (placeholder) {
+      parts.push(placeholder);
+    }
+
+    if (showCharCounter && others.maxLength) {
+      parts.push(`you can enter up to ${others.maxLength} characters`);
+    }
+
+    return parts.join(', ');
+  }, [label, context.isMandatory, helperText, placeholder, showCharCounter, others.maxLength]);
+
   return (
     <FieldContext.Provider value={context}>
-      <View {...containerProps} style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
+      <View {...containerProps} accessible accessibilityLabel={accessibilityLabel} style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
         <View row spread style={centeredContainerStyle}>
           <Label
             label={label}
@@ -206,11 +232,6 @@ const TextField = (props: InternalTextFieldProps) => {
                 placeholder={placeholder}
                 hint={hint}
                 showMandatoryIndication={showMandatoryIndication && !label}
-                accessibilityLabel={
-                  showCharCounter
-                    ? `${label ? `${label}, ` : ''}you can enter up to ${props.maxLength} characters`
-                    : label
-                }
               />
             </View>
           )}
