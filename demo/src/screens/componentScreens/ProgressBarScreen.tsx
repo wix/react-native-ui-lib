@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {View, Text, ProgressBar, Colors, Spacings} from 'react-native-ui-lib';//eslint-disable-line
+import {View, Text, ProgressBar, Colors, Spacings, BorderRadiuses} from 'react-native-ui-lib';//eslint-disable-line
 
 
 export default class ProgressBarScreen extends Component {
@@ -81,6 +81,37 @@ export default class ProgressBarScreen extends Component {
             progress={progresses[0]}
             style={styles.progressBar}
             customElement={this.customElement}
+          />
+
+          <Text $textDefault text70 style={styles.text}>
+            Custom Border Radius 0
+          </Text>
+          <ProgressBar
+            progress={progresses[3]}
+            style={styles.progressBar}
+            borderRadius={BorderRadiuses.br0}
+            progressColor={Colors.blue50}
+          />
+
+         <Text $textDefault text70 style={styles.text}>
+            Custom Border Radius 10
+          </Text>
+          <ProgressBar
+            progress={progresses[3]}
+            style={styles.progressBar}
+            borderRadius={BorderRadiuses.br10}
+            progressColor={Colors.red20}
+          />
+
+          <Text $textDefault text70 style={styles.text}>
+            Custom Border Radius 0 for FullWidth
+          </Text>
+          <ProgressBar
+            progress={progresses[3]}
+            style={styles.fullWidthProgressBar}
+            borderRadius={BorderRadiuses.br0}
+            progressColor={Colors.blue50}
+            fullWidth
           />
         </View>
       </ScrollView>

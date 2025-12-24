@@ -29,6 +29,12 @@
       "name": "customElement",
       "type": "JSX.Element",
       "description": "Custom element to render on top of the animated progress"
+    },
+    {
+      "name": "borderRadius",
+      "type": "number",
+      "description": "Custom border radius for the progress bar",
+      "default": "BorderRadiuses.br100"
     }
   ],
   "snippet": [

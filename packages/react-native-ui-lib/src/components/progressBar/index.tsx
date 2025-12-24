@@ -37,6 +37,10 @@ interface Props {
    * Custom element to render on top of the animated progress
    */
   customElement?: JSX.Element;
+  /**
+   * Custom border radius for the progress bar
+   */
+  borderRadius?: number;
   testID?: string;
 }
 export type ProgressBarProps = Props;
@@ -49,7 +53,8 @@ class ProgressBar extends PureComponent<Props, State> {
   static displayName = 'ProgressBar';
 
   static defaultProps: Partial<Props> = {
-    progress: 0
+    progress: 0,
+    borderRadius: BorderRadiuses.br100
   };
 
   progressAnimation: Animated.Value;
@@ -100,29 +105,27 @@ class ProgressBar extends PureComponent<Props, State> {
   }
 
   getContainerStyle() {
-    const {fullWidth} = this.props;
+    const {fullWidth, borderRadius} = this.props;
     const containerHeight = fullWidth ? FULL_WIDTH_CONTAINER_HEIGHT : CONTAINER_HEIGHT;
     const tabletContainerHeight = fullWidth ? TABLET_FULL_WIDTH_CONTAINER_HEIGHT : TABLET_CONTAINER_HEIGHT;
-    const inlineStyle = fullWidth ? null : styles.inlineContainer;
 
     return {
-      ...inlineStyle,
-      height: Constants.isTablet ? tabletContainerHeight : containerHeight
+      height: Constants.isTablet ? tabletContainerHeight : containerHeight,
+      borderRadius
     };
   }
 
   getProgressStyle() {
-    const {fullWidth, progressColor} = this.props;
-    const borderRadius = fullWidth ? styles.fullWidthProgressBorderRadius : styles.inlineBorderRadius;
+    const {fullWidth, progressColor, borderRadius} = this.props;
     const progressStyle = {
       right: Constants.isRTL ? undefined : this.state.containerWidth,
-      backgroundColor: progressColor || DEFAULT_COLOR
+      backgroundColor: progressColor || DEFAULT_COLOR,
+      borderRadius: fullWidth ? undefined : borderRadius,
+      borderBottomRightRadius: fullWidth ? borderRadius : undefined,
+      borderTopRightRadius: fullWidth ? borderRadius : undefined
     };
 
-    return {
-      ...borderRadius,
-      ...progressStyle
-    };
+    return progressStyle;
   }
 
   renderCustomElement() {
@@ -167,11 +170,7 @@ export default asBaseComponent<ProgressBarProps, typeof ProgressBar>(ProgressBar
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.$backgroundNeutralMedium,
-    overflow: 'hidden',
-    borderRadius: BorderRadiuses.br100
-  },
-  inlineContainer: {
-    borderRadius: BorderRadiuses.br100
+    overflow: 'hidden'
   },
   progress: {
     position: 'absolute',
@@ -184,12 +183,5 @@ const styles = StyleSheet.create({
   customElement: {
     height: '100%',
     width: '100%'
-  },
-  inlineBorderRadius: {
-    borderRadius: BorderRadiuses.br100
-  },
-  fullWidthProgressBorderRadius: {
-    borderBottomRightRadius: BorderRadiuses.br100,
-    borderTopRightRadius: BorderRadiuses.br100
   }
 });
