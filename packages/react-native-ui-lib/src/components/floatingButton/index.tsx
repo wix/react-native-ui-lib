@@ -131,20 +131,17 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
     return secondaryButton && !this.isHorizontalLayout;
   }
 
-  get shouldSecondaryButtonFlex() {
-    const {fullWidth, button} = this.props;
-    return (this.isHorizontalLayout && !!button) || (fullWidth && this.isSecondaryOnly);
-  }
-
   renderButton() {
     const {bottomMargin, button, fullWidth, testID} = this.props;
 
     if (button) {
-      const bottom = this.isSecondaryVertical ? Spacings.s4 : bottomMargin || Spacings.s8;
-      const left = this.isSecondaryHorizontal || fullWidth ? Spacings.s4 : undefined;
-      const right = this.isSecondaryHorizontal ? 20 : fullWidth ? Spacings.s4 : undefined;
       const shadowStyle = button && !button.outline && !button.link ? styles.shadow : undefined;
-      const marginStyle = {marginTop: 16, marginBottom: bottom, marginLeft: left, marginRight: right};
+      const marginStyle = {
+        marginTop: Spacings.s4,
+        marginBottom: this.isSecondaryVertical ? Spacings.s4 : bottomMargin || Spacings.s8,
+        marginLeft: this.isSecondaryHorizontal || fullWidth ? Spacings.s4 : undefined,
+        marginRight: this.isSecondaryHorizontal ? Spacings.s5 : fullWidth ? Spacings.s4 : undefined
+      };
 
       const shouldFlex = this.isSecondaryHorizontal || (fullWidth && this.isHorizontalLayout);
 
@@ -176,24 +173,21 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   };
 
   renderSecondaryButton() {
-    const {secondaryButton, bottomMargin, testID, fullWidth} = this.props;
+    const {secondaryButton, bottomMargin, testID, fullWidth, button} = this.props;
 
     if (secondaryButton) {
       const bgColor = secondaryButton.backgroundColor || Colors.$backgroundDefault;
       const shouldUseHorizontalStyle = this.isHorizontalLayout;
+      const shouldFlex = (shouldUseHorizontalStyle && !!button) || (fullWidth && this.isSecondaryOnly);
 
       const buttonStyle = shouldUseHorizontalStyle
-        ? [
-          styles.shadow,
-          fullWidth && this.isSecondaryOnly ? styles.fullWidthSecondaryMargin : styles.secondaryMargin,
-          {backgroundColor: bgColor}
-        ]
+        ? [styles.shadow, styles.horizontalSecondaryMargin, {backgroundColor: bgColor}]
         : {marginBottom: bottomMargin || Spacings.s7};
 
       return (
         <Button
           outline={shouldUseHorizontalStyle}
-          flex={this.shouldSecondaryButtonFlex}
+          flex={shouldFlex}
           link={!shouldUseHorizontalStyle}
           size={Button.sizes.large}
           testID={`${testID}.secondaryButton`}
@@ -226,6 +220,7 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
   }
 
   render() {
+    // NOTE: keep this.firstLoad as true as long as the visibility changed to true
     const {withoutAnimation, visible, fullWidth, testID, button, secondaryButton} = this.props;
 
     this.firstLoad && !visible ? (this.firstLoad = true) : (this.firstLoad = false);
@@ -244,7 +239,7 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
       return (
         <View
           row={this.isHorizontalLayout}
-          center={!!shouldCenter}
+          center={shouldCenter}
           pointerEvents="box-none"
           animated
           style={[styles.container, this.getAnimatedStyle()]}
@@ -270,15 +265,10 @@ const styles = StyleSheet.create({
   shadow: {
     ...Shadows.sh20.bottom
   },
-  secondaryMargin: {
+  horizontalSecondaryMargin: {
     marginTop: Spacings.s4,
     marginBottom: Spacings.s7,
-    marginLeft: 20
-  },
-  fullWidthSecondaryMargin: {
-    marginTop: Spacings.s4,
-    marginBottom: Spacings.s7,
-    marginHorizontal: Spacings.s5
+    marginLeft: Spacings.s5
   }
 });
 
