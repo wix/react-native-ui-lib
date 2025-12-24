@@ -112,6 +112,10 @@ export interface GridListItemProps {
    * Test ID for component
    */
   testID?: string;
+  /**
+   * Whether this item should be accessible
+   */
+  accessible?: boolean;
   children?: React.ReactElement | React.ReactElement[];
 }
 
@@ -193,7 +197,8 @@ class GridListItem extends Component<GridListItemProps> {
       descriptionColor,
       descriptionLines,
       onPress,
-      renderOverlay
+      renderOverlay,
+      accessible
     } = this.props;
     const Container = onPress ? TouchableOpacity : View;
     const TextContainer = overlayText ? View : React.Fragment;
@@ -222,21 +227,24 @@ class GridListItem extends Component<GridListItemProps> {
             [titleTypography]: true,
             color: titleColor,
             numberOfLines: titleLines,
-            style: styles.title
+            style: styles.title,
+            accessible: accessible
           })}
           {this.renderContent(subtitle, {
             testID: `${testID}.subtitle`,
             [subtitleTypography]: true,
             color: subtitleColor,
             numberOfLines: subtitleLines,
-            style: styles.subtitle
+            style: styles.subtitle,
+            accessible: accessible
           })}
           {this.renderContent(description, {
             testID: `${testID}.description`,
             [descriptionTypography]: true,
             color: descriptionColor,
             numberOfLines: descriptionLines,
-            style: styles.description
+            style: styles.description,
+            accessible: accessible
           })}
         </TextContainer>
       </Container>
