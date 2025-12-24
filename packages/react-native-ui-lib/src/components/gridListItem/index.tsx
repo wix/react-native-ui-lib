@@ -215,7 +215,7 @@ class GridListItem extends Component<GridListItemProps> {
         style={[styles.container, {alignItems}, {width}, containerStyle]}
         {...otherContainerProps}
         onPress={onPress && this.onItemPress}
-        accessible={renderCustomItem ? true : undefined}
+        accessible={accessible ?? (renderCustomItem ? true : undefined)}
         {...Modifiers.extractAccessibilityProps(this.props)}
       >
         {imageProps && <Image {...imageProps} style={[itemSize, imageProps?.style]} customOverlayContent={children}/>}
@@ -228,7 +228,7 @@ class GridListItem extends Component<GridListItemProps> {
             color: titleColor,
             numberOfLines: titleLines,
             style: styles.title,
-            accessible: accessible
+            accessible
           })}
           {this.renderContent(subtitle, {
             testID: `${testID}.subtitle`,
@@ -236,7 +236,7 @@ class GridListItem extends Component<GridListItemProps> {
             color: subtitleColor,
             numberOfLines: subtitleLines,
             style: styles.subtitle,
-            accessible: accessible
+            accessible
           })}
           {this.renderContent(description, {
             testID: `${testID}.description`,
@@ -244,7 +244,7 @@ class GridListItem extends Component<GridListItemProps> {
             color: descriptionColor,
             numberOfLines: descriptionLines,
             style: styles.description,
-            accessible: accessible
+            accessible
           })}
         </TextContainer>
       </Container>
