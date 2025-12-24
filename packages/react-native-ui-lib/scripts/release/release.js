@@ -66,7 +66,9 @@ function versionTagAndPublish() {
 }
 
 function findCurrentPublishedVersion() {
-  return exec.execSyncRead(`npm view ${process.env.npm_package_name} dist-tags.latest`);
+  const result = exec.execSyncRead(`yarn npm info ${process.env.npm_package_name} --fields dist-tags --json`);
+  const parsed = JSON.parse(result);
+  return parsed['dist-tags'].latest;
 }
 
 function tryPublishAndTag(version) {
@@ -89,8 +91,8 @@ function tryPublishAndTag(version) {
 
 function tagAndPublish(newVersion) {
   console.log(`trying to publish ${newVersion}...`);
-  exec.execSync(`npm --no-git-tag-version version ${newVersion}`);
-  exec.execSync(`npm publish --tag ${VERSION_TAG}`);
+  exec.execSync(`yarn version ${newVersion}`);
+  exec.execSync(`yarn npm publish --tag ${VERSION_TAG}`);
   if (isRelease) {
     exec.execSync(`git tag -a ${newVersion} -m "${newVersion}"`);
   }
