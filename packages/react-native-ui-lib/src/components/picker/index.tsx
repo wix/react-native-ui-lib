@@ -104,7 +104,8 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     cancelSelect,
     areAllItemsSelected,
     selectedCount,
-    toggleAllItemsSelection
+    toggleAllItemsSelection,
+    onDismiss
   } = usePickerSelection({
     value,
     onChange,
@@ -287,13 +288,18 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     showLoader
   ]);
 
+  const dialogPropsWithDismiss = useMemo(() => ({
+    ...DEFAULT_DIALOG_PROPS,
+    onDismiss
+  }), [onDismiss]);
+
   return (
     <PickerContext.Provider value={contextValue}>
       {
         <ExpandableOverlay
           ref={pickerExpandable}
           useDialog={useDialog || useWheelPicker}
-          dialogProps={DEFAULT_DIALOG_PROPS}
+          dialogProps={dialogPropsWithDismiss}
           expandableContent={expandableModalContent}
           renderCustomOverlay={renderOverlay ? _renderOverlay : undefined}
           onPress={onPress}
