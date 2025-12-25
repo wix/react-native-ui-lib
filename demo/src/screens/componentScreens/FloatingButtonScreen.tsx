@@ -5,6 +5,7 @@ import {renderBooleanOption} from '../ExampleScreenPresenter';
 
 interface State {
   showButton: boolean;
+  showPrimary: boolean;
   showSecondary: boolean;
   showVertical: boolean;
 }
@@ -12,6 +13,7 @@ interface State {
 export default class FloatingButtonScreen extends Component<{}, State> {
   state = {
     showButton: true,
+    showPrimary: true,
     showSecondary: true,
     showVertical: true,
     fullWidth: false
@@ -36,6 +38,7 @@ export default class FloatingButtonScreen extends Component<{}, State> {
         </Text>
         {renderBooleanOption.call(this, 'Show Floating Button', 'showButton')}
         {renderBooleanOption.call(this, 'Full Width Button', 'fullWidth')}
+        {renderBooleanOption.call(this, 'Show Primary Button', 'showPrimary')}
         {renderBooleanOption.call(this, 'Show Secondary Button', 'showSecondary')}
         {renderBooleanOption.call(this, 'Button Layout Vertical', 'showVertical')}
 
@@ -67,10 +70,14 @@ export default class FloatingButtonScreen extends Component<{}, State> {
         <FloatingButton
           visible={this.state.showButton}
           fullWidth={this.state.fullWidth}
-          button={{
-            label: 'Approve',
-            onPress: this.close
-          }}
+          button={
+            this.state.showPrimary
+              ? {
+                label: 'Approve',
+                onPress: this.close
+              }
+              : undefined
+          }
           secondaryButton={
             showSecondary
               ? {
