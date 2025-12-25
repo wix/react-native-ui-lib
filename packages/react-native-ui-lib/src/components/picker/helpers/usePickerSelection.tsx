@@ -35,16 +35,21 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
   },
   [multiDraftValue]);
 
-  const handleCancelAction = useCallback(() => {
+  const resetSelectionState = useCallback(() => {
     setSearchValue('');
     setMultiDraftValue(multiFinalValue);
+  }, [multiFinalValue]);
+
+  const onDismiss = useCallback(() => {
+    resetSelectionState();
     topBarProps?.onCancel?.();
-  }, [multiFinalValue, topBarProps]);
+  }, [resetSelectionState, topBarProps]);
 
   const cancelSelect = useCallback(() => {
-    handleCancelAction();
+    resetSelectionState();
     pickerExpandableRef.current?.closeExpandable?.();
-  }, [handleCancelAction]);
+    topBarProps?.onCancel?.();
+  }, [resetSelectionState, topBarProps]);
 
   const availableItems: PickerMultiValue = useMemo(() => {
     return items?.filter(item => !item.disabled).map(item => item.value) || [];
@@ -71,7 +76,7 @@ const usePickerSelection = (props: UsePickerSelectionProps) => {
     areAllItemsSelected,
     selectedCount,
     toggleAllItemsSelection,
-    handleCancelAction
+    onDismiss
   };
 };
 
