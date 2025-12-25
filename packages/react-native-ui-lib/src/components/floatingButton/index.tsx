@@ -224,6 +224,7 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
 
     this.firstLoad && !visible ? (this.firstLoad = true) : (this.firstLoad = false);
 
+    // NOTE: On first load, don't show if it should not be visible
     if (this.firstLoad === true && !this.initialVisibility) {
       return false;
     }
