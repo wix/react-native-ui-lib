@@ -177,18 +177,17 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
 
     if (secondaryButton) {
       const bgColor = secondaryButton.backgroundColor || Colors.$backgroundDefault;
-      const shouldUseHorizontalStyle = this.isHorizontalLayout;
-      const shouldFlex = (shouldUseHorizontalStyle && !!button) || (fullWidth && this.isSecondaryOnly);
+      const shouldFlex = (this.isHorizontalLayout && !!button) || (fullWidth && this.isSecondaryOnly);
 
-      const buttonStyle = shouldUseHorizontalStyle
+      const buttonStyle = this.isHorizontalLayout
         ? [styles.shadow, styles.horizontalSecondaryMargin, {backgroundColor: bgColor}]
         : {marginBottom: bottomMargin || Spacings.s7};
 
       return (
         <Button
-          outline={shouldUseHorizontalStyle}
+          outline={this.isHorizontalLayout}
           flex={shouldFlex}
-          link={!shouldUseHorizontalStyle}
+          link={!this.isHorizontalLayout}
           size={Button.sizes.large}
           testID={`${testID}.secondaryButton`}
           {...secondaryButton}
