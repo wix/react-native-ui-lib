@@ -1,11 +1,9 @@
 //IMPORTS
-import React, { useCallback, useMemo } from 'react';
+import React, {PropsWithChildren, useCallback, useMemo} from 'react';
 import { Image, StyleSheet } from 'react-native';
 import View from '../view';
-import {Colors, Shadows, Spacings} from '../../style';
-import Button, { ButtonProps } from '../button';
-import { render } from '@testing-library/react-native';
-
+import {Colors, Spacings} from '../../style';
+import {asBaseComponent} from '../../commons/new';
 
 //ENUMS
 
@@ -17,20 +15,18 @@ export enum ScreenFooterLayouts {
 export enum ScreenFooterBackgrounds {
     FADING = 'fading',
     SOLID = 'solid',
-    //TRANSPARENT?
+    TRANSPARENT = 'transparent'
 }
 
-//CHECK REGARDING A L/R ALLIGNMENT?
 export enum FooterAlignment {
     START = 'start',
     CENTER = 'center', 
     END = 'end'
 }
 
-export enum ItemsDistribution {
+export enum HorizontalItemsDistribution {
     STACK = 'stack', 
     SPREAD = 'spread',
-    // SPACE_EVENLY = 'space-evenly', perhaps rely on stretch + gap?
 }
 
 export enum ItemsFit {
@@ -46,38 +42,23 @@ export enum ScreenFooterPosition {
 
 
 //TYPE
-
-export type ScreenFooterButtonProps = ButtonProps & {
-    stretch?: boolean;
-}
-
-export interface ScreenFooterProps {
+export interface ScreenFooterProps extends PropsWithChildren<{}> {
 
     background?: ScreenFooterBackgrounds | `${ScreenFooterBackgrounds}`;
-
     layout?: ScreenFooterLayouts | `${ScreenFooterLayouts}`
     alignment?: FooterAlignment | `${FooterAlignment}`
-    itemsDistribution?: ItemsDistribution | `${ItemsDistribution}`
+    HorizontalItemsDistribution?: HorizontalItemsDistribution | `${HorizontalItemsDistribution}`
     itemsFit?: ItemsFit | `${ItemsFit}`
-
-    primaryButton?: ScreenFooterButtonProps;
-    secondaryButton?: ScreenFooterButtonProps;
-    tertiaryButton?: ScreenFooterButtonProps;
-
-    //buttonMargin?: number
 
 }
 
-const screenFooter = (props: ScreenFooterProps) => {
+const ScreenFooter = (props: ScreenFooterProps) => {
 
     const {
         layout,
         alignment,
-        primaryButton, 
-        secondaryButton, 
-        tertiaryButton,
-        background
-
+        background,
+        children
     } = props;
 
     // ADD STATE MANAGEMENT
@@ -85,16 +66,17 @@ const screenFooter = (props: ScreenFooterProps) => {
 
     const isSolid = background === ScreenFooterBackgrounds.SOLID;
     const isFading = background === ScreenFooterBackgrounds.FADING;
+    const isTransparent = background === ScreenFooterBackgrounds.TRANSPARENT;
     const isHorizontal = layout === ScreenFooterLayouts.HORIZONTAL;
 
     const contentContainerStyle = useMemo(() => {
 
         return [
             styles.contentContainer,
-            isHorizontal ? styles.horizontalContainer: styles.verticalContainer
+            layout === ScreenFooterLayouts.HORIZONTAL ? styles.horizontalContainer: styles.verticalContainer
             //Add alignment logic also        
         ]
-    }, [layout, alignment]);
+    }, [layout]);
 
 
     const renderBackground = useCallback(() => {
@@ -120,51 +102,22 @@ const screenFooter = (props: ScreenFooterProps) => {
 
     }, [isSolid, isFading]);
 
-    const renderButton = (props: ScreenFooterButtonProps) => {
-
-        const {stretch, style, ...others} = props;
-
-        return (
-            <Button
-            fullWidth={stretch}
-            style={[style, stretch && {flex: 1}]}
-             {...others}/>
-        )
-
-    }
+    const childrenArray = React.Children.toArray(children).slice(0, 3)
 
     return (
         <View
-          style={[styles.container]}
-        >
+          style={[styles.container]}>
             {renderBackground()}
             <View style={contentContainerStyle}>
-                {layout === ScreenFooterLayouts.HORIZONTAL ? (
-                    <>
-                    {tertiaryButton && renderButton(tertiaryButton)}
-                    {secondaryButton && renderButton(secondaryButton)}
-                    {primaryButton && renderButton(primaryButton)}
-                    </>
-                ) : (
-                    <>
-                    {primaryButton && renderButton(primaryButton)}
-                    {secondaryButton && renderButton(secondaryButton)}
-                    {tertiaryButton && renderButton(tertiaryButton)} 
-                    </>
-                )}
+                {childrenArray}
             </View>
-            
         </View>
-    )
-}
-
-
+    );
+};
 
 
 const styles = StyleSheet.create({
-    container: {
-
-    },
+    container: {},
     contentContainer: {
         paddingTop: Spacings.s4,
         paddingHorizontal: Spacings.s5,
@@ -181,12 +134,8 @@ const styles = StyleSheet.create({
     solidBackground: {
         backgroundColor: Colors.$backgroundElevated //maybe elevated light? not sure
     },
-    gradientBackground: {
-        
-    },
-    gradientImage: {
-
-    }
+    gradientBackground: {},
+    gradientImage: {}
 });
 
-export default screenFooter; 
+export default asBaseComponent<ScreenFooterProps, typeof ScreenFooter>(ScreenFooter);
