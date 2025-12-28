@@ -42,7 +42,6 @@
     "@shopify/flash-list": "1.7.6",
     "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/react-native": "^11.5.1",
-    "@topcli/spinner": "patch:@topcli/spinner@npm%3A2.1.2#./.yarn/patches/@topcli-spinner-npm-2.1.2-262b584167.patch",
     "@types/hoist-non-react-statics": "^3.3.1",
     "@types/jest": "^29.5.13",
     "@types/lodash": "^4.0.0",
