@@ -82,12 +82,12 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     const renderBackground = useCallback(() => {
         
         if (isSolid) {
-            return <View style={styles.solidBackground}/>
+            return <View style={[styles.background, styles.solidBackground]} pointerEvents="none"/>
         }
 
         else if (isFading) {
             return (
-                <View style={styles.gradientBackground}>
+                <View style={[styles.background, styles.gradientBackground]} pointerEvents="none">
                     <Image
                         source={require('./gradient.png')}
                         style={styles.gradientImage}
@@ -131,11 +131,19 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         gap: Spacings.s3
     },
+    background: {
+        ...StyleSheet.absoluteFillObject,
+        zIndex: -1
+    },
     solidBackground: {
         backgroundColor: Colors.$backgroundElevated //maybe elevated light? not sure
     },
     gradientBackground: {},
-    gradientImage: {}
+    gradientImage: {
+        flex: 1,
+        width: '100%',
+        height: '100%'
+    }
 });
 
 export default asBaseComponent<ScreenFooterProps, typeof ScreenFooter>(ScreenFooter);
