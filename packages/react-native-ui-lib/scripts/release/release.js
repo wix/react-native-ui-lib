@@ -2,6 +2,7 @@ const exec = require('shell-utils').exec;
 const cp = require('child_process');
 const semver = require('semver');
 const _ = require('lodash');
+const p = require('path');
 
 // Workaround JS
 
@@ -24,7 +25,7 @@ function run() {
 
   console.log('Valid environment - releasing...');
   setupGit();
-  configureNpmToken();
+  createNpmRc();
   versionTagAndPublish();
 }
 
@@ -48,8 +49,10 @@ function setupGit() {
   // exec.execSync(`git checkout ${ONLY_ON_BRANCH}`);
 }
 
-function configureNpmToken() {
-  exec.execSync(`yarn config set npmAuthToken "${process.env.NPM_TOKEN}"`);
+function createNpmRc() {
+  exec.execSync('rm -f package-lock.json');
+  const npmrcPath = p.resolve(`${__dirname}/.npmrc`);
+  exec.execSync(`cp -rf ${npmrcPath} .`);
 }
 
 function versionTagAndPublish() {
