@@ -1,9 +1,10 @@
 //IMPORTS
 import React, {PropsWithChildren, useCallback, useMemo} from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { DimensionValue, Image, StyleSheet } from 'react-native';
 import View from '../view';
 import {Colors, Spacings} from '../../style';
 import {asBaseComponent} from '../../commons/new';
+// import { useKeyboardHeight } from 'hooks';
 
 //ENUMS
 
@@ -49,6 +50,8 @@ export interface ScreenFooterProps extends PropsWithChildren<{}> {
     alignment?: FooterAlignment | `${FooterAlignment}`
     HorizontalItemsDistribution?: HorizontalItemsDistribution | `${HorizontalItemsDistribution}`
     itemsFit?: ItemsFit | `${ItemsFit}`
+    position?: ScreenFooterPosition | `${ScreenFooterPosition}`;
+    itemWidth?: DimensionValue;
 
 }
 
@@ -58,7 +61,10 @@ const ScreenFooter = (props: ScreenFooterProps) => {
         layout,
         alignment,
         background,
-        children
+        children,
+        position = ScreenFooterPosition.STICKY,
+        itemsFit,
+        itemWidth
     } = props;
 
     // ADD STATE MANAGEMENT
@@ -66,15 +72,29 @@ const ScreenFooter = (props: ScreenFooterProps) => {
 
     const isSolid = background === ScreenFooterBackgrounds.SOLID;
     const isFading = background === ScreenFooterBackgrounds.FADING;
-    const isTransparent = background === ScreenFooterBackgrounds.TRANSPARENT;
     const isHorizontal = layout === ScreenFooterLayouts.HORIZONTAL;
+    // const isHoisted = position === ScreenFooterPosition.HOISTED;
+
+    const alignItems = useMemo(() => {
+
+    if(layout === ScreenFooterLayouts.VERTICAL) {
+        if(itemsFit === ItemsFit.STRETCH) {
+            return 'stretch' as const;
+        }
+        switch (alignment) {
+            case FooterAlignment.START: return 'flex-start' as const;
+            case FooterAlignment.END: return 'flex-end' as const;
+            default: return 'center' as const;
+        }
+    }
+        return 'center';
+    }, [layout, itemsFit, alignment]);
 
     const contentContainerStyle = useMemo(() => {
-
         return [
             styles.contentContainer,
-            layout === ScreenFooterLayouts.HORIZONTAL ? styles.horizontalContainer: styles.verticalContainer
-            //Add alignment logic also        
+            layout === ScreenFooterLayouts.HORIZONTAL ? styles.horizontalContainer: styles.verticalContainer,
+            {alignItems}        
         ]
     }, [layout]);
 
@@ -102,7 +122,18 @@ const ScreenFooter = (props: ScreenFooterProps) => {
 
     }, [isSolid, isFading]);
 
-    const childrenArray = React.Children.toArray(children).slice(0, 3)
+    const renderChild = useCallback((child: React.ReactNode, index: number) => {
+        if (itemsFit === ItemsFit.FIXED && itemWidth && layout === ScreenFooterLayouts.VERTICAL) {
+            return (
+                <View key={index} style={{width: itemWidth}}>
+                    {child}
+                </View>
+            );
+        }
+        return child;
+    }, [itemsFit, itemWidth, isHorizontal]);
+
+    const childrenArray = React.Children.toArray(children).slice(0, 3).map(renderChild);
 
     return (
         <View
