@@ -1,8 +1,11 @@
 const childProcess = require('child_process');
 const fs = require('fs');
+const path = require('path');
 
 const BABEL_OPTIONS = `--config-file ./scripts/build/.babelrc.json --extensions '.ts,.tsx' --ignore "src/**/*.d.ts"`;
 const BABEL_INDEX_EXPORTS_OPTIONS = `--config-file ./scripts/build/.babelrc.exports.js`;
+
+const REPO_ROOT = path.resolve(process.cwd(), '../..');
 
 console.info('## Start RNUILib Build ##');
 console.info('## Copy files from root ##');
@@ -12,7 +15,7 @@ childProcess.execSync('cp ../../README.md ./README.md');
 childProcess.execSync('cp ../../LICENSE ./LICENSE');
 
 console.info('## Build Typescript ##');
-childProcess.execSync('cd ../../ && tsc --p tsconfig.build.json');
+childProcess.execSync(`tsc --p "${path.join(REPO_ROOT, 'tsconfig.build.json')}"`, {cwd: REPO_ROOT});
 
 console.info('## Build src files - convert TS to JS files ##');
 childProcess.execSync(`../../node_modules/.bin/babel src --out-dir src ${BABEL_OPTIONS}`);
