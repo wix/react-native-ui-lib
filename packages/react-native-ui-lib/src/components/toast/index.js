@@ -257,7 +257,7 @@ export default class Toast extends PureBaseComponent {
           backgroundColor={actionBg}
           color={textColor}
           {...action}
-          labelStyle={[action?.labelStyle, Typography.text70BO]}
+          labelStyle={Typography.text70BO}
           accessibilityRole={'button'}
         />
       );
