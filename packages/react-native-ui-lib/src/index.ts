@@ -70,6 +70,16 @@ export {default as ExpandableSection, ExpandableSectionProps} from './components
 export {default as Fader, FaderProps, FaderPosition} from './components/fader';
 export {default as FeatureHighlight, FeatureHighlightProps} from './components/featureHighlight';
 export {default as FloatingButton, FloatingButtonProps, FloatingButtonLayouts} from './components/floatingButton';
+export {
+  default as ScreenFooter,
+  ScreenFooterProps,
+  ScreenFooterLayouts,
+  ScreenFooterBackgrounds,
+  FooterAlignment,
+  HorizontalItemsDistribution,
+  ItemsFit,
+  ScreenFooterPosition
+} from './components/screenFooter';
 export {default as Gradient, GradientProps, GradientTypes} from './components/gradient';
 export {default as Slider} from './components/slider';
 export {default as GradientSlider} from './components/slider/GradientSlider';

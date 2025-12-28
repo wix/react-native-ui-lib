@@ -45,7 +45,7 @@ export enum ScreenFooterPosition {
 //TYPE
 export interface ScreenFooterProps extends PropsWithChildren<{}> {
 
-    background?: ScreenFooterBackgrounds | `${ScreenFooterBackgrounds}`;
+    backgroundType?: ScreenFooterBackgrounds | `${ScreenFooterBackgrounds}`;
     layout?: ScreenFooterLayouts | `${ScreenFooterLayouts}`
     alignment?: FooterAlignment | `${FooterAlignment}`
     HorizontalItemsDistribution?: HorizontalItemsDistribution | `${HorizontalItemsDistribution}`
@@ -60,7 +60,7 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     const {
         layout,
         alignment,
-        background,
+        backgroundType,
         children,
         position = ScreenFooterPosition.STICKY,
         itemsFit,
@@ -70,8 +70,8 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     // ADD STATE MANAGEMENT
     //ADD HOOKS
 
-    const isSolid = background === ScreenFooterBackgrounds.SOLID;
-    const isFading = background === ScreenFooterBackgrounds.FADING;
+    const isSolid = backgroundType === ScreenFooterBackgrounds.SOLID;
+    const isFading = backgroundType === ScreenFooterBackgrounds.FADING;
     const isHorizontal = layout === ScreenFooterLayouts.HORIZONTAL;
     // const isHoisted = position === ScreenFooterPosition.HOISTED;
 
@@ -96,7 +96,7 @@ const ScreenFooter = (props: ScreenFooterProps) => {
             layout === ScreenFooterLayouts.HORIZONTAL ? styles.horizontalContainer: styles.verticalContainer,
             {alignItems}        
         ]
-    }, [layout]);
+    }, [layout, alignItems]);
 
 
     const renderBackground = useCallback(() => {
@@ -107,10 +107,10 @@ const ScreenFooter = (props: ScreenFooterProps) => {
 
         else if (isFading) {
             return (
-                <View style={[styles.background, styles.gradientBackground]} pointerEvents="none">
+                <View style={styles.background} pointerEvents="none">
                     <Image
                         source={require('./gradient.png')}
-                        style={styles.gradientImage}
+                        style={styles.background}
                         resizeMode='stretch'
                         tintColor={Colors.$backgroundDefault}
                     />
@@ -148,7 +148,12 @@ const ScreenFooter = (props: ScreenFooterProps) => {
 
 
 const styles = StyleSheet.create({
-    container: {},
+    container: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0
+    },
     contentContainer: {
         paddingTop: Spacings.s4,
         paddingHorizontal: Spacings.s5,
@@ -164,16 +169,11 @@ const styles = StyleSheet.create({
     },
     background: {
         ...StyleSheet.absoluteFillObject,
-        zIndex: -1
+        width: '100%',
+        height: '100%'
     },
     solidBackground: {
         backgroundColor: Colors.$backgroundElevated //maybe elevated light? not sure
-    },
-    gradientBackground: {},
-    gradientImage: {
-        flex: 1,
-        width: '100%',
-        height: '100%'
     }
 });
 
