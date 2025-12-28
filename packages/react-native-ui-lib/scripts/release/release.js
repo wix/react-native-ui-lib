@@ -89,10 +89,8 @@ function tryPublishAndTag(version) {
 
 function tagAndPublish(newVersion) {
   console.log(`trying to publish ${newVersion}...`);
-  // Add --legacy-peer-deps here to bypass the ERESOLVE error
-  exec.execSync(`npm --no-git-tag-version version ${newVersion} --legacy-peer-deps`);
-  // It is also safer to add it to the publish command
-  exec.execSync(`npm publish --tag ${VERSION_TAG} --legacy-peer-deps`);
+  exec.execSync(`npm --no-git-tag-version version ${newVersion}`);
+  exec.execSync(`npm publish --tag ${VERSION_TAG}`);
   if (isRelease) {
     exec.execSync(`git tag -a ${newVersion} -m "${newVersion}"`);
   }
