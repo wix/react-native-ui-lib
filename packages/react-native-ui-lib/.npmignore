@@ -1,0 +1,27 @@
+# Excluded directories and files
+scripts
+!scripts/release/prReleaseNotesCommon.js
+!scripts/docs/buildDocsCommon.js
+
+# Config files
+babel.config.js
+jestSetup
+
+# Source files
+src/**/*.ts
+!src/**/*.d.ts
+src/**/*.tsx
+src/**/__tests__
+
+# System files
+**/.DS_Store
+
+# native related
+ios
+android
+
+# lib related (do we even want lib folder in this package?)
+!lib/android/**
+lib/android/build
+!lib/ios/reactnativeuilib/**
+lib/specs/**
