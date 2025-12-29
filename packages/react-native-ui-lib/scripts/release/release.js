@@ -52,7 +52,7 @@ function setupGit() {
 function createNpmRc() {
   exec.execSync('rm -f package-lock.json');
   const npmrcPath = p.resolve(`${__dirname}/.npmrc`);
-  exec.execSync(`cp -rf ${npmrcPath} .`);
+  exec.execSync(`cp -rf ${npmrcPath} ${process.env.HOME}/.npmrc`);
 }
 
 function versionTagAndPublish() {
