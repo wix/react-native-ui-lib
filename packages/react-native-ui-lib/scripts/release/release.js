@@ -2,7 +2,6 @@ const exec = require('shell-utils').exec;
 const cp = require('child_process');
 const semver = require('semver');
 const _ = require('lodash');
-const p = require('path');
 
 // Workaround JS
 
@@ -25,7 +24,7 @@ function run() {
 
   console.log('Valid environment - releasing...');
   setupGit();
-  createNpmRc();
+  configureNpmToken();
   versionTagAndPublish();
 }
 
@@ -49,10 +48,8 @@ function setupGit() {
   // exec.execSync(`git checkout ${ONLY_ON_BRANCH}`);
 }
 
-function createNpmRc() {
-  exec.execSync('rm -f package-lock.json');
-  const npmrcPath = p.resolve(`${__dirname}/.npmrc`);
-  exec.execSync(`cp -rf ${npmrcPath} .`);
+function configureNpmToken() {
+  exec.execSync(`yarn config set npmAuthToken "${process.env.NPM_TOKEN}"`);
 }
 
 function versionTagAndPublish() {
@@ -66,7 +63,9 @@ function versionTagAndPublish() {
 }
 
 function findCurrentPublishedVersion() {
-  return exec.execSyncRead(`npm view ${process.env.npm_package_name} dist-tags.latest`);
+  const result = exec.execSyncRead(`yarn npm info ${process.env.npm_package_name} --fields dist-tags --json`);
+  const parsed = JSON.parse(result);
+  return parsed['dist-tags'].latest;
 }
 
 function tryPublishAndTag(version) {
@@ -89,8 +88,8 @@ function tryPublishAndTag(version) {
 
 function tagAndPublish(newVersion) {
   console.log(`trying to publish ${newVersion}...`);
-  exec.execSync(`npm --no-git-tag-version version ${newVersion}`);
-  exec.execSync(`npm publish --tag ${VERSION_TAG}`);
+  exec.execSync(`yarn version ${newVersion}`);
+  exec.execSync(`yarn npm publish --tag ${VERSION_TAG}`);
   if (isRelease) {
     exec.execSync(`git tag -a ${newVersion} -m "${newVersion}"`);
   }
