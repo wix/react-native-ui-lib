@@ -1,5 +1,5 @@
 import usePresenter from '../usePresenter';
-import {renderHook} from '@testing-library/react-hooks';
+import {renderHook} from '@testing-library/react-native';
 import {DEFAULT_ITEM_SPACINGS, DEFAULT_NUM_COLUMNS} from '../../gridList/useGridLayout';
 import {Constants} from '../../../commons/new';
 
