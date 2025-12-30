@@ -1,7 +1,6 @@
 import {DragData, UniDriver} from '../UniDriver';
-import {fireEvent, render, RenderAPI} from '@testing-library/react-native';
+import {act, fireEvent, render, RenderAPI} from '@testing-library/react-native';
 import {ReactTestInstance} from 'react-test-renderer';
-import {act} from '@testing-library/react-hooks';
 import _ from 'lodash';
 import {
   MultipleInstancesException,
