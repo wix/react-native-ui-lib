@@ -16,14 +16,14 @@
       "description": "FullWidth Ui preset"
     },
     {
-      "name": "style",
+      "name": "containerStyle",
       "type": "ViewStyle",
       "description": "Override container style"
     },
     {
-      "name": "progressColor",
-      "type": "string",
-      "description": "Progress color"
+      "name": "progressStyle",
+      "type": "ViewStyle",
+      "description": "Override progress style"
     },
     {
       "name": "customElement",
