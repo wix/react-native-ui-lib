@@ -20,8 +20,6 @@ export default function forwardRef<P, STATICS = {}, RefInterface = any>(WrappedC
   //@ts-ignore
   ForwardedComponent.displayName = WrappedComponent.displayName;
   //@ts-ignore
-  ForwardedComponent.propTypes = WrappedComponent.propTypes;
-  //@ts-ignore
   ForwardedComponent.defaultProps = WrappedComponent.defaultProps;
 
   return ForwardedComponent as typeof ForwardedComponent & STATICS;
