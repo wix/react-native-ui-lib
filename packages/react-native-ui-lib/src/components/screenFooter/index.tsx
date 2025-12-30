@@ -44,15 +44,41 @@ export enum ScreenFooterPosition {
 
 //TYPE
 export interface ScreenFooterProps extends PropsWithChildren<{}> {
-
+    /**
+     * The background style of the footer
+     */
     backgroundType?: ScreenFooterBackgrounds | `${ScreenFooterBackgrounds}`;
-    layout?: ScreenFooterLayouts | `${ScreenFooterLayouts}`
-    alignment?: FooterAlignment | `${FooterAlignment}`
-    HorizontalItemsDistribution?: HorizontalItemsDistribution | `${HorizontalItemsDistribution}`
-    itemsFit?: ItemsFit | `${ItemsFit}`
+    /**
+     * The layout direction of footer items
+     */
+    layout?: ScreenFooterLayouts | `${ScreenFooterLayouts}`;
+    /**
+     * Cross-axis alignment:
+     * - Vertical layout: controls horizontal position (left/center/right)
+     * - Horizontal layout: controls vertical position (top/center/bottom)
+     */
+    alignment?: FooterAlignment | `${FooterAlignment}`;
+    /**
+     * Main-axis alignment for horizontal layout only (when distribution is STACK):
+     * Controls horizontal position (left/center/right) of the stacked items
+     */
+    horizontalAlignment?: FooterAlignment | `${FooterAlignment}`;
+    /**
+     * Distribution of items in horizontal layout
+     */
+    HorizontalItemsDistribution?: HorizontalItemsDistribution | `${HorizontalItemsDistribution}`;
+    /**
+     * How items should fit in vertical layout
+     */
+    itemsFit?: ItemsFit | `${ItemsFit}`;
+    /**
+     * Footer position behavior
+     */
     position?: ScreenFooterPosition | `${ScreenFooterPosition}`;
+    /**
+     * Fixed width for items (used with ItemsFit.FIXED)
+     */
     itemWidth?: DimensionValue;
-
 }
 
 const ScreenFooter = (props: ScreenFooterProps) => {
@@ -60,11 +86,13 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     const {
         layout,
         alignment,
+        horizontalAlignment,
         backgroundType,
         children,
         position = ScreenFooterPosition.STICKY,
         itemsFit,
-        itemWidth
+        itemWidth,
+        HorizontalItemsDistribution: distribution
     } = props;
 
     // ADD STATE MANAGEMENT
@@ -75,28 +103,44 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     const isHorizontal = layout === ScreenFooterLayouts.HORIZONTAL;
     // const isHoisted = position === ScreenFooterPosition.HOISTED;
 
-    const alignItems = useMemo(() => {
+    const justifyContent = useMemo(() => {
+        if (isHorizontal) {
+            // When SPREAD, items are distributed with space-between
+            if (distribution === HorizontalItemsDistribution.SPREAD) {
+                return 'space-between' as const;
+            }
+            // When STACK, horizontalAlignment controls left/center/right positioning
+            switch (horizontalAlignment) {
+                case FooterAlignment.START: return 'flex-start' as const;
+                case FooterAlignment.END: return 'flex-end' as const;
+                default: return 'center' as const;
+            }
+        }
+        return 'flex-start' as const;
+    }, [isHorizontal, distribution, horizontalAlignment]);
 
+    const alignItems = useMemo(() => {
+    
     if(layout === ScreenFooterLayouts.VERTICAL) {
         if(itemsFit === ItemsFit.STRETCH) {
             return 'stretch' as const;
         }
-        switch (alignment) {
-            case FooterAlignment.START: return 'flex-start' as const;
-            case FooterAlignment.END: return 'flex-end' as const;
-            default: return 'center' as const;
-        }
     }
-        return 'center';
+    
+    switch (alignment) {
+        case FooterAlignment.START: return 'flex-start' as const;
+        case FooterAlignment.END: return 'flex-end' as const;
+        default: return 'center' as const;
+    }
     }, [layout, itemsFit, alignment]);
 
     const contentContainerStyle = useMemo(() => {
         return [
             styles.contentContainer,
             layout === ScreenFooterLayouts.HORIZONTAL ? styles.horizontalContainer: styles.verticalContainer,
-            {alignItems}        
+            {alignItems, justifyContent}        
         ]
-    }, [layout, alignItems]);
+    }, [layout, alignItems, justifyContent]);
 
 
     const renderBackground = useCallback(() => {
@@ -161,7 +205,7 @@ const styles = StyleSheet.create({
     },
     horizontalContainer: {
         flexDirection: 'row',
-        gap: Spacings.s3,
+        gap: Spacings.s5,
     },
     verticalContainer: {
         flexDirection: 'column',
