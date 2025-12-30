@@ -26,10 +26,8 @@ function withScrollEnabler<PROPS, STATICS = {}>(WrappedComponent: React.Componen
 
     const checkScroll = useCallback(() => {
       const isScrollEnabled = Math.floor(contentSize.current) > layoutSize.current;
-      if (isScrollEnabled !== scrollEnabled) {
-        setScrollEnabled(isScrollEnabled);
-      }
-    }, [scrollEnabled]);
+      setScrollEnabled(isScrollEnabled);
+    }, []);
 
     const onContentSizeChange = useCallback((contentWidth: number, contentHeight: number) => {
       const size = props.horizontal ? contentWidth : contentHeight;
