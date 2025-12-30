@@ -138,32 +138,33 @@ const TextField = (props: InternalTextFieldProps) => {
     [typographyStyle, colorStyle, others.style, centeredTextStyle, hasValue]);
   const dummyPlaceholderStyle = useMemo(() => [inputStyle, styles.dummyPlaceholder], [inputStyle]);
 
-  const accessibilityLabel = props.accessibilityLabel ?? 
-    useMemo(() => {
-      const parts: string[] = [];
+  const defaultAccessibilityLabel = useMemo(() => {
+    const parts: string[] = [];
 
-      if (label) {
-        parts.push(label);
-      }
+    if (label) {
+      parts.push(label);
+    }
 
-      if (context.isMandatory) {
-        parts.push('required');
-      }
+    if (context.isMandatory) {
+      parts.push('required');
+    }
 
-      parts.push('textField');
+    parts.push('textField');
 
-      if (helperText) {
-        parts.push(helperText);
-      } else if (placeholder) {
-        parts.push(placeholder);
-      }
+    if (helperText) {
+      parts.push(helperText);
+    } else if (placeholder) {
+      parts.push(placeholder);
+    }
 
-      if (showCharCounter && others.maxLength) {
-        parts.push(`you can enter up to ${others.maxLength} characters`);
-      }
+    if (showCharCounter && others.maxLength) {
+      parts.push(`you can enter up to ${others.maxLength} characters`);
+    }
 
-      return parts.join(', ');
-    }, [label, context.isMandatory, helperText, placeholder, showCharCounter, others.maxLength]);
+    return parts.join(', ');
+  }, [label, context.isMandatory, helperText, placeholder, showCharCounter, others.maxLength]);
+
+  const accessibilityLabel = props.accessibilityLabel ?? defaultAccessibilityLabel;
 
   return (
     <FieldContext.Provider value={context}>
