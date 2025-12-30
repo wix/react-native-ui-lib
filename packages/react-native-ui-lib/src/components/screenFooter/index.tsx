@@ -1,10 +1,10 @@
 //IMPORTS
 import React, {PropsWithChildren, useCallback, useMemo} from 'react';
-import { DimensionValue, Image, StyleSheet } from 'react-native';
+import {DimensionValue, Image, StyleSheet} from 'react-native';
 import View from '../view';
 import {Colors, Spacings} from '../../style';
 import {asBaseComponent} from '../../commons/new';
-// import { useKeyboardHeight } from 'hooks';
+import {useKeyboardHeight} from '../../hooks';
 
 //ENUMS
 
@@ -95,8 +95,8 @@ const ScreenFooter = (props: ScreenFooterProps) => {
         HorizontalItemsDistribution: distribution
     } = props;
 
-    // ADD STATE MANAGEMENT
-    //ADD HOOKS
+    const keyboardHeight = useKeyboardHeight();
+    const bottom = position === ScreenFooterPosition.HOISTED ? keyboardHeight : 0;
 
     const isSolid = backgroundType === ScreenFooterBackgrounds.SOLID;
     const isFading = backgroundType === ScreenFooterBackgrounds.FADING;
@@ -174,6 +174,14 @@ const ScreenFooter = (props: ScreenFooterProps) => {
                 </View>
             );
         }
+
+        if (isHorizontal && React.isValidElement(child)) {
+             return React.cloneElement(child, {
+                 // @ts-ignore
+                 style: [child.props.style, {flexShrink: 1}]
+             });
+        }
+
         return child;
     }, [itemsFit, itemWidth, isHorizontal]);
 
@@ -181,7 +189,7 @@ const ScreenFooter = (props: ScreenFooterProps) => {
 
     return (
         <View
-          style={[styles.container]}>
+          style={[styles.container, {bottom}]}>
             {renderBackground()}
             <View style={contentContainerStyle}>
                 {childrenArray}
@@ -201,7 +209,7 @@ const styles = StyleSheet.create({
     contentContainer: {
         paddingTop: Spacings.s4,
         paddingHorizontal: Spacings.s5,
-        paddingBottom: Spacings.s5
+        paddingBottom: Spacings.s5,
     },
     horizontalContainer: {
         flexDirection: 'row',

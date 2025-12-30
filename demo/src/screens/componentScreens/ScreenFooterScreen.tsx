@@ -9,10 +9,12 @@ import {
   ScreenFooter,
   ScreenFooterLayouts,
   ScreenFooterBackgrounds,
+  ScreenFooterPosition,
   FooterAlignment,
   HorizontalItemsDistribution,
   ItemsFit,
-  Switch
+  Switch,
+  TextField
 } from 'react-native-ui-lib';
 
 enum ButtonType {
@@ -55,6 +57,12 @@ const DISTRIBUTION_OPTIONS = [
   {label: 'Spread', value: HorizontalItemsDistribution.SPREAD}
 ];
 
+const DISTRIBUTION_OPTIONS_SPACED = [
+  {label: 'Stack', value: HorizontalItemsDistribution.STACK},
+  {label: 'Spread', value: HorizontalItemsDistribution.SPREAD},
+  {label: '', value: 'dummy'},
+];
+
 const ITEMS_FIT_OPTIONS = [
   {label: 'Fit', value: ItemsFit.FIT},
   {label: 'Stretch', value: ItemsFit.STRETCH},
@@ -73,10 +81,22 @@ const SIZE_OPTIONS = [
   {label: 'Large', value: ItemSize.LARGE}
 ];
 
+const POSITION_OPTIONS = [
+  {label: 'Sticky', value: ScreenFooterPosition.STICKY},
+  {label: 'Hoisted', value: ScreenFooterPosition.HOISTED}
+];
+
+const POSITION_OPTIONS_SPACED = [
+  {label: 'Sticky', value: ScreenFooterPosition.STICKY},
+  {label: 'Hoisted', value: ScreenFooterPosition.HOISTED},
+  {label: '', value: 'dummy'},
+];
+
 const ScreenFooterScreen = () => {
   const [itemsCount, setItemsCount] = useState(2);
   const [layout, setLayout] = useState<ScreenFooterLayouts>(ScreenFooterLayouts.HORIZONTAL);
   const [background, setBackground] = useState<ScreenFooterBackgrounds>(ScreenFooterBackgrounds.SOLID);
+  const [position, setPosition] = useState<ScreenFooterPosition>(ScreenFooterPosition.STICKY);
   const [alignment, setAlignment] = useState<FooterAlignment>(FooterAlignment.CENTER);
   const [horizontalAlignment, setHorizontalAlignment] = useState<FooterAlignment>(FooterAlignment.CENTER);
   const [distribution, setDistribution] = useState<HorizontalItemsDistribution>(HorizontalItemsDistribution.STACK);
@@ -112,7 +132,7 @@ const ScreenFooterScreen = () => {
       case ButtonType.PRIMARY:
         return {
           backgroundColor: Colors.$backgroundPrimaryHeavy,
-          label: 'Primary'
+          label: 'Primary-longtxtlongtxtlongtxtlongtxtlongtxtlongtxt'
         };
       case ButtonType.SECONDARY:
         return {
@@ -137,11 +157,11 @@ const ScreenFooterScreen = () => {
     
     if (showExtraContent) {
       items.push(
-        <View key="extra" centerV marginR-s4={isHorizontal} marginB-s4={!isHorizontal}>
-          <Text {...{[textPreset.main]: true}} $textDefault>
-            Total: <Text {...{[textPreset.main]: true}} $textDefault style={{fontWeight: 'bold'}}>257$</Text>
+        <View key="extra" centerV marginR-s4={isHorizontal} marginB-s4={!isHorizontal} style={{flexShrink: 1}}>
+          <Text {...{[textPreset.main]: true}} $textDefault numberOfLines={1}>
+            Total: <Text {...{[textPreset.main]: true}} $textDefault style={{fontWeight: 'bold'}}>257sdsassdadasdsadsadsadsdsadsad$</Text>
           </Text>
-          <Text {...{[textPreset.sub]: true}} $textNeutralLight>Prices are not including VAT.</Text>
+          <Text {...{[textPreset.sub]: true}} $textNeutralLight numberOfLines={1}>Prices are not including VAT.</Text>
         </View>
       );
     }
@@ -151,7 +171,7 @@ const ScreenFooterScreen = () => {
         <Button
           key="btn1"
           size={getButtonSize(buttonSize)}
-          style={itemsFit === ItemsFit.STRETCH && !isHorizontal ? {alignSelf: 'stretch'} : undefined}
+        //   style={itemsFit === ItemsFit.STRETCH && !isHorizontal ? {alignSelf: 'stretch'} : undefined}
           {...getButtonProps(button1Type)}
         />
       );
@@ -162,7 +182,7 @@ const ScreenFooterScreen = () => {
         <Button
           key="btn2"
           size={getButtonSize(buttonSize)}
-          style={itemsFit === ItemsFit.STRETCH && !isHorizontal ? {alignSelf: 'stretch'} : undefined}
+        //   style={itemsFit === ItemsFit.STRETCH && !isHorizontal ? {alignSelf: 'stretch'} : undefined}
           {...getButtonProps(button2Type)}
         />
       );
@@ -173,7 +193,7 @@ const ScreenFooterScreen = () => {
         <Button
           key="btn3"
           size={getButtonSize(buttonSize)}
-          style={itemsFit === ItemsFit.STRETCH && !isHorizontal ? {alignSelf: 'stretch'} : undefined}
+        //   style={itemsFit === ItemsFit.STRETCH && !isHorizontal ? {alignSelf: 'stretch'} : undefined}
           {...getButtonProps(button3Type)}
         />
       );
@@ -188,6 +208,13 @@ const ScreenFooterScreen = () => {
         <Text text60 $textDefault marginB-s4>
           ScreenFooter Configuration
         </Text>
+
+        <TextField
+          placeholder="Focus me to test keyboard behavior"
+          label="Test Input"
+          floatingPlaceholder
+          containerStyle={{marginBottom: 20}}
+        />
 
         {/* Layout Selection */}
         <View marginB-s4>
@@ -301,10 +328,25 @@ const ScreenFooterScreen = () => {
           />
         </View>
 
+        {/* Position */}
+        <View marginB-s4>
+          <Text text70M $textDefault marginB-s2>
+            Position
+          </Text>
+          <View row>
+             <SegmentedControl
+              segments={POSITION_OPTIONS}
+              initialIndex={POSITION_OPTIONS.findIndex(opt => opt.value === position)}
+              onChangeIndex={index => setPosition(POSITION_OPTIONS[index].value)}
+            />
+             <View flex />
+          </View>
+        </View>
+
         {/* Alignment (Cross Axis) */}
         <View marginB-s4>
           <Text text70M $textDefault marginB-s2>
-            {isHorizontal ? 'Vertical Alignment (Top/Center/Bottom)' : 'Alignment (Left/Center/Right)'}
+            {isHorizontal ? 'Vertical Alignment' : 'Alignment'}
           </Text>
           <SegmentedControl
             segments={ALIGNMENT_OPTIONS}
@@ -319,11 +361,14 @@ const ScreenFooterScreen = () => {
             <Text text70M $textDefault marginB-s2>
               Distribution
             </Text>
-            <SegmentedControl
-              segments={DISTRIBUTION_OPTIONS}
-              initialIndex={DISTRIBUTION_OPTIONS.findIndex(opt => opt.value === distribution)}
-              onChangeIndex={index => setDistribution(DISTRIBUTION_OPTIONS[index].value)}
-            />
+            <View row>
+              <SegmentedControl
+                segments={DISTRIBUTION_OPTIONS}
+                initialIndex={DISTRIBUTION_OPTIONS.findIndex(opt => opt.value === distribution)}
+                onChangeIndex={index => setDistribution(DISTRIBUTION_OPTIONS[index].value)}
+              />
+               <View flex />
+            </View>
           </View>
         )}
 
@@ -331,7 +376,7 @@ const ScreenFooterScreen = () => {
         {isHorizontal && distribution === HorizontalItemsDistribution.STACK && (
           <View marginB-s4>
             <Text text70M $textDefault marginB-s2>
-              Horizontal Alignment (Left/Center/Right)
+              Horizontal Alignment
             </Text>
             <SegmentedControl
               segments={ALIGNMENT_OPTIONS}
@@ -374,6 +419,7 @@ const ScreenFooterScreen = () => {
       <ScreenFooter
         layout={layout}
         backgroundType={background}
+        position={position}
         alignment={alignment}
         horizontalAlignment={horizontalAlignment}
         HorizontalItemsDistribution={distribution}
