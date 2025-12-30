@@ -75,7 +75,14 @@
   "docs": {
     "hero": {
       "title": "PageControl",
-      "description": "Page indicator, typically used in paged scroll-views"
+      "description": "Page Control provides orientation by showing the total number of items and indicating the currently visible item.\nIt is most commonly used in components such as galleries, card carousels, and slideshows.",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/PageControl/Preview.png"
+        }
+      ]
     },
     "tabs": [
       {
@@ -87,6 +94,173 @@
               {
                 "value": "https://embed.figma.com/design/Krv1pLl7kq2L52vMRwd498/MADS-Guidelines?node-id=22898-649490&embed-host=share",
                 "height": 1600
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "section",
+            "title": "Usage Examples",
+            "description": "",
+            "content": [
+              {
+                "value": "\"https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=13804-18246&embed-host=share\""
+              }
+            ]
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Point of reference",
+              "Swipe forward (left)",
+              "Swipe back (right)"
+            ],
+            "items": [
+              {
+                "title": "1st item",
+                "description": "",
+                "content": [
+                  {
+                    "props": {
+                      "numOfPages": 7,
+                      "currentPage": 1
+                    }
+                  },
+                  {
+                    "props": {
+                      "numOfPages": 7,
+                      "currentPage": 7
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "2nd item",
+                "description": "",
+                "content": [
+                  {
+                    "props": {
+                      "numOfPages": 7,
+                      "currentPage": 2
+                    }
+                  },
+                  {
+                    "props": {
+                      "numOfPages": 7,
+                      "currentPage": 6
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "3rd item",
+                "description": "",
+                "content": [
+                  {
+                    "props": {
+                      "numOfPages": 7,
+                      "currentPage": 3
+                    }
+                  },
+                  {
+                    "props": {
+                      "numOfPages": 10,
+                      "currentPage": 4
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "4th item",
+                "description": ""
+              },
+              {
+                "title": "5th item up to 3rd from the last",
+                "description": "",
+                "content": [
+                  {
+                    "props": {
+                      "numOfPages": 10,
+                      "currentPage": 5
+                    }
+                  },
+                  {
+                    "props": {
+                      "numOfPages": 10,
+                      "currentPage": 4
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "3rd from the last",
+                "description": "",
+                "content": [
+                  {
+                    "props": {
+                      "numOfPages": 10,
+                      "currentPage": 8
+                    }
+                  },
+                  {
+                    "props": {
+                      "numOfPages": 10,
+                      "currentPage": 3
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "One before last item",
+                "description": "",
+                "content": [
+                  {
+                    "props": {
+                      "numOfPages": 10,
+                      "currentPage": 9
+                    }
+                  },
+                  {
+                    "props": {
+                      "numOfPages": 10,
+                      "currentPage": 2
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Last item",
+                "description": "",
+                "content": [
+                  {
+                    "props": {
+                      "numOfPages": 10,
+                      "currentPage": 10
+                    }
+                  },
+                  {
+                    "props": {
+                      "numOfPages": 10,
+                      "currentPage": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "title": "Page control display",
+            "description": ""
+          },
+          {
+            "type": "section",
+            "title": "Spec",
+            "description": "",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/PageControl/spec.png"
               }
             ]
           }
