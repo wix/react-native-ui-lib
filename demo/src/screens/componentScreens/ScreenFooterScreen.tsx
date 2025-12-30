@@ -1,5 +1,5 @@
 import React, {useState, useMemo} from 'react';
-import {StyleSheet, ScrollView} from 'react-native';
+import {StyleSheet, ScrollView, Image} from 'react-native';
 import {
   View,
   Text,
@@ -14,8 +14,12 @@ import {
   HorizontalItemsDistribution,
   ItemsFit,
   Switch,
-  TextField
+  TextField,
+  Slider
 } from 'react-native-ui-lib';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const basketIcon = require('../../assets/icons/collections.png');
 
 enum ButtonType {
   PRIMARY = 'Primary',
@@ -106,8 +110,11 @@ const ScreenFooterScreen = () => {
   const [button2Type, setButton2Type] = useState<ButtonType>(ButtonType.SECONDARY);
   const [button3Type, setButton3Type] = useState<ButtonType>(ButtonType.LINK);
   const [buttonSize, setButtonSize] = useState<ItemSize>(ItemSize.MEDIUM);
-  const [showExtraContent, setShowExtraContent] = useState(false);
+  const [showExtraText, setShowExtraText] = useState(false);
+  const [showImage, setShowImage] = useState(false);
   const [extraContentSize, setExtraContentSize] = useState<ItemSize>(ItemSize.MEDIUM);
+  const [useLongButtonText, setUseLongButtonText] = useState(false);
+  const [itemWidth, setItemWidth] = useState(150);
 
   const isHorizontal = layout === ScreenFooterLayouts.HORIZONTAL;
 
@@ -132,7 +139,7 @@ const ScreenFooterScreen = () => {
       case ButtonType.PRIMARY:
         return {
           backgroundColor: Colors.$backgroundPrimaryHeavy,
-          label: 'Primary-longtxtlongtxtlongtxtlongtxtlongtxtlongtxt'
+          label: useLongButtonText ? 'Primary-longtxtlongtxtlongtxtlongtxtlongtxtlongtxt' : 'Checkout'
         };
       case ButtonType.SECONDARY:
         return {
@@ -151,17 +158,39 @@ const ScreenFooterScreen = () => {
     }
   };
 
+  const getImageSize = (size: ItemSize): number => {
+    switch (size) {
+      case ItemSize.SMALL: return 24;
+      case ItemSize.MEDIUM: return 32;
+      case ItemSize.LARGE: return 40;
+    }
+  };
+
   const renderFooterItems = useMemo(() => {
     const items = [];
     const textPreset = getTextPreset(extraContentSize);
+    const imageSize = getImageSize(extraContentSize);
     
-    if (showExtraContent) {
+    // Extra Text (Total price)
+    if (showExtraText) {
       items.push(
-        <View key="extra" centerV marginR-s4={isHorizontal} marginB-s4={!isHorizontal} style={{flexShrink: 1}}>
+        <View key="extra-text" centerV marginR-s4={isHorizontal} marginB-s4={!isHorizontal} style={{flexShrink: 1}}>
           <Text {...{[textPreset.main]: true}} $textDefault numberOfLines={1}>
-            Total: <Text {...{[textPreset.main]: true}} $textDefault style={{fontWeight: 'bold'}}>257sdsassdadasdsadsadsadsdsadsad$</Text>
+            Total: <Text {...{[textPreset.main]: true}} $textDefault style={{fontWeight: 'bold'}}>257$</Text>
           </Text>
-          <Text {...{[textPreset.sub]: true}} $textNeutralLight numberOfLines={1}>Prices are not including VAT.</Text>
+          <Text {...{[textPreset.sub]: true}} $textNeutralLight numberOfLines={1}>Including VAT.</Text>
+        </View>
+      );
+    }
+
+    // Image (Basket icon)
+    if (showExtraText && showImage) {
+      items.push(
+        <View key="extra-image" centerV marginR-s4={isHorizontal} marginB-s4={!isHorizontal}>
+          <Image
+            source={basketIcon}
+            style={{width: imageSize, height: imageSize, tintColor: Colors.$iconDefault}}
+          />
         </View>
       );
     }
@@ -200,7 +229,7 @@ const ScreenFooterScreen = () => {
     }
     
     return items;
-  }, [itemsCount, itemsFit, isHorizontal, button1Type, button2Type, button3Type, buttonSize, showExtraContent, extraContentSize]);
+  }, [itemsCount, itemsFit, isHorizontal, button1Type, button2Type, button3Type, buttonSize, showExtraText, showImage, extraContentSize, useLongButtonText]);
 
   return (
     <View flex bg-$backgroundDefault>
@@ -240,16 +269,26 @@ const ScreenFooterScreen = () => {
           />
         </View>
 
-        {/* Extra Content Toggle */}
+        {/* Extra Text Toggle */}
         <View row spread centerV marginB-s4>
           <Text text70M $textDefault>
-            Show Extra Content (Text/Image)
+            Show Extra Text
           </Text>
-          <Switch value={showExtraContent} onValueChange={setShowExtraContent}/>
+          <Switch value={showExtraText} onValueChange={setShowExtraText}/>
         </View>
 
+        {/* Show Image Toggle (only when Extra Text is shown) */}
+        {showExtraText && (
+          <View row spread centerV marginB-s4 marginL-s4>
+            <Text text70M $textDefault>
+              Show Image
+            </Text>
+            <Switch value={showImage} onValueChange={setShowImage}/>
+          </View>
+        )}
+
         {/* Extra Content Size */}
-        {showExtraContent && (
+        {showExtraText && (
           <View marginB-s4>
             <Text text70M $textDefault marginB-s2>
               Extra Content Size
@@ -272,6 +311,14 @@ const ScreenFooterScreen = () => {
             initialIndex={SIZE_OPTIONS.findIndex(opt => opt.value === buttonSize)}
             onChangeIndex={index => setButtonSize(SIZE_OPTIONS[index].value)}
           />
+        </View>
+
+        {/* Long Button Text Toggle */}
+        <View row spread centerV marginB-s4>
+          <Text text70M $textDefault>
+            Use Long Button Text
+          </Text>
+          <Switch value={useLongButtonText} onValueChange={setUseLongButtonText}/>
         </View>
 
         {/* Button 1 Type */}
@@ -386,16 +433,30 @@ const ScreenFooterScreen = () => {
           </View>
         )}
 
-        {/* Items Fit (for Vertical layout) */}
-        {!isHorizontal && (
+        {/* Items Fit */}
+        <View marginB-s4>
+          <Text text70M $textDefault marginB-s2>
+            Items Fit
+          </Text>
+          <SegmentedControl
+            segments={ITEMS_FIT_OPTIONS}
+            initialIndex={ITEMS_FIT_OPTIONS.findIndex(opt => opt.value === itemsFit)}
+            onChangeIndex={index => setItemsFit(ITEMS_FIT_OPTIONS[index].value)}
+          />
+        </View>
+
+        {/* Item Width Slider (only when Fixed is selected) */}
+        {itemsFit === ItemsFit.FIXED && (
           <View marginB-s4>
             <Text text70M $textDefault marginB-s2>
-              Items Fit
+              Item Width: {itemWidth}px
             </Text>
-            <SegmentedControl
-              segments={ITEMS_FIT_OPTIONS}
-              initialIndex={ITEMS_FIT_OPTIONS.findIndex(opt => opt.value === itemsFit)}
-              onChangeIndex={index => setItemsFit(ITEMS_FIT_OPTIONS[index].value)}
+            <Slider
+              value={itemWidth}
+              minimumValue={50}
+              maximumValue={300}
+              step={10}
+              onValueChange={setItemWidth}
             />
           </View>
         )}
@@ -424,7 +485,7 @@ const ScreenFooterScreen = () => {
         horizontalAlignment={horizontalAlignment}
         HorizontalItemsDistribution={distribution}
         itemsFit={itemsFit}
-        itemWidth={150}
+        itemWidth={itemWidth}
       >
         {renderFooterItems}
       </ScreenFooter>

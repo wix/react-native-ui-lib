@@ -167,19 +167,23 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     }, [isSolid, isFading]);
 
     const renderChild = useCallback((child: React.ReactNode, index: number) => {
-        if (itemsFit === ItemsFit.FIXED && itemWidth && layout === ScreenFooterLayouts.VERTICAL) {
+        if (itemsFit === ItemsFit.FIXED && itemWidth) {
+            const fixedStyle = isHorizontal 
+                ? {width: itemWidth, flexShrink: 1} 
+                : {width: itemWidth};
             return (
-                <View key={index} style={{width: itemWidth}}>
+                <View key={index} style={fixedStyle}>
                     {child}
                 </View>
             );
         }
 
         if (isHorizontal && React.isValidElement(child)) {
-             return React.cloneElement(child, {
-                 // @ts-ignore
-                 style: [child.props.style, {flexShrink: 1}]
-             });
+            const flexStyle = itemsFit === ItemsFit.STRETCH ? {flex: 1} : {flexShrink: 1};
+            return React.cloneElement<any>(child, {
+                key: index,
+                style: [child.props.style, flexStyle]
+            });
         }
 
         return child;
