@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {View, Text, ProgressBar, Colors, Spacings} from 'react-native-ui-lib';
+import {View, Text, ProgressBar, Colors, Spacings} from 'react-native-ui-lib';//eslint-disable-line
 
 export default class ProgressBarScreen extends Component {
   state = {
@@ -29,7 +29,9 @@ export default class ProgressBarScreen extends Component {
   }
 
   get customElement() {
-    return <View style={{backgroundColor: Colors.green30, borderWidth: 0.5, borderRadius: 4}}/>;
+    return (
+      <View style={{backgroundColor: Colors.green30, borderWidth: 0.5, borderRadius: 4}}/>
+    );
   }
 
   render() {
@@ -47,15 +49,17 @@ export default class ProgressBarScreen extends Component {
           <Text $textDefault text70 style={styles.text}>
             Default
           </Text>
-          <ProgressBar progress={progresses[0]} style={styles.progressBar}/>
+          <ProgressBar
+            progress={progresses[0]}
+            containerStyle={styles.progressBar}
+          />
 
           <Text $textDefault text70 style={styles.text}>
             FullWidth
           </Text>
           <ProgressBar
             progress={progresses[1]}
-            style={styles.fullWidthProgressBar}
-            progressStyle={{borderTopEndRadius: 0, borderBottomEndRadius: 0}}
+            containerStyle={styles.fullWidthProgressBar}
             fullWidth
           />
 
@@ -64,14 +68,27 @@ export default class ProgressBarScreen extends Component {
           </Text>
           <ProgressBar
             progress={progresses[2]}
-            progressStyle={{borderRadius: 0, backgroundColor: Colors.purple70}}
-            style={[styles.progressBar, styles.styledProgressBar, {borderRadius: 0}]}
+            containerStyle={[styles.progressBar, styles.styledProgressBar]}
+            progressColor={Colors.purple70}
           />
 
           <Text $textDefault text70 style={styles.text}>
             Custom Element
           </Text>
-          <ProgressBar progress={progresses[0]} style={styles.progressBar} customElement={this.customElement}/>
+          <ProgressBar
+            progress={progresses[0]}
+            containerStyle={styles.progressBar}
+            customElement={this.customElement}
+          />
+
+          <Text $textDefault text70 style={styles.text}>
+            Progress Style - Border Radius 0, 50% progress
+          </Text>
+          <ProgressBar
+            progress={50}
+            containerStyle={[styles.progressBar, styles.styledProgressBar, {borderRadius: 0}]}
+            progressStyle={{borderRadius: 0, backgroundColor: Colors.purple70}}
+          />
         </View>
       </ScrollView>
     );
@@ -93,7 +110,6 @@ const styles = StyleSheet.create({
     height: 30
   },
   fullWidthProgressBar: {
-    marginBottom: 10,
-    height: 20
+    marginBottom: 10
   }
 });

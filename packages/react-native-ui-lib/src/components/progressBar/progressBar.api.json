@@ -26,6 +26,11 @@
       "description": "Override progress style"
     },
     {
+      "name": "progressColor",
+      "type": "string",
+      "description": "Progress color"
+    },
+    {
       "name": "customElement",
       "type": "JSX.Element",
       "description": "Custom element to render on top of the animated progress"
