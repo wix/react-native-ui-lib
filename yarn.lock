@@ -3063,13 +3063,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prop-types@npm:^15.5.3":
-  version: 15.7.13
-  resolution: "@types/prop-types@npm:15.7.13"
-  checksum: 10c0/1b20fc67281902c6743379960247bc161f3f0406ffc0df8e7058745a85ea1538612109db0406290512947f9632fe9e10e7337bf0ce6338a91d6c948df16a7c61
-  languageName: node
-  linkType: hard
-
 "@types/react-test-renderer@npm:19.0.0":
   version: 19.0.0
   resolution: "@types/react-test-renderer@npm:19.0.0"
@@ -9656,7 +9649,6 @@ __metadata:
     "@types/hoist-non-react-statics": "npm:^3.3.1"
     "@types/jest": "npm:^29.5.13"
     "@types/lodash": "npm:^4.0.0"
-    "@types/prop-types": "npm:^15.5.3"
     "@types/react": "npm:19.0.0"
     "@types/react-test-renderer": "npm:^19.0.0"
     "@types/tinycolor2": "npm:^1.4.2"
@@ -9708,7 +9700,6 @@ __metadata:
     "@types/hoist-non-react-statics": "npm:^3.3.1"
     "@types/jest": "npm:^29.5.13"
     "@types/lodash": "npm:^4.0.0"
-    "@types/prop-types": "npm:^15.5.3"
     "@types/react": "npm:19.0.0"
     "@types/react-test-renderer": "npm:19.0.0"
     "@types/tinycolor2": "npm:^1.4.2"
