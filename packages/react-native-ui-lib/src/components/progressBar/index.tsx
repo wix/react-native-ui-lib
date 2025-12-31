@@ -39,8 +39,7 @@ interface Props {
    */
   progressStyle?: StyleProp<ViewStyle>;
   /**
-   * @deprecated
-   * Use progressStyle.backgroundColor instead
+   * @deprecated Use progressStyle.backgroundColor instead
    */
   progressColor?: string;
   /**
