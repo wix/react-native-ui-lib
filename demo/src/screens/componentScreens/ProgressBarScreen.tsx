@@ -53,7 +53,7 @@ export default class ProgressBarScreen extends Component {
             FullWidth
           </Text>
           <ProgressBar
-            progress={50}
+            progress={progresses[1]}
             style={styles.fullWidthProgressBar}
             progressStyle={{borderTopEndRadius: 0, borderBottomEndRadius: 0}}
             fullWidth
