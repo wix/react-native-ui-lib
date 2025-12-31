@@ -63,7 +63,7 @@ export default class ProgressBarScreen extends Component {
             Styled
           </Text>
           <ProgressBar
-            progress={50}
+            progress={progresses[2]}
             progressStyle={{borderRadius: 0, backgroundColor: Colors.purple70}}
             style={[styles.progressBar, styles.styledProgressBar, {borderRadius: 0}]}
           />
