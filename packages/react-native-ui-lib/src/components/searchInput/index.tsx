@@ -34,7 +34,7 @@ const SearchInput = forwardRef((props: SearchInputProps, ref: ForwardedRef<any>)
     style,
     inaccessible
   } = props;
-  const currentAnimatedValue = useRef<ReturnType<typeof Animated.timing> | undefined>();
+  const currentAnimatedValue = useRef<ReturnType<typeof Animated.timing> | undefined>(undefined);
   const searchInputRef = useRef<TextInput>(null);
   const [hasValue, setHasValue] = useState(Boolean(controlledValue));
   const [value, setValue] = useState(controlledValue);

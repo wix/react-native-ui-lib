@@ -58,11 +58,11 @@ export interface TabControllerItemProps extends Pick<TabControllerBarProps, 'spr
   /**
    * Pass to render a leading element
    */
-  leadingAccessory?: ReactElement;
+  leadingAccessory?: ReactElement<any>;
   /**
    * Pass to render a trailing element
    */
-  trailingAccessory?: ReactElement;
+  trailingAccessory?: ReactElement<any>;
   /**
    * A fixed width for the item
    */
@@ -138,7 +138,7 @@ export default function TabBarItem({
   ...props
 }: Props) {
   const {currentPage, setCurrentIndex} = useContext(TabBarContext);
-  const itemRef = useRef();
+  const itemRef = useRef(undefined);
   const itemWidth = useRef(props.width);
   const isPressed = useSharedValue(false);
   // JSON.parse(JSON.stringify is due to an issue with reanimated

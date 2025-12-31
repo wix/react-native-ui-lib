@@ -97,7 +97,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
   const [options, setOptions] = useState<Options>(generateOptions(locale, fractionDigits));
   const initialNumber = getInitialNumber(propsInitialNumber, options);
   const [data, setData] = useState<NumberInputData>(parseInput(`${initialNumber}`, options, propsInitialNumber));
-  const textField = useRef<TextFieldRef>();
+  const textField = useRef<TextFieldRef>(undefined);
   const [isFocused, setIsFocused] = useState(textFieldProps?.autoFocus ?? false);
 
   useDidUpdate(() => {

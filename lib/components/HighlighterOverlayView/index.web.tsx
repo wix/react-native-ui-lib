@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {type JSX} from 'react';
 import {Modal, ViewStyle} from 'react-native';
 
 type HighlightFrameType = {

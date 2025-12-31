@@ -5,7 +5,8 @@ import React, {
   useState,
   useImperativeHandle,
   forwardRef,
-  ForwardedRef
+  ForwardedRef,
+  type JSX
 } from 'react';
 import _ from 'lodash';
 import {StyleSheet, Keyboard, TextInput, TextInputProps, StyleProp, ViewStyle} from 'react-native';
@@ -40,8 +41,8 @@ export interface MaskedInputProps extends Omit<TextInputProps, 'value'> {
 function MaskedInput(props: MaskedInputProps, ref: ForwardedRef<any>) {
   const {initialValue, formatter = _.identity, containerStyle, renderMaskedText, onChangeText, ...others} = props;
   const [value, setValue] = useState(initialValue);
-  const inputRef = useRef<TextInput>();
-  const keyboardDidHideListener = useRef<any>();
+  const inputRef = useRef<TextInput>(undefined);
+  const keyboardDidHideListener = useRef<any>(undefined);
 
   useImperativeHandle(ref, () => {
     return {

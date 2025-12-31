@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, type JSX} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
 import {View, Text, Image, Card, Constants, Colors} from 'react-native-ui-lib'; // eslint-disable-line
 

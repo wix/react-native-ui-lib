@@ -22,7 +22,7 @@ export type KeyboardAccessoryViewProps = kbTrackingViewProps & {
   /**
    * Content to be rendered above the keyboard
    */
-  renderContent?: () => React.ReactElement;
+  renderContent?: () => React.ReactElement<any>;
   /**
    * iOS only.
    * The reference to the actual text input (or the keyboard may not reset when instructed to, etc.).
@@ -53,7 +53,7 @@ export type KeyboardAccessoryViewProps = kbTrackingViewProps & {
    * Callback that will be called once the keyboard has been closed
    */
   onKeyboardResigned?: () => void;
-  children?: React.ReactChild;
+  children?: React.ReactNode;
 };
 
 /**
@@ -204,7 +204,9 @@ class KeyboardAccessoryView extends Component<KeyboardAccessoryViewProps> {
       <KeyboardTrackingView
         {...others}
         scrollBehavior={scrollBehavior}
-        ref={(r: any) => (this.trackingViewRef = r)}
+        ref={(r: any) => {
+          (this.trackingViewRef = r);
+        }}
         style={styles.trackingToolbarContainer}
         onLayout={this.onContainerComponentHeightChanged}
       >
