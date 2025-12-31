@@ -2615,13 +2615,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native/normalize-color@npm:*":
-  version: 2.1.0
-  resolution: "@react-native/normalize-color@npm:2.1.0"
-  checksum: 10c0/95814a1e2aac9c00dfc2c65f9e2caec07f70d3dba903b5640f5cf24605bf39863e572f2a5138a85d1c514fb3c33f6931595e0a9f738a58b5c220ee74f2bec13b
-  languageName: node
-  linkType: hard
-
 "@react-native/normalize-colors@npm:0.78.3":
   version: 0.78.3
   resolution: "@react-native/normalize-colors@npm:0.78.3"
@@ -4962,17 +4955,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deprecated-react-native-prop-types@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "deprecated-react-native-prop-types@npm:2.3.0"
-  dependencies:
-    "@react-native/normalize-color": "npm:*"
-    invariant: "npm:*"
-    prop-types: "npm:*"
-  checksum: 10c0/a4bf78dde109cd1a706206fa6e06f7c44e70bc327b990f0f7f936d5d0b8a2372bc78e09979fb2e84bbc5233774aca4165b3ecd17a74765ccc11cead4827380ca
-  languageName: node
-  linkType: hard
-
 "destroy@npm:1.2.0":
   version: 1.2.0
   resolution: "destroy@npm:1.2.0"
@@ -6640,7 +6622,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"invariant@npm:*, invariant@npm:^2.2.4":
+"invariant@npm:^2.2.4":
   version: 2.2.4
   resolution: "invariant@npm:2.2.4"
   dependencies:
@@ -9324,7 +9306,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:*, prop-types@npm:15.8.1, prop-types@npm:15.x.x, prop-types@npm:^15.5.10, prop-types@npm:^15.8.1":
+"prop-types@npm:15.8.1, prop-types@npm:15.x.x, prop-types@npm:^15.5.10, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -9738,7 +9720,6 @@ __metadata:
     color: "npm:^3.1.0"
     commons-validator-js: "npm:^1.0.237"
     date-fns: "npm:^2.29.3"
-    deprecated-react-native-prop-types: "npm:^2.3.0"
     hoist-non-react-statics: "npm:^3.0.0"
     jest: "npm:^29.6.3"
     light-date: "npm:^1.2.0"
@@ -9749,7 +9730,6 @@ __metadata:
     postcss: "npm:^8.4.21"
     postcss-js: "npm:^4.0.0"
     prettier: "npm:^3.2.5"
-    prop-types: "npm:^15.5.10"
     react: "npm:19.0.0"
     react-autobind: "npm:^1.0.6"
     react-dom: "npm:19.0.0"

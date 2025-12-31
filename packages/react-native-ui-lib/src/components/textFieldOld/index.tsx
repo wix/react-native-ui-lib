@@ -6,10 +6,8 @@
 // TODO: add trailing/leading icon props
 // TODO: support margin modifiers
 import _ from 'lodash';
-import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Animated, TextInput as RNTextInput} from 'react-native';
-import {TextInputPropTypes, ImagePropTypes} from 'deprecated-react-native-prop-types';
 import memoize from 'memoize-one';
 import {Constants} from '../../commons/new';
 import {Colors, Typography, Spacings} from '../../style';
@@ -56,136 +54,6 @@ const FLOATING_PLACEHOLDER_SCALE = 0.875;
  */
 export default class TextField extends BaseInput {
   static displayName = 'TextFieldOld';
-
-  static propTypes = {
-    ...TextInputPropTypes,
-    ...BaseInput.propTypes,
-    /**
-     * should placeholder have floating behavior
-     */
-    floatingPlaceholder: PropTypes.bool,
-    /**
-     * floating placeholder color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue', disabled: 'grey'}
-     */
-    floatingPlaceholderColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    /**
-     * Custom style for floating placeholder
-     */
-    floatingPlaceholderStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * This text will appear as a placeholder when the textInput becomes focused, only when passing floatingPlaceholder
-     * as well (NOT for expandable textInputs)
-     */
-    helperText: PropTypes.string,
-    /**
-     * hide text input underline, by default false
-     */
-    hideUnderline: PropTypes.bool,
-    /**
-     * underline color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue', disabled: 'grey'}
-     */
-    underlineColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    /**
-     * the color of all text when the input is disabled (if undefined will not apply color)
-     */
-    disabledColor: PropTypes.string,
-    /**
-     * should text input be align to center
-     */
-    centered: PropTypes.bool,
-    /**
-     * input error message, should be empty if no error exists
-     */
-    error: PropTypes.string,
-    /**
-     * should the input component support error messages
-     */
-    enableErrors: PropTypes.bool,
-    /**
-     * input error message's text color
-     */
-    errorColor: PropTypes.string,
-    /**
-     * should the input expand to another text area modal
-     */
-    expandable: PropTypes.bool,
-    /**
-     * Render custom expandable input (requires expandable to be true)
-     */
-    renderExpandableInput: PropTypes.elementType,
-    /**
-     * allow custom rendering of expandable content when clicking on the input (useful for pickers)
-     * accept props and state as params, ex. (props, state) => {...}
-     * use toggleExpandableModal(false) method to toggle off the expandable content
-     */
-    renderExpandable: PropTypes.elementType,
-    /**
-     * Callback for the modal toggle. Pass with renderExpandable to control the modal toggle
-     */
-    onToggleExpandableModal: PropTypes.func,
-    /**
-     * The picker modal top bar props
-     */
-    topBarProps: PropTypes.shape(Modal.TopBar.propTypes),
-    /**
-     * transform function executed on value and return transformed value
-     */
-    transformer: PropTypes.func,
-    /**
-     * Pass to render a prefix text as part of the input (doesn't work with floatingPlaceholder)
-     */
-    prefix: PropTypes.string,
-    /**
-     * The prefix style
-     */
-    prefixStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * Fixed title that will displayed above the input (note: floatingPlaceholder MUST be 'false')
-     */
-    title: PropTypes.string,
-    /**
-     * The title's color as a string or object of states, ex. {default: 'black', error: 'red', focus: 'blue', disabled: 'grey'}
-     */
-    titleColor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    /**
-     * Additional styles for the title (not including 'color')
-     */
-    titleStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-    /**
-     * should the input display a character counter (only when passing 'maxLength')
-     */
-    showCharacterCounter: PropTypes.bool,
-    /**
-     * should float the placeholder when focused (instead of when typing)
-     */
-    floatOnFocus: PropTypes.bool,
-    /**
-     * should the errors be displayed at the top
-     */
-    useTopErrors: PropTypes.bool,
-    /**
-     * Icon asset source for showing on the right side, appropriate for dropdown icon and such
-     */
-    rightIconSource: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    /**
-     * Pass to style the right icon source
-     */
-    rightIconStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    /**
-     * Props for the right button {iconSource, onPress, style}
-     */
-    rightButtonProps: PropTypes.shape({
-      iconSource: ImagePropTypes.source,
-      iconColor: PropTypes.string,
-      onPress: PropTypes.func,
-      style: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-      accessibilityLabel: PropTypes.string
-    }),
-    /**
-     * Pass to render a leading icon to the TextInput value. Accepts Image props (doesn't work with floatingPlaceholder)
-     */
-    leadingIcon: PropTypes.shape(ImagePropTypes)
-  };
 
   static defaultProps = {
     enableErrors: true,

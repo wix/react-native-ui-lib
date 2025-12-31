@@ -1,8 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {StyleSheet, FlatList, SectionList, ScrollView} from 'react-native';
-import {ViewPropTypes} from 'deprecated-react-native-prop-types';
 import {Navigation} from 'react-native-navigation';
 import {
   Assets,
@@ -27,12 +25,6 @@ const chevronIcon = require('../assets/icons/chevronRight.png');
 const FADER_SIZE = 50;
 
 class MainScreen extends Component {
-  static propTypes = {
-    containerStyle: ViewPropTypes.style,
-    renderItem: PropTypes.func,
-    pageStyle: ViewPropTypes.style
-  };
-
   settingsScreenName = 'unicorn.Settings';
 
   static options() {

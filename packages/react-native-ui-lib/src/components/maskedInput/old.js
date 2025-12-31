@@ -1,8 +1,6 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Keyboard} from 'react-native';
-import {ViewPropTypes} from 'deprecated-react-native-prop-types';
 import BaseInput from '../baseInput';
 import TextField from '../textFieldOld';
 import View from '../view';
@@ -16,17 +14,6 @@ import TouchableOpacity from '../touchableOpacity';
  */
 export default class MaskedInput extends BaseInput {
   static displayName = 'MaskedInput';
-  static propTypes = {
-    ...TextField.propTypes,
-    /**
-     * callback for rendering the custom input out of the value returns from the actual input
-     */
-    renderMaskedText: PropTypes.elementType.isRequired,
-    /**
-     * container style for the masked input container
-     */
-    containerStyle: ViewPropTypes.style
-  };
 
   componentDidMount() {
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
