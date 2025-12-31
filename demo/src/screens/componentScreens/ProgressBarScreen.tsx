@@ -82,7 +82,7 @@ export default class ProgressBarScreen extends Component {
           />
 
           <Text $textDefault text70 style={styles.text}>
-            Progress Style - Border Radius 0, 50% progress
+            Custom Style - No Border Radius, 50% progress
           </Text>
           <ProgressBar
             progress={50}
