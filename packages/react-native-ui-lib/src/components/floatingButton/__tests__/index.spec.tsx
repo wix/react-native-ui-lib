@@ -31,14 +31,14 @@ describe('FloatingButton', () => {
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
       expect(await buttonDriver.exists()).not.toBeTruthy();
       
-      renderTree.rerender(<TestCase visible/>);
+      renderTree.rerender(<TestCase visible button={button}/>);
       expect(await buttonDriver.exists()).toBeTruthy();
     });
   });
 
   describe('buttons', () => {
     it('should render a button', async () => {
-      const props = {visible: true};
+      const props = {visible: true, button};
       const renderTree = render(<TestCase {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
       expect(await buttonDriver.exists()).toBeTruthy();
@@ -68,7 +68,7 @@ describe('FloatingButton', () => {
 
   describe('bottomMargin', () => {
     it('should have default bottom margin', () => {
-      const props = {visible: true};
+      const props = {visible: true, button};
       const renderTree = render(<TestCase {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
 
@@ -76,7 +76,7 @@ describe('FloatingButton', () => {
     });
 
     it('should have default bottom margin for both buttons', () => {
-      const props = {visible: true, secondaryButton};
+      const props = {visible: true, button, secondaryButton};
       const renderTree = render(<TestCase {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
       const buttonDriver2 = ButtonDriver({renderTree, testID: `${TEST_ID}.secondaryButton`});
@@ -86,7 +86,7 @@ describe('FloatingButton', () => {
     });
 
     it('should have bottom margin that match bottomMargin prop', () => {
-      const props = {visible: true, bottomMargin: 10};
+      const props = {visible: true, button, bottomMargin: 10};
       const renderTree = render(<TestCase {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
 
@@ -94,7 +94,7 @@ describe('FloatingButton', () => {
     });
 
     it('should have bottom margin for secondary button that match bottomMarginProp', () => {
-      const props = {visible: true, secondaryButton, bottomMargin: 10};
+      const props = {visible: true, button, secondaryButton, bottomMargin: 10};
       const renderTree = render(<TestCase {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
       const buttonDriver2 = ButtonDriver({renderTree, testID: `${TEST_ID}.secondaryButton`});
@@ -106,7 +106,7 @@ describe('FloatingButton', () => {
 
   describe('buttonLayout', () => {
     it('should style vertical layout (default)', () => {
-      const props = {visible: true, secondaryButton};
+      const props = {visible: true, button, secondaryButton};
       const renderTree = render(<TestCase {...props}/>);
       const driver = FloatingButtonDriver({renderTree, testID: TEST_ID});
       
@@ -117,7 +117,7 @@ describe('FloatingButton', () => {
     });
     
     it('should style horizontal layout', () => {
-      const props = {visible: true, secondaryButton, buttonLayout: FloatingButtonLayouts.HORIZONTAL};
+      const props = {visible: true, button, secondaryButton, buttonLayout: FloatingButtonLayouts.HORIZONTAL};
       const renderTree = render(<TestCase {...props}/>);
       const driver = FloatingButtonDriver({renderTree, testID: TEST_ID});
       
@@ -130,7 +130,7 @@ describe('FloatingButton', () => {
 
   describe('fullWidth', () => {
     it('should style vertical layout (default) when fullWidth is true', () => {
-      const props = {visible: true, secondaryButton, fullWidth: true};
+      const props = {visible: true, button, secondaryButton, fullWidth: true};
       const renderTree = render(<TestCase {...props}/>);
       const driver = FloatingButtonDriver({renderTree, testID: TEST_ID});
       
@@ -143,7 +143,7 @@ describe('FloatingButton', () => {
     });
 
     it('should style horizontal layout when fullWidth is true', () => {
-      const props = {visible: true, secondaryButton, buttonLayout: FloatingButtonLayouts.HORIZONTAL, fullWidth: true};
+      const props = {visible: true, button, secondaryButton, buttonLayout: FloatingButtonLayouts.HORIZONTAL, fullWidth: true};
       const renderTree = render(<TestCase {...props}/>);
       const driver = FloatingButtonDriver({renderTree, testID: TEST_ID});
       

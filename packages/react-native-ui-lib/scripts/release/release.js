@@ -52,7 +52,7 @@ function setupGit() {
 function createNpmRc() {
   exec.execSync('rm -f package-lock.json');
   const npmrcPath = p.resolve(`${__dirname}/.npmrc`);
-  exec.execSync(`cp -rf ${npmrcPath} .`);
+  exec.execSync(`cp -rf ${npmrcPath} ${process.env.HOME}/.npmrc`);
 }
 
 function versionTagAndPublish() {
@@ -66,9 +66,7 @@ function versionTagAndPublish() {
 }
 
 function findCurrentPublishedVersion() {
-  const result = exec.execSyncRead(`yarn npm info ${process.env.npm_package_name} --fields dist-tags --json`);
-  const parsed = JSON.parse(result);
-  return parsed['dist-tags'].latest;
+  return exec.execSyncRead(`npm view ${process.env.npm_package_name} dist-tags.latest`);
 }
 
 function tryPublishAndTag(version) {
@@ -91,8 +89,8 @@ function tryPublishAndTag(version) {
 
 function tagAndPublish(newVersion) {
   console.log(`trying to publish ${newVersion}...`);
-  exec.execSync(`yarn version ${newVersion}`);
-  exec.execSync(`yarn npm publish --tag ${VERSION_TAG}`);
+  exec.execSync(`npm --no-git-tag-version version ${newVersion}`);
+  exec.execSync(`npm publish --tag ${VERSION_TAG}`);
   if (isRelease) {
     exec.execSync(`git tag -a ${newVersion} -m "${newVersion}"`);
   }

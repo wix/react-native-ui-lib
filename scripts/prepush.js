@@ -11,7 +11,6 @@ if (!semver.gte(process.version.substring(1), nodeVersion)) {
 
 const cp = require('child_process');
 const {logGreen, logError} = require('./utils');
-const {Spinner} = require('@topcli/spinner');
 
 const ARGS = process.argv.slice(2);
 const TEST_ARG = 'test';
@@ -54,15 +53,11 @@ function logFailedCommand({command, stdout, stderr}) {
 }
 
 async function execute(command) {
-  const spinner = new Spinner();
   return new Promise((resolve, reject) => {
-    spinner.start(command);
     cp.exec(command, {encoding: 'utf-8'}, (error, stdout, stderr) => {
       if (error) {
-        spinner.failed();
         reject({command, error, stdout, stderr});
       }
-      spinner.succeed();
       resolve();
     });
   });
