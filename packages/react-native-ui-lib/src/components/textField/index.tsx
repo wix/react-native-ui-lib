@@ -92,6 +92,7 @@ const TextField = (props: InternalTextFieldProps) => {
     readonly = false,
     showMandatoryIndication,
     clearButtonStyle,
+    accessibilityLabel,
     ...others
   } = usePreset(props);
 
@@ -164,11 +165,11 @@ const TextField = (props: InternalTextFieldProps) => {
     return parts.join(', ');
   }, [label, context.isMandatory, helperText, placeholder, showCharCounter, others.maxLength]);
 
-  const accessibilityLabel = props.accessibilityLabel ?? defaultAccessibilityLabel;
+  const accessibilityLabelValue = accessibilityLabel ?? defaultAccessibilityLabel;
 
   return (
     <FieldContext.Provider value={context}>
-      <View {...containerProps} accessible accessibilityLabel={accessibilityLabel} style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
+      <View {...containerProps} accessible accessibilityLabel={accessibilityLabelValue} style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
         <View row spread style={centeredContainerStyle}>
           <Label
             label={label}
