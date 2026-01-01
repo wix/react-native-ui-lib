@@ -1,9 +1,9 @@
 //IMPORTS
 import React, {PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {Animated, DimensionValue, Image, LayoutChangeEvent, StyleSheet} from 'react-native';
+import {Animated, DimensionValue, Image, LayoutChangeEvent, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import View from '../view';
 import {Colors, Spacings} from '../../style';
-import {asBaseComponent} from '../../commons/new';
+import {asBaseComponent, Constants} from '../../commons/new';
 import {useKeyboardHeight} from '../../hooks';
 
 //ENUMS
@@ -88,6 +88,10 @@ export interface ScreenFooterProps extends PropsWithChildren<{}> {
      * @default 200
      */
     animationDuration?: number;
+    /**
+     * If true, the footer will respect the safe area (add bottom padding)
+     */
+    useSafeArea?: boolean;
 }
 
 const ScreenFooter = (props: ScreenFooterProps) => {
@@ -103,13 +107,25 @@ const ScreenFooter = (props: ScreenFooterProps) => {
         itemWidth,
         HorizontalItemsDistribution: distribution,
         visible = true,
-        animationDuration = 200
+        animationDuration = 200,
+        useSafeArea
     } = props;
 
     const keyboardHeight = useKeyboardHeight();
-    const bottom = position === ScreenFooterPosition.HOISTED ? keyboardHeight : 0;
+    // const bottom = position === ScreenFooterPosition.HOISTED ? keyboardHeight : 0;
+    const bottom = useRef(new Animated.Value(0)).current;
     const [height, setHeight] = useState(0);
     const translateY = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+        const targetBottom = position === ScreenFooterPosition.HOISTED ? keyboardHeight : 0;
+        
+        Animated.timing(bottom, {
+            toValue: targetBottom,
+            duration: animationDuration,
+            useNativeDriver: false // 'bottom' is not supported by native driver
+        }).start();
+    }, [position, keyboardHeight, animationDuration]);
 
     useEffect(() => {
         Animated.timing(translateY, {
@@ -126,7 +142,6 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     const isSolid = backgroundType === ScreenFooterBackgrounds.SOLID;
     const isFading = backgroundType === ScreenFooterBackgrounds.FADING;
     const isHorizontal = layout === ScreenFooterLayouts.HORIZONTAL;
-    // const isHoisted = position === ScreenFooterPosition.HOISTED;
 
     const justifyContent = useMemo(() => {
         if (isHorizontal) {
@@ -159,13 +174,21 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     }
     }, [layout, itemsFit, alignment]);
 
+    const {bottom: safeAreaBottom} = Constants.getSafeAreaInsets();
+
     const contentContainerStyle = useMemo(() => {
-        return [
+        const style: any[] = [
             styles.contentContainer,
-            layout === ScreenFooterLayouts.HORIZONTAL ? styles.horizontalContainer: styles.verticalContainer,
-            {alignItems, justifyContent}        
-        ]
-    }, [layout, alignItems, justifyContent]);
+            layout === ScreenFooterLayouts.HORIZONTAL ? styles.horizontalContainer : styles.verticalContainer,
+            {alignItems, justifyContent}
+        ];
+
+        if (useSafeArea && Constants.isIphoneX) {
+            style.push({paddingBottom: safeAreaBottom });
+        }
+
+        return style;
+    }, [layout, alignItems, justifyContent, useSafeArea, safeAreaBottom]);
 
 
     const renderBackground = useCallback(() => {
@@ -220,11 +243,13 @@ const ScreenFooter = (props: ScreenFooterProps) => {
         <View
           animated
           onLayout={onLayout}
-          style={[styles.container, {bottom, transform: [{translateY}]}]}
+          style={[styles.container, {bottom}]}
         >
-            {renderBackground()}
-            <View style={contentContainerStyle}>
-                {childrenArray}
+            <View animated style={[styles.innerContainer, {transform: [{translateY}]}]}>
+                {renderBackground()}
+                <View style={contentContainerStyle}>
+                    {childrenArray}
+                </View>
             </View>
         </View>
     );
@@ -238,10 +263,13 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0
     },
+    innerContainer: {
+        width: '100%'
+    },
     contentContainer: {
         paddingTop: Spacings.s4,
         paddingHorizontal: Spacings.s5,
-        paddingBottom: Spacings.s5,
+        paddingBottom: Spacings.s4,
     },
     horizontalContainer: {
         flexDirection: 'row',

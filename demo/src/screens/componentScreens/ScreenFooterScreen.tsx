@@ -117,6 +117,7 @@ const ScreenFooterScreen = () => {
   const [useLongButtonText, setUseLongButtonText] = useState(false);
   const [itemWidth, setItemWidth] = useState(150);
   const [shouldHideOnScroll, setShouldHideOnScroll] = useState(false);
+  const [useSafeArea, setUseSafeArea] = useState(true);
 
   const {onScroll, visible} = Hooks.useScrollToHide();
 
@@ -252,6 +253,14 @@ const ScreenFooterScreen = () => {
           floatingPlaceholder
           containerStyle={{marginBottom: 20}}
         />
+
+        {/* Safe Area Toggle */}
+        <View row spread centerV marginB-s4>
+          <Text text70M $textDefault>
+            Use Safe Area
+          </Text>
+          <Switch value={useSafeArea} onValueChange={setUseSafeArea}/>
+        </View>
 
         {/* Hide On Scroll Toggle */}
         <View row spread centerV marginB-s4>
@@ -499,10 +508,11 @@ const ScreenFooterScreen = () => {
         position={position}
         alignment={alignment}
         horizontalAlignment={horizontalAlignment}
-        HorizontalItemsDistribution={distribution}
+        horizontalItemsDistribution={distribution}
         itemsFit={itemsFit}
         itemWidth={itemWidth}
         visible={shouldHideOnScroll ? visible : true}
+        useSafeArea={useSafeArea}
       >
         {renderFooterItems}
       </ScreenFooter>
