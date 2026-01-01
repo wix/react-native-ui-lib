@@ -593,7 +593,7 @@ class Hint extends Component<HintProps, HintState> {
           {React.cloneElement<any>(children, {
             collapsable: false,
             key: 'mock',
-            style: [children.props.style, styles.mockChildren]
+            style: [(children.props as any).style, styles.mockChildren]
           })}
         </View>
       );
