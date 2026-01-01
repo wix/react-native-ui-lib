@@ -69,8 +69,6 @@ function withScrollEnabler<PROPS, STATICS = {}>(WrappedComponent: React.Componen
 
   hoistStatics(ScrollEnabler, WrappedComponent);
   ScrollEnabler.displayName = WrappedComponent.displayName;
-  //@ts-ignore
-  ScrollEnabler.defaultProps = WrappedComponent.defaultProps;
   return forwardRef(ScrollEnabler) as any;
 }
 
