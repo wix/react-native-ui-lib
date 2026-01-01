@@ -2986,13 +2986,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/hoist-non-react-statics@npm:^3.3.1":
-  version: 3.3.5
-  resolution: "@types/hoist-non-react-statics@npm:3.3.5"
+"@types/hoist-non-react-statics@npm:^3.3.7":
+  version: 3.3.7
+  resolution: "@types/hoist-non-react-statics@npm:3.3.7"
   dependencies:
-    "@types/react": "npm:*"
     hoist-non-react-statics: "npm:^3.3.0"
-  checksum: 10c0/2a3b64bf3d9817d7830afa60ee314493c475fb09570a64e7737084cd482d2177ebdddf888ce837350bac51741278b077683facc9541f052d4bbe8487b4e3e618
+  peerDependencies:
+    "@types/react": "*"
+  checksum: 10c0/ed8f4e88338f7d021d0f956adf6089d2a12b2e254a03c05292324f2e986d2376eb9efdb8a4f04596823e8fca88c9d06361d20dab4a2a00dc935fb36ac911de55
   languageName: node
   linkType: hard
 
@@ -9646,7 +9647,7 @@ __metadata:
     "@testing-library/react-hooks": "npm:^8.0.1"
     "@testing-library/react-native": "npm:^11.5.1"
     "@topcli/spinner": "patch:@topcli/spinner@npm%3A2.1.2#./.yarn/patches/@topcli-spinner-npm-2.1.2-262b584167.patch"
-    "@types/hoist-non-react-statics": "npm:^3.3.1"
+    "@types/hoist-non-react-statics": "npm:^3.3.7"
     "@types/jest": "npm:^29.5.13"
     "@types/lodash": "npm:^4.0.0"
     "@types/react": "npm:19.0.0"
@@ -9697,7 +9698,7 @@ __metadata:
     "@shopify/flash-list": "npm:1.7.6"
     "@testing-library/react-hooks": "npm:^8.0.1"
     "@testing-library/react-native": "npm:^11.5.1"
-    "@types/hoist-non-react-statics": "npm:^3.3.1"
+    "@types/hoist-non-react-statics": "npm:^3.3.7"
     "@types/jest": "npm:^29.5.13"
     "@types/lodash": "npm:^4.0.0"
     "@types/react": "npm:19.0.0"
