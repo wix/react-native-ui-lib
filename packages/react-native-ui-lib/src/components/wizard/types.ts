@@ -77,7 +77,7 @@ export interface WizardProps {
    */
   activeIndex: number;
   /**
-   * The configuration of the active step (see Wizard.Step.propTypes)
+   * The configuration of the active step
    */
   activeConfig?: WizardStepProps;
   /**

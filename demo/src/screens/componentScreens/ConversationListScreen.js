@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
 import React, {Component, PureComponent} from 'react';
 import {StyleSheet, Alert, FlatList} from 'react-native';
 import {Colors, ListItem, Text, Avatar, AvatarHelper, Drawer, Button} from 'react-native-ui-lib'; //eslint-disable-line
@@ -121,13 +120,6 @@ class ConversationListScreen extends Component {
 }
 
 class ContactItem extends PureComponent {
-  static propTypes = {
-    item: PropTypes.object,
-    index: PropTypes.number,
-    addRef: PropTypes.func,
-    onSwipeableWillOpen: PropTypes.func
-  };
-
   render() {
     const {item, index, addRef, onSwipeableWillOpen} = this.props;
 

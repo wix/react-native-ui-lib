@@ -1,5 +1,4 @@
 import React, {ComponentType} from 'react';
-// import PropTypes from 'prop-types';
 import {StyleSheet} from 'react-native';
 import _ from 'lodash';
 import {Colors} from '../style';
@@ -8,12 +7,6 @@ import * as Modifiers from './modifiers';
 export default function baseComponent(usePure: boolean): ComponentType {
   const parent = usePure ? React.PureComponent : React.Component;
   class BaseComponent extends parent {
-    // static propTypes = {
-    //   ..._.mapValues(Typography, () => PropTypes.bool),
-    //   ..._.mapValues(Colors, () => PropTypes.bool),
-    //   useNativeDriver: PropTypes.bool,
-    // };
-
     styles: any;
     view: any;
 

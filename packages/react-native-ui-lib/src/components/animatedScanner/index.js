@@ -1,8 +1,6 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, Animated} from 'react-native';
-import {ViewPropTypes} from 'deprecated-react-native-prop-types';
 import {Colors} from '../../style';
 import {BaseComponent} from '../../commons';
 import View from '../../components/view';
@@ -16,41 +14,6 @@ import View from '../../components/view';
  */
 export default class AnimatedScanner extends BaseComponent {
   static displayName = 'AnimatedScanner';
-  static propTypes = {
-    /**
-     * animated value between 0 and 100
-     */
-    // progress: PropTypes.object,
-    progress: PropTypes.number,
-    /**
-     * Duration of current break (can be change between breaks)
-     */
-    duration: PropTypes.number,
-    /**
-     * scanner opacity
-     */
-    opacity: PropTypes.number,
-    /**
-     * scanner background color
-     */
-    backgroundColor: PropTypes.string,
-    /**
-     * breakpoint callback - ({progress, isDone}) => {}
-     */
-    onBreakpoint: PropTypes.func,
-    /**
-     * should hide the scanner line
-     */
-    hideScannerLine: PropTypes.bool,
-    /**
-     * the container style
-     */
-    containerStyle: ViewPropTypes.style,
-    /**
-     * Used as a testing identifier
-     */
-    testID: PropTypes.string
-  };
 
   static defaultProps = {
     progress: 0,

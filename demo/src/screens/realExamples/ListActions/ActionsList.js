@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {Animated, LayoutAnimation, PanResponder, I18nManager} from 'react-native';
 import {Constants, Assets, Colors, View, TouchableOpacity, Button, Text} from 'react-native-ui-lib'; //eslint-disable-line
@@ -17,11 +16,6 @@ const DIRECTIONS = {
 
 export default class ActionsList extends Component {
   static displayName = 'ActionsList';
-  
-  static propTypes = {
-    item: PropTypes.object,
-    index: PropTypes.number
-  }
 
   constructor(props) {
     super(props);

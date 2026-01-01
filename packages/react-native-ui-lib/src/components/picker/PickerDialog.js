@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import Dialog from '../dialog';
@@ -10,12 +9,6 @@ import {Colors} from '../../style';
 
 class PickerDialog extends Component {
   static displayName = 'PickerDialog';
-  static propTypes = {
-    onDone: PropTypes.func,
-    onCancel: PropTypes.func,
-    topBarProps: PropTypes.object,
-    children: PropTypes.array
-  };
 
   state = {};
 
