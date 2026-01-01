@@ -10,8 +10,6 @@ export default function baseComponent(usePure: boolean): ComponentType {
     styles: any;
     view: any;
 
-    static extractOwnProps = Modifiers.extractOwnProps;
-
     constructor(props: any) {
       super(props);
       if (!this.styles) {

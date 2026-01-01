@@ -338,27 +338,6 @@ export function extractModifierProps(props: Dictionary<any>) {
   return modifierProps;
 }
 
-/**
- * TODO:
- * @deprecated switch to Modifiers#extractComponentProps
- */
-export function extractOwnProps(props: Dictionary<any>, ignoreProps: string[]) {
-  //@ts-ignore
-  const ownPropTypes = this.propTypes;
-  const ownProps = _.flow((props: Dictionary<any>) => _.pickBy(props, (_value, key) => _.includes(Object.keys(ownPropTypes), key)),
-    props => _.omit(props, ignoreProps))(props);
-
-  return ownProps;
-}
-
-export function extractComponentProps(component: any, props: Dictionary<any>, ignoreProps: string[] = []) {
-  const componentPropTypes = component.propTypes;
-  const componentProps = _.flow((props: Dictionary<any>) => _.pickBy(props, (_value, key) => _.includes(Object.keys(componentPropTypes), key)),
-    props => _.omit(props, ignoreProps))(props);
-
-  return componentProps;
-}
-
 export function getComponentName(componentDisplayName: string) {
   //@ts-ignore
   return componentDisplayName || this.displayName || this.constructor.displayName || this.constructor.name;

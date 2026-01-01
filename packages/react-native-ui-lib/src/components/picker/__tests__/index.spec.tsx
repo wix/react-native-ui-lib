@@ -25,7 +25,7 @@ const TestCase = (props?: any) => {
 
 const getDriver = (props?: any) => {
   const renderTree = render(<TestCase {...props}/>);
-  return PickerDriver({renderTree, testID}, props?.useDialog);
+  return PickerDriver({renderTree, testID}, props?.useDialog, {includeHiddenElements: true});
 };
 
 const onPress = jest.fn();
@@ -314,7 +314,7 @@ describe('Picker', () => {
       it('should render a filter picker', () => {
         const driver = getDriver({fieldType: 'filter', placeholder: placeholderText});
         expect(driver.isOpen()).toBeFalsy();
-        const label = screen.getByTestId(`${testID}.filter.type.label`);
+        const label = screen.getByTestId(`${testID}.filter.type.label`, {includeHiddenElements: true});
         expect(label).toBeTruthy();
         expect(label.props.children).toEqual(placeholderText);
       });
@@ -326,8 +326,8 @@ describe('Picker', () => {
 
       it('should render a settings picker with label', async () => {
         const driver = getDriver({fieldType: 'settings', label: labelText, placeholder: placeholderText});
-        const label = screen.getByTestId(`${testID}.settings.type.label`);
-        const placeholder = screen.getByTestId(`${testID}.settings.type.placeholder`);
+        const label = screen.getByTestId(`${testID}.settings.type.label`, {includeHiddenElements: true});
+        const placeholder = screen.getByTestId(`${testID}.settings.type.placeholder`, {includeHiddenElements: true});
 
         expect(driver.isOpen()).toBeFalsy();
         expect(label).toBeTruthy();
@@ -338,8 +338,8 @@ describe('Picker', () => {
 
       it('should render a settings picker with placeholder', async () => {
         const driver = getDriver({fieldType: 'settings', placeholder: placeholderText});
-        const label = screen.getByTestId(`${testID}.settings.type.label`);
-        const placeholder = screen.getByTestId(`${testID}.settings.type.placeholder`);
+        const label = screen.getByTestId(`${testID}.settings.type.label`, {includeHiddenElements: true});
+        const placeholder = screen.getByTestId(`${testID}.settings.type.placeholder`, {includeHiddenElements: true});
 
         expect(driver.isOpen()).toBeFalsy();
         expect(label).toBeTruthy();

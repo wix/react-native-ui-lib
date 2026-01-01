@@ -192,7 +192,6 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
   PickerPropsDeprecation &
   PickerExpandableOverlayProps &
   PickerListProps & {
-    /* ...TextField.propTypes, */
     /**
      * Use dialog instead of modal picker
      */

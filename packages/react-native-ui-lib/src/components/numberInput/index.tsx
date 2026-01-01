@@ -3,7 +3,7 @@ import React, {useMemo, useCallback, useState, useRef} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {useDidUpdate, useThemeProps} from '../../hooks';
 import {Colors} from '../../style';
-import MaskedInput from '../maskedInput/new';
+import MaskedInput from '../maskedInput';
 import TextField, {TextFieldProps, TextFieldRef} from '../textField';
 import View from '../view';
 import Text from '../text';
