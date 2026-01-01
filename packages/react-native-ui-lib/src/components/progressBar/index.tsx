@@ -27,8 +27,17 @@ interface Props {
   fullWidth?: boolean;
   /**
    * Override container style
+   * @deprecated Use containerStyle instead
    */
   style?: StyleProp<ViewStyle>;
+  /**
+   * Override container style
+   */
+  containerStyle?: StyleProp<ViewStyle>;
+  /**
+   * Override progress style
+   */
+  progressStyle?: StyleProp<ViewStyle>;
   /**
    * Progress color
    */
@@ -136,7 +145,7 @@ class ProgressBar extends PureComponent<Props, State> {
   }
 
   render() {
-    const {style, testID} = this.props;
+    const {style, containerStyle, testID, progressStyle} = this.props;
     const {containerWidth = 0} = this.state;
     const outputRange = Constants.isRTL ? [containerWidth, 0] : [0, containerWidth];
     const newProgress = this.progressAnimation.interpolate({
@@ -144,15 +153,17 @@ class ProgressBar extends PureComponent<Props, State> {
       outputRange
     });
 
+    const animatedStyle = {transform: [{translateX: newProgress}]};
+
     return (
       <View
         onLayout={this.getContainerWidth}
-        style={[styles.container, this.getContainerStyle(), style]}
+        style={[styles.container, this.getContainerStyle(), style, containerStyle]}
         {...this.getAccessibilityProps()}
         testID={testID}
       >
         {!!containerWidth && (
-          <Animated.View style={[styles.progress, this.getProgressStyle(), {transform: [{translateX: newProgress}]}]}>
+          <Animated.View style={[styles.progress, this.getProgressStyle(), progressStyle, animatedStyle]}>
             {this.renderCustomElement()}
           </Animated.View>
         )}
