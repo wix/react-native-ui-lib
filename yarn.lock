@@ -1489,7 +1489,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.25.0, @babel/runtime@npm:^7.26.10, @babel/runtime@npm:^7.8.4":
+"@babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.25.0, @babel/runtime@npm:^7.26.10, @babel/runtime@npm:^7.8.4":
   version: 7.27.0
   resolution: "@babel/runtime@npm:7.27.0"
   dependencies:
@@ -2855,28 +2855,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react-hooks@npm:^8.0.1":
-  version: 8.0.1
-  resolution: "@testing-library/react-hooks@npm:8.0.1"
-  dependencies:
-    "@babel/runtime": "npm:^7.12.5"
-    react-error-boundary: "npm:^3.1.0"
-  peerDependencies:
-    "@types/react": ^16.9.0 || ^17.0.0
-    react: ^16.9.0 || ^17.0.0
-    react-dom: ^16.9.0 || ^17.0.0
-    react-test-renderer: ^16.9.0 || ^17.0.0
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-    react-dom:
-      optional: true
-    react-test-renderer:
-      optional: true
-  checksum: 10c0/83bef2d4c437b84143213b5275ef00ef14e5bcd344f9ded12b162d253dc3c799138ead4428026b9c725e5a38dbebf611f2898aa43f3e43432bcaccbd7bf413e5
-  languageName: node
-  linkType: hard
-
 "@testing-library/react-native@npm:^11.5.1":
   version: 11.5.4
   resolution: "@testing-library/react-native@npm:11.5.4"
@@ -2891,41 +2869,6 @@ __metadata:
     jest:
       optional: true
   checksum: 10c0/16849e7c1527021e79dd6921346d397d728ac15dffef04c379098800bb2e32b1e3deff3033fd371f5f6cde5d2f1e005f7f5d7e1506ea189fa27a7362f2ac7707
-  languageName: node
-  linkType: hard
-
-"@topcli/spinner@npm:2.1.2":
-  version: 2.1.2
-  resolution: "@topcli/spinner@npm:2.1.2"
-  dependencies:
-    "@topcli/wcwidth": "npm:^1.0.1"
-    ansi-regex: "npm:^6.0.1"
-    cli-cursor: "npm:^4.0.0"
-    cli-spinners: "npm:^2.9.0"
-    kleur: "npm:^4.1.5"
-    strip-ansi: "npm:^7.1.0"
-  checksum: 10c0/6ccdba1d642c736473b942f05ddf967bc6fd7d23a608bcfa9ddd9c13810545d12b29c27f7a0c2f7723e6ebc27f016ef224217ef04307285d6da0b2031281b806
-  languageName: node
-  linkType: hard
-
-"@topcli/spinner@patch:@topcli/spinner@npm%3A2.1.2#./.yarn/patches/@topcli-spinner-npm-2.1.2-262b584167.patch::locator=react-native-ui-lib-components%40workspace%3A.":
-  version: 2.1.2
-  resolution: "@topcli/spinner@patch:@topcli/spinner@npm%3A2.1.2#./.yarn/patches/@topcli-spinner-npm-2.1.2-262b584167.patch::version=2.1.2&hash=a05f52&locator=react-native-ui-lib-components%40workspace%3A."
-  dependencies:
-    "@topcli/wcwidth": "npm:^1.0.1"
-    ansi-regex: "npm:^6.0.1"
-    cli-cursor: "npm:^4.0.0"
-    cli-spinners: "npm:^2.9.0"
-    kleur: "npm:^4.1.5"
-    strip-ansi: "npm:^7.1.0"
-  checksum: 10c0/5f600f7989942b05fbe7e93e0db4ec8c7f22d8ac8a509e7f51fdd60c0584ecaea66c0a23a5225f4d04150b8914386ddb386dd3642769a7e3be5c11d244352bd0
-  languageName: node
-  linkType: hard
-
-"@topcli/wcwidth@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@topcli/wcwidth@npm:1.0.1"
-  checksum: 10c0/b7ef1f226811853f38dc97063a5b09150e6e4b1c77b608acdb9befdcc81db2a3d636be68395dfe9c4150bef5628d3ca468f735efc6d17fe672e349fa6c82f4b4
   languageName: node
   linkType: hard
 
@@ -4384,16 +4327,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cli-cursor@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "cli-cursor@npm:4.0.0"
-  dependencies:
-    restore-cursor: "npm:^4.0.0"
-  checksum: 10c0/e776e8c3c6727300d0539b0d25160b2bb56aed1a63942753ba1826b012f337a6f4b7ace3548402e4f2f13b5e16bfd751be672c44b203205e7eca8be94afec42c
-  languageName: node
-  linkType: hard
-
-"cli-spinners@npm:^2.5.0, cli-spinners@npm:^2.9.0":
+"cli-spinners@npm:^2.5.0":
   version: 2.9.2
   resolution: "cli-spinners@npm:2.9.2"
   checksum: 10c0/907a1c227ddf0d7a101e7ab8b300affc742ead4b4ebe920a5bf1bc6d45dce2958fcd195eb28fa25275062fe6fa9b109b93b63bc8033396ed3bcb50297008b3a3
@@ -7776,13 +7710,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"kleur@npm:^4.1.5":
-  version: 4.1.5
-  resolution: "kleur@npm:4.1.5"
-  checksum: 10c0/e9de6cb49657b6fa70ba2d1448fd3d691a5c4370d8f7bbf1c2f64c24d461270f2117e1b0afe8cb3114f13bbd8e51de158c2a224953960331904e636a5e4c0f2a
-  languageName: node
-  linkType: hard
-
 "leven@npm:^3.1.0":
   version: 3.1.0
   resolution: "leven@npm:3.1.0"
@@ -9431,17 +9358,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-error-boundary@npm:^3.1.0":
-  version: 3.1.4
-  resolution: "react-error-boundary@npm:3.1.4"
-  dependencies:
-    "@babel/runtime": "npm:^7.12.5"
-  peerDependencies:
-    react: ">=16.13.1"
-  checksum: 10c0/f977ca61823e43de2381d53dd7aa8b4d79ff6a984c9afdc88dc44f9973b99de7fd382d2f0f91f2688e24bb987c0185bf45d0b004f22afaaab0f990a830253bfb
-  languageName: node
-  linkType: hard
-
 "react-freeze@npm:^1.0.0":
   version: 1.0.4
   resolution: "react-freeze@npm:1.0.4"
@@ -9668,9 +9584,7 @@ __metadata:
     "@react-native/metro-config": "npm:0.78.3"
     "@react-native/typescript-config": "npm:0.78.3"
     "@shopify/flash-list": "npm:1.7.6"
-    "@testing-library/react-hooks": "npm:^8.0.1"
     "@testing-library/react-native": "npm:^11.5.1"
-    "@topcli/spinner": "patch:@topcli/spinner@npm%3A2.1.2#./.yarn/patches/@topcli-spinner-npm-2.1.2-262b584167.patch"
     "@types/hoist-non-react-statics": "npm:^3.3.1"
     "@types/jest": "npm:^29.5.13"
     "@types/lodash": "npm:^4.0.0"
@@ -9721,7 +9635,6 @@ __metadata:
     "@react-native/metro-config": "npm:0.78.3"
     "@react-native/typescript-config": "npm:0.78.3"
     "@shopify/flash-list": "npm:1.7.6"
-    "@testing-library/react-hooks": "npm:^8.0.1"
     "@testing-library/react-native": "npm:^11.5.1"
     "@types/hoist-non-react-statics": "npm:^3.3.1"
     "@types/jest": "npm:^29.5.13"
@@ -10198,16 +10111,6 @@ __metadata:
     onetime: "npm:^5.1.0"
     signal-exit: "npm:^3.0.2"
   checksum: 10c0/8051a371d6aa67ff21625fa94e2357bd81ffdc96267f3fb0fc4aaf4534028343836548ef34c240ffa8c25b280ca35eb36be00b3cb2133fa4f51896d7e73c6b4f
-  languageName: node
-  linkType: hard
-
-"restore-cursor@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "restore-cursor@npm:4.0.0"
-  dependencies:
-    onetime: "npm:^5.1.0"
-    signal-exit: "npm:^3.0.2"
-  checksum: 10c0/6f7da8c5e422ac26aa38354870b1afac09963572cf2879443540449068cb43476e9cbccf6f8de3e0171e0d6f7f533c2bc1a0a008003c9a525bbc098e89041318
   languageName: node
   linkType: hard
 
@@ -10888,7 +10791,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strip-ansi@npm:^7.0.1, strip-ansi@npm:^7.1.0":
+"strip-ansi@npm:^7.0.1":
   version: 7.1.2
   resolution: "strip-ansi@npm:7.1.2"
   dependencies:
