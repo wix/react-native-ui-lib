@@ -15,7 +15,7 @@ export enum OffsetType {
 }
 
 export type ScrollToItemProps<T extends ScrollToSupportedViews> = {
-  scrollViewRef?: RefObject<T>;
+  scrollViewRef?: RefObject<T | null>;
   /**
    * The number of items
    */

@@ -8,7 +8,7 @@ export type ScrollToProps<T extends ScrollToSupportedViews> = {
   /**
    * A reference to the ScrollView (or FlatList) which the items are in
    */
-  scrollViewRef?: RefObject<T>;
+  scrollViewRef?: RefObject<T | null>;
   /**
    * Is the scroll view horizontal (default is true)
    */
@@ -19,7 +19,7 @@ export type ScrollToResultProps<T extends ScrollToSupportedViews> = {
   /**
    * A reference to the ScrollView (or FlatList) which the items are in (from the props or a created one)
    */
-  scrollViewRef: RefObject<T>;
+  scrollViewRef: RefObject<T | null>;
   /**
    * scrollTo callback.
    * offset - the x or y to scroll to.

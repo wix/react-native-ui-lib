@@ -19,7 +19,7 @@ const contents = [
 
 const TimelineWrapper = () => {
   const [expand, setExpand] = useState(false);
-  const anchor = useRef();
+  const anchor = useRef(undefined);
 
   const onPressExpand = useCallback(() => {
     setExpand(!expand);

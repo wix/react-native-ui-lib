@@ -1,7 +1,7 @@
 import React from 'react';
 
 const useCombinedRefs = <T>(...refs: React.Ref<any>[]) => {
-  const targetRef = React.useRef();
+  const targetRef = React.useRef(undefined);
 
   React.useEffect(() => {
     refs.forEach(ref => {

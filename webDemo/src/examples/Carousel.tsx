@@ -14,7 +14,7 @@ const IMAGES = [
 
 
 const CarouselWrapper = () => {
-  const carousel = React.useRef<typeof Carousel>();
+  const carousel = React.useRef<typeof Carousel>(undefined);
 
   const [currentPage, setCurrentPage] = useState(INITIAL_PAGE);
 

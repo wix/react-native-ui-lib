@@ -84,7 +84,7 @@ export type DateTimePickerProps = OldApiProps &
     /**
      * Render custom input
      */
-    renderInput?: (props: Omit<DateTimePickerProps, 'value'> & {value?: string}) => React.ReactElement;
+    renderInput?: (props: Omit<DateTimePickerProps, 'value'> & {value?: string}) => React.ReactElement<any>;
     /**
      * Override system theme variant (dark or light mode) used by the date picker.
      */
@@ -159,8 +159,8 @@ const DateTimePicker = forwardRef((props: DateTimePickerPropsInternal, ref: Forw
 
   const [value, setValue] = useState(propsValue);
   const chosenDate = useRef(propsValue);
-  const expandable = useRef<ExpandableOverlayMethods>();
-  const textField = useRef<TextFieldMethods>();
+  const expandable = useRef<ExpandableOverlayMethods>(undefined);
+  const textField = useRef<TextFieldMethods>(undefined);
 
   useImperativeHandle(ref, () => {
     return {

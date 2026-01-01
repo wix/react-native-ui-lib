@@ -398,7 +398,9 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
               <PageControl
                 {...pageControlProps}
                 containerStyle={{marginBottom: 24}}
-                ref={(r: ElementRef<any>) => (this.viewRef = r)}
+                ref={(r: ElementRef<any>) => {
+                  (this.viewRef = r);
+                }}
               />
               <View accessible accessibilityLabel={'dismiss button'}/>
             </View>

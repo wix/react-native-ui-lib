@@ -1,4 +1,4 @@
-import React, {type ReactNode} from 'react';
+import React, {type ReactNode, type JSX} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import {findFirstSidebarItemLink} from '@docusaurus/plugin-content-docs/client';

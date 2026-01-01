@@ -46,7 +46,7 @@ function Calendar(props: PropsWithChildren<CalendarProps>) {
   },
   [monthItems]);
 
-  const flashListRef = useRef();
+  const flashListRef = useRef(undefined);
   const current = useSharedValue<number>(new Date(initialDate).setHours(0, 0, 0, 0));
   const initialMonthIndex = useRef(getItemIndex(current.value));
   const lastUpdateSource = useSharedValue<UpdateSource>(UpdateSource.INIT);

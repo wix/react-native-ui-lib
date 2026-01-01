@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {Component, ReactElement, isValidElement, ElementRef} from 'react';
+import React, {Component, ReactElement, isValidElement, ElementRef, type JSX} from 'react';
 import {
   Animated,
   StyleSheet,
@@ -56,7 +56,7 @@ type HintPositionStyle = Position & Pick<ViewStyle, 'alignItems'>;
 
 type Paddings = Pick<ViewStyle, 'paddingLeft' | 'paddingRight' | 'paddingVertical' | 'paddingHorizontal'>;
 
-type ContentType = string | ReactElement;
+type ContentType = string | ReactElement<any>;
 
 export interface HintProps {
   /**

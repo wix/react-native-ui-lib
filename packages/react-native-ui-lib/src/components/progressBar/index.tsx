@@ -1,5 +1,5 @@
 import isUndefined from 'lodash/isUndefined';
-import React, {PureComponent} from 'react';
+import React, {PureComponent, type JSX} from 'react';
 import {Animated, Easing, StyleSheet, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
 import {Constants, asBaseComponent} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
