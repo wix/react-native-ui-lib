@@ -1,5 +1,5 @@
 import usePresenter from '../usePresenter';
-import {renderHook} from '@testing-library/react-hooks';
+import {renderHook} from '@testing-library/react-native';
 
 describe('WheelPicker presenter tests', () => {
   jest.spyOn(global.console, 'warn');

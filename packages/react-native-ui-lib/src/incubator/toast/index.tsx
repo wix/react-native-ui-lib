@@ -124,6 +124,10 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
   },
   [toastHeight]);
 
+  const actionLabelStyle = useMemo(() => {
+    return [action?.labelStyle, Typography.text70BO];
+  }, [action?.labelStyle]);
+
   const renderRightElement = () => {
     // NOTE: order does matter
     if (showLoader) {
@@ -147,7 +151,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
           color={Colors.$backgroundNeutralHeavy}
           activeBackgroundColor={Colors.$backgroundNeutral}
           {...action}
-          labelStyle={Typography.bodySmallBold}
+          labelStyle={actionLabelStyle}
           accessibilityRole={'button'}
           testID={`${testID}-action`}
         />
