@@ -282,24 +282,6 @@ describe('Modifiers', () => {
     });
   });
 
-  // describe('extractOwnProps', () => {
-  //   it('should extract the component props from a props object', () => {
-  //     const props = {color: 'red', topShadow: 1, bottomShadow: 2};
-  //     expect(MultipleShadow.extractOwnProps(props)).toEqual({
-  //       topShadow: 1,
-  //       bottomShadow: 2,
-  //     });
-  //   });
-
-  //   it('should omit props that were required to ignore', () => {
-  //     const props = {color: 'red', topShadow: 1, bottomShadow: 2};
-  //     expect(MultipleShadow.extractOwnProps(props, 'topShadow')).toEqual({
-  //       bottomShadow: 2,
-  //     });
-  //     expect(MultipleShadow.extractOwnProps(props, ['topShadow', 'bottomShadow'])).toEqual({});
-  //   });
-  // });
-
   describe('extractModifiersProps', () => {
     it('should return all modifiers props', () => {
       expect(uut.extractModifierProps({
@@ -340,24 +322,6 @@ describe('Modifiers', () => {
         'paddingL-20': true,
         'gap-s3': true
       });
-    });
-  });
-
-  describe('extractOwnProps', () => {
-    it('should extract the component props from a props object', () => {
-      const props = {color: 'red', prop1: 'text', prop2: 2};
-      expect(uut.extractOwnProps.bind(SampleComponent)(props)).toEqual({
-        prop1: 'text',
-        prop2: 2
-      });
-    });
-
-    it('should omit props that were required to ignore', () => {
-      const props = {color: 'red', prop1: 'text', prop2: 2};
-      expect(uut.extractOwnProps.bind(SampleComponent)(props, 'prop1')).toEqual({
-        prop2: 2
-      });
-      expect(uut.extractOwnProps.bind(SampleComponent)(props, ['prop1', 'prop2'])).toEqual({});
     });
   });
 
