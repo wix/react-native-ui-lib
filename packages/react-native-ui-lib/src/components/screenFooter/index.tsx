@@ -1,6 +1,6 @@
 //IMPORTS
-import React, {PropsWithChildren, useCallback, useMemo} from 'react';
-import {DimensionValue, Image, StyleSheet} from 'react-native';
+import React, {PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {Animated, DimensionValue, Image, LayoutChangeEvent, StyleSheet} from 'react-native';
 import View from '../view';
 import {Colors, Spacings} from '../../style';
 import {asBaseComponent} from '../../commons/new';
@@ -79,6 +79,15 @@ export interface ScreenFooterProps extends PropsWithChildren<{}> {
      * Fixed width for items (used with ItemsFit.FIXED)
      */
     itemWidth?: DimensionValue;
+    /**
+     * If true, the footer is visible. If false, it slides down.
+     */
+    visible?: boolean;
+    /**
+     * Duration of the show/hide animation in ms.
+     * @default 200
+     */
+    animationDuration?: number;
 }
 
 const ScreenFooter = (props: ScreenFooterProps) => {
@@ -92,11 +101,27 @@ const ScreenFooter = (props: ScreenFooterProps) => {
         position = ScreenFooterPosition.STICKY,
         itemsFit,
         itemWidth,
-        HorizontalItemsDistribution: distribution
+        HorizontalItemsDistribution: distribution,
+        visible = true,
+        animationDuration = 200
     } = props;
 
     const keyboardHeight = useKeyboardHeight();
     const bottom = position === ScreenFooterPosition.HOISTED ? keyboardHeight : 0;
+    const [height, setHeight] = useState(0);
+    const translateY = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+        Animated.timing(translateY, {
+            toValue: visible ? 0 : height,
+            duration: animationDuration,
+            useNativeDriver: true
+        }).start();
+    }, [visible, height, animationDuration]);
+
+    const onLayout = useCallback((event: LayoutChangeEvent) => {
+        setHeight(event.nativeEvent.layout.height);
+    }, []);
 
     const isSolid = backgroundType === ScreenFooterBackgrounds.SOLID;
     const isFading = backgroundType === ScreenFooterBackgrounds.FADING;
@@ -193,7 +218,10 @@ const ScreenFooter = (props: ScreenFooterProps) => {
 
     return (
         <View
-          style={[styles.container, {bottom}]}>
+          animated
+          onLayout={onLayout}
+          style={[styles.container, {bottom, transform: [{translateY}]}]}
+        >
             {renderBackground()}
             <View style={contentContainerStyle}>
                 {childrenArray}

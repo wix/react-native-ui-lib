@@ -15,7 +15,8 @@ import {
   ItemsFit,
   Switch,
   TextField,
-  Slider
+  Slider,
+  Hooks
 } from 'react-native-ui-lib';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -115,6 +116,9 @@ const ScreenFooterScreen = () => {
   const [extraContentSize, setExtraContentSize] = useState<ItemSize>(ItemSize.MEDIUM);
   const [useLongButtonText, setUseLongButtonText] = useState(false);
   const [itemWidth, setItemWidth] = useState(150);
+  const [shouldHideOnScroll, setShouldHideOnScroll] = useState(false);
+
+  const {onScroll, visible} = Hooks.useScrollToHide();
 
   const isHorizontal = layout === ScreenFooterLayouts.HORIZONTAL;
 
@@ -233,7 +237,11 @@ const ScreenFooterScreen = () => {
 
   return (
     <View flex bg-$backgroundDefault>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView 
+        contentContainerStyle={styles.scrollContent}
+        onScroll={onScroll}
+        scrollEventThrottle={16}
+      >
         <Text text60 $textDefault marginB-s4>
           ScreenFooter Configuration
         </Text>
@@ -244,6 +252,14 @@ const ScreenFooterScreen = () => {
           floatingPlaceholder
           containerStyle={{marginBottom: 20}}
         />
+
+        {/* Hide On Scroll Toggle */}
+        <View row spread centerV marginB-s4>
+          <Text text70M $textDefault>
+            Hide on Scroll
+          </Text>
+          <Switch value={shouldHideOnScroll} onValueChange={setShouldHideOnScroll}/>
+        </View>
 
         {/* Layout Selection */}
         <View marginB-s4>
@@ -486,6 +502,7 @@ const ScreenFooterScreen = () => {
         HorizontalItemsDistribution={distribution}
         itemsFit={itemsFit}
         itemWidth={itemWidth}
+        visible={shouldHideOnScroll ? visible : true}
       >
         {renderFooterItems}
       </ScreenFooter>
