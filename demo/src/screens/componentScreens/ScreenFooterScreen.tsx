@@ -9,7 +9,7 @@ import {
   ScreenFooter,
   ScreenFooterLayouts,
   ScreenFooterBackgrounds,
-  ScreenFooterPosition,
+  KeyboardBehavior,
   FooterAlignment,
   HorizontalItemsDistribution,
   ItemsFit,
@@ -86,14 +86,14 @@ const SIZE_OPTIONS = [
   {label: 'Large', value: ItemSize.LARGE}
 ];
 
-const POSITION_OPTIONS = [
-  {label: 'Sticky', value: ScreenFooterPosition.STICKY},
-  {label: 'Hoisted', value: ScreenFooterPosition.HOISTED}
+const KEYBOARD_BEHAVIOR_OPTIONS = [
+  {label: 'Sticky', value: KeyboardBehavior.STICKY},
+  {label: 'Hoisted', value: KeyboardBehavior.HOISTED}
 ];
 
-const POSITION_OPTIONS_SPACED = [
-  {label: 'Sticky', value: ScreenFooterPosition.STICKY},
-  {label: 'Hoisted', value: ScreenFooterPosition.HOISTED},
+const KEYBOARD_BEHAVIOR_OPTIONS_SPACED = [
+  {label: 'Sticky', value: KeyboardBehavior.STICKY},
+  {label: 'Hoisted', value: KeyboardBehavior.HOISTED},
   {label: '', value: 'dummy'},
 ];
 
@@ -101,7 +101,7 @@ const ScreenFooterScreen = () => {
   const [itemsCount, setItemsCount] = useState(2);
   const [layout, setLayout] = useState<ScreenFooterLayouts>(ScreenFooterLayouts.HORIZONTAL);
   const [background, setBackground] = useState<ScreenFooterBackgrounds>(ScreenFooterBackgrounds.SOLID);
-  const [position, setPosition] = useState<ScreenFooterPosition>(ScreenFooterPosition.STICKY);
+  const [keyboardBehavior, setKeyboardBehavior] = useState<KeyboardBehavior>(KeyboardBehavior.STICKY);
   const [alignment, setAlignment] = useState<FooterAlignment>(FooterAlignment.CENTER);
   const [horizontalAlignment, setHorizontalAlignment] = useState<FooterAlignment>(FooterAlignment.CENTER);
   const [distribution, setDistribution] = useState<HorizontalItemsDistribution>(HorizontalItemsDistribution.STACK);
@@ -403,13 +403,13 @@ const ScreenFooterScreen = () => {
         {/* Position */}
         <View marginB-s4>
           <Text text70M $textDefault marginB-s2>
-            Position
+            Keyboard Behavior
           </Text>
           <View row>
              <SegmentedControl
-              segments={POSITION_OPTIONS}
-              initialIndex={POSITION_OPTIONS.findIndex(opt => opt.value === position)}
-              onChangeIndex={index => setPosition(POSITION_OPTIONS[index].value)}
+              segments={KEYBOARD_BEHAVIOR_OPTIONS}
+              initialIndex={KEYBOARD_BEHAVIOR_OPTIONS.findIndex(opt => opt.value === keyboardBehavior)}
+              onChangeIndex={index => setKeyboardBehavior(KEYBOARD_BEHAVIOR_OPTIONS[index].value)}
             />
              <View flex />
           </View>
@@ -479,7 +479,7 @@ const ScreenFooterScreen = () => {
             <Slider
               value={itemWidth}
               minimumValue={50}
-              maximumValue={300}
+              maximumValue={500}
               step={10}
               onValueChange={setItemWidth}
             />
@@ -505,7 +505,7 @@ const ScreenFooterScreen = () => {
       <ScreenFooter
         layout={layout}
         backgroundType={background}
-        position={position}
+        keyboardBehavior={keyboardBehavior}
         alignment={alignment}
         horizontalAlignment={horizontalAlignment}
         horizontalItemsDistribution={distribution}
