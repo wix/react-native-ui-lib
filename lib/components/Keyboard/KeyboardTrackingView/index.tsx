@@ -82,7 +82,7 @@ export type KeyboardTrackingViewProps = ViewProps & {
   children?: React.ReactNode;
 };
 
-const defaultProps = {};
+const defaultProps: KeyboardTrackingViewProps = {};
 const KeyboardTrackingView = forwardRef(({children, ...others}: KeyboardTrackingViewProps, ref: any) => {
   const KeyboardTrackingViewContainer = isAndroid ? KeyboardTrackingViewAndroid : KeyboardTrackingViewIOS;
   return (
