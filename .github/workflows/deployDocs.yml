@@ -16,7 +16,7 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
       - name: Security check (npq)
-        run: npx npq@3.15.4 install --pkgMgr yarn --dry-run
+        run: NPQ_PKG_MGR=yarn npx npq@3.15.4 install --dry-run
       - name: Checkout repository
         uses: actions/checkout@v4
 
