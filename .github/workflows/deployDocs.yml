@@ -13,6 +13,10 @@ jobs:
       contents: write    # Needed for pushing to gh-pages
     
     steps:
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Security check (npq)
+        run: npx npq@3.15.4 install --pkgMgr yarn --dry-run
       - name: Checkout repository
         uses: actions/checkout@v4
 
