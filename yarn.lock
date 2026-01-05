@@ -9302,7 +9302,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:15.8.1, prop-types@npm:15.x.x, prop-types@npm:^15.5.10, prop-types@npm:^15.8.1":
+"prop-types@npm:15.8.1, prop-types@npm:15.x.x, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -9733,7 +9733,7 @@ __metadata:
     shell-utils: "npm:^1.0.10"
     tinycolor2: "npm:^1.4.2"
     typescript: "npm:5.0.4"
-    uilib-native: "npm:^5.0.1"
+    uilib-native: "npm:5.1.0-snapshot.7635"
     url-parse: "npm:^1.2.0"
     wix-react-native-text-size: "npm:1.0.9"
   peerDependencies:
@@ -9742,7 +9742,7 @@ __metadata:
     react-native-gesture-handler: ">=2.24.0"
     react-native-reanimated: ">=3.19.4"
     react-native-ui-lib: "*"
-    uilib-native: ^5.0.1
+    uilib-native: 5.1.0-snapshot.7635
   languageName: unknown
   linkType: soft
 
@@ -11285,16 +11285,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uilib-native@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "uilib-native@npm:5.0.1"
+"uilib-native@npm:5.1.0-snapshot.7635":
+  version: 5.1.0-snapshot.7635
+  resolution: "uilib-native@npm:5.1.0-snapshot.7635"
   dependencies:
     lodash: "npm:^4.17.21"
-    prop-types: "npm:^15.5.10"
   peerDependencies:
-    react: ">=18.3.1"
-    react-native: ">=0.77.3"
-  checksum: 10c0/234d02fd8dd5005c816b2a292d87d205b37e45885eccdf545ab80052ad6eb2761034af6acb58ae31468d66b59a4c869b25a670a5a2a784d26206c92e7f27025d
+    react: ">=19.0.0"
+    react-native: ">=0.78.3"
+  checksum: 10c0/f98238f78e3c291cda5111459dc08d3acddbf38f37f2febb6e7743f0c663c47ab9e0cb9e2558dd044710365640b6c52ada47aec925dfee1386b05fd34e7becad
   languageName: node
   linkType: hard
 
