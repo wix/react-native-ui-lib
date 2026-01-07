@@ -10,8 +10,7 @@
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.21",
-    "prop-types": "^15.5.10"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "shell-utils": "^1.0.10"

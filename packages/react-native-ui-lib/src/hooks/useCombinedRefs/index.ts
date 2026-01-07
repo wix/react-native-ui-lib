@@ -11,7 +11,6 @@ const useCombinedRefs = <T>(...refs: React.Ref<any>[]) => {
       if (typeof ref === 'function') {
         ref(targetRef.current);
       } else {
-        // @ts-expect-error
         ref.current = targetRef.current;
       }
     });
