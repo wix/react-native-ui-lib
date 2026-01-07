@@ -13,10 +13,6 @@ jobs:
       contents: write    # Needed for pushing to gh-pages
     
     steps:
-      - name: Enable Corepack
-        run: corepack enable
-      - name: Security check (npq)
-        run: NPQ_PKG_MGR=yarn npx npq@3.15.4 install --dry-run
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -27,7 +23,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn install
+        run: NPQ_PKG_MGR=yarn npx npq install --immutable
 
       - name: Build documentation
         run: yarn docs:build
@@ -42,7 +38,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           cd docuilib
-          yarn install
+          NPQ_PKG_MGR=yarn npx npq install --immutable
           yarn deploy
 
       - name: Deploy disclaimer
