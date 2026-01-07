@@ -245,17 +245,21 @@ class Image extends PureComponent<Props, State> {
     const {margins} = modifiers;
 
     return (
-      // @ts-ignore
       <ImageView
+        // @ts-expect-error TODO: this error emanates from the fact that
+        // RNImage does not support `resizeMode` inside styles.containImage
+        // I think this is too complex for TS to handle as using inline style
+        // solves it. It is probably possible to refactor and solve it, but
+        // I feel it is not worth the risk ATM.
         style={[
           tintColor && {tintColor},
           shouldFlipRTL && styles.rtlFlipped,
-          width && {width},
-          height && {height},
-          borderRadius && {borderRadius},
+          width ? {width} : undefined,
+          height ? {height} : undefined,
+          borderRadius ? {borderRadius} : undefined,
           cover && styles.coverImage,
           this.isGif() && styles.gifImage,
-          aspectRatio && {aspectRatio},
+          aspectRatio ? {aspectRatio} : undefined,
           !useImageInsideContainer && margins,
           useImageInsideContainer && styles.containImage,
           style,
