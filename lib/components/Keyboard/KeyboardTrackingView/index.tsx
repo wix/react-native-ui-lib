@@ -79,7 +79,7 @@ export type KeyboardTrackingViewProps = ViewProps & {
   usesBottomTabs?: boolean;
   ref?: any;
   style?: StyleProp<ViewStyle>;
-  children?: React.ReactChild | React.ReactChild[];
+  children?: React.ReactNode;
 };
 
 const KeyboardTrackingView = forwardRef(({children, ...others}: KeyboardTrackingViewProps, ref: any) => {

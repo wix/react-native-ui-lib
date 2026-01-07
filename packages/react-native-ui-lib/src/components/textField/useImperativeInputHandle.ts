@@ -3,7 +3,7 @@ import {findNodeHandle, TextInput, TextInputProps} from 'react-native';
 import FieldContext from './FieldContext';
 
 const useImperativeInputHandle = (ref: React.Ref<any>, props: Pick<TextInputProps, 'onChangeText'>) => {
-  const inputRef = useRef<TextInput>();
+  const inputRef = useRef<TextInput>(undefined);
   const context = useContext(FieldContext);
   useImperativeHandle(ref, () => {
     return {

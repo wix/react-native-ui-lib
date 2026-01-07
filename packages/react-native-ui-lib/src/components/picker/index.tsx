@@ -181,7 +181,7 @@ const Picker = React.forwardRef((props: PickerProps, ref) => {
     toggleAllItemsSelection
   ]);
 
-  const renderPickerItem = useCallback((item: PickerItemProps, index: number): React.ReactElement => {
+  const renderPickerItem = useCallback((item: PickerItemProps, index: number): React.ReactElement<any> => {
     return <PickerItem key={`${index}-${item.value}`} {...item}/>;
   }, []);
 

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {Component} from 'react';
+import React, {Component, type JSX} from 'react';
 import {ActionSheetIOS, StyleSheet, StyleProp, ViewStyle, ImageProps, ImageSourcePropType} from 'react-native';
 import {Colors} from '../../style';
 import {asBaseComponent, Constants} from '../../commons/new';

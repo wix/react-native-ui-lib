@@ -165,7 +165,11 @@ class FeatureHighlightScreen extends Component<{}, State> {
           </View>
         </View>
         <View center padding-25>
-          <View ref={r => (this.viewRef = r)}>
+          <View
+            ref={r => {
+              this.viewRef = r;
+            }}
+          >
             <Text marginT-20>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
               industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type

@@ -1,3 +1,4 @@
+import type {JSX} from 'react';
 import {DragData, UniDriver} from '../UniDriver';
 import {act, fireEvent, render, RenderAPI} from '@testing-library/react-native';
 import {ReactTestInstance} from 'react-test-renderer';
