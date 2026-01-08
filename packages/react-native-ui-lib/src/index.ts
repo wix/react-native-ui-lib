@@ -78,7 +78,8 @@ export {
   FooterAlignment,
   HorizontalItemsDistribution,
   ItemsFit,
-  ScreenFooterPosition
+  KeyboardBehavior,
+  ScreenFooterShadow
 } from './components/screenFooter';
 export {default as Gradient, GradientProps, GradientTypes} from './components/gradient';
 export {default as Slider} from './components/slider';
