@@ -10,12 +10,8 @@ jobs:
     name: Validate PR Description
     
     steps:
-      - name: Enable Corepack
-        run: corepack enable
-      - name: Security check (npq)
-        run: NPQ_PKG_MGR=yarn npx npq@3.15.4 install --dry-run
       - name: Validate PR Description
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
         with:
           script: |
             const prBody = context.payload.pull_request.body || '';
