@@ -1,0 +1,98 @@
+{
+  "name": "ScreenFooter",
+  "category": "layout",
+  "description": "A flexible footer component that stays at the bottom of the screen with support for various layouts, backgrounds, and keyboard behaviors",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ScreenFooterScreen.tsx",
+  "images": [],
+  "props": [
+    {
+      "name": "backgroundType",
+      "type": "ScreenFooterBackgrounds",
+      "description": "The background style of the footer [fading, solid, transparent]",
+      "default": "'solid'"
+    },
+    {
+      "name": "layout",
+      "type": "ScreenFooterLayouts",
+      "description": "The layout direction of footer items [horizontal, vertical]",
+      "default": "'vertical'"
+    },
+    {
+      "name": "alignment",
+      "type": "FooterAlignment",
+      "description": "Cross-axis alignment [start, center, end]. In vertical layout: controls horizontal position. In horizontal layout: controls vertical position",
+      "default": "'center'"
+    },
+    {
+      "name": "horizontalAlignment",
+      "type": "FooterAlignment",
+      "description": "Main-axis alignment for horizontal layout only when distribution is STACK [start, center, end]",
+      "default": "'center'"
+    },
+    {
+      "name": "horizontalItemsDistribution",
+      "type": "HorizontalItemsDistribution",
+      "description": "Distribution of items in horizontal layout [stack, spread]",
+      "default": "'spread'"
+    },
+    {
+      "name": "itemsFit",
+      "type": "ItemsFit",
+      "description": "How items should fit in vertical layout [fit, fixed, stretch]",
+      "default": "'fit'"
+    },
+    {
+      "name": "keyboardBehavior",
+      "type": "KeyboardBehavior",
+      "description": "The footer's keyboard behavior [sticky, hoisted]. Sticky: stays at bottom when keyboard opens. Hoisted: pushed up when keyboard opens",
+      "default": "'sticky'"
+    },
+    {
+      "name": "itemWidth",
+      "type": "DimensionValue",
+      "description": "Fixed width for all items (used with ItemsFit.FIXED)"
+    },
+    {
+      "name": "visible",
+      "type": "boolean",
+      "description": "If true, the footer is visible. If false, it slides down",
+      "default": "true"
+    },
+    {
+      "name": "animationDuration",
+      "type": "number",
+      "description": "Duration of the show/hide animation in ms",
+      "default": "200"
+    },
+    {
+      "name": "useSafeArea",
+      "type": "boolean",
+      "description": "If true, the footer will respect the safe area (add bottom padding)",
+      "default": "true"
+    },
+    {
+      "name": "shadow",
+      "type": "ScreenFooterShadow",
+      "description": "Shadow preset for solid background [sh10, sh20, sh30]. Only applies when backgroundType is 'solid'",
+      "default": "'sh20'"
+    },
+    {
+      "name": "hideDivider",
+      "type": "boolean",
+      "description": "If true, hides the top divider for solid background. Only applies when backgroundType is 'solid'",
+      "default": "false"
+    }
+  ],
+  "snippet": [
+    "<View flex bg-$backgroundDefault>",
+    "  <ScrollView>",
+    "    {/* Screen content */}",
+    "  </ScrollView>",
+    "  <ScreenFooter>",
+    "    <Button label=\"Primary Action\" />",
+    "    <Button label=\"Secondary Action\" link />",
+    "  </ScreenFooter>",
+    "</View>"
+  ]
+}
+
