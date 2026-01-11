@@ -15,8 +15,8 @@ import {
   ItemsFit,
   Switch,
   TextField,
-  Slider,
-  Hooks
+  Hooks,
+  Incubator
 } from 'react-native-ui-lib';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -62,12 +62,6 @@ const DISTRIBUTION_OPTIONS = [
   {label: 'Spread', value: HorizontalItemsDistribution.SPREAD}
 ];
 
-const DISTRIBUTION_OPTIONS_SPACED = [
-  {label: 'Stack', value: HorizontalItemsDistribution.STACK},
-  {label: 'Spread', value: HorizontalItemsDistribution.SPREAD},
-  {label: '', value: 'dummy'},
-];
-
 const ITEMS_FIT_OPTIONS = [
   {label: 'Fit', value: ItemsFit.FIT},
   {label: 'Stretch', value: ItemsFit.STRETCH},
@@ -94,7 +88,7 @@ const KEYBOARD_BEHAVIOR_OPTIONS = [
 const KEYBOARD_BEHAVIOR_OPTIONS_SPACED = [
   {label: 'Sticky', value: KeyboardBehavior.STICKY},
   {label: 'Hoisted', value: KeyboardBehavior.HOISTED},
-  {label: '', value: 'dummy'},
+  {label: '', value: 'dummy'}
 ];
 
 const ScreenFooterScreen = () => {
@@ -106,7 +100,7 @@ const ScreenFooterScreen = () => {
   const [horizontalAlignment, setHorizontalAlignment] = useState<FooterAlignment>(FooterAlignment.CENTER);
   const [distribution, setDistribution] = useState<HorizontalItemsDistribution>(HorizontalItemsDistribution.STACK);
   const [itemsFit, setItemsFit] = useState<ItemsFit>(ItemsFit.FIT);
-  
+
   const [button1Type, setButton1Type] = useState<ButtonType>(ButtonType.PRIMARY);
   const [button2Type, setButton2Type] = useState<ButtonType>(ButtonType.SECONDARY);
   const [button3Type, setButton3Type] = useState<ButtonType>(ButtonType.LINK);
@@ -125,17 +119,23 @@ const ScreenFooterScreen = () => {
 
   const getButtonSize = (size: ItemSize) => {
     switch (size) {
-      case ItemSize.SMALL: return Button.sizes.small;
-      case ItemSize.MEDIUM: return Button.sizes.medium;
-      case ItemSize.LARGE: return Button.sizes.large;
+      case ItemSize.SMALL:
+        return Button.sizes.small;
+      case ItemSize.MEDIUM:
+        return Button.sizes.medium;
+      case ItemSize.LARGE:
+        return Button.sizes.large;
     }
   };
 
-  const getTextPreset = (size: ItemSize): {main: string; sub: string} => {
+  const getTextPreset = (size: ItemSize): {main: string; subtext: string} => {
     switch (size) {
-      case ItemSize.SMALL: return {main: 'text80', sub: 'text100'};
-      case ItemSize.MEDIUM: return {main: 'text70', sub: 'text90'};
-      case ItemSize.LARGE: return {main: 'text60', sub: 'text80'};
+      case ItemSize.SMALL:
+        return {main: 'text80', subtext: 'text100'};
+      case ItemSize.MEDIUM:
+        return {main: 'text70', subtext: 'text90'};
+      case ItemSize.LARGE:
+        return {main: 'text60', subtext: 'text80'};
     }
   };
 
@@ -165,9 +165,12 @@ const ScreenFooterScreen = () => {
 
   const getImageSize = (size: ItemSize): number => {
     switch (size) {
-      case ItemSize.SMALL: return 24;
-      case ItemSize.MEDIUM: return 32;
-      case ItemSize.LARGE: return 40;
+      case ItemSize.SMALL:
+        return 24;
+      case ItemSize.MEDIUM:
+        return 32;
+      case ItemSize.LARGE:
+        return 40;
     }
   };
 
@@ -175,15 +178,20 @@ const ScreenFooterScreen = () => {
     const items = [];
     const textPreset = getTextPreset(extraContentSize);
     const imageSize = getImageSize(extraContentSize);
-    
+
     // Extra Text (Total price)
     if (showExtraText) {
       items.push(
-        <View key="extra-text" centerV marginR-s4={isHorizontal} marginB-s4={!isHorizontal} style={{flexShrink: 1}}>
-          <Text {...{[textPreset.main]: true}} $textDefault numberOfLines={1}>
-            Total: <Text {...{[textPreset.main]: true}} $textDefault style={{fontWeight: 'bold'}}>257$</Text>
+        <View key="extra-text" centerV flexS marginR-s4={isHorizontal} marginB-s4={!isHorizontal}>
+          <Text {...{[textPreset.main]: true}} numberOfLines={1}>
+            Total:{' '}
+            <Text {...{[textPreset.main]: true}} style={{fontWeight: 'bold'}}>
+              257$
+            </Text>
           </Text>
-          <Text {...{[textPreset.sub]: true}} $textNeutralLight numberOfLines={1}>Including VAT.</Text>
+          <Text {...{[textPreset.subtext]: true}} $textNeutralLight numberOfLines={1}>
+            Including VAT.
+          </Text>
         </View>
       );
     }
@@ -192,87 +200,62 @@ const ScreenFooterScreen = () => {
     if (showExtraText && showImage) {
       items.push(
         <View key="extra-image" centerV marginR-s4={isHorizontal} marginB-s4={!isHorizontal}>
-          <Image
-            source={basketIcon}
-            style={{width: imageSize, height: imageSize, tintColor: Colors.$iconDefault}}
-          />
+          <Image source={basketIcon} style={{width: imageSize, height: imageSize, tintColor: Colors.$iconDefault}} />
         </View>
       );
     }
 
     if (itemsCount >= 1) {
-      items.push(
-        <Button
-          key="btn1"
-          size={getButtonSize(buttonSize)}
-        //   style={itemsFit === ItemsFit.STRETCH && !isHorizontal ? {alignSelf: 'stretch'} : undefined}
-          {...getButtonProps(button1Type)}
-        />
-      );
+      items.push(<Button key="btn1" size={getButtonSize(buttonSize)} {...getButtonProps(button1Type)} />);
     }
 
     if (itemsCount >= 2) {
-      items.push(
-        <Button
-          key="btn2"
-          size={getButtonSize(buttonSize)}
-        //   style={itemsFit === ItemsFit.STRETCH && !isHorizontal ? {alignSelf: 'stretch'} : undefined}
-          {...getButtonProps(button2Type)}
-        />
-      );
+      items.push(<Button key="btn2" size={getButtonSize(buttonSize)} {...getButtonProps(button2Type)} />);
     }
 
     if (itemsCount >= 3) {
-      items.push(
-        <Button
-          key="btn3"
-          size={getButtonSize(buttonSize)}
-        //   style={itemsFit === ItemsFit.STRETCH && !isHorizontal ? {alignSelf: 'stretch'} : undefined}
-          {...getButtonProps(button3Type)}
-        />
-      );
+      items.push(<Button key="btn3" size={getButtonSize(buttonSize)} {...getButtonProps(button3Type)} />);
     }
-    
+
     return items;
-  }, [itemsCount, itemsFit, isHorizontal, button1Type, button2Type, button3Type, buttonSize, showExtraText, showImage, extraContentSize, useLongButtonText]);
+  }, [
+    itemsCount,
+    itemsFit,
+    isHorizontal,
+    button1Type,
+    button2Type,
+    button3Type,
+    buttonSize,
+    showExtraText,
+    showImage,
+    extraContentSize,
+    useLongButtonText
+  ]);
 
   return (
-    <View flex bg-$backgroundDefault>
-      <ScrollView 
-        contentContainerStyle={styles.scrollContent}
-        onScroll={onScroll}
-        scrollEventThrottle={16}
-      >
-        <Text text60 $textDefault marginB-s4>
+    <>
+      <ScrollView contentContainerStyle={styles.scrollContent} onScroll={onScroll} scrollEventThrottle={16}>
+        <Text text60 marginB-s4>
           ScreenFooter Configuration
         </Text>
 
-        <TextField
-          placeholder="Focus me to test keyboard behavior"
-          label="Test Input"
-          floatingPlaceholder
-          containerStyle={{marginBottom: 20}}
-        />
+        <TextField marginB-20 placeholder="Focus me to test keyboard behavior" label="Test Input" floatingPlaceholder />
 
         {/* Safe Area Toggle */}
         <View row spread centerV marginB-s4>
-          <Text text70M $textDefault>
-            Use Safe Area
-          </Text>
-          <Switch value={useSafeArea} onValueChange={setUseSafeArea}/>
+          <Text text70M>Use Safe Area</Text>
+          <Switch value={useSafeArea} onValueChange={setUseSafeArea} />
         </View>
 
         {/* Hide On Scroll Toggle */}
         <View row spread centerV marginB-s4>
-          <Text text70M $textDefault>
-            Hide on Scroll
-          </Text>
-          <Switch value={shouldHideOnScroll} onValueChange={setShouldHideOnScroll}/>
+          <Text text70M>Hide on Scroll</Text>
+          <Switch value={shouldHideOnScroll} onValueChange={setShouldHideOnScroll} />
         </View>
 
         {/* Layout Selection */}
         <View marginB-s4>
-          <Text text70M $textDefault marginB-s2>
+          <Text text70M marginB-s2>
             Layout
           </Text>
           <SegmentedControl
@@ -284,7 +267,7 @@ const ScreenFooterScreen = () => {
 
         {/* Items Count */}
         <View marginB-s4>
-          <Text text70M $textDefault marginB-s2>
+          <Text text70M marginB-s2>
             Number of Items
           </Text>
           <SegmentedControl
@@ -296,26 +279,22 @@ const ScreenFooterScreen = () => {
 
         {/* Extra Text Toggle */}
         <View row spread centerV marginB-s4>
-          <Text text70M $textDefault>
-            Show Extra Text
-          </Text>
-          <Switch value={showExtraText} onValueChange={setShowExtraText}/>
+          <Text text70M>Show Extra Text</Text>
+          <Switch value={showExtraText} onValueChange={setShowExtraText} />
         </View>
 
         {/* Show Image Toggle (only when Extra Text is shown) */}
         {showExtraText && (
           <View row spread centerV marginB-s4 marginL-s4>
-            <Text text70M $textDefault>
-              Show Image
-            </Text>
-            <Switch value={showImage} onValueChange={setShowImage}/>
+            <Text text70M>Show Image</Text>
+            <Switch value={showImage} onValueChange={setShowImage} />
           </View>
         )}
 
         {/* Extra Content Size */}
         {showExtraText && (
           <View marginB-s4>
-            <Text text70M $textDefault marginB-s2>
+            <Text text70M marginB-s2>
               Extra Content Size
             </Text>
             <SegmentedControl
@@ -328,7 +307,7 @@ const ScreenFooterScreen = () => {
 
         {/* Button Size (applies to all buttons) */}
         <View marginB-s4>
-          <Text text70M $textDefault marginB-s2>
+          <Text text70M marginB-s2>
             Button Size
           </Text>
           <SegmentedControl
@@ -340,16 +319,14 @@ const ScreenFooterScreen = () => {
 
         {/* Long Button Text Toggle */}
         <View row spread centerV marginB-s4>
-          <Text text70M $textDefault>
-            Use Long Button Text
-          </Text>
-          <Switch value={useLongButtonText} onValueChange={setUseLongButtonText}/>
+          <Text text70M>Use Long Button Text</Text>
+          <Switch value={useLongButtonText} onValueChange={setUseLongButtonText} />
         </View>
 
         {/* Button 1 Type */}
         {itemsCount >= 1 && (
           <View marginB-s4>
-            <Text text70M $textDefault marginB-s2>
+            <Text text70M marginB-s2>
               Button 1 Type
             </Text>
             <SegmentedControl
@@ -363,7 +340,7 @@ const ScreenFooterScreen = () => {
         {/* Button 2 Type */}
         {itemsCount >= 2 && (
           <View marginB-s4>
-            <Text text70M $textDefault marginB-s2>
+            <Text text70M marginB-s2>
               Button 2 Type
             </Text>
             <SegmentedControl
@@ -377,7 +354,7 @@ const ScreenFooterScreen = () => {
         {/* Button 3 Type */}
         {itemsCount >= 3 && (
           <View marginB-s4>
-            <Text text70M $textDefault marginB-s2>
+            <Text text70M marginB-s2>
               Button 3 Type
             </Text>
             <SegmentedControl
@@ -390,7 +367,7 @@ const ScreenFooterScreen = () => {
 
         {/* Background */}
         <View marginB-s4>
-          <Text text70M $textDefault marginB-s2>
+          <Text text70M marginB-s2>
             Background
           </Text>
           <SegmentedControl
@@ -402,22 +379,22 @@ const ScreenFooterScreen = () => {
 
         {/* Position */}
         <View marginB-s4>
-          <Text text70M $textDefault marginB-s2>
+          <Text text70M marginB-s2>
             Keyboard Behavior
           </Text>
           <View row>
-             <SegmentedControl
+            <SegmentedControl
               segments={KEYBOARD_BEHAVIOR_OPTIONS}
               initialIndex={KEYBOARD_BEHAVIOR_OPTIONS.findIndex(opt => opt.value === keyboardBehavior)}
               onChangeIndex={index => setKeyboardBehavior(KEYBOARD_BEHAVIOR_OPTIONS[index].value)}
             />
-             <View flex />
+            <View flex />
           </View>
         </View>
 
         {/* Alignment (Cross Axis) */}
         <View marginB-s4>
-          <Text text70M $textDefault marginB-s2>
+          <Text text70M marginB-s2>
             {isHorizontal ? 'Vertical Alignment' : 'Alignment'}
           </Text>
           <SegmentedControl
@@ -430,7 +407,7 @@ const ScreenFooterScreen = () => {
         {/* Distribution (for Horizontal layout) */}
         {isHorizontal && (
           <View marginB-s4>
-            <Text text70M $textDefault marginB-s2>
+            <Text text70M marginB-s2>
               Distribution
             </Text>
             <View row>
@@ -439,7 +416,6 @@ const ScreenFooterScreen = () => {
                 initialIndex={DISTRIBUTION_OPTIONS.findIndex(opt => opt.value === distribution)}
                 onChangeIndex={index => setDistribution(DISTRIBUTION_OPTIONS[index].value)}
               />
-               <View flex />
             </View>
           </View>
         )}
@@ -447,7 +423,7 @@ const ScreenFooterScreen = () => {
         {/* Horizontal Alignment (for Horizontal layout + Stack distribution) */}
         {isHorizontal && distribution === HorizontalItemsDistribution.STACK && (
           <View marginB-s4>
-            <Text text70M $textDefault marginB-s2>
+            <Text text70M marginB-s2>
               Horizontal Alignment
             </Text>
             <SegmentedControl
@@ -460,7 +436,7 @@ const ScreenFooterScreen = () => {
 
         {/* Items Fit */}
         <View marginB-s4>
-          <Text text70M $textDefault marginB-s2>
+          <Text text70M marginB-s2>
             Items Fit
           </Text>
           <SegmentedControl
@@ -473,13 +449,13 @@ const ScreenFooterScreen = () => {
         {/* Item Width Slider (only when Fixed is selected) */}
         {itemsFit === ItemsFit.FIXED && (
           <View marginB-s4>
-            <Text text70M $textDefault marginB-s2>
+            <Text text70M marginB-s2>
               Item Width: {itemWidth}px
             </Text>
-            <Slider
+            <Incubator.Slider
               value={itemWidth}
               minimumValue={50}
-              maximumValue={500}
+              maximumValue={250}
               step={10}
               onValueChange={setItemWidth}
             />
@@ -488,20 +464,19 @@ const ScreenFooterScreen = () => {
 
         {/* Spacer for content */}
         <View marginT-s10>
-          <Text text70 $textDefault style={styles.placeholder}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          <Text text70>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat.
           </Text>
-          <Text text70 $textDefault marginT-s4 style={styles.placeholder}>
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
-            fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
-            culpa qui officia deserunt mollit anim id est laborum.
+          <Text text70 marginT-s4>
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+            laborum.
           </Text>
         </View>
       </ScrollView>
 
-      {/* ScreenFooter Component */}
       <ScreenFooter
         layout={layout}
         backgroundType={background}
@@ -516,7 +491,7 @@ const ScreenFooterScreen = () => {
       >
         {renderFooterItems}
       </ScreenFooter>
-    </View>
+    </>
   );
 };
 
@@ -524,11 +499,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     padding: 20,
     paddingBottom: 150
-  },
-  placeholder: {
-    lineHeight: 22
   }
 });
 
 export default ScreenFooterScreen;
-
