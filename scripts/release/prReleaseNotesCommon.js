@@ -3,6 +3,16 @@ const _ = require('lodash');
 const chalk = require('chalk');
 const childProcess = require('child_process');
 const readline = require('readline');
+const BRANCH_CATEGORIES = [
+  {name: 'features', branch: 'feat/', title: ':gift: Features'},
+  {name: 'web', branch: 'web/', title: ':spider_web: Web support'},
+  {name: 'fixes', branch: 'fix/', title: ':wrench: Fixes'},
+  {name: 'infra', branch: 'infra/', title: ':gear: Maintenance & Infra'}
+];
+
+function getBranchPrefixes() {
+  return BRANCH_CATEGORIES.map(category => category.branch);
+}
 
 function fetchLatestReleaseDate(tagPrefix, version) {
   const release = childProcess.execSync(`gh release view ${tagPrefix}${version}`).toString();
@@ -171,10 +181,7 @@ function generateReleaseNotesFromPRs(PRs, categories, header) {
   }
 
   const prCategories = [
-    {name: 'features', branch: 'feat/', title: ':gift: Features'},
-    {name: 'web', branch: 'web/', title: ':spider_web: Web support'},
-    {name: 'fixes', branch: 'fix/', title: ':wrench: Fixes'},
-    {name: 'infra', branch: 'infra/', title: ':gear: Maintenance & Infra'},
+    ...BRANCH_CATEGORIES,
     ...categories,
     {name: 'others', branch: '', title: 'OTHERS'},
     {
@@ -253,4 +260,4 @@ async function generateReleaseNotes(latestVersion,
   });
 }
 
-module.exports = {generateReleaseNotes, generateReleaseNotesFromPRs, parsePR};
+module.exports = {generateReleaseNotes, generateReleaseNotesFromPRs, parsePR, getBranchPrefixes};
