@@ -92,7 +92,6 @@ const TextField = (props: InternalTextFieldProps) => {
     readonly = false,
     showMandatoryIndication,
     clearButtonStyle,
-    accessibilityLabel: accessibilityLabelProp,
     ...others
   } = usePreset(props);
 
@@ -139,37 +138,9 @@ const TextField = (props: InternalTextFieldProps) => {
     [typographyStyle, colorStyle, others.style, centeredTextStyle, hasValue]);
   const dummyPlaceholderStyle = useMemo(() => [inputStyle, styles.dummyPlaceholder], [inputStyle]);
 
-  const defaultAccessibilityLabel = useMemo(() => {
-    const parts: string[] = [];
-
-    if (label) {
-      parts.push(label);
-    }
-
-    if (context.isMandatory) {
-      parts.push('required');
-    }
-
-    parts.push('textField');
-
-    if (helperText) {
-      parts.push(helperText);
-    } else if (placeholder) {
-      parts.push(placeholder);
-    }
-
-    if (showCharCounter && others.maxLength) {
-      parts.push(`you can enter up to ${others.maxLength} characters`);
-    }
-
-    return parts.join(', ');
-  }, [label, context.isMandatory, helperText, placeholder, showCharCounter, others.maxLength]);
-
-  const accessibilityLabel = accessibilityLabelProp ?? defaultAccessibilityLabel;
-
   return (
     <FieldContext.Provider value={context}>
-      <View {...containerProps} accessible accessibilityLabel={accessibilityLabel} style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
+      <View {...containerProps} style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
         <View row spread style={centeredContainerStyle}>
           <Label
             label={label}
