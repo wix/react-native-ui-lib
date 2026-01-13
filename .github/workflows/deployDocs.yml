@@ -14,16 +14,16 @@ jobs:
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn install
+        run: NPQ_PKG_MGR=yarn npx npq install --immutable
 
       - name: Build documentation
         run: yarn docs:build
@@ -38,7 +38,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           cd docuilib
-          yarn install
+          NPQ_PKG_MGR=yarn npx npq install --immutable
           yarn deploy
 
       - name: Deploy disclaimer
