@@ -123,11 +123,6 @@
       "description": "Renders an overlay on top of the image"
     },
     {
-      "name": "accessible",
-      "type": "boolean",
-      "description": "Whether this item should be accessible"
-    },
-    {
       "name": "testID",
       "type": "string",
       "description": "Test ID for component"

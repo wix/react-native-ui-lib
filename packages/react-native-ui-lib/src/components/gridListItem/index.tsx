@@ -112,10 +112,6 @@ export interface GridListItemProps {
    * Test ID for component
    */
   testID?: string;
-  /**
-   * Whether this item should be accessible
-   */
-  accessible?: boolean;
   children?: React.ReactElement | React.ReactElement[];
 }
 
@@ -197,8 +193,7 @@ class GridListItem extends Component<GridListItemProps> {
       descriptionColor,
       descriptionLines,
       onPress,
-      renderOverlay,
-      accessible
+      renderOverlay
     } = this.props;
     const Container = onPress ? TouchableOpacity : View;
     const TextContainer = overlayText ? View : React.Fragment;
@@ -213,9 +208,9 @@ class GridListItem extends Component<GridListItemProps> {
     return (
       <Container
         style={[styles.container, {alignItems}, {width}, containerStyle]}
+        accessible={renderCustomItem ? true : undefined}
         {...otherContainerProps}
         onPress={onPress && this.onItemPress}
-        accessible={accessible ?? (renderCustomItem ? true : undefined)}
         {...Modifiers.extractAccessibilityProps(this.props)}
       >
         {imageProps && <Image {...imageProps} style={[itemSize, imageProps?.style]} customOverlayContent={children}/>}
@@ -227,24 +222,21 @@ class GridListItem extends Component<GridListItemProps> {
             [titleTypography]: true,
             color: titleColor,
             numberOfLines: titleLines,
-            style: styles.title,
-            accessible
+            style: styles.title
           })}
           {this.renderContent(subtitle, {
             testID: `${testID}.subtitle`,
             [subtitleTypography]: true,
             color: subtitleColor,
             numberOfLines: subtitleLines,
-            style: styles.subtitle,
-            accessible
+            style: styles.subtitle
           })}
           {this.renderContent(description, {
             testID: `${testID}.description`,
             [descriptionTypography]: true,
             color: descriptionColor,
             numberOfLines: descriptionLines,
-            style: styles.description,
-            accessible
+            style: styles.description
           })}
         </TextContainer>
       </Container>

@@ -59,7 +59,7 @@ class GridListScreen extends Component {
           alignToStart={alignToStart}
           overlayText={overlayText}
           horizontalAlignment={horizontalAlignment}
-          accessible={false}
+          containerProps={{accessible: false}}
         />
       );
     } else {
