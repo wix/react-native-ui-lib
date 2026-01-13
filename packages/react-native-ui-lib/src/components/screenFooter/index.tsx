@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {LayoutChangeEvent, StyleSheet} from 'react-native';
 import {Image} from 'react-native-ui-lib';
 import Animated, {useAnimatedKeyboard, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
+import {Keyboard} from 'uilib-native';
 import View from '../view';
 import {Colors, Shadows, Spacings} from '../../style';
 import {asBaseComponent, Constants} from '../../commons/new';
@@ -55,11 +56,18 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     visibilityTranslateY.value = withTiming(visible ? 0 : height, {duration: animationDuration});
   }, [visible, height, animationDuration, visibilityTranslateY]);
 
-  // Combine keyboard hoisting + visibility into a single animated style
-  const animatedStyle = useAnimatedStyle(() => {
-    const keyboardTranslateY = keyboardBehavior === KeyboardBehavior.HOISTED ? -keyboard.height.value : 0;
+  // Animated style for STICKY behavior (counters Android system offset + visibility)
+  const stickyAnimatedStyle = useAnimatedStyle(() => {
+    const counterSystemOffset = Constants.isAndroid ? keyboard.height.value : 0;
     return {
-      transform: [{translateY: keyboardTranslateY + visibilityTranslateY.value}]
+      transform: [{translateY: counterSystemOffset + visibilityTranslateY.value}]
+    };
+  });
+
+  // Animated style for HOISTED behavior (visibility only, keyboard handled by KeyboardAccessoryView)
+  const hoistedAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{translateY: visibilityTranslateY.value}]
     };
   });
 
@@ -117,8 +125,15 @@ const ScreenFooter = (props: ScreenFooterProps) => {
       style.push({paddingBottom: safeAreaBottom});
     }
 
+    if (isSolid) {
+      const shadowStyle = Shadows[shadow]?.top;
+      const backgroundElevation = shadowStyle?.elevation || 0;
+      // When the background has a shadow (elevation on Android), it might render on top of the content
+      style.push({elevation: backgroundElevation + 1});
+    }
+
     return style;
-  }, [layout, alignItems, justifyContent, useSafeArea, safeAreaBottom]);
+  }, [layout, alignItems, justifyContent, useSafeArea, safeAreaBottom, isSolid, shadow]);
 
   const solidBackgroundStyle = useMemo(() => {
     if (!isSolid) {
@@ -171,7 +186,7 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     }
 
     if (isHorizontal && React.isValidElement(child)) {
-      const flexStyle = itemsFit === ItemsFit.STRETCH ? {flex: 1} : {flexShrink: 1};
+      const flexStyle = itemsFit === ItemsFit.STRETCH ? {flex: 1, alignItems: 'center'} : {flexShrink: 1};
       return React.cloneElement<any>(child, {
         key: index,
         style: [child.props.style, flexStyle]
@@ -183,16 +198,43 @@ const ScreenFooter = (props: ScreenFooterProps) => {
 
   const childrenArray = React.Children.toArray(children).slice(0, 3).map(renderChild);
 
+  const renderFooterContent = useCallback(() => {
+    return (
+      <>
+        {renderBackground()}
+        <View testID={testID ? `${testID}.content` : undefined} style={contentContainerStyle}>
+          {childrenArray}
+        </View>
+      </>
+    );
+  }, [renderBackground, testID, contentContainerStyle, childrenArray]);
+
+  if (keyboardBehavior === KeyboardBehavior.HOISTED) {
+    return (
+      <Animated.View
+        style={[styles.container, hoistedAnimatedStyle]}
+        pointerEvents={visible ? 'box-none' : 'none'}
+      >
+        <Keyboard.KeyboardAccessoryView
+          renderContent={renderFooterContent}
+          kbInputRef={undefined}
+          scrollBehavior={Keyboard.KeyboardAccessoryView.scrollBehaviors.FIXED_OFFSET}
+          useSafeArea={false}
+          manageScrollView={false}
+          revealKeyboardInteractive
+          onHeightChanged={setHeight}
+        />
+      </Animated.View>
+    );
+  }
+
   return (
     <Animated.View
       testID={testID}
       onLayout={onLayout}
-      style={[styles.container, animatedStyle]}
+      style={[styles.container, stickyAnimatedStyle]}
     >
-      {renderBackground()}
-      <View testID={testID ? `${testID}.content` : undefined} style={contentContainerStyle}>
-        {childrenArray}
-      </View>
+      {renderFooterContent()}
     </Animated.View>
   );
 };
