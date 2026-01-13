@@ -4,6 +4,7 @@ import {Image} from 'react-native-ui-lib';
 import Animated, {useAnimatedKeyboard, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
 import {Keyboard} from 'uilib-native';
 import View from '../view';
+import Assets from '../../assets';
 import {Colors, Shadows, Spacings} from '../../style';
 import {asBaseComponent, Constants} from '../../commons/new';
 import {
@@ -161,7 +162,7 @@ const ScreenFooter = (props: ScreenFooterProps) => {
       return (
         <View testID={testID ? `${testID}.fadingBackground` : undefined} absF pointerEvents="none">
           <Image
-            source={require('./gradient.png')}
+            source={Assets.internal.images.buttonFloatingOverlay}
             style={styles.background}
             resizeMode="stretch"
             tintColor={Colors.$backgroundDefault}
