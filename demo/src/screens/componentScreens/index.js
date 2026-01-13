@@ -38,6 +38,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.animations.ProgressBarScreen', () => require('../componentScreens/ProgressBarScreen').default);
   registrar('unicorn.components.ProgressiveImageScreen', () => require('./ProgressiveImageScreen').default);
   registrar('unicorn.components.RadioButtonScreen', () => require('./RadioButtonScreen').default);
+  registrar('unicorn.components.ReanimatedLearningScreen', () => require('./ReanimatedLearningScreen').default);
   registrar('unicorn.components.ScrollBarScreen', () => require('./ScrollBarScreen').default);
   registrar('unicorn.components.SectionsWheelPickerScreen', () => require('./SectionsWheelPickerScreen').default);
   registrar('unicorn.components.SearchInputScreen', () => require('./SearchInputScreen').default);

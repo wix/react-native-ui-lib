@@ -177,6 +177,7 @@ export const navigationData = {
   AnimationsAndGestures: {
     title: 'Animations & Gestures',
     screens: [
+      {title: 'Reanimated Learning', tags: 'reanimated animation learning', screen: 'unicorn.components.ReanimatedLearningScreen'},
       {title: 'Animated Image', tags: 'animated image', screen: 'unicorn.components.AnimatedImageScreen'},
       {title: 'Card Scanner', tags: 'card scanner process', screen: 'unicorn.animations.CardScannerScreen'},
       {title: 'Haptic feedback', tags: 'haptic feedback', screen: 'unicorn.components.HapticScreen'},
