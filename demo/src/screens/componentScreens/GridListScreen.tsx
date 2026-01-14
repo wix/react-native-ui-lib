@@ -53,13 +53,11 @@ class GridListScreen extends Component {
           // containerStyle={{width: '100%', borderWidth: 1}}
           itemSize={{width: '100%', height: 200}}
           imageProps={{source: {uri: item.mediaUrl}}}
-          renderCustomItem={() => <Text>Custom Text</Text>}
           title="Title"
           subtitle="Subtile"
           alignToStart={alignToStart}
           overlayText={overlayText}
           horizontalAlignment={horizontalAlignment}
-          containerProps={{accessible: false}}
         />
       );
     } else {
