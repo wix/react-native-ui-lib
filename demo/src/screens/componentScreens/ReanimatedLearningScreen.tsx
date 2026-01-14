@@ -1,7 +1,7 @@
 import React from 'react';
+import { ScrollView, type ViewStyle } from 'react-native';
 import {View, Text, Button, TextField, Colors} from 'react-native-ui-lib';
-import Animated, {useSharedValue, useAnimatedStyle, withTiming, useDerivedValue, withSpring} from 'react-native-reanimated';
-import type { ViewStyle } from 'react-native';
+import Animated, {useSharedValue, useAnimatedStyle, withTiming, useDerivedValue, withSpring, withSequence, withRepeat, withDelay, interpolateColor} from 'react-native-reanimated';
 
 const spring = {
   // Gentle spring (smooth, natural)
@@ -40,11 +40,11 @@ function SpringBox() {
       const [mass, setMass] = React.useState(1);
   
       // Shared value for scale
-      const boxScale = useSharedValue(1);
+      const scale = useSharedValue(1);
   
       // Animated style for the spring box
       const springAnimStyle = useAnimatedStyle(() => ({
-        transform: [{ scale: boxScale.value }]
+        transform: [{ scale: scale.value }]
       }));
   
       return (
@@ -120,11 +120,16 @@ function SpringBox() {
           <Button
             label="Spring Animate!"
             onPress={() => {
-              boxScale.value = withSpring(boxScale.value === 1 ? 2 : 1, {
-                damping: damping || 1,
-                stiffness: stiffness || 1,
-                mass: mass || 1
-              });
+              scale.value = withRepeat(
+                // withDelay(200,
+                  withSpring(scale.value === 1 ? 2 : 1, {
+                    damping: damping || 1,
+                    stiffness: stiffness || 1,
+                    mass: mass || 1,
+                  }),
+                // ),
+                2,
+                true);
             }}
             style={{alignSelf: 'center'}}
           />
@@ -185,7 +190,10 @@ function CardFlip() {
         </Animated.View>
       </View>
       <Button marginB-s4 label="animate!" style={{alignSelf: 'center'}} onPress={() => {
-        scale.value = withTiming(scale.value === 1 ? 1.5 : 1, { duration: 500 });
+        scale.value = scale.value === 1 ?
+          withTiming(1.5, { duration: 500 }) :
+          withTiming(1, { duration: 500 });
+
         rotate.value = withTiming(rotate.value === 0 ? 180 : 0, {duration});
         // Swap zIndex to flip which card is on top
         zIndexFront.value = withTiming(zIndexFront.value === 1 ? 0 : 1, {duration});
@@ -195,9 +203,29 @@ function CardFlip() {
   );
 }
 
+function ColorInterpolation() {
+  const color = useSharedValue(0);
+  const colorStyle = useAnimatedStyle(() => ({
+    backgroundColor: interpolateColor(
+      color.value,
+      [0, 1],
+      ['red', 'blue'],
+    ),
+  }));
+  
+  return (
+    <View center>
+      <Animated.View style={[colorStyle, { width: 100, height: 100, borderRadius: 10 }]} />
+      <Button label="animate!" marginT-s4 style={{alignSelf: 'center'}} onPress={() => {
+        color.value = withTiming(color.value === 0 ? 1 : 0, { duration: 500 });
+      }} />
+    </View>
+  );
+}
+
 export default function ReanimatedLearningScreen() {
   return (
-    <View flex padding-page>
+    <ScrollView padding-page contentContainerStyle={{flexGrow: 1}} style={{marginStart: 16}}>
       <Text text40 marginB-s4>
         Spring Playground
       </Text>
@@ -207,6 +235,11 @@ export default function ReanimatedLearningScreen() {
         Card Flip
       </Text>
       <CardFlip />
-    </View>
+
+      <Text text40 marginB-s4 marginT-s4>
+        Color Interpolation
+      </Text>
+      <ColorInterpolation />
+    </ScrollView>
   );
 }
