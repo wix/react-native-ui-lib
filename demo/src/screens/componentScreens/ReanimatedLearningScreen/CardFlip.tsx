@@ -2,18 +2,18 @@ import React from 'react';
 import {type ViewStyle} from 'react-native';
 import {View, Text, Button} from 'react-native-ui-lib';
 import Animated, {useSharedValue, useAnimatedStyle, withTiming, useDerivedValue} from 'react-native-reanimated';
+import { Easings } from './tokens';
 
 export function CardFlip() {
-  const duration = 500;
+  const duration = 1500;
   const scale = useSharedValue(1);
   const rotate = useSharedValue(0);
-  const zIndexFront = useSharedValue(1);
-  const zIndexBack = useSharedValue(0);
 
-  // Round zIndex values to integers to avoid precision errors
-  // zIndex must be an integer, but withTiming produces floats during animation
-  const zIndexFrontRounded = useDerivedValue(() => Math.round(zIndexFront.value));
-  const zIndexBackRounded = useDerivedValue(() => Math.round(zIndexBack.value));
+  // Use derived value to compute zIndex based on rotation angle
+  // When rotation < 90: front is on top (zIndex 1), back is behind (zIndex 0)
+  // When rotation >= 90: back is on top (zIndex 1), front is behind (zIndex 0)
+  const zIndexFront = useDerivedValue(() => (rotate.value < 90 ? 1 : 0));
+  const zIndexBack = useDerivedValue(() => (rotate.value >= 90 ? 1 : 0));
 
   const animStyleF = useAnimatedStyle(() => ({
     transform: [
@@ -21,16 +21,28 @@ export function CardFlip() {
       {scaleY: scale.value},
       {rotateY: `${rotate.value}deg`},
     ],
-    zIndex: zIndexFrontRounded.value,
+    zIndex: zIndexFront.value,
   }));
   const animStyleB = useAnimatedStyle(() => ({
     transform: [
-      {scaleX: scale.value}, // Scale down to appear behind
+      {scaleX: scale.value},
       {scaleY: scale.value},
       {rotateY: `${rotate.value}deg`},
     ],
-    zIndex: zIndexBackRounded.value,
+    zIndex: zIndexBack.value,
   }));
+
+  // useAnimatedReaction(
+  //   () => rotate.value,
+  //   (value, prev) => {
+  //     if (prev < 90 && value >= 90) {
+  //       runOnJS(setFrontOrBack)('back');
+  //     } else if (prev > 90 && value <= 90) {
+  //       runOnJS(setFrontOrBack)('front');
+  //     }
+  //   }
+  // )
+
   const cardStyle: ViewStyle = {
     position: 'absolute' as const,
     width: 150,
@@ -42,28 +54,24 @@ export function CardFlip() {
 
   return (
     <>
-      <View center marginB-s4 style={{height: 100}}>
+      <View center height={100} style={{marginVertical: 50}}>
         <Animated.View
-          style={[ animStyleF, { ...cardStyle, backgroundColor: 'cyan' } ]}
+          style={[ animStyleF, { ...cardStyle, backgroundColor: 'hsl(54, 100.00%, 57.50%)' } ]}
           >
           <Text center>Front</Text>
         </Animated.View>
 
         <Animated.View
-          style={[ animStyleB, { ...cardStyle, backgroundColor: 'blue' } ]}
+          style={[ animStyleB, { ...cardStyle, backgroundColor: 'hsl(207, 66.50%, 44.50%)' } ]}
           >
           <Text center white>Back</Text>
         </Animated.View>
       </View>
       <Button marginB-s4 label="animate!" style={{alignSelf: 'center'}} onPress={() => {
-        scale.value = scale.value === 1 ?
-          withTiming(1.5, { duration: 500 }) :
-          withTiming(1, { duration: 500 });
-
         rotate.value = withTiming(rotate.value === 0 ? 180 : 0, {duration});
-        // Swap zIndex to flip which card is on top
-        zIndexFront.value = withTiming(zIndexFront.value === 1 ? 0 : 1, {duration});
-        zIndexBack.value = withTiming(zIndexBack.value === 0 ? 1 : 0, {duration});
+        scale.value = scale.value === 1 ?
+          withTiming(1.5, { duration, easing: Easings.backInOut }) :
+          withTiming(1, { duration, easing: Easings.backInOut });
       }} />
     </>
   );
