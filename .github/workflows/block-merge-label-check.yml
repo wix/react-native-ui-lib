@@ -3,6 +3,8 @@ name: Block Merge Label Check
 on:
   pull_request:
     types: [opened, synchronize, reopened, labeled, unlabeled]
+    branches:
+      - '**'
 
 jobs:
   check-do-not-merge-label:
