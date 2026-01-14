@@ -254,9 +254,9 @@ class FloatingButton extends PureComponent<FloatingButtonProps> {
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject,
+    // ...StyleSheet.absoluteFillObject, // TODO: this is breaking scenarios where the FloatingButton is inside a KeyboardTrackingView
     top: undefined,
-    zIndex: Constants.isAndroid ? 99 : undefined
+    zIndex: 99
   },
   image: {
     ...StyleSheet.absoluteFillObject,
