@@ -1,0 +1,36 @@
+name: Block Merge Label Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+jobs:
+  check-do-not-merge-label:
+    runs-on: ubuntu-latest
+    name: Check Do Not Merge Label
+    
+    steps:
+      - name: Check for Do Not Merge label
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            console.log(`Checking labels for PR #${prNumber}...`);
+            
+            // Get all labels on the PR
+            const { data: labels } = await github.rest.issues.listLabelsOnIssue({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+            });
+            
+            // Check if "Do Not Merge!" label exists
+            const doNotMergeLabel = labels.find(label => label.name === 'Do Not Merge!');
+            
+            if (doNotMergeLabel) {
+              console.log('❌ Found "Do Not Merge!" label - blocking merge');
+              core.setFailed('PR has "Do Not Merge!" label - cannot merge');
+            } else {
+              console.log('✅ No "Do Not Merge!" label found - PR can be merged');
+            }
+

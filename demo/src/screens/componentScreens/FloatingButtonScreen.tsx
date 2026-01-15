@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Alert, ScrollView} from 'react-native';
-import {Colors, Text, FloatingButton, FloatingButtonLayouts} from 'react-native-ui-lib';
+import {Colors, Text, FloatingButton, FloatingButtonLayouts, Keyboard} from 'react-native-ui-lib';
 import {renderBooleanOption} from '../ExampleScreenPresenter';
 
 interface State {
@@ -8,6 +8,7 @@ interface State {
   showPrimary: boolean;
   showSecondary: boolean;
   showVertical: boolean;
+  withTrackingView: boolean;
 }
 
 export default class FloatingButtonScreen extends Component<{}, State> {
@@ -16,7 +17,8 @@ export default class FloatingButtonScreen extends Component<{}, State> {
     showPrimary: true,
     showSecondary: true,
     showVertical: true,
-    fullWidth: false
+    fullWidth: false,
+    withTrackingView: false
   };
 
   notNow = () => {
@@ -30,7 +32,8 @@ export default class FloatingButtonScreen extends Component<{}, State> {
   };
 
   render() {
-    const {showSecondary, showVertical} = this.state;
+    const {showSecondary, showVertical, withTrackingView} = this.state;
+    const Container = withTrackingView ? Keyboard.KeyboardTrackingView : React.Fragment;
     return (
       <View style={styles.container}>
         <Text text60 center $textDefault marginB-s4>
@@ -41,6 +44,7 @@ export default class FloatingButtonScreen extends Component<{}, State> {
         {renderBooleanOption.call(this, 'Show Primary Button', 'showPrimary')}
         {renderBooleanOption.call(this, 'Show Secondary Button', 'showSecondary')}
         {renderBooleanOption.call(this, 'Button Layout Vertical', 'showVertical')}
+        {renderBooleanOption.call(this, 'With tracking view', 'withTrackingView')}
 
         <ScrollView showsVerticalScrollIndicator={false}>
           <View paddingT-20>
@@ -67,30 +71,32 @@ export default class FloatingButtonScreen extends Component<{}, State> {
           </View>
         </ScrollView>
 
-        <FloatingButton
-          visible={this.state.showButton}
-          fullWidth={this.state.fullWidth}
-          button={
-            this.state.showPrimary
-              ? {
-                label: 'Approve',
-                onPress: this.close
-              }
-              : undefined
-          }
-          secondaryButton={
-            showSecondary
-              ? {
-                label: 'Not now',
-                onPress: this.notNow
-              }
-              : undefined
-          }
-          buttonLayout={showVertical ? FloatingButtonLayouts.VERTICAL : FloatingButtonLayouts.HORIZONTAL}
-          // bottomMargin={80}
-          // hideBackgroundOverlay
-          // withoutAnimation
-        />
+        <Container>
+          <FloatingButton
+            visible={this.state.showButton}
+            fullWidth={this.state.fullWidth}
+            button={
+              this.state.showPrimary
+                ? {
+                  label: 'Approve',
+                  onPress: this.close
+                }
+                : undefined
+            }
+            secondaryButton={
+              showSecondary
+                ? {
+                  label: 'Not now',
+                  onPress: this.notNow
+                }
+                : undefined
+            }
+            buttonLayout={showVertical ? FloatingButtonLayouts.VERTICAL : FloatingButtonLayouts.HORIZONTAL}
+            // bottomMargin={80}
+            // hideBackgroundOverlay
+            // withoutAnimation
+          />
+        </Container>
       </View>
     );
   }
