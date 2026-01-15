@@ -208,9 +208,9 @@ class GridListItem extends Component<GridListItemProps> {
     return (
       <Container
         style={[styles.container, {alignItems}, {width}, containerStyle]}
+        accessible={renderCustomItem ? true : undefined}
         {...otherContainerProps}
         onPress={onPress && this.onItemPress}
-        accessible={renderCustomItem ? true : undefined}
         {...Modifiers.extractAccessibilityProps(this.props)}
       >
         {imageProps && <Image {...imageProps} style={[itemSize, imageProps?.style]} customOverlayContent={children}/>}
