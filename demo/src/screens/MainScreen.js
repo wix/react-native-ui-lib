@@ -144,6 +144,9 @@ class MainScreen extends Component {
             title: {
               text: options.title
             }
+          },
+          bottomTabs: {
+            visible: false
           }
         }
       }
