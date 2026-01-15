@@ -71,18 +71,52 @@ function getDefaultNavigationStyle() {
 function startApp(defaultScreen) {
   Navigation.setDefaultOptions(getDefaultNavigationStyle());
 
+  const uiLibTab = {
+    component: {
+      name: 'unicorn.MainScreen',
+      options: {
+        topBar: {
+          title: {
+            text: 'R N U I L I B'
+          }
+        }
+      }
+    }
+  };
+
+  const motionTab = {
+    component: {
+      name: 'unicorn.MotionMainScreen',
+      options: {
+        topBar: {
+          title: {
+            text: 'Motion'
+          }
+        }
+      }
+    }
+  };
+
   const rootObject = {
     root: {
-      stack: {
+      bottomTabs: {
         children: [
           {
-            component: {
-              name: 'unicorn.MainScreen',
+            stack: {
+              children: [uiLibTab],
               options: {
-                topBar: {
-                  title: {
-                    text: 'R N U I L I B'
-                  }
+                bottomTab: {
+                  text: 'UI Lib'
+                }
+              }
+            }
+          },
+          {
+            stack: {
+              children: [motionTab],
+              options: {
+                bottomTab: {
+                  text: 'Motion'
                 }
               }
             }
@@ -93,7 +127,7 @@ function startApp(defaultScreen) {
   };
 
   if (defaultScreen) {
-    rootObject.root.stack.children.push({
+    rootObject.root.bottomTabs.children[0].stack.children.push({
       component: {
         name: defaultScreen
       }
