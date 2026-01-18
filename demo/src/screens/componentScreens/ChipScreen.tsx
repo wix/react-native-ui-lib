@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, type JSX} from 'react';
 import {Alert} from 'react-native';
 import {Chip, Colors, Spacings, Text, Typography, View, Image} from 'react-native-ui-lib';
 

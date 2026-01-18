@@ -327,7 +327,6 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
               titleStyle
             ]}
             numberOfLines={titleNumberOfLines}
-            // @ts-expect-error
             pointerEvents={'none'}
           >
             {title}
@@ -338,7 +337,6 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
             text70
             style={[styles.message, {color}, messageStyle]}
             numberOfLines={messageNumberOfLines}
-            // @ts-expect-error
             pointerEvents={'none'}
           >
             {message}
@@ -398,7 +396,9 @@ class FeatureHighlight extends Component<FeatureHighlightProps, State> {
               <PageControl
                 {...pageControlProps}
                 containerStyle={{marginBottom: 24}}
-                ref={(r: ElementRef<any>) => (this.viewRef = r)}
+                ref={(r: ElementRef<any>) => {
+                  (this.viewRef = r);
+                }}
               />
               <View accessible accessibilityLabel={'dismiss button'}/>
             </View>

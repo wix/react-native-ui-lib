@@ -1,6 +1,6 @@
 // TODO: Support style customization
 import {isFunction, isUndefined} from 'lodash';
-import React, {useCallback, useRef, useMemo, useEffect, useState} from 'react';
+import React, {useCallback, useRef, useMemo, useEffect, useState, type JSX} from 'react';
 import {
   TextStyle,
   ViewStyle,
@@ -126,7 +126,7 @@ const WheelPicker = <T extends WheelPickerItemValue>(props: WheelPickerProps<T>)
     faderProps,
     flatListProps
   } = themeProps;
-  const scrollView = useRef<Animated.ScrollView>();
+  const scrollView = useRef<Animated.ScrollView>(undefined);
   const offset = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler(e => {
     offset.value = e.contentOffset.y;

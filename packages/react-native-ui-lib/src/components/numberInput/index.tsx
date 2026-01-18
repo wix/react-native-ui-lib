@@ -3,7 +3,7 @@ import React, {useMemo, useCallback, useState, useRef} from 'react';
 import {StyleSheet, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {useDidUpdate, useThemeProps} from '../../hooks';
 import {Colors} from '../../style';
-import MaskedInput from '../maskedInput/new';
+import MaskedInput from '../maskedInput';
 import TextField, {TextFieldProps, TextFieldRef} from '../textField';
 import View from '../view';
 import Text from '../text';
@@ -97,7 +97,7 @@ function NumberInput(props: NumberInputProps, ref: any) {
   const [options, setOptions] = useState<Options>(generateOptions(locale, fractionDigits));
   const initialNumber = getInitialNumber(propsInitialNumber, options);
   const [data, setData] = useState<NumberInputData>(parseInput(`${initialNumber}`, options, propsInitialNumber));
-  const textField = useRef<TextFieldRef>();
+  const textField = useRef<TextFieldRef>(undefined);
   const [isFocused, setIsFocused] = useState(textFieldProps?.autoFocus ?? false);
 
   useDidUpdate(() => {

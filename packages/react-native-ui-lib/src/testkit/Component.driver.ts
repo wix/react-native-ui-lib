@@ -1,3 +1,4 @@
+import type {JSX} from 'react';
 import {DragData, UniDriver, UniDriverClass} from './UniDriver';
 import {TestingLibraryDriver} from './drivers/TestingLibraryDriver';
 

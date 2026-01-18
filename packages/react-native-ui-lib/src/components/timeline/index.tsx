@@ -24,7 +24,7 @@ const Timeline = (props: TimelineProps) => {
   const [anchorMeasurements, setAnchorMeasurements] = useState<Layout | undefined>();
   const [contentContainerMeasurements, setContentContainerMeasurements] = useState<Layout | undefined>();
   const [pointMeasurements, setPointMeasurements] = useState<Layout | undefined>();
-  const contentContainerRef = useRef<any>();
+  const contentContainerRef = useRef<any>(undefined);
 
   const onMeasure: MeasureOnSuccessCallback = (x, y, width, height) => {
     setAnchorMeasurements({x, y, width, height});

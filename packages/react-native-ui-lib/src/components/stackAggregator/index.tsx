@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useCallback, useEffect} from 'react';
+import React, {useState, useMemo, useCallback, useEffect, type JSX} from 'react';
 import {StyleSheet, Animated, Easing, LayoutAnimation, StyleProp, ViewStyle, LayoutChangeEvent} from 'react-native';
 import {Colors} from '../../style';
 import View, {ViewProps} from '../view';

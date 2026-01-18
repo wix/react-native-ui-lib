@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {Component, RefObject, ReactNode, Key} from 'react';
+import React, {Component, RefObject, ReactNode, Key, type JSX} from 'react';
 import {
   Animated,
   ScrollView,
@@ -39,7 +39,7 @@ class Carousel extends Component<CarouselProps, CarouselState> {
   };
 
   static pageControlPositions = PageControlPosition;
-  carousel: RefObject<ScrollView> = React.createRef();
+  carousel: RefObject<ScrollView | null> = React.createRef();
   autoplayTimer?: ReturnType<typeof setTimeout>;
   orientationChange?: boolean;
   skippedInitialScroll?: boolean;

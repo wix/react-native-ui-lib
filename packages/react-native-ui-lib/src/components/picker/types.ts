@@ -1,4 +1,4 @@
-import {PropsWithChildren, ReactNode} from 'react';
+import {PropsWithChildren, ReactNode, type JSX} from 'react';
 import {FlatListProps, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {ExpandableOverlayProps, ExpandableOverlayMethods} from '../../incubator/expandableOverlay';
 import {ModalTopBarProps} from '../modal/TopBar';
@@ -28,7 +28,7 @@ export type PickerValue = PickerSingleValue | PickerMultiValue | undefined;
 type PickerFilteredItems = ReactNode | Pick<PickerItemProps, 'label' | 'value' | 'disabled'>[] | undefined;
 
 type RenderPickerOverloads<ValueType> = ValueType extends PickerValue
-  ? (value?: ValueType, label?: string) => React.ReactElement
+  ? (value?: ValueType, label?: string) => React.ReactElement<any>
   : never;
 type RenderPicker = RenderPickerOverloads<PickerValue>;
 
@@ -66,7 +66,7 @@ type PickerPropsDeprecation = {
    * Render a custom header for Picker's dialog
    * instead use renderHeader
    */
-  renderCustomDialogHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement;
+  renderCustomDialogHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement<any>;
   /**
    * @deprecated
    * Render custom picker input (the value will be passed)
@@ -80,7 +80,7 @@ type PickerPropsDeprecation = {
    * Render custom picker overlay (e.g ({visible, children, toggleModal}) => {...})
    * instead use renderOverlay
    */
-  renderCustomModal?: (modalProps: RenderCustomModalProps) => React.ReactElement;
+  renderCustomModal?: (modalProps: RenderCustomModalProps) => React.ReactElement<any>;
   /**
    * @deprecated
    * Pass props to the picker modal
@@ -109,14 +109,14 @@ type PickerSearchProps = {
   /**
    * Render custom search input (only when passing showSearch)
    */
-  renderCustomSearch?: (props: PickerItemsListProps) => React.ReactElement;
+  renderCustomSearch?: (props: PickerItemsListProps) => React.ReactElement<any>;
 };
 
 type PickerListProps = PickerSearchProps & {
   /**
    * Render a custom header for Picker's Overlay
    */
-  renderHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement;
+  renderHeader?: (callbacks: {onDone?: () => void; onCancel?: () => void}) => React.ReactElement<any>;
   /**
    * Pass props to the list component that wraps the picker items (allows to control FlatList behavior)
    */
@@ -139,7 +139,7 @@ type PickerExpandableOverlayProps = {
   /**
    * Render custom picker overlay (e.g ({visible, children, toggleModal}) => {...})
    */
-  renderOverlay?: (modalProps: RenderCustomModalProps) => React.ReactElement;
+  renderOverlay?: (modalProps: RenderCustomModalProps) => React.ReactElement<any>;
   /**
    * Add blur effect to picker modal (iOS only)
    */
@@ -192,7 +192,6 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
   PickerPropsDeprecation &
   PickerExpandableOverlayProps &
   PickerListProps & {
-    /* ...TextField.propTypes, */
     /**
      * Use dialog instead of modal picker
      */
@@ -234,11 +233,11 @@ export type PickerBaseProps = Omit<TextFieldProps, 'value' | 'onChange'> &
       value: PickerValue,
       itemProps: PickerItemProps & {isSelected: boolean; isItemDisabled: boolean},
       label?: string
-    ) => React.ReactElement;
+    ) => React.ReactElement<any>;
     /**
      * Render custom top element
      */
-    renderCustomTopElement?: (value?: PickerValue) => React.ReactElement;
+    renderCustomTopElement?: (value?: PickerValue) => React.ReactElement<any>;
     /**
      * Selection status bar props
      */

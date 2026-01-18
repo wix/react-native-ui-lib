@@ -92,10 +92,6 @@ function withScrollReached<PROPS, STATICS = {}>(WrappedComponent: React.Componen
 
   hoistStatics(ScrollReachedDetector, WrappedComponent);
   ScrollReachedDetector.displayName = WrappedComponent.displayName;
-  //@ts-ignore
-  ScrollReachedDetector.propTypes = WrappedComponent.propTypes;
-  //@ts-ignore
-  ScrollReachedDetector.defaultProps = WrappedComponent.defaultProps;
   return forwardRef<PROPS & PropTypes>(ScrollReachedDetector) as any;
 }
 
