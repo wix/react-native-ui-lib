@@ -18,6 +18,8 @@ export default function forwardRef<P, STATICS = {}, RefInterface = any>(WrappedC
 
   hoistStatics(ForwardedComponent, WrappedComponent);
   ForwardedComponent.displayName = WrappedComponent.displayName;
+  // @ts-expect-error
+  ForwardedComponent.defaultProps = WrappedComponent.defaultProps;
 
   return ForwardedComponent as typeof ForwardedComponent & STATICS;
 }
