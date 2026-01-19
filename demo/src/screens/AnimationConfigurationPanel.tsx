@@ -1,6 +1,6 @@
 import React, {useState, useMemo, useEffect} from 'react';
-import {View, Text, Button, Slider, Picker} from 'react-native-ui-lib';
-
+import {View, Text, Button, Slider, Picker, Colors} from 'react-native-ui-lib';
+import {Navigation} from 'react-native-navigation';
 // TODO replace with 'react-native-motion-lib'
 import type {Spring, Easing} from '../../../packages/react-native-motion-lib/src/tokens';
 import {Springs, Easings, Durations} from '../../../packages/react-native-motion-lib/src/tokens';
@@ -50,7 +50,7 @@ export function AnimationConfigurationPanel({onAnimationSelected}: AnimationConf
   useEffect(() => {
     onAnimationSelected(animation);
   }, [animation, onAnimationSelected]);
-
+  
   const applySpringToken = (tokenName: string, token: Spring) => {
     setDamping(token.damping);
     setStiffness(token.stiffness);
@@ -95,14 +95,18 @@ export function AnimationConfigurationPanel({onAnimationSelected}: AnimationConf
           label="Spring"
           size={Button.sizes.small}
           marginR-s2
-          onPress={() => setAnimationType('spring')}
+          bg-$backgroundGeneralHeavy
+          outlineColor={Colors.$backgroundGeneralHeavy}
           outline={animationType !== 'spring'}
+          onPress={() => setAnimationType('spring')}
         />
         <Button
           label="Timing"
           size={Button.sizes.small}
-          onPress={() => setAnimationType('timing')}
+          bg-$backgroundGeneralHeavy
+          outlineColor={Colors.$backgroundGeneralHeavy}
           outline={animationType !== 'timing'}
+          onPress={() => setAnimationType('timing')}
         />
       </View>
 
@@ -119,8 +123,10 @@ export function AnimationConfigurationPanel({onAnimationSelected}: AnimationConf
                 label={name}
                 size={Button.sizes.small}
                 marginR-s2
-                onPress={() => applySpringToken(name, token)}
+                bg-$backgroundGeneralHeavy
+                outlineColor={Colors.$backgroundGeneralHeavy}
                 outline={activeSpringToken !== name}
+                onPress={() => applySpringToken(name, token)}
               />
             ))}
           </View>
@@ -131,9 +137,12 @@ export function AnimationConfigurationPanel({onAnimationSelected}: AnimationConf
             </View>
             <Slider
               value={damping}
+              thumbTintColor={Colors.$backgroundGeneralHeavy}
+              minimumTrackTintColor={Colors.$backgroundGeneralHeavy}
               minimumValue={10}
               maximumValue={120}
               step={10}
+              
               onValueChange={handleDampingChange}
             />
           </View>
@@ -144,6 +153,8 @@ export function AnimationConfigurationPanel({onAnimationSelected}: AnimationConf
             </View>
             <Slider
               value={stiffness}
+              thumbTintColor={Colors.$backgroundGeneralHeavy}
+              minimumTrackTintColor={Colors.$backgroundGeneralHeavy}
               minimumValue={100}
               maximumValue={1000}
               step={100}
@@ -157,6 +168,8 @@ export function AnimationConfigurationPanel({onAnimationSelected}: AnimationConf
             </View>
             <Slider
               value={mass}
+              thumbTintColor={Colors.$backgroundGeneralHeavy}
+              minimumTrackTintColor={Colors.$backgroundGeneralHeavy}
               minimumValue={1}
               maximumValue={10}
               step={1}
@@ -177,8 +190,10 @@ export function AnimationConfigurationPanel({onAnimationSelected}: AnimationConf
                 label={name}
                 size={Button.sizes.small}
                 marginR-s2
-                onPress={() => applyDurationToken(name, token)}
+                bg-$backgroundGeneralHeavy
+                outlineColor={Colors.$backgroundGeneralHeavy}
                 outline={activeDurationToken !== name}
+                onPress={() => applyDurationToken(name, token)}
               />
             ))}
           </View>
@@ -189,6 +204,8 @@ export function AnimationConfigurationPanel({onAnimationSelected}: AnimationConf
             </View>
             <Slider
               value={duration}
+              thumbTintColor={Colors.$backgroundGeneralHeavy}
+              minimumTrackTintColor={Colors.$backgroundGeneralHeavy}
               minimumValue={100}
               maximumValue={2000}
               step={100}

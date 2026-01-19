@@ -91,7 +91,8 @@ function startApp(defaultScreen) {
         topBar: {
           title: {
             text: 'Motion'
-          }
+          },
+          backgroundColor: Colors.$backgroundPrimaryHeavy
         }
       }
     }

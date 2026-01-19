@@ -7,6 +7,10 @@ const chevronIcon = require('../assets/icons/chevronRight.png');
 
 const sectionsData = [
   {
+    title: 'Playground',
+    data: [{title: 'Animation', screen: 'unicorn.MotionPlayground'}]
+  },
+  {
     title: 'Effects',
     data: [{title: 'Card Flip', screen: 'unicorn.MotionCardFlip'}]
   }
