@@ -4,10 +4,9 @@ import {View, Text, Colors} from 'react-native-ui-lib';
 import Animated, {useSharedValue, useAnimatedStyle, withSpring, withTiming, SharedValue} from 'react-native-reanimated';
 import {Navigation} from 'react-native-navigation';
 
-// TODO replace with 'react-native-motion-lib'
-import {Springs} from '../../../packages/react-native-motion-lib/src/tokens';
-import type {AnimationProps, SpringAnimationProps, TimeAnimationProps} from '../../../packages/react-native-motion-lib/src/types';
-import type {Easing} from '../../../packages/react-native-motion-lib/src/tokens';
+import {Springs, Easings, Durations, type Easing} from 'react-native-motion-lib';
+import type {AnimationProps, SpringAnimationProps, TimeAnimationProps} from 'react-native-motion-lib';
+
 import {AnimationConfigurationPanel} from './AnimationConfigurationPanel';
 
 type AnimationSpecs = {

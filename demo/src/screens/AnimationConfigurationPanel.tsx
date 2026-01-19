@@ -1,10 +1,9 @@
 import React, {useState, useMemo, useEffect} from 'react';
 import {View, Text, Button, Slider, Picker, Colors} from 'react-native-ui-lib';
 import {Navigation} from 'react-native-navigation';
-// TODO replace with 'react-native-motion-lib'
-import type {Spring, Easing} from '../../../packages/react-native-motion-lib/src/tokens';
-import {Springs, Easings, Durations} from '../../../packages/react-native-motion-lib/src/tokens';
-import type {AnimationProps} from '../../../packages/react-native-motion-lib/src/types';
+import type {Spring, Easing} from 'react-native-motion-lib';
+import {Springs, Easings, Durations} from 'react-native-motion-lib';
+import type {AnimationProps} from 'react-native-motion-lib';
 
 type AnimationType = 'spring' | 'timing';
 

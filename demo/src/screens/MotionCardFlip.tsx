@@ -2,10 +2,8 @@ import React, {useState} from 'react';
 import {type ViewStyle, ScrollView} from 'react-native';
 import {View, Text, TouchableOpacity} from 'react-native-ui-lib';
 
-// TODO replace with 'react-native-motion-lib'
-import {FlipEffect} from '../../../packages/react-native-motion-lib/src/effects/FlipEffect';
-import {Springs} from '../../../packages/react-native-motion-lib/src/tokens';
-import type {AnimationProps} from '../../../packages/react-native-motion-lib/src/types';
+import {FlipEffect, Springs, type AnimationProps} from 'react-native-motion-lib';
+
 import {AnimationConfigurationPanel} from './AnimationConfigurationPanel';
 
 const cardStyle: ViewStyle = {

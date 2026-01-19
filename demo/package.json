@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "react-native-ui-lib": "8.0.0",
+    "react-native-motion-lib": "*",
     "shell-utils": "^1.0.10"
   },
   "peerDependencies": {
