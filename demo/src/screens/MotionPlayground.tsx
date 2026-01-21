@@ -1,11 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, TouchableOpacity} from 'react-native';
+import {ScrollView, TouchableWithoutFeedback} from 'react-native';
 import {View, Text, Colors} from 'react-native-ui-lib';
 import Animated, {useSharedValue, useAnimatedStyle, withSpring, withTiming, SharedValue} from 'react-native-reanimated';
 import {Navigation} from 'react-native-navigation';
 
-import {Springs, Easings, Durations, type Easing} from 'react-native-motion-lib';
-import type {AnimationProps, SpringAnimationProps, TimeAnimationProps} from 'react-native-motion-lib';
+import {Springs, type Easing, type AnimationProps, type SpringAnimationProps, type TimeAnimationProps, Spring} from 'react-native-motion-lib';
 
 import {AnimationConfigurationPanel} from './AnimationConfigurationPanel';
 
@@ -30,7 +29,7 @@ function AnimatedBox({animationSpecs, animation, isAnimated, onPress}: AnimatedB
 
   const animatedStyle = useAnimatedStyle(() => {
     const style: { [key: string]: any } = {
-      transform: [],
+      transform: []
     };
     animationSpecs.applyAnimationStyle(style, animatedValue);
     return style;
@@ -38,14 +37,18 @@ function AnimatedBox({animationSpecs, animation, isAnimated, onPress}: AnimatedB
 
   useEffect(() => {
     if ((animation as SpringAnimationProps).spring !== undefined) {
-      animatedValue.value = withSpring(isAnimated ? targetValue : initialValue, (animation as SpringAnimationProps).spring);
+      animatedValue.value = withSpring(isAnimated ? targetValue : initialValue,
+        (animation as SpringAnimationProps).spring as Spring);
     } else {
-      animatedValue.value = withTiming(isAnimated ? targetValue : initialValue, {duration: (animation as TimeAnimationProps).duration, easing: (animation as TimeAnimationProps).easing as Easing});
+      animatedValue.value = withTiming(isAnimated ? targetValue : initialValue, {
+        duration: (animation as TimeAnimationProps).duration,
+        easing: (animation as TimeAnimationProps).easing as Easing
+      });
     }
-  }, [isAnimated, animation, animatedValue]);
+  }, [isAnimated, animation, animatedValue, targetValue, initialValue]);
 
   return (
-    <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
+    <TouchableWithoutFeedback onPress={onPress}>
       <Animated.View
         style={[
           {
@@ -56,14 +59,14 @@ function AnimatedBox({animationSpecs, animation, isAnimated, onPress}: AnimatedB
             justifyContent: 'center',
             alignItems: 'center',
             margin: 20,
-            shadowColor: '#000',
+            shadowColor: 'black',
             shadowOffset: {
               width: 0,
-              height: 2
+              height: 5
             },
-            shadowOpacity: 0.1,
-            shadowRadius: 4,
-            elevation: 3
+            shadowOpacity: 0.25,
+            shadowRadius: 10
+            // elevation: 5
           },
           animatedStyle
         ]}
@@ -72,7 +75,7 @@ function AnimatedBox({animationSpecs, animation, isAnimated, onPress}: AnimatedB
           {label}
         </Text>
       </Animated.View>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -83,8 +86,8 @@ function MotionPlayground({componentId}: {componentId: string}) {
       topBar: {
         background: {
           color: Colors.$backgroundGeneralHeavy
-        },
-      },
+        }
+      }
     });
   });
 
@@ -97,7 +100,7 @@ function MotionPlayground({componentId}: {componentId: string}) {
       applyAnimationStyle: (style: { [key: string]: any }, animatedValue: SharedValue) => {
         'worklet';
         style.transform.push({scale: animatedValue.value});
-      },
+      }
     },
     opacity: {
       label: 'Fade', 
@@ -107,7 +110,7 @@ function MotionPlayground({componentId}: {componentId: string}) {
       applyAnimationStyle: (style: { [key: string]: any }, animatedValue: SharedValue) => {
         'worklet';
         style.opacity = animatedValue.value;
-      },
+      }
     },
     rotation: {
       label: 'Rotation',
@@ -117,7 +120,7 @@ function MotionPlayground({componentId}: {componentId: string}) {
       applyAnimationStyle: (style: { [key: string]: any }, animatedValue: SharedValue) => {
         'worklet';
         style.transform.push({rotate: `${animatedValue.value}deg`});
-      },
+      }
     },
     slideV: {
       label: 'Slide V',
@@ -127,7 +130,7 @@ function MotionPlayground({componentId}: {componentId: string}) {
       applyAnimationStyle: (style: { [key: string]: any }, animatedValue: SharedValue) => {
         'worklet';
         style.transform.push({translateY: animatedValue.value});
-      },
+      }
     },
     slideH: {
       label: 'Slide H',
@@ -137,8 +140,18 @@ function MotionPlayground({componentId}: {componentId: string}) {
       applyAnimationStyle: (style: { [key: string]: any }, animatedValue: SharedValue) => {
         'worklet';
         style.transform.push({translateX: animatedValue.value});
-      },
+      }
     },
+
+    placeholder: {
+      label: '',
+      color: '#ffffff00',
+      initialValue: 0,
+      targetValue: 0,
+      applyAnimationStyle: (_style: { [key: string]: any }, _animatedValue: SharedValue) => {
+        'worklet';
+      }
+    }
   };
 
   const [animation, setAnimation] = useState<AnimationProps>({spring: Springs.gentle});
@@ -165,7 +178,7 @@ function MotionPlayground({componentId}: {componentId: string}) {
             backgroundColor: Colors.$backgroundNeutralLight
           }}
         >
-          <View row centerH marginB-s4>
+          <View row centerH marginB-s1>
             <AnimatedBox
               animationSpecs={items.scale}
               animation={animation}
@@ -179,7 +192,7 @@ function MotionPlayground({componentId}: {componentId: string}) {
               onPress={() => setFadeAnimated(!fadeAnimated)}
             />
           </View>
-          <View row centerH marginB-s4>
+          <View row centerH marginB-s1>
             <AnimatedBox
               animationSpecs={items.rotation}
               animation={animation}
@@ -200,10 +213,16 @@ function MotionPlayground({componentId}: {componentId: string}) {
               isAnimated={slideHAnimated}
               onPress={() => setSlideHAnimated(!slideHAnimated)}
             />
+            <AnimatedBox
+              animationSpecs={items.placeholder}
+              animation={animation}
+              isAnimated={false}
+              onPress={() => {}}
+            />
           </View>
         </View>
 
-        <AnimationConfigurationPanel onAnimationSelected={setAnimation} />
+        <AnimationConfigurationPanel onAnimationSelected={setAnimation}/>
       </View>
     </ScrollView>
   );
