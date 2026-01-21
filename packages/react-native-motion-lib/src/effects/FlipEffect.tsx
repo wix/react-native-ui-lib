@@ -12,7 +12,13 @@ type FlipEffectProps = {
   animation?: AnimationProps;
 };
 
-export function FlipEffect({FrontComponent, BackComponent, height, flipped = false, animation = {spring: Springs.gentle}}: FlipEffectProps) {
+export function FlipEffect({
+  FrontComponent,
+  BackComponent,
+  height,
+  flipped = false,
+  animation = {spring: Springs.gentle}
+}: FlipEffectProps) {
   const rotate = useSharedValue(0);
   const zIndexFront = useDerivedValue(() => (rotate.value < 90 ? 1 : 0));
   const zIndexBack = useDerivedValue(() => (rotate.value >= 90 ? 1 : 0));
@@ -39,7 +45,7 @@ export function FlipEffect({FrontComponent, BackComponent, height, flipped = fal
         easing: (animation as TimeAnimationProps).easing as Easing
       });
     }
-  }, [flipped, animation]);
+  }, [flipped, animation, rotate]);
   
   return (
     <View style={{alignItems: 'center', height}} >

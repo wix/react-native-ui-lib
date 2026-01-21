@@ -1,9 +1,6 @@
 import React, {useState, useMemo, useEffect} from 'react';
 import {View, Text, Button, Slider, Picker, Colors} from 'react-native-ui-lib';
-import {Navigation} from 'react-native-navigation';
-import type {Spring, Easing} from 'react-native-motion-lib';
-import {Springs, Easings, Durations} from 'react-native-motion-lib';
-import type {AnimationProps} from 'react-native-motion-lib';
+import {Springs, Easings, Durations, type AnimationProps, type Spring, type Easing} from 'react-native-motion-lib';
 
 type AnimationType = 'spring' | 'timing';
 
@@ -37,7 +34,7 @@ export function AnimationConfigurationPanel({onAnimationSelected}: AnimationConf
 
   const animation: AnimationProps = useMemo(() => {
     if (animationType === 'spring') {
-      return { spring };
+      return {spring};
     } else {
       return {
         duration,

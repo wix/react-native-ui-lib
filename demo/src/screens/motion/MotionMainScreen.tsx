@@ -3,16 +3,21 @@ import {SectionList} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import {View, Text, TouchableOpacity, Colors, Dividers, Icon} from 'react-native-ui-lib'; //eslint-disable-line
 
-const chevronIcon = require('../assets/icons/chevronRight.png');
+const chevronIcon = require('../../assets/icons/chevronRight.png');
 
 const sectionsData = [
   {
     title: 'Playground',
-    data: [{title: 'Animation', screen: 'unicorn.MotionPlayground'}]
+    data: [
+      {title: 'Isolated Animations', screen: 'unicorn.MotionPlaygroundScreen'},
+      {title: 'Pins Play', screen: 'unicorn.MotionPinsPlayScreen'}
+    ]
   },
   {
     title: 'Effects',
-    data: [{title: 'Card Flip', screen: 'unicorn.MotionCardFlip'}]
+    data: [
+      {title: 'Card Flip', screen: 'unicorn.MotionCardFlipScreen'}
+    ]
   }
 ];
 

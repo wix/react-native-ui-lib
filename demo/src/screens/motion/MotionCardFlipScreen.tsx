@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {type ViewStyle, ScrollView} from 'react-native';
-import {View, Text, TouchableOpacity} from 'react-native-ui-lib';
+import {type ViewStyle, ScrollView, TouchableHighlight} from 'react-native';
+import {View, Text} from 'react-native-ui-lib';
 
 import {FlipEffect, Springs, type AnimationProps} from 'react-native-motion-lib';
 
@@ -11,12 +11,12 @@ const cardStyle: ViewStyle = {
   height: 150,
   alignItems: 'center',
   justifyContent: 'center',
-  borderRadius: 10,
+  borderRadius: 10
 };
   
 function FrontCardFace() {
   return (
-    <View style={{ ...cardStyle, backgroundColor: 'hsl(54, 100.00%, 57.50%)' }}>
+    <View style={{...cardStyle, backgroundColor: 'hsl(54, 100.00%, 57.50%)'}}>
       <Text center text40>Front</Text>
     </View>
   );
@@ -24,7 +24,7 @@ function FrontCardFace() {
 
 function BackCardFace() {
   return (
-    <View style={{ ...cardStyle, backgroundColor: 'hsl(207, 66.50%, 44.50%)' }}>
+    <View style={{...cardStyle, backgroundColor: 'hsl(207, 66.50%, 44.50%)'}}>
       <Text center white text40>Back</Text>
     </View>
   );
@@ -40,17 +40,17 @@ function MotionCardFlip() {
 
         <Text text80 marginB-s3>Tap on the card</Text>
 
-        <TouchableOpacity onPress={() => setIsFlipped(!isFlipped)} style={{alignSelf: 'center'}} activeOpacity={0}>
+        <TouchableHighlight onPress={() => setIsFlipped(!isFlipped)} style={{alignSelf: 'center'}}>
           <FlipEffect 
-            FrontComponent={<FrontCardFace />} 
-            BackComponent={<BackCardFace />} 
+            FrontComponent={<FrontCardFace/>} 
+            BackComponent={<BackCardFace/>} 
             height={200} 
             flipped={isFlipped}
             animation={animation}
-            />
-        </TouchableOpacity>
+          />
+        </TouchableHighlight>
   
-        <AnimationConfigurationPanel onAnimationSelected={setAnimation} />
+        <AnimationConfigurationPanel onAnimationSelected={setAnimation}/>
       </View>
     </ScrollView>
   );

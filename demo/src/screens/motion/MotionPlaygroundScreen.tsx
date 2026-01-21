@@ -65,8 +65,8 @@ function AnimatedBox({animationSpecs, animation, isAnimated, onPress}: AnimatedB
               height: 5
             },
             shadowOpacity: 0.25,
-            shadowRadius: 10
-            // elevation: 5
+            shadowRadius: 10,
+            elevation: 5
           },
           animatedStyle
         ]}
@@ -148,8 +148,9 @@ function MotionPlayground({componentId}: {componentId: string}) {
       color: '#ffffff00',
       initialValue: 0,
       targetValue: 0,
-      applyAnimationStyle: (_style: { [key: string]: any }, _animatedValue: SharedValue) => {
+      applyAnimationStyle: (style: { [key: string]: any }, _animatedValue: SharedValue) => {
         'worklet';
+        style.elevation = 0;
       }
     }
   };
