@@ -86,7 +86,7 @@ function startApp(defaultScreen) {
 
   const motionTab = {
     component: {
-      name: 'unicorn.MotionMainScreen',
+      name: 'unicorn.motion.MotionMainScreen',
       options: {
         topBar: {
           title: {

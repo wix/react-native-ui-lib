@@ -4,7 +4,7 @@ import {View, Text, Colors} from 'react-native-ui-lib';
 import Animated, {useSharedValue, useAnimatedStyle, withSpring, withTiming, SharedValue} from 'react-native-reanimated';
 import {Navigation} from 'react-native-navigation';
 
-import {Springs, type Easing, type AnimationProps, type SpringAnimationProps, type TimeAnimationProps, Spring} from 'react-native-motion-lib';
+import {Springs, type Easing, type AnimationSpecs, type SpringAnimationSpecs, type TimeAnimationSpecs, Spring} from 'react-native-motion-lib';
 
 import {AnimationConfigurationPanel} from './AnimationConfigurationPanel';
 
@@ -18,9 +18,73 @@ type AnimationSpecs = {
 
 type AnimatedBoxProps = {
   animationSpecs: AnimationSpecs;
-  animation: AnimationProps;
+  animation: AnimationSpecs;
   isAnimated: boolean;
   onPress: () => void;
+};
+
+const items: Record<string, AnimationSpecs> = {
+  scale: {
+    label: 'Scale',
+    color: '#4A90E2',
+    initialValue: 1,
+    targetValue: 1.5,
+    applyAnimationStyle: (style: { [key: string]: any }, animatedValue: SharedValue) => {
+      'worklet';
+      style.transform.push({scale: animatedValue.value});
+    }
+  },
+  opacity: {
+    label: 'Fade', 
+    color: '#50C878',
+    initialValue: 1,
+    targetValue: 0,
+    applyAnimationStyle: (style: { [key: string]: any }, animatedValue: SharedValue) => {
+      'worklet';
+      style.opacity = animatedValue.value;
+    }
+  },
+  rotation: {
+    label: 'Rotation',
+    color: '#FF6B6B',
+    initialValue: 0,
+    targetValue: 360,
+    applyAnimationStyle: (style: { [key: string]: any }, animatedValue: SharedValue) => {
+      'worklet';
+      style.transform.push({rotate: `${animatedValue.value}deg`});
+    }
+  },
+  slideV: {
+    label: 'Slide V',
+    color: '#FFD93D',
+    initialValue: 0,
+    targetValue: 100,
+    applyAnimationStyle: (style: { [key: string]: any }, animatedValue: SharedValue) => {
+      'worklet';
+      style.transform.push({translateY: animatedValue.value});
+    }
+  },
+  slideH: {
+    label: 'Slide H',
+    color: '#9B59B6',
+    initialValue: 0,
+    targetValue: 100,
+    applyAnimationStyle: (style: { [key: string]: any }, animatedValue: SharedValue) => {
+      'worklet';
+      style.transform.push({translateX: animatedValue.value});
+    }
+  },
+
+  placeholder: {
+    label: '',
+    color: '#ffffff00',
+    initialValue: 0,
+    targetValue: 0,
+    applyAnimationStyle: (style: { [key: string]: any }, _animatedValue: SharedValue) => {
+      'worklet';
+      style.elevation = 0;
+    }
+  }
 };
 
 function AnimatedBox({animationSpecs, animation, isAnimated, onPress}: AnimatedBoxProps) {
@@ -36,13 +100,13 @@ function AnimatedBox({animationSpecs, animation, isAnimated, onPress}: AnimatedB
   });
 
   useEffect(() => {
-    if ((animation as SpringAnimationProps).spring !== undefined) {
+    if ((animation as SpringAnimationSpecs).spring !== undefined) {
       animatedValue.value = withSpring(isAnimated ? targetValue : initialValue,
-        (animation as SpringAnimationProps).spring as Spring);
+        (animation as SpringAnimationSpecs).spring as Spring);
     } else {
       animatedValue.value = withTiming(isAnimated ? targetValue : initialValue, {
-        duration: (animation as TimeAnimationProps).duration,
-        easing: (animation as TimeAnimationProps).easing as Easing
+        duration: (animation as TimeAnimationSpecs).duration,
+        easing: (animation as TimeAnimationSpecs).easing as Easing
       });
     }
   }, [isAnimated, animation, animatedValue, targetValue, initialValue]);
@@ -91,71 +155,7 @@ function MotionPlayground({componentId}: {componentId: string}) {
     });
   });
 
-  const items: Record<string, AnimationSpecs> = {
-    scale: {
-      label: 'Scale',
-      color: '#4A90E2',
-      initialValue: 1,
-      targetValue: 1.5,
-      applyAnimationStyle: (style: { [key: string]: any }, animatedValue: SharedValue) => {
-        'worklet';
-        style.transform.push({scale: animatedValue.value});
-      }
-    },
-    opacity: {
-      label: 'Fade', 
-      color: '#50C878',
-      initialValue: 1,
-      targetValue: 0,
-      applyAnimationStyle: (style: { [key: string]: any }, animatedValue: SharedValue) => {
-        'worklet';
-        style.opacity = animatedValue.value;
-      }
-    },
-    rotation: {
-      label: 'Rotation',
-      color: '#FF6B6B',
-      initialValue: 0,
-      targetValue: 360,
-      applyAnimationStyle: (style: { [key: string]: any }, animatedValue: SharedValue) => {
-        'worklet';
-        style.transform.push({rotate: `${animatedValue.value}deg`});
-      }
-    },
-    slideV: {
-      label: 'Slide V',
-      color: '#FFD93D',
-      initialValue: 0,
-      targetValue: 100,
-      applyAnimationStyle: (style: { [key: string]: any }, animatedValue: SharedValue) => {
-        'worklet';
-        style.transform.push({translateY: animatedValue.value});
-      }
-    },
-    slideH: {
-      label: 'Slide H',
-      color: '#9B59B6',
-      initialValue: 0,
-      targetValue: 100,
-      applyAnimationStyle: (style: { [key: string]: any }, animatedValue: SharedValue) => {
-        'worklet';
-        style.transform.push({translateX: animatedValue.value});
-      }
-    },
-
-    placeholder: {
-      label: '',
-      color: '#ffffff00',
-      initialValue: 0,
-      targetValue: 0,
-      applyAnimationStyle: (style: { [key: string]: any }, _animatedValue: SharedValue) => {
-        'worklet';
-        style.elevation = 0;
-      }
-    }
-  };
-
-  const [animation, setAnimation] = useState<AnimationProps>({spring: Springs.gentle});
+  const [animation, setAnimation] = useState<AnimationSpecs>({spring: Springs.gentle});
   const [scaleAnimated, setScaleAnimated] = useState(false);
   const [fadeAnimated, setFadeAnimated] = useState(false);
   const [rotateAnimated, setRotateAnimated] = useState(false);

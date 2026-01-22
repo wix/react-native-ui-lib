@@ -2,14 +2,14 @@ import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import Animated, {useAnimatedStyle, useDerivedValue, useSharedValue, withSpring, withTiming} from 'react-native-reanimated';
 import {Springs, type Easing} from '../tokens';
-import {AnimationProps, SpringAnimationProps, TimeAnimationProps} from '../types';
+import {AnimationSpecs, SpringAnimationSpecs, TimeAnimationSpecs} from '../types';
 
 type FlipEffectProps = {
   FrontComponent: React.ReactNode;
   BackComponent: React.ReactNode;
   height: number;
   flipped: boolean;
-  animation?: AnimationProps;
+  animation?: AnimationSpecs;
 };
 
 export function FlipEffect({
@@ -37,12 +37,12 @@ export function FlipEffect({
   }));
 
   useEffect(() => {
-    if ((animation as SpringAnimationProps).spring !== undefined) {
-      rotate.value = withSpring(flipped ? 180 : 0, (animation as SpringAnimationProps).spring);
+    if ((animation as SpringAnimationSpecs).spring !== undefined) {
+      rotate.value = withSpring(flipped ? 180 : 0, (animation as SpringAnimationSpecs).spring);
     } else {
       rotate.value = withTiming(flipped ? 180 : 0, {
-        duration: (animation as TimeAnimationProps).duration,
-        easing: (animation as TimeAnimationProps).easing as Easing
+        duration: (animation as TimeAnimationSpecs).duration,
+        easing: (animation as TimeAnimationSpecs).easing as Easing
       });
     }
   }, [flipped, animation, rotate]);

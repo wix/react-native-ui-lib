@@ -1,4 +1,6 @@
 export * from './tokens';
 export * from './types';
+export * from './utils';
 
-export {FlipEffect} from './effects/FlipEffect';
+export * from './effects/FlipEffect';
+export * from './effects/AnimationStack';

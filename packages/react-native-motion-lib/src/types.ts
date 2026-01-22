@@ -1,12 +1,12 @@
 import type {Spring, Easing} from './tokens';
 
-export type SpringAnimationProps = {
+export type SpringAnimationSpecs = {
     spring: Spring;
 }
 
-export type TimeAnimationProps = {
+export type TimeAnimationSpecs = {
     duration: number;
     easing: Easing;
 }
 
-export type AnimationProps = SpringAnimationProps | TimeAnimationProps;
+export type AnimationSpecs = SpringAnimationSpecs | TimeAnimationSpecs;

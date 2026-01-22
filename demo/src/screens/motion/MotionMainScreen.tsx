@@ -9,14 +9,15 @@ const sectionsData = [
   {
     title: 'Playground',
     data: [
-      {title: 'Isolated Animations', screen: 'unicorn.MotionPlaygroundScreen'},
-      {title: 'Pins Play', screen: 'unicorn.MotionPinsPlayScreen'}
+      {title: 'Isolated Animations', screen: 'unicorn.motion.MotionPlaygroundScreen'},
+      {title: 'Animation Compositor', screen: 'unicorn.motion.MotionComposeScreen'}
     ]
   },
   {
     title: 'Effects',
     data: [
-      {title: 'Card Flip', screen: 'unicorn.MotionCardFlipScreen'}
+      {title: 'Card Flip', screen: 'unicorn.motion.MotionCardFlipScreen'},
+      {title: 'Pin In/Out', screen: 'unicorn.motion.MotionPinsPlayScreen'}
     ]
   }
 ];
