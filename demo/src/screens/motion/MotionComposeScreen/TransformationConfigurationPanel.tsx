@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
+import {TouchableWithoutFeedback} from 'react-native';
 import {Colors, Slider, Text, View} from 'react-native-ui-lib';
 
 export type TransformationConfigurationPanelProps = {
@@ -38,9 +39,10 @@ export function TransformationConfigurationPanel({
   targetMax,
   targetStep
 }: TransformationConfigurationPanelProps) {
-
   const [startValue, setStartValue] = useState(initialValue);
   const [endValue, setEndValue] = useState(targetValue);
+  const startSliderRef = useRef<React.ElementRef<typeof Slider>>(null);
+  const endSliderRef = useRef<React.ElementRef<typeof Slider>>(null);
 
   return (
     <View marginT-s4>
@@ -50,8 +52,16 @@ export function TransformationConfigurationPanel({
 
       <View row>
         <View flex marginR-s2>
-          <Text text80>Start: {formatValue(startValue)}</Text>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              setStartValue(initialValue);
+              startSliderRef.current?.reset();
+            }}
+          >
+            <Text text80>Start: {formatValue(startValue)}</Text>
+          </TouchableWithoutFeedback>
           <Slider
+            ref={startSliderRef}
             value={initialValue}
             thumbTintColor={Colors.$backgroundGeneralHeavy}
             minimumTrackTintColor={Colors.$backgroundGeneralHeavy}
@@ -68,8 +78,16 @@ export function TransformationConfigurationPanel({
         </View>
 
         <View flex marginL-s2>
-          <Text text80>End: {formatValue(endValue)}</Text>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              setEndValue(targetValue);
+              endSliderRef.current?.reset();
+            }}
+          >
+            <Text text80>End: {formatValue(endValue)}</Text>
+          </TouchableWithoutFeedback>
           <Slider
+            ref={endSliderRef}
             value={targetValue}
             thumbTintColor={Colors.$backgroundGeneralHeavy}
             minimumTrackTintColor={Colors.$backgroundGeneralHeavy}

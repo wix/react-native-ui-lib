@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {ScrollView, TouchableWithoutFeedback, ViewStyle} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import {Colors, Text, View} from 'react-native-ui-lib';
-
 import {
   createScaleAnimation,
   createTranslationXAnimation,
@@ -146,98 +145,100 @@ function MotionComposeScreen({componentId}: {componentId: string}) {
             </View>
           </TouchableWithoutFeedback>  
         </View>
+
+        <View flex style={{opacity: (previewStyle !== null ? 0.2 : 1)}}>
+          <ScaleConfigurationPanel
+            initialValue={SCALE_INIT}
+            targetValue={SCALE_TARGET}
+          
+            onInitialPressIn={setPreviewStyleInitial}
+            onInitialChange={(value) => {
+              setScaleInit(value);
+              setPreviewStyleInitial();
+            }}
+            onInitialPressOut={clearPreviewStyle}
+            onTargetPressIn={setPreviewStyleTarget}
+            onTargetChange={(value) => {
+              setScaleTarget(value);
+              setPreviewStyleTarget();
+            }}
+            onTargetPressOut={clearPreviewStyle}
+          />
+
+          <TranslationXConfigurationPanel
+            initialValue={TRANSLATION_X_INIT}
+            targetValue={TRANSLATION_X_TARGET}
+          
+            onInitialPressIn={setPreviewStyleInitial}
+            onInitialChange={(value) => {
+              setTransXInit(value);
+              setPreviewStyleInitial();
+            }}
+            onInitialPressOut={clearPreviewStyle}
+            onTargetPressIn={setPreviewStyleTarget}
+            onTargetChange={(value) => {
+              setTransXTarget(value);
+              setPreviewStyleTarget();
+            }}
+            onTargetPressOut={clearPreviewStyle}
+          />
+
+          <TranslationYConfigurationPanel
+            initialValue={TRANSLATION_Y_INIT}
+            targetValue={TRANSLATION_Y_TARGET}
+          
+            onInitialPressIn={setPreviewStyleInitial}
+            onInitialChange={(value) => {
+              setTransYInit(value);
+              setPreviewStyleInitial();
+            }}
+            onInitialPressOut={clearPreviewStyle}
+            onTargetPressIn={setPreviewStyleTarget}
+            onTargetChange={(value) => {
+              setTransYTarget(value);
+              setPreviewStyleTarget();
+            }}
+            onTargetPressOut={clearPreviewStyle}
+          />
+
+          <RotationZConfigurationPanel
+            initialValue={ROTATION_Z_INIT}
+            targetValue={ROTATION_Z_TARGET}
+          
+            onInitialPressIn={setPreviewStyleInitial}
+            onInitialChange={(value) => {
+              setRotationZInit(value);
+              setPreviewStyleInitial();
+            }}
+            onInitialPressOut={clearPreviewStyle}
+            onTargetPressIn={setPreviewStyleTarget}
+            onTargetChange={(value) => {
+              setRotationZTarget(value);
+              setPreviewStyleTarget();
+            }}
+            onTargetPressOut={clearPreviewStyle}
+          />
+
+          <OpacityConfigurationPanel
+            initialValue={OPACITY_INIT}
+            targetValue={OPACITY_TARGET}
+          
+            onInitialPressIn={setPreviewStyleInitial}
+            onInitialChange={(value) => {
+              setOpacityInit(value);
+              setPreviewStyleInitial();
+            }}
+            onInitialPressOut={clearPreviewStyle}
+            onTargetPressIn={setPreviewStyleTarget}
+            onTargetChange={(value) => {
+              setOpacityTarget(value);
+              setPreviewStyleTarget();
+            }}
+            onTargetPressOut={clearPreviewStyle}
+          />
+
+        </View>
         
-
-        <ScaleConfigurationPanel
-          initialValue={SCALE_INIT}
-          targetValue={SCALE_TARGET}
-          
-          onInitialPressIn={setPreviewStyleInitial}
-          onInitialChange={(value) => {
-            setScaleInit(value);
-            setPreviewStyleInitial();
-          }}
-          onInitialPressOut={clearPreviewStyle}
-          onTargetPressIn={setPreviewStyleTarget}
-          onTargetChange={(value) => {
-            setScaleTarget(value);
-            setPreviewStyleTarget();
-          }}
-          onTargetPressOut={clearPreviewStyle}
-        />
-
-        <TranslationXConfigurationPanel
-          initialValue={TRANSLATION_X_INIT}
-          targetValue={TRANSLATION_X_TARGET}
-          
-          onInitialPressIn={setPreviewStyleInitial}
-          onInitialChange={(value) => {
-            setTransXInit(value);
-            setPreviewStyleInitial();
-          }}
-          onInitialPressOut={clearPreviewStyle}
-          onTargetPressIn={setPreviewStyleTarget}
-          onTargetChange={(value) => {
-            setTransXTarget(value);
-            setPreviewStyleTarget();
-          }}
-          onTargetPressOut={clearPreviewStyle}
-        />
-
-        <TranslationYConfigurationPanel
-          initialValue={TRANSLATION_Y_INIT}
-          targetValue={TRANSLATION_Y_TARGET}
-          
-          onInitialPressIn={setPreviewStyleInitial}
-          onInitialChange={(value) => {
-            setTransYInit(value);
-            setPreviewStyleInitial();
-          }}
-          onInitialPressOut={clearPreviewStyle}
-          onTargetPressIn={setPreviewStyleTarget}
-          onTargetChange={(value) => {
-            setTransYTarget(value);
-            setPreviewStyleTarget();
-          }}
-          onTargetPressOut={clearPreviewStyle}
-        />
-
-        <RotationZConfigurationPanel
-          initialValue={ROTATION_Z_INIT}
-          targetValue={ROTATION_Z_TARGET}
-          
-          onInitialPressIn={setPreviewStyleInitial}
-          onInitialChange={(value) => {
-            setRotationZInit(value);
-            setPreviewStyleInitial();
-          }}
-          onInitialPressOut={clearPreviewStyle}
-          onTargetPressIn={setPreviewStyleTarget}
-          onTargetChange={(value) => {
-            setRotationZTarget(value);
-            setPreviewStyleTarget();
-          }}
-          onTargetPressOut={clearPreviewStyle}
-        />
-
-        <OpacityConfigurationPanel
-          initialValue={OPACITY_INIT}
-          targetValue={OPACITY_TARGET}
-          
-          onInitialPressIn={setPreviewStyleInitial}
-          onInitialChange={(value) => {
-            setOpacityInit(value);
-            setPreviewStyleInitial();
-          }}
-          onInitialPressOut={clearPreviewStyle}
-          onTargetPressIn={setPreviewStyleTarget}
-          onTargetChange={(value) => {
-            setOpacityTarget(value);
-            setPreviewStyleTarget();
-          }}
-          onTargetPressOut={clearPreviewStyle}
-        />
-
         <View marginT-s10>
           <AnimationConfigurationPanel onAnimationSelected={setAnimationSpecs}/>
         </View>
