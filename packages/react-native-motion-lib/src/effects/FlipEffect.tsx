@@ -1,15 +1,15 @@
 import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import Animated, {useAnimatedStyle, useDerivedValue, useSharedValue, withSpring, withTiming} from 'react-native-reanimated';
-import {Springs, type Easing} from '../tokens';
-import {AnimationSpecs, SpringAnimationSpecs, TimeAnimationSpecs} from '../types';
+
+import {Springs, type InterpolationSpecs, type SpringInterpolationSpecs, type TimeInterpolationSpecs} from '../foundation';
 
 type FlipEffectProps = {
   FrontComponent: React.ReactNode;
   BackComponent: React.ReactNode;
   height: number;
   flipped: boolean;
-  animation?: AnimationSpecs;
+  interpolation?: InterpolationSpecs;
 };
 
 export function FlipEffect({
@@ -17,7 +17,7 @@ export function FlipEffect({
   BackComponent,
   height,
   flipped = false,
-  animation = {spring: Springs.gentle}
+  interpolation = {spring: Springs.gentle}
 }: FlipEffectProps) {
   const rotate = useSharedValue(0);
   const zIndexFront = useDerivedValue(() => (rotate.value < 90 ? 1 : 0));
@@ -37,15 +37,15 @@ export function FlipEffect({
   }));
 
   useEffect(() => {
-    if ((animation as SpringAnimationSpecs).spring !== undefined) {
-      rotate.value = withSpring(flipped ? 180 : 0, (animation as SpringAnimationSpecs).spring);
+    if ((interpolation as SpringInterpolationSpecs).spring !== undefined) {
+      rotate.value = withSpring(flipped ? 180 : 0, (interpolation as SpringInterpolationSpecs).spring);
     } else {
       rotate.value = withTiming(flipped ? 180 : 0, {
-        duration: (animation as TimeAnimationSpecs).duration,
-        easing: (animation as TimeAnimationSpecs).easing as Easing
+        duration: (interpolation as TimeInterpolationSpecs).duration,
+        easing: (interpolation as TimeInterpolationSpecs).easing
       });
     }
-  }, [flipped, animation, rotate]);
+  }, [flipped, interpolation, rotate]);
   
   return (
     <View style={{alignItems: 'center', height}} >

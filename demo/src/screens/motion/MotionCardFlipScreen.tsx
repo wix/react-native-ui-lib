@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {type ViewStyle, ScrollView, TouchableHighlight} from 'react-native';
 import {View, Text} from 'react-native-ui-lib';
 
-import {FlipEffect, Springs, type AnimationSpecs} from 'react-native-motion-lib';
+import {FlipEffect, Springs, type InterpolationSpecs} from 'react-native-motion-lib';
 
 import {AnimationConfigurationPanel} from './AnimationConfigurationPanel';
 
@@ -32,7 +32,7 @@ function BackCardFace() {
 
 function MotionCardFlip() {
   const [isFlipped, setIsFlipped] = useState(false);
-  const [animation, setAnimation] = useState<AnimationSpecs>({spring: Springs.gentle});
+  const [animation, setAnimation] = useState<InterpolationSpecs>({spring: Springs.gentle});
 
   return (
     <ScrollView contentContainerStyle={{padding: 20}}>
@@ -46,7 +46,7 @@ function MotionCardFlip() {
             BackComponent={<BackCardFace/>} 
             height={200} 
             flipped={isFlipped}
-            animation={animation}
+            interpolation={animation}
           />
         </TouchableHighlight>
   

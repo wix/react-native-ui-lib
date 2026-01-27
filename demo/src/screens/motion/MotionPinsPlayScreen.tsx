@@ -4,12 +4,12 @@ import {View, Text, Colors} from 'react-native-ui-lib';
 import Animated, {useSharedValue, useAnimatedStyle, withSpring, withTiming, interpolate, Extrapolation} from 'react-native-reanimated';
 import {Navigation} from 'react-native-navigation';
 
-import {Springs, type Easing, type AnimationSpecs, type SpringAnimationSpecs, type TimeAnimationSpecs, Spring} from 'react-native-motion-lib';
+import {Springs, type Easing, type InterpolationSpecs, type SpringTransitionSpecs, type TimeAnimationSpecs, Spring} from 'react-native-motion-lib';
 
 import {AnimationConfigurationPanel} from './AnimationConfigurationPanel';
 
 type AnimatedPinProps = {
-  animation: AnimationSpecs;
+  animation: InterpolationSpecs;
   isAnimated: boolean;
   onPress: () => void;
 };
@@ -50,9 +50,9 @@ function AnimatedPin({animation, isAnimated, onPress}: AnimatedPinProps) {
   });
 
   useEffect(() => {
-    if ((animation as SpringAnimationSpecs).spring !== undefined) {
+    if ((animation as SpringTransitionSpecs).spring !== undefined) {
       animatedValue.value = withSpring(isAnimated ? 1 : 0,
-        (animation as SpringAnimationSpecs).spring as Spring);
+        (animation as SpringTransitionSpecs).spring as Spring);
     } else {
       animatedValue.value = withTiming(isAnimated ? 1 : 0, {
         duration: (animation as TimeAnimationSpecs).duration,
@@ -79,7 +79,7 @@ function MotionPinsPlayScreen({componentId}: {componentId: string}) {
     });
   });
 
-  const [animation, setAnimation] = useState<AnimationSpecs>({spring: Springs.wobbly});
+  const [animation, setAnimation] = useState<InterpolationSpecs>({spring: Springs.wobbly});
   const [pin1Animated, setPin1Animated] = useState(false);
   const [pin2Animated, setPin2Animated] = useState(false);
   const [pin3Animated, setPin3Animated] = useState(false);

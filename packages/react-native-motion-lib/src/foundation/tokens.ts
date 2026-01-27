@@ -64,8 +64,7 @@ export const Easings = {
   sinInOut: ReanimatedEasing.inOut(ReanimatedEasing.sin),
   cubicIn: ReanimatedEasing.in(ReanimatedEasing.cubic),
   cubicOut: ReanimatedEasing.out(ReanimatedEasing.cubic),
-  cubicInOut: ReanimatedEasing.inOut(ReanimatedEasing.cubic),
-  bezier1: ReanimatedEasing.bezier(0.33, 1, 0.68, 1)
+  cubicInOut: ReanimatedEasing.inOut(ReanimatedEasing.cubic)
 } as const;
 
 export const Durations = {

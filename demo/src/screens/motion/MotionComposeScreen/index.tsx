@@ -2,15 +2,15 @@ import React, {useEffect, useState} from 'react';
 import {ScrollView, TouchableWithoutFeedback, ViewStyle} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import {Colors, Text, View} from 'react-native-ui-lib';
-import {
-  createScaleAnimation,
-  createTranslationXAnimation,
-  createTranslationYAnimation,
-  createRotationZAnimation,
-  createOpacityAnimation,
-  AnimationStack,
-  Springs,
-  type AnimationSpecs
+import Motion, {
+  scale,
+  translationX,
+  translationY,
+  rotationZ,
+  opacity,
+  type InterpolationSpecs,
+  type MotionSpecs,
+  Springs
 } from 'react-native-motion-lib';
 
 import {AnimationConfigurationPanel} from '../AnimationConfigurationPanel';
@@ -62,28 +62,28 @@ function MotionComposeScreen({componentId}: {componentId: string}) {
     });
   });
 
-  const [animationSpecs, setAnimationSpecs] = useState<AnimationSpecs>({spring: Springs.gentle});
+  const [interpolation, setInterpolation] = useState<InterpolationSpecs>({spring: Springs.gentle});
   const [isAnimated, setIsAnimated] = useState(false);
 
   const [scaleInit, setScaleInit] = useState(SCALE_INIT);
   const [scaleTarget, setScaleTarget] = useState(SCALE_TARGET);
-  const scaleAnim = createScaleAnimation(scaleInit, scaleTarget);
+  const scaleAnim = scale(scaleInit, scaleTarget);
 
   const [transXInit, setTransXInit] = useState(TRANSLATION_X_INIT);
   const [transXTarget, setTransXTarget] = useState(TRANSLATION_X_TARGET);
-  const transXAnim = createTranslationXAnimation(transXInit, transXTarget);
+  const transXAnim = translationX(transXInit, transXTarget);
   
   const [transYInit, setTransYInit] = useState(TRANSLATION_Y_INIT);
   const [transYTarget, setTransYTarget] = useState(TRANSLATION_Y_TARGET);
-  const transYAnim = createTranslationYAnimation(transYInit, transYTarget);
+  const transYAnim = translationY(transYInit, transYTarget);
   
   const [rotationZInit, setRotationZInit] = useState(ROTATION_Z_INIT);
   const [rotationZTarget, setRotationZTarget] = useState(ROTATION_Z_TARGET);
-  const rotationZAnim = createRotationZAnimation(rotationZInit, rotationZTarget);
+  const rotationZAnim = rotationZ(rotationZInit, rotationZTarget);
 
   const [opacityInit, setOpacityInit] = useState(OPACITY_INIT);
   const [opacityTarget, setOpacityTarget] = useState(OPACITY_TARGET);
-  const opacityAnim = createOpacityAnimation(opacityInit, opacityTarget);
+  const opacityAnim = opacity(opacityInit, opacityTarget);
   
   const [previewStyle, setPreviewStyle] = useState<ViewStyle | null>(null);
   const setPreviewStyleInitial = () => setPreviewStyle({
@@ -105,6 +105,11 @@ function MotionComposeScreen({componentId}: {componentId: string}) {
     opacity: opacityTarget
   } as ViewStyle);
   const clearPreviewStyle = () => setPreviewStyle(null);
+
+  const motion: MotionSpecs = {
+    animations: [scaleAnim, transXAnim, transYAnim, rotationZAnim, opacityAnim],
+    interpolation
+  };
 
   return (
     <ScrollView contentContainerStyle={{padding: 20}}>
@@ -134,13 +139,9 @@ function MotionComposeScreen({componentId}: {componentId: string}) {
               {previewStyle !== null ? (
                 <PlaygroundElement style={previewStyle}/>
               ) : (
-                <AnimationStack
-                  animations={[scaleAnim, transXAnim, transYAnim, rotationZAnim, opacityAnim]}
-                  animationSpecs={animationSpecs}
-                  isAnimated={isAnimated}
-                >
+                <Motion.View motion={motion} isAnimated={isAnimated}>
                   <PlaygroundElement/>
-                </AnimationStack>
+                </Motion.View>
               )}
             </View>
           </TouchableWithoutFeedback>  
@@ -240,7 +241,7 @@ function MotionComposeScreen({componentId}: {componentId: string}) {
         </View>
         
         <View marginT-s10>
-          <AnimationConfigurationPanel onAnimationSelected={setAnimationSpecs}/>
+          <AnimationConfigurationPanel onAnimationSelected={setInterpolation}/>
         </View>
       </View>
     </ScrollView>
