@@ -1,4 +1,7 @@
 export const images = {
+  get buttonFloatingOverlay() {
+    return require('./buttonFloatingOverlay.png');
+  },
   get gradient() {
     return require('./gradient.png');
   },
