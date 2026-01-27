@@ -1,6 +1,10 @@
-export * from './tokens';
-export * from './types';
-export * from './utils';
+export * from './foundation';
 
+export * from './effects/MotionView';
 export * from './effects/FlipEffect';
-export * from './effects/AnimationStack';
+
+import {View} from './effects/MotionView';
+
+export default {
+  View
+};

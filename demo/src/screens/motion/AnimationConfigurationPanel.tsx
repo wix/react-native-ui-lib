@@ -1,11 +1,11 @@
 import React, {useState, useMemo, useEffect} from 'react';
 import {View, Text, Button, Slider, Picker, Colors} from 'react-native-ui-lib';
-import {Springs, Easings, Durations, type AnimationSpecs, type Spring, type Easing} from 'react-native-motion-lib';
+import {Springs, Easings, Durations, type InterpolationSpecs, type Spring, type Easing} from 'react-native-motion-lib';
 
 type AnimationType = 'spring' | 'timing';
 
 type AnimationConfigurationPanelProps = {
-  onAnimationSelected: (animation: AnimationSpecs) => void;
+  onAnimationSelected: (animation: InterpolationSpecs) => void;
 };
 
 export function AnimationConfigurationPanel({onAnimationSelected}: AnimationConfigurationPanelProps) {
@@ -32,7 +32,7 @@ export function AnimationConfigurationPanel({onAnimationSelected}: AnimationConf
     return Easings[easingName as keyof typeof Easings] as Easing;
   }, [easingName]);
 
-  const animation: AnimationSpecs = useMemo(() => {
+  const animation: InterpolationSpecs = useMemo(() => {
     if (animationType === 'spring') {
       return {spring};
     } else {

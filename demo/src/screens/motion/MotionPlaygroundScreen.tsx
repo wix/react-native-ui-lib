@@ -4,11 +4,11 @@ import {View, Text, Colors} from 'react-native-ui-lib';
 import Animated, {useSharedValue, useAnimatedStyle, withSpring, withTiming, SharedValue} from 'react-native-reanimated';
 import {Navigation} from 'react-native-navigation';
 
-import {Springs, type Easing, type AnimationSpecs, type SpringAnimationSpecs, type TimeAnimationSpecs, Spring} from 'react-native-motion-lib';
+import {Springs, type Easing, type InterpolationSpecs, type SpringTransitionSpecs, type TimeAnimationSpecs, Spring} from 'react-native-motion-lib';
 
 import {AnimationConfigurationPanel} from './AnimationConfigurationPanel';
 
-type AnimationSpecs = {
+type InterpolationSpecs = {
   label: string;
   color: string;
   initialValue: number;
@@ -17,13 +17,13 @@ type AnimationSpecs = {
 };
 
 type AnimatedBoxProps = {
-  animationSpecs: AnimationSpecs;
-  animation: AnimationSpecs;
+  animationSpecs: InterpolationSpecs;
+  animation: InterpolationSpecs;
   isAnimated: boolean;
   onPress: () => void;
 };
 
-const items: Record<string, AnimationSpecs> = {
+const items: Record<string, InterpolationSpecs> = {
   scale: {
     label: 'Scale',
     color: '#4A90E2',
@@ -100,9 +100,9 @@ function AnimatedBox({animationSpecs, animation, isAnimated, onPress}: AnimatedB
   });
 
   useEffect(() => {
-    if ((animation as SpringAnimationSpecs).spring !== undefined) {
+    if ((animation as SpringTransitionSpecs).spring !== undefined) {
       animatedValue.value = withSpring(isAnimated ? targetValue : initialValue,
-        (animation as SpringAnimationSpecs).spring as Spring);
+        (animation as SpringTransitionSpecs).spring as Spring);
     } else {
       animatedValue.value = withTiming(isAnimated ? targetValue : initialValue, {
         duration: (animation as TimeAnimationSpecs).duration,
@@ -155,7 +155,7 @@ function MotionPlayground({componentId}: {componentId: string}) {
     });
   });
 
-  const [animation, setAnimation] = useState<AnimationSpecs>({spring: Springs.gentle});
+  const [animation, setAnimation] = useState<InterpolationSpecs>({spring: Springs.gentle});
   const [scaleAnimated, setScaleAnimated] = useState(false);
   const [fadeAnimated, setFadeAnimated] = useState(false);
   const [rotateAnimated, setRotateAnimated] = useState(false);
