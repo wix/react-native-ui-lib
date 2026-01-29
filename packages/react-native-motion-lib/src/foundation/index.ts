@@ -1,5 +1,3 @@
 export * from './tokens';
-export * from './motion';
-export * from './animation';
+export * from './motions';
 export * from './interpolations';
-export * from './behaviors';

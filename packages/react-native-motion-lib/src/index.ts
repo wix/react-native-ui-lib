@@ -1,11 +1,9 @@
 export * from './foundation';
 
-export * from './effects/MotionView';
 export * from './effects/FlipEffect';
-export {View as BehaviorView} from './effects/BehaviorView';
+export * from './effects/MotionView';
 
-import {View} from './effects/MotionView';
-
+import {MotionView} from './effects/MotionView';
 export default {
-  View
+  View: MotionView
 };

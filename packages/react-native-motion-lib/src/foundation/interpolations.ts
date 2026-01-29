@@ -2,6 +2,8 @@ import {withSpring, withTiming} from 'react-native-reanimated';
 
 import type {Spring, Easing} from './tokens';
 
+// TODO Revisit whether any of this is still needed
+ 
 export type SpringInterpolationSpecs = {
     spring: Spring;
 }

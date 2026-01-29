@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {ScrollView, ViewStyle} from 'react-native';
 import {Colors, Text, View, Button} from 'react-native-ui-lib';
-import {Behaviors, BehaviorView, type Behavior} from 'react-native-motion-lib';
+import Motion, {type MotionSpecs, Motions} from 'react-native-motion-lib';
 
 function PlaygroundElement({style}: {style?: ViewStyle} = {}) {
   const baseStyle = {
@@ -23,22 +23,22 @@ function PlaygroundElement({style}: {style?: ViewStyle} = {}) {
   return <View style={[baseStyle, style]}/>;
 }
 
-const BEHAVIOR_ENTRIES: Array<{name: string; createBehavior: () => Behavior}> = [
-  {name: 'Bounce Up', createBehavior: () => Behaviors.BounceUp(80)},
-  {name: 'Roll In Left', createBehavior: () => Behaviors.RollInLeft(100)}
+const MOTION_ENTRIES: Array<{name: string; createMotion: () => MotionSpecs}> = [
+  {name: 'Bounce Up', createMotion: () => Motions.BounceUp(80)},
+  {name: 'Roll In Left', createMotion: () => Motions.RollInLeft(100)}
 ];
 
-export default function BehaviorsScreen() {
+export default function MotionsExploreScreen() {
   const [trigger, setTrigger] = useState<{
     name: string;
-    behavior: Behavior;
+    motion: MotionSpecs;
     key: number;
   } | null>(null);
 
-  const onPressBehavior = (name: string, createBehavior: () => Behavior) => {
+  const onMotionPress = (name: string, createMotion: () => MotionSpecs) => {
     setTrigger({
       name,
-      behavior: createBehavior(),
+      motion: createMotion(),
       key: (trigger?.key ?? 0) + 1
     });
   };
@@ -67,12 +67,12 @@ export default function BehaviorsScreen() {
             }}
           >
             {trigger ? (
-              <BehaviorView
+              <Motion.View
                 key={trigger.key}
-                behavior={trigger.behavior}
+                motion={trigger.motion}
               >
                 <PlaygroundElement/>
-              </BehaviorView>
+              </Motion.View>
             ) : (
               <PlaygroundElement/>
             )}
@@ -80,14 +80,14 @@ export default function BehaviorsScreen() {
         </View>
 
         <View row flex centerH style={{flexWrap: 'wrap'}}>
-          {BEHAVIOR_ENTRIES.map(({name, createBehavior}) => (
+          {MOTION_ENTRIES.map(({name, createMotion}) => (
             <Button
               key={name}
               label={name}
               size={Button.sizes.small}
               marginR-s2
               marginB-s2
-              onPress={() => onPressBehavior(name, createBehavior)}
+              onPress={() => onMotionPress(name, createMotion)}
             />
           ))}
         </View>
