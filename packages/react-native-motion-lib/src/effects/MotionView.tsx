@@ -1,37 +1,34 @@
 import React, {useEffect} from 'react';
-import Animated, {SharedValue, useAnimatedStyle, useSharedValue} from 'react-native-reanimated';
+import Animated, {useAnimatedStyle, useSharedValue} from 'react-native-reanimated';
 
-import {createAnimation, createInterpolation, type MotionSpecs} from '../foundation';
+import {applyMotion, type MotionSpecs, type MotionAnimatedValues} from '../foundation';
 
-export type MotionWrapperProps = {
+export type MotionViewProps = {
   motion: MotionSpecs;
-  isAnimated: boolean;
   children?: React.ReactNode;
 };
 
-export function View({motion, isAnimated, children}: MotionWrapperProps) {
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const animatedValues = motion.animations.map((anim) => useSharedValue(anim.initialValue));
-  const animations = motion.animations.map((anim) => createAnimation(anim));
+export function MotionView({motion, children}: MotionViewProps) {
+  const animatedValues: MotionAnimatedValues = {};
+  Object.keys(motion).forEach((key) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    animatedValues[key as keyof MotionSpecs] = useSharedValue(motion[key as keyof MotionSpecs]!.initial);
+  });
 
   const animatedStyle = useAnimatedStyle(() => {
     const style: { [key: string]: any } = {
       transform: []
     };
 
-    animations.forEach((anim, index) => {
-      anim.applyAnimationStyle(style, animatedValues[index] as SharedValue);
-    });
+    applyMotion(motion, style, animatedValues);
     return style;
   });
 
   useEffect(() => {
-    motion.animations.forEach((anim, index) => {
-      const targetValue = isAnimated ? anim.targetValue : anim.initialValue;
-      animatedValues[index].value = createInterpolation(motion.interpolation, targetValue);
+    Object.keys(motion).forEach((key) => {
+      animatedValues[key as keyof MotionSpecs]!.value = motion[key as keyof MotionSpecs]!.animation;
     });
-  }, [isAnimated, motion.interpolation, motion.animations, animatedValues]);
+  }, [motion]);
 
   return (
     <Animated.View style={animatedStyle}>

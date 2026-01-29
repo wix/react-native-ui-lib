@@ -1,15 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {ScrollView, TouchableWithoutFeedback, ViewStyle} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import {Colors, Text, View} from 'react-native-ui-lib';
 import Motion, {
-  scale,
-  translationX,
-  translationY,
-  rotationZ,
-  opacity,
-  type InterpolationSpecs,
+  Builder,
   type MotionSpecs,
+  type InterpolationSpecs,
   Springs
 } from 'react-native-motion-lib';
 
@@ -38,15 +34,7 @@ function PlaygroundElement({style}: {style?: ViewStyle} = {}) {
     borderRadius: 10,
     backgroundColor: Colors.$backgroundGeneralHeavy,
     justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: 'black',
-    shadowOffset: {
-      width: 0,
-      height: 5
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 15,
-    elevation: 5
+    alignItems: 'center'
   } as ViewStyle;  
   return <View style={[baseStyle, style]}/>;
 }
@@ -63,28 +51,24 @@ function MotionComposeScreen({componentId}: {componentId: string}) {
   });
 
   const [interpolation, setInterpolation] = useState<InterpolationSpecs>({spring: Springs.gentle});
-  const [isAnimated, setIsAnimated] = useState(false);
+  const [triggerKey, setTriggerKey] = useState(0);
+  const [isPressedIn, setIsPressedIn] = useState(false);
 
   const [scaleInit, setScaleInit] = useState(SCALE_INIT);
   const [scaleTarget, setScaleTarget] = useState(SCALE_TARGET);
-  const scaleAnim = scale(scaleInit, scaleTarget);
 
   const [transXInit, setTransXInit] = useState(TRANSLATION_X_INIT);
   const [transXTarget, setTransXTarget] = useState(TRANSLATION_X_TARGET);
-  const transXAnim = translationX(transXInit, transXTarget);
-  
+
   const [transYInit, setTransYInit] = useState(TRANSLATION_Y_INIT);
   const [transYTarget, setTransYTarget] = useState(TRANSLATION_Y_TARGET);
-  const transYAnim = translationY(transYInit, transYTarget);
-  
+
   const [rotationZInit, setRotationZInit] = useState(ROTATION_Z_INIT);
   const [rotationZTarget, setRotationZTarget] = useState(ROTATION_Z_TARGET);
-  const rotationZAnim = rotationZ(rotationZInit, rotationZTarget);
 
   const [opacityInit, setOpacityInit] = useState(OPACITY_INIT);
   const [opacityTarget, setOpacityTarget] = useState(OPACITY_TARGET);
-  const opacityAnim = opacity(opacityInit, opacityTarget);
-  
+
   const [previewStyle, setPreviewStyle] = useState<ViewStyle | null>(null);
   const setPreviewStyleInitial = () => setPreviewStyle({
     transform: [
@@ -106,10 +90,40 @@ function MotionComposeScreen({componentId}: {componentId: string}) {
   } as ViewStyle);
   const clearPreviewStyle = () => setPreviewStyle(null);
 
-  const motion: MotionSpecs = {
-    animations: [scaleAnim, transXAnim, transYAnim, rotationZAnim, opacityAnim],
-    interpolation
-  };
+  const initialStyle = useMemo(() => ({
+    transform: [
+      {scale: scaleInit},
+      {translateX: transXInit},
+      {translateY: transYInit},
+      {rotate: `${rotationZInit}deg`}
+    ],
+    opacity: opacityInit
+  } as ViewStyle), [scaleInit, transXInit, transYInit, rotationZInit, opacityInit]);
+
+  const behavior: MotionSpecs = useMemo(() => {
+    const interp = 'spring' in interpolation
+      ? interpolation.spring
+      : {duration: interpolation.duration, easing: interpolation.easing};
+    return new Builder(interp)
+      .withScale(scaleInit, scaleTarget)
+      .withTranslationX(transXInit, transXTarget)
+      .withTranslationY(transYInit, transYTarget)
+      .withRotationZ(rotationZInit, rotationZTarget)
+      .withOpacity(opacityInit, opacityTarget)
+      .build();
+  }, [
+    interpolation,
+    scaleInit,
+    scaleTarget,
+    transXInit,
+    transXTarget,
+    transYInit,
+    transYTarget,
+    rotationZInit,
+    rotationZTarget,
+    opacityInit,
+    opacityTarget
+  ]);
 
   return (
     <ScrollView contentContainerStyle={{padding: 20}}>
@@ -119,7 +133,13 @@ function MotionComposeScreen({componentId}: {componentId: string}) {
         </Text>
 
         <View center>
-          <TouchableWithoutFeedback onPress={() => setIsAnimated(!isAnimated)} >
+          <TouchableWithoutFeedback
+            onPressIn={() => setIsPressedIn(true)}
+            onPressOut={() => {
+              setIsPressedIn(false);
+              setTriggerKey((k) => k + 1);
+            }}
+          >
             <View
               marginB-s6
               padding-s32
@@ -138,8 +158,10 @@ function MotionComposeScreen({componentId}: {componentId: string}) {
             >
               {previewStyle !== null ? (
                 <PlaygroundElement style={previewStyle}/>
+              ) : isPressedIn ? (
+                <PlaygroundElement style={initialStyle}/>
               ) : (
-                <Motion.View motion={motion} isAnimated={isAnimated}>
+                <Motion.View key={triggerKey} motion={behavior}>
                   <PlaygroundElement/>
                 </Motion.View>
               )}

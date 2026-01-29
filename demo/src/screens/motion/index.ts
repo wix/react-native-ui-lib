@@ -4,5 +4,5 @@ export function registerScreens(registrar) {
   registrar('unicorn.motion.MotionPinsPlayScreen', () => require('./MotionPinsPlayScreen').default);
   registrar('unicorn.motion.MotionPlaygroundScreen', () => require('./MotionPlaygroundScreen').default);
   registrar('unicorn.motion.MotionComposeScreen', () => require('./MotionComposeScreen').default);
-  registrar('unicorn.motion.BehaviorsScreen', () => require('./BehaviorsScreen').default);
+  registrar('unicorn.motion.MotionExploreSCreen', () => require('./MotionsExploreScreen').default);
 }

@@ -11,7 +11,7 @@ const sectionsData = [
     data: [
       {title: 'Isolated Animations', screen: 'unicorn.motion.MotionPlaygroundScreen'},
       {title: 'Animation Compositor', screen: 'unicorn.motion.MotionComposeScreen'},
-      {title: 'Behaviors Explorer', screen: 'unicorn.motion.BehaviorsScreen'}
+      {title: 'Motions Explorer', screen: 'unicorn.motion.MotionExploreSCreen'}
     ]
   },
   {
