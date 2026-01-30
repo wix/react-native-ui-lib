@@ -34,7 +34,7 @@
         "date-fns": "^2.29.3",
         "deprecated-react-native-prop-types": "^2.3.0",
         "hoist-non-react-statics": "^3.0.0",
-        "lodash": "^4.17.21",
+        "lodash": "4.17.21",
         "memoize-one": "^5.0.5",
         "prop-types": "^15.5.10",
         "react-freeze": "^1.0.0",
