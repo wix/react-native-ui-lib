@@ -90,7 +90,7 @@ function tryPublishAndTag(version) {
 function tagAndPublish(newVersion) {
   console.log(`trying to publish ${newVersion}...`);
   exec.execSync(`npm --no-git-tag-version version ${newVersion}`);
-  exec.execSync(`npm publish --tag ${VERSION_TAG}`);
+  exec.execSync(`npm publish --tag ${VERSION_TAG} --workspace react-native-ui-lib`);
   if (isRelease) {
     exec.execSync(`git tag -a ${newVersion} -m "${newVersion}"`);
   }

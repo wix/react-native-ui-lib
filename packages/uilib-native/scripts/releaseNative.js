@@ -62,7 +62,7 @@ function tagAndPublish(newVersion) {
   if (IS_SNAPSHOT) {
     exec.execSync(`npm --no-git-tag-version version ${newVersion}`);
   }
-  exec.execSync(`npm publish --tag ${VERSION_TAG}`);
+  exec.execSync(`npm publish --tag ${VERSION_TAG} --workspace uilib-native`);
   if (!IS_SNAPSHOT) {
     exec.execSync(`git tag -a ${newVersion} -m "${newVersion}"`);
   }
