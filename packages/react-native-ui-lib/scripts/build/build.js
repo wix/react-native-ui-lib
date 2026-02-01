@@ -6,7 +6,7 @@ const BABEL_INDEX_EXPORTS_OPTIONS = `--config-file ./scripts/build/.babelrc.expo
 
 console.info('## Start RNUILib Build ##');
 console.info('## Copy files from root ##');
-childProcess.execSync('cp -r ../../lib ./lib'); // TODO: pretty sure we don't need this - needs to be tested
+childProcess.execSync('cp -r ../uilib-native ./lib'); // TODO: pretty sure we don't need this - needs to be tested
 childProcess.execSync('cp -r ../../scripts .');
 childProcess.execSync('cp ../../README.md ./README.md');
 childProcess.execSync('cp ../../LICENSE ./LICENSE');

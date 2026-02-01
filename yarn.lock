@@ -9302,7 +9302,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:15.8.1, prop-types@npm:15.x.x, prop-types@npm:^15.5.10, prop-types@npm:^15.8.1":
+"prop-types@npm:15.8.1, prop-types@npm:15.x.x, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -9733,7 +9733,7 @@ __metadata:
     shell-utils: "npm:^1.0.10"
     tinycolor2: "npm:^1.4.2"
     typescript: "npm:5.0.4"
-    uilib-native: "npm:^5.0.1"
+    uilib-native: "workspace:*"
     url-parse: "npm:^1.2.0"
     wix-react-native-text-size: "npm:1.0.9"
   peerDependencies:
@@ -11285,18 +11285,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uilib-native@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "uilib-native@npm:5.0.1"
+"uilib-native@workspace:*, uilib-native@workspace:packages/uilib-native":
+  version: 0.0.0-use.local
+  resolution: "uilib-native@workspace:packages/uilib-native"
   dependencies:
     lodash: "npm:^4.17.21"
-    prop-types: "npm:^15.5.10"
+    shell-utils: "npm:^1.0.10"
   peerDependencies:
-    react: ">=18.3.1"
-    react-native: ">=0.77.3"
-  checksum: 10c0/234d02fd8dd5005c816b2a292d87d205b37e45885eccdf545ab80052ad6eb2761034af6acb58ae31468d66b59a4c869b25a670a5a2a784d26206c92e7f27025d
-  languageName: node
-  linkType: hard
+    react: ">=19.0.0"
+    react-native: ">=0.78.3"
+  languageName: unknown
+  linkType: soft
 
 "unbox-primitive@npm:^1.0.2":
   version: 1.0.2

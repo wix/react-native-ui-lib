@@ -101,7 +101,7 @@
         "setimmediate": "^1.0.5",
         "shell-utils": "^1.0.10",
         "typescript": "5.0.4",
-        "uilib-native": "^5.0.1"
+        "uilib-native": "workspace:*"
     },
     "peerDependencies": {
         "react": ">=19.0.0",
