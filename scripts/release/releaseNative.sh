@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pushd lib
+pushd packages/uilib-native
 npm install
 npm run releaseNative
 popd
