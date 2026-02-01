@@ -1,7 +1,7 @@
 const childProcess = require('child_process');
 const fs = require('fs');
 
-const BABEL_OPTIONS = `--config-file ./scripts/build/.babelrc.json --extensions '.ts,.tsx' --ignore "src/**/*.d.ts,**/node_modules/**,lib/**/*.d.ts,../../lib/node_modules/**"`;
+const BABEL_OPTIONS = `--config-file ./scripts/build/.babelrc.json --extensions '.ts,.tsx' --ignore "src/**/*.d.ts,**/node_modules/**,lib/**/*.d.ts,../uilib-native/node_modules/**"`;
 const BABEL_INDEX_EXPORTS_OPTIONS = `--config-file ./scripts/build/.babelrc.exports.js`;
 
 console.info('## Start RNUILib Build ##');
@@ -22,7 +22,7 @@ console.info('## Build lib (native component) files - convert TS to JS files ##'
 childProcess.execSync(`../../node_modules/.bin/babel lib --out-dir lib ${BABEL_OPTIONS}`);
 
 console.info('## in uilib-native - Build lib (native component) files - convert TS to JS files ##');
-childProcess.execSync(`../../node_modules/.bin/babel ../../lib --out-dir ../../lib ${BABEL_OPTIONS}`);
+childProcess.execSync(`../../node_modules/.bin/babel ../uilib-native --out-dir ../uilib-native ${BABEL_OPTIONS}`);
 
 console.info('## Build main index file - for lazy load exports ##');
 childProcess.execSync(`../../node_modules/.bin/babel ./src/index.js -o ./src/index.js ${BABEL_INDEX_EXPORTS_OPTIONS}`);
