@@ -109,7 +109,7 @@
         "react-native-gesture-handler": ">=2.24.0",
         "react-native-reanimated": ">=3.19.4",
         "react-native-ui-lib": "*",
-        "uilib-native": "^5.0.1"
+        "uilib-native": "5.1.0-snapshot.7635"
     },
     "jest": {
         "preset": "react-native",
