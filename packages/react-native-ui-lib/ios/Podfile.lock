@@ -1638,7 +1638,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - ReactNativeUiLib (5.0.1):
+  - ReactNativeUiLib (5.1.0):
     - React
   - RNDateTimePicker (8.2.0):
     - DoubleConversion
@@ -2195,7 +2195,7 @@ SPEC CHECKSUMS:
   ReactCodegen: 7296600d988a22efad378aa9c06e930e0cc377c7
   ReactCommon: 7ea8ee50e489e9cc75922f19a06ea45c1b59b4bd
   ReactNativeNavigation: f5b64def1a53be435190591f9a4e1780167837e7
-  ReactNativeUiLib: 699cec778ce0464e2205c84f8716dd4d40bd9b4a
+  ReactNativeUiLib: 6a72903b74902f11cbb60cf885864191b3962a0a
   RNDateTimePicker: 8fcea61ffc2b8ee230ad29c7f423dc639359780c
   RNFlashList: b84542632250e04d25a4500294e32aa83d0e2e6f
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
