@@ -4,9 +4,9 @@ import {View, Text, Colors} from 'react-native-ui-lib';
 import Animated, {useSharedValue, useAnimatedStyle, withSpring, withTiming, interpolate, Extrapolation} from 'react-native-reanimated';
 import {Navigation} from 'react-native-navigation';
 
-import {Springs, type Easing, type InterpolationSpecs, type SpringTransitionSpecs, type TimeAnimationSpecs, Spring} from 'react-native-motion-lib';
+import {Springs, type InterpolationSpecs, Easings, getEasing} from 'react-native-motion-lib';
 
-import {AnimationConfigurationPanel} from './AnimationConfigurationPanel';
+import {InterpolationSelectPanel} from './InterpolationSelectPanel';
 
 type AnimatedPinProps = {
   animation: InterpolationSpecs;
@@ -50,13 +50,12 @@ function AnimatedPin({animation, isAnimated, onPress}: AnimatedPinProps) {
   });
 
   useEffect(() => {
-    if ((animation as SpringTransitionSpecs).spring !== undefined) {
-      animatedValue.value = withSpring(isAnimated ? 1 : 0,
-        (animation as SpringTransitionSpecs).spring as Spring);
+    if (animation.type === 'spring') {
+      animatedValue.value = withSpring(isAnimated ? 1 : 0, animation.spring);
     } else {
       animatedValue.value = withTiming(isAnimated ? 1 : 0, {
-        duration: (animation as TimeAnimationSpecs).duration,
-        easing: (animation as TimeAnimationSpecs).easing as Easing
+        duration: animation.duration,
+        easing: getEasing(animation.easingName) ?? Easings.standard
       });
     }
   }, [isAnimated, animation, animatedValue]);
@@ -79,7 +78,7 @@ function MotionPinsPlayScreen({componentId}: {componentId: string}) {
     });
   });
 
-  const [animation, setAnimation] = useState<InterpolationSpecs>({spring: Springs.wobbly});
+  const [animation, setAnimation] = useState<InterpolationSpecs>({type: 'spring', spring: Springs.wobbly});
   const [pin1Animated, setPin1Animated] = useState(false);
   const [pin2Animated, setPin2Animated] = useState(false);
   const [pin3Animated, setPin3Animated] = useState(false);
@@ -140,7 +139,7 @@ function MotionPinsPlayScreen({componentId}: {componentId: string}) {
           </View>
         </View>
 
-        <AnimationConfigurationPanel onAnimationSelected={setAnimation}/>
+        <InterpolationSelectPanel onInterpolationSelected={setAnimation}/>
       </View>
     </ScrollView>
   );

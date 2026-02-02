@@ -1,27 +1,18 @@
-import {withSpring, withTiming} from 'react-native-reanimated';
+import {Easings, type Spring, type Easing} from './tokens';
 
-import type {Spring, Easing} from './tokens';
-
-// TODO Revisit whether any of this is still needed
- 
 export type SpringInterpolationSpecs = {
-    spring: Spring;
+  type: 'spring';
+  spring: Spring;
 }
 
 export type TimeInterpolationSpecs = {
-    duration: number;
-    easing: Easing;
+  type: 'timing';
+  duration: number;
+  easingName: string;
 }
 
 export type InterpolationSpecs = SpringInterpolationSpecs | TimeInterpolationSpecs;
 
-export function createInterpolation(interpolation: InterpolationSpecs, targetValue: number): number {
-  if ((interpolation as SpringInterpolationSpecs).spring !== undefined) {
-    return withSpring(targetValue, (interpolation as SpringInterpolationSpecs).spring);
-  } else {
-    return withTiming(targetValue, {
-      duration: (interpolation as TimeInterpolationSpecs).duration,
-      easing: (interpolation as TimeInterpolationSpecs).easing as Easing
-    });
-  }
+export function getEasing(easingName: string): Easing | null {
+  return easingName ? Easings[easingName] as Easing : null;
 }

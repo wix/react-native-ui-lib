@@ -1,14 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, TouchableWithoutFeedback} from 'react-native';
-import {View, Text, Colors} from 'react-native-ui-lib';
-import Animated, {useSharedValue, useAnimatedStyle, withSpring, withTiming, SharedValue} from 'react-native-reanimated';
+import {Easings, getEasing, InterpolationSpecs, Springs} from 'react-native-motion-lib';
 import {Navigation} from 'react-native-navigation';
+import Animated, {SharedValue, useAnimatedStyle, useSharedValue, withSpring, withTiming} from 'react-native-reanimated';
+import {Colors, Text, View} from 'react-native-ui-lib';
 
-import {Springs, type Easing, type InterpolationSpecs, type SpringTransitionSpecs, type TimeAnimationSpecs, Spring} from 'react-native-motion-lib';
+import {InterpolationSelectPanel} from './InterpolationSelectPanel';
 
-import {AnimationConfigurationPanel} from './AnimationConfigurationPanel';
+// TODO Fix Animation vs. Interpolation terminology in this file in order to stay consistent system-wide
 
-type InterpolationSpecs = {
+type ItemSpecs = {
   label: string;
   color: string;
   initialValue: number;
@@ -17,13 +18,14 @@ type InterpolationSpecs = {
 };
 
 type AnimatedBoxProps = {
-  animationSpecs: InterpolationSpecs;
-  animation: InterpolationSpecs;
+  itemSpecs: ItemSpecs;
+  interpolation: InterpolationSpecs;
   isAnimated: boolean;
   onPress: () => void;
 };
 
-const items: Record<string, InterpolationSpecs> = {
+// TODO Replace applyAninmationStyle etc. with the interpolation builder approach
+const items: Record<string, ItemSpecs> = {
   scale: {
     label: 'Scale',
     color: '#4A90E2',
@@ -87,29 +89,28 @@ const items: Record<string, InterpolationSpecs> = {
   }
 };
 
-function AnimatedBox({animationSpecs, animation, isAnimated, onPress}: AnimatedBoxProps) {
-  const {label, color, initialValue, targetValue} = animationSpecs;
+function AnimatedBox({itemSpecs, interpolation, isAnimated, onPress}: AnimatedBoxProps) {
+  const {label, color, initialValue, targetValue} = itemSpecs;
   const animatedValue = useSharedValue(initialValue);
 
   const animatedStyle = useAnimatedStyle(() => {
     const style: { [key: string]: any } = {
       transform: []
     };
-    animationSpecs.applyAnimationStyle(style, animatedValue);
+    itemSpecs.applyAnimationStyle(style, animatedValue);
     return style;
   });
 
   useEffect(() => {
-    if ((animation as SpringTransitionSpecs).spring !== undefined) {
-      animatedValue.value = withSpring(isAnimated ? targetValue : initialValue,
-        (animation as SpringTransitionSpecs).spring as Spring);
+    if (interpolation.type === 'spring') {
+      animatedValue.value = withSpring(isAnimated ? targetValue : initialValue, interpolation.spring);
     } else {
       animatedValue.value = withTiming(isAnimated ? targetValue : initialValue, {
-        duration: (animation as TimeAnimationSpecs).duration,
-        easing: (animation as TimeAnimationSpecs).easing as Easing
+        duration: interpolation.duration,
+        easing: getEasing(interpolation.easingName) ?? Easings.standard
       });
     }
-  }, [isAnimated, animation, animatedValue, targetValue, initialValue]);
+  }, [isAnimated, interpolation, animatedValue, targetValue, initialValue]);
 
   return (
     <TouchableWithoutFeedback onPress={onPress}>
@@ -155,7 +156,7 @@ function MotionPlayground({componentId}: {componentId: string}) {
     });
   });
 
-  const [animation, setAnimation] = useState<InterpolationSpecs>({spring: Springs.gentle});
+  const [animation, setAnimation] = useState<InterpolationSpecs>({type: 'spring', spring: Springs.gentle});
   const [scaleAnimated, setScaleAnimated] = useState(false);
   const [fadeAnimated, setFadeAnimated] = useState(false);
   const [rotateAnimated, setRotateAnimated] = useState(false);
@@ -181,49 +182,49 @@ function MotionPlayground({componentId}: {componentId: string}) {
         >
           <View row centerH marginB-s1>
             <AnimatedBox
-              animationSpecs={items.scale}
-              animation={animation}
+              itemSpecs={items.scale}
+              interpolation={animation}
               isAnimated={scaleAnimated}
               onPress={() => setScaleAnimated(!scaleAnimated)}
             />
             <AnimatedBox
-              animationSpecs={items.opacity}
-              animation={animation}
+              itemSpecs={items.opacity}
+              interpolation={animation}
               isAnimated={fadeAnimated}
               onPress={() => setFadeAnimated(!fadeAnimated)}
             />
           </View>
           <View row centerH marginB-s1>
             <AnimatedBox
-              animationSpecs={items.rotation}
-              animation={animation}
+              itemSpecs={items.rotation}
+              interpolation={animation}
               isAnimated={rotateAnimated}
               onPress={() => setRotateAnimated(!rotateAnimated)}
             />
             <AnimatedBox
-              animationSpecs={items.slideV}
-              animation={animation}
+              itemSpecs={items.slideV}
+              interpolation={animation}
               isAnimated={slideAnimated}
               onPress={() => setSlideAnimated(!slideAnimated)}
             />
           </View>
           <View row centerH>
             <AnimatedBox
-              animationSpecs={items.slideH}
-              animation={animation}
+              itemSpecs={items.slideH}
+              interpolation={animation}
               isAnimated={slideHAnimated}
               onPress={() => setSlideHAnimated(!slideHAnimated)}
             />
             <AnimatedBox
-              animationSpecs={items.placeholder}
-              animation={animation}
+              itemSpecs={items.placeholder}
+              interpolation={animation}
               isAnimated={false}
               onPress={() => {}}
             />
           </View>
         </View>
 
-        <AnimationConfigurationPanel onAnimationSelected={setAnimation}/>
+        <InterpolationSelectPanel onInterpolationSelected={setAnimation}/>
       </View>
     </ScrollView>
   );

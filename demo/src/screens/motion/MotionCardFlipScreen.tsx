@@ -4,7 +4,7 @@ import {View, Text} from 'react-native-ui-lib';
 
 import {FlipEffect, Springs, type InterpolationSpecs} from 'react-native-motion-lib';
 
-import {AnimationConfigurationPanel} from './AnimationConfigurationPanel';
+import {InterpolationSelectPanel} from './InterpolationSelectPanel';
 
 const cardStyle: ViewStyle = {
   width: 225,
@@ -50,7 +50,7 @@ function MotionCardFlip() {
           />
         </TouchableHighlight>
   
-        <AnimationConfigurationPanel onAnimationSelected={setAnimation}/>
+        <InterpolationSelectPanel onInterpolationSelected={setAnimation}/>
       </View>
     </ScrollView>
   );

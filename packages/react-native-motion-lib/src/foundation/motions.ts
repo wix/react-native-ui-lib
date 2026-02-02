@@ -1,6 +1,7 @@
 import {SharedValue, withSequence, withSpring, withTiming} from 'react-native-reanimated';
 
-import {Easing, Easings, Spring, Springs} from './tokens';
+import {Easings, Springs} from './tokens';
+import {getEasing, InterpolationSpecs} from './interpolations';
 
 export type MotionSpecs = {
   scale?: {
@@ -57,19 +58,18 @@ export const Motions = {
   })
 };
 
-type TimeInterpolation = {duration: number, easing: Easing};
-type Interpolation = Spring | TimeInterpolation;
-
 export class Builder {
   private motion: MotionSpecs = {};
   private createAnimation: (target: number) => number;
 
-  constructor(interpolation: Interpolation) {
-    if ((interpolation as TimeInterpolation).duration !== undefined) {
-      this.createAnimation = (target: number) => withTiming(target,
-        {duration: (interpolation as TimeInterpolation).duration, easing: (interpolation as TimeInterpolation).easing});
+  constructor(interpolation: InterpolationSpecs) {
+    if ('duration' in interpolation) {
+      this.createAnimation = (target: number) => withTiming(target, {
+        duration: interpolation.duration,
+        easing: getEasing(interpolation.easingName) ?? Easings.standard
+      });
     } else {
-      this.createAnimation = (target: number) => withSpring(target, (interpolation as Spring));
+      this.createAnimation = (target: number) => withSpring(target, interpolation.spring);
     }
   }
 

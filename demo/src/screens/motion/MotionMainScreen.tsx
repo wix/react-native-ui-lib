@@ -7,11 +7,11 @@ const chevronIcon = require('../../assets/icons/chevronRight.png');
 
 const sectionsData = [
   {
-    title: 'Playground',
+    title: 'Motion Playground',
     data: [
-      {title: 'Isolated Animations', screen: 'unicorn.motion.MotionPlaygroundScreen'},
-      {title: 'Animation Compositor', screen: 'unicorn.motion.MotionComposeScreen'},
-      {title: 'Motions Explorer', screen: 'unicorn.motion.MotionExploreSCreen'}
+      {title: 'Composer', screen: 'unicorn.motion.MotionComposeScreen'},
+      {title: 'Explorer', screen: 'unicorn.motion.MotionExploreScreen'},
+      {title: 'Interpolations', screen: 'unicorn.motion.MotionInterpolationPlayScreen'}
     ]
   },
   {

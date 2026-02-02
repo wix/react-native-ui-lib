@@ -38,11 +38,11 @@ export const Springs: Record<string, Spring> = {
   }
 } as const;
 
-export const Easings = {
-  standard: ReanimatedEasing.bezier(0.4, 0.0, 0.2, 1),
-  accelerate: ReanimatedEasing.bezier(0.4, 0.0, 1, 1),
-  decelerate: ReanimatedEasing.bezier(0.0, 0.0, 0.2, 1),
-  sharp: ReanimatedEasing.bezier(0.4, 0.0, 0.6, 1),
+export const Easings: Record<string, Easing> = {
+  standard: ReanimatedEasing.bezier(0.4, 0.0, 0.2, 1).factory(),
+  accelerate: ReanimatedEasing.bezier(0.4, 0.0, 1, 1).factory(),
+  decelerate: ReanimatedEasing.bezier(0.0, 0.0, 0.2, 1).factory(),
+  sharp: ReanimatedEasing.bezier(0.4, 0.0, 0.6, 1).factory(),
   bounce: ReanimatedEasing.bounce,
 
   linear: ReanimatedEasing.linear,

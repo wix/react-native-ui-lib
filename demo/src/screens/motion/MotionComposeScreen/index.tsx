@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {ScrollView, TouchableWithoutFeedback, ViewStyle} from 'react-native';
 import {Navigation} from 'react-native-navigation';
-import {Colors, Text, View} from 'react-native-ui-lib';
+import {Colors, View, Button} from 'react-native-ui-lib';
 import Motion, {
   Builder,
   type MotionSpecs,
@@ -9,7 +9,7 @@ import Motion, {
   Springs
 } from 'react-native-motion-lib';
 
-import {AnimationConfigurationPanel} from '../AnimationConfigurationPanel';
+import {InterpolationSelectDialog} from '../InterpolationSelectDialog';
 import {ScaleConfigurationPanel} from './ScaleConfigurationPanel';
 import {TranslationXConfigurationPanel} from './TranslationXConfigurationPanel';
 import {TranslationYConfigurationPanel} from './TranslationYConfigurationPanel';
@@ -17,7 +17,7 @@ import {RotationZConfigurationPanel} from './RotationZConfigurationPanel';
 import {OpacityConfigurationPanel} from './OpacityConfigurationPanel';
 
 const SCALE_INIT = 1;
-const SCALE_TARGET = 1.5;
+const SCALE_TARGET = 1;
 const TRANSLATION_X_INIT = 0;
 const TRANSLATION_X_TARGET = 0;
 const TRANSLATION_Y_INIT = 0;
@@ -50,10 +50,9 @@ function MotionComposeScreen({componentId}: {componentId: string}) {
     });
   });
 
-  const [interpolation, setInterpolation] = useState<InterpolationSpecs>({spring: Springs.gentle});
+  const [interpolation, setInterpolation] = useState<InterpolationSpecs>({type: 'spring', spring: Springs.gentle});
   const [triggerKey, setTriggerKey] = useState(0);
   const [isPressedIn, setIsPressedIn] = useState(false);
-
   const [scaleInit, setScaleInit] = useState(SCALE_INIT);
   const [scaleTarget, setScaleTarget] = useState(SCALE_TARGET);
 
@@ -100,11 +99,10 @@ function MotionComposeScreen({componentId}: {componentId: string}) {
     opacity: opacityInit
   } as ViewStyle), [scaleInit, transXInit, transYInit, rotationZInit, opacityInit]);
 
-  const behavior: MotionSpecs = useMemo(() => {
-    const interp = 'spring' in interpolation
-      ? interpolation.spring
-      : {duration: interpolation.duration, easing: interpolation.easing};
-    return new Builder(interp)
+  const [dialogVisible, setDialogVisible] = useState(false);
+
+  const motion: MotionSpecs = useMemo(() => {
+    return new Builder(interpolation)
       .withScale(scaleInit, scaleTarget)
       .withTranslationX(transXInit, transXTarget)
       .withTranslationY(transYInit, transYTarget)
@@ -126,49 +124,57 @@ function MotionComposeScreen({componentId}: {componentId: string}) {
   ]);
 
   return (
-    <ScrollView contentContainerStyle={{padding: 20}}>
-      <View flex useSafeArea>
-        <Text text80 marginB-s3>
-          Tap the box to animate it
-        </Text>
-
-        <View center>
-          <TouchableWithoutFeedback
-            onPressIn={() => setIsPressedIn(true)}
-            onPressOut={() => {
-              setIsPressedIn(false);
-              setTriggerKey((k) => k + 1);
+    <View flex useSafeArea style={{padding: 20}}>
+      <View center>
+        <TouchableWithoutFeedback
+          onPressIn={() => setIsPressedIn(true)}
+          onPressOut={() => {
+            setIsPressedIn(false);
+            setTriggerKey((k) => k + 1);
+          }}
+        >
+          <View
+            marginB-s6
+            padding-s32
+            style={{
+              borderWidth: 1,
+              borderColor: Colors.$outlineDefault,
+              borderRadius: 8,
+              borderStyle: 'dashed',
+              backgroundColor: Colors.$backgroundNeutralLight,
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: 250,
+              width: 250,
+              overflow: (previewStyle !== null ? 'visible' : 'hidden')
             }}
           >
-            <View
-              marginB-s6
-              padding-s32
-              style={{
-                borderWidth: 1,
-                borderColor: Colors.$outlineDefault,
-                borderRadius: 8,
-                borderStyle: 'dashed',
-                backgroundColor: Colors.$backgroundNeutralLight,
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: 250,
-                width: 250,
-                overflow: (previewStyle !== null ? 'visible' : 'hidden')
-              }}
-            >
-              {previewStyle !== null ? (
-                <PlaygroundElement style={previewStyle}/>
-              ) : isPressedIn ? (
-                <PlaygroundElement style={initialStyle}/>
-              ) : (
-                <Motion.View key={triggerKey} motion={behavior}>
-                  <PlaygroundElement/>
-                </Motion.View>
-              )}
-            </View>
-          </TouchableWithoutFeedback>  
-        </View>
+            {previewStyle !== null ? (
+              <PlaygroundElement style={previewStyle}/>
+            ) : isPressedIn ? (
+              <PlaygroundElement style={initialStyle}/>
+            ) : (
+              <Motion.View key={triggerKey} motion={motion}>
+                <PlaygroundElement/>
+              </Motion.View>
+            )}
+          </View>
+        </TouchableWithoutFeedback>
+      </View>
 
+      <ScrollView
+        style={{flex: 1}}
+        contentContainerStyle={{paddingBottom: 20}}
+        showsVerticalScrollIndicator
+      >
+        <View marginT-s10>
+          <Button
+            label="Interpolation config"
+            style={{alignSelf: 'center'}}
+            backgroundColor={Colors.$backgroundGeneralHeavy}
+            onPress={() => setDialogVisible(true)}
+          />
+        </View>
         <View flex style={{opacity: (previewStyle !== null ? 0.2 : 1)}}>
           <ScaleConfigurationPanel
             initialValue={SCALE_INIT}
@@ -261,12 +267,15 @@ function MotionComposeScreen({componentId}: {componentId: string}) {
           />
 
         </View>
-        
-        <View marginT-s10>
-          <AnimationConfigurationPanel onAnimationSelected={setInterpolation}/>
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+
+      <InterpolationSelectDialog
+        visible={dialogVisible}
+        onDismiss={() => setDialogVisible(false)}
+        value={interpolation}
+        onInterpolationSelected={setInterpolation}
+      />
+    </View>
   );
 }
 
