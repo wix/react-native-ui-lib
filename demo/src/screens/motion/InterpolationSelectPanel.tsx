@@ -173,16 +173,21 @@ export function InterpolationSelectPanel({value, onInterpolationSelected}: Inter
   const DAMPING_INIT = 30;
   const STIFFNESS_INIT = 200;
   const MASS_INIT = 1;
+  const [dampingInit, setDampingInit] = useState(DAMPING_INIT);
   const [damping, setDamping] = useState(initialType === 'spring' ? (value as SpringInterpolationSpecs).spring.damping : DAMPING_INIT);
+  const [stiffnessInit, setStiffnessInit] = useState(STIFFNESS_INIT);
   const [stiffness, setStiffness] = useState(initialType === 'spring' ? (value as SpringInterpolationSpecs).spring.stiffness : STIFFNESS_INIT);
+  const [massInit, setMassInit] = useState(MASS_INIT);
   const [mass, setMass] = useState(initialType === 'spring' ? (value as SpringInterpolationSpecs).spring.mass : MASS_INIT);
   const [activeSpringToken, setActiveSpringToken] = useState<string | null>(null);
   
   // Tween configuration
   const DURATION_INIT = 800;
-  const EASING_INIT = 'standard';
+  const EASING_NAME_INIT = 'standard';
+  const [durationInit, setDurationInit] = useState(DURATION_INIT);
   const [duration, setDuration] = useState(initialType === 'tween' ? (value as TweenInterpolationSpecs).duration : DURATION_INIT);
-  const [easingName, setEasingName] = useState<string>(initialType === 'tween' ? (value as TweenInterpolationSpecs).easingName : EASING_INIT);
+  const [easingNameInit, setEasingNameInit] = useState(EASING_NAME_INIT);
+  const [easingName, setEasingName] = useState<string>(initialType === 'tween' ? (value as TweenInterpolationSpecs).easingName : EASING_NAME_INIT);
   const [activeDurationToken, setActiveDurationToken] = useState<string | null>(null);
 
   const spring: Spring = useMemo(() => ({
@@ -236,9 +241,9 @@ export function InterpolationSelectPanel({value, onInterpolationSelected}: Inter
 
       {interpolationType === 'spring' ? (
         <SpringConfigurationPanel
-          damping={damping}
-          stiffness={stiffness}
-          mass={mass}
+          damping={dampingInit}
+          stiffness={stiffnessInit}
+          mass={massInit}
           activeSpringToken={activeSpringToken}
           onDampingChange={(value: number) => {
             setDamping(value);
@@ -256,22 +261,29 @@ export function InterpolationSelectPanel({value, onInterpolationSelected}: Inter
             setDamping(token.damping);
             setStiffness(token.stiffness);
             setMass(token.mass);
+            setDampingInit(token.damping);
+            setStiffnessInit(token.stiffness);
+            setMassInit(token.mass);
             setActiveSpringToken(tokenName);        
           }}
         />
       ) : (
         <TweenConfigurationPanel
-          duration={duration}
-          easingName={easingName}
+          duration={durationInit}
+          easingName={easingNameInit}
           activeDurationToken={activeDurationToken}
           easingItems={easingItems}
-          onEasingChange={setEasingName}
+          onEasingChange={(name: string) => {
+            setEasingName(name);
+            setEasingNameInit(name);
+          }}
           onDurationChange={(value: number) => {
             setDuration(value);
             setActiveDurationToken(null);
           }}
           onDurationTokenPress={(tokenName: string, token: {default: number; slow: number}) => {
             setDuration(token.default);
+            setDurationInit(token.default);
             setActiveDurationToken(tokenName);
           }}
         />
