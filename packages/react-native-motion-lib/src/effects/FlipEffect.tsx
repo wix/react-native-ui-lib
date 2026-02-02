@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import Animated, {useAnimatedStyle, useDerivedValue, useSharedValue, withSpring, withTiming} from 'react-native-reanimated';
 
-import {Springs, type InterpolationSpecs, type SpringInterpolationSpecs, type TimeInterpolationSpecs} from '../foundation';
+import {Easings, getEasing, Springs, type InterpolationSpecs} from '../foundation';
 
 type FlipEffectProps = {
   FrontComponent: React.ReactNode;
@@ -17,7 +17,7 @@ export function FlipEffect({
   BackComponent,
   height,
   flipped = false,
-  interpolation = {spring: Springs.gentle}
+  interpolation = {type: 'spring', spring: Springs.gentle}
 }: FlipEffectProps) {
   const rotate = useSharedValue(0);
   const zIndexFront = useDerivedValue(() => (rotate.value < 90 ? 1 : 0));
@@ -37,12 +37,12 @@ export function FlipEffect({
   }));
 
   useEffect(() => {
-    if ((interpolation as SpringInterpolationSpecs).spring !== undefined) {
-      rotate.value = withSpring(flipped ? 180 : 0, (interpolation as SpringInterpolationSpecs).spring);
+    if (interpolation.type === 'spring') {
+      rotate.value = withSpring(flipped ? 180 : 0, interpolation.spring);
     } else {
       rotate.value = withTiming(flipped ? 180 : 0, {
-        duration: (interpolation as TimeInterpolationSpecs).duration,
-        easing: (interpolation as TimeInterpolationSpecs).easing
+        duration: interpolation.duration,
+        easing: getEasing(interpolation.easingName) ?? Easings.standard
       });
     }
   }, [flipped, interpolation, rotate]);

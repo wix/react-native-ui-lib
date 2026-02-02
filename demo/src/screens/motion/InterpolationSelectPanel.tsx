@@ -1,6 +1,6 @@
 import React, {useState, useMemo, useEffect} from 'react';
 import {View, Text, Button, Slider, Picker, Colors} from 'react-native-ui-lib';
-import {Springs, Easings, Durations, type InterpolationSpecs, type Spring, SpringInterpolationSpecs, TimeInterpolationSpecs} from 'react-native-motion-lib';
+import {Springs, Easings, Durations, type InterpolationSpecs, type Spring, SpringInterpolationSpecs, TweenInterpolationSpecs} from 'react-native-motion-lib';
 
 type SpringConfigurationPanelProps = {
   damping: number;
@@ -92,7 +92,7 @@ function SpringConfigurationPanel({
   );
 }
 
-type TimingConfigurationPanelProps = {
+type TweenConfigurationPanelProps = {
   duration: number;
   easingName: string;
   activeDurationToken: string | null;
@@ -102,7 +102,7 @@ type TimingConfigurationPanelProps = {
   onDurationTokenPress: (name: string, token: {default: number; slow: number}) => void;
 };
 
-function TimingConfigurationPanel({
+function TweenConfigurationPanel({
   duration,
   easingName,
   activeDurationToken,
@@ -110,11 +110,11 @@ function TimingConfigurationPanel({
   onDurationChange,
   onEasingChange,
   onDurationTokenPress
-}: TimingConfigurationPanelProps) {
+}: TweenConfigurationPanelProps) {
   return (
     <View>
       <Text text60M marginB-s3>
-        Timing Configuration
+        Tween Configuration
       </Text>
 
       <View row marginB-s4 center>
@@ -178,11 +178,11 @@ export function InterpolationSelectPanel({value, onInterpolationSelected}: Inter
   const [mass, setMass] = useState(initialType === 'spring' ? (value as SpringInterpolationSpecs).spring.mass : MASS_INIT);
   const [activeSpringToken, setActiveSpringToken] = useState<string | null>(null);
   
-  // Timing configuration
+  // Tween configuration
   const DURATION_INIT = 800;
   const EASING_INIT = 'standard';
-  const [duration, setDuration] = useState(initialType === 'timing' ? (value as TimeInterpolationSpecs).duration : DURATION_INIT);
-  const [easingName, setEasingName] = useState<string>(initialType === 'timing' ? (value as TimeInterpolationSpecs).easingName : EASING_INIT);
+  const [duration, setDuration] = useState(initialType === 'tween' ? (value as TweenInterpolationSpecs).duration : DURATION_INIT);
+  const [easingName, setEasingName] = useState<string>(initialType === 'tween' ? (value as TweenInterpolationSpecs).easingName : EASING_INIT);
   const [activeDurationToken, setActiveDurationToken] = useState<string | null>(null);
 
   const spring: Spring = useMemo(() => ({
@@ -195,7 +195,7 @@ export function InterpolationSelectPanel({value, onInterpolationSelected}: Inter
     if (interpolationType === 'spring') {
       return {type: 'spring', spring};
     } else {
-      return {type: 'timing', duration, easingName};
+      return {type: 'tween', duration, easingName};
     }
   }, [interpolationType, spring, duration, easingName]);
 
@@ -225,12 +225,12 @@ export function InterpolationSelectPanel({value, onInterpolationSelected}: Inter
           onPress={() => setInterpolationType('spring')}
         />
         <Button
-          label="Timing"
+          label="Tween"
           size={Button.sizes.small}
           bg-$backgroundGeneralHeavy
           outlineColor={Colors.$backgroundGeneralHeavy}
-          outline={interpolationType !== 'timing'}
-          onPress={() => setInterpolationType('timing')}
+          outline={interpolationType !== 'tween'}
+          onPress={() => setInterpolationType('tween')}
         />
       </View>
 
@@ -260,7 +260,7 @@ export function InterpolationSelectPanel({value, onInterpolationSelected}: Inter
           }}
         />
       ) : (
-        <TimingConfigurationPanel
+        <TweenConfigurationPanel
           duration={duration}
           easingName={easingName}
           activeDurationToken={activeDurationToken}
