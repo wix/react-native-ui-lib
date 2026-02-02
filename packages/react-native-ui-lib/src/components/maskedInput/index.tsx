@@ -1,11 +1,12 @@
 import React, {forwardRef, useEffect} from 'react';
+import {useThemeProps} from '../../hooks';
 // @ts-expect-error
 import MaskedInputOld from './old';
 import MaskedInputNew, {MaskedInputProps} from './new';
 import {LogService} from 'services';
 
 function MaskedInputMigrator(props: any, refToForward: any) {
-  const {migrate, ...others} = props;
+  const {migrate, ...others} = useThemeProps(props, 'MaskedInput');
 
   useEffect(() => {
     if (!migrate) {
