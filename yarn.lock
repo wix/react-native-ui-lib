@@ -9532,7 +9532,7 @@ __metadata:
 
 "react-native-safe-area-context@npm:5.6.2":
   version: 5.6.2
-  resolution: "react-native-safe-area-context@npm:5.6.2::__archiveUrl=https%3A%2F%2Fnpm.dev.wixpress.com%2Fapi%2Fnpm%2Fnpm-repos%2Freact-native-safe-area-context%2F-%2Freact-native-safe-area-context-5.6.2.tgz"
+  resolution: "react-native-safe-area-context@npm:5.6.2"
   peerDependencies:
     react: "*"
     react-native: "*"
