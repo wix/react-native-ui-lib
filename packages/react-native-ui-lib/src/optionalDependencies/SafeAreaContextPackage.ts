@@ -1,6 +1,6 @@
-let SafeAreaContext: any;
+let SafeAreaContextPackage: any;
 try {
-  SafeAreaContext = require('react-native-safe-area-context');
+  SafeAreaContextPackage = require('react-native-safe-area-context');
 } catch (error) {}
 
-export default SafeAreaContext;
+export default SafeAreaContextPackage;
