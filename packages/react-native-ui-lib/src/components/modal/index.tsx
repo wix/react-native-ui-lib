@@ -10,7 +10,7 @@ import {
   KeyboardAvoidingView,
   KeyboardAvoidingViewProps
 } from 'react-native';
-import {BlurViewPackage} from '../../optionalDependencies';
+import {BlurViewPackage, SafeAreaContextPackage} from '../../optionalDependencies';
 import {Constants, asBaseComponent} from '../../commons/new';
 import TopBar, {ModalTopBarProps} from './TopBar';
 import View from '../../components/view';
@@ -120,6 +120,7 @@ class Modal extends Component<ModalProps> {
       ...others
     } = this.props;
     const defaultContainer = enableModalBlur && Constants.isIOS && BlurView ? BlurView : View;
+    const SafeAreaProvider = SafeAreaContextPackage?.SafeAreaProvider ?? React.Fragment;
     const GestureContainer = useGestureHandlerRootView ? GestureHandlerRootView : React.Fragment;
     const gestureContainerProps = useGestureHandlerRootView ? {style: styles.fill} : {};
     const useKeyboardAvoiding = useKeyboardAvoidingView && Constants.isIOS;
@@ -133,14 +134,16 @@ class Modal extends Component<ModalProps> {
     return (
       <HackContainer>
         <RNModal visible={Boolean(visible)} {...others}>
-          <GestureContainer {...gestureContainerProps}>
-            <KeyboardAvoidingContainer {...keyboardAvoidingContainerProps}>
-              <Container style={styles.fill} blurType="light">
-                {this.renderTouchableOverlay()}
-                {this.props.children}
-              </Container>
-            </KeyboardAvoidingContainer>
-          </GestureContainer>
+          <SafeAreaProvider>
+            <GestureContainer {...gestureContainerProps}>
+              <KeyboardAvoidingContainer {...keyboardAvoidingContainerProps}>
+                <Container style={styles.fill} blurType="light">
+                  {this.renderTouchableOverlay()}
+                  {this.props.children}
+                </Container>
+              </KeyboardAvoidingContainer>
+            </GestureContainer>
+          </SafeAreaProvider>
         </RNModal>
       </HackContainer>
     );
