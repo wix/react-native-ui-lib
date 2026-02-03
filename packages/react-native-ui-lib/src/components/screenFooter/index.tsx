@@ -82,34 +82,34 @@ const ScreenFooter = (props: ScreenFooterProps) => {
 
   const childrenCount = React.Children.count(children);
 
-  const justifyContent = useMemo(() => {
+  const justifyContent: ViewStyle['justifyContent'] = useMemo(() => {
     if (isHorizontal) {
       // When SPREAD with multiple items, distribute with space-between
       // When SPREAD with single item, center it (space-between has no effect)
       if (distribution === HorizontalItemsDistribution.SPREAD) {
-        return childrenCount === 1 ? 'center' as const : 'space-between' as const;
+        return childrenCount === 1 ? 'center' : 'space-between';
       }
       // When STACK, horizontalAlignment controls left/center/right positioning
       switch (horizontalAlignment) {
-        case FooterAlignment.START: return 'flex-start' as const;
-        case FooterAlignment.END: return 'flex-end' as const;
-        default: return 'center' as const;
+        case FooterAlignment.START: return 'flex-start';
+        case FooterAlignment.END: return 'flex-end';
+        default: return 'center';
       }
     }
-    return 'flex-start' as const;
+    return 'flex-start';
   }, [isHorizontal, distribution, horizontalAlignment, childrenCount]);
 
   const alignItems = useMemo(() => {
     if (layout === ScreenFooterLayouts.VERTICAL) {
       if (itemsFit === ItemsFit.STRETCH) {
-        return 'stretch' as const;
+        return 'stretch';
       }
     }
 
     switch (alignment) {
-      case FooterAlignment.START: return 'flex-start' as const;
-      case FooterAlignment.END: return 'flex-end' as const;
-      default: return 'center' as const;
+      case FooterAlignment.START: return 'flex-start';
+      case FooterAlignment.END: return 'flex-end';
+      default: return 'center';
     }
   }, [layout, itemsFit, alignment]);
 
