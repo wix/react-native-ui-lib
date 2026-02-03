@@ -1,15 +1,15 @@
 import React from 'react';
 import {ScrollView} from 'react-native';
 import {Dialog} from 'react-native-ui-lib';
-import type {InterpolationSpecs} from 'react-native-motion-lib';
 
-import {InterpolationSelectPanel} from './InterpolationSelectPanel';
+import {InterpolationSelectPanel, type TokenizedInterpolationSpecs} from './InterpolationSelectPanel';
+export type {TokenizedInterpolationSpecs};
 
 export type InterpolationSelectDialogProps = {
   visible: boolean;
   onDismiss: () => void;
-  value: InterpolationSpecs;
-  onInterpolationSelected: (interpolation: InterpolationSpecs) => void;
+  value?: TokenizedInterpolationSpecs;
+  onInterpolationSelected: (interpolation: TokenizedInterpolationSpecs) => void;
 };
 
 export function InterpolationSelectDialog({

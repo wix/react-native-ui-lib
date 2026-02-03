@@ -1,28 +1,47 @@
-import React, {useState, useMemo, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, Button, Slider, Picker, Colors} from 'react-native-ui-lib';
-import {Springs, Easings, Durations, type InterpolationSpecs, type Spring, SpringInterpolationSpecs, TweenInterpolationSpecs} from 'react-native-motion-lib';
+import {Springs, Easings, Durations, type InterpolationSpecs, SpringInterpolationSpecs, TweenInterpolationSpecs} from 'react-native-motion-lib';
 
+/** Interpolation specs with optional token names (for panel value/callback). */
+export type TokenizedSpringInterpolationSpecs = SpringInterpolationSpecs & {springTokenName?: string};
+export type TokenizedTweenInterpolationSpecs = TweenInterpolationSpecs & {durationTokenName?: string};
+export type TokenizedInterpolationSpecs =
+  TokenizedSpringInterpolationSpecs | TokenizedTweenInterpolationSpecs;
+
+export function getInterpolationGist(interpolation: TokenizedInterpolationSpecs): string {
+  if (interpolation.type === 'spring') {
+    return `spring(${interpolation.springTokenName ??
+        `${interpolation.spring.damping}, ${interpolation.spring.stiffness}, ${interpolation.spring.mass}kg`})`;
+  } else if (interpolation.type === 'tween') {
+    return `tween(${interpolation.durationTokenName ?? `${interpolation.duration}ms`}, ${interpolation.easingName})`;
+  }
+  return '';
+}
+  
 type SpringConfigurationPanelProps = {
-  damping: number;
-  stiffness: number;
-  mass: number;
-  activeSpringToken: string | null;
-  onDampingChange: (value: number) => void;
-  onStiffnessChange: (value: number) => void;
-  onMassChange: (value: number) => void;
-  onSpringTokenPress: (name: string, token: Spring) => void;
+  initialSpec?: TokenizedSpringInterpolationSpecs;
+  onSpecChange: (spec: TokenizedSpringInterpolationSpecs) => void;
 };
 
-function SpringConfigurationPanel({
-  damping,
-  stiffness,
-  mass,
-  activeSpringToken,
-  onDampingChange,
-  onStiffnessChange,
-  onMassChange,
-  onSpringTokenPress
-}: SpringConfigurationPanelProps) {
+function SpringConfigurationPanel({initialSpec, onSpecChange}: SpringConfigurationPanelProps) {
+  const DAMPING_DEFAULT = 30;
+  const STIFFNESS_DEFAULT = 200;
+  const MASS_DEFAULT = 1;
+  const spec = initialSpec?.type === 'spring' ? initialSpec : {
+    type: 'spring',
+    spring: {
+      damping: DAMPING_DEFAULT,
+      stiffness: STIFFNESS_DEFAULT,
+      mass: MASS_DEFAULT
+    },
+    springTokenName: null
+  };
+
+  const [damping, setDamping] = useState(spec.spring.damping);
+  const [stiffness, setStiffness] = useState(spec.spring.stiffness);
+  const [mass, setMass] = useState(spec.spring.mass);
+  const [activeSpringToken, setActiveSpringToken] = useState<string | null>(spec.springTokenName);
+
   return (
     <View>
       <Text text60M marginB-s3>
@@ -39,7 +58,17 @@ function SpringConfigurationPanel({
             bg-$backgroundGeneralHeavy
             outlineColor={Colors.$backgroundGeneralHeavy}
             outline={activeSpringToken !== name}
-            onPress={() => onSpringTokenPress(name, token)}
+            onPress={() => {
+              setDamping(token.damping);
+              setStiffness(token.stiffness);
+              setMass(token.mass);
+              setActiveSpringToken(name);
+              onSpecChange({
+                type: 'spring',
+                spring: {damping: token.damping, stiffness: token.stiffness, mass: token.mass},
+                springTokenName: name
+              });
+            }}
           />
         ))}
       </View>
@@ -49,13 +78,21 @@ function SpringConfigurationPanel({
           <Text text80>Damping: {damping}</Text>
         </View>
         <Slider
-          value={damping}
+          value={spec.spring.damping}
           thumbTintColor={Colors.$backgroundGeneralHeavy}
           minimumTrackTintColor={Colors.$backgroundGeneralHeavy}
           minimumValue={10}
           maximumValue={120}
           step={10}
-          onValueChange={onDampingChange}
+          onValueChange={(v: number) => {
+            setDamping(v);
+            setActiveSpringToken(null);
+            onSpecChange({
+              type: 'spring',
+              spring: {damping: v, stiffness, mass},
+              springTokenName: null
+            });
+          }}
         />
       </View>
 
@@ -64,13 +101,21 @@ function SpringConfigurationPanel({
           <Text text80>Stiffness: {stiffness}</Text>
         </View>
         <Slider
-          value={stiffness}
+          value={spec.spring.stiffness}
           thumbTintColor={Colors.$backgroundGeneralHeavy}
           minimumTrackTintColor={Colors.$backgroundGeneralHeavy}
           minimumValue={100}
           maximumValue={1000}
           step={100}
-          onValueChange={onStiffnessChange}
+          onValueChange={(v: number) => {
+            setStiffness(v);
+            setActiveSpringToken(null);
+            onSpecChange({
+              type: 'spring',
+              spring: {damping, stiffness: v, mass},
+              springTokenName: null
+            });
+          }}
         />
       </View>
 
@@ -79,13 +124,21 @@ function SpringConfigurationPanel({
           <Text text80>Mass: {mass}</Text>
         </View>
         <Slider
-          value={mass}
+          value={spec.spring.mass}
           thumbTintColor={Colors.$backgroundGeneralHeavy}
           minimumTrackTintColor={Colors.$backgroundGeneralHeavy}
           minimumValue={1}
           maximumValue={10}
           step={1}
-          onValueChange={onMassChange}
+          onValueChange={(v: number) => {
+            setMass(v);
+            setActiveSpringToken(null);
+            onSpecChange({
+              type: 'spring',
+              spring: {damping, stiffness, mass: v},
+              springTokenName: null
+            });
+          }}
         />
       </View>
     </View>
@@ -93,24 +146,20 @@ function SpringConfigurationPanel({
 }
 
 type TweenConfigurationPanelProps = {
-  duration: number;
-  easingName: string;
-  activeDurationToken: string | null;
+  initialSpec?: TokenizedTweenInterpolationSpecs;
   easingItems: Array<{label: string; value: string}>;
-  onDurationChange: (value: number) => void;
-  onEasingChange: (name: string) => void;
-  onDurationTokenPress: (name: string, token: {default: number; slow: number}) => void;
+  onSpecChange: (spec: TokenizedTweenInterpolationSpecs) => void;
 };
 
 function TweenConfigurationPanel({
-  duration,
-  easingName,
-  activeDurationToken,
+  initialSpec,
   easingItems,
-  onDurationChange,
-  onEasingChange,
-  onDurationTokenPress
+  onSpecChange
 }: TweenConfigurationPanelProps) {
+  const [duration, setDuration] = useState(initialSpec?.duration ?? 100);
+  const [easingName, setEasingName] = useState(initialSpec?.easingName ?? 'standard');
+  const [activeDurationToken, setActiveDurationToken] = useState<string | null>(initialSpec?.durationTokenName ?? null);
+
   return (
     <View>
       <Text text60M marginB-s3>
@@ -118,7 +167,7 @@ function TweenConfigurationPanel({
       </Text>
 
       <View row marginB-s4 center>
-        {Object.entries(Durations).map(([name, token]) => (
+        {Object.entries(Durations).map(([name, durations]) => (
           <Button
             key={name}
             label={name}
@@ -127,7 +176,17 @@ function TweenConfigurationPanel({
             bg-$backgroundGeneralHeavy
             outlineColor={Colors.$backgroundGeneralHeavy}
             outline={activeDurationToken !== name}
-            onPress={() => onDurationTokenPress(name, token)}
+            onPress={() => {
+              setDuration(durations.default);
+              setActiveDurationToken(name);
+
+              onSpecChange({
+                type: 'tween',
+                duration: durations.default,
+                durationTokenName: name,
+                easingName
+              });
+            }}
           />
         ))}
       </View>
@@ -137,13 +196,23 @@ function TweenConfigurationPanel({
           <Text text80>Duration: {duration}ms</Text>
         </View>
         <Slider
-          value={duration}
+          value={initialSpec?.duration ?? 100}
           thumbTintColor={Colors.$backgroundGeneralHeavy}
           minimumTrackTintColor={Colors.$backgroundGeneralHeavy}
           minimumValue={100}
           maximumValue={2000}
           step={100}
-          onValueChange={onDurationChange}
+          onValueChange={(value: number) => {
+            setDuration(value);
+            setActiveDurationToken(null);
+
+            onSpecChange({
+              type: 'tween',
+              easingName,
+              duration: value,
+              durationTokenName: null
+            });
+          }}
         />
       </View>
 
@@ -152,7 +221,15 @@ function TweenConfigurationPanel({
         <Picker
           placeholder="Select easing"
           value={easingName}
-          onChange={(item) => onEasingChange(item as string)}
+          onChange={(item) => {
+            setEasingName(item as string);
+            onSpecChange({
+              type: 'tween',
+              easingName: item,
+              duration,
+              durationTokenName: activeDurationToken
+            });
+          }}
           items={easingItems}
         />
       </View>
@@ -161,62 +238,22 @@ function TweenConfigurationPanel({
 }
 
 type InterpolationSelectPanelProps = {
-  value?: InterpolationSpecs;
-  onInterpolationSelected: (interpolation: InterpolationSpecs) => void;
+  value?: TokenizedInterpolationSpecs;
+  onInterpolationSelected: (interpolation: TokenizedInterpolationSpecs) => void;
 };
 
+const easingItems = Object.keys(Easings).map(name => ({
+  label: name,
+  value: name
+}));
+
 export function InterpolationSelectPanel({value, onInterpolationSelected}: InterpolationSelectPanelProps) {
-  const initialType = value?.type;
-  const [interpolationType, setInterpolationType] = useState<InterpolationSpecs['type']>(initialType);
-  
-  // Spring configuration
-  const DAMPING_INIT = 30;
-  const STIFFNESS_INIT = 200;
-  const MASS_INIT = 1;
-  const [dampingInit, setDampingInit] = useState(DAMPING_INIT);
-  const [damping, setDamping] = useState(initialType === 'spring' ? (value as SpringInterpolationSpecs).spring.damping : DAMPING_INIT);
-  const [stiffnessInit, setStiffnessInit] = useState(STIFFNESS_INIT);
-  const [stiffness, setStiffness] = useState(initialType === 'spring' ? (value as SpringInterpolationSpecs).spring.stiffness : STIFFNESS_INIT);
-  const [massInit, setMassInit] = useState(MASS_INIT);
-  const [mass, setMass] = useState(initialType === 'spring' ? (value as SpringInterpolationSpecs).spring.mass : MASS_INIT);
-  const [activeSpringToken, setActiveSpringToken] = useState<string | null>(null);
-  
-  // Tween configuration
-  const DURATION_INIT = 800;
-  const EASING_NAME_INIT = 'standard';
-  const [durationInit, setDurationInit] = useState(DURATION_INIT);
-  const [duration, setDuration] = useState(initialType === 'tween' ? (value as TweenInterpolationSpecs).duration : DURATION_INIT);
-  const [easingNameInit, setEasingNameInit] = useState(EASING_NAME_INIT);
-  const [easingName, setEasingName] = useState<string>(initialType === 'tween' ? (value as TweenInterpolationSpecs).easingName : EASING_NAME_INIT);
-  const [activeDurationToken, setActiveDurationToken] = useState<string | null>(null);
-
-  const spring: Spring = useMemo(() => ({
-    damping,
-    stiffness,
-    mass
-  }), [damping, stiffness, mass]);
-
-  const interpolation: InterpolationSpecs = useMemo(() => {
-    if (interpolationType === 'spring') {
-      return {type: 'spring', spring};
-    } else {
-      return {type: 'tween', duration, easingName};
-    }
-  }, [interpolationType, spring, duration, easingName]);
-
-  useEffect(() => {
-    onInterpolationSelected(interpolation);
-  }, [interpolation, onInterpolationSelected]);
+  const [interpolationType, setInterpolationType] = useState<InterpolationSpecs['type']>(value?.type ?? 'spring');
 
   useEffect(() => {
     setInterpolationType(value?.type ?? 'spring');
   }, [value]);
   
-  const easingItems = Object.keys(Easings).map(name => ({
-    label: name,
-    value: name
-  }));
-
   return (
     <View marginT-s6>
       <View row marginB-s4 centerH>
@@ -241,50 +278,17 @@ export function InterpolationSelectPanel({value, onInterpolationSelected}: Inter
 
       {interpolationType === 'spring' ? (
         <SpringConfigurationPanel
-          damping={dampingInit}
-          stiffness={stiffnessInit}
-          mass={massInit}
-          activeSpringToken={activeSpringToken}
-          onDampingChange={(value: number) => {
-            setDamping(value);
-            setActiveSpringToken(null);        
-          }}
-          onStiffnessChange={(value: number) => {
-            setStiffness(value);
-            setActiveSpringToken(null);
-          }}
-          onMassChange={(value: number) => {
-            setMass(value);
-            setActiveSpringToken(null);
-          }}
-          onSpringTokenPress={(tokenName: string, token: Spring) => {
-            setDamping(token.damping);
-            setStiffness(token.stiffness);
-            setMass(token.mass);
-            setDampingInit(token.damping);
-            setStiffnessInit(token.stiffness);
-            setMassInit(token.mass);
-            setActiveSpringToken(tokenName);        
+          initialSpec={value as TokenizedSpringInterpolationSpecs}
+          onSpecChange={(spec: TokenizedSpringInterpolationSpecs) => {
+            onInterpolationSelected(spec);
           }}
         />
       ) : (
         <TweenConfigurationPanel
-          duration={durationInit}
-          easingName={easingNameInit}
-          activeDurationToken={activeDurationToken}
           easingItems={easingItems}
-          onEasingChange={(name: string) => {
-            setEasingName(name);
-            setEasingNameInit(name);
-          }}
-          onDurationChange={(value: number) => {
-            setDuration(value);
-            setActiveDurationToken(null);
-          }}
-          onDurationTokenPress={(tokenName: string, token: {default: number; slow: number}) => {
-            setDuration(token.default);
-            setDurationInit(token.default);
-            setActiveDurationToken(tokenName);
+          initialSpec={value as TokenizedTweenInterpolationSpecs}
+          onSpecChange={(spec: TokenizedTweenInterpolationSpecs) => {
+            onInterpolationSelected(spec);
           }}
         />
       )}

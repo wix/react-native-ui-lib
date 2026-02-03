@@ -1,20 +1,16 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {ScrollView, TouchableWithoutFeedback, ViewStyle} from 'react-native';
+import {ScrollView, TouchableHighlight, TouchableWithoutFeedback, ViewStyle} from 'react-native';
+import Motion, {Builder, type MotionSpecs, Springs} from 'react-native-motion-lib';
 import {Navigation} from 'react-native-navigation';
-import {Colors, View, Button} from 'react-native-ui-lib';
-import Motion, {
-  Builder,
-  type MotionSpecs,
-  type InterpolationSpecs,
-  Springs
-} from 'react-native-motion-lib';
+import {Colors, Text, View} from 'react-native-ui-lib';
 
 import {InterpolationSelectDialog} from '../InterpolationSelectDialog';
+import {type TokenizedInterpolationSpecs, getInterpolationGist} from '../InterpolationSelectPanel';
+import {OpacityConfigurationPanel} from './OpacityConfigurationPanel';
+import {RotationZConfigurationPanel} from './RotationZConfigurationPanel';
 import {ScaleConfigurationPanel} from './ScaleConfigurationPanel';
 import {TranslationXConfigurationPanel} from './TranslationXConfigurationPanel';
 import {TranslationYConfigurationPanel} from './TranslationYConfigurationPanel';
-import {RotationZConfigurationPanel} from './RotationZConfigurationPanel';
-import {OpacityConfigurationPanel} from './OpacityConfigurationPanel';
 
 const SCALE_INIT = 1;
 const SCALE_TARGET = 1;
@@ -50,7 +46,11 @@ function MotionComposeScreen({componentId}: {componentId: string}) {
     });
   });
 
-  const [interpolation, setInterpolation] = useState<InterpolationSpecs>({type: 'spring', spring: Springs.gentle});
+  const [interpolation, setInterpolation] = useState<TokenizedInterpolationSpecs>({
+    type: 'spring',
+    spring: Springs.gentle,
+    springTokenName: 'gentle'
+  });
   const [triggerKey, setTriggerKey] = useState(0);
   const [isPressedIn, setIsPressedIn] = useState(false);
   const [scaleInit, setScaleInit] = useState(SCALE_INIT);
@@ -167,14 +167,17 @@ function MotionComposeScreen({componentId}: {componentId: string}) {
         contentContainerStyle={{paddingBottom: 20}}
         showsVerticalScrollIndicator
       >
-        <View marginT-s10>
-          <Button
-            label="Interpolation config"
-            style={{alignSelf: 'center'}}
-            backgroundColor={Colors.$backgroundGeneralHeavy}
+        <View row center flex>
+          <Text text80>Interpolation: </Text>
+          <TouchableHighlight
+            marginT-s10
+            underlayColor={Colors.$backgroundGeneralHeavy}
             onPress={() => setDialogVisible(true)}
-          />
+          >
+            <Text text80 color={Colors.$textPrimary}>{getInterpolationGist(interpolation)}</Text>
+          </TouchableHighlight>
         </View>
+
         <View flex style={{opacity: (previewStyle !== null ? 0.2 : 1)}}>
           <ScaleConfigurationPanel
             initialValue={SCALE_INIT}
