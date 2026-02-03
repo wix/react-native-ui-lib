@@ -9545,6 +9545,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-safe-area-context@npm:5.6.2":
+  version: 5.6.2
+  resolution: "react-native-safe-area-context@npm:5.6.2"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/3c8df21a1dbac83116b9c9bd5d20b7c1bb7649ecef44a111af6fb6b237241f5f4d692189eec30a69f5701b857249257da3621b9e17165460a2bb71faac7b92ae
+  languageName: node
+  linkType: hard
+
 "react-native-shimmer-placeholder@npm:^2.0.6":
   version: 2.0.9
   resolution: "react-native-shimmer-placeholder@npm:2.0.9"
@@ -9684,6 +9694,7 @@ __metadata:
     react-native-navigation: "npm:8.1.2"
     react-native-reanimated: "npm:3.18.0"
     react-native-redash: "npm:^12.0.3"
+    react-native-safe-area-context: "npm:5.6.2"
     react-native-shimmer-placeholder: "npm:^2.0.6"
     react-native-svg: "npm:15.11.2"
     react-native-svg-transformer: "npm:1.5.0"
@@ -9702,6 +9713,7 @@ __metadata:
     react-native: ">=0.77.3"
     react-native-gesture-handler: ">=2.24.0"
     react-native-reanimated: ">=3.17.5"
+    react-native-safe-area-context: ">=5.6.2"
     uilib-native: ^5.0.1
   languageName: unknown
   linkType: soft
