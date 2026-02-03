@@ -120,7 +120,7 @@ class Modal extends Component<ModalProps> {
       ...others
     } = this.props;
     const defaultContainer = enableModalBlur && Constants.isIOS && BlurView ? BlurView : View;
-    const SafeAreaProvider = SafeAreaContextPackage?.SafeAreaProvider ?? React.Fragment;
+    const SafeAreaContainer = SafeAreaContextPackage?.SafeAreaProvider ?? React.Fragment;
     const GestureContainer = useGestureHandlerRootView ? GestureHandlerRootView : React.Fragment;
     const gestureContainerProps = useGestureHandlerRootView ? {style: styles.fill} : {};
     const useKeyboardAvoiding = useKeyboardAvoidingView && Constants.isIOS;
@@ -134,7 +134,7 @@ class Modal extends Component<ModalProps> {
     return (
       <HackContainer>
         <RNModal visible={Boolean(visible)} {...others}>
-          <SafeAreaProvider>
+          <SafeAreaContainer>
             <GestureContainer {...gestureContainerProps}>
               <KeyboardAvoidingContainer {...keyboardAvoidingContainerProps}>
                 <Container style={styles.fill} blurType="light">
@@ -143,7 +143,7 @@ class Modal extends Component<ModalProps> {
                 </Container>
               </KeyboardAvoidingContainer>
             </GestureContainer>
-          </SafeAreaProvider>
+          </SafeAreaContainer>
         </RNModal>
       </HackContainer>
     );
