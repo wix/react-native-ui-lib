@@ -42,7 +42,7 @@ UILib supports additional features through optional dependencies. These packages
 | @react-native-community/blur | Card component's blur effects |
 | @react-native-community/datetimepicker | Date/time picker components |
 | @react-native-community/netinfo | Network connectivity features |
-| react-native-safe-area-context | support useSafeAreaInsets inside and usages of Modal |
+| react-native-safe-area-context | support useSafeAreaInsets inside Modal, usages of Modal and TabController |
 | react-native-haptic-feedback | Haptic feedback functionality |
 | react-native-svg | SVG-based components |
 | react-native-shimmer-placeholder | Shimmer loading effects |
