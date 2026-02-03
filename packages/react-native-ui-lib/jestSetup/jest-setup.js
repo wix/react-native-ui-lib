@@ -149,6 +149,7 @@ jest.mock('../src/optionalDependencies', () => {
   const view = jest.requireActual('../src/components/view').default;
   return {
     ...actualOptional,
+    SafeAreaContextPackage: view,
     DateTimePickerPackage: view
   };
 });
