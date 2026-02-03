@@ -1,5 +1,5 @@
-import React, {useState, useMemo} from 'react';
-import {StyleSheet, ScrollView, Image} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, ScrollView} from 'react-native';
 import {
   View,
   Text,
@@ -16,7 +16,8 @@ import {
   Switch,
   TextField,
   Hooks,
-  Incubator
+  Incubator,
+  Icon
 } from 'react-native-ui-lib';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -174,7 +175,7 @@ const ScreenFooterScreen = () => {
     }
   };
 
-  const renderFooterItems = useMemo(() => {
+  const renderFooterItems = () => {
     const items = [];
     const textPreset = getTextPreset(extraContentSize);
     const imageSize = getImageSize(extraContentSize);
@@ -200,7 +201,7 @@ const ScreenFooterScreen = () => {
     if (showExtraText && showImage) {
       items.push(
         <View key="extra-image" centerV marginR-s4={isHorizontal} marginB-s4={!isHorizontal}>
-          <Image source={basketIcon} style={{width: imageSize, height: imageSize, tintColor: Colors.$iconDefault}} />
+          <Icon source={basketIcon} size={imageSize} tintColor={Colors.$iconDefault} />
         </View>
       );
     }
@@ -218,19 +219,7 @@ const ScreenFooterScreen = () => {
     }
 
     return items;
-  }, [
-    itemsCount,
-    itemsFit,
-    isHorizontal,
-    button1Type,
-    button2Type,
-    button3Type,
-    buttonSize,
-    showExtraText,
-    showImage,
-    extraContentSize,
-    useLongButtonText
-  ]);
+  };
 
   return (
     <>
@@ -306,19 +295,17 @@ const ScreenFooterScreen = () => {
         )}
 
         {/* Button Size (applies to all buttons) */}
-        <View marginB-s4>
-          <Text text70M marginB-s2>
-            Button Size
-          </Text>
-          <SegmentedControl
-            segments={SIZE_OPTIONS}
-            initialIndex={SIZE_OPTIONS.findIndex(opt => opt.value === buttonSize)}
-            onChangeIndex={index => setButtonSize(SIZE_OPTIONS[index].value)}
-          />
-        </View>
+        <Text text70M marginB-s2>
+          Button Size
+        </Text>
+        <SegmentedControl
+          segments={SIZE_OPTIONS}
+          initialIndex={SIZE_OPTIONS.findIndex(opt => opt.value === buttonSize)}
+          onChangeIndex={index => setButtonSize(SIZE_OPTIONS[index].value)}
+        />
 
         {/* Long Button Text Toggle */}
-        <View row spread centerV marginB-s4>
+        <View row spread centerV marginB-s4 marginT-s4>
           <Text text70M>Use Long Button Text</Text>
           <Switch value={useLongButtonText} onValueChange={setUseLongButtonText} />
         </View>
@@ -410,13 +397,12 @@ const ScreenFooterScreen = () => {
             <Text text70M marginB-s2>
               Distribution
             </Text>
-            <View row>
-              <SegmentedControl
-                segments={DISTRIBUTION_OPTIONS}
-                initialIndex={DISTRIBUTION_OPTIONS.findIndex(opt => opt.value === distribution)}
-                onChangeIndex={index => setDistribution(DISTRIBUTION_OPTIONS[index].value)}
-              />
-            </View>
+            <SegmentedControl
+              containerStyle={{flexDirection: 'row'}}
+              segments={DISTRIBUTION_OPTIONS}
+              initialIndex={DISTRIBUTION_OPTIONS.findIndex(opt => opt.value === distribution)}
+              onChangeIndex={index => setDistribution(DISTRIBUTION_OPTIONS[index].value)}
+            />
           </View>
         )}
 
@@ -489,7 +475,7 @@ const ScreenFooterScreen = () => {
         visible={shouldHideOnScroll ? visible : true}
         useSafeArea={useSafeArea}
       >
-        {renderFooterItems}
+        {renderFooterItems()}
       </ScreenFooter>
     </>
   );

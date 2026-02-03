@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {LayoutChangeEvent, StyleSheet} from 'react-native';
+import {LayoutChangeEvent, StyleSheet, ViewStyle} from 'react-native';
 import {Image} from 'react-native-ui-lib';
 import Animated, {useAnimatedKeyboard, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
 import {Keyboard} from 'uilib-native';
@@ -162,7 +162,7 @@ const ScreenFooter = (props: ScreenFooterProps) => {
       return (
         <View testID={testID ? `${testID}.fadingBackground` : undefined} absF pointerEvents="none">
           <Image
-            source={Assets.internal.images.buttonFloatingOverlay}
+            source={Assets.internal.images.bottomGradient}
             style={styles.background}
             resizeMode="stretch"
             tintColor={Colors.$backgroundDefault}
@@ -176,9 +176,9 @@ const ScreenFooter = (props: ScreenFooterProps) => {
 
   const renderChild = useCallback((child: React.ReactNode, index: number) => {
     if (itemsFit === ItemsFit.FIXED && itemWidth) {
-      const fixedStyle = isHorizontal
-        ? {width: itemWidth, flexShrink: 1, overflow: 'hidden' as const}
-        : {width: itemWidth, maxWidth: '100%' as const};
+      const fixedStyle: ViewStyle = isHorizontal
+        ? {width: itemWidth, flexShrink: 1, overflow: 'hidden'}
+        : {width: itemWidth, maxWidth: '100%'};
       return (
         <View key={index} style={fixedStyle}>
           {child}
