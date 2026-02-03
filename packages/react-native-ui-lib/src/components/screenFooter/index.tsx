@@ -84,12 +84,9 @@ const ScreenFooter = (props: ScreenFooterProps) => {
 
   const justifyContent: ViewStyle['justifyContent'] = useMemo(() => {
     if (isHorizontal) {
-      // When SPREAD with multiple items, distribute with space-between
-      // When SPREAD with single item, center it (space-between has no effect)
       if (distribution === HorizontalItemsDistribution.SPREAD) {
         return childrenCount === 1 ? 'center' : 'space-between';
       }
-      // When STACK, horizontalAlignment controls left/center/right positioning
       switch (horizontalAlignment) {
         case FooterAlignment.START: return 'flex-start';
         case FooterAlignment.END: return 'flex-end';
@@ -122,9 +119,6 @@ const ScreenFooter = (props: ScreenFooterProps) => {
       {alignItems, justifyContent}
     ];
 
-    if (useSafeArea && Constants.isIphoneX) {
-      style.push({paddingBottom: safeAreaBottom});
-    }
 
     if (isSolid) {
       const shadowStyle = Shadows[shadow]?.top;
@@ -187,7 +181,9 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     }
 
     if (isHorizontal && React.isValidElement(child)) {
-      const flexStyle = itemsFit === ItemsFit.STRETCH ? {flex: 1, alignItems: 'center'} : {flexShrink: 1};
+      const flexStyle = itemsFit === ItemsFit.STRETCH 
+        ? {flex: 1, minWidth: 0, alignItems: 'center'} 
+        : {flexShrink: 1};
       return React.cloneElement<any>(child, {
         key: index,
         style: [child.props.style, flexStyle]
@@ -201,12 +197,12 @@ const ScreenFooter = (props: ScreenFooterProps) => {
 
   const renderFooterContent = useCallback(() => {
     return (
-      <>
+      <View useSafeArea={useSafeArea}>
         {renderBackground()}
         <View testID={testID ? `${testID}.content` : undefined} style={contentContainerStyle}>
           {childrenArray}
         </View>
-      </>
+      </View>
     );
   }, [renderBackground, testID, contentContainerStyle, childrenArray]);
 

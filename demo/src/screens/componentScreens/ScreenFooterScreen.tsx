@@ -183,7 +183,7 @@ const ScreenFooterScreen = () => {
     // Extra Text (Total price)
     if (showExtraText) {
       items.push(
-        <View key="extra-text" centerV flexS marginR-s4={isHorizontal} marginB-s4={!isHorizontal}>
+        <View key="extra-text" centerV flexS marginB-s4={!isHorizontal}>
           <Text {...{[textPreset.main]: true}} numberOfLines={1}>
             Total:{' '}
             <Text {...{[textPreset.main]: true}} style={{fontWeight: 'bold'}}>
@@ -200,7 +200,7 @@ const ScreenFooterScreen = () => {
     // Image (Basket icon)
     if (showExtraText && showImage) {
       items.push(
-        <View key="extra-image" centerV marginR-s4={isHorizontal} marginB-s4={!isHorizontal}>
+        <View key="extra-image" centerV marginB-s4={!isHorizontal}>
           <Icon source={basketIcon} size={imageSize} tintColor={Colors.$iconDefault} />
         </View>
       );
@@ -398,7 +398,7 @@ const ScreenFooterScreen = () => {
               Distribution
             </Text>
             <SegmentedControl
-              containerStyle={{flexDirection: 'row'}}
+              containerStyle={styles.rowContainer}
               segments={DISTRIBUTION_OPTIONS}
               initialIndex={DISTRIBUTION_OPTIONS.findIndex(opt => opt.value === distribution)}
               onChangeIndex={index => setDistribution(DISTRIBUTION_OPTIONS[index].value)}
@@ -485,6 +485,9 @@ const styles = StyleSheet.create({
   scrollContent: {
     padding: 20,
     paddingBottom: 150
+  },
+  rowContainer: {
+    flexDirection: 'row'
   }
 });
 
