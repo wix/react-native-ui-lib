@@ -57,7 +57,7 @@ const useSafeAreaInsets = SafeAreaContextPackage?.useSafeAreaInsets ?? (() => Co
 
 
 const getScreenWidth = (useSafeArea: boolean, left: number, right: number) => {
-  return Constants.windowWidth - (useSafeArea && Constants.isIphoneX ? left + right : 0);
+  return Constants.windowWidth - (useSafeArea ? left + right : 0);
 };
 
 /**
