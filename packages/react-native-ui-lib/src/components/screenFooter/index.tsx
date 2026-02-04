@@ -171,7 +171,7 @@ const ScreenFooter = (props: ScreenFooterProps) => {
   const renderChild = useCallback((child: React.ReactNode, index: number) => {
     if (itemsFit === ItemsFit.FIXED && itemWidth) {
       const fixedStyle: ViewStyle = isHorizontal
-        ? {width: itemWidth, flexShrink: 1, overflow: 'hidden'}
+        ? {width: itemWidth, flexShrink: 1, overflow: 'hidden', flexDirection: 'row', justifyContent: 'center'}
         : {width: itemWidth, maxWidth: '100%'};
       return (
         <View key={index} style={fixedStyle}>
@@ -180,16 +180,13 @@ const ScreenFooter = (props: ScreenFooterProps) => {
       );
     }
 
-    if (isHorizontal && React.isValidElement(child)) {
-      const flexStyle = itemsFit === ItemsFit.STRETCH 
-        ? {flex: 1, minWidth: 0, alignItems: 'center'} 
-        : {flexShrink: 1};
-      return React.cloneElement<any>(child, {
-        key: index,
-        style: [child.props.style, flexStyle]
-      });
+    if (isHorizontal && React.isValidElement(child) && itemsFit === ItemsFit.STRETCH) {
+      return (
+        <View key={index} style={styles.stretchItemWrapper}>
+          {child}
+        </View>
+      );
     }
-
     return child;
   }, [itemsFit, itemWidth, isHorizontal]);
 
@@ -257,6 +254,11 @@ const styles = StyleSheet.create({
   verticalContainer: {
     flexDirection: 'column',
     gap: Spacings.s3
+  },
+  stretchItemWrapper: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'center'
   },
   background: {
     width: '100%',
