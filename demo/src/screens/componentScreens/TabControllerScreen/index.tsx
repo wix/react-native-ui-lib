@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {ActivityIndicator, StyleSheet} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {
   Assets,
   TabController,
@@ -162,63 +163,65 @@ class TabControllerScreen extends Component<{}, State> {
   render() {
     const {key, initialIndex, asCarousel, centerSelected, fewItems, items} = this.state;
     return (
-      <View flex bg-$backgroundDefault>
-        <TabController
-          key={key}
-          ref={this.tabController}
-          asCarousel={asCarousel}
-          initialIndex={initialIndex}
-          onChangeIndex={this.onChangeIndex}
-          items={items}
-        >
-          <TabController.TabBar
-            // items={items}
+      <SafeAreaProvider style={{flex: 1}}>
+        <View flex bg-$backgroundDefault>
+          <TabController
             key={key}
-            // uppercase
-            // indicatorStyle={{backgroundColor: 'green', height: 3}}
-            // indicatorInsets={0}
-            spreadItems={!fewItems}
-            backgroundColor={fewItems ? 'transparent' : undefined}
-            // labelColor={'green'}
-            // selectedLabelColor={'red'}
-            labelStyle={styles.labelStyle}
-            selectedLabelStyle={styles.selectedLabelStyle}
-            // iconColor={'green'}
-            // selectedIconColor={'blue'}
-            enableShadow
-            activeBackgroundColor={Colors.$backgroundPrimaryMedium}
-            centerSelected={centerSelected}
-          />
-          {this.renderTabPages()}
-        </TabController>
-        <View absB left margin-20 marginB-100 style={{zIndex: 1}}>
-          <Button
-            bg-green10={!fewItems}
-            bg-green30={fewItems}
-            label={fewItems ? 'Show Many Items' : 'Show Few Items'}
-            marginB-12
-            size={Button.sizes.small}
-            onPress={this.toggleItemsCount}
-          />
-          <Button
-            bg-grey20={!asCarousel}
-            bg-green30={asCarousel}
-            label={`Carousel : ${asCarousel ? 'ON' : 'OFF'}`}
-            marginB-12
-            size={Button.sizes.small}
-            onPress={this.toggleCarouselMode}
-          />
-          <Button
-            bg-grey20={!centerSelected}
-            bg-green30={centerSelected}
-            label={`centerSelected : ${centerSelected ? 'ON' : 'OFF'}`}
-            size={Button.sizes.small}
-            marginB-12
-            onPress={this.toggleCenterSelected}
-          />
-          <Button label="setTab (Imperative)" bg-green10 onPress={this.setTab} size={Button.sizes.small}/>
+            ref={this.tabController}
+            asCarousel={asCarousel}
+            initialIndex={initialIndex}
+            onChangeIndex={this.onChangeIndex}
+            items={items}
+          >
+            <TabController.TabBar
+              // items={items}
+              key={key}
+              // uppercase
+              // indicatorStyle={{backgroundColor: 'green', height: 3}}
+              // indicatorInsets={0}
+              spreadItems={!fewItems}
+              backgroundColor={fewItems ? 'transparent' : undefined}
+              // labelColor={'green'}
+              // selectedLabelColor={'red'}
+              labelStyle={styles.labelStyle}
+              selectedLabelStyle={styles.selectedLabelStyle}
+              // iconColor={'green'}
+              // selectedIconColor={'blue'}
+              enableShadow
+              activeBackgroundColor={Colors.$backgroundPrimaryMedium}
+              centerSelected={centerSelected}
+            />
+            {this.renderTabPages()}
+          </TabController>
+          <View absB left margin-20 marginB-100 style={{zIndex: 1}}>
+            <Button
+              bg-green10={!fewItems}
+              bg-green30={fewItems}
+              label={fewItems ? 'Show Many Items' : 'Show Few Items'}
+              marginB-12
+              size={Button.sizes.small}
+              onPress={this.toggleItemsCount}
+            />
+            <Button
+              bg-grey20={!asCarousel}
+              bg-green30={asCarousel}
+              label={`Carousel : ${asCarousel ? 'ON' : 'OFF'}`}
+              marginB-12
+              size={Button.sizes.small}
+              onPress={this.toggleCarouselMode}
+            />
+            <Button
+              bg-grey20={!centerSelected}
+              bg-green30={centerSelected}
+              label={`centerSelected : ${centerSelected ? 'ON' : 'OFF'}`}
+              size={Button.sizes.small}
+              marginB-12
+              onPress={this.toggleCenterSelected}
+            />
+            <Button label="setTab (Imperative)" bg-green10 onPress={this.setTab} size={Button.sizes.small}/>
+          </View>
         </View>
-      </View>
+      </SafeAreaProvider>
     );
   }
 }
