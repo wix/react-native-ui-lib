@@ -83,6 +83,7 @@ export const navigationData = {
       {title: 'Dialog', tags: 'dialog modal popup alert', screen: 'unicorn.components.DialogScreen'},
       {title: 'Feature Highlight', tags: 'native feature overlay', screen: 'unicorn.components.FeatureHighlightScreen'},
       {title: 'Floating Button', tags: 'floating button', screen: 'unicorn.components.FloatingButtonScreen'},
+      {title: 'Screen Footer', tags: 'screen footer sticky bottom', screen: 'unicorn.components.ScreenFooterScreen'},
       {title: 'Hint', tags: 'hints tooltip', screen: 'unicorn.components.HintsScreen'},
       {title: 'Toast', tags: 'toast top bottom snackbar', screen: 'unicorn.components.ToastsScreen'}
     ]

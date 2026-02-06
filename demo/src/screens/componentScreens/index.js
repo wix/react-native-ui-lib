@@ -21,6 +21,7 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.DrawerScreen', () => require('./DrawerScreen').default);
   registrar('unicorn.components.ExpandableSectionScreen', () => require('./ExpandableSectionScreen').default);
   registrar('unicorn.components.FloatingButtonScreen', () => require('./FloatingButtonScreen').default);
+  registrar('unicorn.components.ScreenFooterScreen', () => require('./ScreenFooterScreen').default);
   registrar('unicorn.components.HapticScreen', () => require('./HapticScreen').default);
   registrar('unicorn.components.HintsScreen', () => require('./HintsScreen').default);
   registrar('unicorn.components.IconScreen', () => require('./IconScreen').default);
