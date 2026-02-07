@@ -34,7 +34,7 @@ const PACKAGES = [
   {
     name: 'react-native-ui-lib',
     shouldUpdatePackageJson: true,
-    releaseVersionStrategy: 'buildKiteVersion',
+    releaseVersionStrategy: isRelease ? 'buildKiteVersion' : 'packageJsonVersion',
     workspaceDeps: ['uilib-native']
   }
 ];
