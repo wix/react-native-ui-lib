@@ -19,14 +19,17 @@ const testMaster =
   (process.argv?.find(arg => arg.toLowerCase().includes('-master'))?.length ?? 0) > 0 ||
   (process.argv?.find(arg => arg.toLowerCase().includes('-m'))?.length ?? 0) > 0;
 
-const testSnapshot =
+let testSnapshot =
   (process.argv?.find(arg => arg.toLowerCase().includes('-snapshot'))?.length ?? 0) > 0 ||
   (process.argv?.find(arg => arg.toLowerCase().includes('-snap'))?.length ?? 0) > 0 ||
-  (process.argv?.find(arg => arg.toLowerCase().includes('-s'))?.length ?? 0) > 0 ||
-  (!testMaster && !testRelease);
+  (process.argv?.find(arg => arg.toLowerCase().includes('-s'))?.length ?? 0) > 0;
 
 if (testRelease || testMaster || testSnapshot) {
   dryRun = true;
+}
+
+if (dryRun && !testMaster && !testRelease) {
+  testSnapshot = true;
 }
 
 const isMaster = dryRun ? testMaster : process.env.BUILDKITE_BRANCH === 'master';
