@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {
   View,
   Text,
@@ -222,7 +223,7 @@ const ScreenFooterScreen = () => {
   };
 
   return (
-    <>
+    <SafeAreaProvider>
       <ScrollView contentContainerStyle={styles.scrollContent} onScroll={onScroll} scrollEventThrottle={16}>
         <Text text60 marginB-s4>
           ScreenFooter Configuration
@@ -477,7 +478,7 @@ const ScreenFooterScreen = () => {
       >
         {renderFooterItems()}
       </ScreenFooter>
-    </>
+    </SafeAreaProvider>
   );
 };
 

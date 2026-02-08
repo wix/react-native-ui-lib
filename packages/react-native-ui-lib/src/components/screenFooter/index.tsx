@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {LayoutChangeEvent, StyleSheet, ViewStyle} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Image} from 'react-native-ui-lib';
 import Animated, {useAnimatedKeyboard, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
 import {Keyboard} from 'uilib-native';
@@ -7,6 +8,7 @@ import View from '../view';
 import Assets from '../../assets';
 import {Colors, Shadows, Spacings} from '../../style';
 import {asBaseComponent, Constants} from '../../commons/new';
+import {useKeyboardHeight} from '../../hooks';
 import {
   ScreenFooterProps,
   ScreenFooterLayouts,
@@ -110,7 +112,10 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     }
   }, [layout, itemsFit, alignment]);
 
-  const {bottom: safeAreaBottom} = Constants.getSafeAreaInsets();
+  const insets = useSafeAreaInsets();
+
+  const keyboardHeight = useKeyboardHeight();
+  const isKeyboardVisible = keyboardHeight > 0;
 
   const contentContainerStyle = useMemo(() => {
     const style: any[] = [
@@ -119,7 +124,10 @@ const ScreenFooter = (props: ScreenFooterProps) => {
       {alignItems, justifyContent}
     ];
 
-
+    if (useSafeArea && !isKeyboardVisible) {
+      style.push({paddingBottom: insets.bottom});
+    }
+    
     if (isSolid) {
       const shadowStyle = Shadows[shadow]?.top;
       const backgroundElevation = shadowStyle?.elevation || 0;
@@ -128,7 +136,7 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     }
 
     return style;
-  }, [layout, alignItems, justifyContent, useSafeArea, safeAreaBottom, isSolid, shadow]);
+  }, [layout, alignItems, justifyContent, useSafeArea, insets.bottom, isSolid, shadow, isKeyboardVisible]);
 
   const solidBackgroundStyle = useMemo(() => {
     if (!isSolid) {
@@ -182,7 +190,7 @@ const ScreenFooter = (props: ScreenFooterProps) => {
 
     if (isHorizontal && React.isValidElement(child) && itemsFit === ItemsFit.STRETCH) {
       return (
-        <View key={index} style={styles.stretchItemWrapper}>
+        <View flex row centerH key={index}>
           {child}
         </View>
       );
@@ -194,12 +202,12 @@ const ScreenFooter = (props: ScreenFooterProps) => {
 
   const renderFooterContent = useCallback(() => {
     return (
-      <View useSafeArea={useSafeArea}>
+      <>
         {renderBackground()}
         <View testID={testID ? `${testID}.content` : undefined} style={contentContainerStyle}>
           {childrenArray}
         </View>
-      </View>
+      </>
     );
   }, [renderBackground, testID, contentContainerStyle, childrenArray]);
 
@@ -254,11 +262,6 @@ const styles = StyleSheet.create({
   verticalContainer: {
     flexDirection: 'column',
     gap: Spacings.s3
-  },
-  stretchItemWrapper: {
-    flexDirection: 'row',
-    flex: 1,
-    justifyContent: 'center'
   },
   background: {
     width: '100%',
