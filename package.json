@@ -25,11 +25,11 @@
     "docs:deploy": "./scripts/docs/deployDocs.sh",
     "docs:build": "node scripts/docs/buildDocs.js",
     "docs:start": "(cd docuilib && yarn start)",
-    "release": "./scripts/release/releaseUiLib.sh",
+    "release": "node ./scripts/release/release.js",
     "releaseDemo": "./scripts/release/releaseDemo.sh",
     "releaseDocs": "./scripts/release/releaseDocs.sh",
     "releaseEslint": "./scripts/release/releaseEslint.sh",
-    "releaseNative": "./scripts/release/releaseNative.sh"
+    "releaseNative": ""
   },
   "workspaces": {
     "packages": [
