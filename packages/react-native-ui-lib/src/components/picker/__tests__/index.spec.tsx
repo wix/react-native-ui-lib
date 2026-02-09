@@ -166,7 +166,7 @@ describe('Picker', () => {
         expect(driver.isOpen()).toBeTruthy();
         driver.cancel();
         expect(driver.isOpen()).toBeFalsy();
-        expect(onDismiss).toHaveBeenCalledTimes(2); // TODO: this should be 1
+        expect(onDismiss).toHaveBeenCalledTimes(1);
       });
 
       // TODO: this test is not passing yet

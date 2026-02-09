@@ -9,6 +9,7 @@ const BRANCH_CATEGORIES = [
   {name: 'fixes', branch: 'fix/', title: ':wrench: Fixes'},
   {name: 'infra', branch: 'infra/', title: ':gear: Maintenance & Infra'}
 ];
+const SILENT_PRS = ['none', 'n/a', 'na'];
 
 function getBranchPrefixes() {
   return BRANCH_CATEGORIES.map(category => category.branch);
@@ -95,7 +96,7 @@ function isSilent(pr) {
     return true;
   } else {
     const changelog = pr.info.changelog.toLowerCase();
-    if (changelog === 'none' || changelog === 'n/a') {
+    if (SILENT_PRS.includes(changelog)) {
       return true;
     }
   }
