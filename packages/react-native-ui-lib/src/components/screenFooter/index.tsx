@@ -1,9 +1,9 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {LayoutChangeEvent, StyleSheet, ViewStyle} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Image} from 'react-native-ui-lib';
 import Animated, {useAnimatedKeyboard, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
 import {Keyboard} from 'uilib-native';
+import {SafeAreaContextPackage} from '../../optionalDependencies';
 import View from '../view';
 import Assets from '../../assets';
 import {Colors, Shadows, Spacings} from '../../style';
@@ -45,7 +45,6 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     horizontalItemsDistribution: distribution,
     visible = true,
     animationDuration = 200,
-    useSafeArea,
     shadow = ScreenFooterShadow.SH20,
     hideDivider = false
   } = props;
@@ -112,6 +111,7 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     }
   }, [layout, itemsFit, alignment]);
 
+  const useSafeAreaInsets = SafeAreaContextPackage?.useSafeAreaInsets ?? (() => Constants.getSafeAreaInsets());
   const insets = useSafeAreaInsets();
 
   const keyboardHeight = useKeyboardHeight();
@@ -124,7 +124,7 @@ const ScreenFooter = (props: ScreenFooterProps) => {
       {alignItems, justifyContent}
     ];
 
-    if (useSafeArea && !isKeyboardVisible) {
+    if (!isKeyboardVisible) {
       style.push({paddingBottom: insets.bottom});
     }
     
@@ -136,7 +136,7 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     }
 
     return style;
-  }, [layout, alignItems, justifyContent, useSafeArea, insets.bottom, isSolid, shadow, isKeyboardVisible]);
+  }, [layout, alignItems, justifyContent, insets.bottom, isSolid, shadow, isKeyboardVisible]);
 
   const solidBackgroundStyle = useMemo(() => {
     if (!isSolid) {

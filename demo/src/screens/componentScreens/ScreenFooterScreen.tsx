@@ -113,7 +113,6 @@ const ScreenFooterScreen = () => {
   const [useLongButtonText, setUseLongButtonText] = useState(false);
   const [itemWidth, setItemWidth] = useState(150);
   const [shouldHideOnScroll, setShouldHideOnScroll] = useState(false);
-  const [useSafeArea, setUseSafeArea] = useState(true);
 
   const {onScroll, visible} = Hooks.useScrollToHide();
 
@@ -229,13 +228,7 @@ const ScreenFooterScreen = () => {
           ScreenFooter Configuration
         </Text>
 
-        <TextField marginB-20 placeholder="Focus me to test keyboard behavior" label="Test Input" floatingPlaceholder />
-
-        {/* Safe Area Toggle */}
-        <View row spread centerV marginB-s4>
-          <Text text70M>Use Safe Area</Text>
-          <Switch value={useSafeArea} onValueChange={setUseSafeArea} />
-        </View>
+        <TextField placeholder="Focus me to test keyboard behavior" label="Test Input" floatingPlaceholder />
 
         {/* Hide On Scroll Toggle */}
         <View row spread centerV marginB-s4>
@@ -474,7 +467,6 @@ const ScreenFooterScreen = () => {
         itemsFit={itemsFit}
         itemWidth={itemWidth}
         visible={shouldHideOnScroll ? visible : true}
-        useSafeArea={useSafeArea}
       >
         {renderFooterItems()}
       </ScreenFooter>
