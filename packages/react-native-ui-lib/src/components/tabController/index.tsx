@@ -2,7 +2,6 @@
 import _ from 'lodash';
 import React, {PropsWithChildren, useMemo, useEffect, useState, useCallback} from 'react';
 import {useAnimatedReaction, useSharedValue, withTiming, runOnJS} from 'react-native-reanimated';
-import {SafeAreaContextPackage} from '../../optionalDependencies';
 import {useOrientation, useThemeProps} from '../../hooks';
 import {Constants} from '../../commons/new';
 import TabBarContext from './TabBarContext';
@@ -53,11 +52,9 @@ export interface TabControllerProps {
   children?: React.ReactNode;
 }
 
-const useSafeAreaInsets = SafeAreaContextPackage?.useSafeAreaInsets ?? (() => Constants.getSafeAreaInsets());
-
-
-const getScreenWidth = (useSafeArea: boolean, left: number, right: number) => {
-  return Constants.windowWidth - (useSafeArea ? left + right : 0);
+const getScreenWidth = (useSafeArea: boolean) => {
+  const {left, right} = Constants.getSafeAreaInsets();
+  return Constants.windowWidth - (useSafeArea && Constants.isIphoneX ? left + right : 0);
 };
 
 /**
@@ -78,8 +75,7 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
     useSafeArea = false,
     children
   } = themeProps;
-  const {left, right} = useSafeAreaInsets();
-  const [screenWidth, setScreenWidth] = useState<number>(getScreenWidth(useSafeArea, left, right));
+  const [screenWidth, setScreenWidth] = useState<number>(getScreenWidth(useSafeArea));
 
   if (items?.length < 2) {
     console.warn('TabController component expect a minimum of 2 items');
@@ -87,7 +83,7 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
 
   useOrientation({
     onOrientationChange: () => {
-      setScreenWidth(getScreenWidth(useSafeArea, left, right));
+      setScreenWidth(getScreenWidth(useSafeArea));
     }
   });
 
