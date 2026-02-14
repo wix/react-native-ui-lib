@@ -105,17 +105,7 @@
     "tabs": [
       {
         "title": "UX Guidelines",
-        "sections": [
-          {
-            "type": "section",
-            "content": [
-              {
-                "value": "https://embed.figma.com/design/Krv1pLl7kq2L52vMRwd498/MADS-Guidelines?node-id=10088-640358&embed-host=share",
-                "height": 1600
-              }
-            ]
-          }
-        ]
+        "sections": []
       },
       {
         "title": "Overview",
@@ -127,11 +117,11 @@
           },
           {
             "type": "section",
-            "title": "Usage Examples",
+            "title": "",
             "description": "",
             "content": [
               {
-                "value": "\"https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=14016-35810&embed-host=share\""
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=14016-35810&embed-host=share"
               }
             ]
           },
@@ -157,7 +147,7 @@
                 "content": [
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Type%20tabel/White%20Overlay.png",
-                    "background": "A6ACB1"
+                    "background": "#A6ACB1"
                   }
                 ]
               }
@@ -181,10 +171,10 @@
                   },
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20Types/Gradient%20Top%20-%20white.png",
-                    "background": "A6ACB1"
+                    "background": "#A6ACB1"
                   }
                 ],
-                "description": "markdown:\n**Black height:** 75% of image\n**White height:** 70% of image"
+                "description": "Black height: 75% of image\n\nWhite height: 70% of image"
               },
               {
                 "title": "Gradient Bottom",
@@ -194,10 +184,10 @@
                   },
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20Types/Gradient%20Bottom%20-%20white.png",
-                    "background": "A6ACB1"
+                    "background": "#A6ACB1"
                   }
                 ],
-                "description": "markdown:\n**Black height:** 75% of image\n**White height:** 70% of image"
+                "description": "Black height:  75% of image\n\nWhite height: 70% of image"
               },
               {
                 "title": "Gradient Both",
@@ -207,10 +197,10 @@
                   },
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20Types/Gradient%20Both%20-%20white.png",
-                    "background": "A6ACB1"
+                    "background": "#A6ACB1"
                   }
                 ],
-                "description": "markdown:\n**Black height:** 40% of image\n**White height:** 50% of image"
+                "description": "Black height: 40% of image\n\nWhite height: 50% of image"
               },
               {
                 "title": "Flat Overlay",
@@ -220,10 +210,10 @@
                   },
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20Types/Flat%20Overlay%20-%20white.png",
-                    "background": "A6ACB1"
+                    "background": "#A6ACB1"
                   }
                 ],
-                "description": "markdown:\n**Black opacity:** 45%\n**White opacity:** 40%"
+                "description": "Black opacity: 45%\n\nWhite opacity: 40%"
               }
             ],
             "title": "Overlay Types",
@@ -246,7 +236,7 @@
                   },
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20intensity/Low%20Intensity%20-%20white.png",
-                    "background": "A6ACB1"
+                    "background": "#A6ACB1"
                   }
                 ]
               },
@@ -259,7 +249,7 @@
                   },
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20intensity/Medium%20Intensity%20-%20white.png",
-                    "background": "A6ACB1"
+                    "background": "#A6ACB1"
                   }
                 ]
               },
@@ -272,7 +262,7 @@
                   },
                   {
                     "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/Image/Overlay%20intensity/High%20Intensity%20-%20white.png",
-                    "background": "A6ACB1"
+                    "background": "#A6ACB1"
                   }
                 ]
               }
@@ -283,15 +273,15 @@
           {
             "type": "section",
             "title": "Image Error",
-            "description": "Add a fallback to the Image component that displays the “placeholderMissingImage” illustration, in one of the following scenarios:\n- URL is invalid (broken)\n- Image that is not cached + offline mode\n- Failed fetching from server"
+            "description": "Add a fallback to the Image component that displays the “placeholderMissingImage” illustration, in one of the following scenarios:\n\n- URL is invalid (broken)\n\n- Image that is not cached + offline mode\n\n- Failed fetching from server"
           },
           {
             "type": "section",
-            "title": "Usage Examples",
+            "title": "",
             "description": "",
             "content": [
               {
-                "value": "\"https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=14016-36419&embed-host=share\""
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=14016-36419&embed-host=share"
               }
             ]
           },
@@ -301,7 +291,7 @@
             "description": "",
             "content": [
               {
-                "value": "\"https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=16054-57603&embed-host=share\""
+                "value": "https://embed.figma.com/design/xFjvYNkGTmYTGYMLrmz9Ir/Guidelines-to-Docs?node-id=16054-57603&embed-host=share"
               }
             ]
           }
