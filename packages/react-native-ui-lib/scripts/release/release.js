@@ -35,7 +35,7 @@ function validateEnv() {
   }
   return (
     process.env.BUILDKITE_BRANCH === 'master' ||
-    process.env.BUILDKITE_BRANCH === 'release' ||
+    process.env.BUILDKITE_MESSAGE?.match?.(/^release$/i) ||
     process.env.BUILDKITE_MESSAGE === 'snapshot'
   );
 }
