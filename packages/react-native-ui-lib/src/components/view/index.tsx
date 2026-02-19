@@ -1,14 +1,6 @@
 import {useModifiers, useThemeProps} from 'hooks';
 import React, {useEffect, useMemo, useState} from 'react';
-import {
-  View as RNView,
-  SafeAreaView as RNSafeAreaView,
-  Animated,
-  ViewProps as RNViewProps,
-  type StyleProp,
-  type ViewStyle,
-  type DimensionValue
-} from 'react-native';
+import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, type StyleProp, type ViewStyle, type DimensionValue} from 'react-native';
 import type {AnimateProps as RNReanimatedProps} from 'react-native-reanimated';
 import {Constants, ContainerModifiers} from '../../commons/new';
 import type {RecorderProps} from '../../typings/recorderTypes';
@@ -119,7 +111,7 @@ function View(props: ViewProps, ref: any) {
     if (useSafeArea && SafeAreaContextPackage?.SafeAreaView) {
       container = SafeAreaContextPackage.SafeAreaView;
     } else if (useSafeArea && Constants.isIOS) {
-      container = RNSafeAreaView;
+      container = SafeAreaView;
     }
 
     if (reanimated) {
