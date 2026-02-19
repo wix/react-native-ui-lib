@@ -1,9 +1,18 @@
 import {useModifiers, useThemeProps} from 'hooks';
 import React, {useEffect, useMemo, useState} from 'react';
-import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, type StyleProp, type ViewStyle, type DimensionValue} from 'react-native';
+import {
+  View as RNView,
+  SafeAreaView as RNSafeAreaView,
+  Animated,
+  ViewProps as RNViewProps,
+  type StyleProp,
+  type ViewStyle,
+  type DimensionValue
+} from 'react-native';
 import type {AnimateProps as RNReanimatedProps} from 'react-native-reanimated';
 import {Constants, ContainerModifiers} from '../../commons/new';
 import type {RecorderProps} from '../../typings/recorderTypes';
+import {SafeAreaContextPackage} from '../../optionalDependencies';
 
 /**
  * Extra props when using reanimated (only non experimental props)
@@ -106,7 +115,12 @@ function View(props: ViewProps, ref: any) {
   }, []);
 
   const ViewContainer = useMemo(() => {
-    const container = useSafeArea && Constants.isIOS ? SafeAreaView : RNView;
+    let container: React.ComponentType<any> = RNView;
+    if (useSafeArea && SafeAreaContextPackage?.SafeAreaView) {
+      container = SafeAreaContextPackage.SafeAreaView;
+    } else if (useSafeArea && Constants.isIOS) {
+      container = RNSafeAreaView;
+    }
 
     if (reanimated) {
       const {default: Reanimated}: typeof import('react-native-reanimated') = require('react-native-reanimated');
@@ -155,7 +169,6 @@ function View(props: ViewProps, ref: any) {
   }
 
   return (
-    //@ts-expect-error
     <ViewContainer
       accessibilityElementsHidden={inaccessible}
       importantForAccessibility={inaccessible ? 'no-hide-descendants' : undefined}
