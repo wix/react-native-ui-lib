@@ -10,6 +10,7 @@ import React, {
 } from 'react';
 import _ from 'lodash';
 import {StyleSheet, Keyboard, TextInput, TextInputProps, StyleProp, ViewStyle} from 'react-native';
+import {useThemeProps} from '../../hooks';
 import View from '../view';
 import Text from '../text';
 import TouchableOpacity from '../touchableOpacity';
@@ -39,7 +40,14 @@ export interface MaskedInputProps extends Omit<TextInputProps, 'value'> {
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/MaskedInputScreen.tsx
  */
 function MaskedInput(props: MaskedInputProps, ref: ForwardedRef<any>) {
-  const {initialValue, formatter = _.identity, containerStyle, renderMaskedText, onChangeText, ...others} = props;
+  const {
+    initialValue,
+    formatter = _.identity,
+    containerStyle,
+    renderMaskedText,
+    onChangeText,
+    ...others
+  } = useThemeProps(props, 'MaskedInput');
   const [value, setValue] = useState(initialValue);
   const inputRef = useRef<TextInput>(undefined);
   const keyboardDidHideListener = useRef<any>(undefined);

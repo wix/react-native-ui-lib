@@ -37,7 +37,7 @@ function checkBranchPrefix() {
       encoding: 'utf8'
     }).trim();
 
-    const hasValidPrefix = getBranchPrefixes().some(prefix => currentBranch.startsWith(prefix));
+    const hasValidPrefix = getBranchPrefixes().some(prefix => currentBranch.startsWith(prefix)) || currentBranch === 'release';
 
     if (!hasValidPrefix) {
       logError(`Branch "${currentBranch}" does not start with a valid prefix.`);

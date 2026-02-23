@@ -1,0 +1,262 @@
+{
+  "name": "ScreenFooter",
+  "category": "layout",
+  "description": "A flexible footer component that stays at the bottom of the screen with support for various layouts, backgrounds, and keyboard behaviors",
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ScreenFooterScreen.tsx",
+  "images": [],
+  "props": [
+    {
+      "name": "backgroundType",
+      "type": "ScreenFooterBackgrounds",
+      "description": "The background style of the footer [fading, solid, transparent]",
+      "default": "'solid'"
+    },
+    {
+      "name": "layout",
+      "type": "ScreenFooterLayouts",
+      "description": "The layout direction of footer items [horizontal, vertical]",
+      "default": "'vertical'"
+    },
+    {
+      "name": "alignment",
+      "type": "FooterAlignment",
+      "description": "Cross-axis alignment [start, center, end]. In vertical layout: controls horizontal position. In horizontal layout: controls vertical position",
+      "default": "'center'"
+    },
+    {
+      "name": "horizontalAlignment",
+      "type": "FooterAlignment",
+      "description": "Main-axis alignment for horizontal layout only when distribution is STACK [start, center, end]",
+      "default": "'center'"
+    },
+    {
+      "name": "horizontalItemsDistribution",
+      "type": "HorizontalItemsDistribution",
+      "description": "Distribution of items in horizontal layout [stack, spread]",
+      "default": "'spread'"
+    },
+    {
+      "name": "itemsFit",
+      "type": "ItemsFit",
+      "description": "How items should fit in vertical layout [fit, fixed, stretch]",
+      "default": "'fit'"
+    },
+    {
+      "name": "keyboardBehavior",
+      "type": "KeyboardBehavior",
+      "description": "The footer's keyboard behavior [sticky, hoisted]. Sticky: stays at bottom when keyboard opens. Hoisted: pushed up when keyboard opens",
+      "default": "'sticky'"
+    },
+    {
+      "name": "itemWidth",
+      "type": "DimensionValue",
+      "description": "Fixed width for all items (used with ItemsFit.FIXED)"
+    },
+    {
+      "name": "visible",
+      "type": "boolean",
+      "description": "If true, the footer is visible. If false, it slides down",
+      "default": "true"
+    },
+    {
+      "name": "animationDuration",
+      "type": "number",
+      "description": "Duration of the show/hide animation in ms",
+      "default": "200"
+    },
+    {
+      "name": "useSafeArea",
+      "type": "boolean",
+      "description": "If true, the footer will respect the safe area (add bottom padding)",
+      "default": "true"
+    },
+    {
+      "name": "shadow",
+      "type": "ScreenFooterShadow",
+      "description": "Shadow preset for solid background [sh10, sh20, sh30]. Only applies when backgroundType is 'solid'",
+      "default": "'sh20'"
+    },
+    {
+      "name": "hideDivider",
+      "type": "boolean",
+      "description": "If true, hides the top divider for solid background. Only applies when backgroundType is 'solid'",
+      "default": "false"
+    }
+  ],
+  "snippet": [
+    "<View flex bg-$backgroundDefault>",
+    "  <ScrollView>",
+    "    {/* Screen content */}",
+    "  </ScrollView>",
+    "  <ScreenFooter>",
+    "    <Button label=\"Primary Action\" />",
+    "    <Button label=\"Secondary Action\" link />",
+    "  </ScreenFooter>",
+    "</View>"
+  ],
+  "docs": {
+    "hero": {
+      "title": "ScreenFooter",
+      "description": "The ScreenFooter component provides a flexible footer that stays at the bottom of the screen with support for various layouts, backgrounds, and keyboard behaviors. It's ideal for forms, checkout flows, and any screen requiring persistent bottom actions.",
+      "type": "hero",
+      "layout": "horizontal",
+      "content": [
+        {
+          "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ScreenFooter/screenFooter_overview_preview.png"
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "title": "Overview",
+        "sections": [
+          {
+            "type": "section",
+            "title": "Use Examples",
+            "description": "The ScreenFooter can be used in various scenarios depending on the content and action hierarchy. Each layout type serves different use cases and provides different visual emphasis.",
+            "content": []
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Layout Type",
+              "Use Case",
+              "Example"
+            ],
+            "items": [
+              {
+                "title": "Horizontal - Spread",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ScreenFooter/screenFooter_horizontal_spread.png"
+                  }
+                ],
+                "description": "Best for two equally important actions positioned at opposite ends. Common in navigation flows or when presenting contrasting choices."
+              },
+              {
+                "title": "Horizontal - Stacked Center",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ScreenFooter/screenFooter_horizontal_stacked.png"
+                  }
+                ],
+                "description": "Ideal for primary and secondary actions of similar importance that should be grouped together in the center."
+              },
+              {
+                "title": "Horizontal - With Content",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ScreenFooter/screenFooter_horizontal_content.png"
+                  }
+                ],
+                "description": "Perfect for checkout or summary screens where you need to display information alongside actions. The footer can accommodate text, prices, or other content elements."
+              }
+            ],
+            "title": "Horizontal Layouts",
+            "description": "markdown: Horizontal layouts are best when screen content is abundant and vertical space is limited. They keep actions compact while maintaining good reachability. Use the `layout` prop set to `ScreenFooterLayouts.HORIZONTAL`."
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Layout Type",
+              "Use Case",
+              "Example"
+            ],
+            "items": [
+              {
+                "title": "Vertical - Fit",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ScreenFooter/screenFooter_vertical_fit.png"
+                  }
+                ],
+                "description": "Buttons are sized based on their content. Best for clear action hierarchy with a prominent primary button and a subtle secondary link button."
+              },
+              {
+                "title": "Vertical - Stretched",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ScreenFooter/screenFooter_vertical_stretched.png"
+                  }
+                ],
+                "description": "Full-width buttons provide maximum tap area and visual prominence. Recommended for forms and high-priority actions where accessibility is crucial."
+              }
+            ],
+            "title": "Vertical Layouts",
+            "description": "markdown: Vertical layouts provide better action prominence and are recommended when a single primary action needs emphasis, or when content can be obscured. Use `itemsFit` prop with `ItemsFit.STRETCH` for full-width buttons or `ItemsFit.FIT` for content-sized buttons."
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Background Type",
+              "Visual",
+              "When to Use"
+            ],
+            "items": [
+              {
+                "title": "Solid",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ScreenFooter/screenFooter_background_solid.png"
+                  }
+                ],
+                "description": "Provides clear separation with a solid background and optional shadow. Best for content-heavy screens where the footer needs to stand out."
+              },
+              {
+                "title": "Fading",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ScreenFooter/screenFooter_background_fading.png"
+                  }
+                ],
+                "description": "Creates a subtle gradient overlay that doesn't obscure content completely. Ideal for minimal designs or when content should remain partially visible."
+              },
+              {
+                "title": "Transparent",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ScreenFooter/screenFooter_background_transparent.png"
+                  }
+                ],
+                "description": "No background overlay. Use when the screen has minimal content or a solid background color, and separation isn't needed."
+              }
+            ],
+            "title": "Background Types",
+            "description": "markdown: Choose the background type based on your content density and visual hierarchy needs. Set using the `backgroundType` prop."
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Behavior",
+              "Description",
+              "Example"
+            ],
+            "items": [
+              {
+                "title": "Sticky",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ScreenFooter/screenFooter_behavior_sticky.png"
+                  }
+                ],
+                "description": "The footer remains at the bottom of the screen even when the keyboard is open. Best for short forms or when the footer actions don't relate to keyboard input."
+              },
+              {
+                "title": "Hoisted",
+                "content": [
+                  {
+                    "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/ScreenFooter/screenFooter_behavior_hoisted.png"
+                  }
+                ],
+                "description": "The footer moves up with the keyboard, staying above it. Recommended for forms where users need immediate access to submit actions while typing."
+              }
+            ],
+            "title": "Keyboard Behavior",
+            "description": "markdown: Control how the footer responds to the keyboard using the `keyboardBehavior` prop. Choose `KeyboardBehavior.STICKY` to keep it at the bottom, or `KeyboardBehavior.HOISTED` to move it above the keyboard."
+          }
+        ]
+      }
+    ]
+  }
+}
+
