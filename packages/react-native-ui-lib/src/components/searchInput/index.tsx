@@ -29,7 +29,6 @@ const SearchInput = forwardRef((props: SearchInputProps, ref: ForwardedRef<any>)
     value: controlledValue,
     onChangeText,
     onClear,
-    containerStyle,
     customRightElement,
     style,
     inaccessible
@@ -101,7 +100,6 @@ const SearchInput = forwardRef((props: SearchInputProps, ref: ForwardedRef<any>)
   };
 
   const onChangeTextHandler = (text: string) => {
-    console.log(`onChangeTextHandler, text:`, text);
     onChangeText?.(text);
     setValue(text);
     setHasValue(!_.isEmpty(text));
@@ -153,16 +151,16 @@ const SearchInput = forwardRef((props: SearchInputProps, ref: ForwardedRef<any>)
           color={invertColors ? INVERTED_TEXT_COLOR : undefined}
           $textDefault
           text65M
-          {...cancelButtonProps}
           onPress={onDismiss}
           testID={`${testID}.cancelButton`}
+          {...cancelButtonProps}
         />
       );
     }
   };
 
   const renderTextInput = () => {
-    const {placeholder} = props;
+    const {containerStyle, ...others} = props;
     const height = getHeight();
     const placeholderTextColor = invertColors ? INVERTED_TEXT_COLOR : Colors.$textDefault;
     const selectionColor = invertColors ? INVERTED_TEXT_COLOR : Colors.$textDefault;
@@ -170,10 +168,11 @@ const SearchInput = forwardRef((props: SearchInputProps, ref: ForwardedRef<any>)
       <View style={[styles.inputContainer, {height}]}>
         <TextInput
           accessibilityRole={'search'}
-          placeholder={placeholder}
+          placeholder={others.placeholder}
           placeholderTextColor={placeholderTextColor}
           underlineColorAndroid="transparent"
           selectionColor={selectionColor}
+          {...others}
           ref={searchInputRef}
           value={value}
           allowFontScaling={false}

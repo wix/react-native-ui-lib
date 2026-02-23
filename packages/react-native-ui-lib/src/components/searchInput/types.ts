@@ -12,7 +12,7 @@ export interface SearchInputRef {
   focus: () => void;
 }
 
-export type SearchInputProps = TextInputProps & {
+export type SearchInputSpecificProps = {
   /**
    * On clear button callback.
    */
@@ -66,3 +66,5 @@ export type SearchInputProps = TextInputProps & {
    */
   preset?: SearchInputPresets | `${SearchInputPresets}`;
 };
+
+export type SearchInputProps = Omit<TextInputProps, 'style' | 'ref'> & SearchInputSpecificProps;
