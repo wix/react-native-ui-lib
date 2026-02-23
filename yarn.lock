@@ -9744,7 +9744,7 @@ __metadata:
     shell-utils: "npm:^1.0.10"
     tinycolor2: "npm:^1.4.2"
     typescript: "npm:5.0.4"
-    uilib-native: "npm:5.1.0-snapshot.7635"
+    uilib-native: "workspace:*"
     url-parse: "npm:^1.2.0"
     wix-react-native-text-size: "npm:1.0.9"
   peerDependencies:
@@ -11296,17 +11296,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uilib-native@npm:5.1.0-snapshot.7635":
-  version: 5.1.0-snapshot.7635
-  resolution: "uilib-native@npm:5.1.0-snapshot.7635"
+"uilib-native@workspace:*, uilib-native@workspace:packages/uilib-native":
+  version: 0.0.0-use.local
+  resolution: "uilib-native@workspace:packages/uilib-native"
   dependencies:
     lodash: "npm:^4.17.21"
+    shell-utils: "npm:^1.0.10"
   peerDependencies:
     react: ">=19.0.0"
     react-native: ">=0.78.3"
-  checksum: 10c0/f98238f78e3c291cda5111459dc08d3acddbf38f37f2febb6e7743f0c663c47ab9e0cb9e2558dd044710365640b6c52ada47aec925dfee1386b05fd34e7becad
-  languageName: node
-  linkType: hard
+  languageName: unknown
+  linkType: soft
 
 "unbox-primitive@npm:^1.0.2":
   version: 1.0.2
