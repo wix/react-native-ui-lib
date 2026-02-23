@@ -4,6 +4,7 @@ import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, type S
 import type {AnimateProps as RNReanimatedProps} from 'react-native-reanimated';
 import {Constants, ContainerModifiers} from '../../commons/new';
 import type {RecorderProps} from '../../typings/recorderTypes';
+import {SafeAreaContextPackage} from '../../optionalDependencies';
 
 /**
  * Extra props when using reanimated (only non experimental props)
@@ -106,7 +107,12 @@ function View(props: ViewProps, ref: any) {
   }, []);
 
   const ViewContainer = useMemo(() => {
-    const container = useSafeArea && Constants.isIOS ? SafeAreaView : RNView;
+    let container: React.ComponentType<any> = RNView;
+    if (useSafeArea && SafeAreaContextPackage?.SafeAreaView) {
+      container = SafeAreaContextPackage.SafeAreaView;
+    } else if (useSafeArea && Constants.isIOS) {
+      container = SafeAreaView;
+    }
 
     if (reanimated) {
       const {default: Reanimated}: typeof import('react-native-reanimated') = require('react-native-reanimated');
