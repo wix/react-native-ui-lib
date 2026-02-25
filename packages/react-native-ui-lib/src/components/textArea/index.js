@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, TextInput as RNTextInput, StyleSheet} from 'react-native';
-import {TextInputPropTypes} from 'deprecated-react-native-prop-types';
 import BaseInput from '../baseInput';
 import {Colors} from '../../style';
 
@@ -14,11 +13,6 @@ import {Colors} from '../../style';
  */
 export default class TextArea extends BaseInput {
   static displayName = 'TextArea';
-
-  static propTypes = {
-    ...TextInputPropTypes,
-    ...BaseInput.propTypes
-  };
 
   generateStyles() {
     this.styles = createStyles(this.props);

@@ -51,7 +51,7 @@ export interface SkeletonListProps {
   /**
    * Extra content to be rendered on the end of the list item
    */
-  renderEndContent?: () => React.ReactElement | undefined;
+  renderEndContent?: () => React.ReactElement<any> | undefined;
 }
 
 export interface SkeletonViewProps extends AccessibilityProps, AlignmentModifiers, PaddingModifiers, MarginModifiers {

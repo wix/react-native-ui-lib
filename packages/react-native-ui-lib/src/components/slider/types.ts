@@ -44,7 +44,7 @@ export type SliderProps = Omit<ThumbProps, 'ref'> & {
   /**
    * Custom render instead of rendering the track
    */
-  renderTrack?: () => ReactElement | ReactElement[];
+  renderTrack?: () => ReactElement<any> | ReactElement<any>[];
   /**
    * Callback for onValueChange
    */

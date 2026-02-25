@@ -72,7 +72,7 @@ describe('Dialog sanity checks', () => {
   });
 
   it('Should dismiss dialog on dismiss call', () => {
-    let dialogRef: React.RefObject<{dismiss: () => void}>;
+    let dialogRef: React.RefObject<{dismiss: () => void} | null>;
     const RefTestCase = () => {
       dialogRef = useRef<{dismiss:() => void}>(null);
       return <Dialog testID={testID} visible ref={dialogRef}/>;

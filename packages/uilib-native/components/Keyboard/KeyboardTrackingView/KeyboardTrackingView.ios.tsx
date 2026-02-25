@@ -24,7 +24,14 @@ class KeyboardTrackingView extends PureComponent<KeyboardTrackingViewProps> {
   ref?: any;
 
   render() {
-    return <KeyboardTrackingViewNativeComponent {...this.props} ref={r => (this.ref = r)}/>;
+    return (
+      <KeyboardTrackingViewNativeComponent
+        {...this.props}
+        ref={r => {
+          this.ref = r;
+        }}
+      />
+    );
   }
 
   async getNativeProps() {

@@ -15,7 +15,7 @@ const contents = [
 const TimelineScreen = () => {
   const [anchorIndex, setAnchorIndex] = useState(0);
   const [expand, setExpand] = useState(false);
-  const anchor = useRef();
+  const anchor = useRef(undefined);
 
   const onPress = useCallback(() => {
     setAnchorIndex(anchorIndex === 0 ? 1 : 0);

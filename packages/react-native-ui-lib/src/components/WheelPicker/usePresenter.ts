@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React from 'react';
+import React, {type JSX} from 'react';
 import {LogService} from '../../services';
 import useMiddleIndex from './helpers/useListMiddleIndex';
 import {WheelPickerItemValue} from './types';

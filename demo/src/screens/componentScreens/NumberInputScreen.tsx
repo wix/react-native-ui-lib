@@ -28,7 +28,7 @@ const DISCOUNT_PERCENTAGE = {min: 1, max: 80};
 const DISCOUNT_PERCENTAGE_VALIDATION_MESSAGE = `Make sure your number is between ${DISCOUNT_PERCENTAGE.min} and ${DISCOUNT_PERCENTAGE.max}`;
 
 const NumberInputScreen = () => {
-  const currentData = useRef<NumberInputData>();
+  const currentData = useRef<NumberInputData>(undefined);
   const [text, setText] = useState<string>('');
   const [showLabel, setShowLabel] = useState<boolean>(true);
   const [exampleType, setExampleType] = useState<ExampleType>('price');

@@ -122,7 +122,7 @@ function View(props: ViewProps, ref: any) {
     }
 
     return container;
-  }, [useSafeArea, animated, reanimated]);
+  }, [useSafeArea, animated, reanimated]) as React.ComponentType<any>;
 
   const _style = useMemo(() => {
     const backgroundColor = backgroundColorProps || backgroundColorModifiers;

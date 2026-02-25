@@ -17,11 +17,8 @@ export default function forwardRef<P, STATICS = {}, RefInterface = any>(WrappedC
   const ForwardedComponent = React.forwardRef<RefInterface, P>(forwardRef);
 
   hoistStatics(ForwardedComponent, WrappedComponent);
-  //@ts-ignore
   ForwardedComponent.displayName = WrappedComponent.displayName;
-  //@ts-ignore
-  ForwardedComponent.propTypes = WrappedComponent.propTypes;
-  //@ts-ignore
+  // @ts-expect-error
   ForwardedComponent.defaultProps = WrappedComponent.defaultProps;
 
   return ForwardedComponent as typeof ForwardedComponent & STATICS;
