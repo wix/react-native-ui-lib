@@ -19,11 +19,15 @@ export type GetColorByHexOptions = {validColors?: string[]};
 export type GeneratePaletteOptions = {
   /** Whether to adjust the lightness of very light colors (generating darker palette) */
   adjustLightness?: boolean;
-  /** Whether to adjust the saturation of colors with high lightness and saturation (unifying saturation level throughout palette) */
+  /** Whether to apply the saturation curve to unify saturation levels throughout the palette */
   adjustSaturation?: boolean;
-  /** Array of saturation adjustments to apply on the color's tints array (from darkest to lightest).
-   * The 'adjustSaturation' option must be true */
-  saturationLevels?: number[];
+  /** Percentage-based saturation curve indexed by distance from base color.
+   * When provided, applies proportional saturation reduction outward from the base color */
+  saturationCurve?: number[];
+  /** Base saturation threshold below which the saturation curve is not applied (default: 50) */
+  saturationThreshold?: number;
+  /** Minimum saturation value when applying the curve (default: 20) */
+  saturationFloor?: number;
   /** Whether to add two extra dark colors usually used for dark mode (generating a palette of 10 instead of 8 colors) */
   addDarkestTints?: boolean; // TODO: rename 'fullPalette'
   /** Whether to reverse the color palette to generate dark mode palette (pass 'true' to generate the same palette for both light and dark modes) */
@@ -268,7 +272,7 @@ export class Colors {
     const end = options?.addDarkestTints && colorLightness > 10 ? undefined : size;
     const sliced = tints.slice(start, end);
 
-    const adjusted = options?.adjustSaturation && adjustSaturation(sliced, color, options?.saturationLevels);
+    const adjusted = options?.adjustSaturation && adjustSaturationWithCurve(sliced, color, options);
     return adjusted || sliced;
   }, generatePaletteCacheResolver);
 
@@ -277,7 +281,9 @@ export class Colors {
     adjustSaturation: true,
     addDarkestTints: false,
     avoidReverseOnDark: false,
-    saturationLevels: undefined
+    saturationCurve: [1.0, 0.89, 0.77, 0.65, 0.55, 0.47, 0.42, 0.38, 0.34, 0.30],
+    saturationThreshold: 50,
+    saturationFloor: 20
   };
 
   generateColorPalette = _.memoize((color: string, options?: GeneratePaletteOptions): string[] => {
@@ -354,50 +360,35 @@ function colorStringValue(color: string | object) {
   return color?.toString();
 }
 
-function adjustAllSaturations(colors: string[], baseColor: string, levels: number[]) {
-  const array: string[] = [];
-  _.forEach(colors, (c, index) => {
-    if (c === baseColor) {
-      array[index] = baseColor;
-    } else {
-      const hsl = Color(c).hsl();
-      const saturation = hsl.color[1];
-      const level = levels[index];
-      if (level !== undefined) {
-        const saturationLevel = saturation + level;
-        const clampedLevel = _.clamp(saturationLevel, 0, 100);
-        const adjusted = setSaturation(c, clampedLevel);
-        array[index] = adjusted;
-      }
+type CurveOptions = Pick<GeneratePaletteOptions, 'saturationCurve' | 'saturationThreshold' | 'saturationFloor'>;
+
+function adjustSaturationWithCurve(colors: string[], baseColor: string, options?: CurveOptions): string[] | null {
+  const {saturationCurve: curve, saturationThreshold: threshold = 50, saturationFloor: floor = 20} = options ?? {};
+
+  if (!curve) {
+    return null;
+  }
+
+  const baseSaturation = Color(baseColor).hsl().color[1];
+  if (baseSaturation <= threshold) {
+    return null;
+  }
+
+  const baseIndex = colors.indexOf(baseColor.toUpperCase());
+  if (baseIndex === -1) {
+    return null;
+  }
+
+  return colors.map((hex, i) => {
+    if (i === baseIndex) {
+      return hex;
     }
+    const hsl = Color(hex).hsl();
+    const distance = Math.abs(i - baseIndex);
+    const percentage = curve[Math.min(distance, curve.length - 1)];
+    const newSaturation = Math.max(floor, Math.ceil(baseSaturation * percentage));
+    return Color.hsl(hsl.color[0], newSaturation, hsl.color[2]).hex();
   });
-  return array;
-}
-
-function adjustSaturation(colors: string[], baseColor: string, levels?: number[]) {
-  if (levels) {
-    return adjustAllSaturations(colors, baseColor, levels);
-  }
-
-  let array;
-  const lightnessLevel = 80;
-  const saturationLevel = 60;
-  const hsl = Color(baseColor).hsl();
-  const lightness = Math.round(hsl.color[2]);
-
-  if (lightness > lightnessLevel) {
-    const saturation = Math.round(hsl.color[1]);
-    if (saturation > saturationLevel) {
-      array = _.map(colors, e => (e !== baseColor ? setSaturation(e, saturationLevel) : e));
-    }
-  }
-  return array;
-}
-
-function setSaturation(color: string, saturation: number): string {
-  const hsl = Color(color).hsl();
-  hsl.color[1] = saturation;
-  return hsl.hex();
 }
 
 function generateColorTint(color: string, tintLevel: number): string {
