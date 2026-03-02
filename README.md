@@ -10,10 +10,11 @@
 
 ---
 
-[![Build Status](https://github.com/wix/react-native-ui-lib/blob/master/ios/rnuilib/Images.xcassets/AppIcon.appiconset/20.png?raw=true)](https://buildkite.com/wix-mobile-oss/react-native-ui-lib)
+[![Build Status](https://https://badge.buildkite.com/{identifier}?branch=master&style=flat)](https://buildkite.com/wix-mobile-oss/react-native-ui-lib)
 [![npm](https://img.shields.io/npm/v/react-native-ui-lib.svg)](https://www.npmjs.com/package/react-native-ui-lib)
 [![NPM Downloads](https://img.shields.io/npm/dm/react-native-ui-lib.svg?style=flat)](https://www.npmjs.com/package/react-native-ui-lib)
-<a href="https://twitter.com/rnuilib"><img src="https://img.shields.io/twitter/follow/rnuilib.svg?style=flat&colorA=1DA1F2&colorB=20303C&label=Follow%20us%20on%20Twitter" alt="Follow on Twitter"></a>
+[![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/rnuilib?style=social&logo=x)
+](https://x.com/rnuilib)
 
 ## Notes
 
