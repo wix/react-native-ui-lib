@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {LayoutChangeEvent, LayoutRectangle, StyleSheet} from 'react-native';
 import {useSharedValue, useAnimatedStyle, withTiming, withRepeat, Easing} from 'react-native-reanimated';
+import {Constants} from '../../commons/new';
 import View from '../view';
 import Text from '../text';
 import {MarqueeDirections, MarqueeProps} from './types';
@@ -59,19 +60,30 @@ function Marquee(props: MarqueeProps) {
 
   useEffect(() => {
     if (viewLayout && textLayout) {
-      switch (direction) {
-        case MarqueeDirections.RIGHT:
-          startAnimation(-textLayout.width, viewLayout.width, 0);
-          break;
-        case MarqueeDirections.LEFT:
-          startAnimation(viewLayout?.width, -textLayout.width, viewLayout.width - textLayout.width);
-          break;
-        case MarqueeDirections.UP:
-          startAnimation(viewLayout.height, -textLayout.height, viewLayout.height - textLayout.height);
-          break;
-        case MarqueeDirections.DOWN:
-          startAnimation(-textLayout.height, viewLayout.height, 0);
-          break;
+      const start = () => {
+        switch (direction) {
+          case MarqueeDirections.RIGHT:
+            startAnimation(-textLayout.width, viewLayout.width, 0);
+            break;
+          case MarqueeDirections.LEFT:
+            startAnimation(viewLayout?.width, -textLayout.width, viewLayout.width - textLayout.width);
+            break;
+          case MarqueeDirections.UP:
+            startAnimation(viewLayout.height, -textLayout.height, viewLayout.height - textLayout.height);
+            break;
+          case MarqueeDirections.DOWN:
+            startAnimation(-textLayout.height, viewLayout.height, 0);
+            break;
+        }
+      };
+
+      // On Android, withRepeat/withTiming can silently fail to start if the
+      // animated view isn't fully attached yet. Deferring by one frame avoids this.
+      if (Constants.isAndroid) {
+        const raf = requestAnimationFrame(start);
+        return () => cancelAnimationFrame(raf);
+      } else {
+        start();
       }
     }
   }, [viewLayout, textLayout]);
