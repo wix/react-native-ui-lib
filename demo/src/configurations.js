@@ -60,6 +60,4 @@ export const loadDemoConfigurations = () => {
     }
   });
 
-  /* Components */
-  TextField.defaultProps = {preset: TextField.presets.UNDERLINE, ...TextField.defaultProps};
 };
