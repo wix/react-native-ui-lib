@@ -12,6 +12,10 @@ import Scheme, {Schemes, SchemeType} from './scheme';
 import type {ExtendTypeWith} from '../typings/common';
 import LogService from '../services/LogService';
 
+const SATURATION_CURVE = [1.0, 0.89, 0.77, 0.65, 0.55, 0.47, 0.42, 0.38, 0.34, 0.30];
+const SATURATION_THRESHOLD = 50;
+const SATURATION_FLOOR = 20;
+
 export type DesignToken = {semantic?: [string]; resource_paths?: [string]; toString: Function};
 export type TokensOptions = {primaryColor: string};
 export type GetColorTintOptions = {avoidReverseOnDark?: boolean};
@@ -21,13 +25,13 @@ export type GeneratePaletteOptions = {
   adjustLightness?: boolean;
   /** Whether to apply the saturation curve to unify saturation levels throughout the palette */
   adjustSaturation?: boolean;
-  /** Percentage-based saturation curve indexed by distance from base color.
-   * When provided, applies proportional saturation reduction outward from the base color */
+  /** Custom percentage-based saturation curve indexed by distance from the base color.
+   * Overrides the default curve when provided. Each value represents the fraction of the base
+   * color's saturation to apply at that distance (e.g. [1.0, 0.89, 0.77, ...]) */
   saturationCurve?: number[];
-  /** Base saturation threshold below which the saturation curve is not applied (default: 50) */
-  saturationThreshold?: number;
-  /** Minimum saturation value when applying the curve (default: 20) */
-  saturationFloor?: number;
+  /** Array of additive saturation adjustments to apply per-index on the palette (from darkest to lightest).
+   * When provided, uses legacy per-index saturation logic instead of the default curve */
+  saturationLevels?: number[];
   /** Whether to add two extra dark colors usually used for dark mode (generating a palette of 10 instead of 8 colors) */
   addDarkestTints?: boolean; // TODO: rename 'fullPalette'
   /** Whether to reverse the color palette to generate dark mode palette (pass 'true' to generate the same palette for both light and dark modes) */
@@ -272,7 +276,7 @@ export class Colors {
     const end = options?.addDarkestTints && colorLightness > 10 ? undefined : size;
     const sliced = tints.slice(start, end);
 
-    const adjusted = options?.adjustSaturation && adjustSaturationWithCurve(sliced, color, options);
+    const adjusted = options?.adjustSaturation && adjustSaturation(sliced, color, options);
     return adjusted || sliced;
   }, generatePaletteCacheResolver);
 
@@ -280,10 +284,7 @@ export class Colors {
     adjustLightness: true,
     adjustSaturation: true,
     addDarkestTints: false,
-    avoidReverseOnDark: false,
-    saturationCurve: [1.0, 0.89, 0.77, 0.65, 0.55, 0.47, 0.42, 0.38, 0.34, 0.30],
-    saturationThreshold: 50,
-    saturationFloor: 20
+    avoidReverseOnDark: false
   };
 
   generateColorPalette = _.memoize((color: string, options?: GeneratePaletteOptions): string[] => {
@@ -360,16 +361,31 @@ function colorStringValue(color: string | object) {
   return color?.toString();
 }
 
-// eslint-disable-next-line max-len
-function adjustSaturationWithCurve(colors: string[], baseColor: string, options?: GeneratePaletteOptions): string[] | null {
-  const {saturationCurve: curve, saturationThreshold: threshold = 50, saturationFloor: floor = 20} = options ?? {};
-
-  if (!curve) {
-    return null;
+function adjustSaturation(colors: string[], baseColor: string, options?: GeneratePaletteOptions): string[] | null {
+  if (options?.saturationLevels) {
+    return adjustSaturationByLevels(colors, baseColor, options.saturationLevels);
   }
+  return adjustSaturationWithCurve(colors, baseColor, options?.saturationCurve);
+}
 
+function adjustSaturationByLevels(colors: string[], baseColor: string, levels: number[]): string[] {
+  return colors.map((color, index) => {
+    if (color === baseColor) {
+      return baseColor;
+    }
+    const level = levels[index];
+    if (level === undefined) {
+      return color;
+    }
+    const hsl = Color(color).hsl();
+    const newSaturation = _.clamp(hsl.color[1] + level, 0, 100);
+    return Color.hsl(hsl.color[0], newSaturation, hsl.color[2]).hex();
+  });
+}
+
+function adjustSaturationWithCurve(colors: string[], baseColor: string, customCurve?: number[]): string[] | null {
   const baseSaturation = Color(baseColor).hsl().color[1];
-  if (baseSaturation <= threshold) {
+  if (baseSaturation <= SATURATION_THRESHOLD) {
     return null;
   }
 
@@ -378,6 +394,7 @@ function adjustSaturationWithCurve(colors: string[], baseColor: string, options?
     return null;
   }
 
+  const curve = customCurve ?? SATURATION_CURVE;
   return colors.map((hex, i) => {
     if (i === baseIndex) {
       return hex;
@@ -385,7 +402,7 @@ function adjustSaturationWithCurve(colors: string[], baseColor: string, options?
     const hsl = Color(hex).hsl();
     const distance = Math.abs(i - baseIndex);
     const percentage = curve[Math.min(distance, curve.length - 1)];
-    const newSaturation = Math.max(floor, Math.round(baseSaturation * percentage));
+    const newSaturation = Math.max(SATURATION_FLOOR, Math.round(baseSaturation * percentage));
     return Color.hsl(hsl.color[0], newSaturation, hsl.color[2]).hex();
   });
 }

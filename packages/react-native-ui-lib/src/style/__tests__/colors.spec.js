@@ -186,16 +186,19 @@ describe('style/Colors', () => {
       expect(palette).toEqual(rawPalette);
     });
 
-    it('should respect custom saturationFloor', () => {
-      const palette = uut.generateColorPalette(baseColor, {saturationFloor: 40});
-      const expected = ['#20374B', '#2F526F', '#376E9B', '#3F88C5', '#6CA0CB', '#97B8D3', '#BCD0E2', '#DFE9F1'];
-      expect(palette).toEqual(expected);
-    });
-
     it('should not apply curve when adjustSaturation is false', () => {
       const rawPalette = ['#193852', '#255379', '#316EA1', '#3F88C5', '#66A0D1', '#8DB9DD', '#B5D1E9', '#DCE9F4'];
       const palette = uut.generateColorPalette(baseColor, {adjustSaturation: false});
       expect(palette).toEqual(rawPalette);
+    });
+
+    it('should apply legacy saturationLevels when provided', () => {
+      const saturationLevels = [-10, -10, -20, -20, -25, -25, -25, -25];
+      const expected = ['#1E384D', '#2D5271', '#466C8C', '#3F88C5', '#7F9EB8', '#A0B7CB', '#C1D0DD', '#E2E9EE'];
+      const palette = uut.generateColorPalette(baseColor, {adjustSaturation: true, saturationLevels});
+      expect(palette.length).toBe(8);
+      expect(palette).toContain(baseColor);
+      expect(palette).toEqual(expected);
     });
 
   });
