@@ -140,7 +140,6 @@ const TextField = (props: InternalTextFieldProps) => {
     [typographyStyle, colorStyle, others.style, centeredTextStyle, hasValue]);
   const dummyPlaceholderStyle = useMemo(() => [inputStyle, styles.dummyPlaceholder], [inputStyle]);
 
-
   const defaultAccessibilityLabel = useMemo(() => {
     const parts: string[] = [];
 
@@ -230,6 +229,7 @@ const TextField = (props: InternalTextFieldProps) => {
                 placeholderTextColor={hidePlaceholder ? 'transparent' : placeholderTextColor}
                 value={fieldState.value}
                 {...others}
+                testID={`${testID}.input`}
                 readonly={readonly}
                 style={inputStyle}
                 onFocus={onFocus}
