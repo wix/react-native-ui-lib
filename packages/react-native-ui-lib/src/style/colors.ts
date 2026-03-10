@@ -360,9 +360,8 @@ function colorStringValue(color: string | object) {
   return color?.toString();
 }
 
-type CurveOptions = Pick<GeneratePaletteOptions, 'saturationCurve' | 'saturationThreshold' | 'saturationFloor'>;
-
-function adjustSaturationWithCurve(colors: string[], baseColor: string, options?: CurveOptions): string[] | null {
+// eslint-disable-next-line max-len
+function adjustSaturationWithCurve(colors: string[], baseColor: string, options?: GeneratePaletteOptions): string[] | null {
   const {saturationCurve: curve, saturationThreshold: threshold = 50, saturationFloor: floor = 20} = options ?? {};
 
   if (!curve) {
@@ -386,7 +385,7 @@ function adjustSaturationWithCurve(colors: string[], baseColor: string, options?
     const hsl = Color(hex).hsl();
     const distance = Math.abs(i - baseIndex);
     const percentage = curve[Math.min(distance, curve.length - 1)];
-    const newSaturation = Math.max(floor, Math.ceil(baseSaturation * percentage));
+    const newSaturation = Math.max(floor, Math.round(baseSaturation * percentage));
     return Color.hsl(hsl.color[0], newSaturation, hsl.color[2]).hex();
   });
 }
