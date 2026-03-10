@@ -92,6 +92,7 @@ const TextField = (props: InternalTextFieldProps) => {
     readonly = false,
     showMandatoryIndication,
     clearButtonStyle,
+    testID,
     ...others
   } = usePreset(props);
 
@@ -140,7 +141,7 @@ const TextField = (props: InternalTextFieldProps) => {
 
   return (
     <FieldContext.Provider value={context}>
-      <View {...containerProps} style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
+      <View {...containerProps} testID={testID} style={[margins, positionStyle, containerStyle, centeredContainerStyle]}>
         <View row spread style={centeredContainerStyle}>
           <Label
             label={label}
@@ -149,7 +150,7 @@ const TextField = (props: InternalTextFieldProps) => {
             labelProps={labelProps}
             floatingPlaceholder={floatingPlaceholder}
             validationMessagePosition={validationMessagePosition}
-            testID={`${props.testID}.label`}
+            testID={`${testID}.label`}
             showMandatoryIndication={showMandatoryIndication}
             enableErrors={enableErrors}
           />
@@ -160,7 +161,7 @@ const TextField = (props: InternalTextFieldProps) => {
               validationMessage={others.validationMessage}
               validationMessageStyle={_validationMessageStyle}
               retainValidationSpace={retainValidationSpace && retainTopMessageSpace}
-              testID={`${props.testID}.validationMessage`}
+              testID={`${testID}.validationMessage`}
             />
           )}
           {topTrailingAccessory && <View>{topTrailingAccessory}</View>}
@@ -189,7 +190,7 @@ const TextField = (props: InternalTextFieldProps) => {
                   floatOnFocus={floatOnFocus}
                   validationMessagePosition={validationMessagePosition}
                   extraOffset={leadingAccessoryMeasurements?.width}
-                  testID={`${props.testID}.floatingPlaceholder`}
+                  testID={`${testID}.floatingPlaceholder`}
                   showMandatoryIndication={showMandatoryIndication}
                 />
               )}
@@ -212,7 +213,7 @@ const TextField = (props: InternalTextFieldProps) => {
           {showClearButton && (
             <ClearButton
               onClear={onClear}
-              testID={`${props.testID}.clearButton`}
+              testID={`${testID}.clearButton`}
               onChangeText={onChangeText}
               clearButtonStyle={clearButtonStyle}
             />
@@ -230,11 +231,11 @@ const TextField = (props: InternalTextFieldProps) => {
                 validationIcon={validationIcon}
                 validationMessageStyle={_validationMessageStyle}
                 retainValidationSpace={retainValidationSpace}
-                testID={`${props.testID}.validationMessage`}
+                testID={`${testID}.validationMessage`}
               />
             )}
             {helperText && (
-              <Text $textNeutralHeavy subtext marginT-s1 testID={`${props.testID}.helperText`}>
+              <Text $textNeutralHeavy subtext marginT-s1 testID={`${testID}.helperText`}>
                 {helperText}
               </Text>
             )}
@@ -245,7 +246,7 @@ const TextField = (props: InternalTextFieldProps) => {
               <CharCounter
                 maxLength={others.maxLength}
                 charCounterStyle={charCounterStyle}
-                testID={`${props.testID}.charCounter`}
+                testID={`${testID}.charCounter`}
               />
             )}
           </View>
