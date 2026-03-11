@@ -27,10 +27,12 @@ export type GeneratePaletteOptions = {
   adjustSaturation?: boolean;
   /** Custom percentage-based saturation curve indexed by distance from the base color.
    * Overrides the default curve when provided. Each value represents the fraction of the base
-   * color's saturation to apply at that distance (e.g. [1.0, 0.89, 0.77, ...]) */
+   * color's saturation to apply at that distance (e.g. [1.0, 0.89, 0.77, ...]).
+   * The 'adjustSaturation' option must be true */
   saturationCurve?: number[];
   /** Array of additive saturation adjustments to apply per-index on the palette (from darkest to lightest).
-   * When provided, uses legacy per-index saturation logic instead of the default curve */
+   * When provided, uses legacy per-index saturation logic instead of the default curve.
+   * The 'adjustSaturation' option must be true */
   saturationLevels?: number[];
   /** Whether to add two extra dark colors usually used for dark mode (generating a palette of 10 instead of 8 colors) */
   addDarkestTints?: boolean; // TODO: rename 'fullPalette'
