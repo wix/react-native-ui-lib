@@ -1,10 +1,10 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {LayoutChangeEvent, StyleSheet, ViewStyle} from 'react-native';
-import {Image} from 'react-native-ui-lib';
 import Animated, {useAnimatedKeyboard, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
 import {Keyboard} from 'uilib-native';
 import {SafeAreaContextPackage} from '../../optionalDependencies';
 import View from '../view';
+import Image from '../image';
 import Assets from '../../assets';
 import {Colors, Shadows, Spacings} from '../../style';
 import {asBaseComponent, Constants} from '../../commons/new';
