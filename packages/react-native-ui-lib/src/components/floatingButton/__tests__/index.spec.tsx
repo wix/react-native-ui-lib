@@ -1,7 +1,6 @@
 import React from 'react';
-import {ViewStyle} from 'react-native';
+import {StyleSheet, ViewStyle} from 'react-native';
 import {render} from '@testing-library/react-native';
-import {Spacings} from '../../../style';
 import FloatingButton, {FloatingButtonLayouts} from '../index';
 import {ButtonDriver} from '../../button/Button.driver.new';
 import {useComponentDriver, ComponentProps} from '../../../testkit/new/Component.driver';
@@ -15,11 +14,18 @@ const secondaryButton = {
 };
 
 const TestCase = (props) => {
-  return <FloatingButton {...props} testID={TEST_ID}/>;
+  return <FloatingButton hoisted={false} {...props} testID={TEST_ID}/>;
 };
+
 export const FloatingButtonDriver = (props: ComponentProps) => {
   const driver = useComponentDriver(props);
   const getStyle = () => driver.getElement().props.style as ViewStyle;
+  return {...driver, getStyle};
+};
+
+const ContentDriver = (props: ComponentProps) => {
+  const driver = useComponentDriver(props);
+  const getStyle = () => StyleSheet.flatten(driver.getElement().props.style) as ViewStyle;
   return {...driver, getStyle};
 };
 
@@ -30,7 +36,7 @@ describe('FloatingButton', () => {
       const renderTree = render(<TestCase {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
       expect(await buttonDriver.exists()).not.toBeTruthy();
-      
+
       renderTree.rerender(<TestCase visible button={button}/>);
       expect(await buttonDriver.exists()).toBeTruthy();
     });
@@ -44,7 +50,7 @@ describe('FloatingButton', () => {
       expect(await buttonDriver.exists()).toBeTruthy();
     });
 
-    it('should not render a secondary button', async () => {
+    it('should not render a secondary button when not provided', async () => {
       const props = {visible: true};
       const renderTree = render(<TestCase {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.secondaryButton`});
@@ -66,91 +72,43 @@ describe('FloatingButton', () => {
     });
   });
 
-  describe('bottomMargin', () => {
-    it('should have default bottom margin', () => {
-      const props = {visible: true, button};
-      const renderTree = render(<TestCase {...props}/>);
-      const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
-
-      expect(buttonDriver.getElement().props.style?.marginBottom).toBe(Spacings.s8);
-    });
-
-    it('should have default bottom margin for both buttons', () => {
-      const props = {visible: true, button, secondaryButton};
-      const renderTree = render(<TestCase {...props}/>);
-      const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
-      const buttonDriver2 = ButtonDriver({renderTree, testID: `${TEST_ID}.secondaryButton`});
-
-      expect(buttonDriver.getElement().props.style?.marginBottom).toBe(Spacings.s4);
-      expect(buttonDriver2.getElement().props.style?.marginBottom).toBe(Spacings.s7);
-    });
-
-    it('should have bottom margin that match bottomMargin prop', () => {
-      const props = {visible: true, button, bottomMargin: 10};
-      const renderTree = render(<TestCase {...props}/>);
-      const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
-
-      expect(buttonDriver.getElement().props.style?.marginBottom).toBe(10);
-    });
-
-    it('should have bottom margin for secondary button that match bottomMarginProp', () => {
-      const props = {visible: true, button, secondaryButton, bottomMargin: 10};
-      const renderTree = render(<TestCase {...props}/>);
-      const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
-      const buttonDriver2 = ButtonDriver({renderTree, testID: `${TEST_ID}.secondaryButton`});
-
-      expect(buttonDriver.getElement().props.style?.marginBottom).toBe(Spacings.s4);
-      expect(buttonDriver2.getElement().props.style?.marginBottom).toBe(10);
-    });
-  });
-
   describe('buttonLayout', () => {
-    it('should style vertical layout (default)', () => {
+    it('should use vertical layout by default', () => {
       const props = {visible: true, button, secondaryButton};
       const renderTree = render(<TestCase {...props}/>);
-      const driver = FloatingButtonDriver({renderTree, testID: TEST_ID});
-      
-      expect(driver.getStyle()?.flexDirection).toBe(undefined);
-      expect(driver.getStyle()?.alignItems).toBe('center');
-      expect(driver.getStyle()?.justifyContent).toBe('center');
-      expect(driver.getStyle()?.paddingHorizontal).toBe(undefined);
+      const contentDriver = ContentDriver({renderTree, testID: `${TEST_ID}.content`});
+
+      expect(contentDriver.getStyle().flexDirection).toBe('column');
+      expect(contentDriver.getStyle().alignItems).toBe('center');
     });
-    
-    it('should style horizontal layout', () => {
+
+    it('should use horizontal layout when specified', () => {
       const props = {visible: true, button, secondaryButton, buttonLayout: FloatingButtonLayouts.HORIZONTAL};
       const renderTree = render(<TestCase {...props}/>);
-      const driver = FloatingButtonDriver({renderTree, testID: TEST_ID});
-      
-      expect(driver.getStyle()?.flexDirection).toBe('row');
-      expect(driver.getStyle()?.alignItems).toBe('center');
-      expect(driver.getStyle()?.justifyContent).toBe('center');
-      expect(driver.getStyle()?.paddingHorizontal).toBe(undefined);
+      const contentDriver = ContentDriver({renderTree, testID: `${TEST_ID}.content`});
+
+      expect(contentDriver.getStyle().flexDirection).toBe('row');
+      expect(contentDriver.getStyle().alignItems).toBe('center');
     });
   });
 
   describe('fullWidth', () => {
-    it('should style vertical layout (default) when fullWidth is true', () => {
+    it('should stretch items in vertical layout when fullWidth is true', () => {
       const props = {visible: true, button, secondaryButton, fullWidth: true};
       const renderTree = render(<TestCase {...props}/>);
-      const driver = FloatingButtonDriver({renderTree, testID: TEST_ID});
-      
-      expect(driver.getStyle()?.flexDirection).toBe(undefined);
-      expect(driver.getStyle()?.alignItems).toBe(undefined);
-      expect(driver.getStyle()?.justifyContent).toBe(undefined);
-      const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
-      expect(buttonDriver.getElement().props.style.marginLeft).toBe(16);
-      expect(buttonDriver.getElement().props.style.marginRight).toBe(16);
+      const contentDriver = ContentDriver({renderTree, testID: `${TEST_ID}.content`});
+
+      expect(contentDriver.getStyle().flexDirection).toBe('column');
+      expect(contentDriver.getStyle().alignItems).toBe('stretch');
     });
 
-    it('should style horizontal layout when fullWidth is true', () => {
+    it('should use horizontal layout when fullWidth is true with horizontal layout', () => {
       const props = {visible: true, button, secondaryButton, buttonLayout: FloatingButtonLayouts.HORIZONTAL, fullWidth: true};
       const renderTree = render(<TestCase {...props}/>);
-      const driver = FloatingButtonDriver({renderTree, testID: TEST_ID});
-      
-      expect(driver.getStyle()?.flexDirection).toBe('row');
-      expect(driver.getStyle()?.alignItems).toBe('center');
-      expect(driver.getStyle()?.justifyContent).toBe('center');
-      expect(driver.getStyle()?.paddingHorizontal).toBe(undefined);
+      const contentDriver = ContentDriver({renderTree, testID: `${TEST_ID}.content`});
+
+      expect(contentDriver.getStyle().flexDirection).toBe('row');
+      expect(contentDriver.getStyle().alignItems).toBe('center');
     });
   });
 });
