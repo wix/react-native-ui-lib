@@ -92,46 +92,33 @@ describe('style/Colors', () => {
     });
 
     it('should handle color that does not exist in `uilib`', () => {
-      expect(uut.getColorTint('#F1BE0B', 10)).toEqual('#8D7006'); //
-      expect(uut.getColorTint('#F1BE0B', 20)).toEqual('#BE9609'); //
-      expect(uut.getColorTint('#F1BE0B', 30)).toEqual('#F1BE0B'); //
-      expect(uut.getColorTint('#F1BE0B', 40)).toEqual('#F6CC37'); //
-      expect(uut.getColorTint('#F1BE0B', 50)).toEqual('#F8D868'); //
-      expect(uut.getColorTint('#F1BE0B', 60)).toEqual('#FAE599'); //
-      expect(uut.getColorTint('#F1BE0B', 70)).toEqual('#FDF1C9'); //
-      expect(uut.getColorTint('#F1BE0B', 80)).toEqual('#FFFEFA'); //
+      expect(uut.getColorTint('#F1BE0B', 10)).toEqual('#7D6716');
+      expect(uut.getColorTint('#F1BE0B', 20)).toEqual('#B49013');
+      expect(uut.getColorTint('#F1BE0B', 30)).toEqual('#F1BE0B');
+      expect(uut.getColorTint('#F1BE0B', 40)).toEqual('#EBC642');
+      expect(uut.getColorTint('#F1BE0B', 50)).toEqual('#E7CF79');
+      expect(uut.getColorTint('#F1BE0B', 60)).toEqual('#E9DBAA');
+      expect(uut.getColorTint('#F1BE0B', 70)).toEqual('#F1EBD5');
+      expect(uut.getColorTint('#F1BE0B', 80)).toEqual('#FEFDFB');
     });
 
     it('should round down tint level to the nearest one', () => {
-      expect(uut.getColorTint('#F1BE0B', 75)).toEqual('#FDF1C9');
-      expect(uut.getColorTint('#F1BE0B', 25)).toEqual('#BE9609');
+      expect(uut.getColorTint('#F1BE0B', 75)).toEqual('#F1EBD5');
+      expect(uut.getColorTint('#F1BE0B', 25)).toEqual('#B49013');
       expect(uut.getColorTint('#F1BE0B', 35)).toEqual('#F1BE0B');
     });
 
     it('should handle out of range tint levels and round them to the nearest one in range', () => {
-      expect(uut.getColorTint('#F1BE0B', 3)).toEqual('#8D7006');
-      expect(uut.getColorTint('#F1BE0B', 95)).toEqual('#FFFEFA');
+      expect(uut.getColorTint('#F1BE0B', 3)).toEqual('#7D6716');
+      expect(uut.getColorTint('#F1BE0B', 95)).toEqual('#FEFDFB');
     });
   });
 
   describe('generateColorPalette', () => {
     const baseColor = '#3F88C5';
-    const tints = ['#193852', '#255379', '#316EA1', '#3F88C5', '#66A0D1', '#8DB9DD', '#B5D1E9', '#DCE9F4'];
+    const tints = ['#233748', '#2F526F', '#376E9B', '#3F88C5', '#6CA0CB', '#97B8D3', '#BED0E0', '#E1E9EF'];
     const baseColorLight = '#DCE9F4';
     const tintsLight = ['#1A3851', '#265278', '#326D9F', '#4187C3', '#68A0CF', '#8EB8DC', '#B5D1E8', '#DCE9F4'];
-    const saturationLevels = [-10, -10, -20, -20, -25, -25, -25, -25, -20, -10];
-    const tintsSaturationLevels = [
-      '#1E384D',
-      '#2D5271',
-      '#466C8C',
-      '#3F88C5',
-      '#7F9EB8',
-      '#A0B7CB',
-      '#C1D0DD',
-      '#E2E9EE'
-    ];
-    // const tintsSaturationLevelsDarkest = ['#162837', '#223F58', '#385770', '#486E90', '#3F88C5', '#7C9CB6', '#9AB2C6', '#B7C9D7', '#D3DFE9', '#F0F5F9'];
-    // const tintsAddDarkestTints = ['#12283B', '#1C405E', '#275881', '#3270A5', '#3F88C5', '#629ED0', '#86B4DA', '#A9CAE5', '#CCDFF0', '#EFF5FA'];
 
     it('should memoize calls for generateColorPalette', () => {
       uut.getColorTint(baseColor, 20);
@@ -163,21 +150,6 @@ describe('style/Colors', () => {
       expect(palette).toEqual(tintsLight);
     });
 
-    it('should generateColorPalette with adjustSaturation option true and saturationLevels 8 array', () => {
-      const palette = uut.generateColorPalette(baseColor, {adjustSaturation: true, saturationLevels});
-      expect(palette.length).toBe(8);
-      expect(palette).toContain(baseColor); // adjusting baseColor tint as well
-      expect(palette).toEqual(tintsSaturationLevels);
-    });
-
-    // it('should generateColorPalette with adjustSaturation option true and saturationLevels 10 array and addDarkestTints true', () => {
-    //   const options = {adjustSaturation: true, saturationLevels, addDarkestTints: true};
-    //   const palette = uut.generateColorPalette(baseColor, options);
-    //   expect(palette.length).toBe(10);
-    //   expect(palette).toContain(baseColor); // adjusting baseColor tint as well
-    //   expect(palette).toEqual(tintsSaturationLevelsDarkest);
-    // });
-
     it('should generateColorPalette with avoidReverseOnDark option false not reverse on light mode (default)', () => {
       const palette = uut.generateColorPalette(baseColor, {avoidReverseOnDark: false});
       expect(palette.length).toBe(8);
@@ -199,12 +171,36 @@ describe('style/Colors', () => {
       expect(palette).toEqual(tints);
     });
 
-    // it('should generateColorPalette with addDarkestTints option true return 10 tints with 9 lightness increment', () => {
-    //   const palette = uut.generateColorPalette(baseColor, {addDarkestTints: true});
-    //   expect(palette.length).toBe(10);
-    //   expect(palette).toContain(baseColor);
-    //   expect(palette).toEqual(tintsAddDarkestTints);
-    // });
+    it('should generateColorPalette with addDarkestTints option true return 10 tints with saturation curve', () => {
+      const palette = uut.generateColorPalette(baseColor, {addDarkestTints: true});
+      const expected = ['#1B2732', '#283F52', '#325776', '#38709F', '#3F88C5', '#689DCA', '#90B3D0', '#B3C9DB', '#D4DFE8', '#F2F5F7'];
+      expect(palette.length).toBe(10);
+      expect(palette).toContain(baseColor);
+      expect(palette).toEqual(expected);
+    });
+
+    it('should not apply saturation curve when base color saturation is below threshold', () => {
+      const lowSatColor = '#7A8A8A';
+      const rawPalette = ['#323939', '#4A5454', '#626F6F', '#7A8A8A', '#95A2A2', '#B0BABA', '#CBD2D2', '#E7EAEA'];
+      const palette = uut.generateColorPalette(lowSatColor);
+      expect(palette).toEqual(rawPalette);
+    });
+
+    it('should not apply curve when adjustSaturation is false', () => {
+      const rawPalette = ['#193852', '#255379', '#316EA1', '#3F88C5', '#66A0D1', '#8DB9DD', '#B5D1E9', '#DCE9F4'];
+      const palette = uut.generateColorPalette(baseColor, {adjustSaturation: false});
+      expect(palette).toEqual(rawPalette);
+    });
+
+    it('should apply legacy saturationLevels when provided', () => {
+      const saturationLevels = [-10, -10, -20, -20, -25, -25, -25, -25];
+      const expected = ['#1E384D', '#2D5271', '#466C8C', '#3F88C5', '#7F9EB8', '#A0B7CB', '#C1D0DD', '#E2E9EE'];
+      const palette = uut.generateColorPalette(baseColor, {adjustSaturation: true, saturationLevels});
+      expect(palette.length).toBe(8);
+      expect(palette).toContain(baseColor);
+      expect(palette).toEqual(expected);
+    });
+
   });
 
   describe('generateDesignTokens', () => {

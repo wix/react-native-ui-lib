@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {
   View,
   Text,
@@ -20,6 +19,11 @@ import {
   Incubator,
   Icon
 } from 'react-native-ui-lib';
+
+let SafeAreaProvider: React.ComponentType<any> | undefined;
+try {
+  SafeAreaProvider = require('react-native-safe-area-context').SafeAreaProvider;
+} catch {}
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const basketIcon = require('../../assets/icons/collections.png');
@@ -93,7 +97,23 @@ const KEYBOARD_BEHAVIOR_OPTIONS_SPACED = [
   {label: '', value: 'dummy'}
 ];
 
-const ScreenFooterScreen = () => {
+const MissingDependencyScreen = () => {
+  return (
+    <View flex center padding-s5>
+      <Text text60 $textDangerLight center>
+        Missing Dependency
+      </Text>
+      <Text text70 center marginT-s3>
+        This screen requires react-native-safe-area-context to be installed.
+      </Text>
+      <Text text80 $textNeutral center marginT-s2>
+        Run: npm/yarn install react-native-safe-area-context
+      </Text>
+    </View>
+  );
+};
+
+const ScreenFooterContent = () => {
   const [itemsCount, setItemsCount] = useState(2);
   const [layout, setLayout] = useState<ScreenFooterLayouts>(ScreenFooterLayouts.HORIZONTAL);
   const [background, setBackground] = useState<ScreenFooterBackgrounds>(ScreenFooterBackgrounds.SOLID);
@@ -472,6 +492,14 @@ const ScreenFooterScreen = () => {
       </ScreenFooter>
     </SafeAreaProvider>
   );
+};
+
+const ScreenFooterScreen = () => {
+  if (!SafeAreaProvider) {
+    return <MissingDependencyScreen />;
+  }
+
+  return <ScreenFooterContent />;
 };
 
 const styles = StyleSheet.create({
