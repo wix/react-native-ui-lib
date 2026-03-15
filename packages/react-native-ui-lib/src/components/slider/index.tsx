@@ -498,6 +498,10 @@ class Slider extends PureComponent<InternalSliderProps, State> {
     this.handleMeasure('thumbSize', nativeEvent);
   };
 
+  handleContainerShouldSetResponder = () => {
+    return !this.props.disabled;
+  };
+
   handleTrackPress = (event: GestureResponderEvent) => {
     if (this.props.disabled) {
       return;
@@ -672,10 +676,11 @@ class Slider extends PureComponent<InternalSliderProps, State> {
         onLayout={this.onContainerLayout}
         onAccessibilityAction={this.onAccessibilityAction}
         testID={testID}
+        onStartShouldSetResponder={this.handleContainerShouldSetResponder}
+        onResponderRelease={this.handleTrackPress}
         {...this.getAccessibilityProps()}
       >
         {this.renderTrack()}
-        <View style={styles.touchArea} onTouchEnd={this.handleTrackPress}/>
         {this.renderRangeThumb()}
         {this.renderThumb()}
       </View>
@@ -700,9 +705,5 @@ const styles = StyleSheet.create({
   },
   trackDisableRTL: {
     right: 0
-  },
-  touchArea: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'transparent'
   }
 });
