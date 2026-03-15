@@ -74,6 +74,7 @@ class Slider extends PureComponent<InternalSliderProps, State> {
   private minThumb = React.createRef<RNView>();
   private activeThumbRef: React.RefObject<RNView>;
   private panResponder;
+  private containerPanResponder;
 
   private minTrack = React.createRef<RNView>();
   private _minTrackStyles: MinTrackStyle = {};
@@ -97,6 +98,7 @@ class Slider extends PureComponent<InternalSliderProps, State> {
   private dimensionsChangeListener: any;
 
   private didMount: boolean;
+  private _containerDragInitialValue = 0;
 
   constructor(props: InternalSliderProps) {
     super(props);
@@ -119,6 +121,16 @@ class Slider extends PureComponent<InternalSliderProps, State> {
       onPanResponderGrant: this.handlePanResponderGrant,
       onPanResponderMove: this.handlePanResponderMove,
       onPanResponderRelease: this.handlePanResponderEnd,
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderEnd: () => true,
+      onPanResponderTerminationRequest: () => false
+    });
+
+    this.containerPanResponder = PanResponder.create({
+      onMoveShouldSetPanResponder: this.handleMoveShouldSetPanResponder,
+      onPanResponderGrant: this.handleContainerGrant,
+      onPanResponderMove: this.handleContainerMove,
+      onPanResponderRelease: this.handleContainerEnd,
       onStartShouldSetPanResponder: () => true,
       onPanResponderEnd: () => true,
       onPanResponderTerminationRequest: () => false
@@ -233,6 +245,32 @@ class Slider extends PureComponent<InternalSliderProps, State> {
   };
 
   handlePanResponderEnd = () => {
+    this.bounceToStep();
+    this.onSeekEnd();
+  };
+
+  handleContainerGrant = () => {
+    this._containerDragInitialValue = this.getValueForX(this._x);
+    this.onSeekStart();
+  };
+
+  handleContainerMove = (_e: GestureResponderEvent, gestureState: PanResponderGestureState) => {
+    if (this.props.disabled) {
+      return;
+    }
+    const {minimumValue, maximumValue} = this.props;
+    const range = this.getRange();
+    const containerWidth = this.state.containerSize.width;
+    const dx = gestureState.dx * (Constants.isRTL && !this.disableRTL ? -1 : 1);
+    const deltaValue = (dx / containerWidth) * range;
+    const newValue = _.clamp(this._containerDragInitialValue + deltaValue, minimumValue, maximumValue);
+    const newX = this.getXForValue(newValue);
+    this.set_x(newX);
+    this.moveTo(newX);
+    this.updateValue(newX);
+  };
+
+  handleContainerEnd = () => {
     this.bounceToStep();
     this.onSeekEnd();
   };
@@ -591,23 +629,27 @@ class Slider extends PureComponent<InternalSliderProps, State> {
 
   /* Renders */
   renderMinThumb = () => {
+    const {useRelativeDrag} = this.props;
     return (
       <Thumb
         {...this.getThumbProps()}
         ref={this.minThumb}
-        onTouchStart={this.onMinTouchStart}
-        {...this.panResponder.panHandlers}
+        onTouchStart={useRelativeDrag ? undefined : this.onMinTouchStart}
+        pointerEvents={useRelativeDrag ? 'none' : undefined}
+        {...(useRelativeDrag ? {} : this.panResponder.panHandlers)}
       />
     );
   };
 
   renderThumb = () => {
+    const {useRelativeDrag} = this.props;
     return (
       <Thumb
         {...this.getThumbProps()}
         ref={this.thumb}
-        onTouchStart={this.onTouchStart}
-        {...this.panResponder.panHandlers}
+        onTouchStart={useRelativeDrag ? undefined : this.onTouchStart}
+        pointerEvents={useRelativeDrag ? 'none' : undefined}
+        {...(useRelativeDrag ? {} : this.panResponder.panHandlers)}
       />
     );
   };
@@ -664,11 +706,18 @@ class Slider extends PureComponent<InternalSliderProps, State> {
   }
 
   render() {
-    const {containerStyle, testID, migrate} = this.props;
+    const {containerStyle, testID, migrate, useRelativeDrag} = this.props;
 
     if (migrate) {
       return <IncubatorSlider {...this.props}/>;
     }
+
+    const containerGestureProps = useRelativeDrag
+      ? this.containerPanResponder.panHandlers
+      : {
+        onStartShouldSetResponder: this.handleContainerShouldSetResponder,
+        onResponderRelease: this.handleTrackPress
+      };
 
     return (
       <View
@@ -676,8 +725,7 @@ class Slider extends PureComponent<InternalSliderProps, State> {
         onLayout={this.onContainerLayout}
         onAccessibilityAction={this.onAccessibilityAction}
         testID={testID}
-        onStartShouldSetResponder={this.handleContainerShouldSetResponder}
-        onResponderRelease={this.handleTrackPress}
+        {...containerGestureProps}
         {...this.getAccessibilityProps()}
       >
         {this.renderTrack()}

@@ -141,6 +141,12 @@
       "description": "The component test id"
     },
     {
+      "name": "useRelativeDrag",
+      "type": "boolean",
+      "description": "If true, dragging anywhere on the slider moves the thumb relative to its current position instead of snapping to the touch point. Designed for single-thumb mode.",
+      "default": "false"
+    },
+    {
       "name": "migrate",
       "type": "boolean",
       "description": "Temporary prop required for migration to the Slider's new implementation"

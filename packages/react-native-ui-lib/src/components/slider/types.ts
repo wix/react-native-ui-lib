@@ -98,6 +98,11 @@ export type SliderProps = Omit<ThumbProps, 'ref'> & {
    */
   testID?: string;
   /**
+   * If true, dragging anywhere on the slider moves the thumb relative to its current position
+   * instead of snapping to the touch point. Designed for single-thumb mode.
+   */
+  useRelativeDrag?: boolean;
+  /**
    * Whether to use the new Slider implementation using Reanimated
    */
   migrate?: boolean;
