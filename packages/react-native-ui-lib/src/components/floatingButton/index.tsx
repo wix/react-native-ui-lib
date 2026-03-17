@@ -1,4 +1,4 @@
-import React, {PropsWithChildren} from 'react';
+import React, {PropsWithChildren, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
 import {Colors, Shadows} from '../../style';
@@ -78,6 +78,7 @@ const FloatingButton = (props: FloatingButtonProps) => {
     visible,
     button,
     secondaryButton,
+    bottomMargin,
     fullWidth,
     buttonLayout = FloatingButtonLayouts.VERTICAL,
     duration = 300,
@@ -141,6 +142,13 @@ const FloatingButton = (props: FloatingButtonProps) => {
     ? [renderSecondaryButton(), renderPrimaryButton()]
     : [renderPrimaryButton(), renderSecondaryButton()];
 
+  const footerContentContainerStyle = useMemo(() => {
+    if (bottomMargin !== undefined) {
+      return {paddingBottom: bottomMargin};
+    }
+    return undefined;
+  }, [bottomMargin]);
+
   return (
     <ScreenFooter
       visible={visible}
@@ -149,6 +157,7 @@ const FloatingButton = (props: FloatingButtonProps) => {
       keyboardBehavior={hoisted ? KeyboardBehavior.HOISTED : KeyboardBehavior.STICKY}
       animationDuration={withoutAnimation ? 0 : duration}
       itemsFit={fullWidth ? ItemsFit.STRETCH : undefined}
+      contentContainerStyle={footerContentContainerStyle}
       testID={testID}
     >
       {children}

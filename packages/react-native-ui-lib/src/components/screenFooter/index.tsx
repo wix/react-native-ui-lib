@@ -46,7 +46,8 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     visible = true,
     animationDuration = 200,
     shadow = ScreenFooterShadow.SH20,
-    hideDivider = false
+    hideDivider = false,
+    contentContainerStyle: contentContainerStyleOverride
   } = props;
 
   const keyboard = useAnimatedKeyboard();
@@ -111,6 +112,9 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     }
   }, [layout, itemsFit, alignment]);
 
+  // TODO: Consider wrapping useSafeAreaInsets in a try-catch to gracefully handle
+  // missing SafeAreaProvider (e.g. when ScreenFooter is used indirectly via FloatingButton).
+  // Fallback: Constants.getSafeAreaInsets()
   const useSafeAreaInsets = SafeAreaContextPackage?.useSafeAreaInsets ?? (() => Constants.getSafeAreaInsets());
   const insets = useSafeAreaInsets();
 
@@ -131,12 +135,15 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     if (isSolid) {
       const shadowStyle = Shadows[shadow]?.top;
       const backgroundElevation = shadowStyle?.elevation || 0;
-      // When the background has a shadow (elevation on Android), it might render on top of the content
       style.push({elevation: backgroundElevation + 1});
     }
 
+    if (contentContainerStyleOverride) {
+      style.push(contentContainerStyleOverride);
+    }
+
     return style;
-  }, [layout, alignItems, justifyContent, insets.bottom, isSolid, shadow, isKeyboardVisible]);
+  }, [layout, alignItems, justifyContent, insets.bottom, isSolid, shadow, isKeyboardVisible, contentContainerStyleOverride]);
 
   const solidBackgroundStyle = useMemo(() => {
     if (!isSolid) {
