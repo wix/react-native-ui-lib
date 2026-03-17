@@ -81,6 +81,11 @@
       "type": "boolean",
       "description": "If true, hides the top divider for solid background. Only applies when backgroundType is 'solid'",
       "default": "false"
+    },
+    {
+      "name": "contentContainerStyle",
+      "type": "StyleProp<ViewStyle>",
+      "description": "Custom style for the content container that wraps the footer's children. Can be used to override default padding, gap, or other layout properties."
     }
   ],
   "snippet": [
