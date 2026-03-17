@@ -112,9 +112,6 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     }
   }, [layout, itemsFit, alignment]);
 
-  // TODO: Consider wrapping useSafeAreaInsets in a try-catch to gracefully handle
-  // missing SafeAreaProvider (e.g. when ScreenFooter is used indirectly via FloatingButton).
-  // Fallback: Constants.getSafeAreaInsets()
   const useSafeAreaInsets = SafeAreaContextPackage?.useSafeAreaInsets ?? (() => Constants.getSafeAreaInsets());
   const insets = useSafeAreaInsets();
 

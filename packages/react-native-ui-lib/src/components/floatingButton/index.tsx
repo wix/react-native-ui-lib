@@ -1,6 +1,7 @@
-import React, {PropsWithChildren, useMemo} from 'react';
+import React, {PropsWithChildren, useEffect, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
+import {LogService} from '../../services';
 import {Colors, Shadows} from '../../style';
 import Button, {ButtonProps} from '../button';
 import ScreenFooter, {
@@ -75,7 +76,7 @@ export interface FloatingButtonProps {
  */
 const FloatingButton = (props: FloatingButtonProps) => {
   const {
-    visible,
+    visible = false,
     button,
     secondaryButton,
     bottomMargin,
@@ -87,6 +88,13 @@ const FloatingButton = (props: FloatingButtonProps) => {
     hoisted = true,
     testID
   } = props;
+
+  useEffect(() => {
+    LogService.warn(
+      `RNUILib FloatingButton now uses ScreenFooter internally, which requires a SafeAreaProvider. ` +
+      `If you experience safe area issues, please wrap your app (or the relevant screen) with <SafeAreaProvider> from 'react-native-safe-area-context'.`
+    );
+  }, []);
 
   const isSecondaryOnly = !!secondaryButton && !button;
   const isHorizontal = buttonLayout === FloatingButtonLayouts.HORIZONTAL || isSecondaryOnly;
