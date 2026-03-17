@@ -2,7 +2,6 @@ import React from 'react';
 import {StyleSheet, ViewStyle} from 'react-native';
 import {render} from '@testing-library/react-native';
 import FloatingButton, {FloatingButtonLayouts} from '../index';
-import {Spacings} from '../../../style';
 import {ButtonDriver} from '../../button/Button.driver.new';
 import {useComponentDriver, ComponentProps} from '../../../testkit/new/Component.driver';
 
@@ -144,7 +143,10 @@ describe('FloatingButton', () => {
     });
 
     it('should use horizontal layout when fullWidth is true with horizontal layout', () => {
-      const props = {visible: true, button, secondaryButton, buttonLayout: FloatingButtonLayouts.HORIZONTAL, fullWidth: true};
+      const props = {
+        visible: true, button, secondaryButton,
+        buttonLayout: FloatingButtonLayouts.HORIZONTAL, fullWidth: true
+      };
       const renderTree = render(<StickyTestCase {...props}/>);
       const contentDriver = ContentDriver({renderTree, testID: `${TEST_ID}.content`});
 

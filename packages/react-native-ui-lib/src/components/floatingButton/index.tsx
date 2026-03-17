@@ -90,11 +90,16 @@ const FloatingButton = (props: FloatingButtonProps) => {
   } = props;
 
   useEffect(() => {
-    LogService.warn(
-      `RNUILib FloatingButton now uses ScreenFooter internally, which requires a SafeAreaProvider. ` +
-      `If you experience safe area issues, please wrap your app (or the relevant screen) with <SafeAreaProvider> from 'react-native-safe-area-context'.`
-    );
+    // eslint-disable-next-line max-len
+    LogService.warn('RNUILib FloatingButton now uses ScreenFooter internally, which requires a SafeAreaProvider. If you experience safe area issues, please wrap your app (or the relevant screen) with <SafeAreaProvider>.');
   }, []);
+
+  const footerContentContainerStyle = useMemo(() => {
+    if (bottomMargin !== undefined) {
+      return {paddingBottom: bottomMargin};
+    }
+    return undefined;
+  }, [bottomMargin]);
 
   const isSecondaryOnly = !!secondaryButton && !button;
   const isHorizontal = buttonLayout === FloatingButtonLayouts.HORIZONTAL || isSecondaryOnly;
@@ -149,13 +154,6 @@ const FloatingButton = (props: FloatingButtonProps) => {
   const children = isHorizontal
     ? [renderSecondaryButton(), renderPrimaryButton()]
     : [renderPrimaryButton(), renderSecondaryButton()];
-
-  const footerContentContainerStyle = useMemo(() => {
-    if (bottomMargin !== undefined) {
-      return {paddingBottom: bottomMargin};
-    }
-    return undefined;
-  }, [bottomMargin]);
 
   return (
     <ScreenFooter
