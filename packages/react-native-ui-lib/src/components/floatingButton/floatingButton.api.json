@@ -1,12 +1,8 @@
 {
   "name": "FloatingButton",
   "category": "overlays",
-  "description": "Hovering button with gradient background",
-  "modifiers": [
-    "margin",
-    "background",
-    "color"
-  ],
+  "description": "Hovering button with gradient background, backed by ScreenFooter",
+  "modifiers": ["margin", "background", "color"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FloatingButtonScreen.tsx",
   "images": [
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/FloatingButton/FloatingButton.gif?raw=true"
@@ -59,6 +55,12 @@
       "description": "Whether to show background overlay"
     },
     {
+      "name": "hoisted",
+      "type": "boolean",
+      "description": "Whether the footer should be hoisted above the keyboard. When true, uses KeyboardAccessoryView for keyboard-aware positioning. When false, uses sticky positioning.",
+      "default": "true"
+    },
+    {
       "name": "testID",
       "type": "string",
       "description": "The test id for e2e tests",
@@ -96,11 +98,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Default",
-              "Full Width"
-            ],
+            "columns": ["Property", "Default", "Full Width"],
             "items": [
               {
                 "title": "Main button",
@@ -130,10 +128,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Layout",
-              "Component"
-            ],
+            "columns": ["Layout", "Component"],
             "items": [
               {
                 "title": "Horizontal",
