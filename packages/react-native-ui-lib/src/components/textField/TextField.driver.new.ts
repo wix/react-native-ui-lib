@@ -10,6 +10,7 @@ import {ViewDriver} from '../view/View.driver.new';
 
 export const TextFieldDriver = (props: ComponentProps, options?: ComponentDriverOptions) => {
   const driver = usePressableDriver(useComponentDriver(props, options));
+  const inputDriver = useComponentDriver({renderTree: props.renderTree, testID: `${props.testID}.input`}, options);
 
   const floatingPlaceholderDriver = TextDriver({
     renderTree: props.renderTree,
@@ -44,35 +45,37 @@ export const TextFieldDriver = (props: ComponentProps, options?: ComponentDriver
     testID: `${props.testID}.clearButton.container`
   });
 
+  const getInputElement = () => inputDriver.queryElement() ?? driver.getElement();
+
   const getValue = (): string | undefined => {
-    return driver.getElement().props.value ?? driver.getElement().props.defaultValue;
+    return getInputElement().props.value ?? getInputElement().props.defaultValue;
   };
 
   const changeText = (text: string): void => {
-    fireEvent.changeText(driver.getElement(), text);
+    fireEvent.changeText(getInputElement(), text);
   };
 
   const focus = (): void => {
-    fireEvent(driver.getElement(), 'focus');
+    fireEvent(getInputElement(), 'focus');
   };
 
   const blur = (): void => {
-    fireEvent(driver.getElement(), 'blur');
+    fireEvent(getInputElement(), 'blur');
   };
 
   const isEnabled = (): boolean => {
-    return !driver.getElement().props.accessibilityState?.disabled;
+    return !getInputElement().props.accessibilityState?.disabled;
   };
 
   const getPlaceholder = () => {
     const exists = (): boolean => {
-      const hasPlaceholder = !!driver.getElement().props.placeholder;
+      const hasPlaceholder = !!getInputElement().props.placeholder;
       const hasText = !!getValue();
       return hasPlaceholder && (!hasText || (hasText && floatingPlaceholderDriver.exists()));
     };
     const getText = (): string | undefined => {
       if (exists()) {
-        return driver.getElement().props.placeholder;
+        return getInputElement().props.placeholder;
       }
     };
 
