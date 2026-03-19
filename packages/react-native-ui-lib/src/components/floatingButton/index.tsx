@@ -4,12 +4,7 @@ import {asBaseComponent} from '../../commons/new';
 import {LogService} from '../../services';
 import {Colors, Shadows} from '../../style';
 import Button, {ButtonProps} from '../button';
-import ScreenFooter, {
-  ScreenFooterLayouts,
-  ScreenFooterBackgrounds,
-  KeyboardBehavior,
-  ItemsFit
-} from '../screenFooter';
+import ScreenFooter, {ScreenFooterLayouts, ScreenFooterBackgrounds, KeyboardBehavior, ItemsFit} from '../screenFooter';
 
 export enum FloatingButtonLayouts {
   VERTICAL = 'Vertical',
@@ -91,7 +86,9 @@ const FloatingButton = (props: FloatingButtonProps) => {
 
   useEffect(() => {
     // eslint-disable-next-line max-len
-    LogService.warn('RNUILib FloatingButton now uses ScreenFooter internally, which requires a SafeAreaProvider. If you experience safe area issues, please wrap your app (or the relevant screen) with <SafeAreaProvider>.');
+    LogService.warn(
+      'RNUILib FloatingButton now uses ScreenFooter internally, which requires a SafeAreaProvider. If you experience safe area issues, please wrap your app (or the relevant screen) with <SafeAreaProvider>.'
+    );
   }, []);
 
   const footerContentContainerStyle = useMemo(() => {

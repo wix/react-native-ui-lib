@@ -2,11 +2,7 @@
   "name": "FloatingButton",
   "category": "overlays",
   "description": "Hovering button with gradient background, backed by ScreenFooter",
-  "modifiers": [
-    "margin",
-    "background",
-    "color"
-  ],
+  "modifiers": ["margin", "background", "color"],
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FloatingButtonScreen.tsx",
   "images": [
     "https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/FloatingButton/FloatingButton.gif?raw=true"
@@ -102,11 +98,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Property",
-              "Default",
-              "Full Width"
-            ],
+            "columns": ["Property", "Default", "Full Width"],
             "items": [
               {
                 "title": "Main button",
@@ -136,10 +128,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Layout",
-              "Component"
-            ],
+            "columns": ["Layout", "Component"],
             "items": [
               {
                 "title": "Horizontal",

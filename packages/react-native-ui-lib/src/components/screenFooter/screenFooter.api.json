@@ -123,11 +123,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Layout Type",
-              "Use Case",
-              "Example"
-            ],
+            "columns": ["Layout Type", "Use Case", "Example"],
             "items": [
               {
                 "title": "Horizontal - Spread",
@@ -162,11 +158,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Layout Type",
-              "Use Case",
-              "Example"
-            ],
+            "columns": ["Layout Type", "Use Case", "Example"],
             "items": [
               {
                 "title": "Vertical - Fit",
@@ -192,11 +184,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Background Type",
-              "Visual",
-              "When to Use"
-            ],
+            "columns": ["Background Type", "Visual", "When to Use"],
             "items": [
               {
                 "title": "Solid",
@@ -231,11 +219,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Behavior",
-              "Description",
-              "Example"
-            ],
+            "columns": ["Behavior", "Description", "Example"],
             "items": [
               {
                 "title": "Sticky",
@@ -264,4 +248,3 @@
     ]
   }
 }
-
