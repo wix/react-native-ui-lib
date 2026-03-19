@@ -14,11 +14,11 @@ const secondaryButton = {
 };
 
 const StickyTestCase = props => {
-  return <FloatingButton hoisted={false} {...props} testID={TEST_ID} />;
+  return <FloatingButton hoisted={false} {...props} testID={TEST_ID}/>;
 };
 
 const HoistedTestCase = props => {
-  return <FloatingButton {...props} testID={TEST_ID} />;
+  return <FloatingButton {...props} testID={TEST_ID}/>;
 };
 
 export const FloatingButtonDriver = (props: ComponentProps) => {
@@ -37,11 +37,11 @@ describe('FloatingButton', () => {
   describe('visible', () => {
     it('should render a button according to visibility', async () => {
       const props = {};
-      const renderTree = render(<StickyTestCase {...props} />);
+      const renderTree = render(<StickyTestCase {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
       expect(await buttonDriver.exists()).not.toBeTruthy();
 
-      renderTree.rerender(<StickyTestCase visible button={button} />);
+      renderTree.rerender(<StickyTestCase visible button={button}/>);
       expect(await buttonDriver.exists()).toBeTruthy();
     });
   });
@@ -49,28 +49,28 @@ describe('FloatingButton', () => {
   describe('buttons', () => {
     it('should render a button', async () => {
       const props = {visible: true, button};
-      const renderTree = render(<StickyTestCase {...props} />);
+      const renderTree = render(<StickyTestCase {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
       expect(await buttonDriver.exists()).toBeTruthy();
     });
 
     it('should not render a secondary button when not provided', async () => {
       const props = {visible: true};
-      const renderTree = render(<StickyTestCase {...props} />);
+      const renderTree = render(<StickyTestCase {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.secondaryButton`});
       expect(await buttonDriver.exists()).not.toBeTruthy();
     });
 
     it('should render a button with a label', async () => {
       const props = {visible: true, button};
-      const renderTree = render(<StickyTestCase {...props} />);
+      const renderTree = render(<StickyTestCase {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
       expect(await buttonDriver.getLabel().getText()).toEqual(button.label);
     });
 
     it('should render secondary button with label', async () => {
       const props = {visible: true, secondaryButton};
-      const renderTree = render(<StickyTestCase {...props} />);
+      const renderTree = render(<StickyTestCase {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.secondaryButton`});
       expect(await buttonDriver.getLabel().getText()).toEqual(secondaryButton.label);
     });
@@ -79,7 +79,7 @@ describe('FloatingButton', () => {
   describe('buttonLayout', () => {
     it('should use vertical layout by default', () => {
       const props = {visible: true, button, secondaryButton};
-      const renderTree = render(<StickyTestCase {...props} />);
+      const renderTree = render(<StickyTestCase {...props}/>);
       const contentDriver = ContentDriver({renderTree, testID: `${TEST_ID}.content`});
 
       expect(contentDriver.getStyle().flexDirection).toBe('column');
@@ -88,7 +88,7 @@ describe('FloatingButton', () => {
 
     it('should use horizontal layout when specified', () => {
       const props = {visible: true, button, secondaryButton, buttonLayout: FloatingButtonLayouts.HORIZONTAL};
-      const renderTree = render(<StickyTestCase {...props} />);
+      const renderTree = render(<StickyTestCase {...props}/>);
       const contentDriver = ContentDriver({renderTree, testID: `${TEST_ID}.content`});
 
       expect(contentDriver.getStyle().flexDirection).toBe('row');
@@ -99,7 +99,7 @@ describe('FloatingButton', () => {
   describe('bottomMargin', () => {
     it('should have default paddingBottom when bottomMargin is not provided', () => {
       const props = {visible: true, button};
-      const renderTree = render(<StickyTestCase {...props} />);
+      const renderTree = render(<StickyTestCase {...props}/>);
       const contentDriver = ContentDriver({renderTree, testID: `${TEST_ID}.content`});
       const defaultPaddingBottom = contentDriver.getStyle().paddingBottom as number;
 
@@ -108,7 +108,7 @@ describe('FloatingButton', () => {
 
     it('should have default paddingBottom with both buttons when bottomMargin is not provided', () => {
       const props = {visible: true, button, secondaryButton};
-      const renderTree = render(<StickyTestCase {...props} />);
+      const renderTree = render(<StickyTestCase {...props}/>);
       const contentDriver = ContentDriver({renderTree, testID: `${TEST_ID}.content`});
       const defaultPaddingBottom = contentDriver.getStyle().paddingBottom as number;
 
@@ -117,7 +117,7 @@ describe('FloatingButton', () => {
 
     it('should apply bottomMargin as paddingBottom on the content container', () => {
       const props = {visible: true, button, bottomMargin: 10};
-      const renderTree = render(<StickyTestCase {...props} />);
+      const renderTree = render(<StickyTestCase {...props}/>);
       const contentDriver = ContentDriver({renderTree, testID: `${TEST_ID}.content`});
 
       expect(contentDriver.getStyle().paddingBottom).toBe(10);
@@ -125,7 +125,7 @@ describe('FloatingButton', () => {
 
     it('should apply bottomMargin as paddingBottom with both buttons', () => {
       const props = {visible: true, button, secondaryButton, bottomMargin: 10};
-      const renderTree = render(<StickyTestCase {...props} />);
+      const renderTree = render(<StickyTestCase {...props}/>);
       const contentDriver = ContentDriver({renderTree, testID: `${TEST_ID}.content`});
 
       expect(contentDriver.getStyle().paddingBottom).toBe(10);
@@ -135,7 +135,7 @@ describe('FloatingButton', () => {
   describe('fullWidth', () => {
     it('should stretch items in vertical layout when fullWidth is true', () => {
       const props = {visible: true, button, secondaryButton, fullWidth: true};
-      const renderTree = render(<StickyTestCase {...props} />);
+      const renderTree = render(<StickyTestCase {...props}/>);
       const contentDriver = ContentDriver({renderTree, testID: `${TEST_ID}.content`});
 
       expect(contentDriver.getStyle().flexDirection).toBe('column');
@@ -150,7 +150,7 @@ describe('FloatingButton', () => {
         buttonLayout: FloatingButtonLayouts.HORIZONTAL,
         fullWidth: true
       };
-      const renderTree = render(<StickyTestCase {...props} />);
+      const renderTree = render(<StickyTestCase {...props}/>);
       const contentDriver = ContentDriver({renderTree, testID: `${TEST_ID}.content`});
 
       expect(contentDriver.getStyle().flexDirection).toBe('row');
@@ -161,14 +161,14 @@ describe('FloatingButton', () => {
   describe('hoisted (default)', () => {
     it('should render a button in hoisted mode', async () => {
       const props = {visible: true, button};
-      const renderTree = render(<HoistedTestCase {...props} />);
+      const renderTree = render(<HoistedTestCase {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
       expect(await buttonDriver.exists()).toBeTruthy();
     });
 
     it('should render both buttons in hoisted mode', async () => {
       const props = {visible: true, button, secondaryButton};
-      const renderTree = render(<HoistedTestCase {...props} />);
+      const renderTree = render(<HoistedTestCase {...props}/>);
       const primaryDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
       const secondaryDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.secondaryButton`});
       expect(await primaryDriver.exists()).toBeTruthy();
@@ -177,11 +177,11 @@ describe('FloatingButton', () => {
 
     it('should render a button according to visibility in hoisted mode', async () => {
       const props = {};
-      const renderTree = render(<HoistedTestCase {...props} />);
+      const renderTree = render(<HoistedTestCase {...props}/>);
       const buttonDriver = ButtonDriver({renderTree, testID: `${TEST_ID}.button`});
       expect(await buttonDriver.exists()).not.toBeTruthy();
 
-      renderTree.rerender(<HoistedTestCase visible button={button} />);
+      renderTree.rerender(<HoistedTestCase visible button={button}/>);
       expect(await buttonDriver.exists()).toBeTruthy();
     });
   });
