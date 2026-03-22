@@ -83,11 +83,16 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
     onPress?.(props);
   }, [onPress, customValue]);
 
-  const closeExpandable = useCallback(() => {
+  const dismissOverlay = useCallback(() => {
     setExpandableVisible(false);
     focusAccessibility();
+  }, [focusAccessibility]);
+
+  const closeExpandable = useCallback(() => {
+    dismissOverlay();
     useDialog ? dialogProps?.onDismiss?.() : modalProps?.onDismiss?.();
-  }, [useDialog, dialogProps?.onDismiss, modalProps?.onDismiss, focusAccessibility]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dismissOverlay, dialogProps?.onDismiss, modalProps?.onDismiss]);
 
   const toggleExpandable = useCallback(() => (visible ? closeExpandable() : openExpandable()),
     [visible, openExpandable, closeExpandable]);
@@ -105,7 +110,7 @@ const ExpandableOverlay = (props: ExpandableOverlayProps, ref: any) => {
         overlayBackgroundColor={Colors.$backgroundDefault}
         {...modalProps}
         visible={visible}
-        onDismiss={closeExpandable}
+        onDismiss={dismissOverlay}
         onRequestClose={closeExpandable}
         onBackgroundPress={closeExpandable}
       >
