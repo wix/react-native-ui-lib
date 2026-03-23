@@ -62,6 +62,7 @@ const Thumb = (props: ThumbProps) => {
   const lastOffset = useSharedValue(0);
 
   const gesture = Gesture.Pan()
+    .hitSlop(hitSlop ?? DEFAULT_THUMB_HIT_SLOP)
     .onBegin(() => {
       onSeekStart?.();
       isPressed.value = true;
