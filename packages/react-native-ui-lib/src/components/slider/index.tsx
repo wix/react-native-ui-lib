@@ -99,6 +99,7 @@ class Slider extends PureComponent<InternalSliderProps, State> {
 
   private didMount: boolean;
   private _containerDragInitialValue = 0;
+  private _containerThumbScale = new Animated.Value(1);
 
   constructor(props: InternalSliderProps) {
     super(props);
@@ -251,6 +252,7 @@ class Slider extends PureComponent<InternalSliderProps, State> {
 
   handleContainerGrant = () => {
     this._containerDragInitialValue = this.getValueForX(this._x);
+    this.animateContainerThumbScale(1.5);
     this.onSeekStart();
   };
 
@@ -272,7 +274,16 @@ class Slider extends PureComponent<InternalSliderProps, State> {
 
   handleContainerEnd = () => {
     this.bounceToStep();
+    this.animateContainerThumbScale(1);
     this.onSeekEnd();
+  };
+
+  animateContainerThumbScale = (toValue: number) => {
+    Animated.timing(this._containerThumbScale, {
+      toValue,
+      duration: 100,
+      useNativeDriver: true
+    }).start();
   };
 
   /* Actions */
@@ -602,7 +613,7 @@ class Slider extends PureComponent<InternalSliderProps, State> {
   };
 
   getThumbProps = () => {
-    const {thumbStyle, activeThumbStyle, disableActiveStyling, disabled, thumbTintColor, thumbHitSlop} = this.props;
+    const {thumbStyle, activeThumbStyle, disableActiveStyling, disabled, thumbTintColor, thumbHitSlop, useRelativeDrag} = this.props;
     const {thumbSize} = this.state;
     const verticalHitslop = Math.max(0, (48 - thumbSize.height) / 2);
     const horizontalHitslop = Math.max(0, (48 - thumbSize.width) / 2);
@@ -623,7 +634,8 @@ class Slider extends PureComponent<InternalSliderProps, State> {
       activeThumbStyle,
       disableActiveStyling,
       thumbHitSlop: thumbHitSlop ?? calculatedHitSlop,
-      onLayout: this.onThumbLayout
+      onLayout: this.onThumbLayout,
+      scaleAnimation: useRelativeDrag ? this._containerThumbScale : undefined
     };
   };
 

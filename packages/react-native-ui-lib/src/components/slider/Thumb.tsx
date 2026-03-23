@@ -39,6 +39,10 @@ export interface ThumbProps extends ViewProps {
   disabled?: boolean;
   /** ref to thumb component */
   ref?: React.RefObject<RNView>;
+  /**
+   * External scale animation value (used by useRelativeDrag)
+   */
+  scaleAnimation?: Animated.Value;
 }
 type ThumbStyle = {style?: StyleProp<ViewStyle>; left?: StyleProp<number>};
 
@@ -58,6 +62,7 @@ const Thumb = forwardRef((props: ThumbProps, ref: any) => {
     thumbHitSlop,
     onTouchStart,
     onTouchEnd,
+    scaleAnimation,
     ...others
   } = props;
 
@@ -142,7 +147,7 @@ const Thumb = forwardRef((props: ThumbProps, ref: any) => {
         {
           transform: [
             {
-              scale: thumbScaleAnimation.current
+              scale: scaleAnimation ?? thumbScaleAnimation.current
             }
           ]
         }

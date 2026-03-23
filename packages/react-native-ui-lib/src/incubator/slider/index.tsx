@@ -381,6 +381,7 @@ const Slider = React.memo((props: Props) => {
   };
 
   const containerDragStartOffset = useSharedValue(0);
+  const isContainerDragging = useSharedValue(false);
 
   const clampOffset = (offset: number) => {
     'worklet';
@@ -398,6 +399,7 @@ const Slider = React.memo((props: Props) => {
   const containerGesture = Gesture.Pan()
     .onBegin(() => {
       containerDragStartOffset.value = defaultThumbOffset.value;
+      isContainerDragging.value = true;
       _onSeekStart();
     })
     .onUpdate(e => {
@@ -408,7 +410,10 @@ const Slider = React.memo((props: Props) => {
       defaultThumbOffset.value = clampOffset(containerDragStartOffset.value + dx);
     })
     .onEnd(() => _onSeekEnd())
-    .onFinalize(snapToStep);
+    .onFinalize(() => {
+      isContainerDragging.value = false;
+      snapToStep();
+    });
   containerGesture.enabled(!disabled && !!useRelativeDrag);
 
   const trackAnimatedStyles = useAnimatedStyle(() => {
@@ -438,6 +443,7 @@ const Slider = React.memo((props: Props) => {
         shouldDisableRTL={shouldDisableRTL}
         disabled={disabled}
         pointerEvents={useRelativeDrag ? 'none' : undefined}
+        isActive={useRelativeDrag ? isContainerDragging : undefined}
         disableActiveStyling={disableActiveStyling}
         defaultStyle={_thumbStyle}
         activeStyle={_activeThumbStyle}

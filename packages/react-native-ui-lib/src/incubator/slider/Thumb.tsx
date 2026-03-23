@@ -24,6 +24,7 @@ interface ThumbProps extends ViewProps {
   onSeekStart?: () => void;
   onSeekEnd?: () => void;
   enableShadow?: boolean;
+  isActive?: SharedValue<boolean>;
 }
 
 const SHADOW_RADIUS = 4;
@@ -54,7 +55,8 @@ const Thumb = (props: ThumbProps) => {
     gap = 0,
     secondary,
     enableShadow,
-    pointerEvents
+    pointerEvents,
+    isActive
   } = props;
 
   const rtlFix = Constants.isRTL ? -1 : 1;
@@ -94,15 +96,16 @@ const Thumb = (props: ThumbProps) => {
         offset.value = Math.round(offset.value / stepInterpolatedValue.value) * stepInterpolatedValue.value;
       }
     });
-  gesture.enabled(!disabled);
+  gesture.enabled(!disabled && pointerEvents !== 'none');
 
   const animatedStyle = useAnimatedStyle(() => {
-    const customStyle = isPressed.value ? activeStyle?.value : defaultStyle?.value;
+    const active = isPressed.value || isActive?.value;
+    const customStyle = active ? activeStyle?.value : defaultStyle?.value;
     return {
       ...customStyle,
       transform: [
         {translateX: (offset.value - thumbSize.value.width / 2) * rtlFix},
-        {scale: withSpring(!disableActiveStyling && isPressed.value ? 1.3 : 1)}
+        {scale: withSpring(!disableActiveStyling && active ? 1.3 : 1)}
       ]
     };
   });
