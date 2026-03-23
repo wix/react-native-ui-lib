@@ -53,7 +53,8 @@ const Thumb = (props: ThumbProps) => {
     stepInterpolatedValue,
     gap = 0,
     secondary,
-    enableShadow
+    enableShadow,
+    pointerEvents
   } = props;
 
   const rtlFix = Constants.isRTL ? -1 : 1;
@@ -117,6 +118,7 @@ const Thumb = (props: ThumbProps) => {
     <GestureDetector gesture={gesture}>
       <View
         reanimated
+        pointerEvents={pointerEvents}
         style={[styles.thumbPosition, enableShadow && styles.thumbShadow, animatedStyle]}
         hitSlop={hitSlop}
         onLayout={onThumbLayout}
