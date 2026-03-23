@@ -199,7 +199,7 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     (child: React.ReactNode, index: number) => {
       if (itemsFit === ItemsFit.FIXED && itemWidth) {
         const fixedStyle: ViewStyle = isHorizontal
-          ? {width: itemWidth, flexShrink: 1, overflow: 'hidden', flexDirection: 'row', justifyContent: 'center'}
+          ? {width: itemWidth, flexShrink: 1, overflow: 'hidden'}
           : {width: itemWidth, maxWidth: '100%'};
         return (
           <View key={index} style={fixedStyle}>
@@ -210,11 +210,20 @@ const ScreenFooter = (props: ScreenFooterProps) => {
 
       if (isHorizontal && React.isValidElement(child) && itemsFit === ItemsFit.STRETCH) {
         return (
-          <View flex row centerH key={index}>
+          <View flex key={index}>
             {child}
           </View>
         );
       }
+
+      if (isHorizontal) {
+        return (
+          <View flexS key={index}>
+            {child}
+          </View>
+        );
+      }
+
       return child;
     },
     [itemsFit, itemWidth, isHorizontal]

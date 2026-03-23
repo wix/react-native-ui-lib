@@ -200,7 +200,7 @@ const ScreenFooterContent = () => {
     // Extra Text (Total price)
     if (showExtraText) {
       items.push(
-        <View key="extra-text" centerV flexS marginB-s4={!isHorizontal}>
+        <View key="extra-text" center flexS marginB-s4={!isHorizontal}>
           <Text {...{[textPreset.main]: true}} numberOfLines={1}>
             Total:{' '}
             <Text {...{[textPreset.main]: true}} style={{fontWeight: 'bold'}}>
@@ -217,7 +217,7 @@ const ScreenFooterContent = () => {
     // Image (Basket icon)
     if (showExtraText && showImage) {
       items.push(
-        <View key="extra-image" centerV marginB-s4={!isHorizontal}>
+        <View key="extra-image" center marginB-s4={!isHorizontal}>
           <Icon source={basketIcon} size={imageSize} tintColor={Colors.$iconDefault} />
         </View>
       );
