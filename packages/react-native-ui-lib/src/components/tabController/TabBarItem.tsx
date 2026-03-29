@@ -1,6 +1,6 @@
 // TODO: support commented props
 import React, {useCallback, useContext, useEffect, useRef, useMemo, ReactElement, useState} from 'react';
-import {StyleSheet, TextStyle, LayoutChangeEvent, StyleProp, ViewStyle, TextProps} from 'react-native';
+import {StyleSheet, TextStyle, LayoutChangeEvent, StyleProp, ViewStyle, TextProps, AccessibilityInfo, findNodeHandle} from 'react-native';
 import _ from 'lodash';
 import Reanimated, {runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue} from 'react-native-reanimated';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
@@ -137,7 +137,7 @@ export default function TabBarItem({
   onPress,
   ...props
 }: Props) {
-  const {currentPage, setCurrentIndex} = useContext(TabBarContext);
+  const {currentPage, setCurrentIndex, accessibilityFocusOnSelected} = useContext(TabBarContext);
   const itemRef = useRef();
   const itemWidth = useRef(props.width);
   const isPressed = useSharedValue(false);
@@ -163,6 +163,20 @@ export default function TabBarItem({
       runOnJS(setIsSelected)(isSelected);
     }
   });
+
+  const isMounted = useRef(false);
+  useEffect(() => {
+    if (!isMounted.current) {
+      isMounted.current = true;
+      return;
+    }
+    if (accessibilityFocusOnSelected && isSelected) {
+      const node = findNodeHandle(itemRef.current as unknown as React.Component | null);
+      if (node) {
+        AccessibilityInfo.setAccessibilityFocus(node);
+      }
+    }
+  }, [isSelected, accessibilityFocusOnSelected]);
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
     const {width} = event.nativeEvent.layout;

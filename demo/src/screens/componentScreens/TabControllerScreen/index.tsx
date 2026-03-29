@@ -22,6 +22,7 @@ interface State {
   asCarousel: boolean;
   centerSelected: boolean;
   fewItems: boolean;
+  accessibilityFocusOnSelected: boolean;
   initialIndex: number;
   selectedIndex: number;
   key: string | number;
@@ -35,6 +36,7 @@ class TabControllerScreen extends Component<{}, State> {
       asCarousel: true,
       centerSelected: false,
       fewItems: false,
+      accessibilityFocusOnSelected: false,
       initialIndex: 0,
       selectedIndex: 0,
       key: Date.now(),
@@ -105,6 +107,10 @@ class TabControllerScreen extends Component<{}, State> {
     });
   };
 
+  toggleAccessibilityFocusOnSelected = () => {
+    this.setState({accessibilityFocusOnSelected: !this.state.accessibilityFocusOnSelected});
+  };
+
   toggleCenterSelected = () => {
     const {fewItems, centerSelected} = this.state;
     this.setState({
@@ -160,7 +166,7 @@ class TabControllerScreen extends Component<{}, State> {
   }
 
   render() {
-    const {key, initialIndex, asCarousel, centerSelected, fewItems, items} = this.state;
+    const {key, initialIndex, asCarousel, centerSelected, fewItems, accessibilityFocusOnSelected, items} = this.state;
     return (
       <View flex bg-$backgroundDefault>
         <TabController
@@ -170,6 +176,7 @@ class TabControllerScreen extends Component<{}, State> {
           initialIndex={initialIndex}
           onChangeIndex={this.onChangeIndex}
           items={items}
+          accessibilityFocusOnSelected={accessibilityFocusOnSelected}
         >
           <TabController.TabBar
             // items={items}
@@ -215,6 +222,14 @@ class TabControllerScreen extends Component<{}, State> {
             size={Button.sizes.small}
             marginB-12
             onPress={this.toggleCenterSelected}
+          />
+          <Button
+            bg-grey20={!accessibilityFocusOnSelected}
+            bg-green30={accessibilityFocusOnSelected}
+            label={`A11y Focus on Select : ${accessibilityFocusOnSelected ? 'ON' : 'OFF'}`}
+            size={Button.sizes.small}
+            marginB-12
+            onPress={this.toggleAccessibilityFocusOnSelected}
           />
           <Button label="setTab (Imperative)" bg-green10 onPress={this.setTab} size={Button.sizes.small}/>
         </View>

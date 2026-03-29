@@ -15,6 +15,7 @@ interface TabControllerContext {
   targetPage: Reanimated.SharedValue<number>;
   /* carouselOffset: Reanimated.SharedValue<number>; */
   setCurrentIndex: (index: number) => void;
+  accessibilityFocusOnSelected?: boolean;
 }
 
 // @ts-expect-error
