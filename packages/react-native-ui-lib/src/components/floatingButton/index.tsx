@@ -2,7 +2,7 @@ import React, {PropsWithChildren, useEffect, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import {asBaseComponent} from '../../commons/new';
 import {LogService} from '../../services';
-import {Colors, Shadows} from '../../style';
+import {Colors, Shadows, Spacings} from '../../style';
 import Button, {ButtonProps} from '../button';
 import ScreenFooter, {ScreenFooterLayouts, ScreenFooterBackgrounds, KeyboardBehavior, ItemsFit} from '../screenFooter';
 
@@ -91,15 +91,16 @@ const FloatingButton = (props: FloatingButtonProps) => {
     );
   }, []);
 
+  const isSecondaryOnly = !!secondaryButton && !button;
+  const isHorizontal = buttonLayout === FloatingButtonLayouts.HORIZONTAL || isSecondaryOnly;
+
   const footerContentContainerStyle = useMemo(() => {
     if (bottomMargin !== undefined) {
       return {paddingBottom: bottomMargin};
     }
-    return undefined;
-  }, [bottomMargin]);
-
-  const isSecondaryOnly = !!secondaryButton && !button;
-  const isHorizontal = buttonLayout === FloatingButtonLayouts.HORIZONTAL || isSecondaryOnly;
+    const isSecondaryAtBottom = !!secondaryButton && (isSecondaryOnly || !isHorizontal);
+    return {paddingBottom: isSecondaryAtBottom ? Spacings.s7 : Spacings.s8};
+  }, [bottomMargin, secondaryButton, isSecondaryOnly, isHorizontal]);
 
   if (!button && !secondaryButton) {
     return null;
