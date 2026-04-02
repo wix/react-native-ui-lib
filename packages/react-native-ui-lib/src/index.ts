@@ -47,7 +47,7 @@ export {default as Button, ButtonProps, ButtonSize, ButtonAnimationDirection} fr
 export {default as Card, CardProps, CardSectionProps, CardSelectionOptions} from './components/card';
 export {default as Carousel, CarouselProps, PageControlPosition} from './components/carousel';
 export {default as Checkbox, CheckboxProps, CheckboxRef} from './components/checkbox';
-export {default as ChipsInput, ChipsInputProps, ChipsInputChipProps, ChipsInputChangeReason} from './components/chipsInput';
+export {default as ChipsInput, ChipsInputProps, ChipsInputChipProps, ChipsInputChangeReason, ChipsInputChangeReasonUnion, ChipsInputChangeReasonProps} from './components/chipsInput';
 export {default as Chip, ChipProps} from './components/chip';
 export {default as ColorPicker, ColorPickerProps} from './components/colorPicker';
 export {default as ColorPalette, ColorPaletteProps} from './components/colorPalette';

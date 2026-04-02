@@ -12,6 +12,9 @@ export enum ChipsInputChangeReason {
   Removed = 'removed'
 }
 
+export type ChipsInputChangeReasonUnion = `${ChipsInputChangeReason}`;
+export type ChipsInputChangeReasonProps = ChipsInputChangeReasonUnion | ChipsInputChangeReason;
+
 type RenderChip = {index: number; chip: ChipsInputChipProps; isMarkedForRemoval: boolean};
 
 export type ChipsInputChipProps = ChipProps & {invalid?: boolean};
