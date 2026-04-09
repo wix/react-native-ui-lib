@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, {ReactElement, useImperativeHandle, useCallback, useMemo, useEffect, useRef} from 'react';
 import {StyleSheet, AccessibilityRole, StyleProp, ViewStyle, GestureResponderEvent, LayoutChangeEvent, ViewProps, AccessibilityProps} from 'react-native';
 import {useSharedValue, useAnimatedStyle, runOnJS, useAnimatedReaction, withTiming} from 'react-native-reanimated';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {GestureHandlerRootView, GestureDetector, Gesture} from 'react-native-gesture-handler';
 import {forwardRef, ForwardRefInjectedProps, Constants} from '../../commons/new';
 import {extractAccessibilityProps} from '../../commons/modifiers';
 import {Colors, Spacings} from '../../style';
@@ -15,6 +15,7 @@ import {
   getValueForOffset,
   getStepInterpolated
 } from './SliderPresenter';
+import View from '../../components/view';
 import Thumb from './Thumb';
 import Track from './Track';
 
@@ -135,11 +136,16 @@ export interface SliderProps extends AccessibilityProps {
    * The slider's test identifier
    */
   testID?: string;
-  /** 
+  /**
    * Whether to use the new Slider implementation using Reanimated
    */
   migrate?: boolean;
-  /** 
+  /**
+   * If true, dragging anywhere on the slider moves the thumb relative to its current position
+   * instead of snapping to the touch point. Designed for single-thumb mode.
+   */
+  useRelativeDrag?: boolean;
+  /**
    * Control the throttle time of the onValueChange and onRangeChange callbacks
    */
   throttleTime?: number;
@@ -193,6 +199,7 @@ const Slider = React.memo((props: Props) => {
     accessible = true,
     testID,
     enableThumbShadow = true,
+    useRelativeDrag,
     throttleTime = 200
   } = themeProps;
 
@@ -373,6 +380,42 @@ const Slider = React.memo((props: Props) => {
     }
   };
 
+  const containerDragStartOffset = useSharedValue(0);
+  const isContainerDragging = useSharedValue(false);
+
+  const clampOffset = (offset: number) => {
+    'worklet';
+    return Math.max(0, Math.min(trackSize.value.width, offset));
+  };
+
+  const snapToStep = () => {
+    'worklet';
+    if (shouldBounceToStep) {
+      const step = stepInterpolatedValue.value;
+      defaultThumbOffset.value = Math.round(defaultThumbOffset.value / step) * step;
+    }
+  };
+
+  const containerGesture = Gesture.Pan()
+    .onBegin(() => {
+      containerDragStartOffset.value = defaultThumbOffset.value;
+      isContainerDragging.value = true;
+      _onSeekStart();
+    })
+    .onUpdate(e => {
+      if (trackSize.value.width === 0) {
+        return;
+      }
+      const dx = e.translationX * (shouldDisableRTL ? 1 : rtlFix);
+      defaultThumbOffset.value = clampOffset(containerDragStartOffset.value + dx);
+    })
+    .onEnd(() => _onSeekEnd())
+    .onFinalize(() => {
+      isContainerDragging.value = false;
+      snapToStep();
+    });
+  containerGesture.enabled(!disabled && !!useRelativeDrag);
+
   const trackAnimatedStyles = useAnimatedStyle(() => {
     if (useRange) {
       return {
@@ -399,6 +442,8 @@ const Slider = React.memo((props: Props) => {
         onSeekEnd={_onSeekEnd}
         shouldDisableRTL={shouldDisableRTL}
         disabled={disabled}
+        pointerEvents={useRelativeDrag ? 'none' : undefined}
+        isActive={useRelativeDrag ? isContainerDragging : undefined}
         disableActiveStyling={disableActiveStyling}
         defaultStyle={_thumbStyle}
         activeStyle={_activeThumbStyle}
@@ -415,7 +460,7 @@ const Slider = React.memo((props: Props) => {
       <Track
         renderTrack={renderTrack}
         onLayout={onTrackLayout}
-        onPress={onTrackPress}
+        onPress={useRelativeDrag ? undefined : onTrackPress}
         animatedStyle={trackAnimatedStyles}
         disabled={disabled}
         maximumTrackTintColor={maximumTrackTintColor}
@@ -425,15 +470,29 @@ const Slider = React.memo((props: Props) => {
     );
   };
 
+  const renderSliderContent = () => (
+    <>
+      {_renderTrack()}
+      {renderThumb(ThumbType.DEFAULT)}
+      {useRange && renderThumb(ThumbType.RANGE)}
+    </>
+  );
+
   return (
     <GestureHandlerRootView
       style={[styles.container, containerStyle, shouldDisableRTL && styles.disableRTL]}
       testID={testID}
       {...accessibilityProps}
     >
-      {_renderTrack()}
-      {renderThumb(ThumbType.DEFAULT)}
-      {useRange && renderThumb(ThumbType.RANGE)}
+      {useRelativeDrag ? (
+        <GestureDetector gesture={containerGesture}>
+          <View style={styles.gestureContainer}>
+            {renderSliderContent()}
+          </View>
+        </GestureDetector>
+      ) : (
+        renderSliderContent()
+      )}
     </GestureHandlerRootView>
   );
 });
@@ -444,6 +503,10 @@ export default forwardRef<SliderProps, ComponentStatics<typeof Slider>, SliderRe
 const styles = StyleSheet.create({
   container: {
     height: THUMB_SIZE + SHADOW_RADIUS,
+    justifyContent: 'center'
+  },
+  gestureContainer: {
+    flex: 1,
     justifyContent: 'center'
   },
   disableRTL: {
