@@ -9597,7 +9597,6 @@ __metadata:
     "@testing-library/react-native": "npm:^11.5.1"
     "@types/hoist-non-react-statics": "npm:^3.3.1"
     "@types/jest": "npm:^29.5.13"
-    "@types/lodash": "npm:^4.0.0"
     "@types/prop-types": "npm:^15.5.3"
     "@types/react": "npm:18.3.24"
     "@types/react-test-renderer": "npm:^18.3.0"
