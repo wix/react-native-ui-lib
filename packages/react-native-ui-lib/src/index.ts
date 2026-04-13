@@ -27,7 +27,7 @@ export {
 export {BaseComponent, PureBaseComponent} from './commons';
 
 import * as Incubator from './incubator';
-export {ExpandableOverlayProps, ExpandableOverlayMethods, ToastProps, ToastPresets} from './incubator';
+export {ExpandableOverlayProps, ExpandableOverlayMethods, ToastProps, ToastPresets, MarqueeDirections, MarqueeProps} from './incubator';
 import * as Hooks from './hooks';
 import * as Modifiers from './commons/modifiers';
 export {default as LogService} from './services/LogService';
@@ -100,7 +100,6 @@ export {default as KeyboardAwareFlatList} from './components/KeyboardAwareScroll
 export {default as ListItem, ListItemProps} from './components/listItem';
 export {default as LoaderScreen, LoaderScreenProps} from './components/loaderScreen';
 export {default as MaskedInput, MaskedInputProps} from './components/maskedInput';
-export {default as Marquee, MarqueeDirections, MarqueeProps} from './components/marquee';
 export {default as Modal, ModalProps, ModalTopBarProps} from './components/modal';
 export {default as NumberInput, NumberInputProps, NumberInputData} from './components/numberInput';
 export {default as Overlay, OverlayTypes} from './components/overlay';
