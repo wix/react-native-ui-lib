@@ -49,6 +49,13 @@ export interface TabControllerProps {
    * Send if a SafeView is used in the context of the TabController.
    */
   useSafeArea?: boolean;
+  /**
+   * When true, accessibility focus will be moved to the selected tab bar item
+   * whenever the selected index changes (e.g. via swipe or programmatic change).
+   * Useful for screen-reader users so the newly selected tab is announced automatically.
+   * @default false
+   */
+  accessibilityFocusOnSelected?: boolean;
   children?: React.ReactNode;
 }
 
@@ -73,6 +80,7 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
     onChangeIndex = _.noop,
     carouselPageWidth,
     useSafeArea = false,
+    accessibilityFocusOnSelected = false,
     children
   } = themeProps;
   const [screenWidth, setScreenWidth] = useState<number>(getScreenWidth(useSafeArea));
@@ -138,9 +146,11 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
       containerWidth: screenWidth,
       /* Callbacks */
       onChangeIndex,
-      setCurrentIndex
+      setCurrentIndex,
+      /* Accessibility */
+      accessibilityFocusOnSelected
     };
-  }, [initialIndex, asCarousel, items, onChangeIndex, screenWidth, nestedInScrollView]);
+  }, [initialIndex, asCarousel, items, onChangeIndex, screenWidth, nestedInScrollView, accessibilityFocusOnSelected]);
 
   return <TabBarContext.Provider value={context}>{children}</TabBarContext.Provider>;
 });
