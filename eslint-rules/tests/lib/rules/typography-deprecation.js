@@ -568,7 +568,7 @@ ruleTester.run('typography-deprecation', rule, {
           render() {
             const titleVal = true;
             return (
-              <Text heading/>
+              <Text heading={titleVal}/>
             )
           }
         }`,
@@ -598,7 +598,7 @@ ruleTester.run('typography-deprecation', rule, {
             const titleVal = this.props.isTitle;
             const subtitleVal = !this.props.isTitle;
             return (
-              <Text heading subtitle={subtitleVal}/>
+              <Text heading={titleVal} subtitle={subtitleVal}/>
             )
           }
         }`,
@@ -628,7 +628,7 @@ ruleTester.run('typography-deprecation', rule, {
             const titleVal = isTitle;
             const subtitleVal = !isTitle;
             return (
-              <Text heading subtitle={subtitleVal}/>
+              <Text heading={titleVal} subtitle={subtitleVal}/>
             )
           }
         }`,
@@ -654,7 +654,7 @@ ruleTester.run('typography-deprecation', rule, {
           render() {
             const titleVal = true;
             return (
-              <TextField heading/>
+              <TextField heading={titleVal}/>
             )
           }
         }`,
@@ -684,7 +684,7 @@ ruleTester.run('typography-deprecation', rule, {
             const titleVal = this.props.isTitle;
             const subtitleVal = !this.props.isTitle;
             return (
-              <TextField heading subtitle={subtitleVal}/>
+              <TextField heading={titleVal} subtitle={subtitleVal}/>
             )
           }
         }`,
@@ -714,7 +714,7 @@ ruleTester.run('typography-deprecation', rule, {
             const titleVal = isTitle;
             const subtitleVal = !isTitle;
             return (
-              <TextField heading subtitle={subtitleVal}/>
+              <TextField heading={titleVal} subtitle={subtitleVal}/>
             )
           }
         }`,
