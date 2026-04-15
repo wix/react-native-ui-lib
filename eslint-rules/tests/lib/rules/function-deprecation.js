@@ -24,7 +24,7 @@ const deprecatedFunctionImport = `import {deprecatedFunction} from '${ourSource}
 
 const validProps = `{validProp: "I'm valid!", validProp2: "I'm not deprecated, so I'm valid as well"}`;
 const deprecatedProps = `{deprecatedProp: "I'm deprecated :(", validProp2: "I'm not deprecated, so I'm valid as well"}`;
-const fixedDeprecatedProps = `{validProp, validProp2: "I'm not deprecated, so I'm valid as well"}`;
+const fixedDeprecatedProps = `{validProp: "I'm deprecated :(", validProp2: "I'm not deprecated, so I'm valid as well"}`;
 
 const onPress = functionCall => `const onPress = () => {${functionCall}};`;
 

@@ -66,7 +66,7 @@ module.exports = {
                   // console.warn('from', node.arguments[options.argumentIndex]);
                   const prop = _.find(node.arguments[options.argumentIndex].properties, prop => prop.key.name === options.prop);
                   const propIndex = node.arguments[options.argumentIndex].properties.indexOf(prop);
-                  fixed = fixer.replaceText(node.arguments[options.argumentIndex].properties[propIndex], fix)
+                  fixed = fixer.replaceText(node.arguments[options.argumentIndex].properties[propIndex].key, fix)
                   // console.warn('to', fixed);
                   return fixed;
                 case FIX_TYPES.FUNCTION_NAME:
