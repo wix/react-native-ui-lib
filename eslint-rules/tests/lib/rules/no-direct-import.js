@@ -20,7 +20,7 @@ const ruleWithCustomMessage = [
 ]
 
 RuleTester.setDefaultConfig({
-  parser: 'babel-eslint',
+  parser: require.resolve('babel-eslint'),
   parserOptions: {ecmaVersion: 6, ecmaFeatures: {jsx: true}}
 });
 
@@ -38,7 +38,9 @@ const invalidExample1 = `import {Component} from 'deprecated-module1';`;
 const invalidExample2 = `import {Component} from 'deprecated-module2';`;
 const invalidExample3 = `const {Component} = require('deprecated-module1');`;
 const invalidExample4 = `const {Component} = require('deprecated-module2');`;
+const invalidExample4Output = `const {Component} = require('valid-module2');`;
 const invalidExample5 = `const test = require(\'deprecated-module1\').test;`;
+const invalidExample5Output = `const test = require(\'valid-module1\').test;`;
 const invalidDefault = `import something from 'deprecated-module1';`;
 
 const error1 = `Do not import directly from 'deprecated-module1'. Please use 'valid-module1' (autofix available).`;
@@ -89,7 +91,7 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleOptions,
       code: invalidExample1,
-      output: `import {Component} from 'valid-module1';`,
+      output: validExample1,
       errors: [
         {message: error1}
       ]
@@ -97,7 +99,7 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleOptionsArray,
       code: invalidExample1,
-      output: `import {Component} from 'valid-module1';`,
+      output: validExample1,
       errors: [
         {message: error1}
       ]
@@ -105,7 +107,7 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleOptionsArray,
       code: invalidExample2,
-      output: `import {Component} from 'valid-module2';`,
+      output: validExample2,
       errors: [
         {message: error2}
       ]
@@ -113,7 +115,7 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleOptions,
       code: invalidExample3,
-      output: `const {Component} = require('valid-module1');`,
+      output: validExample3,
       errors: [
         {message: requireError1}
       ]
@@ -121,7 +123,7 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleOptionsArray,
       code: invalidExample4,
-      output: `const {Component} = require('valid-module2');`,
+      output: invalidExample4Output,
       errors: [
         {message: requireError2}
       ]
@@ -129,6 +131,7 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleWithCustomMessage,
       code: invalidExample1,
+      output: validExample1,
       errors: [
         {message: customErrorMessage}
       ]
@@ -136,6 +139,7 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleWithCustomMessage,
       code: invalidExample3,
+      output: validExample3,
       errors: [
         {message: customErrorMessage}
       ]
@@ -143,7 +147,7 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleOptions,
       code: invalidExample5,
-      output: 'const test = require(\'valid-module1\').test;',
+      output: invalidExample5Output,
       errors: [
         {message: requireError1}
       ]
@@ -151,7 +155,7 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleOptions,
       code: invalidDefault,
-      output: 'import something from \'valid-module1\';',
+      output: validDefault,
       errors: [
         {message: error1}
       ]

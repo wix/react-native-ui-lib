@@ -3,7 +3,7 @@ const rule = require('../../../lib/rules/typography-deprecation');
 const deprecationsJson = require('../../typography_deprecation.json');
 
 RuleTester.setDefaultConfig({
-  parser: 'babel-eslint',
+  parser: require.resolve('babel-eslint'),
   parserOptions: {ecmaVersion: 6, ecmaFeatures: {jsx: true}}
 });
 
@@ -401,147 +401,151 @@ ruleTester.run('typography-deprecation', rule, {
     {
       options: options,
       code: `${ourImport} ${constDeprecated1}`,
-      output: `${ourImport} const typography = Typography.valid;`,
+      output: `${ourImport} ${constValid1}`,
       errors: [{message: error}]
     },
     {
       options: optionsWithDate,
       code: `${ourImport} ${constDeprecated1}`,
-      output: `${ourImport} const typography = Typography.valid;`,
+      output: `${ourImport} ${constValid1}`,
       errors: [{message: error + errorDate}]
     },
     {
       options: optionsWithDate,
       code: `${ourImport} ${constDeprecated2}`,
-      output: `${ourImport} const typography = <Text style={Typography.valid}>Title</Text>;`,
+      output: `${ourImport} ${constValid2}`,
       errors: [{message: error + errorDate}]
     },
     {
       options: optionsWithDate,
       code: `${ourImport} ${constDeprecated3}`,
-      output: `${ourImport} const typography = <Text valid>Title</Text>;`,
+      output: `${ourImport} ${constValid3}`,
       errors: [{message: error + errorDate}]
     },
     {
       options: options,
       code: `${ourImport} ${styleSheetDeprecated1}`,
-      output: `${ourImport} const styles = StyleSheet.create({text: {...Typography.valid}});`,
+      output: `${ourImport} ${styleSheetValid1}`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImport} ${styleSheetDeprecated2}`,
-      output: `${ourImport} const styles = StyleSheet.create({text: Typography.valid});`,
+      output: `${ourImport} ${styleSheetValid2}`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImport} ${jsxDeprecated1}`,
-      output: `${ourImport} <Text style={Typography.valid}>Title</Text>`,
+      output: `${ourImport} ${jsxValid1}`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImport} ${jsxDeprecated2}`,
-      output: `${ourImport} <Text valid>Title</Text>`,
+      output: `${ourImport} ${jsxValid2}`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImport} ${jsxDeprecated2}`,
-      output: `${ourImport} <Text valid>Title</Text>`,
+      output: `${ourImport} ${jsxValid2}`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImport} ${jsxDeprecated3}`,
-      output: `${ourImport} <View><Text style={Typography.valid}>Title</Text></View>`,
+      output: `${ourImport} ${jsxValid3}`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImport} ${jsxDeprecated4}`,
-      output: `${ourImport} <View><Text valid>Title</Text></View>`,
+      output: `${ourImport} ${jsxValid4}`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${fullClassDeprecated}`,
+      output: `${fullClassValid}`,
       errors: [{message: error}, {message: error}, {message: error}, {message: error}]
     },
     {
       options: options,
       code: `${ourImportRenamed} ${constDeprecatedRenamed1}`,
-      output: `${ourImportRenamed} const typography = UITypography.valid;`,
+      output: `${ourImportRenamed} ${constValidRenamed1}`,
       errors: [{message: error}]
     },
     {
       options: optionsWithDate,
       code: `${ourImportRenamed} ${constDeprecatedRenamed1}`,
-      output: `${ourImportRenamed} const typography = UITypography.valid;`,
+      output: `${ourImportRenamed} ${constValidRenamed1}`,
       errors: [{message: error + errorDate}]
     },
     {
       options: optionsWithDate,
       code: `${ourImportRenamed} ${constDeprecatedRenamed2}`,
-      output: `${ourImportRenamed} const typography = <Text style={UITypography.valid}>Title</Text>;`,
+      output: `${ourImportRenamed} ${constValidRenamed2}`,
       errors: [{message: error + errorDate}]
     },
     {
       options: optionsWithDate,
       code: `${ourImportRenamed} ${constDeprecated3}`,
-      output: `${ourImportRenamed} const typography = <Text valid>Title</Text>;`,
+      output: `${ourImportRenamed} ${constValid3}`,
       errors: [{message: error + errorDate}]
     },
     {
       options: options,
       code: `${ourImportRenamed} ${styleSheetDeprecatedRenamed1}`,
-      output: `${ourImportRenamed} const styles = StyleSheet.create({text: {...UITypography.valid}});`,
+      output: `${ourImportRenamed} ${styleSheetValidRenamed1}`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImportRenamed} ${styleSheetDeprecatedRenamed2}`,
-      output: `${ourImportRenamed} const styles = StyleSheet.create({text: UITypography.valid});`,
+      output: `${ourImportRenamed} ${styleSheetValidRenamed2}`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImportRenamed} ${jsxDeprecatedRenamed1}`,
-      output: `${ourImportRenamed} <Text style={UITypography.valid}>Title</Text>`,
+      output: `${ourImportRenamed} ${jsxValidRenamed1}`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImportRenamed} ${jsxDeprecated2}`,
-      output: `${ourImportRenamed} <Text valid>Title</Text>`,
+      output: `${ourImportRenamed} ${jsxValid2}`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImportRenamed} ${jsxDeprecatedRenamed3}`,
-      output: `${ourImportRenamed} <View><Text style={UITypography.valid}>Title</Text></View>`,
+      output: `${ourImportRenamed} ${jsxValidRenamed3}`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${ourImportRenamed} ${jsxDeprecated4}`,
-      output: `${ourImportRenamed} <View><Text valid>Title</Text></View>`,
+      output: `${ourImportRenamed} ${jsxValid4}`,
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${fullClassDeprecatedRenamed}`,
+      output: `${fullClassValidRenamed}`,
       errors: [{message: error}, {message: error}, {message: error}, {message: error}]
     },
     {
       options: options,
       code: `${fullClassTest1}`,
+      output: fullClassTest1.replace('Typography.deprecated', 'Typography.valid'),
       errors: [{message: error}]
     },
     {
       options: options,
       code: `${fullClassTest2}`,
+      output: fullClassTest2.replace('Typography.deprecated', 'Typography.valid'),
       errors: [{message: error}]
     },
     {
@@ -554,6 +558,17 @@ ruleTester.run('typography-deprecation', rule, {
             const titleVal = true;
             return (
               <Text title={titleVal}/>
+            )
+          }
+        }`,
+        output: `
+        import React, {Component} from 'react';
+        import {Typography, Text} from 'our-source';
+        export default class OurList extends Component {
+          render() {
+            const titleVal = true;
+            return (
+              <Text heading/>
             )
           }
         }`,
@@ -574,6 +589,19 @@ ruleTester.run('typography-deprecation', rule, {
             )
           }
         }`,
+        output: `
+        import React, {Component} from 'react';
+        import {Typography, Text} from 'our-source';
+        export default class OurList extends Component {
+          render() {
+            const {isTitle} = this.props;
+            const titleVal = this.props.isTitle;
+            const subtitleVal = !this.props.isTitle;
+            return (
+              <Text heading subtitle={subtitleVal}/>
+            )
+          }
+        }`,
         errors: [{message: `'Typography.title' is deprecated. Please use 'Typography.heading' instead (fix is available).`}]
     },
     {
@@ -588,6 +616,19 @@ ruleTester.run('typography-deprecation', rule, {
             const subtitleVal = !isTitle;
             return (
               <Text title={titleVal} subtitle={subtitleVal}/>
+            )
+          }
+        }`,
+        output: `
+        import React, {Component} from 'react';
+        import {Typography, Text} from 'our-source';
+        export default class OurList extends Component {
+          render() {
+            const {isTitle} = this.props;
+            const titleVal = isTitle;
+            const subtitleVal = !isTitle;
+            return (
+              <Text heading subtitle={subtitleVal}/>
             )
           }
         }`,
@@ -606,6 +647,17 @@ ruleTester.run('typography-deprecation', rule, {
             )
           }
         }`,
+        output: `
+        import React, {Component} from 'react';
+        import {Typography, TextField} from 'our-source';
+        export default class OurList extends Component {
+          render() {
+            const titleVal = true;
+            return (
+              <TextField heading/>
+            )
+          }
+        }`,
         errors: [{message: `'Typography.title' is deprecated. Please use 'Typography.heading' instead (fix is available).`}]
     },
     {
@@ -623,6 +675,19 @@ ruleTester.run('typography-deprecation', rule, {
             )
           }
         }`,
+        output: `
+        import React, {Component} from 'react';
+        import {Typography, TextField} from 'our-source';
+        export default class OurList extends Component {
+          render() {
+            const {isTitle} = this.props;
+            const titleVal = this.props.isTitle;
+            const subtitleVal = !this.props.isTitle;
+            return (
+              <TextField heading subtitle={subtitleVal}/>
+            )
+          }
+        }`,
         errors: [{message: `'Typography.title' is deprecated. Please use 'Typography.heading' instead (fix is available).`}]
     },
     {
@@ -637,6 +702,19 @@ ruleTester.run('typography-deprecation', rule, {
             const subtitleVal = !isTitle;
             return (
               <TextField title={titleVal} subtitle={subtitleVal}/>
+            )
+          }
+        }`,
+        output: `
+        import React, {Component} from 'react';
+        import {Typography, TextField} from 'our-source';
+        export default class OurList extends Component {
+          render() {
+            const {isTitle} = this.props;
+            const titleVal = isTitle;
+            const subtitleVal = !isTitle;
+            return (
+              <TextField heading subtitle={subtitleVal}/>
             )
           }
         }`,

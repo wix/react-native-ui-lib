@@ -73,6 +73,11 @@ module.exports = {
                   if (node.type === "ImportDeclaration") {
                     // console.warn('fix function import');
                     const index = getSpecifierIndex(node, options.name);
+                    // Check if the target name already exists to avoid duplicate identifiers
+                    const targetExists = node.specifiers.some((s, i) => i !== index && (s.local.name === fix || (s.imported && s.imported.name === fix)));
+                    if (targetExists) {
+                      return null;
+                    }
                     // console.warn('from', node.specifiers[index]);
                     fixed = fixer.replaceText(node.specifiers[index], fix);
                     // console.warn('to', fixed);

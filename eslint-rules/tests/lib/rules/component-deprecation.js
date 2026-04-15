@@ -3,7 +3,7 @@ const rule = require('../../../lib/rules/component-deprecation');
 const deprecationsJson = require('../../component_deprecation.json');
 
 RuleTester.setDefaultConfig({
-  parser: 'babel-eslint',
+  parser: require.resolve('babel-eslint'),
   parserOptions: {ecmaVersion: 6, ecmaFeatures: {jsx: true}}
 });
 
@@ -12,6 +12,8 @@ const ruleTester = new RuleTester();
 const ruleOptions = [{deprecations: deprecationsJson}];
 const invalidExample =
   "import {Avatar} from 'module-with-deprecations'; const test = <Avatar url={'some_uri_string'}/>";
+const invalidExampleOutput =
+  "import {Picture} from 'module-with-deprecations'; const test = <Picture url={'some_uri_string'}/>";
 
 // NOTE: Deprecated components will error at import and again if used as jsx tag.
 // KNOWN BUG: usages such as module.List.Item will not be fixed (not supported ATM)
@@ -113,6 +115,7 @@ ruleTester.run('component-deprecation', rule, {
     {
       options: ruleOptions,
       code: invalidExample,
+      output: invalidExampleOutput,
       errors: [
         {message: "The 'Avatar' component is deprecated. Please use the 'Picture' component instead."},
         {message: "The 'Avatar' component is deprecated. Please use the 'Picture' component instead."}
@@ -121,6 +124,7 @@ ruleTester.run('component-deprecation', rule, {
     {
       options: [{...ruleOptions[0], dueDate: '10/11/18'}],
       code: invalidExample,
+      output: invalidExampleOutput,
       errors: [
         {
           message:
