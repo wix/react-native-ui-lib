@@ -298,6 +298,16 @@ validFunction(${validProps});`,
     },
     {
       options: options,
+      code: `
+import {deprecatedFunction as someFunction, validFunction as validFunctionAlias} from '${ourSource}';
+someFunction(${validProps});`,
+      output: `
+import {validFunction, validFunction as validFunctionAlias} from '${ourSource}';
+validFunction(${validProps});`,
+      errors: [{message: functionError}, {message: functionError}]
+    },
+    {
+      options: options,
       code: `import * as Everything from '${ourSource}'; Everything.deprecatedFunction(${validProps});`,
       output: `import * as Everything from '${ourSource}'; validFunction(${validProps});`,
       errors: [{message: functionError}]
