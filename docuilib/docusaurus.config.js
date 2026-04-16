@@ -11,7 +11,11 @@ const darkCodeTheme = themes.dracula;
     url: 'https://wix.github.io',
     baseUrl: '/react-native-ui-lib/',
     onBrokenLinks: 'throw',
-    onBrokenMarkdownLinks: 'warn',
+    markdown: {
+      hooks: {
+        onBrokenMarkdownLinks: 'warn'
+      }
+    },
     favicon: 'img/favicon.ico',
     organizationName: 'wix', // Usually your GitHub org/user name.
     projectName: 'react-native-ui-lib', // Usually your repo name.
