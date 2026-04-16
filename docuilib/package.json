@@ -27,7 +27,7 @@
     "babel-plugin-react-native-web": "^0.19.12",
     "classnames": "^2.3.1",
     "clsx": "^1.1.1",
-    "docusaurus-plugin-sass": "^0.2.1",
+    "docusaurus-plugin-sass": "^0.2.6",
     "file-loader": "^6.2.0",
     "prettier": "2.8.8",
     "prism-react-renderer": "^2.4.1",
