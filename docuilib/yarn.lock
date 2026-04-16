@@ -6538,15 +6538,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"docusaurus-plugin-sass@npm:^0.2.1":
-  version: 0.2.5
-  resolution: "docusaurus-plugin-sass@npm:0.2.5"
+"docusaurus-plugin-sass@npm:^0.2.6":
+  version: 0.2.6
+  resolution: "docusaurus-plugin-sass@npm:0.2.6"
   dependencies:
-    sass-loader: "npm:^10.1.1"
+    sass-loader: "npm:^16.0.2"
   peerDependencies:
     "@docusaurus/core": ^2.0.0-beta || ^3.0.0-alpha
     sass: ^1.30.0
-  checksum: 10c0/1ed75a0e9ca52405ba474ad55add5318d786a18a551974520f1a9b6a4e5707cd4b20cd4fd4c60770e7cd683d7483372dd5f175ba13608048a1082847d3750bb7
+  checksum: 10c0/b5448ec386486ee1a49e9ea2a9cc9bf73a084f3150ec71a0203833f73c9ab48d5bbe98b7b95a21d5eeec5bd94fda9e3b06cf6cffa1120f2731174b7f134c38b5
   languageName: node
   linkType: hard
 
@@ -8855,13 +8855,6 @@ __metadata:
   version: 3.0.3
   resolution: "kleur@npm:3.0.3"
   checksum: 10c0/cd3a0b8878e7d6d3799e54340efe3591ca787d9f95f109f28129bdd2915e37807bf8918bb295ab86afb8c82196beec5a1adcaf29042ce3f2bd932b038fe3aa4b
-  languageName: node
-  linkType: hard
-
-"klona@npm:^2.0.4":
-  version: 2.0.6
-  resolution: "klona@npm:2.0.6"
-  checksum: 10c0/94eed2c6c2ce99f409df9186a96340558897b3e62a85afdc1ee39103954d2ebe1c1c4e9fe2b0952771771fa96d70055ede8b27962a7021406374fdb695fd4d01
   languageName: node
   linkType: hard
 
@@ -12667,28 +12660,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass-loader@npm:^10.1.1":
-  version: 10.5.2
-  resolution: "sass-loader@npm:10.5.2"
+"sass-loader@npm:^16.0.2":
+  version: 16.0.7
+  resolution: "sass-loader@npm:16.0.7"
   dependencies:
-    klona: "npm:^2.0.4"
-    loader-utils: "npm:^2.0.0"
     neo-async: "npm:^2.6.2"
-    schema-utils: "npm:^3.0.0"
-    semver: "npm:^7.3.2"
   peerDependencies:
-    fibers: ">= 3.1.0"
+    "@rspack/core": 0.x || ^1.0.0 || ^2.0.0-0
     node-sass: ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0
     sass: ^1.3.0
-    webpack: ^4.36.0 || ^5.0.0
+    sass-embedded: "*"
+    webpack: ^5.0.0
   peerDependenciesMeta:
-    fibers:
+    "@rspack/core":
       optional: true
     node-sass:
       optional: true
     sass:
       optional: true
-  checksum: 10c0/5ba4a83459fbb50e21d4f4b1b59baf1ddf8dd404099b6d1f2ec887c6903659e505879915030dd9efb1c6dd5fde2d515a19f418487b73d1cc59f6aad60c79bcf5
+    sass-embedded:
+      optional: true
+    webpack:
+      optional: true
+  checksum: 10c0/eb352777cb3aff4bf0029c88e276a37ca10f415de0765eb1276f742455ebb152faffc2417770bf4a26da389d6115e27dd6c8e66c8b71396b21811f6e4d1b4eea
   languageName: node
   linkType: hard
 
@@ -12809,7 +12803,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.3.2, semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.5.4":
+"semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.5.4":
   version: 7.6.3
   resolution: "semver@npm:7.6.3"
   bin:
@@ -13832,7 +13826,7 @@ __metadata:
     babel-plugin-react-native-web: "npm:^0.19.12"
     classnames: "npm:^2.3.1"
     clsx: "npm:^1.1.1"
-    docusaurus-plugin-sass: "npm:^0.2.1"
+    docusaurus-plugin-sass: "npm:^0.2.6"
     file-loader: "npm:^6.2.0"
     metro-react-native-babel-preset: "npm:^0.77.0"
     prettier: "npm:2.8.8"
