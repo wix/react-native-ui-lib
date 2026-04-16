@@ -5,11 +5,21 @@ import MobileProgressiveImage from 'react-native-ui-lib/ProgressiveImage';
 
 const source = 'https://picsum.photos/200';
 const source2 = 'https://picsum.photos/300';
+const svgSource = 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg';
 
 export const Image = () => (
   <MobileImage
     accessibilityLabel={'React logo'}
     source={{uri: source}}
+    resizeMode="contain"
+    style={styles.logo}
+  />
+);
+
+export const SvgImage = () => (
+  <MobileImage
+    accessibilityLabel={'React logo SVG'}
+    source={{uri: svgSource}}
     resizeMode="contain"
     style={styles.logo}
   />
