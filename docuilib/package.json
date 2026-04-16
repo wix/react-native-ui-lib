@@ -23,7 +23,6 @@
     "@docusaurus/types": "3.9.2",
     "@mdx-js/mdx": "^3.0.1",
     "@react-native-clipboard/clipboard": "^1.14.2",
-    "@svgr/webpack": "^5.5.0",
     "babel-loader": "9.2.1",
     "babel-plugin-react-native-web": "^0.19.12",
     "classnames": "^2.3.1",
@@ -34,7 +33,7 @@
     "prism-react-renderer": "^2.4.1",
     "react-html-parser": "^2.0.2",
     "react-native-web": "^0.19.12",
-    "sass": "^1.39.0",
+    "sass": "^1.85.0",
     "showdown": "^2.1.0",
     "url-loader": "^4.1.1"
   },
