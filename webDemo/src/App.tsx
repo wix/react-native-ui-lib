@@ -25,7 +25,7 @@ import Picker from './examples/Picker';
 import RadioGroup from './examples/RadioButtonGroup';
 import Timeline from './examples/Timeline';
 import StackAggregator from './examples/StackAggregator';
-import {Image, ProgressiveImage} from './examples/Image';
+import {Image, ProgressiveImage, SvgImage} from './examples/Image';
 import List from './examples/List';
 import CarouselWrapper from './examples/Carousel';
 interface ItemToRender {
@@ -360,6 +360,10 @@ const itemsToRender: ItemToRender[] = [
         </View>
       );
     }
+  },
+  {
+    title: 'SVG Image',
+    FC: SvgImage
   },
   {
     title: 'Progressive Image',
