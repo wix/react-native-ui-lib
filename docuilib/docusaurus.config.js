@@ -11,7 +11,11 @@ const darkCodeTheme = themes.dracula;
     url: 'https://wix.github.io',
     baseUrl: '/react-native-ui-lib/',
     onBrokenLinks: 'throw',
-    onBrokenMarkdownLinks: 'warn',
+    markdown: {
+      hooks: {
+        onBrokenMarkdownLinks: 'warn'
+      }
+    },
     favicon: 'img/favicon.ico',
     organizationName: 'wix', // Usually your GitHub org/user name.
     projectName: 'react-native-ui-lib', // Usually your repo name.
@@ -29,7 +33,11 @@ const darkCodeTheme = themes.dracula;
         showExpoButton: true
       }
     },
-    plugins: ['docusaurus-plugin-sass', '@docusaurus/theme-live-codeblock', './plugins/uilib.js'],
+    plugins: [
+      ['docusaurus-plugin-sass', {sassOptions: {loadPaths: [__dirname]}}],
+      '@docusaurus/theme-live-codeblock',
+      './plugins/uilib.js'
+    ],
     presets: [
       [
         '@docusaurus/preset-classic',
