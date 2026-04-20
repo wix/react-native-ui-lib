@@ -30,7 +30,7 @@ export {
   KeyboardBehavior,
   ScreenFooterShadow
 };
-
+const androidVersion = Constants.getAndroidVersion();
 const ScreenFooter = (props: ScreenFooterProps) => {
   const {
     testID,
@@ -47,10 +47,14 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     animationDuration = 200,
     shadow = ScreenFooterShadow.SH20,
     hideDivider = false,
+    isAndroidEdgeToEdge = !!androidVersion && androidVersion >= 35 ? true : undefined,
     contentContainerStyle: contentContainerStyleOverride
   } = props;
 
-  const keyboard = useAnimatedKeyboard();
+  const keyboard = useAnimatedKeyboard({
+    isNavigationBarTranslucentAndroid: isAndroidEdgeToEdge,
+    isStatusBarTranslucentAndroid: isAndroidEdgeToEdge
+  });
   const [height, setHeight] = useState(0);
   const visibilityTranslateY = useSharedValue(0);
 
