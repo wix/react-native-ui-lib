@@ -1,17 +1,17 @@
 import React, {PropsWithChildren, useEffect, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
-import {asBaseComponent} from '../../commons/new';
+import {asBaseComponent, Constants} from '../../commons/new';
 import {LogService} from '../../services';
 import {Colors, Shadows} from '../../style';
 import Button, {ButtonProps} from '../button';
-import ScreenFooter, {ScreenFooterLayouts, ScreenFooterBackgrounds, KeyboardBehavior, ItemsFit} from '../screenFooter';
+import ScreenFooter, {ScreenFooterProps, ScreenFooterLayouts, ScreenFooterBackgrounds, KeyboardBehavior, ItemsFit} from '../screenFooter';
 
 export enum FloatingButtonLayouts {
   VERTICAL = 'Vertical',
   HORIZONTAL = 'Horizontal'
 }
 
-export interface FloatingButtonProps {
+export interface FloatingButtonProps extends Pick<ScreenFooterProps, 'isAndroidEdgeToEdge'> {
   /**
    * Whether the button is visible
    */
@@ -80,7 +80,8 @@ const FloatingButton = (props: FloatingButtonProps) => {
     duration = 300,
     withoutAnimation,
     hideBackgroundOverlay,
-    hoisted = true,
+    hoisted = Constants.isAndroid,
+    isAndroidEdgeToEdge,
     testID
   } = props;
 
@@ -158,6 +159,7 @@ const FloatingButton = (props: FloatingButtonProps) => {
       layout={isHorizontal ? ScreenFooterLayouts.HORIZONTAL : ScreenFooterLayouts.VERTICAL}
       backgroundType={hideBackgroundOverlay ? ScreenFooterBackgrounds.TRANSPARENT : ScreenFooterBackgrounds.FADING}
       keyboardBehavior={hoisted ? KeyboardBehavior.HOISTED : KeyboardBehavior.STICKY}
+      isAndroidEdgeToEdge={isAndroidEdgeToEdge}
       animationDuration={withoutAnimation ? 0 : duration}
       itemsFit={fullWidth ? ItemsFit.STRETCH : undefined}
       contentContainerStyle={footerContentContainerStyle}
