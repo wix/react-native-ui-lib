@@ -110,5 +110,10 @@ export interface ScreenFooterProps extends PropsWithChildren<{}> {
      * Can be used to override default padding, gap, or other layout properties.
      */
     contentContainerStyle?: StyleProp<ViewStyle>;
+    /**
+     * Is this an Android device that supports edge-to-edge
+     * Defaults to true for Android with version 35 and above, undefined for others
+     */
+    isAndroidEdgeToEdge?: boolean;
 }
 
