@@ -1,6 +1,6 @@
 import React, {PropsWithChildren, useEffect, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
-import {asBaseComponent} from '../../commons/new';
+import {asBaseComponent, Constants} from '../../commons/new';
 import {LogService} from '../../services';
 import {Colors, Shadows, Spacings} from '../../style';
 import Button, {ButtonProps} from '../button';
@@ -80,7 +80,7 @@ const FloatingButton = (props: FloatingButtonProps) => {
     duration = 300,
     withoutAnimation,
     hideBackgroundOverlay,
-    hoisted = true,
+    hoisted = Constants.isAndroid,
     testID
   } = props;
 
