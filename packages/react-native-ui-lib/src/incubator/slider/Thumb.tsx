@@ -24,7 +24,7 @@ interface ThumbProps extends ViewProps {
   onSeekStart?: () => void;
   onSeekEnd?: () => void;
   enableShadow?: boolean;
-  isActive?: SharedValue<boolean>;
+  isActive: SharedValue<boolean>;
 }
 
 const SHADOW_RADIUS = 4;
@@ -55,7 +55,6 @@ const Thumb = (props: ThumbProps) => {
     gap = 0,
     secondary,
     enableShadow,
-    pointerEvents,
     isActive
   } = props;
 
@@ -96,10 +95,10 @@ const Thumb = (props: ThumbProps) => {
         offset.value = Math.round(offset.value / stepInterpolatedValue.value) * stepInterpolatedValue.value;
       }
     });
-  gesture.enabled(!disabled && pointerEvents !== 'none');
+  gesture.enabled(!disabled);
 
   const animatedStyle = useAnimatedStyle(() => {
-    const active = isPressed.value || isActive?.value;
+    const active = isPressed.value || isActive.value;
     const customStyle = active ? activeStyle?.value : defaultStyle?.value;
     return {
       ...customStyle,
@@ -121,7 +120,6 @@ const Thumb = (props: ThumbProps) => {
     <GestureDetector gesture={gesture}>
       <View
         reanimated
-        pointerEvents={pointerEvents}
         style={[styles.thumbPosition, enableShadow && styles.thumbShadow, animatedStyle]}
         hitSlop={hitSlop}
         onLayout={onThumbLayout}

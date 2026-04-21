@@ -442,8 +442,7 @@ const Slider = React.memo((props: Props) => {
         onSeekEnd={_onSeekEnd}
         shouldDisableRTL={shouldDisableRTL}
         disabled={disabled}
-        pointerEvents={useRelativeDrag ? 'none' : undefined}
-        isActive={useRelativeDrag ? isContainerDragging : undefined}
+        isActive={isContainerDragging}
         disableActiveStyling={disableActiveStyling}
         defaultStyle={_thumbStyle}
         activeStyle={_activeThumbStyle}
@@ -460,7 +459,7 @@ const Slider = React.memo((props: Props) => {
       <Track
         renderTrack={renderTrack}
         onLayout={onTrackLayout}
-        onPress={useRelativeDrag ? undefined : onTrackPress}
+        onPress={onTrackPress}
         animatedStyle={trackAnimatedStyles}
         disabled={disabled}
         maximumTrackTintColor={maximumTrackTintColor}
