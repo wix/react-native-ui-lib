@@ -190,6 +190,8 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
   };
 
   const panGesture = Gesture.Pan()
+    .activeOffsetY([-15, 15])
+    .activeOffsetX([-15, 15])
     .onStart(event => {
       initialTranslation.value =
         getTranslationReverseInterpolation(isVertical ? event.translationY : event.translationX) - visibility.value;
