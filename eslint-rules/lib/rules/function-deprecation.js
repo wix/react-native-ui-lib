@@ -66,13 +66,18 @@ module.exports = {
                   // console.warn('from', node.arguments[options.argumentIndex]);
                   const prop = _.find(node.arguments[options.argumentIndex].properties, prop => prop.key.name === options.prop);
                   const propIndex = node.arguments[options.argumentIndex].properties.indexOf(prop);
-                  fixed = fixer.replaceText(node.arguments[options.argumentIndex].properties[propIndex], fix)
+                  fixed = fixer.replaceText(node.arguments[options.argumentIndex].properties[propIndex].key, fix)
                   // console.warn('to', fixed);
                   return fixed;
                 case FIX_TYPES.FUNCTION_NAME:
                   if (node.type === "ImportDeclaration") {
                     // console.warn('fix function import');
                     const index = getSpecifierIndex(node, options.name);
+                    // Check if the target name already exists to avoid duplicate identifiers
+                    const targetExists = node.specifiers.some((s, i) => i !== index && s.local.name === fix);
+                    if (targetExists) {
+                      return null;
+                    }
                     // console.warn('from', node.specifiers[index]);
                     fixed = fixer.replaceText(node.specifiers[index], fix);
                     // console.warn('to', fixed);
