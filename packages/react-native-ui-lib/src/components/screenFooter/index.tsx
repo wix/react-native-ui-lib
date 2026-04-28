@@ -30,7 +30,7 @@ export {
   KeyboardBehavior,
   ScreenFooterShadow
 };
-
+const androidVersion = Constants.getAndroidVersion();
 const ScreenFooter = (props: ScreenFooterProps) => {
   const {
     testID,
@@ -46,10 +46,15 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     visible = true,
     animationDuration = 200,
     shadow = ScreenFooterShadow.SH20,
-    hideDivider = false
+    hideDivider = false,
+    isAndroidEdgeToEdge = !!androidVersion && androidVersion >= 35 ? true : undefined,
+    contentContainerStyle: contentContainerStyleOverride
   } = props;
 
-  const keyboard = useAnimatedKeyboard();
+  const keyboard = useAnimatedKeyboard({
+    isNavigationBarTranslucentAndroid: isAndroidEdgeToEdge,
+    isStatusBarTranslucentAndroid: isAndroidEdgeToEdge
+  });
   const [height, setHeight] = useState(0);
   const visibilityTranslateY = useSharedValue(0);
 
@@ -89,9 +94,12 @@ const ScreenFooter = (props: ScreenFooterProps) => {
         return childrenCount === 1 ? 'center' : 'space-between';
       }
       switch (horizontalAlignment) {
-        case FooterAlignment.START: return 'flex-start';
-        case FooterAlignment.END: return 'flex-end';
-        default: return 'center';
+        case FooterAlignment.START:
+          return 'flex-start';
+        case FooterAlignment.END:
+          return 'flex-end';
+        default:
+          return 'center';
       }
     }
     return 'flex-start';
@@ -105,9 +113,12 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     }
 
     switch (alignment) {
-      case FooterAlignment.START: return 'flex-start';
-      case FooterAlignment.END: return 'flex-end';
-      default: return 'center';
+      case FooterAlignment.START:
+        return 'flex-start';
+      case FooterAlignment.END:
+        return 'flex-end';
+      default:
+        return 'center';
     }
   }, [layout, itemsFit, alignment]);
 
@@ -127,16 +138,28 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     if (!isKeyboardVisible) {
       style.push({paddingBottom: insets.bottom});
     }
-    
+
     if (isSolid) {
       const shadowStyle = Shadows[shadow]?.top;
       const backgroundElevation = shadowStyle?.elevation || 0;
-      // When the background has a shadow (elevation on Android), it might render on top of the content
       style.push({elevation: backgroundElevation + 1});
     }
 
+    if (contentContainerStyleOverride) {
+      style.push(contentContainerStyleOverride);
+    }
+
     return style;
-  }, [layout, alignItems, justifyContent, insets.bottom, isSolid, shadow, isKeyboardVisible]);
+  }, [
+    layout,
+    alignItems,
+    justifyContent,
+    insets.bottom,
+    isSolid,
+    shadow,
+    isKeyboardVisible,
+    contentContainerStyleOverride
+  ]);
 
   const solidBackgroundStyle = useMemo(() => {
     if (!isSolid) {
@@ -176,27 +199,30 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     return null;
   }, [testID, isSolid, isFading, solidBackgroundStyle]);
 
-  const renderChild = useCallback((child: React.ReactNode, index: number) => {
-    if (itemsFit === ItemsFit.FIXED && itemWidth) {
-      const fixedStyle: ViewStyle = isHorizontal
-        ? {width: itemWidth, flexShrink: 1, overflow: 'hidden', flexDirection: 'row', justifyContent: 'center'}
-        : {width: itemWidth, maxWidth: '100%'};
-      return (
-        <View key={index} style={fixedStyle}>
-          {child}
-        </View>
-      );
-    }
+  const renderChild = useCallback(
+    (child: React.ReactNode, index: number) => {
+      if (itemsFit === ItemsFit.FIXED && itemWidth) {
+        const fixedStyle: ViewStyle = isHorizontal
+          ? {width: itemWidth, flexShrink: 1, overflow: 'hidden', flexDirection: 'row', justifyContent: 'center'}
+          : {width: itemWidth, maxWidth: '100%'};
+        return (
+          <View key={index} style={fixedStyle}>
+            {child}
+          </View>
+        );
+      }
 
-    if (isHorizontal && React.isValidElement(child) && itemsFit === ItemsFit.STRETCH) {
-      return (
-        <View flex row centerH key={index}>
-          {child}
-        </View>
-      );
-    }
-    return child;
-  }, [itemsFit, itemWidth, isHorizontal]);
+      if (isHorizontal && React.isValidElement(child) && itemsFit === ItemsFit.STRETCH) {
+        return (
+          <View flex row centerH key={index}>
+            {child}
+          </View>
+        );
+      }
+      return child;
+    },
+    [itemsFit, itemWidth, isHorizontal]
+  );
 
   const childrenArray = React.Children.toArray(children).slice(0, 3).map(renderChild);
 
@@ -213,10 +239,7 @@ const ScreenFooter = (props: ScreenFooterProps) => {
 
   if (keyboardBehavior === KeyboardBehavior.HOISTED) {
     return (
-      <Animated.View
-        style={[styles.container, hoistedAnimatedStyle]}
-        pointerEvents={visible ? 'box-none' : 'none'}
-      >
+      <Animated.View style={[styles.container, hoistedAnimatedStyle]} pointerEvents={visible ? 'box-none' : 'none'}>
         <Keyboard.KeyboardAccessoryView
           renderContent={renderFooterContent}
           kbInputRef={undefined}
@@ -231,11 +254,7 @@ const ScreenFooter = (props: ScreenFooterProps) => {
   }
 
   return (
-    <Animated.View
-      testID={testID}
-      onLayout={onLayout}
-      style={[styles.container, stickyAnimatedStyle]}
-    >
+    <Animated.View testID={testID} onLayout={onLayout} style={[styles.container, stickyAnimatedStyle]}>
       {renderFooterContent()}
     </Animated.View>
   );

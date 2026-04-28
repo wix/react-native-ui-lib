@@ -81,6 +81,16 @@
       "type": "boolean",
       "description": "If true, hides the top divider for solid background. Only applies when backgroundType is 'solid'",
       "default": "false"
+    },
+    {
+      "name": "isAndroidEdgeToEdge",
+      "type": "boolean",
+      "description": "Indicates if the device is an Android device that supports edge-to-edge. Defaults to true for Android with version 35 and above, undefined for others."
+    },
+    {
+      "name": "contentContainerStyle",
+      "type": "StyleProp<ViewStyle>",
+      "description": "Custom style for the content container that wraps the footer's children. Can be used to override default padding, gap, or other layout properties."
     }
   ],
   "snippet": [
@@ -118,11 +128,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Layout Type",
-              "Use Case",
-              "Example"
-            ],
+            "columns": ["Layout Type", "Use Case", "Example"],
             "items": [
               {
                 "title": "Horizontal - Spread",
@@ -157,11 +163,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Layout Type",
-              "Use Case",
-              "Example"
-            ],
+            "columns": ["Layout Type", "Use Case", "Example"],
             "items": [
               {
                 "title": "Vertical - Fit",
@@ -187,11 +189,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Background Type",
-              "Visual",
-              "When to Use"
-            ],
+            "columns": ["Background Type", "Visual", "When to Use"],
             "items": [
               {
                 "title": "Solid",
@@ -226,11 +224,7 @@
           },
           {
             "type": "table",
-            "columns": [
-              "Behavior",
-              "Description",
-              "Example"
-            ],
+            "columns": ["Behavior", "Description", "Example"],
             "items": [
               {
                 "title": "Sticky",
@@ -259,4 +253,3 @@
     ]
   }
 }
-

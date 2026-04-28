@@ -19,11 +19,8 @@ import {
   Incubator,
   Icon
 } from 'react-native-ui-lib';
-
-let SafeAreaProvider: React.ComponentType<any> | undefined;
-try {
-  SafeAreaProvider = require('react-native-safe-area-context').SafeAreaProvider;
-} catch {}
+import {SafeAreaContextPackage} from '../../optionalDependencies';
+const SafeAreaProvider = SafeAreaContextPackage?.SafeAreaProvider;
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const basketIcon = require('../../assets/icons/collections.png');

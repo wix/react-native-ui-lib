@@ -1,5 +1,5 @@
 import {PropsWithChildren} from 'react';
-import {DimensionValue} from 'react-native';
+import {DimensionValue, StyleProp, ViewStyle} from 'react-native';
 
 export enum ScreenFooterLayouts {
     HORIZONTAL = 'horizontal',
@@ -105,5 +105,15 @@ export interface ScreenFooterProps extends PropsWithChildren<{}> {
      * Only applies when backgroundType is 'solid'
      */
     hideDivider?: boolean;
+    /**
+     * Custom style for the content container that wraps the footer's children.
+     * Can be used to override default padding, gap, or other layout properties.
+     */
+    contentContainerStyle?: StyleProp<ViewStyle>;
+    /**
+     * Is this an Android device that supports edge-to-edge
+     * Defaults to true for Android with version 35 and above, undefined for others
+     */
+    isAndroidEdgeToEdge?: boolean;
 }
 
