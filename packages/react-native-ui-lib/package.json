@@ -124,7 +124,7 @@
             "/expoDemo/",
             "/uilib-docs/"
         ],
-        "setupFiles": [
+        "setupFilesAfterEnv": [
             "./jestSetup/jest-setup.js"
         ],
         "testMatch": [
