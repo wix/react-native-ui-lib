@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {LayoutChangeEvent, StyleSheet, ViewStyle} from 'react-native';
 import Animated, {useAnimatedKeyboard, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
 import {Keyboard} from 'uilib-native';
@@ -56,11 +56,41 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     isStatusBarTranslucentAndroid: isAndroidEdgeToEdge
   });
   const [height, setHeight] = useState(0);
-  const visibilityTranslateY = useSharedValue(0);
+  const initialHiddenOffset = 9999;
+  const visibilityTranslateY = useSharedValue(visible ? 0 : initialHiddenOffset);
+  const pendingEntranceAnimation = useRef(!visible);
 
   // Update visibility translation when visible or height changes
   useEffect(() => {
-    visibilityTranslateY.value = withTiming(visible ? 0 : height, {duration: animationDuration});
+    let animationFrame: number | undefined;
+    const hiddenOffset = height > 0 ? height : initialHiddenOffset;
+
+    if (visible) {
+      if (height === 0) {
+        pendingEntranceAnimation.current = true;
+        visibilityTranslateY.value = initialHiddenOffset;
+        return;
+      }
+
+      if (pendingEntranceAnimation.current) {
+        pendingEntranceAnimation.current = false;
+        visibilityTranslateY.value = height;
+        animationFrame = requestAnimationFrame(() => {
+          visibilityTranslateY.value = withTiming(0, {duration: animationDuration});
+        });
+      } else {
+        visibilityTranslateY.value = withTiming(0, {duration: animationDuration});
+      }
+    } else {
+      pendingEntranceAnimation.current = true;
+      visibilityTranslateY.value = withTiming(hiddenOffset, {duration: animationDuration});
+    }
+
+    return () => {
+      if (animationFrame !== undefined) {
+        cancelAnimationFrame(animationFrame);
+      }
+    };
   }, [visible, height, animationDuration, visibilityTranslateY]);
 
   // Animated style for STICKY behavior (counters Android system offset + visibility)
@@ -237,11 +267,19 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     );
   }, [renderBackground, testID, contentContainerStyle, childrenArray]);
 
+  const renderHoistedFooterContent = useCallback(() => {
+    return (
+      <Animated.View testID={testID} style={hoistedAnimatedStyle} pointerEvents={visible ? 'box-none' : 'none'}>
+        {renderFooterContent()}
+      </Animated.View>
+    );
+  }, [testID, hoistedAnimatedStyle, visible, renderFooterContent]);
+
   if (keyboardBehavior === KeyboardBehavior.HOISTED) {
     return (
-      <Animated.View style={[styles.container, hoistedAnimatedStyle]} pointerEvents={visible ? 'box-none' : 'none'}>
+      <Animated.View style={styles.container}>
         <Keyboard.KeyboardAccessoryView
-          renderContent={renderFooterContent}
+          renderContent={renderHoistedFooterContent}
           kbInputRef={undefined}
           scrollBehavior={Keyboard.KeyboardAccessoryView.scrollBehaviors.FIXED_OFFSET}
           useSafeArea={false}

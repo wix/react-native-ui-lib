@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, useEffect, useMemo} from 'react';
+import React, {PropsWithChildren, useEffect, useMemo, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {asBaseComponent, Constants} from '../../commons/new';
 import {LogService} from '../../services';
@@ -84,6 +84,41 @@ const FloatingButton = (props: FloatingButtonProps) => {
     isAndroidEdgeToEdge,
     testID
   } = props;
+  const [isMounted, setIsMounted] = useState(visible);
+  const [shouldShowFooter, setShouldShowFooter] = useState(visible);
+
+  useEffect(() => {
+    let showFrame: number | undefined;
+    let secondShowFrame: number | undefined;
+    let hideTimeout: ReturnType<typeof setTimeout> | undefined;
+
+    if (visible) {
+      setIsMounted(true);
+      setShouldShowFooter(false);
+      showFrame = requestAnimationFrame(() => {
+        secondShowFrame = requestAnimationFrame(() => {
+          setShouldShowFooter(true);
+        });
+      });
+    } else {
+      setShouldShowFooter(false);
+      hideTimeout = setTimeout(() => {
+        setIsMounted(false);
+      }, withoutAnimation ? 0 : duration);
+    }
+
+    return () => {
+      if (showFrame !== undefined) {
+        cancelAnimationFrame(showFrame);
+      }
+      if (secondShowFrame !== undefined) {
+        cancelAnimationFrame(secondShowFrame);
+      }
+      if (hideTimeout !== undefined) {
+        clearTimeout(hideTimeout);
+      }
+    };
+  }, [visible, duration, withoutAnimation]);
 
   useEffect(() => {
     // eslint-disable-next-line max-len
@@ -104,6 +139,9 @@ const FloatingButton = (props: FloatingButtonProps) => {
   }, [bottomMargin, secondaryButton, isSecondaryOnly, isHorizontal]);
 
   if (!button && !secondaryButton) {
+    return null;
+  }
+  if (!isMounted) {
     return null;
   }
 
@@ -156,7 +194,7 @@ const FloatingButton = (props: FloatingButtonProps) => {
 
   return (
     <ScreenFooter
-      visible={visible}
+      visible={shouldShowFooter}
       layout={isHorizontal ? ScreenFooterLayouts.HORIZONTAL : ScreenFooterLayouts.VERTICAL}
       backgroundType={hideBackgroundOverlay ? ScreenFooterBackgrounds.TRANSPARENT : ScreenFooterBackgrounds.FADING}
       keyboardBehavior={hoisted ? KeyboardBehavior.HOISTED : KeyboardBehavior.STICKY}
