@@ -1,17 +1,16 @@
-import React, {PropsWithChildren, useEffect, useMemo} from 'react';
-import {StyleSheet} from 'react-native';
-import {asBaseComponent, Constants} from '../../commons/new';
-import {LogService} from '../../services';
+import React, {PropsWithChildren, PureComponent} from 'react';
+import {StyleSheet, Animated} from 'react-native';
+import {Constants, asBaseComponent} from '../../commons/new';
 import {Colors, Shadows, Spacings} from '../../style';
+import View from '../view';
+import Image from '../image';
 import Button, {ButtonProps} from '../button';
-import ScreenFooter, {ScreenFooterProps, ScreenFooterLayouts, ScreenFooterBackgrounds, KeyboardBehavior, ItemsFit} from '../screenFooter';
 
 export enum FloatingButtonLayouts {
   VERTICAL = 'Vertical',
   HORIZONTAL = 'Horizontal'
 }
-
-export interface FloatingButtonProps extends Pick<ScreenFooterProps, 'isAndroidEdgeToEdge'> {
+export interface FloatingButtonProps {
   /**
    * Whether the button is visible
    */
@@ -29,7 +28,7 @@ export interface FloatingButtonProps extends Pick<ScreenFooterProps, 'isAndroidE
    */
   bottomMargin?: number;
   /**
-   * Whether the buttons get the container's full width (vertical layout only)
+   * Whether the buttons get the container's full with (vertical layout only)
    */
   fullWidth?: boolean;
   /**
@@ -49,12 +48,6 @@ export interface FloatingButtonProps extends Pick<ScreenFooterProps, 'isAndroidE
    */
   hideBackgroundOverlay?: boolean;
   /**
-   * Whether the footer should be hoisted above the keyboard.
-   * When true (default), uses KeyboardAccessoryView for keyboard-aware positioning.
-   * When false, uses sticky positioning.
-   */
-  hoisted?: boolean;
-  /**
    * Used as testing identifier
    * <TestID> - the floatingButton container
    * <TestID>.button - the floatingButton main button
@@ -63,120 +56,220 @@ export interface FloatingButtonProps extends Pick<ScreenFooterProps, 'isAndroidE
   testID?: string;
 }
 
+const gradientImage = () => require('./gradient.png');
+
 /**
- * @description: Hovering button with gradient background, backed by ScreenFooter
+ * @description: Hovering button with gradient background
  * @modifiers: margin, background, color
  * @example: https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/FloatingButtonScreen.tsx
  * @gif: https://github.com/wix/react-native-ui-lib/blob/master/demo/showcase/FloatingButton/FloatingButton.gif?raw=true
  */
-const FloatingButton = (props: FloatingButtonProps) => {
-  const {
-    visible = false,
-    button,
-    secondaryButton,
-    bottomMargin,
-    fullWidth,
-    buttonLayout = FloatingButtonLayouts.VERTICAL,
-    duration = 300,
-    withoutAnimation,
-    hideBackgroundOverlay,
-    hoisted = Constants.isAndroid,
-    isAndroidEdgeToEdge,
-    testID
-  } = props;
+class FloatingButton extends PureComponent<FloatingButtonProps> {
+  static displayName = 'FloatingButton';
+  static floatingButtonLayouts = FloatingButtonLayouts;
 
-  useEffect(() => {
-    // eslint-disable-next-line max-len
-    LogService.warn(
-      'RNUILib FloatingButton now uses ScreenFooter internally, which requires a SafeAreaProvider. If you experience safe area issues, please wrap your app (or the relevant screen) with <SafeAreaProvider>.'
-    );
-  }, []);
+  static defaultProps = {
+    duration: 300,
+    buttonLayout: FloatingButtonLayouts.VERTICAL
+  };
 
-  const isSecondaryOnly = !!secondaryButton && !button;
-  const isHorizontal = buttonLayout === FloatingButtonLayouts.HORIZONTAL || isSecondaryOnly;
+  initialVisibility?: boolean;
+  firstLoad: boolean;
+  visibleAnimated: Animated.Value;
 
-  const footerContentContainerStyle = useMemo(() => {
-    if (bottomMargin !== undefined) {
-      return {paddingBottom: bottomMargin};
-    }
-    const isSecondaryAtBottom = !!secondaryButton && (isSecondaryOnly || !isHorizontal);
-    return {paddingBottom: isSecondaryAtBottom ? Spacings.s7 : Spacings.s8};
-  }, [bottomMargin, secondaryButton, isSecondaryOnly, isHorizontal]);
+  constructor(props: FloatingButtonProps) {
+    super(props);
 
-  if (!button && !secondaryButton) {
-    return null;
+    this.initialVisibility = props.visible;
+    this.firstLoad = true;
+    this.visibleAnimated = new Animated.Value(Number(!!props.visible));
   }
 
-  const renderPrimaryButton = () => {
-    if (!button) {
-      return null;
+  componentDidUpdate(prevProps: FloatingButtonProps) {
+    const {visible, duration} = this.props;
+
+    if (prevProps.visible !== visible) {
+      Animated.timing(this.visibleAnimated, {
+        toValue: Number(!!visible),
+        duration,
+        useNativeDriver: true
+      }).start();
     }
+  }
 
-    const shadowStyle = !button.outline && !button.link ? styles.shadow : undefined;
-    const shouldFlex = (isHorizontal && !!secondaryButton) || (fullWidth && isHorizontal);
-
-    return (
-      <Button
-        key="primary"
-        size={Button.sizes.large}
-        flex={!!shouldFlex}
-        style={shadowStyle}
-        testID={testID ? `${testID}.button` : undefined}
-        {...button}
-      />
-    );
+  getAnimatedStyle = () => {
+    return {
+      opacity: this.visibleAnimated,
+      transform: [
+        {
+          translateY: this.visibleAnimated.interpolate({
+            inputRange: [0, 1],
+            outputRange: [Constants.screenHeight / 2, 0]
+          })
+        }
+      ]
+    };
   };
 
-  const renderSecondaryButton = () => {
-    if (!secondaryButton) {
-      return null;
+  get isSecondaryOnly() {
+    const {secondaryButton, button} = this.props;
+    return !!secondaryButton && !button;
+  }
+
+  get isHorizontalLayout() {
+    const {buttonLayout} = this.props;
+    return buttonLayout === FloatingButtonLayouts.HORIZONTAL || this.isSecondaryOnly;
+  }
+
+  get isSecondaryHorizontal() {
+    const {secondaryButton} = this.props;
+    return secondaryButton && this.isHorizontalLayout;
+  }
+
+  get isSecondaryVertical() {
+    const {secondaryButton} = this.props;
+    return secondaryButton && !this.isHorizontalLayout;
+  }
+
+  renderButton() {
+    const {bottomMargin, button, fullWidth, testID} = this.props;
+
+    if (button) {
+      const shadowStyle = button && !button.outline && !button.link ? styles.shadow : undefined;
+      const marginStyle = {
+        marginTop: Spacings.s4,
+        marginBottom: this.isSecondaryVertical ? Spacings.s4 : bottomMargin || Spacings.s8,
+        marginLeft: this.isSecondaryHorizontal || fullWidth ? Spacings.s4 : undefined,
+        marginRight: this.isSecondaryHorizontal ? Spacings.s5 : fullWidth ? Spacings.s4 : undefined
+      };
+
+      const shouldFlex = this.isSecondaryHorizontal || (fullWidth && this.isHorizontalLayout);
+
+      return (
+        <Button
+          size={Button.sizes.large}
+          flex={!!shouldFlex}
+          style={[shadowStyle, marginStyle]}
+          testID={`${testID}.button`}
+          {...button}
+        />
+      );
     }
+  }
 
-    const shouldFlex = (isHorizontal && !!button) || (fullWidth && isSecondaryOnly);
-    const bgColor = secondaryButton.backgroundColor || Colors.$backgroundDefault;
-
-    return (
-      <Button
-        key="secondary"
-        outline={isHorizontal}
-        link={!isHorizontal}
-        flex={shouldFlex}
-        size={Button.sizes.large}
-        testID={testID ? `${testID}.secondaryButton` : undefined}
-        {...secondaryButton}
-        style={isHorizontal ? [styles.shadow, {backgroundColor: bgColor}] : undefined}
-        enableShadow={false}
-      />
-    );
+  renderOverlay = () => {
+    if (!this.props.hideBackgroundOverlay) {
+      return (
+        <View pointerEvents={'none'} style={styles.image}>
+          <Image
+            style={styles.image}
+            source={gradientImage()}
+            resizeMode={'stretch'}
+            tintColor={Colors.$backgroundDefault}
+          />
+        </View>
+      );
+    }
   };
 
-  const children = isHorizontal
-    ? [renderSecondaryButton(), renderPrimaryButton()]
-    : [renderPrimaryButton(), renderSecondaryButton()];
+  renderSecondaryButton() {
+    const {secondaryButton, bottomMargin, testID, fullWidth, button} = this.props;
 
-  return (
-    <ScreenFooter
-      visible={visible}
-      layout={isHorizontal ? ScreenFooterLayouts.HORIZONTAL : ScreenFooterLayouts.VERTICAL}
-      backgroundType={hideBackgroundOverlay ? ScreenFooterBackgrounds.TRANSPARENT : ScreenFooterBackgrounds.FADING}
-      keyboardBehavior={hoisted ? KeyboardBehavior.HOISTED : KeyboardBehavior.STICKY}
-      isAndroidEdgeToEdge={isAndroidEdgeToEdge}
-      animationDuration={withoutAnimation ? 0 : duration}
-      itemsFit={fullWidth ? ItemsFit.STRETCH : undefined}
-      contentContainerStyle={footerContentContainerStyle}
-      testID={testID}
-    >
-      {children}
-    </ScreenFooter>
-  );
-};
+    if (secondaryButton) {
+      const bgColor = secondaryButton.backgroundColor || Colors.$backgroundDefault;
+      const shouldFlex = (this.isHorizontalLayout && !!button) || (fullWidth && this.isSecondaryOnly);
 
-FloatingButton.displayName = 'FloatingButton';
-FloatingButton.floatingButtonLayouts = FloatingButtonLayouts;
+      const buttonStyle = this.isHorizontalLayout
+        ? [styles.shadow, styles.horizontalSecondaryMargin, {backgroundColor: bgColor}]
+        : {marginBottom: bottomMargin || Spacings.s7};
+
+      return (
+        <Button
+          outline={this.isHorizontalLayout}
+          flex={shouldFlex}
+          link={!this.isHorizontalLayout}
+          size={Button.sizes.large}
+          testID={`${testID}.secondaryButton`}
+          {...secondaryButton}
+          style={buttonStyle}
+          enableShadow={false}
+        />
+      );
+    }
+  }
+
+  renderHorizontalLayout() {
+    return (
+      <>
+        {this.renderOverlay()}
+        {this.renderSecondaryButton()}
+        {this.renderButton()}
+      </>
+    );
+  }
+
+  renderVerticalLayout() {
+    return (
+      <>
+        {this.renderOverlay()}
+        {this.renderButton()}
+        {this.renderSecondaryButton()}
+      </>
+    );
+  }
+
+  render() {
+    // NOTE: keep this.firstLoad as true as long as the visibility changed to true
+    const {withoutAnimation, visible, fullWidth, testID, button, secondaryButton} = this.props;
+
+    this.firstLoad && !visible ? (this.firstLoad = true) : (this.firstLoad = false);
+
+    // NOTE: On first load, don't show if it should not be visible
+    if (this.firstLoad === true && !this.initialVisibility) {
+      return false;
+    }
+    if (!visible && withoutAnimation) {
+      return false;
+    }
+
+    if (button || secondaryButton) {
+      const hasBothButtons = !!(button && secondaryButton);
+      const shouldCenter = !fullWidth || (this.isHorizontalLayout && hasBothButtons);
+
+      return (
+        <View
+          row={this.isHorizontalLayout}
+          center={shouldCenter}
+          pointerEvents="box-none"
+          animated
+          style={[styles.container, this.getAnimatedStyle()]}
+          testID={testID}
+        >
+          {this.isHorizontalLayout ? this.renderHorizontalLayout() : this.renderVerticalLayout()}
+        </View>
+      );
+    }
+  }
+}
 
 const styles = StyleSheet.create({
+  container: {
+    // ...StyleSheet.absoluteFillObject, // TODO: this is breaking scenarios where the FloatingButton is inside a KeyboardTrackingView
+    top: undefined,
+    zIndex: 99
+  },
+  image: {
+    ...StyleSheet.absoluteFillObject,
+    width: '100%',
+    height: '100%'
+  },
   shadow: {
     ...Shadows.sh20.bottom
+  },
+  horizontalSecondaryMargin: {
+    marginTop: Spacings.s4,
+    marginBottom: Spacings.s7,
+    marginLeft: Spacings.s5
   }
 });
 
