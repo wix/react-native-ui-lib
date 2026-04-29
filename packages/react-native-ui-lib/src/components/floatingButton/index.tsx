@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, useEffect, useMemo} from 'react';
+import React, {PropsWithChildren, useEffect, useMemo, useRef} from 'react';
 import {StyleSheet} from 'react-native';
 import {asBaseComponent, Constants} from '../../commons/new';
 import {LogService} from '../../services';
@@ -85,6 +85,13 @@ const FloatingButton = (props: FloatingButtonProps) => {
     testID
   } = props;
 
+  const initialVisibility = useRef(visible);
+  const firstLoad = useRef(true);
+
+  if (firstLoad.current && visible) {
+    firstLoad.current = false;
+  }
+
   useEffect(() => {
     // eslint-disable-next-line max-len
     LogService.warn(
@@ -104,6 +111,10 @@ const FloatingButton = (props: FloatingButtonProps) => {
   }, [bottomMargin, secondaryButton, isSecondaryOnly, isHorizontal]);
 
   if (!button && !secondaryButton) {
+    return null;
+  }
+
+  if (firstLoad.current && !initialVisibility.current) {
     return null;
   }
 
