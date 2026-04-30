@@ -226,6 +226,8 @@ const ScreenFooter = (props: ScreenFooterProps) => {
 
   const childrenArray = React.Children.toArray(children).slice(0, 3).map(renderChild);
 
+  const isStaticVisible = animationDuration === 0 && visible;
+
   const renderFooterContent = useCallback(() => {
     return (
       <>
@@ -237,19 +239,38 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     );
   }, [renderBackground, testID, contentContainerStyle, childrenArray]);
 
+  const renderKeyboardAccessoryView = () => (
+    <Keyboard.KeyboardAccessoryView
+      renderContent={renderFooterContent}
+      kbInputRef={undefined}
+      scrollBehavior={Keyboard.KeyboardAccessoryView.scrollBehaviors.FIXED_OFFSET}
+      useSafeArea={false}
+      manageScrollView={false}
+      revealKeyboardInteractive
+      onHeightChanged={setHeight}
+    />
+  );
+
   if (keyboardBehavior === KeyboardBehavior.HOISTED) {
+    if (isStaticVisible) {
+      return (
+        <View pointerEvents="box-none" style={styles.container}>
+          {renderKeyboardAccessoryView()}
+        </View>
+      );
+    }
     return (
       <Animated.View style={[styles.container, hoistedAnimatedStyle]} pointerEvents={visible ? 'box-none' : 'none'}>
-        <Keyboard.KeyboardAccessoryView
-          renderContent={renderFooterContent}
-          kbInputRef={undefined}
-          scrollBehavior={Keyboard.KeyboardAccessoryView.scrollBehaviors.FIXED_OFFSET}
-          useSafeArea={false}
-          manageScrollView={false}
-          revealKeyboardInteractive
-          onHeightChanged={setHeight}
-        />
+        {renderKeyboardAccessoryView()}
       </Animated.View>
+    );
+  }
+
+  if (isStaticVisible) {
+    return (
+      <View testID={testID} onLayout={onLayout} pointerEvents="box-none" style={styles.container}>
+        {renderFooterContent()}
+      </View>
     );
   }
 
