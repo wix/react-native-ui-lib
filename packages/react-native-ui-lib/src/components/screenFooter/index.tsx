@@ -237,9 +237,9 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     );
   }, [renderBackground, testID, contentContainerStyle, childrenArray]);
 
-  if (keyboardBehavior === KeyboardBehavior.HOISTED) {
-    return (
-      <Animated.View style={[styles.container, hoistedAnimatedStyle]} pointerEvents={visible ? 'box-none' : 'none'}>
+  const renderKeyboardAwareFooter = useCallback(() => {
+    if (keyboardBehavior === 'hoisted') {
+      return (
         <Keyboard.KeyboardAccessoryView
           renderContent={renderFooterContent}
           kbInputRef={undefined}
@@ -249,13 +249,27 @@ const ScreenFooter = (props: ScreenFooterProps) => {
           revealKeyboardInteractive
           onHeightChanged={setHeight}
         />
-      </Animated.View>
-    );
-  }
+      );
+    } else {
+      return renderFooterContent();
+    }
+  }, [keyboardBehavior, renderFooterContent]);
+
+  const containerStyle = useMemo(() => {
+    return keyboardBehavior === 'hoisted'
+      ? [styles.container, hoistedAnimatedStyle]
+      : [styles.container, stickyAnimatedStyle];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [keyboardBehavior]);
 
   return (
-    <Animated.View testID={testID} onLayout={onLayout} style={[styles.container, stickyAnimatedStyle]}>
-      {renderFooterContent()}
+    <Animated.View
+      testID={testID}
+      style={containerStyle}
+      onLayout={keyboardBehavior === 'hoisted' ? undefined : onLayout}
+      pointerEvents={keyboardBehavior === 'hoisted' ? (visible ? 'box-none' : 'none') : 'auto'}
+    >
+      {renderKeyboardAwareFooter()}
     </Animated.View>
   );
 };
