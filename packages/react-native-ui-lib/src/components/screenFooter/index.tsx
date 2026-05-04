@@ -199,30 +199,28 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     return null;
   }, [testID, isSolid, isFading, solidBackgroundStyle]);
 
-  const renderChild = useCallback(
-    (child: React.ReactNode, index: number) => {
-      if (itemsFit === ItemsFit.FIXED && itemWidth) {
-        const fixedStyle: ViewStyle = isHorizontal
-          ? {width: itemWidth, flexShrink: 1, overflow: 'hidden', flexDirection: 'row', justifyContent: 'center'}
-          : {width: itemWidth, maxWidth: '100%'};
-        return (
-          <View key={index} style={fixedStyle}>
-            {child}
-          </View>
-        );
-      }
+  const renderChild = useCallback((child: React.ReactNode, index: number) => {
+    if (itemsFit === ItemsFit.FIXED && itemWidth) {
+      const fixedStyle: ViewStyle = isHorizontal
+        ? {width: itemWidth, flexShrink: 1, overflow: 'hidden', flexDirection: 'row', justifyContent: 'center'}
+        : {width: itemWidth, maxWidth: '100%'};
+      return (
+        <View key={index} style={fixedStyle}>
+          {child}
+        </View>
+      );
+    }
 
-      if (isHorizontal && React.isValidElement(child) && itemsFit === ItemsFit.STRETCH) {
-        return (
-          <View flex row centerH key={index}>
-            {child}
-          </View>
-        );
-      }
-      return child;
-    },
-    [itemsFit, itemWidth, isHorizontal]
-  );
+    if (isHorizontal && React.isValidElement(child) && itemsFit === ItemsFit.STRETCH) {
+      return (
+        <View flex row centerH key={index}>
+          {child}
+        </View>
+      );
+    }
+    return child;
+  },
+  [itemsFit, itemWidth, isHorizontal]);
 
   const childrenArray = React.Children.toArray(children).slice(0, 3).map(renderChild);
 
