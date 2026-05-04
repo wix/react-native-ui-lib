@@ -51,8 +51,6 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     contentContainerStyle: contentContainerStyleOverride
   } = props;
 
-  const withoutAnimation = animationDuration === 0;
-
   const keyboard = useAnimatedKeyboard({
     isNavigationBarTranslucentAndroid: isAndroidEdgeToEdge,
     isStatusBarTranslucentAndroid: isAndroidEdgeToEdge
@@ -239,18 +237,9 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     );
   }, [renderBackground, testID, contentContainerStyle, childrenArray]);
 
-  const Container = useMemo(() => {
-    return withoutAnimation ? View : Animated.View;
-  }, [withoutAnimation]);
-
-  const containerStyle = useMemo(() => {
-    return withoutAnimation ? styles.container : [styles.container, hoistedAnimatedStyle];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [withoutAnimation]);
-
   if (keyboardBehavior === KeyboardBehavior.HOISTED) {
     return (
-      <Container style={containerStyle} pointerEvents={visible ? 'box-none' : 'none'}>
+      <Animated.View style={[styles.container, hoistedAnimatedStyle]} pointerEvents={visible ? 'box-none' : 'none'}>
         <Keyboard.KeyboardAccessoryView
           renderContent={renderFooterContent}
           kbInputRef={undefined}
@@ -260,7 +249,7 @@ const ScreenFooter = (props: ScreenFooterProps) => {
           revealKeyboardInteractive
           onHeightChanged={setHeight}
         />
-      </Container>
+      </Animated.View>
     );
   }
 
