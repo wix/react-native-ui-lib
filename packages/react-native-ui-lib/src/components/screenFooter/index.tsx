@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    zIndex: 1
+    zIndex: 50
   },
   contentContainer: {
     paddingTop: Spacings.s4,
