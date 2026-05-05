@@ -1,6 +1,6 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {LayoutChangeEvent, StyleSheet, ViewStyle} from 'react-native';
-import Animated, {useAnimatedKeyboard, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import {Keyboard} from 'uilib-native';
 import {SafeAreaContextPackage} from '../../optionalDependencies';
 import View from '../view';
@@ -9,6 +9,7 @@ import Assets from '../../assets';
 import {Colors, Shadows, Spacings} from '../../style';
 import {asBaseComponent, Constants} from '../../commons/new';
 import {useKeyboardHeight} from '../../hooks';
+import useAnimatedFooterStyle from './useAnimatedFooterStyle';
 import {
   ScreenFooterProps,
   ScreenFooterLayouts,
@@ -30,7 +31,6 @@ export {
   KeyboardBehavior,
   ScreenFooterShadow
 };
-const androidVersion = Constants.getAndroidVersion();
 const ScreenFooter = (props: ScreenFooterProps) => {
   const {
     testID,
@@ -44,38 +44,18 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     itemWidth,
     horizontalItemsDistribution: distribution,
     visible = true,
-    animationDuration = 200,
+    animationDuration: animationDurationProp,
     shadow = ScreenFooterShadow.SH20,
     hideDivider = false,
-    isAndroidEdgeToEdge = !!androidVersion && androidVersion >= 35 ? true : undefined,
+    isAndroidEdgeToEdge,
     contentContainerStyle: contentContainerStyleOverride
   } = props;
 
-  const keyboard = useAnimatedKeyboard({
-    isNavigationBarTranslucentAndroid: isAndroidEdgeToEdge,
-    isStatusBarTranslucentAndroid: isAndroidEdgeToEdge
-  });
-  const [height, setHeight] = useState(0);
-  const visibilityTranslateY = useSharedValue(0);
-
-  // Update visibility translation when visible or height changes
-  useEffect(() => {
-    visibilityTranslateY.value = withTiming(visible ? 0 : height, {duration: animationDuration});
-  }, [visible, height, animationDuration, visibilityTranslateY]);
-
-  // Animated style for STICKY behavior (counters Android system offset + visibility)
-  const stickyAnimatedStyle = useAnimatedStyle(() => {
-    const counterSystemOffset = Constants.isAndroid ? keyboard.height.value : 0;
-    return {
-      transform: [{translateY: counterSystemOffset + visibilityTranslateY.value}]
-    };
-  });
-
-  // Animated style for HOISTED behavior (visibility only, keyboard handled by KeyboardAccessoryView)
-  const hoistedAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{translateY: visibilityTranslateY.value}]
-    };
+  const {containerStyle, setHeight} = useAnimatedFooterStyle({
+    animationDuration: animationDurationProp,
+    keyboardBehavior,
+    visible,
+    isAndroidEdgeToEdge
   });
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
@@ -253,13 +233,6 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     }
   }, [keyboardBehavior, renderFooterContent]);
 
-  const containerStyle = useMemo(() => {
-    return keyboardBehavior === 'hoisted'
-      ? [styles.container, hoistedAnimatedStyle]
-      : [styles.container, stickyAnimatedStyle];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [keyboardBehavior]);
-
   return (
     <Animated.View
       testID={testID}
@@ -275,12 +248,6 @@ const ScreenFooter = (props: ScreenFooterProps) => {
 ScreenFooter.displayName = 'ScreenFooter';
 
 const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0
-  },
   contentContainer: {
     paddingTop: Spacings.s4,
     paddingHorizontal: Spacings.s5,
