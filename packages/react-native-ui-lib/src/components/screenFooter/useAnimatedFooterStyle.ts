@@ -27,23 +27,21 @@ const useAnimatedFooterStyle = (
     visibilityTranslateY.value = withTiming(visible ? 0 : height, {duration: animationDuration});
   }, [visible, height, animationDuration, visibilityTranslateY]);
 
-  const stickyAnimatedStyle = useAnimatedStyle(() => {
-    const counterSystemOffset = Constants.isAndroid ? keyboard.height.value : 0;
-    return {
-      transform: [{translateY: counterSystemOffset + visibilityTranslateY.value}]
-    };
-  });
-
-  const hoistedAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{translateY: visibilityTranslateY.value}]
-    };
+  const animatedStyle = useAnimatedStyle(() => {
+    if (keyboardBehavior === 'hoisted') {
+      return {
+        transform: [{translateY: visibilityTranslateY.value}]
+      };
+    } else {
+      const counterSystemOffset = Constants.isAndroid ? keyboard.height.value : 0;
+      return {
+        transform: [{translateY: counterSystemOffset + visibilityTranslateY.value}]
+      };
+    }
   });
 
   const containerStyle = useMemo(() => {
-    return keyboardBehavior === 'hoisted'
-      ? [styles.container, hoistedAnimatedStyle]
-      : [styles.container, stickyAnimatedStyle];
+    return [styles.container, animatedStyle];
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keyboardBehavior]);
 
