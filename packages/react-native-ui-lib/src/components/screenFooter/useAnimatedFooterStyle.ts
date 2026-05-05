@@ -58,7 +58,7 @@ const useAnimatedFooterStyle = (
   const containerStyle = useMemo(() => {
     return [styles.container, animatedStyle];
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [keyboardBehavior]);
+  }, []);
 
   return {containerStyle, setHeight};
 };
