@@ -40,9 +40,22 @@ export enum ScreenFooterShadow {
     SH30 = 'sh30'
 }
 
+export enum ScreenFooterAnimation {
+    NONE = 'none',
+    SLIDE = 'slide',
+    FADE = 'fade'
+}
+
+export type ScreenFooterAnimationTypeProp = ScreenFooterAnimation | `${ScreenFooterAnimation}`;
+
 export interface AnimatedFooterStyleProps {
     /**
-     * Duration of the show/hide animation in ms.
+     * The type of animation to use when showing or hiding the footer.
+     * @default 'slide'
+     */
+    animationType?: ScreenFooterAnimationTypeProp;
+    /**
+     * Duration of the show/hide animation in ms (sending 0 will disable the animation).
      * @default 200
      */
     animationDuration?: number;

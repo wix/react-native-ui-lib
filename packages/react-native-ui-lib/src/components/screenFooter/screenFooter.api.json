@@ -59,9 +59,15 @@
       "default": "true"
     },
     {
+      "name": "animationType",
+      "type": "ScreenFooterAnimationTypeProp",
+      "description": "The animation type for showing/hiding the footer [slide, fade, none]",
+      "default": "'slide'"
+    },
+    {
       "name": "animationDuration",
       "type": "number",
-      "description": "Duration of the show/hide animation in ms",
+      "description": "Duration of the show/hide animation in ms (sending 0 will disable the animation)",
       "default": "200"
     },
     {

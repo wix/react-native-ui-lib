@@ -1,5 +1,5 @@
 import {useAnimatedKeyboard, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, ViewStyle} from 'react-native';
 import {AnimatedFooterStyleProps, ScreenFooterProps} from './types';
 import {Constants} from '../../commons/new';
 import {useEffect, useMemo, useState} from 'react';
@@ -9,35 +9,50 @@ const useAnimatedFooterStyle = (
   props: AnimatedFooterStyleProps & Pick<ScreenFooterProps, 'keyboardBehavior' | 'visible' | 'isAndroidEdgeToEdge'>
 ) => {
   const {
-    animationDuration = 200,
+    animationType: animationTypeProp = 'slide',
+    animationDuration: animationDurationProp = 200,
     keyboardBehavior,
     visible,
     isAndroidEdgeToEdge = !!androidVersion && androidVersion >= 35 ? true : undefined
   } = props;
 
+  const animationType = animationDurationProp === 0 ? 'none' : animationTypeProp;
+  const animationDuration = animationType === 'none' ? 0 : animationDurationProp;
+
   const keyboard = useAnimatedKeyboard({
     isNavigationBarTranslucentAndroid: isAndroidEdgeToEdge,
     isStatusBarTranslucentAndroid: isAndroidEdgeToEdge
   });
-  const [height, setHeight] = useState(0);
 
-  const animatedValue = useSharedValue(0);
+  const [height, setHeight] = useState(0);
+  const animatedValue = useSharedValue(animationType === 'fade' && visible ? 1 : 0);
 
   useEffect(() => {
-    animatedValue.value = withTiming(visible ? 0 : height, {duration: animationDuration});
-  }, [visible, height, animationDuration, animatedValue]);
+    if (animationType === 'slide') {
+      animatedValue.value = withTiming(visible ? 0 : height, {duration: animationDuration});
+    } else {
+      animatedValue.value = withTiming(visible ? 1 : 0, {duration: animationDuration});
+    }
+  }, [visible, height, animationDuration, animatedValue, animationType]);
 
   const animatedStyle = useAnimatedStyle(() => {
-    if (keyboardBehavior === 'hoisted') {
-      return {
-        transform: [{translateY: animatedValue.value}]
-      };
+    let style: ViewStyle = {};
+    let translateY = 0;
+    if (animationType === 'slide') {
+      translateY = animatedValue.value;
     } else {
-      const counterSystemOffset = Constants.isAndroid ? keyboard.height.value : 0;
-      return {
-        transform: [{translateY: counterSystemOffset + animatedValue.value}]
-      };
+      style = {opacity: animatedValue.value};
     }
+
+    if (keyboardBehavior === 'sticky' && Constants.isAndroid) {
+      translateY += keyboard.height.value;
+    }
+
+    if (translateY !== 0) {
+      style.transform = [{translateY}];
+    }
+
+    return style;
   });
 
   const containerStyle = useMemo(() => {

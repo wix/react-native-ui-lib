@@ -18,6 +18,7 @@ import {
   HorizontalItemsDistribution,
   ItemsFit,
   KeyboardBehavior,
+  ScreenFooterAnimationTypeProp,
   ScreenFooterShadow
 } from './types';
 
@@ -29,6 +30,7 @@ export {
   HorizontalItemsDistribution,
   ItemsFit,
   KeyboardBehavior,
+  ScreenFooterAnimationTypeProp,
   ScreenFooterShadow
 };
 const ScreenFooter = (props: ScreenFooterProps) => {
@@ -44,7 +46,8 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     itemWidth,
     horizontalItemsDistribution: distribution,
     visible = true,
-    animationDuration: animationDurationProp,
+    animationDuration,
+    animationType,
     shadow = ScreenFooterShadow.SH20,
     hideDivider = false,
     isAndroidEdgeToEdge,
@@ -52,7 +55,8 @@ const ScreenFooter = (props: ScreenFooterProps) => {
   } = props;
 
   const {containerStyle, setHeight} = useAnimatedFooterStyle({
-    animationDuration: animationDurationProp,
+    animationDuration,
+    animationType,
     keyboardBehavior,
     visible,
     isAndroidEdgeToEdge
