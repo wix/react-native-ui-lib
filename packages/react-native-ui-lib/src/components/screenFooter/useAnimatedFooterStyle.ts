@@ -21,21 +21,21 @@ const useAnimatedFooterStyle = (
   });
   const [height, setHeight] = useState(0);
 
-  const visibilityTranslateY = useSharedValue(0);
+  const animatedValue = useSharedValue(0);
 
   useEffect(() => {
-    visibilityTranslateY.value = withTiming(visible ? 0 : height, {duration: animationDuration});
-  }, [visible, height, animationDuration, visibilityTranslateY]);
+    animatedValue.value = withTiming(visible ? 0 : height, {duration: animationDuration});
+  }, [visible, height, animationDuration, animatedValue]);
 
   const animatedStyle = useAnimatedStyle(() => {
     if (keyboardBehavior === 'hoisted') {
       return {
-        transform: [{translateY: visibilityTranslateY.value}]
+        transform: [{translateY: animatedValue.value}]
       };
     } else {
       const counterSystemOffset = Constants.isAndroid ? keyboard.height.value : 0;
       return {
-        transform: [{translateY: counterSystemOffset + visibilityTranslateY.value}]
+        transform: [{translateY: counterSystemOffset + animatedValue.value}]
       };
     }
   });
