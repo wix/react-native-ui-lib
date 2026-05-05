@@ -106,6 +106,11 @@ export interface ScreenFooterProps extends PropsWithChildren<{}> {
      */
     hideDivider?: boolean;
     /**
+     * Custom style for the outer container of the footer.
+     * Can be used to override zIndex or other container-level properties.
+     */
+    containerStyle?: StyleProp<ViewStyle>;
+    /**
      * Custom style for the content container that wraps the footer's children.
      * Can be used to override default padding, gap, or other layout properties.
      */
