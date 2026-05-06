@@ -7,7 +7,7 @@ const bigExampleValid = fs.readFileSync('../demo/src/screens/componentScreens/Ch
 // const bigExampleError = fs.readFileSync('../demo/src/screens/componentScreens/PickerScreen.tsx', 'utf8');
 
 RuleTester.setDefaultConfig({
-  parser: 'babel-eslint',
+  parser: require.resolve('babel-eslint'),
   parserOptions: {ecmaVersion: 6, ecmaFeatures: {jsx: true}}
 });
 
@@ -230,7 +230,24 @@ ruleTester.run('prop-value-shape-deprecation', rule, {
         {
           message: `The shape of 'avatarProps' prop of 'Label' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
         }
-      ]
+      ],
+      output: `
+      import {Label} from 'our-source';
+        const myProps1 = {
+          avatarProps: {
+            ${source},
+            goodProp1: goodValue1
+          }
+        };
+
+        const myProps2 = {
+          buttonProps: {
+            goodProp2: goodValue2,
+            goodProp3: goodValue3
+          }
+        };
+
+      <Label goodProp={'goodValue'} {...myProps1} {...myProps2}/>`
     },
     {
       options: ruleOptions,
@@ -255,7 +272,24 @@ ruleTester.run('prop-value-shape-deprecation', rule, {
         {
           message: `The shape of 'avatarProps' prop of 'Label' doesn't contain 'imageSource' anymore. Please use 'source' instead (fix is available).`
         }
-      ]
+      ],
+      output: `
+      import {Label} from 'our-source';
+        const myProps1 = {
+          buttonProps: {
+            goodProp1: goodValue1,
+            goodProp2: goodValue2,
+          }
+        };
+
+        const myProps2 = {
+          avatarProps: {
+            goodProp3: goodValue3,
+            ${source}
+          }
+        };
+
+      <Label goodProp={'goodValue'} {...myProps1} {...myProps2}/>`
     },
     {
       options: ruleOptions,

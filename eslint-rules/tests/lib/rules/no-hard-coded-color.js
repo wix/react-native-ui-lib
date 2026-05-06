@@ -17,7 +17,7 @@ const rule = require('../../../lib/rules/no-hard-coded-color');
 const RuleTester = require('eslint').RuleTester;
 
 RuleTester.setDefaultConfig({
-  parser: 'babel-eslint',
+  parser: require.resolve('babel-eslint'),
   parserOptions: {ecmaVersion: 6, ecmaFeatures: {jsx: true}}
 });
 const ruleOptions = [{validColors: Colors, customColors: extraFixColorsMap}];

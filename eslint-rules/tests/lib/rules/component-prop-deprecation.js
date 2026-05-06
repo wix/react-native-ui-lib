@@ -5,7 +5,7 @@ const fs = require('fs');
 const bigExample = fs.readFileSync('../demo/src/screens/componentScreens/AvatarsScreen.tsx', 'utf8');
 
 RuleTester.setDefaultConfig({
-  parser: 'babel-eslint',
+  parser: require.resolve('babel-eslint'),
   parserOptions: {ecmaVersion: 6, ecmaFeatures: {jsx: true}}
 });
 

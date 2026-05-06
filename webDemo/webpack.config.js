@@ -90,7 +90,7 @@ module.exports =
     extensions: ['.web.js', '.js', '.jsx', '.tsx', '.ts']
   },
   devServer: {
-    contentBase: path.resolve(appDirectory, './dist'),
+    static: path.resolve(appDirectory, './dist'),
     compress: true,
     port: 9001
   },

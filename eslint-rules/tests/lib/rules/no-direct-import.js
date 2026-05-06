@@ -2,49 +2,51 @@ const RuleTester = require('eslint').RuleTester;
 const rule = require('../../../lib/rules/no-direct-import');
 
 const ruleOptions = [
-  {origin: 'some-module', destination: 'another-module', applyAutofix: true}
+  {origin: 'deprecated-module1', destination: 'valid-module1', applyAutofix: true}
 ];
 
 const ruleOptionsArray = [
   {
     rules: [
-      {origin: 'some-module', destination: 'another-module', applyAutofix: true},
-      {origin: 'old-module', destination: 'new-module', applyAutofix: true}
+      {origin: 'deprecated-module1', destination: 'valid-module1', applyAutofix: true},
+      {origin: 'deprecated-module2', destination: 'valid-module2', applyAutofix: true}
     ]
   }
 ];
 
 customErrorMessage = 'This is a custom message';
 const ruleWithCustomMessage = [
-  {origin: 'some-module', destination: 'another-module', applyAutofix: true, customMessage: customErrorMessage}
+  {origin: 'deprecated-module1', destination: 'valid-module1', applyAutofix: true, customMessage: customErrorMessage}
 ]
 
 RuleTester.setDefaultConfig({
-  parser: 'babel-eslint',
+  parser: require.resolve('babel-eslint'),
   parserOptions: {ecmaVersion: 6, ecmaFeatures: {jsx: true}}
 });
 
 const ruleTester = new RuleTester();
 
-const validExample1 = `import {Component} from 'another-module';`;
-const validExample2 = `import {Component} from 'new-module';`;
-const validExample3 = `const {Component} = require('another-module');`;
-const validExample4 = `const test = require('new-module').test;`;
+const validExample1 = `import {Component} from 'valid-module1';`;
+const validExample2 = `import {Component} from 'valid-module2';`;
+const validExample3 = `const {Component} = require('valid-module1');`;
+const validExample4 = `const test = require('valid-module2').test;`;
 const validExample5 = `export const credentials = { email: 'test@test.com', password: 'test' };`;
 const validExample6 = `const digits = 'phoneNumber'.split(''); for (const digit of digits) { console.log(digit); };`;
-const validDefault = `import something from 'another-module';`;
+const validDefault = `import something from 'valid-module1';`;
 
-const invalidExample1 = `import {Component} from 'some-module';`;
-const invalidExample2 = `import {Component} from 'old-module';`;
-const invalidExample3 = `const {Component} = require('some-module');`;
-const invalidExample4 = `const {Component} = require('old-module');`;
-const invalidExample5 = `const test = require(\'some-module\').test;`;
-const invalidDefault = `import something from 'some-module';`;
+const invalidExample1 = `import {Component} from 'deprecated-module1';`;
+const invalidExample2 = `import {Component} from 'deprecated-module2';`;
+const invalidExample3 = `const {Component} = require('deprecated-module1');`;
+const invalidExample4 = `const {Component} = require('deprecated-module2');`;
+const invalidExample4Output = `const {Component} = require('valid-module2');`;
+const invalidExample5 = `const test = require(\'deprecated-module1\').test;`;
+const invalidExample5Output = `const test = require(\'valid-module1\').test;`;
+const invalidDefault = `import something from 'deprecated-module1';`;
 
-const error1 = `Do not import directly from 'some-module'. Please use 'another-module' (autofix available).`;
-const error2 = `Do not import directly from 'old-module'. Please use 'new-module' (autofix available).`;
-const requireError1 = `Do not require directly from 'some-module'. Please use 'another-module' (autofix available).`;
-const requireError2 = `Do not require directly from 'old-module'. Please use 'new-module' (autofix available).`;
+const error1 = `Do not import directly from 'deprecated-module1'. Please use 'valid-module1' (autofix available).`;
+const error2 = `Do not import directly from 'deprecated-module2'. Please use 'valid-module2' (autofix available).`;
+const requireError1 = `Do not require directly from 'deprecated-module1'. Please use 'valid-module1' (autofix available).`;
+const requireError2 = `Do not require directly from 'deprecated-module2'. Please use 'valid-module2' (autofix available).`;
 
 ruleTester.run('no-direct-import', rule, {
   valid: [
@@ -89,7 +91,7 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleOptions,
       code: invalidExample1,
-      output: `import {Component} from 'another-module';`,
+      output: validExample1,
       errors: [
         {message: error1}
       ]
@@ -97,7 +99,7 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleOptionsArray,
       code: invalidExample1,
-      output: `import {Component} from 'another-module';`,
+      output: validExample1,
       errors: [
         {message: error1}
       ]
@@ -105,7 +107,7 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleOptionsArray,
       code: invalidExample2,
-      output: `import {Component} from 'new-module';`,
+      output: validExample2,
       errors: [
         {message: error2}
       ]
@@ -113,7 +115,7 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleOptions,
       code: invalidExample3,
-      output: `const {Component} = require('another-module');`,
+      output: validExample3,
       errors: [
         {message: requireError1}
       ]
@@ -121,7 +123,7 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleOptionsArray,
       code: invalidExample4,
-      output: `const {Component} = require('new-module');`,
+      output: invalidExample4Output,
       errors: [
         {message: requireError2}
       ]
@@ -129,6 +131,7 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleWithCustomMessage,
       code: invalidExample1,
+      output: validExample1,
       errors: [
         {message: customErrorMessage}
       ]
@@ -136,6 +139,7 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleWithCustomMessage,
       code: invalidExample3,
+      output: validExample3,
       errors: [
         {message: customErrorMessage}
       ]
@@ -143,7 +147,7 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleOptions,
       code: invalidExample5,
-      output: 'const test = require(\'another-module\').test;',
+      output: invalidExample5Output,
       errors: [
         {message: requireError1}
       ]
@@ -151,7 +155,7 @@ ruleTester.run('no-direct-import', rule, {
     {
       options: ruleOptions,
       code: invalidDefault,
-      output: 'import something from \'another-module\';',
+      output: validDefault,
       errors: [
         {message: error1}
       ]

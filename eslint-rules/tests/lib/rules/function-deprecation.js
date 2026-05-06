@@ -4,7 +4,7 @@ const deprecationsJson = require('../../function_deprecation.json');
 
 
 RuleTester.setDefaultConfig({
-  parser: 'babel-eslint',
+  parser: require.resolve('babel-eslint'),
   parserOptions: {ecmaVersion: 6, ecmaFeatures: {jsx: true}},
 });
 
@@ -24,6 +24,7 @@ const deprecatedFunctionImport = `import {deprecatedFunction} from '${ourSource}
 
 const validProps = `{validProp: "I'm valid!", validProp2: "I'm not deprecated, so I'm valid as well"}`;
 const deprecatedProps = `{deprecatedProp: "I'm deprecated :(", validProp2: "I'm not deprecated, so I'm valid as well"}`;
+const fixedDeprecatedProps = `{validProp: "I'm deprecated :(", validProp2: "I'm not deprecated, so I'm valid as well"}`;
 
 const onPress = functionCall => `const onPress = () => {${functionCall}};`;
 
@@ -228,11 +229,13 @@ b.deprecatedFunction3();`
     {
       options: options,
       code: `${deprecatedFunctionImport} deprecatedFunction(${validProps})`,
+      output: `${validFunctionImport} validFunction(${validProps})`,
       errors: [{message: functionError}, {message: functionError}]
     },
     {
       options: options,
       code: `${validFunctionImport} validFunction(${deprecatedProps}, ${deprecatedProps});`,
+      output: `${validFunctionImport} validFunction(${deprecatedProps}, ${fixedDeprecatedProps});`,
       errors: [{message: propError}]
     },
     {
@@ -241,6 +244,10 @@ b.deprecatedFunction3();`
 import {Something as deprecatedFunction, deprecatedFunction as someFunction, SomethingElse, validFunction} from '${ourSource}';
 someFunction(${validProps});
 validFunction(${validProps}, ${deprecatedProps});`,
+      output: `
+import {Something as deprecatedFunction, deprecatedFunction as someFunction, SomethingElse, validFunction} from '${ourSource}';
+validFunction(${validProps});
+validFunction(${validProps}, ${fixedDeprecatedProps});`,
       errors: [{message: functionError}, {message: functionError}, {message: propError}]
     },
     {
@@ -251,6 +258,12 @@ import {deprecatedFunction as someFunction, validFunction} from '${ourSource}';
 import {SomethingElse} from '${notOurSource2}';
 someFunction(${validProps});
 validFunction(${validProps}, ${deprecatedProps});`,
+      output: `
+import {Something} from '${notOurSource}';
+import {deprecatedFunction as someFunction, validFunction} from '${ourSource}';
+import {SomethingElse} from '${notOurSource2}';
+validFunction(${validProps});
+validFunction(${validProps}, ${fixedDeprecatedProps});`,
       errors: [{message: functionError}, {message: functionError}, {message: propError}]
     },
     {
@@ -258,6 +271,9 @@ validFunction(${validProps}, ${deprecatedProps});`,
       code: `
 import {Something as deprecatedFunction, deprecatedFunction as someFunction, SomethingElse, validFunction} from '${ourSource}';
 someFunction(${validProps});`,
+      output: `
+import {Something as deprecatedFunction, deprecatedFunction as someFunction, SomethingElse, validFunction} from '${ourSource}';
+validFunction(${validProps});`,
       errors: [{message: functionError + errorDate}, {message: functionError + errorDate}]
     },
     {
@@ -265,6 +281,9 @@ someFunction(${validProps});`,
       code: `
 import {Something as deprecatedFunction, deprecatedFunction as someFunction, SomethingElse, validFunction} from '${ourSource}';
 validFunction(${validProps}, ${deprecatedProps});`,
+      output: `
+import {Something as deprecatedFunction, deprecatedFunction as someFunction, SomethingElse, validFunction} from '${ourSource}';
+validFunction(${validProps}, ${fixedDeprecatedProps});`,
       errors: [{message: functionError + errorDate}, {message: propError + errorDate}]
     },
     {
@@ -272,16 +291,31 @@ validFunction(${validProps}, ${deprecatedProps});`,
       code: `
 import {deprecatedFunction as validFunction, SomethingElse} from '${ourSource}';
 validFunction(${validProps});`,
+      output: `
+import {validFunction, SomethingElse} from '${ourSource}';
+validFunction(${validProps});`,
+      errors: [{message: functionError}, {message: functionError}]
+    },
+    {
+      options: options,
+      code: `
+import {deprecatedFunction as someFunction, validFunction as validFunctionAlias} from '${ourSource}';
+someFunction(${validProps});`,
+      output: `
+import {validFunction, validFunction as validFunctionAlias} from '${ourSource}';
+validFunction(${validProps});`,
       errors: [{message: functionError}, {message: functionError}]
     },
     {
       options: options,
       code: `import * as Everything from '${ourSource}'; Everything.deprecatedFunction(${validProps});`,
+      output: `import * as Everything from '${ourSource}'; validFunction(${validProps});`,
       errors: [{message: functionError}]
     },
     {
       options: options,
       code: `import * as Everything from '${ourSource}'; Everything.validFunction(${validProps}, ${deprecatedProps});`,
+      output: `import * as Everything from '${ourSource}'; Everything.validFunction(${validProps}, ${fixedDeprecatedProps});`,
       errors: [{message: propError}]
     },
     {
@@ -290,6 +324,10 @@ validFunction(${validProps});`,
 ${deprecatedFunctionImport}
 const props = ${validProps};
 deprecatedFunction(props)`,
+      output: `
+${validFunctionImport}
+const props = ${validProps};
+validFunction(props)`,
       errors: [{message: functionError}, {message: functionError}]
     },
     {
@@ -300,11 +338,20 @@ function getProps() {
   return ${validProps};
 }
 deprecatedFunction(getProp())`,
+      output: `
+${validFunctionImport}
+function getProps() {
+  return ${validProps};
+}
+validFunction(getProp())`,
       errors: [{message: functionError}, {message: functionError}]
     },
     {
       options: options,
       code: `${fullClassDeprecated1}`,
+      output: fullClassDeprecated1
+        .replaceAll('someFunction(', 'validFunction(')
+        .replaceAll(`validFunction(${validProps}, ${deprecatedProps})`, `validFunction(${validProps}, ${fixedDeprecatedProps})`),
       errors: [
         { message: functionError },
         { message: propError },
@@ -318,6 +365,9 @@ deprecatedFunction(getProp())`,
     {
       options: options,
       code: `${fullClassDeprecated2}`,
+      output: fullClassDeprecated2
+        .replaceAll('Everything.deprecatedFunction', 'validFunction')
+        .replaceAll(`Everything.validFunction(${validProps}, ${deprecatedProps})`, `Everything.validFunction(${validProps}, ${fixedDeprecatedProps})`),
       errors: [
         { message: propError },
         { message: functionError },
@@ -330,6 +380,7 @@ deprecatedFunction(getProp())`,
     {
       options: options,
       code: `${fullClassDeprecated3}`,
+      output: `${fullClassDeprecated3}`,
       errors: [
         { message: classFunctionError }
       ],
@@ -337,6 +388,7 @@ deprecatedFunction(getProp())`,
     {
       options: options,
       code: `${fullClassDeprecated4}`,
+      output: `${fullClassDeprecated4}`,
       errors: [
         { message: classFunctionError }
       ],
@@ -344,6 +396,10 @@ deprecatedFunction(getProp())`,
     {
       options: options,
       code: `
+import {a, c} from '${ourSource}';
+import {b} from '${notOurSource}';
+a.deprecatedFunction3();`,
+      output: `
 import {a, c} from '${ourSource}';
 import {b} from '${notOurSource}';
 a.deprecatedFunction3();`,
