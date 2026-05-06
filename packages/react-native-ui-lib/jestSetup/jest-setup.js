@@ -1,4 +1,6 @@
 import {AccessibilityInfo, Animated} from 'react-native';
+import {configure} from '@testing-library/react-native';
+configure({defaultIncludeHiddenElements: true});
 // ========= Mock Object.defineProperty to always allow overriding =========
 const originalDefineProperty = Object.defineProperty;
 Object.defineProperty = (obj, prop, desc) => {

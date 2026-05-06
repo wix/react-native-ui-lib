@@ -41,7 +41,8 @@ module.exports = {
           fix(fixer) {
             if (options.fix) {
               const fix = useShortVersion ? options.fix.substr(`${defaultImportName}.`.length) : options.fix;
-              return fixer.replaceText(node, fix);
+              const fixNode = useShortVersion && node.name ? node.name : node;
+              return fixer.replaceText(fixNode, fix);
             }
           }
         });
