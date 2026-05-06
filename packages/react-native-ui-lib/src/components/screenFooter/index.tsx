@@ -48,6 +48,7 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     shadow = ScreenFooterShadow.SH20,
     hideDivider = false,
     isAndroidEdgeToEdge = !!androidVersion && androidVersion >= 35 ? true : undefined,
+    containerStyle: containerStyleOverride,
     contentContainerStyle: contentContainerStyleOverride
   } = props;
 
@@ -244,9 +245,11 @@ const ScreenFooter = (props: ScreenFooterProps) => {
   }, [withoutAnimation]);
 
   const containerStyle = useMemo(() => {
-    return withoutAnimation ? styles.container : [styles.container, hoistedAnimatedStyle];
+    return withoutAnimation
+      ? [styles.container, containerStyleOverride]
+      : [styles.container, hoistedAnimatedStyle, containerStyleOverride];
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [withoutAnimation]);
+  }, [withoutAnimation, containerStyleOverride]);
 
   if (keyboardBehavior === KeyboardBehavior.HOISTED) {
     return (
@@ -265,7 +268,7 @@ const ScreenFooter = (props: ScreenFooterProps) => {
   }
 
   return (
-    <Animated.View testID={testID} onLayout={onLayout} style={[styles.container, stickyAnimatedStyle]}>
+    <Animated.View testID={testID} onLayout={onLayout} style={[styles.container, stickyAnimatedStyle, containerStyleOverride]}>
       {renderFooterContent()}
     </Animated.View>
   );
@@ -278,7 +281,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    right: 0
+    right: 0,
+    zIndex: 50
   },
   contentContainer: {
     paddingTop: Spacings.s4,
