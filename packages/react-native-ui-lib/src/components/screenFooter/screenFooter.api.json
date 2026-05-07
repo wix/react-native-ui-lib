@@ -88,6 +88,11 @@
       "description": "Indicates if the device is an Android device that supports edge-to-edge. Defaults to true for Android with version 35 and above, undefined for others."
     },
     {
+      "name": "containerStyle",
+      "type": "StyleProp<ViewStyle>",
+      "description": "Custom style for the outer container of the footer. Can be used to override zIndex or other container-level properties."
+    },
+    {
       "name": "contentContainerStyle",
       "type": "StyleProp<ViewStyle>",
       "description": "Custom style for the content container that wraps the footer's children. Can be used to override default padding, gap, or other layout properties."
