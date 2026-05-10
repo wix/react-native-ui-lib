@@ -24,3 +24,12 @@ buildscript {
 }
 
 apply plugin: "com.facebook.react.rootproject"
+
+allprojects {
+    repositories {
+        maven {
+            // Detox prebuilt Android artifacts (provided by the detox npm package)
+            url("$rootDir/../../../node_modules/detox/Detox-android")
+        }
+    }
+}
