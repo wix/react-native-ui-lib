@@ -51,6 +51,7 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     shadow = ScreenFooterShadow.SH20,
     hideDivider = false,
     isAndroidEdgeToEdge,
+    containerStyle: containerStyleOverride,
     contentContainerStyle: contentContainerStyleOverride
   } = props;
 
@@ -59,7 +60,8 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     animationType,
     keyboardBehavior,
     visible,
-    isAndroidEdgeToEdge
+    isAndroidEdgeToEdge,
+    containerStyle: containerStyleOverride
   });
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {

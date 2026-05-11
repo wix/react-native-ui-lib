@@ -6,14 +6,16 @@ import {useEffect, useMemo, useState} from 'react';
 
 const androidVersion = Constants.getAndroidVersion();
 const useAnimatedFooterStyle = (
-  props: AnimatedFooterStyleProps & Pick<ScreenFooterProps, 'keyboardBehavior' | 'visible' | 'isAndroidEdgeToEdge'>
+  props: AnimatedFooterStyleProps &
+    Pick<ScreenFooterProps, 'keyboardBehavior' | 'visible' | 'isAndroidEdgeToEdge' | 'containerStyle'>
 ) => {
   const {
     animationType: animationTypeProp = 'slide',
     animationDuration: animationDurationProp = 200,
     keyboardBehavior,
     visible,
-    isAndroidEdgeToEdge = !!androidVersion && androidVersion >= 35 ? true : undefined
+    isAndroidEdgeToEdge = !!androidVersion && androidVersion >= 35 ? true : undefined,
+    containerStyle: containerStyleOverride
   } = props;
 
   const animationType = animationDurationProp === 0 ? 'none' : animationTypeProp;
@@ -56,9 +58,9 @@ const useAnimatedFooterStyle = (
   });
 
   const containerStyle = useMemo(() => {
-    return [styles.container, animatedStyle];
+    return [styles.container, animatedStyle, containerStyleOverride];
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [containerStyleOverride]);
 
   return {containerStyle, setHeight};
 };
@@ -70,6 +72,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    right: 0
+    right: 0,
+    zIndex: 50
   }
 });
