@@ -50,7 +50,7 @@ const useAnimatedFooterStyle = (
       translateY += keyboard.height.value;
     }
 
-    if (translateY !== 0) {
+    if (animationType === 'slide' || translateY !== 0) {
       style.transform = [{translateY}];
     }
 
