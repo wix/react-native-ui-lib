@@ -1,6 +1,6 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {LayoutChangeEvent, StyleSheet, ViewStyle} from 'react-native';
-import Animated, {useAnimatedKeyboard, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import {Keyboard} from 'uilib-native';
 import {SafeAreaContextPackage} from '../../optionalDependencies';
 import View from '../view';
@@ -9,6 +9,7 @@ import Assets from '../../assets';
 import {Colors, Shadows, Spacings} from '../../style';
 import {asBaseComponent, Constants} from '../../commons/new';
 import {useKeyboardHeight} from '../../hooks';
+import useAnimatedFooterStyle from './useAnimatedFooterStyle';
 import {
   ScreenFooterProps,
   ScreenFooterLayouts,
@@ -17,6 +18,7 @@ import {
   HorizontalItemsDistribution,
   ItemsFit,
   KeyboardBehavior,
+  ScreenFooterAnimationTypeProp,
   ScreenFooterShadow
 } from './types';
 
@@ -28,9 +30,9 @@ export {
   HorizontalItemsDistribution,
   ItemsFit,
   KeyboardBehavior,
+  ScreenFooterAnimationTypeProp,
   ScreenFooterShadow
 };
-const androidVersion = Constants.getAndroidVersion();
 const ScreenFooter = (props: ScreenFooterProps) => {
   const {
     testID,
@@ -44,41 +46,22 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     itemWidth,
     horizontalItemsDistribution: distribution,
     visible = true,
-    animationDuration = 200,
+    animationDuration,
+    animationType,
     shadow = ScreenFooterShadow.SH20,
     hideDivider = false,
-    isAndroidEdgeToEdge = !!androidVersion && androidVersion >= 35 ? true : undefined,
+    isAndroidEdgeToEdge,
     containerStyle: containerStyleOverride,
     contentContainerStyle: contentContainerStyleOverride
   } = props;
 
-  const withoutAnimation = animationDuration === 0;
-
-  const keyboard = useAnimatedKeyboard({
-    isNavigationBarTranslucentAndroid: isAndroidEdgeToEdge,
-    isStatusBarTranslucentAndroid: isAndroidEdgeToEdge
-  });
-  const [height, setHeight] = useState(0);
-  const visibilityTranslateY = useSharedValue(0);
-
-  // Update visibility translation when visible or height changes
-  useEffect(() => {
-    visibilityTranslateY.value = withTiming(visible ? 0 : height, {duration: animationDuration});
-  }, [visible, height, animationDuration, visibilityTranslateY]);
-
-  // Animated style for STICKY behavior (counters Android system offset + visibility)
-  const stickyAnimatedStyle = useAnimatedStyle(() => {
-    const counterSystemOffset = Constants.isAndroid ? keyboard.height.value : 0;
-    return {
-      transform: [{translateY: counterSystemOffset + visibilityTranslateY.value}]
-    };
-  });
-
-  // Animated style for HOISTED behavior (visibility only, keyboard handled by KeyboardAccessoryView)
-  const hoistedAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{translateY: visibilityTranslateY.value}]
-    };
+  const {containerStyle, setHeight} = useAnimatedFooterStyle({
+    animationDuration,
+    animationType,
+    keyboardBehavior,
+    visible,
+    isAndroidEdgeToEdge,
+    containerStyle: containerStyleOverride
   });
 
   const onLayout = useCallback((event: LayoutChangeEvent) => {
@@ -202,30 +185,28 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     return null;
   }, [testID, isSolid, isFading, solidBackgroundStyle]);
 
-  const renderChild = useCallback(
-    (child: React.ReactNode, index: number) => {
-      if (itemsFit === ItemsFit.FIXED && itemWidth) {
-        const fixedStyle: ViewStyle = isHorizontal
-          ? {width: itemWidth, flexShrink: 1, overflow: 'hidden', flexDirection: 'row', justifyContent: 'center'}
-          : {width: itemWidth, maxWidth: '100%'};
-        return (
-          <View key={index} style={fixedStyle}>
-            {child}
-          </View>
-        );
-      }
+  const renderChild = useCallback((child: React.ReactNode, index: number) => {
+    if (itemsFit === ItemsFit.FIXED && itemWidth) {
+      const fixedStyle: ViewStyle = isHorizontal
+        ? {width: itemWidth, flexShrink: 1, overflow: 'hidden', flexDirection: 'row', justifyContent: 'center'}
+        : {width: itemWidth, maxWidth: '100%'};
+      return (
+        <View key={index} style={fixedStyle}>
+          {child}
+        </View>
+      );
+    }
 
-      if (isHorizontal && React.isValidElement(child) && itemsFit === ItemsFit.STRETCH) {
-        return (
-          <View flex row centerH key={index}>
-            {child}
-          </View>
-        );
-      }
-      return child;
-    },
-    [itemsFit, itemWidth, isHorizontal]
-  );
+    if (isHorizontal && React.isValidElement(child) && itemsFit === ItemsFit.STRETCH) {
+      return (
+        <View flex row centerH key={index}>
+          {child}
+        </View>
+      );
+    }
+    return child;
+  },
+  [itemsFit, itemWidth, isHorizontal]);
 
   const childrenArray = React.Children.toArray(children).slice(0, 3).map(renderChild);
 
@@ -240,20 +221,9 @@ const ScreenFooter = (props: ScreenFooterProps) => {
     );
   }, [renderBackground, testID, contentContainerStyle, childrenArray]);
 
-  const Container = useMemo(() => {
-    return withoutAnimation ? View : Animated.View;
-  }, [withoutAnimation]);
-
-  const containerStyle = useMemo(() => {
-    return withoutAnimation
-      ? [styles.container, containerStyleOverride]
-      : [styles.container, hoistedAnimatedStyle, containerStyleOverride];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [withoutAnimation, containerStyleOverride]);
-
-  if (keyboardBehavior === KeyboardBehavior.HOISTED) {
-    return (
-      <Container style={containerStyle} pointerEvents={visible ? 'box-none' : 'none'}>
+  const renderKeyboardAwareFooter = useCallback(() => {
+    if (keyboardBehavior === 'hoisted') {
+      return (
         <Keyboard.KeyboardAccessoryView
           renderContent={renderFooterContent}
           kbInputRef={undefined}
@@ -263,13 +233,20 @@ const ScreenFooter = (props: ScreenFooterProps) => {
           revealKeyboardInteractive
           onHeightChanged={setHeight}
         />
-      </Container>
-    );
-  }
+      );
+    } else {
+      return renderFooterContent();
+    }
+  }, [keyboardBehavior, renderFooterContent]);
 
   return (
-    <Animated.View testID={testID} onLayout={onLayout} style={[styles.container, stickyAnimatedStyle, containerStyleOverride]}>
-      {renderFooterContent()}
+    <Animated.View
+      testID={testID}
+      style={containerStyle}
+      onLayout={keyboardBehavior === 'hoisted' ? undefined : onLayout}
+      pointerEvents={!visible ? 'none' : keyboardBehavior === 'hoisted' ? 'box-none' : 'auto'}
+    >
+      {renderKeyboardAwareFooter()}
     </Animated.View>
   );
 };
@@ -277,13 +254,6 @@ const ScreenFooter = (props: ScreenFooterProps) => {
 ScreenFooter.displayName = 'ScreenFooter';
 
 const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    zIndex: 50
-  },
   contentContainer: {
     paddingTop: Spacings.s4,
     paddingHorizontal: Spacings.s5,

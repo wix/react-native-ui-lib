@@ -10,6 +10,7 @@ import {
   ScreenFooterLayouts,
   ScreenFooterBackgrounds,
   KeyboardBehavior,
+  ScreenFooterAnimationTypeProp,
   FooterAlignment,
   HorizontalItemsDistribution,
   ItemsFit,
@@ -88,6 +89,12 @@ const KEYBOARD_BEHAVIOR_OPTIONS = [
   {label: 'Hoisted', value: KeyboardBehavior.HOISTED}
 ];
 
+const ANIMATION_TYPE_OPTIONS = [
+  {label: 'Slide', value: 'slide'},
+  {label: 'Fade', value: 'fade'},
+  {label: 'None', value: 'none'}
+];
+
 const KEYBOARD_BEHAVIOR_OPTIONS_SPACED = [
   {label: 'Sticky', value: KeyboardBehavior.STICKY},
   {label: 'Hoisted', value: KeyboardBehavior.HOISTED},
@@ -115,6 +122,7 @@ const ScreenFooterContent = () => {
   const [layout, setLayout] = useState<ScreenFooterLayouts>(ScreenFooterLayouts.HORIZONTAL);
   const [background, setBackground] = useState<ScreenFooterBackgrounds>(ScreenFooterBackgrounds.SOLID);
   const [keyboardBehavior, setKeyboardBehavior] = useState<KeyboardBehavior>(KeyboardBehavior.STICKY);
+  const [animationType, setAnimationType] = useState<ScreenFooterAnimationTypeProp>('slide');
   const [alignment, setAlignment] = useState<FooterAlignment>(FooterAlignment.CENTER);
   const [horizontalAlignment, setHorizontalAlignment] = useState<FooterAlignment>(FooterAlignment.CENTER);
   const [distribution, setDistribution] = useState<HorizontalItemsDistribution>(HorizontalItemsDistribution.STACK);
@@ -390,6 +398,21 @@ const ScreenFooterContent = () => {
           </View>
         </View>
 
+        {/* Animation type */}
+        <View marginB-s4>
+          <Text text70M marginB-s2>
+            Animation Type
+          </Text>
+          <View row>
+            <SegmentedControl
+              segments={ANIMATION_TYPE_OPTIONS}
+              initialIndex={ANIMATION_TYPE_OPTIONS.findIndex(opt => opt.value === animationType)}
+              onChangeIndex={index => setAnimationType(ANIMATION_TYPE_OPTIONS[index].value)}
+            />
+            <View flex />
+          </View>
+        </View>
+
         {/* Alignment (Cross Axis) */}
         <View marginB-s4>
           <Text text70M marginB-s2>
@@ -478,6 +501,7 @@ const ScreenFooterContent = () => {
         layout={layout}
         backgroundType={background}
         keyboardBehavior={keyboardBehavior}
+        animationType={animationType}
         alignment={alignment}
         horizontalAlignment={horizontalAlignment}
         horizontalItemsDistribution={distribution}

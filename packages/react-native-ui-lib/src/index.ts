@@ -79,6 +79,7 @@ export {
   HorizontalItemsDistribution,
   ItemsFit,
   KeyboardBehavior,
+  ScreenFooterAnimationTypeProp,
   ScreenFooterShadow
 } from './components/screenFooter';
 export {default as Gradient, GradientProps, GradientTypes} from './components/gradient';
