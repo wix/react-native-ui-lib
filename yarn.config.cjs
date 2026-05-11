@@ -20,7 +20,21 @@ function hasUnwantedDependencies(file) {
 
 function checkYarnLock() {
   if (hasUnwantedDependencies('./yarn.lock')) {
-    logDebug('You can fix this by running `node scripts/fixYarnLock.js`');
+    logDebug('You can fix this by running `node scripts/fixYarnLock.js yarn.lock`');
+    process.exit(1);
+  }
+}
+
+function checkEslintYarnLock() {
+  if (hasUnwantedDependencies('./eslint-rules/yarn.lock')) {
+    logDebug('You can fix this by running `node scripts/fixYarnLock.js eslint-rules/yarn.lock`');
+    process.exit(1);
+  }
+}
+
+function checkDocsYarnLock() {
+  if (hasUnwantedDependencies('./docuilib/yarn.lock')) {
+    logDebug('You can fix this by running `node scripts/fixYarnLock.js docuilib/yarn.lock`');
     process.exit(1);
   }
 }
@@ -53,6 +67,8 @@ function checkBranchPrefix() {
 module.exports = defineConfig({
   constraints: async () => {
     checkYarnLock();
+    checkEslintYarnLock();
+    checkDocsYarnLock();
     checkYarnRc();
     checkBranchPrefix();
   }

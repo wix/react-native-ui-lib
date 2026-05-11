@@ -2,7 +2,7 @@ import React, {PropsWithChildren, useEffect, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import {asBaseComponent, Constants} from '../../commons/new';
 import {LogService} from '../../services';
-import {Colors, Shadows} from '../../style';
+import {Colors, Shadows, Spacings} from '../../style';
 import Button, {ButtonProps} from '../button';
 import ScreenFooter, {ScreenFooterProps, ScreenFooterLayouts, ScreenFooterBackgrounds, KeyboardBehavior, ItemsFit} from '../screenFooter';
 
@@ -11,7 +11,7 @@ export enum FloatingButtonLayouts {
   HORIZONTAL = 'Horizontal'
 }
 
-export interface FloatingButtonProps extends Pick<ScreenFooterProps, 'isAndroidEdgeToEdge'> {
+export interface FloatingButtonProps extends Pick<ScreenFooterProps, 'isAndroidEdgeToEdge' | 'animationType'> {
   /**
    * Whether the button is visible
    */
@@ -82,6 +82,7 @@ const FloatingButton = (props: FloatingButtonProps) => {
     hideBackgroundOverlay,
     hoisted = Constants.isAndroid,
     isAndroidEdgeToEdge,
+    animationType,
     testID
   } = props;
 
@@ -92,15 +93,16 @@ const FloatingButton = (props: FloatingButtonProps) => {
     );
   }, []);
 
+  const isSecondaryOnly = !!secondaryButton && !button;
+  const isHorizontal = buttonLayout === FloatingButtonLayouts.HORIZONTAL || isSecondaryOnly;
+
   const footerContentContainerStyle = useMemo(() => {
     if (bottomMargin !== undefined) {
       return {paddingBottom: bottomMargin};
     }
-    return undefined;
-  }, [bottomMargin]);
-
-  const isSecondaryOnly = !!secondaryButton && !button;
-  const isHorizontal = buttonLayout === FloatingButtonLayouts.HORIZONTAL || isSecondaryOnly;
+    const isSecondaryAtBottom = !!secondaryButton && (isSecondaryOnly || !isHorizontal);
+    return {paddingBottom: isSecondaryAtBottom ? Spacings.s7 : Spacings.s8};
+  }, [bottomMargin, secondaryButton, isSecondaryOnly, isHorizontal]);
 
   if (!button && !secondaryButton) {
     return null;
@@ -161,6 +163,7 @@ const FloatingButton = (props: FloatingButtonProps) => {
       keyboardBehavior={hoisted ? KeyboardBehavior.HOISTED : KeyboardBehavior.STICKY}
       isAndroidEdgeToEdge={isAndroidEdgeToEdge}
       animationDuration={withoutAnimation ? 0 : duration}
+      animationType={animationType}
       itemsFit={fullWidth ? ItemsFit.STRETCH : undefined}
       contentContainerStyle={footerContentContainerStyle}
       testID={testID}

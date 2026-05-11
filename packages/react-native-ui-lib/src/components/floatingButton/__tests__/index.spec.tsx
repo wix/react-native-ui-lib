@@ -4,6 +4,7 @@ import {render} from '@testing-library/react-native';
 import FloatingButton, {FloatingButtonLayouts} from '../index';
 import {ButtonDriver} from '../../button/Button.driver.new';
 import {useComponentDriver, ComponentProps} from '../../../testkit/new/Component.driver';
+import {Spacings} from '../../../style';
 
 const TEST_ID = 'floating_button';
 const button = {
@@ -97,22 +98,36 @@ describe('FloatingButton', () => {
   });
 
   describe('bottomMargin', () => {
-    it('should have default paddingBottom when bottomMargin is not provided', () => {
+    it('should default to s8 paddingBottom with primary button only', () => {
       const props = {visible: true, button};
       const renderTree = render(<StickyTestCase {...props}/>);
       const contentDriver = ContentDriver({renderTree, testID: `${TEST_ID}.content`});
-      const defaultPaddingBottom = contentDriver.getStyle().paddingBottom as number;
 
-      expect(defaultPaddingBottom).toBeGreaterThan(0);
+      expect(contentDriver.getStyle().paddingBottom).toBe(Spacings.s8);
     });
 
-    it('should have default paddingBottom with both buttons when bottomMargin is not provided', () => {
+    it('should default to s7 paddingBottom with both buttons in vertical layout', () => {
       const props = {visible: true, button, secondaryButton};
       const renderTree = render(<StickyTestCase {...props}/>);
       const contentDriver = ContentDriver({renderTree, testID: `${TEST_ID}.content`});
-      const defaultPaddingBottom = contentDriver.getStyle().paddingBottom as number;
 
-      expect(defaultPaddingBottom).toBeGreaterThan(0);
+      expect(contentDriver.getStyle().paddingBottom).toBe(Spacings.s7);
+    });
+
+    it('should default to s8 paddingBottom with both buttons in horizontal layout', () => {
+      const props = {visible: true, button, secondaryButton, buttonLayout: FloatingButtonLayouts.HORIZONTAL};
+      const renderTree = render(<StickyTestCase {...props}/>);
+      const contentDriver = ContentDriver({renderTree, testID: `${TEST_ID}.content`});
+
+      expect(contentDriver.getStyle().paddingBottom).toBe(Spacings.s8);
+    });
+
+    it('should default to s7 paddingBottom with secondary button only', () => {
+      const props = {visible: true, secondaryButton};
+      const renderTree = render(<StickyTestCase {...props}/>);
+      const contentDriver = ContentDriver({renderTree, testID: `${TEST_ID}.content`});
+
+      expect(contentDriver.getStyle().paddingBottom).toBe(Spacings.s7);
     });
 
     it('should apply bottomMargin as paddingBottom on the content container', () => {
