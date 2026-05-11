@@ -244,7 +244,7 @@ const ScreenFooter = (props: ScreenFooterProps) => {
       testID={testID}
       style={containerStyle}
       onLayout={keyboardBehavior === 'hoisted' ? undefined : onLayout}
-      pointerEvents={keyboardBehavior === 'hoisted' ? (visible ? 'box-none' : 'none') : 'auto'}
+      pointerEvents={!visible ? 'none' : keyboardBehavior === 'hoisted' ? 'box-none' : 'auto'}
     >
       {renderKeyboardAwareFooter()}
     </Animated.View>
