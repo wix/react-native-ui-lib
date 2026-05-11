@@ -55,7 +55,7 @@
     {
       "name": "visible",
       "type": "boolean",
-      "description": "If true, the footer is visible. If false, it slides down",
+      "description": "If true, the footer is visible. If false, the footer is hidden using the configured animation type",
       "default": "true"
     },
     {
