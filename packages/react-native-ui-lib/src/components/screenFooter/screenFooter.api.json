@@ -55,13 +55,19 @@
     {
       "name": "visible",
       "type": "boolean",
-      "description": "If true, the footer is visible. If false, it slides down",
+      "description": "If true, the footer is visible. If false, the footer is hidden using the configured animation type",
       "default": "true"
+    },
+    {
+      "name": "animationType",
+      "type": "ScreenFooterAnimationTypeProp",
+      "description": "The animation type for showing/hiding the footer [slide, fade, none]",
+      "default": "'slide'"
     },
     {
       "name": "animationDuration",
       "type": "number",
-      "description": "Duration of the show/hide animation in ms",
+      "description": "Duration of the show/hide animation in ms (sending 0 will disable the animation)",
       "default": "200"
     },
     {
