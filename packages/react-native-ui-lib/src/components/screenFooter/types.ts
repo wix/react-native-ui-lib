@@ -40,7 +40,28 @@ export enum ScreenFooterShadow {
     SH30 = 'sh30'
 }
 
-export interface ScreenFooterProps extends PropsWithChildren<{}> {
+export enum ScreenFooterAnimation {
+    NONE = 'none',
+    SLIDE = 'slide',
+    FADE = 'fade'
+}
+
+export type ScreenFooterAnimationTypeProp = ScreenFooterAnimation | `${ScreenFooterAnimation}`;
+
+export interface AnimatedFooterStyleProps {
+    /**
+     * The type of animation to use when showing or hiding the footer.
+     * @default 'slide'
+     */
+    animationType?: ScreenFooterAnimationTypeProp;
+    /**
+     * Duration of the show/hide animation in ms (sending 0 will disable the animation).
+     * @default 200
+     */
+    animationDuration?: number;
+}
+
+export interface ScreenFooterProps extends AnimatedFooterStyleProps, PropsWithChildren<{}> {
     /**
      * Used as testing identifier
      */
@@ -87,11 +108,6 @@ export interface ScreenFooterProps extends PropsWithChildren<{}> {
      */
     visible?: boolean;
     /**
-     * Duration of the show/hide animation in ms.
-     * @default 200
-     */
-    animationDuration?: number;
-    /**
      * If true, the footer will respect the safe area (add bottom padding)
      */
     useSafeArea?: boolean;
@@ -105,6 +121,10 @@ export interface ScreenFooterProps extends PropsWithChildren<{}> {
      * Only applies when backgroundType is 'solid'
      */
     hideDivider?: boolean;
+    /**
+     * Custom style for the outer container of the footer.
+     */
+    containerStyle?: StyleProp<ViewStyle>;
     /**
      * Custom style for the content container that wraps the footer's children.
      * Can be used to override default padding, gap, or other layout properties.
