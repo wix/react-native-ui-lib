@@ -79,7 +79,7 @@
         "light-date": "^1.2.0",
         "moment": "^2.24.0",
         "object-hash": "^3.0.0",
-        "postcss": "^8.5.8",
+        "postcss": "^8.5.10",
         "postcss-js": "^4.0.0",
         "prettier": "^3.2.5",
         "react": "19.0.0",
