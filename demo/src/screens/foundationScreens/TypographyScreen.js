@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
 import {TabController, Colors, Typography, View, Text} from 'react-native-ui-lib';
@@ -7,10 +6,6 @@ import {TabController, Colors, Typography, View, Text} from 'react-native-ui-lib
 const WEIGHTS = ['Thin', 'Light', 'Default', 'Regular', 'Medium', 'Bold', 'Heavy', 'Black'];
 
 export default class TypographyScreen extends Component {
-  static propTypes = {
-    color: PropTypes.string
-  };
-
   static defaultProps = {
     color: Colors.grey10
   };

@@ -44,7 +44,6 @@
     "  return (",
     "    <div>",
     "      <MaskedInput",
-    "        migrate",
     "        renderMaskedText={renderTimeText}",
     "        formatter={formatter}",
     "        keyboardType={'numeric'}",

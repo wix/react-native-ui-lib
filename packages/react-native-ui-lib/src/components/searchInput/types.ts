@@ -28,7 +28,7 @@ export type SearchInputProps = TextInputProps & {
   /**
    * Custom right element
    */
-  customRightElement?: React.ReactElement;
+  customRightElement?: React.ReactElement<any>;
   /**
    * Whether to show a loader instead of the left search icon
    */
@@ -40,7 +40,7 @@ export type SearchInputProps = TextInputProps & {
   /**
    * custom loader element
    */
-  customLoader?: React.ReactElement;
+  customLoader?: React.ReactElement<any>;
   /**
    * converts the colors of the search's input elements, icons and button to white
    */

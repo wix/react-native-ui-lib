@@ -209,19 +209,19 @@ export type TextFieldProps = MarginModifiers &
     /**
      * Pass to render a leading element
      */
-    leadingAccessory?: ReactElement;
+    leadingAccessory?: ReactElement<any>;
     /**
      * Pass to render a trailing element
      */
-    trailingAccessory?: ReactElement;
+    trailingAccessory?: ReactElement<any>;
     /**
      * Pass to render a top trailing element
      */
-    topTrailingAccessory?: ReactElement;
+    topTrailingAccessory?: ReactElement<any>;
     /**
      * Pass to render a bottom element below the input
      */
-    bottomAccessory?: ReactElement;
+    bottomAccessory?: ReactElement<any>;
     /**
      * Should show a clear button when there is a value
      */

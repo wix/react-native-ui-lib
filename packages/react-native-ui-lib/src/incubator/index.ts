@@ -17,3 +17,4 @@ export {default as Slider, SliderRef, SliderProps} from './slider';
 export {default as ChipsInput, ChipsInputProps, ChipsInputChangeReason, ChipsInputChipProps} from '../components/chipsInput';
 export {default as WheelPicker, WheelPickerProps, WheelPickerItemProps, WheelPickerAlign, WheelPickerItemValue} from '../components/WheelPicker';
 export {default as Gradient, GradientProps} from './gradient';
+export {default as Marquee, MarqueeDirections, MarqueeProps} from './marquee';

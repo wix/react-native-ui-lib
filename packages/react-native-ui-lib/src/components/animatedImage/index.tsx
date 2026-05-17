@@ -21,7 +21,7 @@ export interface AnimatedImageProps extends ImageProps {
   /**
    * A component to render while the image is loading
    */
-  loader?: React.ReactElement;
+  loader?: React.ReactElement<any>;
 }
 
 /**

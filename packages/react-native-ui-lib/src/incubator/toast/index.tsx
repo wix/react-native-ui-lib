@@ -55,7 +55,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
     PanView.directions.RIGHT
   ]);
 
-  const viewRef = useRef();
+  const viewRef = useRef(undefined);
   const [toastHeight, setToastHeight] = useState<number | undefined>();
 
   const {clearTimer, setTimer} = useToastTimer(props);

@@ -27,8 +27,8 @@ export default function useHiddenLocation<T extends View>() {
   };
 
   const [hiddenLocation, setHiddenLocation] = useState<HiddenLocation>(getHiddenLocation({}));
-  const ref = useRef<T>();
-  const layoutData = useRef<LayoutRectangle>();
+  const ref = useRef<T>(undefined);
+  const layoutData = useRef<LayoutRectangle>(undefined);
   const wasMeasured = useRef(wasMeasuredDefaultValue);
 
   const measure = useCallback(() => {

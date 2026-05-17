@@ -1,4 +1,4 @@
-import {Assets, Colors, Typography, Spacings, TextField} from 'react-native-ui-lib'; // eslint-disable-line
+import {Assets, Colors, Typography, Spacings} from 'react-native-ui-lib'; // eslint-disable-line
 
 export const loadDemoConfigurations = () => {
   Assets.loadAssetsGroup('icons.demo', {
@@ -60,6 +60,4 @@ export const loadDemoConfigurations = () => {
     }
   });
 
-  /* Components */
-  TextField.defaultProps = {preset: TextField.presets.UNDERLINE, ...TextField.defaultProps};
 };

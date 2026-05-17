@@ -63,7 +63,7 @@ const FadedScrollView = (props: Props) => {
     ...others
   } = props;
   const ScrollView = useGesture ? GestureScrollView : RNScrollView;
-  const scrollViewRef = useRef<typeof ScrollView>();
+  const scrollViewRef = useRef<typeof ScrollView>(undefined);
   const horizontal = propsHorizontal ?? false;
   const {onContentSizeChange, onLayout, scrollEnabled} = useScrollEnabler({horizontal});
   const {

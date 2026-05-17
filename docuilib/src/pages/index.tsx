@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {type JSX} from 'react';
 import Layout from '@theme/Layout';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 // import clsx from 'clsx';
