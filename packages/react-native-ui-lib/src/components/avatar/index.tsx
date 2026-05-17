@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {PropsWithChildren, useMemo, forwardRef} from 'react';
+import React, {PropsWithChildren, useMemo, forwardRef, type JSX} from 'react';
 import {
   StyleSheet,
   StyleProp,

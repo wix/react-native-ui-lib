@@ -11,7 +11,7 @@ export type CustomKeyboardViewBaseProps = {
   component?: string;
   onItemSelected?: (component?: string, args?: any) => void;
   onRequestShowKeyboard?: (keyboardId: string) => void;
-  children?: React.ReactChild | React.ReactChild[];
+  children?: React.ReactNode;
 };
 
 export default class CustomKeyboardViewBase<T extends CustomKeyboardViewBaseProps> extends Component<T> {

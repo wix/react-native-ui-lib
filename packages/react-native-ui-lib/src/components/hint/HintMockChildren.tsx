@@ -25,7 +25,7 @@ export default function HintMockChildren({children, backdropColor, targetLayout}
         {React.cloneElement<any>(children, {
           collapsable: false,
           key: 'mock',
-          style: [children.props.style, styles.mockChildren]
+          style: [(children.props as any).style, styles.mockChildren]
         })}
       </View>
     );

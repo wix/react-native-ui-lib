@@ -32,6 +32,7 @@
   "include": [
     "packages/react-native-ui-lib/src/**/*",
     "packages/react-native-ui-lib/lib/**/*",
+    "lib/**/*",
     "typings/**/*",
     "packages/unicorn-demo-app/**/*",
     "packages/uilib-native/components/**/*"

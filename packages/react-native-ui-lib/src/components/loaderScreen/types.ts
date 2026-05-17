@@ -8,7 +8,7 @@ export type LoaderScreenProps = ActivityIndicatorProps & {
     /**
      * Custom loader
      */
-    customLoader?: React.ReactChild;
+    customLoader?: React.ReactElement<any> | number | string;
     /**
      * Color of the loader background (only when passing 'overlay')
      */

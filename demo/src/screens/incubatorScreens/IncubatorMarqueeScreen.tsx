@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import {Marquee, MarqueeDirections, Text, View, Spacings} from 'react-native-ui-lib';
+import {Incubator, MarqueeDirections, Text, View, Spacings} from 'react-native-ui-lib';
+
+const {Marquee} = Incubator;
 import {renderBooleanOption, renderMultipleSegmentOptions} from '../ExampleScreenPresenter';
 
 export default class MarqueeScreen extends Component<{}> {

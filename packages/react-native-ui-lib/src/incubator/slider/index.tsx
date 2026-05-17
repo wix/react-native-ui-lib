@@ -78,7 +78,7 @@ export interface SliderProps extends AccessibilityProps {
   /**
    * Custom render instead of rendering the track
    */
-  renderTrack?: () => ReactElement | ReactElement[];
+  renderTrack?: () => ReactElement<any> | ReactElement<any>[];
   /**
    * The thumb style
    */

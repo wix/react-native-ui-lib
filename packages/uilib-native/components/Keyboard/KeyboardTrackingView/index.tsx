@@ -79,18 +79,25 @@ export type KeyboardTrackingViewProps = ViewProps & {
   usesBottomTabs?: boolean;
   ref?: any;
   style?: StyleProp<ViewStyle>;
-  children?: React.ReactChild | React.ReactChild[];
+  children?: React.ReactNode;
 };
 
+const defaultProps: KeyboardTrackingViewProps = {};
 const KeyboardTrackingView = forwardRef(({children, ...others}: KeyboardTrackingViewProps, ref: any) => {
   const KeyboardTrackingViewContainer = isAndroid ? KeyboardTrackingViewAndroid : KeyboardTrackingViewIOS;
   return (
-    <KeyboardTrackingViewContainer {...others} ref={ref}>
+    <KeyboardTrackingViewContainer {...defaultProps} {...others} ref={ref}>
       {children}
     </KeyboardTrackingViewContainer>
   );
 });
 
-export default KeyboardTrackingView as (typeof KeyboardTrackingView & {scrollBehaviors: typeof SCROLL_BEHAVIORS});
-// @ts-expect-error
-KeyboardTrackingView.scrollBehaviors = SCROLL_BEHAVIORS;
+type KeyboardTrackingViewType = typeof KeyboardTrackingView & {
+  scrollBehaviors: typeof SCROLL_BEHAVIORS;
+  defaultProps: typeof defaultProps;
+};
+
+(KeyboardTrackingView as KeyboardTrackingViewType).defaultProps = defaultProps;
+(KeyboardTrackingView as KeyboardTrackingViewType).scrollBehaviors = SCROLL_BEHAVIORS;
+
+export default KeyboardTrackingView as KeyboardTrackingViewType;
