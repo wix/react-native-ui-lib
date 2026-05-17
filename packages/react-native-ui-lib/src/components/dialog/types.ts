@@ -46,19 +46,19 @@ export interface DialogHeaderProps extends ViewProps {
   /**
    * Pass to render a leading element
    */
-  leadingAccessory?: ReactElement;
+  leadingAccessory?: ReactElement<any>;
   /**
    * Pass to render a trailing element
    */
-  trailingAccessory?: ReactElement;
+  trailingAccessory?: ReactElement<any>;
   /**
    * Pass to render a top element above the title
    */
-  topAccessory?: ReactElement;
+  topAccessory?: ReactElement<any>;
   /**
    * Pass to render a bottom element below the subtitle
    */
-  bottomAccessory?: ReactElement;
+  bottomAccessory?: ReactElement<any>;
   /**
    * Style for the leading + content + trailing components (without the topAccessory\bottomAccessory)
    */

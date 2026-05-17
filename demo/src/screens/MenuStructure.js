@@ -39,8 +39,7 @@ export const navigationData = {
       {title: 'ProgressBar', tags: 'progress bar animated', screen: 'unicorn.animations.ProgressBarScreen'},
       {title: 'ScrollBar', tags: 'scroll bar gradient', screen: 'unicorn.components.ScrollBarScreen'},
       {title: 'SearchInputScreen', tags: 'search input', screen: 'unicorn.components.SearchInputScreen'},
-      {title: 'Stack Aggregator', tags: 'stack aggregator', screen: 'unicorn.components.StackAggregatorScreen'},
-      {title: 'Marquee', tags: 'sliding text', screen: 'unicorn.components.MarqueeScreen'}
+      {title: 'Stack Aggregator', tags: 'stack aggregator', screen: 'unicorn.components.StackAggregatorScreen'}
     ]
   },
   Form: {
@@ -201,7 +200,8 @@ export const navigationData = {
         tags: 'text field expandable input picker',
         screen: 'unicorn.components.IncubatorExpandableOverlayScreen'
       },
-      {title: 'Gradient', tags: 'gradient', screen: 'unicorn.components.IncubatorGradientScreen'}
+      {title: 'Gradient', tags: 'gradient', screen: 'unicorn.components.IncubatorGradientScreen'},
+      {title: 'Marquee', tags: 'sliding text', screen: 'unicorn.components.IncubatorMarqueeScreen'}
     ]
   },
   Inspirations: {

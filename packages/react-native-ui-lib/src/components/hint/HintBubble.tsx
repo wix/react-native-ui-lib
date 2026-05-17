@@ -27,7 +27,7 @@ interface HintBubbleProps
     | 'icon'
     | 'customContent'
   > {
-  hintRef: React.RefObject<RNView>;
+  hintRef: React.RefObject<RNView | null>;
   setHintLayout: (layoutChangeEvent: LayoutChangeEvent) => void;
   hintPositionStyle: {left: number};
 }

@@ -1,17 +1,16 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
-import MaskedInput from '../old';
-import Text from '../../../components/text';
+import MaskedInput from '../index';
+import Text from '../../text';
 import {TextFieldDriver} from '../../textField/TextField.driver.new';
 
 const testID = 'field';
 
 const TestCase = () => {
-  // @ts-expect-error - this has an error, but this is an old component and I don't want to spend time fixing it
   return <MaskedInput testID={testID} renderMaskedText={(text?: string) => <Text>{text}</Text>}/>;
 };
 
-describe('MaskedInput (old)', () => {
+describe('MaskedInput (new)', () => {
   it('Sanity - it renders', () => {
     const renderTree = render(<TestCase/>);
     const mainInputDriver = TextFieldDriver({renderTree, testID});

@@ -4,7 +4,7 @@ import {useCallback, useRef} from 'react';
  * This hook is used to debounce a function call
  */
 function useDebounce<A>(func: (args: A) => void, timeout = 300) {
-  const handler = useRef<NodeJS.Timeout>();
+  const handler = useRef<NodeJS.Timeout>(undefined);
   const debouncedFunction = useCallback((args: A) => {
     if (handler.current) {
       clearTimeout(handler.current);

@@ -34,7 +34,7 @@ export default class TextFieldScreen extends Component {
     isReadonly: false,
     value: 'Initial Value',
     isSearching: false,
-    preset: undefined,
+    preset: TextField.presets.UNDERLINE,
     price: '',
     editable: false
   };

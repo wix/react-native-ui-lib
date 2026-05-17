@@ -76,7 +76,7 @@ export interface CheckboxProps extends TouchableOpacityProps {
   /**
    * The label of the checkbox
    */
-  label?: string;
+  label?: string | React.ReactElement<Text>;
   /**
    * The style of the label
    */

@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
 import React from 'react';
 import {AccessibilityInfo, findNodeHandle, StyleSheet, Animated, Easing, ActivityIndicator} from 'react-native';
 import {PureBaseComponent} from '../../commons';
@@ -20,74 +19,6 @@ const COLOR = Colors.white;
  */
 export default class Toast extends PureBaseComponent {
   static displayName = 'Toast';
-
-  static propTypes = {
-    /**
-     * Whether to show or hide the toast
-     */
-    visible: PropTypes.bool,
-    /**
-     * The position of the toast. 'top' or 'bottom'.
-     */
-    position: PropTypes.oneOf(['top', 'bottom']),
-    /**
-     * custom zIndex for toast
-     */
-    zIndex: PropTypes.number,
-    /**
-     * The background color of the toast
-     */
-    backgroundColor: PropTypes.string,
-    /**
-     * the toast content color (message, actions labels)
-     */
-    color: PropTypes.string,
-    /**
-     * the toast message
-     */
-    message: PropTypes.string,
-    /**
-     * should message be centered in the toast
-     */
-    centerMessage: PropTypes.bool,
-    /**
-     * a left icon
-     */
-    icon: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    /**
-     * a single action for the user
-     */
-    action: PropTypes.shape(Button.propTypes),
-    /**
-     * should show a loader (showDismiss must be false)
-     */
-    showLoader: PropTypes.bool,
-    /**
-     * callback for dismiss action
-     */
-    onDismiss: PropTypes.func,
-    /**
-     * number of milliseconds to automatically invoke the onDismiss callback
-     */
-    autoDismiss: PropTypes.number,
-    /**
-     * show dismiss action (right 'X' button)
-     */
-    showDismiss: PropTypes.bool,
-    /**
-     * callback for end of component animation
-     */
-    onAnimationEnd: PropTypes.func,
-    /**
-     * render a custom view that will appear permanently above or below a Toast,
-     * depends on the Toast's position, and animate with it when the Toast is made visible or dismissed
-     */
-    renderAttachment: PropTypes.elementType,
-    /**
-     * render a custom loader component instead of the default when passing showLoader
-     */
-    customLoader: PropTypes.func
-  };
 
   static defaultProps = {
     position: 'top',

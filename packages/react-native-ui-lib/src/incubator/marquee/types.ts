@@ -1,6 +1,6 @@
 import type {PropsWithChildren} from 'react';
-import {TextProps} from '../text';
-import {ViewProps} from '../view';
+import {TextProps} from '../../components/text';
+import {ViewProps} from '../../components/view';
 
 export enum MarqueeDirections {
   RIGHT = 'RIGHT', //LTR

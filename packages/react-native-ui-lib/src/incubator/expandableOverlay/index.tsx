@@ -21,7 +21,7 @@ export type ExpandableOverlayProps = TouchableOpacityProps &
     /**
      * The content to render inside the expandable modal/dialog
      */
-    expandableContent?: React.ReactElement;
+    expandableContent?: React.ReactElement<any>;
     /**
      * Whether to use a dialog as expandable container (by default the container will be a full screen modal)
      */
@@ -45,7 +45,7 @@ export type ExpandableOverlayProps = TouchableOpacityProps &
     /**
      * A custom overlay to render instead of Modal or Dialog components
      */
-    renderCustomOverlay?: (props: RenderCustomOverlayProps) => React.ReactElement | undefined | null;
+    renderCustomOverlay?: (props: RenderCustomOverlayProps) => React.ReactElement<any> | undefined | null;
     /**
      * Disabled opening expandable overlay
      */
