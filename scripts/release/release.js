@@ -2,15 +2,16 @@
 const exec = require('shell-utils').exec;
 const fs = require('fs');
 const path = require('path');
+const semver = require('semver');
 const {logDebug, logGreen, logError} = require('../utils');
 const {
   dryRun,
+  isMaster,
   isRelease,
   isSnapshot,
   versionTag,
   getPublishedVersion,
   getPackageJsonVersion,
-  getShouldRelease,
   getVersion,
   setupGit,
   createNpmRc
@@ -29,13 +30,15 @@ const PACKAGES = [
   {
     name: 'uilib-native',
     shouldUpdatePackageJson: !!isSnapshot,
-    releaseVersionStrategy: 'packageJsonVersion'
+    releaseVersionStrategy: 'packageJsonVersion',
+    shouldRelease: () => !!isSnapshot || !!isRelease
   },
   {
     name: 'react-native-ui-lib',
     shouldUpdatePackageJson: true,
     releaseVersionStrategy: isRelease ? 'buildKiteVersion' : 'packageJsonVersion',
-    workspaceDeps: ['uilib-native']
+    workspaceDeps: ['uilib-native'],
+    shouldRelease: pkg => (isMaster || isRelease ? semver.gt(pkg.packageJsonVersion, pkg.publishedVersion) : !!isSnapshot)
   }
 ];
 
@@ -43,10 +46,10 @@ logDebug('Checking if packages should be released...');
 PACKAGES.forEach(package => {
   package.publishedVersion = getPublishedVersion(package.name);
   package.packageJsonVersion = getPackageJsonVersion(package.name);
-  package.shouldRelease = getShouldRelease(package);
+  package.shouldRelease = package.shouldRelease(package);
 });
 
-if (!PACKAGES.every(package => package.shouldRelease)) {
+if (!PACKAGES.some(package => package.shouldRelease)) {
   logGreen('No packages to release');
   if (dryRun) {
     logDebug('Dry run - not exiting');
@@ -90,6 +93,10 @@ const originalCwd = process.cwd();
 logDebug(`Starting release process with ${versionTag}`);
 try {
   for (const package of PACKAGES) {
+    if (!package.shouldRelease) {
+      logDebug(`Skipping release for ${package.name}`);
+      continue;
+    }
     logDebug(`Trying to release ${package.name} in ${package.path}`);
     process.chdir(package.path);
     // Update version in package.json

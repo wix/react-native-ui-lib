@@ -50,10 +50,6 @@ function getPackageJsonVersion(packageName) {
   return require(path.join(rootDir, `packages/${packageName}/package.json`)).version;
 }
 
-function getShouldRelease(package) {
-  return isMaster || isRelease ? semver.gt(package.packageJsonVersion, package.publishedVersion) : !!isSnapshot;
-}
-
 function getVersion(package, dryRun) {
   let releaseVersion;
   switch (package.releaseVersionStrategy) {
@@ -105,7 +101,6 @@ module.exports = {
   versionTag,
   getPublishedVersion,
   getPackageJsonVersion,
-  getShouldRelease,
   getVersion,
   setupGit,
   createNpmRc
