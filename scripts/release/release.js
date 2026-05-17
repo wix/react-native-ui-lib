@@ -31,7 +31,7 @@ const PACKAGES = [
     name: 'uilib-native',
     shouldUpdatePackageJson: !!isSnapshot,
     releaseVersionStrategy: 'packageJsonVersion',
-    shouldRelease: () => !!isSnapshot || !!isRelease
+    shouldRelease: pkg => !!isSnapshot || (!!isRelease && semver.gt(pkg.packageJsonVersion, pkg.publishedVersion))
   },
   {
     name: 'react-native-ui-lib',
