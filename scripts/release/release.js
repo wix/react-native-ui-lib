@@ -31,7 +31,7 @@ const PACKAGES = [
     name: 'uilib-native',
     shouldUpdatePackageJson: !!isSnapshot,
     releaseVersionStrategy: 'packageJsonVersion',
-    shouldRelease: () => !!isSnapshot || !!isRelease
+    shouldRelease: pkg => !!isSnapshot || (!!isRelease && semver.gt(pkg.packageJsonVersion, pkg.publishedVersion))
   },
   {
     name: 'react-native-ui-lib',
@@ -100,7 +100,7 @@ try {
     logDebug(`Trying to release ${package.name} in ${package.path}`);
     process.chdir(package.path);
     // Update version in package.json
-    if (package.shouldUpdatePackageJson) {
+    if (package.shouldUpdatePackageJson && package.packageJsonVersion !== package.version) {
       if (dryRun) {
         exec.execSync(`npm --no-git-tag-version --no-workspaces-update version ${package.version}`, true);
       } else {
