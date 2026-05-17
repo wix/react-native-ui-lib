@@ -108,9 +108,10 @@ try {
       exec.execSync(`npm publish --tag ${versionTag}`);
       // Create git tag for releases (not snapshots)
       if (isRelease) {
-        exec.execSync(`git tag -a ${package.version} -m "${package.version}"`);
-        exec.execSync(`git push deploy ${package.version}`);
-        // TODO: backup - exec.execSyncSilent(`git push deploy ${package.version} || true`);
+        const tagName = `${package.name}@${package.version}`;
+        exec.execSync(`git tag -a ${tagName} -m "${tagName}"`);
+        exec.execSync(`git push deploy ${tagName}`);
+        // TODO: backup - exec.execSyncSilent(`git push deploy ${tagName} || true`);
       }
       logGreen(`Successfully released ${package.name}@${package.version}`);
     } else {
