@@ -11,7 +11,7 @@ export enum FloatingButtonLayouts {
   HORIZONTAL = 'Horizontal'
 }
 
-export interface FloatingButtonProps extends Pick<ScreenFooterProps, 'isAndroidEdgeToEdge'> {
+export interface FloatingButtonProps extends Pick<ScreenFooterProps, 'isAndroidEdgeToEdge' | 'animationType'> {
   /**
    * Whether the button is visible
    */
@@ -82,6 +82,7 @@ const FloatingButton = (props: FloatingButtonProps) => {
     hideBackgroundOverlay,
     hoisted = Constants.isAndroid,
     isAndroidEdgeToEdge,
+    animationType,
     testID
   } = props;
 
@@ -162,6 +163,7 @@ const FloatingButton = (props: FloatingButtonProps) => {
       keyboardBehavior={hoisted ? KeyboardBehavior.HOISTED : KeyboardBehavior.STICKY}
       isAndroidEdgeToEdge={isAndroidEdgeToEdge}
       animationDuration={withoutAnimation ? 0 : duration}
+      animationType={animationType}
       itemsFit={fullWidth ? ItemsFit.STRETCH : undefined}
       contentContainerStyle={footerContentContainerStyle}
       testID={testID}
