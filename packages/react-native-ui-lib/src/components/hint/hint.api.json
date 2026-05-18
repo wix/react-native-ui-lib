@@ -55,6 +55,11 @@
       "description": "Open the hint using a Modal component"
     },
     {
+      "name": "modalProps",
+      "type": "ModalProps",
+      "description": "Pass props to the hint modal"
+    },
+    {
       "name": "useSideTip",
       "type": "boolean",
       "description": "Show side tips instead of the middle tip"

@@ -26,6 +26,7 @@ const Hint = (props: HintProps) => {
   const {
     visible,
     useModal = true,
+    modalProps,
     position = HintPositions.BOTTOM,
     children,
     message,
@@ -216,6 +217,7 @@ const Hint = (props: HintProps) => {
       {renderChildren()}
       {isUsingModal ? (
         <Modal
+          {...modalProps}
           visible={showHint}
           animationType={backdropColor ? 'fade' : 'none'}
           overlayBackgroundColor={backdropColor}

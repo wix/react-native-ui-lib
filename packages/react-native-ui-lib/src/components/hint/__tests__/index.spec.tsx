@@ -64,6 +64,14 @@ describe('Hint Screen component test', () => {
     expect(driver.getModal().isVisible()).toBe(false);
   });
 
+  it('Should pass modalProps to the modal', async () => {
+    const renderTree = render(
+      <TestCase visible withModal modalProps={{supportedOrientations: ['landscape']}}/>
+    );
+
+    expect(renderTree.getByTestId(`${HINT_TEST_ID}.modal`).props.supportedOrientations).toEqual(['landscape']);
+  });
+
   // TODO: This scenario tests doesn't pass, need to fix it using act
   it.skip('Should modal be visible when showHint is true', async () => {
     const renderTree = render(<TestCase visible withModal/>);
