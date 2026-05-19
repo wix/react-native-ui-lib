@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {type JSX} from 'react';
 import {processColor, StyleSheet, Modal, ViewStyle} from 'react-native';
 // Import the Codegen specification for New Architecture
 import HighlighterViewNativeComponent, {

@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
-import {TextPropTypes} from 'deprecated-react-native-prop-types';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import Dialog from '../dialog';
@@ -11,19 +9,6 @@ import {Colors, BorderRadiuses} from '../../style';
 
 class PickerDialog extends Component {
   static displayName = 'PickerDialog';
-  static propTypes = {
-    onDone: PropTypes.func,
-    onCancel: PropTypes.func,
-    children: PropTypes.array,
-    /**
-     * select label style
-     */
-    selectLabelStyle: TextPropTypes.style,
-    /**
-     * cancel label style
-     */
-    cancelLabelStyle: TextPropTypes.style
-  };
 
   state = {};
 

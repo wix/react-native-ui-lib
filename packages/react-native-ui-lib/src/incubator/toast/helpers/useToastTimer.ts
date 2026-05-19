@@ -2,7 +2,7 @@ import {useCallback, useRef} from 'react';
 import {ToastProps} from '../types';
 
 export default ({autoDismiss, onDismiss}: Pick<ToastProps, 'autoDismiss' | 'onDismiss'>) => {
-  const timer = useRef<ReturnType<typeof setTimeout>>();
+  const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const clearTimer = useCallback(() => {
     if (timer.current) {

@@ -5,4 +5,5 @@ export function registerScreens(registrar) {
   registrar('unicorn.components.IncubatorToastScreen', () => require('./IncubatorToastScreen').default);
   registrar('unicorn.components.IncubatorSliderScreen', () => require('./IncubatorSliderScreen').default);
   registrar('unicorn.components.IncubatorGradientScreen', () => require('./IncubatorGradientScreen').default);
+  registrar('unicorn.components.IncubatorMarqueeScreen', () => require('./IncubatorMarqueeScreen').default);
 }

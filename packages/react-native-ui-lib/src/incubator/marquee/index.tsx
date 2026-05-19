@@ -1,8 +1,8 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {LayoutChangeEvent, LayoutRectangle, StyleSheet} from 'react-native';
 import {useSharedValue, useAnimatedStyle, withTiming, withRepeat, Easing} from 'react-native-reanimated';
-import View from '../view';
-import Text from '../text';
+import View from '../../components/view';
+import Text from '../../components/text';
 import {MarqueeDirections, MarqueeProps} from './types';
 
 const DEFAULT_DURATION = 3000;

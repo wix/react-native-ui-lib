@@ -32,6 +32,8 @@ export default class KeyboardRegistry {
    */
   static registerKeyboard = (componentID: string, generator: Function, params = {}) => {
     if (!_.isFunction(generator)) {
+      // TODO: do we want to add a util for this?
+      // eslint-disable-next-line no-restricted-syntax
       console.error(`KeyboardRegistry.registerKeyboard: ${componentID} you must register a generator function`);
       return;
     }
@@ -45,7 +47,9 @@ export default class KeyboardRegistry {
    */
   static getKeyboard = (componentID: string) => {
     const res = KeyboardRegistry.registeredKeyboards[componentID];
-    if (!res || !res.generator) {
+    if (!res?.generator) {
+      // TODO: do we want to add a util for this?
+      // eslint-disable-next-line no-restricted-syntax
       console.error(`KeyboardRegistry.getKeyboard: ${componentID} used but not yet registered`);
       return undefined;
     }

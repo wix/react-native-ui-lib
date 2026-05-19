@@ -38,7 +38,7 @@ export interface ThumbProps extends ViewProps {
    */
   disabled?: boolean;
   /** ref to thumb component */
-  ref?: React.RefObject<RNView>;
+  ref?: React.RefObject<RNView | null>;
 }
 type ThumbStyle = {style?: StyleProp<ViewStyle>; left?: StyleProp<number>};
 

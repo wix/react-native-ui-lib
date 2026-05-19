@@ -102,7 +102,7 @@ class ColorPalette extends PureComponent<Props, State> {
     this.initLocalVariables();
   }
 
-  carousel: React.RefObject<typeof Carousel> = React.createRef();
+  carousel: React.RefObject<typeof Carousel | null> = React.createRef();
   scrollBar: React.RefObject<any> = React.createRef();
   itemsRefs?: any = React.createRef();
   selectedColorIndex?: number = undefined;
