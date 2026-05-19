@@ -63,8 +63,5 @@
     "eslint-plugin-react-native": "^4.0.0",
     "prettier-eslint": "16.3.0",
     "typescript": "5.0.4"
-  },
-  "resolutions": {
-    "node-forge": "^1.4.0"
   }
 }
