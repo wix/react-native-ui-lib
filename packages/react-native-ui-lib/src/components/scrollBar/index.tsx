@@ -3,6 +3,7 @@ import React, {Component, useCallback} from 'react';
 import {
   Animated,
   FlatListProps,
+  ScrollViewProps,
   ImageSourcePropType,
   NativeSyntheticEvent,
   NativeScrollEvent,
@@ -16,11 +17,21 @@ import View from '../view';
 import Image from '../image';
 import Assets from '../../assets';
 
-export interface ScrollBarProps extends FlatListProps<any> {
-  /**
-   * Whether to use a FlatList. NOTE: you must pass 'data' and 'renderItem' props as well
-   */
-  useList?: boolean;
+export type ListProps =
+  | (FlatListProps<any> & {
+      /**
+       * Whether to use a FlatList. NOTE: you must pass 'data' and 'renderItem' props as well
+       */
+      useList: true;
+    })
+  | (ScrollViewProps & {
+      /**
+       * Whether to use a ScrollView. NOTE: you must pass 'contentContainerStyle' prop as well
+       */
+      useList?: false;
+    });
+
+export type ScrollBarProps = ListProps & {
   /**
    * The element to use as a container, instead of a View
    */
@@ -58,7 +69,7 @@ export interface ScrollBarProps extends FlatListProps<any> {
    * The index to currently focus on
    */
   focusIndex?: number;
-}
+};
 
 type Props = ScrollBarProps & ForwardRefInjectedProps;
 

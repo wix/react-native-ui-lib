@@ -1,12 +1,15 @@
 import {ScrollViewProps, StyleProp, ViewStyle, NativeSyntheticEvent, NativeScrollEvent, Animated} from 'react-native';
-// @ts-expect-error No typings available for 'deprecated-react-native-prop-types'
-import {PointPropType} from 'deprecated-react-native-prop-types';
 import {PageControlProps} from '../pageControl';
 
 export enum PageControlPosition {
   OVER = 'over',
   UNDER = 'under'
 }
+
+export type PointPropType = {
+  x: number;
+  y: number;
+};
 
 export interface CarouselProps extends ScrollViewProps {
   /**
@@ -96,7 +99,6 @@ export interface CarouselProps extends ScrollViewProps {
    * Carousel scroll offset (pass new Animated.ValueXY())
    */
   animatedScrollOffset?: Animated.ValueXY;
-  
 }
 
 export interface CarouselState {

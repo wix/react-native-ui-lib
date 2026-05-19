@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {FlatList} from 'react-native';
 import KeyboardAwareBase from './KeyboardAwareBase';
 
@@ -9,11 +8,6 @@ import KeyboardAwareBase from './KeyboardAwareBase';
  */
 export default class KeyboardAwareFlatList extends KeyboardAwareBase {
   static displayName = 'KeyboardAwareFlatList';
-
-  static PropTypes = {
-    getTextInputRefs: PropTypes.func,
-    onScroll: PropTypes.func
-  };
 
   static defaultProps = {
     ...KeyboardAwareBase.defaultProps,

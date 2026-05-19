@@ -1,8 +1,6 @@
 // @ts-nocheck
 import _ from 'lodash';
-import PropTypes from 'prop-types';
 import 'react';
-import {ViewPropTypes, TextInputPropTypes} from 'deprecated-react-native-prop-types';
 import {Colors, Typography} from '../../style';
 import {BaseComponent} from '../../commons';
 import Validators from './Validators';
@@ -17,51 +15,6 @@ const VALIDATORS = {
 
 export default class BaseInput extends BaseComponent {
   static displayName = 'BaseInput';
-
-  static propTypes = {
-    ...TextInputPropTypes,
-    // ...BaseComponent.propTypes,
-    /**
-     * text color
-     */
-    color: PropTypes.string,
-    /**
-     * text input container style
-     */
-    containerStyle: ViewPropTypes.style,
-    /**
-     * validator type or custom validator function
-     */
-    validate: PropTypes.oneOfType([
-      PropTypes.oneOf(_.values(VALIDATORS)), // enum
-      PropTypes.func, // custom
-      PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.oneOf(_.values(VALIDATORS)), PropTypes.func])) // array of validators
-    ]),
-    /**
-     * Whether to mark required field with an asterisk
-     */
-    markRequired: PropTypes.bool,
-    /**
-     * the message to be displayed when the validation fails
-     */
-    errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
-    /**
-     * whether to run the validation on mount
-     */
-    validateOnStart: PropTypes.bool,
-    /**
-     * whether to run the validation on text changed
-     */
-    validateOnChange: PropTypes.bool,
-    /**
-     * whether to run the validation on blur
-     */
-    validateOnBlur: PropTypes.bool,
-    /**
-     * callback for validity change
-     */
-    onChangeValidity: PropTypes.func
-  };
 
   static defaultProps = {
     validateOnBlur: true

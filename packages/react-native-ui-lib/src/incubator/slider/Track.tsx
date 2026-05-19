@@ -12,7 +12,7 @@ export interface Props extends ViewProps {
   maximumTrackTintColor?: string;
   minimumTrackTintColor?: string;
   trackStyle?: StyleProp<ViewStyle>;
-  renderTrack?: () => ReactElement | ReactElement[];
+  renderTrack?: () => ReactElement<any> | ReactElement<any>[];
   onPress?: ((event: GestureResponderEvent) => void) | undefined;
 }
 

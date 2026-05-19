@@ -141,7 +141,7 @@ class Drawer extends PureComponent<DrawerProps> {
 
   leftRender: SwipeableProps['renderLeftActions'];
   rightRender: SwipeableProps['renderLeftActions'];
-  _swipeableRow: RefObject<Swipeable> = React.createRef();
+  _swipeableRow: RefObject<Swipeable | null> = React.createRef();
   animationOptions: SwipeableProps['animationOptions'] = {bounciness: this.props.bounciness || DEFAULT_BOUNCINESS};
   leftActionX: Animated.Value = new Animated.Value(0);
 

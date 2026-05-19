@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {PureComponent} from 'react';
+import React, {PureComponent, type JSX} from 'react';
 import {
   ImageSourcePropType,
   ImageStyle,

@@ -72,7 +72,7 @@ class Slider extends PureComponent<InternalSliderProps, State> {
 
   private thumb = React.createRef<RNView>();
   private minThumb = React.createRef<RNView>();
-  private activeThumbRef: React.RefObject<RNView>;
+  private activeThumbRef: React.RefObject<RNView | null>;
   private panResponder;
 
   private minTrack = React.createRef<RNView>();
@@ -239,7 +239,7 @@ class Slider extends PureComponent<InternalSliderProps, State> {
 
   /* Actions */
 
-  setActiveThumb = (ref: React.RefObject<RNView>) => {
+  setActiveThumb = (ref: React.RefObject<RNView | null>) => {
     this.activeThumbRef = ref;
   };
 

@@ -27,7 +27,7 @@ export interface GridListItemProps {
   /**
    * Custom GridListItem to be rendered in the GridView
    */
-  renderCustomItem?: () => React.ReactElement;
+  renderCustomItem?: () => React.ReactElement<any>;
   /**
    * The item size
    */
@@ -35,7 +35,7 @@ export interface GridListItemProps {
   /**
    * Title content text
    */
-  title?: string | React.ReactElement;
+  title?: string | React.ReactElement<any>;
   /**
    * Title content typography
    */
@@ -51,7 +51,7 @@ export interface GridListItemProps {
   /**
    * Subtitle content text
    */
-  subtitle?: string | React.ReactElement;
+  subtitle?: string | React.ReactElement<any>;
   /**
    * Subtitle content typography
    */
@@ -67,7 +67,7 @@ export interface GridListItemProps {
   /**
    * Description content text
    */
-  description?: string | React.ReactElement;
+  description?: string | React.ReactElement<any>;
   /**
    * Description content typography
    */
@@ -107,12 +107,12 @@ export interface GridListItemProps {
   /**
    * Renders an overlay on top of the image
    */
-  renderOverlay?: () => React.ReactElement;
+  renderOverlay?: () => React.ReactElement<any>;
   /**
    * Test ID for component
    */
   testID?: string;
-  children?: React.ReactElement | React.ReactElement[];
+  children?: React.ReactElement<any> | React.ReactElement<any>[];
 }
 
 /**
@@ -156,7 +156,7 @@ class GridListItem extends Component<GridListItemProps> {
     }
   });
 
-  renderContent(text: string | React.ReactElement | undefined, textProps: Partial<TextProps>) {
+  renderContent(text: string | React.ReactElement<any> | undefined, textProps: Partial<TextProps>) {
     const {alignToStart, horizontalAlignment} = this.props;
     const textAlign = alignToStart ? 'left' : horizontalAlignment;
     if (text) {

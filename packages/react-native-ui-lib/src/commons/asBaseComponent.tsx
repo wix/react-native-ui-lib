@@ -55,7 +55,7 @@ function asBaseComponent<PROPS, STATICS = {}, RefInterface = any>(WrappedCompone
     };
 
     static getDerivedStateFromError(error: any) {
-      UIComponent.defaultProps?.onError?.(error, WrappedComponent.defaultProps);
+      UIComponent.defaultProps?.onError?.(error);
       return {error: true};
     }
 
@@ -80,6 +80,7 @@ function asBaseComponent<PROPS, STATICS = {}, RefInterface = any>(WrappedCompone
   hoistStatics(BaseComponent, WrappedComponent);
   BaseComponent.displayName = WrappedComponent.displayName;
   BaseComponent.propTypes = WrappedComponent.propTypes;
+  // @ts-expect-error class component have defaultProps and functions do not and so should not be affected by this
   BaseComponent.defaultProps = WrappedComponent.defaultProps;
   const ThemeContext = ThemeManager.getThemeContext();
   if (ThemeContext) {

@@ -129,9 +129,6 @@ const Icon = forwardRef((props: Props, ref: any) => {
 });
 
 Icon.displayName = 'Icon';
-Icon.defaultProps = {
-  assetGroup: 'icons'
-};
 
 export default asBaseComponent<IconProps, ComponentStatics<typeof Icon>>(Icon, {modifiersOptions: {margins: true}});
 

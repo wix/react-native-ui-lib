@@ -8,6 +8,7 @@ import {
   MarginModifiers
 } from '../../commons/new';
 import {TouchableOpacityProps} from '../touchableOpacity';
+import type {JSX} from 'react';
 import {TextProps} from '../text';
 import {ImageProps} from '../image';
 import type {IconProps} from '../icon';
@@ -155,7 +156,7 @@ export type ButtonProps = TouchableOpacityProps &
     /**
      * Custom element to render as button background (takes precedence over backgroundColor)
      */
-    customBackground?: React.ReactElement;
+    customBackground?: React.ReactElement<any>;
   };
 
 export type ButtonState = {

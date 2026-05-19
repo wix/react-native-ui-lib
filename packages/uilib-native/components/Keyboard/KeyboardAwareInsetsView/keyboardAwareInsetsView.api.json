@@ -1,0 +1,14 @@
+{
+  "name": "KeyboardAwareInsetsView",
+  "category": "infra",
+  "description": "Used to add an inset when a keyboard is used and might hide part of the screen.",
+  "note": "This view is useful only for iOS.",
+  "extends": ["infra/KeyboardTrackingView"],
+  "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/TextFieldScreen.tsx",
+  "snippet": ["<ScrollView>",
+    "  <TextField/>",
+    "  <TextField/>",
+    "  <KeyboardAwareInsetsView/>",
+    "<ScrollView>"    
+  ]
+}

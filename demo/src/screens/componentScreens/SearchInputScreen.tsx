@@ -6,7 +6,7 @@ const SearchInputScreen = () => {
   const [showCancelBtn, setShowCancelBtn] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
   const [showCustomRightElement, setShowCustomRightElement] = useState(false);
-  const searchInput = useRef<SearchInputRef>();
+  const searchInput = useRef<SearchInputRef>(undefined);
 
   const onChangeText = (text: string) => {
     console.log('UILIB text: ', text);

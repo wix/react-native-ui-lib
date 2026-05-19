@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import {Component} from 'react';
-import PropTypes from 'prop-types';
 import ReactNative, {DeviceEventEmitter, Keyboard} from 'react-native';
 
 export default class KeyboardAwareBase extends Component {
@@ -21,12 +20,6 @@ export default class KeyboardAwareBase extends Component {
     this.state = {keyboardHeight: 0};
     this._addKeyboardEventListeners();
   }
-
-  static propTypes = {
-    startScrolledToBottom: PropTypes.bool,
-    scrollToBottomOnKBShow: PropTypes.bool,
-    scrollToInputAdditionalOffset: PropTypes.number
-  };
 
   static defaultProps = {
     startScrolledToBottom: false,

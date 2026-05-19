@@ -1,4 +1,4 @@
-import type {ReactElement} from 'react';
+import type {ReactElement, JSX} from 'react';
 import type {
   GestureResponderEvent,
   ImageSourcePropType,
@@ -15,7 +15,7 @@ export type LayoutStyle = PositionStyle & Pick<ViewStyle, 'alignItems'>;
 
 export type PaddingsStyle = Pick<ViewStyle, 'paddingLeft' | 'paddingRight' | 'paddingVertical' | 'paddingHorizontal'>;
 
-export type ContentType = string | ReactElement;
+export type ContentType = string | ReactElement<any>;
 
 export enum TargetAlignments {
   LEFT = 'left',

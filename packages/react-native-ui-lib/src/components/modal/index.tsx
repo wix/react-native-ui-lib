@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, {Component} from 'react';
+import React, {Component, type JSX} from 'react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {
   StyleSheet,

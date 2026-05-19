@@ -216,9 +216,6 @@ module.exports = {
       get ScrollBar() {
         return require('./screens/componentScreens/ScrollBarScreen').default;
       },
-      get Marquee() {
-        return require('./screens/componentScreens/MarqueeScreen').default;
-      },
       get NumberInput() {
         return require('./screens/componentScreens/NumberInputScreen').default;
       },
@@ -249,6 +246,9 @@ module.exports = {
       },
       get IncubatorGradient() {
         return require('./screens/incubatorScreens/IncubatorGradientScreen').default;
+      },
+      get IncubatorMarquee() {
+        return require('./screens/incubatorScreens/IncubatorMarqueeScreen').default;
       },
       // realExamples
       get AppleMusic() {

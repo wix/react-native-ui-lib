@@ -11,7 +11,7 @@ interface Measurements {
 }
 
 export default () => {
-  const ref = useRef<RNView>();
+  const ref = useRef<RNView>(undefined);
   const [measurements, setMeasurements] = useState<Measurements | undefined>();
 
   const onMeasure: MeasureOnSuccessCallback = (x, y, width, height, pageX, pageY) => {
