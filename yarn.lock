@@ -5823,13 +5823,13 @@ __metadata:
   linkType: hard
 
 "fast-xml-parser@npm:^4.4.1":
-  version: 4.5.0
-  resolution: "fast-xml-parser@npm:4.5.0"
+  version: 4.5.6
+  resolution: "fast-xml-parser@npm:4.5.6"
   dependencies:
     strnum: "npm:^1.0.5"
   bin:
     fxparser: src/cli/cli.js
-  checksum: 10c0/71d206c9e137f5c26af88d27dde0108068a5d074401901d643c500c36e95dfd828333a98bda020846c41f5b9b364e2b0e9be5b19b0bdcab5cf31559c07b80a95
+  checksum: 10c0/1c19e183b5ee93bea9b24e1ddb0aed8564b273c6106af622b1c11ff8eb1fc8d2033cd7a0cb68976a5f3e05d1cbf0a0026e6f300f904be0bc854ff896dbdf38d2
   languageName: node
   linkType: hard
 
@@ -8589,7 +8589,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-forge@npm:^1.4.0":
+"node-forge@npm:^1":
   version: 1.4.0
   resolution: "node-forge@npm:1.4.0"
   checksum: 10c0/67330a5f1f95257a4c8a93b7d555abe87b5f15e350123aa396c97a21a8ca94f9c6549008eb2c73668a91e0d7e3a905785acbd8f8bd0751c29401292011f8f8e1
