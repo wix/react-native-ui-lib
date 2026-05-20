@@ -7,6 +7,7 @@ import {createShimmerPlaceholder, LinearGradientPackage} from 'optionalDeps';
 import View from '../view';
 import {Constants, AlignmentModifiers, PaddingModifiers, MarginModifiers} from '../../commons/new';
 import {LogService} from 'services';
+import type {ComponentStatics} from '../../typings/common';
 
 const LinearGradient = LinearGradientPackage?.default;
 
@@ -443,7 +444,7 @@ class SkeletonView extends Component<SkeletonViewProps, SkeletonState> {
   }
 }
 
-export default SkeletonView;
+export default SkeletonView as React.ComponentClass<SkeletonViewProps> & ComponentStatics<typeof SkeletonView>;
 
 const styles = StyleSheet.create({
   listItem: {
