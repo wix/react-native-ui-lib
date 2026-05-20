@@ -23,7 +23,7 @@ function copyDir(src, dest) {
 }
 
 if (!fs.existsSync(SOURCE_DIR)) {
-  console.error(`Error: skill source not found at ${SOURCE_DIR}`);
+  process.stderr.write(`Error: skill source not found at ${SOURCE_DIR}\n`);
   process.exit(1);
 }
 
