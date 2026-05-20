@@ -138,6 +138,8 @@
         "node": ">=18"
     },
     "files": [
+        "skills",
+        "install-skills.js",
         "*.js",
         "*.d.ts",
         "!scripts",
