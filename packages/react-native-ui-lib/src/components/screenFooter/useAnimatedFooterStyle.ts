@@ -42,7 +42,7 @@ const useAnimatedFooterStyle = (
     let translateY = 0;
     if (animationType === 'slide') {
       translateY = animatedValue.value;
-    } else {
+    } else if (animationType === 'fade') {
       style = {opacity: animatedValue.value};
     }
 
