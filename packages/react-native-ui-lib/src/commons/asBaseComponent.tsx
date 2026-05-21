@@ -19,7 +19,6 @@ export interface AsBaseComponentOptions {
 }
 
 const EMPTY_MODIFIERS = {};
-const colorScheme = Scheme.getSchemeType();
 
 function asBaseComponent<PROPS, STATICS = {}, RefInterface = any>(WrappedComponent: React.ComponentType<any>,
   options: AsBaseComponentOptions = {}) {
@@ -30,7 +29,7 @@ function asBaseComponent<PROPS, STATICS = {}, RefInterface = any>(WrappedCompone
 
     state = {
       error: false,
-      colorScheme
+      colorScheme: Scheme.getSchemeType()
     };
 
     componentDidMount() {
