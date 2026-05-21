@@ -158,6 +158,7 @@
         "!lib/android/build",
         "!lib/scripts",
         "lib/package.json",
-        "lib/ReactNativeUILib.podspec"
+        "lib/ReactNativeUILib.podspec",
+        "!lib/react-native.config.js"
     ]
 }
