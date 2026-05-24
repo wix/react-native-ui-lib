@@ -11,11 +11,12 @@
     "android": "yarn workspace react-native-ui-lib android",
     "iPad": "yarn workspace react-native-ui-lib iPad",
     "test": "yarn workspace react-native-ui-lib test",
+    "test:releaseScript": "jest scripts/release/__tests__",
     "pretest": "yarn lint",
     "lint": "eslint packages -c .eslintrc.js --ext .tsx,.ts,.js",
     "lint:fix": "eslint packages -c .eslintrc.js --fix",
     "build:dev": "tsc --p tsconfig.dev.json",
-    "pre-push": "yarn build:dev && yarn test",
+    "pre-push": "yarn build:dev && yarn test && yarn test:releaseScript",
     "prepush": "node ./scripts/prepush.js",
     "build": "yarn workspace react-native-ui-lib build",
     "build:local": "yarn workspace react-native-ui-lib build:local",
@@ -61,6 +62,7 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.0.4",
     "eslint-plugin-react-native": "^4.0.0",
+    "jest": "^29.6.3",
     "prettier-eslint": "16.3.0",
     "typescript": "5.0.4"
   }
