@@ -54,7 +54,8 @@ function versionTagAndPublish() {
 }
 
 function findCurrentPublishedVersion() {
-  return exec.execSyncRead(`npm view ${process.env.npm_package_name} dist-tags.latest`);
+  const pkg = isRelease ? process.env.npm_package_name : 'react-native-ui-lib';
+  return exec.execSyncRead(`npm view ${pkg} dist-tags.latest`);
 }
 
 function tryPublishAndTag(version) {
