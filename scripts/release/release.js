@@ -38,7 +38,13 @@ const PACKAGES = [
     shouldUpdatePackageJson: true,
     releaseVersionStrategy: isRelease ? 'buildKiteVersion' : 'packageJsonVersion',
     workspaceDeps: ['uilib-native'],
-    shouldRelease: pkg => (isMaster || isRelease ? semver.gt(pkg.packageJsonVersion, pkg.publishedVersion) : !!isSnapshot)
+    shouldRelease: pkg => {
+      if (isRelease) {
+        return semver.gt(pkg.packageJsonVersion, pkg.publishedVersion)
+          || semver.gt(pkg.version, pkg.publishedVersion);
+      }
+      return isMaster || !!isSnapshot;
+    }
   }
 ];
 
@@ -46,6 +52,8 @@ logDebug('Checking if packages should be released...');
 PACKAGES.forEach(package => {
   package.publishedVersion = getPublishedVersion(package.name);
   package.packageJsonVersion = getPackageJsonVersion(package.name);
+  package.path = `packages/${package.name}`;
+  package.version = getVersion(package, dryRun);
   package.shouldRelease = package.shouldRelease(package);
 });
 
@@ -60,8 +68,6 @@ if (!PACKAGES.some(package => package.shouldRelease)) {
 
 logDebug('Getting packages information...');
 PACKAGES.forEach(package => {
-  package.path = `packages/${package.name}`;
-  package.version = getVersion(package, dryRun);
   if (package.workspaceDeps?.length > 0) {
     package.workSpaceTempDeps = [];
     package.workspaceDeps.forEach(dep => {
