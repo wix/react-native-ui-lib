@@ -24,6 +24,8 @@ let testSnapshot =
   (process.argv?.find(arg => arg.toLowerCase().includes('-snap'))?.length ?? 0) > 0 ||
   (process.argv?.find(arg => arg.toLowerCase().includes('-s'))?.length ?? 0) > 0;
 
+const bkVersionArg = process.argv.find(arg => arg.startsWith('-bkVersion='))?.split('=')[1];
+
 if (testRelease || testMaster || testSnapshot) {
   dryRun = true;
 }
@@ -58,7 +60,7 @@ function getVersion(package, dryRun) {
       break;
     case 'buildKiteVersion':
       releaseVersion = dryRun
-        ? `${semver.inc(package.packageJsonVersion, 'patch')}-dry-run`
+        ? (bkVersionArg ?? `${semver.inc(package.packageJsonVersion, 'patch')}-dry-run`)
         : childProcess.execSync(`buildkite-agent meta-data get version`).toString();
       break;
   }
