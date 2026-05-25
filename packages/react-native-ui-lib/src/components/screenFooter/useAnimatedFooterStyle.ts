@@ -42,7 +42,7 @@ const useAnimatedFooterStyle = (
     let translateY = 0;
     if (animationType === 'slide') {
       translateY = animatedValue.value;
-    } else if (animationType === 'fade') {
+    } else {
       style = {opacity: animatedValue.value};
     }
 
@@ -50,7 +50,7 @@ const useAnimatedFooterStyle = (
       translateY += keyboard.height.value;
     }
 
-    if (animationType === 'slide' || translateY !== 0) {
+    if (translateY !== 0) {
       style.transform = [{translateY}];
     }
 
