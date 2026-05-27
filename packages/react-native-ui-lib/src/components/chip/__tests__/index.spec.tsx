@@ -54,4 +54,21 @@ describe('Chip', () => {
     expect(driver.getIcon().exists()).toBeTruthy();
     expect(driver.getDismissIcon().exists()).toBeTruthy();
   });
+
+  describe('Accessibility', () => {
+    it('should set accessibilityState.selected when selected is true', () => {
+      const driver = getDriver({selected: true});
+      expect(driver.getElement().props.accessibilityState).toEqual({selected: true});
+    });
+
+    it('should set accessibilityState.selected when selected is false', () => {
+      const driver = getDriver({selected: false});
+      expect(driver.getElement().props.accessibilityState).toEqual({selected: false});
+    });
+
+    it('should not set accessibilityState when selected is not provided', () => {
+      const driver = getDriver();
+      expect(driver.getElement().props.accessibilityState).toBeUndefined();
+    });
+  });
 });
