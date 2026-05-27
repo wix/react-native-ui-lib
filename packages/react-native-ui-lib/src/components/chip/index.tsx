@@ -22,6 +22,10 @@ export type ChipProps = ViewProps &
      */
     onPress?: (props: any) => void;
     /**
+     * Indicates whether the chip is selected, exposed to screen readers via accessibilityState
+     */
+    selected?: boolean;
+    /**
      * Chip's background color
      */
     backgroundColor?: string;
@@ -158,6 +162,7 @@ const Chip = ({
   labelStyle,
   onPress,
   resetSpacings,
+  selected,
   size = DEFAULT_SIZE,
   useSizeAsMinimum = true,
   recorderTag,
@@ -332,6 +337,7 @@ const Chip = ({
       style={[styles.container, {backgroundColor}, {borderRadius}, containerStyle, containerSizeStyle]}
       testID={testID}
       hitSlop={hitSlop}
+      accessibilityState={selected !== undefined ? {selected} : undefined}
       {...others}
     >
       {avatarProps && renderAvatar()}
