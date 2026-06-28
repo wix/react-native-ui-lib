@@ -32,7 +32,7 @@ function validateEnv() {
   }
   return (
     process.env.BUILDKITE_BRANCH === 'master' ||
-    process.env.BUILDKITE_BRANCH === 'release' ||
+    process.env.BUILDKITE_MESSAGE?.match?.(/^release$/i) ||
     process.env.BUILDKITE_MESSAGE === 'snapshot'
   );
 }
@@ -54,7 +54,8 @@ function versionTagAndPublish() {
 }
 
 function findCurrentPublishedVersion() {
-  return exec.execSyncRead(`npm view ${process.env.npm_package_name} dist-tags.latest`);
+  const pkg = isRelease ? process.env.npm_package_name : 'react-native-ui-lib';
+  return exec.execSyncRead(`npm view ${pkg} dist-tags.latest`);
 }
 
 function tryPublishAndTag(version) {
