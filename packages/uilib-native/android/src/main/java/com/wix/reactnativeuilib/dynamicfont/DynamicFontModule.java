@@ -130,9 +130,10 @@ public class DynamicFontModule extends ReactContextBaseJavaModule {
       ReactFontManager.getInstance().setTypeface(name, Typeface.NORMAL, typeface);
 
       cacheFile.delete();
-      callback.invoke(null, name);
-    } catch(Exception e) {
+    } catch (Exception e) {
       callback.invoke(e.getMessage());
+      return;
     }
+    callback.invoke(null, name);
   }
 }
