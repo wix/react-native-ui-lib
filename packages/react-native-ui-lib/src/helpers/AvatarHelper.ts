@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import URL from 'url-parse';
 import Colors from '../style/colors';
 import {Typography} from 'style';
 
@@ -100,10 +99,8 @@ export function isBlankGravatarUrl(url: string) {
 }
 
 export function patchGravatarUrl(gravatarUrl: string) {
-  const url = new URL(gravatarUrl, true);
-  const {query} = url;
-  query.d = '404';
-  delete query.default;
-  url.set('query', query);
+  const url = new URL(gravatarUrl);
+  url.searchParams.set('d', '404');
+  url.searchParams.delete('default');
   return url.toString();
 }

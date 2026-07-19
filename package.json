@@ -49,7 +49,6 @@
     "@types/react": "19.0.0",
     "@types/react-test-renderer": "^19.0.0",
     "@types/tinycolor2": "^1.4.2",
-    "@types/url-parse": "^1.4.3",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "@welldone-software/why-did-you-render": "^3.2.1",
