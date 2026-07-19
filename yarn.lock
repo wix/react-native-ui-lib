@@ -9753,7 +9753,7 @@ __metadata:
     tinycolor2: "npm:^1.4.2"
     typescript: "npm:5.0.4"
     uilib-native: "workspace:*"
-    url-parse: "npm:^1.2.0"
+    url-parse: "npm:^1.5.10"
     wix-react-native-text-size: "npm:1.0.9"
   peerDependencies:
     react: ">=19.0.0"
