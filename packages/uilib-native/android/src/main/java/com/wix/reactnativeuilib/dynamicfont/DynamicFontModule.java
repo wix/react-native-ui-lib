@@ -132,8 +132,8 @@ public class DynamicFontModule extends ReactContextBaseJavaModule {
       cacheFile.delete();
     } catch(Exception e) {
       callback.invoke(e.getMessage());
-    } finally {
-      callback.invoke(null, name);
+      return;
     }
+    callback.invoke(null, name);
   }
 }
