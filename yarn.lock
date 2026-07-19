@@ -11421,7 +11421,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"url-parse@npm:^1.2.0":
+"url-parse@npm:^1.5.10":
   version: 1.5.10
   resolution: "url-parse@npm:1.5.10"
   dependencies:
