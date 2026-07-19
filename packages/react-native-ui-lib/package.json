@@ -39,7 +39,6 @@
         "react-native-redash": "^12.0.3",
         "semver": "^5.5.0",
         "tinycolor2": "^1.4.2",
-        "url-parse": "^1.2.0",
         "wix-react-native-text-size": "1.0.9"
     },
     "devDependencies": {
@@ -71,7 +70,6 @@
         "@types/react": "19.0.0",
         "@types/react-test-renderer": "19.0.0",
         "@types/tinycolor2": "^1.4.2",
-        "@types/url-parse": "^1.4.3",
         "@welldone-software/why-did-you-render": "^3.2.1",
         "babel-plugin-lodash": "^3.3.4",
         "babel-plugin-module-resolver": "^5.0.0",
