@@ -1,6 +1,6 @@
 {
     "name": "react-native-ui-lib",
-    "version": "9.0.0",
+    "version": "9.1.0-snapshot.8044",
     "main": "src/index.ts",
     "types": "src/index.d.ts",
     "author": "Ethan Sharabi <ethan.shar@gmail.com>",
