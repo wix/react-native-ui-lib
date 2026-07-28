@@ -114,6 +114,12 @@ describe('services/AvatarService', () => {
       expect(uut.isGravatarUrl('https://www.gravatars.com/avatar/00000000000000000000000000000000')).toEqual(false);
       expect(uut.isGravatarUrl('https://www.grava.tar/avatar/00000000000000000000000000000000')).toEqual(false);
     });
+
+    it('should return false for an invalid url', () => {
+      expect(uut.isGravatarUrl('fakeUrl')).toEqual(false);
+      expect(uut.isGravatarUrl('fakeUri1')).toEqual(false);
+      expect(uut.isGravatarUrl('')).toEqual(false);
+    });
   });
 
   describe('isBlankGravatarUrl', () => {

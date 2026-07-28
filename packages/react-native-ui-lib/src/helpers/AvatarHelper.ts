@@ -90,8 +90,12 @@ export function getBackgroundColor(name?: string,
 }
 
 export function isGravatarUrl(url: string) {
-  const {hostname, pathname} = new URL(url);
-  return _.split(hostname, '.').includes('gravatar') && pathname.startsWith('/avatar/');
+  try {
+    const {hostname, pathname} = new URL(url);
+    return _.split(hostname, '.').includes('gravatar') && pathname.startsWith('/avatar/');
+  } catch {
+    return false;
+  }
 }
 
 export function isBlankGravatarUrl(url: string) {
