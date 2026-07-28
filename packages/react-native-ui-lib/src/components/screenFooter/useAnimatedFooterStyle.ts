@@ -27,7 +27,7 @@ const useAnimatedFooterStyle = (
   });
 
   const [height, setHeight] = useState(0);
-  const animatedValue = useSharedValue(animationType === 'fade' && visible ? 1 : 0);
+  const animatedValue = useSharedValue(animationType !== 'slide' && visible ? 1 : 0);
 
   useEffect(() => {
     if (animationType === 'slide') {
@@ -76,3 +76,4 @@ const styles = StyleSheet.create({
     zIndex: 50
   }
 });
+
