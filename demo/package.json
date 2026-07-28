@@ -1,6 +1,6 @@
 {
   "name": "unicorn-demo-app",
-  "version": "1.1.16",
+  "version": "9.1.0-snapshot.8044",
   "main": "src/index.js",
   "author": "Ethan Sharabi <ethan.shar@gmail.com>",
   "license": "MIT",
