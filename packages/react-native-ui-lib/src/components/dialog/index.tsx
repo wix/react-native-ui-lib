@@ -190,6 +190,12 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
   };
 
   const panGesture = Gesture.Pan()
+    // MOBAPP-2994: require a deliberate drag before the pan engages. Without this, on Android/Fabric
+    // the residual touch stream from a gesture-handler trigger (e.g. List.Item's TapGestureHandler,
+    // which fires onPress on END while the touch is still settling) leaks into this freshly-mounted
+    // pan and drives `visibility` mid-open, interrupting the open spring so the sheet rests part-way.
+    // A plain touchable trigger (Button) lifts cleanly before the modal mounts and is unaffected.
+    .minDistance(10)
     .onStart(event => {
       initialTranslation.value =
         getTranslationReverseInterpolation(isVertical ? event.translationY : event.translationX) - visibility.value;
