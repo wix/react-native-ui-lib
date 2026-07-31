@@ -47,4 +47,10 @@ describe('SortableGridlist', () => {
     expect(onOrderChange).toHaveBeenCalledWith(newOrder.map(index => TEST_DATA[index]),
       newOrder.map(index => TEST_DATA[index].id));
   });
+  it('should forward ScrollView props to the inner ScrollView', () => {
+    const {getByTestId} = render(<TestCase scrollEnabled={false} showsVerticalScrollIndicator={false}/>);
+    const scrollView = getByTestId(testID);
+    expect(scrollView.props.scrollEnabled).toBe(false);
+    expect(scrollView.props.showsVerticalScrollIndicator).toBe(false);
+  });
 });
