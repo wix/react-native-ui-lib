@@ -195,6 +195,7 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     // which fires onPress on END while the touch is still settling) leaks into this freshly-mounted
     // pan and drives `visibility` mid-open, interrupting the open spring so the sheet rests part-way.
     // A plain touchable trigger (Button) lifts cleanly before the modal mounts and is unaffected.
+    // 10dp is small enough to keep drag-to-dismiss responsive while ignoring near-static residual touches.
     .minDistance(10)
     .onStart(event => {
       initialTranslation.value =
