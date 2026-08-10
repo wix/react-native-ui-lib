@@ -1,4 +1,4 @@
-import {type ElementRef, useState, useCallback, useRef} from 'react';
+import {type ElementRef, useState, useCallback, useRef, useEffect} from 'react';
 import type {LayoutChangeEvent, LayoutRectangle, View as RNView} from 'react-native';
 import _ from 'lodash';
 import {HintProps} from '../types';
@@ -10,6 +10,14 @@ export default function useHintLayout({onBackgroundPress, targetFrame}: UseHintL
   const [targetLayoutInWindowState, setTargetLayoutInWindow] = useState<LayoutRectangle | undefined>(targetFrame);
   const [hintMessageWidth, setHintMessageWidth] = useState<number | undefined>();
   const targetRef = useRef<ElementRef<typeof RNView> | null>(null);
+
+  useEffect(() => {
+    if (targetFrame && !_.isEqual(targetFrame, targetLayoutState)) {
+      setTargetLayout(targetFrame);
+      setTargetLayoutInWindow(targetFrame);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [targetFrame]);
 
   const onTargetLayout = useCallback(({nativeEvent: {layout}}: LayoutChangeEvent) => {
     if (!_.isEqual(targetLayoutState, layout)) {
