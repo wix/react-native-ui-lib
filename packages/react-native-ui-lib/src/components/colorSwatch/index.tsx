@@ -235,7 +235,7 @@ function createStyles({color = DEFAULT_COLOR}) {
       overflow: 'hidden'
     },
     transparentImage: {
-      ...StyleSheet.absoluteFillObject,
+      ...StyleSheet.absoluteFill,
       width: DEFAULT_SIZE,
       height: DEFAULT_SIZE,
       borderWidth: 1,
