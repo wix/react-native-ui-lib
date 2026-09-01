@@ -10,7 +10,7 @@ export const HintDriver = (props: ComponentProps) => {
     testID: `${props.testID}.message`
   });
 
-  const modalDriver = ModalDriver({renderTree: props.renderTree, testID: `${props.testID}.message`});
+  const modalDriver = ModalDriver({renderTree: props.renderTree, testID: `${props.testID}.modal`});
 
   return {
     ...driver,
