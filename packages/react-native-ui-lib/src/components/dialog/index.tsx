@@ -29,9 +29,7 @@ import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps} 
 export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};
 
 const THRESHOLD_VELOCITY = 750;
-// Watchdog cadence for an open animation that never completes. Comfortably longer than a
-// healthy open (~240ms measured at 60fps), so a normal open always wins and the watchdog is
-// a no-op. Capped so an unrecoverable case degrades to previous behaviour, not a spin.
+// Longer than a healthy open (~240ms), so a normal open always wins and the watchdog no-ops.
 const OPEN_WATCHDOG_INTERVAL_MS = 400;
 const OPEN_WATCHDOG_MAX_ATTEMPTS = 8;
 
@@ -128,33 +126,12 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modalVisibility, wasMeasured]);
 
-  // Watchdog for a dialog that is visible but whose open animation never completes.
-  //
-  // Two Android-only failures share this remedy, both traced to RN 0.79 returning Size{0,0} from
-  // ModalHostViewScreenSize() (ReactCommon/.../modal/platform/cxx/ModalHostViewUtils.cpp; iOS
-  // returns a real RCTScreenSize) so the Modal's Fabric state starts 0x0 - facebook/react-native#51048,
-  // fixed only in RN 0.81:
-  //
-  //   never opens   `open()` above is gated on `wasMeasured`, which only flips once onLayout
-  //                 reports non-zero width AND height. Inside a 0x0 Modal that may never happen
-  //                 and nothing sits behind the gate. Measured at 60fps: visibility stays 0.000.
-  //   opens partly  `open()` ran, the spring advanced normally for ~50ms then froze indefinitely -
-  //                 0.012 -> 0.043 -> 0.075 -> 0.122, flat after, against a healthy
-  //                 0.016 -> 0.110 -> 0.310 -> 0.569 over ~240ms. Orphaned, not overwritten: a raw
-  //                 write cancels the animation and jumps within one frame rather than tracking
-  //                 the curve first.
-  //
-  // Armed on `modalVisibility` ALONE, never on `wasMeasured`. An earlier version gated on
-  // measurement and missed the case where the watchdog itself opens the dialog while unmeasured
-  // and that animation is then orphaned - seen in CI as a sheet stranded at alpha 0.102 with the
-  // watchdog never armed. Gating on measurement is what causes the bug; the watchdog must not
-  // repeat it.
-  //
-  // Only re-opens a FROZEN animation. `close()` animates visibility to 0 while `modalVisibility`
-  // is still true (it only flips in withTiming's completion callback), so a watchdog that just
-  // checked `visibility < 1` would re-open a dialog the user is dismissing. A closing animation
-  // changes between ticks and a strand does not, so compare against the previous sample and bail
-  // out permanently on any decrease.
+  // Recovers a dialog whose open animation never completes. On Android with RN 0.79 the Modal's
+  // Fabric state can start 0x0 (facebook/react-native#51048, fixed in RN 0.81), so the dialog
+  // either never opens - `open()` above is gated on `wasMeasured`, which never flips - or opens
+  // part-way and freezes. Armed on `modalVisibility` alone, since gating on measurement is the
+  // bug being worked around. Re-opens a frozen animation only: `close()` animates while
+  // `modalVisibility` is still true, so a decreasing value is a dismiss in progress, not a strand.
   useEffect(() => {
     if (!modalVisibility) {
       return;
@@ -244,12 +221,9 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
   };
 
   const panGesture = Gesture.Pan()
-    // MOBAPP-2994: require a deliberate drag before the pan engages. Without this, on Android/Fabric
-    // the residual touch stream from a gesture-handler trigger (e.g. List.Item's TapGestureHandler,
-    // which fires onPress on END while the touch is still settling) leaks into this freshly-mounted
+    // MOBAPP-2994: require a deliberate drag before the pan engages. On Android/Fabric the residual
+    // touch from a gesture-handler trigger (e.g. List.Item) otherwise leaks into this freshly-mounted
     // pan and drives `visibility` mid-open, interrupting the open spring so the sheet rests part-way.
-    // A plain touchable trigger (Button) lifts cleanly before the modal mounts and is unaffected.
-    // 10dp is small enough to keep drag-to-dismiss responsive while ignoring near-static residual touches.
     .minDistance(10)
     .onStart(event => {
       initialTranslation.value =

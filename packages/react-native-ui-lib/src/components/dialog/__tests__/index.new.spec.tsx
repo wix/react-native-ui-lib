@@ -111,20 +111,13 @@ describe('Dialog sanity checks', () => {
   });
 });
 
-// Mirrors the private OPEN_WATCHDOG_INTERVAL_MS / OPEN_WATCHDOG_MAX_ATTEMPTS constants in index.tsx
-// (not exported, so the values are duplicated here).
+// Mirrors the non-exported constants in index.tsx.
 const WATCHDOG_INTERVAL_MS = 400;
 const WATCHDOG_MAX_ATTEMPTS = 8;
 
-// These drive the dialog straight to `visible` on the very first render (as opposed to
-// TestCase2, which flips a `visible` prop after mount) so that `open`/`close` - each memoized
-// once with a stable dependency array - and the watchdog effect all close over the *same*
-// mount-time render. That matters only because of the test double: the real Reanimated
-// useSharedValue returns one ref-backed value for the component's whole lifetime, but
-// react-native-reanimated/mock's useSharedValue (used repo-wide via jestSetup/jest-setup.js)
-// allocates a brand-new value on every call, so a scenario that goes through the dialog's
-// normal visible-prop-then-modalVisibility-state transition (two renders) would have `open()`
-// and the watchdog reading two different mock values - a mock artifact, not a real one.
+// Mounted already `visible` so open/close and the watchdog share one render. Reanimated's mock
+// useSharedValue returns a new value per call (the real one is ref-backed for the component's
+// lifetime), so a post-mount `visible` flip would have them reading different values.
 describe('Dialog open animation watchdog', () => {
   afterEach(() => {
     jest.useRealTimers();
@@ -133,19 +126,18 @@ describe('Dialog open animation watchdog', () => {
 
   it('recovers a dialog that never opens, then stops once it reaches full visibility', () => {
     jest.useFakeTimers();
-    // No mockImplementation/mockReturnValue: withSpring resolves to its real target value (1).
     const withSpringSpy = jest.spyOn(Reanimated, 'withSpring');
     const {dialogDriver} = getDriver(<TestCase1 visible/>);
     expect(dialogDriver.isVisible()).toBeTruthy();
     expect(withSpringSpy).not.toHaveBeenCalled();
 
-    // First tick: visibility has been stuck at its initial 0 since mount - the watchdog opens it.
+    // Stuck at 0 since mount - the watchdog opens it.
     act(() => {
       jest.advanceTimersByTime(WATCHDOG_INTERVAL_MS);
     });
     expect(withSpringSpy).toHaveBeenCalledTimes(1);
 
-    // Second tick: visibility reached 1, so the watchdog clears itself and stops for good.
+    // Reached 1, so the watchdog clears itself for good.
     act(() => {
       jest.advanceTimersByTime(WATCHDOG_INTERVAL_MS * (WATCHDOG_MAX_ATTEMPTS + 3));
     });
@@ -154,8 +146,7 @@ describe('Dialog open animation watchdog', () => {
 
   it('keeps retrying while the open animation stays frozen, then permanently gives up at the attempt cap', () => {
     jest.useFakeTimers();
-    // Every open() call lands on the same value, so visibility never advances on its own -
-    // the "opens partly, then freezes" failure, generalized to any stuck value.
+    // open() always lands on the same value, so visibility never advances: the frozen-open failure.
     const withSpringSpy = jest.spyOn(Reanimated, 'withSpring').mockReturnValue(0.5);
     getDriver(<TestCase1 visible/>);
 
@@ -163,25 +154,21 @@ describe('Dialog open animation watchdog', () => {
       jest.advanceTimersByTime(WATCHDOG_INTERVAL_MS * (WATCHDOG_MAX_ATTEMPTS + 3));
     });
     const attemptsMade = withSpringSpy.mock.calls.length;
-    // More than the single first-tick retry: the watchdog kept trying while stuck.
     expect(attemptsMade).toBeGreaterThan(1);
-    // Never more than one retry per tick it was armed for.
     expect(attemptsMade).toBeLessThanOrEqual(WATCHDOG_MAX_ATTEMPTS + 1);
 
     act(() => {
       jest.advanceTimersByTime(WATCHDOG_INTERVAL_MS * 5);
     });
-    // No further growth long after the cap: the watchdog has permanently given up, not paused.
+    // No growth long after the cap: permanently given up, not paused.
     expect(withSpringSpy).toHaveBeenCalledTimes(attemptsMade);
   });
 
   it('does not re-open while the dialog is closing (visibility decreasing)', () => {
     jest.useFakeTimers();
     const withSpringSpy = jest.spyOn(Reanimated, 'withSpring');
-    // Drive visibility below its watched baseline the way an in-progress close() would, but
-    // without invoking the completion callback - so modalVisibility stays true, matching a
-    // close that is still animating (it only flips modalVisibility once the real animation
-    // finishes).
+    // Drive visibility down as an in-progress close() would, without the completion callback -
+    // so modalVisibility stays true, matching a close that is still animating.
     const withTimingSpy = jest.spyOn(Reanimated, 'withTiming').mockReturnValue(-0.1);
     const {dialogDriver} = getDriver(<TestCase1 visible/>);
 
@@ -193,7 +180,6 @@ describe('Dialog open animation watchdog', () => {
     act(() => {
       jest.advanceTimersByTime(WATCHDOG_INTERVAL_MS * 3);
     });
-    // Decreasing visibility reads as a close in progress, not a stalled open: no re-open, ever.
     expect(withSpringSpy).not.toHaveBeenCalled();
   });
 });
