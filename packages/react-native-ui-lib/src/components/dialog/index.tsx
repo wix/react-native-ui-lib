@@ -29,6 +29,9 @@ import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps} 
 export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};
 
 const THRESHOLD_VELOCITY = 750;
+// Longer than a healthy open (~240ms), so a normal open always wins and the watchdog no-ops.
+const OPEN_WATCHDOG_INTERVAL_MS = 400;
+const OPEN_WATCHDOG_MAX_ATTEMPTS = 8;
 
 export interface DialogStatics {
   directions: typeof DialogDirectionsEnum;
@@ -123,6 +126,34 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modalVisibility, wasMeasured]);
 
+  // Recovers a dialog whose open animation never completes. On Android with RN 0.79 the Modal's
+  // Fabric state can start 0x0 (facebook/react-native#51048, fixed in RN 0.81), so the dialog
+  // either never opens - `open()` above is gated on `wasMeasured`, which never flips - or opens
+  // part-way and freezes. Armed on `modalVisibility` alone, since gating on measurement is the
+  // bug being worked around. Re-opens a frozen animation only: `close()` animates while
+  // `modalVisibility` is still true, so a decreasing value is a dismiss in progress, not a strand.
+  useEffect(() => {
+    if (!modalVisibility) {
+      return;
+    }
+    let attempts = 0;
+    let previous = visibility.value;
+    const interval = setInterval(() => {
+      const current = visibility.value;
+      attempts += 1;
+      if (current >= 1 || current < previous || attempts > OPEN_WATCHDOG_MAX_ATTEMPTS) {
+        clearInterval(interval);
+        return;
+      }
+      if (current === previous) {
+        open();
+      }
+      previous = current;
+    }, OPEN_WATCHDOG_INTERVAL_MS);
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [modalVisibility]);
+
   const alignmentStyle = useMemo(() => {
     return {flex: 1, alignItems: 'center', ...extractAlignmentsValues(props)};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -190,6 +221,10 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
   };
 
   const panGesture = Gesture.Pan()
+    // MOBAPP-2994: require a deliberate drag before the pan engages. On Android/Fabric the residual
+    // touch from a gesture-handler trigger (e.g. List.Item) otherwise leaks into this freshly-mounted
+    // pan and drives `visibility` mid-open, interrupting the open spring so the sheet rests part-way.
+    .minDistance(10)
     .onStart(event => {
       initialTranslation.value =
         getTranslationReverseInterpolation(isVertical ? event.translationY : event.translationX) - visibility.value;

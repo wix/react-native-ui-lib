@@ -79,6 +79,7 @@ jest.mock('react-native-gesture-handler',
       PanMock.onFinalize = getDefaultMockedHandler('onFinalize');
       PanMock.activateAfterLongPress = getDefaultMockedHandler('activateAfterLongPress');
       PanMock.enabled = getDefaultMockedHandler('enabled');
+      PanMock.minDistance = getDefaultMockedHandler('minDistance');
       PanMock.hitSlop = getDefaultMockedHandler('hitSlop');
       PanMock.onTouchesMove = getDefaultMockedHandler('onTouchesMove');
       PanMock.prepare = jest.fn();
