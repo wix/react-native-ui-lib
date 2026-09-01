@@ -29,6 +29,11 @@ import {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps} 
 export {DialogProps, DialogDirections, DialogDirectionsEnum, DialogHeaderProps};
 
 const THRESHOLD_VELOCITY = 750;
+// Watchdog cadence for an open animation that never completes. Comfortably longer than a
+// healthy open (~240ms measured at 60fps), so a normal open always wins and the watchdog is
+// a no-op. Capped so an unrecoverable case degrades to previous behaviour, not a spin.
+const OPEN_WATCHDOG_INTERVAL_MS = 400;
+const OPEN_WATCHDOG_MAX_ATTEMPTS = 8;
 
 export interface DialogStatics {
   directions: typeof DialogDirectionsEnum;
@@ -122,6 +127,55 @@ const Dialog = (props: DialogProps, ref: ForwardedRef<DialogImperativeMethods>) 
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modalVisibility, wasMeasured]);
+
+  // Watchdog for a dialog that is visible but whose open animation never completes.
+  //
+  // Two Android-only failures share this remedy, both traced to RN 0.79 returning Size{0,0} from
+  // ModalHostViewScreenSize() (ReactCommon/.../modal/platform/cxx/ModalHostViewUtils.cpp; iOS
+  // returns a real RCTScreenSize) so the Modal's Fabric state starts 0x0 - facebook/react-native#51048,
+  // fixed only in RN 0.81:
+  //
+  //   never opens   `open()` above is gated on `wasMeasured`, which only flips once onLayout
+  //                 reports non-zero width AND height. Inside a 0x0 Modal that may never happen
+  //                 and nothing sits behind the gate. Measured at 60fps: visibility stays 0.000.
+  //   opens partly  `open()` ran, the spring advanced normally for ~50ms then froze indefinitely -
+  //                 0.012 -> 0.043 -> 0.075 -> 0.122, flat after, against a healthy
+  //                 0.016 -> 0.110 -> 0.310 -> 0.569 over ~240ms. Orphaned, not overwritten: a raw
+  //                 write cancels the animation and jumps within one frame rather than tracking
+  //                 the curve first.
+  //
+  // Armed on `modalVisibility` ALONE, never on `wasMeasured`. An earlier version gated on
+  // measurement and missed the case where the watchdog itself opens the dialog while unmeasured
+  // and that animation is then orphaned - seen in CI as a sheet stranded at alpha 0.102 with the
+  // watchdog never armed. Gating on measurement is what causes the bug; the watchdog must not
+  // repeat it.
+  //
+  // Only re-opens a FROZEN animation. `close()` animates visibility to 0 while `modalVisibility`
+  // is still true (it only flips in withTiming's completion callback), so a watchdog that just
+  // checked `visibility < 1` would re-open a dialog the user is dismissing. A closing animation
+  // changes between ticks and a strand does not, so compare against the previous sample and bail
+  // out permanently on any decrease.
+  useEffect(() => {
+    if (!modalVisibility) {
+      return;
+    }
+    let attempts = 0;
+    let previous = visibility.value;
+    const interval = setInterval(() => {
+      const current = visibility.value;
+      attempts += 1;
+      if (current >= 1 || current < previous || attempts > OPEN_WATCHDOG_MAX_ATTEMPTS) {
+        clearInterval(interval);
+        return;
+      }
+      if (current === previous) {
+        open();
+      }
+      previous = current;
+    }, OPEN_WATCHDOG_INTERVAL_MS);
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [modalVisibility]);
 
   const alignmentStyle = useMemo(() => {
     return {flex: 1, alignItems: 'center', ...extractAlignmentsValues(props)};
