@@ -354,6 +354,8 @@ const WheelPicker = <T extends WheelPickerItemValue>(props: WheelPickerProps<T>)
         <GestureHandlerRootView style={styles.gestureContainer}>
           <AnimatedFlatList
             {...androidFlatListProps}
+            directionalLockEnabled
+            alwaysBounceHorizontal={false}
             {...flatListProps}
             testID={`${testID}.list`}
             listKey={`${testID}.flatList`}
