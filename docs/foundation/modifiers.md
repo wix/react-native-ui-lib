@@ -128,7 +128,7 @@ Easily control component positioning with our absolute position modifiers:
 ### Stretch Options
 - `absH` - Position absolutely and stretch horizontally
 - `absV` - Position absolutely and stretch vertically
-- `absF` - Position absolutely and fill the entire parent container (equivalent to `StyleSheet.absoluteFillObject`)
+- `absF` - Position absolutely and fill the entire parent container (equivalent to `StyleSheet.absoluteFill`)
 
 ```jsx
 <View absL>

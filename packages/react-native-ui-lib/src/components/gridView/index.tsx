@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap'
   },
   overlayContainer: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     alignItems: 'center',
     justifyContent: 'center'
   }

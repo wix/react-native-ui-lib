@@ -702,7 +702,7 @@ const styles = StyleSheet.create({
     right: 0
   },
   touchArea: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: 'transparent'
   }
 });
