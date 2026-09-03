@@ -224,6 +224,13 @@ export default function TabBarItem({
     })
     .onTouchesDown(() => {
       isPressed.value = true;
+    })
+    // NOTE: On iOS a cancelled tap (i.e. when the enclosing ScrollView claims the touch) transitions the
+    //       recognizer straight from POSSIBLE to CANCELLED, which emits no state change event, so onFinalize
+    //       is never called and the press feedback stays on the item.
+    //       Releasing it from the touch stream as well makes sure it is always cleared.
+    .onTouchesCancelled(() => {
+      isPressed.value = false;
     });
 
   return (
