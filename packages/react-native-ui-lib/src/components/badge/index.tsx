@@ -206,7 +206,7 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   renderLabel() {
-    const {labelStyle, label} = this.props;
+    const {labelStyle, label, testID} = this.props;
 
     if (label) {
       return (
@@ -214,7 +214,7 @@ class Badge extends PureComponent<BadgeProps> {
           style={[this.styles.label, this.isSmallBadge() && this.styles.labelSmall, labelStyle]}
           allowFontScaling={false}
           numberOfLines={1}
-          testID="badge"
+          testID={testID ? `${testID}.label` : 'badge'}
           recorderTag={'unmask'}
         >
           {this.getFormattedLabel()}
@@ -229,7 +229,7 @@ class Badge extends PureComponent<BadgeProps> {
   }
 
   renderIcon() {
-    const {icon, iconStyle, iconProps, borderColor, label} = this.props;
+    const {icon, iconStyle, iconProps, borderColor, label, testID} = this.props;
     const flex = label ? 0 : 1;
     return (
       icon && (
@@ -239,6 +239,7 @@ class Badge extends PureComponent<BadgeProps> {
           tintColor={Colors.$iconDefaultLight}
           //@ts-ignore
           borderColor={borderColor}
+          testID={testID ? `${testID}.icon` : undefined}
           {...iconProps}
           style={{
             flex,
