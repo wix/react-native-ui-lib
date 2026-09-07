@@ -18,7 +18,7 @@ class Tab2 extends Component {
     return (
       <View flex padding-20>
         <Image
-          style={StyleSheet.absoluteFillObject}
+          style={StyleSheet.absoluteFill}
           overlayType="top"
           source={{
             uri:
