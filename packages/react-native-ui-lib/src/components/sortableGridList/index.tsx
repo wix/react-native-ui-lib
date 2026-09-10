@@ -16,8 +16,28 @@ function generateItemsOrder(data: SortableGridListProps['data']) {
   return _.map(data, item => item.id);
 }
 
+const CONSUMED_PROPS = [
+  'renderItem',
+  'onOrderChange',
+  'flexMigration',
+  'orderByIndex',
+  'data',
+  'extraData',
+  // Consumed by useGridLayout — re-applied via listStyle / listContentStyle / listColumnWrapperStyle.
+  'style',
+  'contentContainerStyle',
+  'columnWrapperStyle',
+  'numColumns',
+  'itemSpacing',
+  'maxItemWidth',
+  'listPadding',
+  'keepItemSize',
+  'containerWidth'
+];
+
 function SortableGridList<T = any>(props: SortableGridListProps<T>) {
-  const {renderItem, onOrderChange, flexMigration, orderByIndex = false, ...others} = props;
+  const {renderItem, onOrderChange, flexMigration, orderByIndex = false, data} = props;
+  const scrollViewProps = _.omit(props, CONSUMED_PROPS);
 
   const {
     itemContainerStyle,
@@ -28,7 +48,6 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
     listContentStyle,
     listColumnWrapperStyle
   } = useGridLayout(props);
-  const {data} = others;
   const itemsOrder = useSharedValue<ItemsOrder>(generateItemsOrder(data));
 
   // TODO: Remove once flexMigration migration is completed
@@ -79,6 +98,7 @@ function SortableGridList<T = any>(props: SortableGridListProps<T>) {
   return (
     <GestureHandlerRootView style={flexMigration ? styles.container : undefined}>
       <ScrollView
+        {...scrollViewProps}
         style={listStyle}
         contentContainerStyle={[styles.listContent, listContentStyle, listColumnWrapperStyle]}
       >
