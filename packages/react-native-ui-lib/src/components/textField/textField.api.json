@@ -476,6 +476,16 @@
             ],
             "title": "Spec",
             "description": "Markdown:\n\n**Label**\nbodySmall, $textNeutralHeavy  \n**Placeholder**\nbody, $textNeutralLight  \n**Value**  \nbody, $textDefault  \n**Helper Text**  \nsubtext, $textNeutralHeavy  \n**Character Count**  \nbodySmall, $textNeutralHeavy  \n**Validation message**  \nMessage - bodySmall, $textDangerLight\nIcon - exclamationFillSmall, $iconDangerLight  \n**Prefix & Suffix**  \nbody, $textNeutral  \n**Clear Button**  \nxFlat, $textNeutralLight  \n**Warning Message**  \nMessage - bodySmall, $textDefault\nIcon - exclamationFillSmall, $iconDefault  \n**Validation Success**  \nIcon - checkmarkFlatSmall, $iconSuccess  \n**Outline - Default/unfocused**  \n1p, $outlineNeutral  \n**Outline - Focused, typing**  \n1p, $outlinePrimary  \n**Outline - Validation**  \n1p, $outlineDanger  \n**Outline - Disabled**  \n1p, $outlineDisabled  \n**Outline - Read only**  \nfill background- $backgroundNeutralLight"
+          },
+          {
+            "type": "section",
+            "title": "Sortable Input",
+            "description": "For guidelines regarding list reordering and behavior, see the SortableList documentation:\nhttps://wix-private.github.io/wix-react-native-ui-lib/docs/components/lists/SortableList",
+            "content": [
+              {
+                "value": "https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/Components%20Docs/textField/Sortable%20Input.png"
+              }
+            ]
           }
         ]
       },
