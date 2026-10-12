@@ -155,7 +155,7 @@ class TouchableOpacity extends PureComponent<Props, {active: boolean}> {
         onPress={this.onPress}
         onPressIn={this.onPressIn}
         onPressOut={this.onPressOut}
-        onLongPress={this.onLongPress}
+        onLongPress={this.props.onLongPress ? this.onLongPress : undefined}
         style={[
           this.backgroundColorStyle,
           borderRadius && {borderRadius},
