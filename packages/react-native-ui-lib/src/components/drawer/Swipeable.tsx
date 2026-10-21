@@ -541,11 +541,11 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   leftActions: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row'
   },
   rightActions: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     flexDirection: I18nManager.isRTL ? 'row' : 'row-reverse'
   }
 });

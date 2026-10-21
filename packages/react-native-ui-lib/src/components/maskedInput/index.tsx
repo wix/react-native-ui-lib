@@ -122,7 +122,7 @@ function MaskedInput(props: MaskedInputProps, ref: ForwardedRef<any>) {
 
 const styles = StyleSheet.create({
   hiddenInput: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     zIndex: 1,
     color: 'transparent',
     backgroundColor: 'transparent',

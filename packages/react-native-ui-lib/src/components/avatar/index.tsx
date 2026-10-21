@@ -288,7 +288,7 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
   }, [props]);
 
   const _imageStyle = useMemo(() => {
-    return [_baseContainerStyle, StyleSheet.absoluteFillObject, imageStyle];
+    return [_baseContainerStyle, StyleSheet.absoluteFill, imageStyle];
   }, [_baseContainerStyle, imageStyle]);
 
   const renderImage = () => {
@@ -382,7 +382,7 @@ const Avatar = forwardRef<any, AvatarProps>((props: AvatarProps, ref: React.Forw
 
 const styles = StyleSheet.create({
   initialsContainer: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: BorderRadiuses.br100,

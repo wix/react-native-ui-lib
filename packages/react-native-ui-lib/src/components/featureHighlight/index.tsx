@@ -429,7 +429,7 @@ const styles = StyleSheet.create({
     lineHeight: messageLineHeight
   },
   touchableOverlay: {
-    ...StyleSheet.absoluteFillObject
+    ...StyleSheet.absoluteFill
   }
 });
 export {FeatureHighlight}; // for tests

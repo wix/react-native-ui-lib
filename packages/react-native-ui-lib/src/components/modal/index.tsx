@@ -152,7 +152,7 @@ class Modal extends Component<ModalProps> {
 
 const styles = StyleSheet.create({
   touchableOverlay: {
-    ...StyleSheet.absoluteFillObject
+    ...StyleSheet.absoluteFill
   },
   fill: {
     flex: 1

@@ -81,7 +81,7 @@ const HighlighterOverlayView = (props: HighlighterOverlayViewProps) => {
     >
       <HighlighterViewNativeComponent
         highlightFrame={highlightFrame}
-        style={[style, {...StyleSheet.absoluteFillObject, backgroundColor: 'transparent'}]}
+        style={[style, {...StyleSheet.absoluteFill, backgroundColor: 'transparent'}]}
         overlayColor={overlayColorToUse}
         borderRadius={borderRadius}
         strokeColor={strokeColorToUse}

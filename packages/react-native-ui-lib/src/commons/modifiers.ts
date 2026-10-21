@@ -457,7 +457,7 @@ export function getAlteredModifiersOptions(currentProps: any, nextProps: any) {
 
 const styles = StyleSheet.create({
   absolute: {position: 'absolute'},
-  absoluteFill: StyleSheet.absoluteFillObject,
+  absoluteFill: StyleSheet.absoluteFill,
   absoluteTop: {position: 'absolute', top: 0},
   absoluteBottom: {position: 'absolute', bottom: 0},
   absoluteLeft: {position: 'absolute', left: 0},
