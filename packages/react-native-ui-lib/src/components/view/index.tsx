@@ -1,6 +1,6 @@
 import {useModifiers, useThemeProps} from 'hooks';
 import React, {useEffect, useMemo, useState} from 'react';
-import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, type StyleProp, type ViewStyle, type DimensionValue} from 'react-native';
+import {View as RNView, SafeAreaView, Animated, Platform, ViewProps as RNViewProps, type StyleProp, type ViewStyle, type DimensionValue} from 'react-native';
 import type {AnimateProps as RNReanimatedProps} from 'react-native-reanimated';
 import {Constants, ContainerModifiers} from '../../commons/new';
 import type {RecorderProps} from '../../typings/recorderTypes';
@@ -14,7 +14,7 @@ type ReanimatedProps = Partial<Pick<RNReanimatedProps<object>, 'entering' | 'exi
 export interface ViewProps extends Omit<RNViewProps, 'style'>, ReanimatedProps, ContainerModifiers, RecorderProps {
   /**
    * If true, will render as SafeAreaView.
-   * On iOS this is React Native's SafeAreaView, which insets only the edges the view actually touches;
+   * On iOS 26 and later this is React Native's SafeAreaView, which insets only the edges the view actually touches;
    * elsewhere it is react-native-safe-area-context's SafeAreaView when that package is installed.
    */
   useSafeArea?: boolean;
@@ -110,10 +110,12 @@ function View(props: ViewProps, ref: any) {
 
   const ViewContainer = useMemo(() => {
     let container: React.ComponentType<any> = RNView;
-    if (useSafeArea && Constants.isIOS) {
+    if (useSafeArea && Constants.isIOS && parseInt(String(Platform.Version), 10) >= 26) {
       container = SafeAreaView;
     } else if (useSafeArea && SafeAreaContextPackage?.SafeAreaView) {
       container = SafeAreaContextPackage.SafeAreaView;
+    } else if (useSafeArea && Constants.isIOS) {
+      container = SafeAreaView;
     }
 
     if (reanimated) {

@@ -11,7 +11,7 @@
     {
       "name": "useSafeArea",
       "type": "boolean",
-      "description": "If true, will render as SafeAreaView. On iOS this is React Native's SafeAreaView, which insets only the edges the view actually touches; elsewhere it is react-native-safe-area-context's SafeAreaView when that package is installed"
+      "description": "If true, will render as SafeAreaView. On iOS 26 and later this is React Native's SafeAreaView, which insets only the edges the view actually touches; elsewhere it is react-native-safe-area-context's SafeAreaView when that package is installed"
     },
     {"name": "animated", "type": "boolean", "description": "Use Animate.View as a container"},
     {
