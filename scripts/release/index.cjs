@@ -271,7 +271,7 @@ async function prepareArtifact(github) {
 async function record(github) {
   const manifest = await verifiedArtifact(github);
   if (manifest.kind === 'snapshot') return;
-  const branch = `ci/update-version-${mainPackage(manifest).version}`;
+  const branch = `infra/update-version-${mainPackage(manifest).version}`;
   const existing = await github.request('GET', `${prefix}/git/ref/heads/${branch}`, undefined, {
     allow404: true,
   });

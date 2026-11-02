@@ -46,7 +46,7 @@ before enabling publication. Creating or merging the workflow does not configure
 3. Enable GitHub Actions for this repository. Check Wix's Actions policy permits the pinned
    checkout, setup-node, upload-artifact, and download-artifact actions. Allow
    workflow-created pull requests. Ensure existing repository rules permit
-   `ci/update-version-*` branches and `react-native-ui-lib@*` / `uilib-native@*` tags
+   `infra/update-version-*` branches and `react-native-ui-lib@*` / `uilib-native@*` tags
    without a bypass. Branch rulesets do not cover tags: anyone with push access can
    pre-create a future `react-native-ui-lib@*` tag, which makes the workflow stop after npm
    publication ("Tag ... already points to a different commit") or narrows the release-notes
@@ -132,7 +132,7 @@ workflow rechecks authorization before every job that changes external state.
    entry points, the shipped `scripts/` whitelist, and the native sources are checked.
 5. Uploads a versioned manifest, the tarballs, release notes, and a Git bundle as
    `release-<run_id>-<run_attempt>`. A dry run ends here with no external release mutations.
-6. For real releases, persists `ci/update-version-<version>`, then publishes the verified
+6. For real releases, persists `infra/update-version-<version>`, then publishes the verified
    tarballs in order (`uilib-native` first) using OIDC. The publisher does not install
    project dependencies or rebuild them.
 7. Verifies npm integrity, creates annotated tags `uilib-native@<version>` (when published)

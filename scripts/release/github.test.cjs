@@ -185,7 +185,7 @@ test('ensurePullRequest reuses matching open or merged PRs, applies labels, and 
   ]) {
     const pr = {
       ...existing,
-      head: { ref: 'ci/update-version-9.1.4', sha: sourceSha },
+      head: { ref: 'infra/update-version-9.1.4', sha: sourceSha },
       base: { ref: adapter.branch },
     };
     const github = mockGitHub((_method, path) => {
@@ -213,7 +213,7 @@ test('ensurePullRequest reuses matching open or merged PRs, applies labels, and 
   });
   const pr = await ensurePullRequest(created, manifest());
   assert.equal(pr.title, 'Release: update version to 9.1.4');
-  assert.equal(pr.head, 'ci/update-version-9.1.4');
+  assert.equal(pr.head, 'infra/update-version-9.1.4');
   assert.match(pr.body, /## Changelog\nnone/);
 
   for (const pr of [
@@ -221,14 +221,14 @@ test('ensurePullRequest reuses matching open or merged PRs, applies labels, and 
       number: 53,
       state: 'closed',
       merged_at: null,
-      head: { ref: 'ci/update-version-9.1.4', sha: sourceSha },
+      head: { ref: 'infra/update-version-9.1.4', sha: sourceSha },
       base: { ref: adapter.branch },
     },
     {
       number: 54,
       state: 'open',
       merged_at: null,
-      head: { ref: 'ci/update-version-9.1.4', sha: 'c'.repeat(40) },
+      head: { ref: 'infra/update-version-9.1.4', sha: 'c'.repeat(40) },
       base: { ref: adapter.branch },
     },
   ]) {

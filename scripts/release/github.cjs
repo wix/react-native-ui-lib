@@ -137,7 +137,7 @@ function pullRequestBody(manifest) {
 
 async function ensurePullRequest(github, manifest) {
   const pkg = mainPackage(manifest);
-  const branch = `ci/update-version-${pkg.version}`;
+  const branch = `infra/update-version-${pkg.version}`;
   const results = await github.request(
     'GET',
     `${prefix}/pulls?state=all&head=${adapter.repository.split('/')[0]}:${branch}&base=${adapter.branch}&per_page=100`
