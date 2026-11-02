@@ -137,7 +137,7 @@ function createStyles() {
       backgroundColor: Colors.grey30
     },
     absolutePosition: {
-      ...StyleSheet.absoluteFillObject,
+      ...StyleSheet.absoluteFill,
       bottom: undefined
     },
     container: {

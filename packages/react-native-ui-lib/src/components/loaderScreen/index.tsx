@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   overlayContainer: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: Colors.rgba(Colors.white, 0.85),
     zIndex: 100
   },

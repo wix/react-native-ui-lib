@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
   trackingToolbarContainer: {
     ...Platform.select({
       ios: {
-        ...StyleSheet.absoluteFillObject,
+        ...StyleSheet.absoluteFill,
         top: undefined
       }
     })
