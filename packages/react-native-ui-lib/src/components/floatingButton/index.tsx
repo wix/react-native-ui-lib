@@ -1,7 +1,8 @@
 import React, {PropsWithChildren, useEffect, useMemo} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 import {asBaseComponent, Constants} from '../../commons/new';
 import {LogService} from '../../services';
+import {SafeAreaContextPackage} from '../../optionalDependencies';
 import {Colors, Shadows, Spacings} from '../../style';
 import Button, {ButtonProps} from '../button';
 import ScreenFooter, {ScreenFooterProps, ScreenFooterLayouts, ScreenFooterBackgrounds, KeyboardBehavior, ItemsFit} from '../screenFooter';
@@ -63,6 +64,9 @@ export interface FloatingButtonProps extends Pick<ScreenFooterProps, 'isAndroidE
   testID?: string;
 }
 
+const isIOS26OrLater = Constants.isIOS && parseInt(String(Platform.Version), 10) >= 26;
+const useSafeAreaInsets = SafeAreaContextPackage?.useSafeAreaInsets ?? (() => Constants.getSafeAreaInsets());
+
 /**
  * @description: Hovering button with gradient background, backed by ScreenFooter
  * @modifiers: margin, background, color
@@ -93,16 +97,18 @@ const FloatingButton = (props: FloatingButtonProps) => {
     );
   }, []);
 
+  const insets = useSafeAreaInsets();
+  const bottomInset = isIOS26OrLater ? insets.bottom : 0;
   const isSecondaryOnly = !!secondaryButton && !button;
   const isHorizontal = buttonLayout === FloatingButtonLayouts.HORIZONTAL || isSecondaryOnly;
 
   const footerContentContainerStyle = useMemo(() => {
     if (bottomMargin !== undefined) {
-      return {paddingBottom: bottomMargin};
+      return {paddingBottom: bottomMargin + bottomInset};
     }
     const isSecondaryAtBottom = !!secondaryButton && (isSecondaryOnly || !isHorizontal);
-    return {paddingBottom: isSecondaryAtBottom ? Spacings.s7 : Spacings.s8};
-  }, [bottomMargin, secondaryButton, isSecondaryOnly, isHorizontal]);
+    return {paddingBottom: (isSecondaryAtBottom ? Spacings.s7 : Spacings.s8) + bottomInset};
+  }, [bottomMargin, secondaryButton, isSecondaryOnly, isHorizontal, bottomInset]);
 
   if (!button && !secondaryButton) {
     return null;
