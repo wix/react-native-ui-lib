@@ -95,7 +95,7 @@ export type AlignmentLiterals =
   | 'right'
   | 'top'
   | 'bottom';
-export type PositionLiterals = 'absF' | 'absL' | 'absR' | 'absT' | 'absB' | 'absV' | 'absH';
+export type PositionLiterals = 'abs' | 'absF' | 'absL' | 'absR' | 'absT' | 'absB' | 'absV' | 'absH';
 export type GapLiterals = 'gap';
 
 export type Modifier<T extends string> = Partial<Record<T, boolean>>;
