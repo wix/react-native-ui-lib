@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-RELEASING" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Releasing react-native-ui-lib | RNUILib</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://wix.github.io/react-native-ui-lib/docs/RELEASING"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="title" content="React Native UI Lib"><meta data-rh="true" name="keywords" content="design system, react native, react, mobile, web, ui library, components library"><meta data-rh="true" name="robots" content="index, follow"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Releasing react-native-ui-lib | RNUILib"><meta data-rh="true" name="description" content="The Release workflow"><meta data-rh="true" property="og:description" content="The Release workflow"><link data-rh="true" rel="icon" href="/react-native-ui-lib/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://wix.github.io/react-native-ui-lib/docs/RELEASING"><link data-rh="true" rel="alternate" href="https://wix.github.io/react-native-ui-lib/docs/RELEASING" hreflang="en"><link data-rh="true" rel="alternate" href="https://wix.github.io/react-native-ui-lib/docs/RELEASING" hreflang="x-default"><link data-rh="true" rel="preconnect" href="https://BWQFOHCCF3-dsn.algolia.net" crossorigin="anonymous"><link rel="search" type="application/opensearchdescription+xml" title="RNUILib" href="/react-native-ui-lib/opensearch.xml"><link rel="stylesheet" href="/react-native-ui-lib/assets/css/styles.c38dc4ac.css">
+<script src="/react-native-ui-lib/assets/js/runtime~main.10dc1eed.js" defer="defer"></script>
+<script src="/react-native-ui-lib/assets/js/main.a04209fc.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>document.documentElement.setAttribute("data-theme","light"),document.documentElement.setAttribute("data-theme-choice","light"),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/react-native-ui-lib/img/logo_rnui.png"><link rel="preload" as="image" href="https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/site/logo_rnui_footer.png"><link rel="preload" as="image" href="https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/site/externalSmall.png"><link rel="preload" as="image" href="https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/site/discord.png"><link rel="preload" as="image" href="https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/site/xSocial.png"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/react-native-ui-lib/"><div class="navbar__logo"><img src="/react-native-ui-lib/img/logo_rnui.png" alt="RNUI Logo" class="themedComponent_mlkZ themedComponent--light_NVdE" height="53" width="139"><img src="/react-native-ui-lib/img/logo_rnui.png" alt="RNUI Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU" height="53" width="139"></div></a><a class="navbar__item navbar__link" href="/react-native-ui-lib/docs/getting-started/setup">GETTING STARTED</a><a class="navbar__item navbar__link" href="/react-native-ui-lib/docs/foundation/style">FOUNDATION</a><a class="navbar__item navbar__link" href="/react-native-ui-lib/docs/category/basic">COMPONENTS</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://github.com/wix/react-native-ui-lib" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">
+                <div style="display: flex; align-items: center; font-size: 16px;">
+                  <span style="margin-right: 6px;">GitHub</span>
+                  <image src="https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/site/externalSmall.png" alt="external link icon" width="17" height="16">
+                </div>
+              </a><div class="navbarSearchContainer_Bca1"><button type="button" class="DocSearch DocSearch-Button" aria-label="Search (Meta+k)" aria-keyshortcuts="Meta+k"><span class="DocSearch-Button-Container"><svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" fill="none" stroke-width="1.4"></circle><path d="m21 21-4.3-4.3" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="DocSearch-Button-Placeholder">Search</span></span><span class="DocSearch-Button-Keys"></span></button></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><main class="docMainContainer_TBSr docMainContainerEnhanced_lQrH"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Releasing react-native-ui-lib</h1></header>
+<p>The <a href="https://github.com/wix/react-native-ui-lib/actions/workflows/release.yml" target="_blank" rel="noopener noreferrer" class="">Release workflow</a>
+is the only supported npm publisher for <code>react-native-ui-lib</code> and <code>uilib-native</code>. Repository
+admins start it manually on <code>master</code>. Both regular releases and snapshots use npm trusted
+publishing with GitHub OIDC. Buildkite keeps running native tests; it must no longer version
+or publish packages, and its npm credentials must not be renewed as a fallback.</p>
+<p>The contract is a port of react-native-navigation&#x27;s release tooling (<code>scripts/release/*.cjs</code>).
+Repository-specific policy (package directories, publication order, expected tarball contents)
+lives in <code>scripts/release/uilib.cjs</code>; tag naming lives in <code>scripts/release/policy.cjs</code>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="one-time-configuration">One-time configuration<a href="#one-time-configuration" class="hash-link" aria-label="Direct link to One-time configuration" title="Direct link to One-time configuration" translate="no">​</a></h2>
+<p>A repository admin and an npm administrator for both packages must complete these steps
+before enabling publication. Creating or merging the workflow does not configure npm trust.</p>
+<ol>
+<li class="">
+<p>Create the GitHub environment <code>npm-release</code>. Under deployment branches and tags, select
+only the <strong>branch</strong> <code>master</code>. Protect <code>master</code> and review changes to release workflows and
+helpers. Required environment reviewers are optional; enabling them introduces approvals
+for the record, publish, and finalize jobs.</p>
+</li>
+<li class="">
+<p>Add a GitHub Actions trusted publisher in the npm settings of <strong>each</strong> package,
+<code>react-native-ui-lib</code> and <code>uilib-native</code>, with the same values:</p>
+<table><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody><tr><td>Organization</td><td><code>wix</code></td></tr><tr><td>Repository</td><td><code>react-native-ui-lib</code></td></tr><tr><td>Workflow filename</td><td><code>release.yml</code></td></tr><tr><td>Environment</td><td><code>npm-release</code></td></tr><tr><td>Allowed action</td><td>Direct <code>npm publish</code></td></tr></tbody></table>
+<p>Explicitly allow direct publication: a stage-only configuration cannot complete this
+workflow. Standalone <code>npm dist-tag</code> permission is not needed. See
+<a href="https://docs.npmjs.com/trusted-publishers/" target="_blank" rel="noopener noreferrer" class="">npm trusted publishing</a>. Provenance requires
+both package.json <code>repository.url</code> fields to point at this repository; they do.</p>
+<p>From the CLI, this needs an npm with <code>--allow-publish</code> (11.17.0 has it, 11.12.1 does not
+and fails with an unexplained <code>E400</code>):</p>
+<div class="language-sh codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-sh codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">npm trust github &lt;package&gt; --file release.yml --repo wix/react-native-ui-lib \</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  --env npm-release --allow-publish</span><br></span></code></pre></div></div>
+</li>
+<li class="">
+<p>Enable GitHub Actions for this repository. Check Wix&#x27;s Actions policy permits the pinned
+checkout, setup-node, upload-artifact, and download-artifact actions. Allow
+workflow-created pull requests. Ensure existing repository rules permit
+<code>infra/update-version-*</code> branches and <code>react-native-ui-lib@*</code> / <code>uilib-native@*</code> tags
+without a bypass. Branch rulesets do not cover tags: anyone with push access can
+pre-create a future <code>react-native-ui-lib@*</code> tag, which makes the workflow stop after npm
+publication (&quot;Tag ... already points to a different commit&quot;) or narrows the release-notes
+range. Add a tag ruleset for both patterns that forbids creation and deletion, with a
+bypass for repository admins and the GitHub Actions app (the workflow creates tags with
+<code>GITHUB_TOKEN</code>), or record the accepted risk.</p>
+</li>
+<li class="">
+<p>Check the GitHub commit status <code>buildkite/react-native-ui-lib</code> represents the Buildkite
+pipeline for this repository. It must finish successfully on the exact <code>master</code> commit
+selected by the release run. The status creator must match the Buildkite app ID/login
+pinned in <code>scripts/release/uilib.cjs</code>. A failed, absent, or pending status blocks real
+publication, including snapshots. A dry run reports it without publishing.</p>
+</li>
+<li class="">
+<p>Define the release baseline on <code>master</code>. Release notes span from the newest stable
+<code>react-native-ui-lib@*</code> tag reachable from the selected <code>master</code> commit. Existing tags
+were created by the old flow on the <code>release</code> branch and are not reachable from <code>master</code>,
+so the first <code>kind=release</code> run fails with &quot;No preceding reachable stable tag&quot; until an
+admin creates an annotated <code>react-native-ui-lib@&lt;npm latest&gt;</code> tag on the <code>master</code> commit
+that corresponds to that published version. For 9.1.3 that commit is <code>2af5663e4</code>
+(<code>git tag -a react-native-ui-lib@9.1.3 -m react-native-ui-lib@9.1.3 2af5663e4</code> and push it).
+Snapshots need no baseline; without one their notes list no pull requests.</p>
+</li>
+<li class="">
+<p>Verify a dry run and inspect its artifact. Then set the repository Actions variable
+<code>RELEASE_PUBLISH_ENABLED</code> to <code>true</code>. Without it, publish and resume fail closed.</p>
+</li>
+<li class="">
+<p>Run an intentional snapshot publication and verify both npm versions, integrity,
+provenance, and the <code>snapshot</code> dist-tags. Confirm that <code>latest</code> did not change.</p>
+</li>
+<li class="">
+<p>Clean up Buildkite (configured outside this repository, no <code>.buildkite/</code> directory):
+remove the <code>release</code> and <code>snapshot</code> publishing steps and the <code>NPM_TOKEN</code>, <code>NPM_EMAIL</code>,
+<code>GIT_USER</code>, <code>GIT_EMAIL</code>, and <code>GIT_TOKEN</code> injection from the pipeline. Restrict traditional
+token publishing in both packages&#x27; npm settings. Do not renew expired tokens. A shared
+credential must not be revoked until its other consumers (see retained publishers below)
+have been migrated.</p>
+</li>
+</ol>
+<p>No npm write token is needed in GitHub. <code>GITHUB_TOKEN</code> performs repository bookkeeping; only
+the publish job has <code>id-token: write</code>. Publishing runs on a GitHub-hosted Ubuntu runner. The
+workflow uses Node 24.22.1, including npm 11.19.1; update this tested pair together. Older npm
+releases can execute <code>prepare</code> during <code>npm pack --ignore-scripts</code>. (<code>.nvmrc</code> stays at the
+development version; the release workflow pins its own Node.)</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="start-a-release">Start a release<a href="#start-a-release" class="hash-link" aria-label="Direct link to Start a release" title="Direct link to Start a release" translate="no">​</a></h2>
+<p>Open <strong>Actions → Release → Run workflow</strong>, select <code>master</code>, and supply:</p>
+<table><thead><tr><th>Input</th><th>Meaning</th></tr></thead><tbody><tr><td><code>operation</code></td><td><code>dry-run</code> (default), <code>publish</code>, or <code>resume</code></td></tr><tr><td><code>kind</code></td><td><code>release</code> or <code>snapshot</code></td></tr><tr><td><code>version</code></td><td>Exact <code>react-native-ui-lib</code> semver for releases; empty for snapshots</td></tr><tr><td><code>native_version</code></td><td>Exact <code>uilib-native</code> semver to publish in the same run; empty = do not publish it (empty for snapshots)</td></tr><tr><td><code>npm_tag</code></td><td><code>latest</code> for stable versions, <code>next</code> for prereleases, <code>snapshot</code> for snapshots (applies to both packages)</td></tr><tr><td><code>source_run_id</code></td><td>Original publishing run ID, for resume only</td></tr></tbody></table>
+<p>Examples:</p>
+<ul>
+<li class="">Stable JS-only: <code>kind=release</code>, <code>version=9.1.4</code>, <code>npm_tag=latest</code>.</li>
+<li class="">Stable with native: <code>kind=release</code>, <code>version=9.2.0</code>, <code>native_version=5.2.0</code>, <code>npm_tag=latest</code>.</li>
+<li class="">Prerelease: <code>kind=release</code>, <code>version=9.2.0-rc.1</code>, <code>native_version=5.2.0-rc.1</code>, <code>npm_tag=next</code>.</li>
+<li class="">Snapshot: <code>kind=snapshot</code>, leave both versions empty, <code>npm_tag=snapshot</code>.</li>
+</ul>
+<p>Each selected version must be newer than that package&#x27;s npm <code>latest</code>. Build metadata such as
+<code>+build.1</code> is intentionally unsupported. Snapshots publish <strong>both</strong> packages as
+<code>&lt;base&gt;-snapshot.gha.&lt;run_id&gt;</code>, with each base derived from the greater of the source
+package version and that package&#x27;s npm <code>latest</code>. The run attempt is not part of the version.
+Snapshots do not create tags, GitHub releases, or version PRs.</p>
+<p><code>react-native-ui-lib</code> depends on <code>uilib-native</code> through <code>&quot;workspace:*&quot;</code>. Before packing, the
+workflow rewrites that range to the planned <code>uilib-native</code> version when it is published in
+the same run, otherwise to the current npm <code>latest</code> of <code>uilib-native</code>. The packed
+package.json is checked for leftover <code>workspace:</code> ranges.</p>
+<p>Users with write access may see GitHub&#x27;s Run workflow button, but both the original actor
+and the user rerunning/resuming the workflow must have repository-admin permission. The
+workflow rechecks authorization before every job that changes external state.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-the-workflow-does">What the workflow does<a href="#what-the-workflow-does" class="hash-link" aria-label="Direct link to What the workflow does" title="Direct link to What the workflow does" translate="no">​</a></h2>
+<ol>
+<li class="">Records the exact source SHA, chosen versions/channel, and native CI result.</li>
+<li class="">Installs the locked Yarn dependencies and creates a local release commit from the clean
+tree. The commit changes only the <code>version</code> fields of <code>packages/uilib-native/package.json</code>
+and <code>packages/react-native-ui-lib/package.json</code>; the bundle verifier rejects anything else.</li>
+<li class="">Runs the release-helper tests and <code>yarn build</code>. The build rewrites <code>packages/</code> in place
+(compiles TypeScript, copies <code>uilib-native</code> into <code>lib/</code>, copies the root <code>scripts/</code>,
+<code>README.md</code>, and <code>LICENSE</code> into the package), which is why the commit is created first.</li>
+<li class="">Rewrites the <code>uilib-native</code> workspace dependency, then packs <code>uilib-native</code> (when
+selected) and <code>react-native-ui-lib</code> with <code>npm pack --ignore-scripts</code>. Package contents,
+entry points, the shipped <code>scripts/</code> whitelist, and the native sources are checked.</li>
+<li class="">Uploads a versioned manifest, the tarballs, release notes, and a Git bundle as
+<code>release-&lt;run_id&gt;-&lt;run_attempt&gt;</code>. A dry run ends here with no external release mutations.</li>
+<li class="">For real releases, persists <code>infra/update-version-&lt;version&gt;</code>, then publishes the verified
+tarballs in order (<code>uilib-native</code> first) using OIDC. The publisher does not install
+project dependencies or rebuild them.</li>
+<li class="">Verifies npm integrity, creates annotated tags <code>uilib-native@&lt;version&gt;</code> (when published)
+and <code>react-native-ui-lib@&lt;version&gt;</code> on the source commit, creates a GitHub release named
+after the bare <code>react-native-ui-lib</code> version, and opens a version PR with the <code>release</code>
+label. Its body fills the sections required by the PR description check.</li>
+</ol>
+<p>Release notes include merged PRs from the preceding reachable <code>react-native-ui-lib@*</code> stable
+tag through the source commit, categorized by head-branch prefix the same way
+<code>scripts/release/prReleaseNotesCommon.js</code> does (<code>feat/</code>, <code>web/</code>, <code>fix/</code>, <code>infra/</code>, other).
+Each entry uses the PR&#x27;s <code>## Changelog</code> section when present; PRs whose changelog is
+<code>none</code>/<code>n/a</code>/<code>na</code> are omitted. The interactive <code>yarn prReleaseNotes</code> tooling is unchanged and
+still ships inside the npm package.</p>
+<p>Review and merge the version PR after publication. Events created with <code>GITHUB_TOKEN</code> do not
+start Actions workflows, so Release checks will not run on the version PR; Buildkite still
+builds it through its webhook. Inspect the PR&#x27;s checks before merging. Documentation deploys
+through the separate <code>deployDocs.yml</code> workflow and is not part of this process.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="resume-a-partial-release">Resume a partial release<a href="#resume-a-partial-release" class="hash-link" aria-label="Direct link to Resume a partial release" title="Direct link to Resume a partial release" translate="no">​</a></h2>
+<p>Use <strong>Re-run failed jobs</strong> when the original run still has its preparation outputs, or
+dispatch <code>operation=resume</code> with <code>source_run_id</code> set to the original <strong>publish</strong> run. Other
+release inputs are ignored in resume mode. Do not enter a different version to recover from a
+GitHub or network error.</p>
+<p>Recovery validates the upstream workflow identity, source SHA, native CI, artifact integrity,
+release commit, and package metadata. It downloads the saved artifacts and does not rebuild
+against the current branch. If a version is still absent from npm and <code>master</code> has advanced,
+re-run the original publishing run instead of dispatching a new resume run: npm provenance
+must identify the source commit that built the package. A new resume dispatch may finish
+GitHub bookkeeping for already published matching tarballs.</p>
+<p>Multi-package publication is not atomic. If <code>uilib-native</code> published and <code>react-native-ui-lib</code>
+did not, resume skips the package whose registry bytes already match the artifact and
+publishes only the remaining one; versions are never incremented to recover.</p>
+<table><thead><tr><th>State</th><th>Result</th></tr></thead><tbody><tr><td>Version absent from npm</td><td>Publish the original tarball, provided its channel would not move backward</td></tr><tr><td>Same version and same integrity already published</td><td>Skip publication and finish GitHub steps</td></tr><tr><td>Same version with different integrity</td><td>Stop; investigate the conflicting publication</td></tr><tr><td>Registry failure or lost response</td><td>Fail without choosing another version; resume when healthy</td></tr><tr><td><code>E409 Cannot publish over previously staged</code></td><td>npm still hides that upload; wait until the version is visible and resume</td></tr><tr><td>Existing branch/tag/PR matches</td><td>Reuse it</td></tr><tr><td>Existing branch/tag/PR conflicts</td><td>Stop; never force-push or move a tag</td></tr><tr><td>Dry-run artifact selected</td><td>Reject; start a fresh publish run</td></tr><tr><td>Artifact expired/deleted</td><td>Stop automatic recovery</td></tr></tbody></table>
+<p>Artifacts request 90-day retention, subject to organization limits. Retain artifacts until
+the version PR is merged and the release is verified. After artifact loss, an admin must
+investigate the existing registry versions and persisted release branch manually; do not
+reconstruct and publish different bytes under the same version or fall back to the old
+pipeline. npm and GitHub do not provide a cross-service atomic transaction.</p>
+<p>The concurrency group serializes all release attempts. GitHub may replace a pending run when
+another dispatch is queued; it does not cancel the running publisher. Check each run&#x27;s state
+rather than assuming every click is queued indefinitely.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="validate-changes-to-the-release-tooling">Validate changes to the release tooling<a href="#validate-changes-to-the-release-tooling" class="hash-link" aria-label="Direct link to Validate changes to the release tooling" title="Direct link to Validate changes to the release tooling" translate="no">​</a></h2>
+<p>With Node 24.22.1 and npm 11.19.1:</p>
+<div class="language-sh codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-sh codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">node --test scripts/release/*.test.cjs</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">node .yarn/releases/yarn-4.12.0.cjs install --immutable</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">node .yarn/releases/yarn-4.12.0.cjs build</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">RELEASE_DIR=/tmp/uilib-pack node scripts/release/index.cjs pack-check</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">git checkout -- packages &amp;&amp; git clean -fd packages   # undo the in-place build</span><br></span></code></pre></div></div>
+<p><code>pack-check</code> only prepares and inspects local tarballs; it rewrites the workspace range to the
+source <code>uilib-native</code> version. The read-only Release checks workflow runs the tests and the
+clean Linux package check on PRs. A real OIDC publication still needs the default-branch
+workflow and the npm/GitHub configuration above.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="removed-release-paths-and-retained-publishers">Removed release paths and retained publishers<a href="#removed-release-paths-and-retained-publishers" class="hash-link" aria-label="Direct link to Removed release paths and retained publishers" title="Direct link to Removed release paths and retained publishers" translate="no">​</a></h2>
+<p>Removed: the Buildkite-driven <code>scripts/release/release.js</code>, <code>releaseUtils.js</code>, their Jest
+spec, the token-based <code>scripts/release/.npmrc</code>, and the root <code>release</code> /
+<code>test:releaseScript</code> scripts. Automatic Buildkite snapshots are replaced by manual snapshots.
+Native Buildkite testing remains.</p>
+<p>Retained publishers (out of scope for this migration, still Buildkite/token based; migrate
+as follow-up work before revoking the shared <code>NPM_TOKEN</code>):</p>
+<ul>
+<li class=""><code>demo/scripts/releaseDemo.js</code> (<code>yarn releaseDemo</code>, <code>demo/scripts/.npmrc</code>)</li>
+<li class=""><code>docuilib/scripts/releaseDocs.js</code> (<code>yarn releaseDocs</code>, <code>docuilib/scripts/.npmrc</code>)</li>
+<li class=""><code>eslint-rules/scripts/releaseEslint.js</code> (<code>yarn releaseEslint</code>, <code>eslint-rules/scripts/.npmrc</code>)</li>
+</ul></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href="https://github.com/facebook/docusaurus/edit/main/website/../docs/RELEASING.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#one-time-configuration" class="table-of-contents__link toc-highlight">One-time configuration</a></li><li><a href="#start-a-release" class="table-of-contents__link toc-highlight">Start a release</a></li><li><a href="#what-the-workflow-does" class="table-of-contents__link toc-highlight">What the workflow does</a></li><li><a href="#resume-a-partial-release" class="table-of-contents__link toc-highlight">Resume a partial release</a></li><li><a href="#validate-changes-to-the-release-tooling" class="table-of-contents__link toc-highlight">Validate changes to the release tooling</a></li><li><a href="#removed-release-paths-and-retained-publishers" class="table-of-contents__link toc-highlight">Removed release paths and retained publishers</a></li></ul></div></div></div></div></main></div></div></div><footer class="footer"><div class="footer__container"><div class="footer__links"><div class="footer__section"><a href="docs/getting-started/setup" rel="noreferrer noopener" aria-label="Go to docs"><img src="https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/site/logo_rnui_footer.png" alt="rnui logo" width="139" height="38"></a></div><div class="footer__section"><div class="footer__section__item"><a href="https://github.com/wix/react-native-ui-lib" target="_blank" rel="noreferrer noopener" aria-label="Open gitHub" class="text__link"><span>GitHub</span><img src="https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/site/externalSmall.png" alt="external link icon" width="17" height="16"></a></div><div class="footer__section__item"><a href="https://snack.expo.io/@ethanshar/rnuilib_snack?platform=ios&amp;supportedPlatforms=ios,android" target="_blank" rel="noreferrer noopener" aria-label="Open expo snack"><span>Expo-Snack</span><img src="https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/site/externalSmall.png" alt="external link icon" width="17" height="16"></a></div></div><div class="footer__section right__section"><a href="https://discord.gg/2eW4g6Z" target="_blank" rel="noreferrer noopener" aria-label="Open discord" class="icon__link"><img src="https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/site/discord.png" alt="Discord icon" width="28" height="28"></a><a href="https://twitter.com/rnuilib" target="_blank" rel="noreferrer noopener" aria-label="Open x"><img src="https://wixmp-1d257fba8470f1b562a0f5f2.wixmp.com/mads-docs-assets/assets/site/xSocial.png" alt="x icon" width="28" height="28"></a></div></div><div class="footer__bottom text--center"><div class="footer__copyright">© 2006-<!-- -->2026<!-- --> Wix.com, Inc.</div></div></div></footer></div>
+</body>
+</html>
