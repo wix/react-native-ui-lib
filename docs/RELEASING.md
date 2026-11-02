@@ -35,6 +35,14 @@ before enabling publication. Creating or merging the workflow does not configure
    [npm trusted publishing](https://docs.npmjs.com/trusted-publishers/). Provenance requires
    both package.json `repository.url` fields to point at this repository; they do.
 
+   From the CLI, this needs an npm with `--allow-publish` (11.17.0 has it, 11.12.1 does not
+   and fails with an unexplained `E400`):
+
+   ```sh
+   npm trust github <package> --file release.yml --repo wix/react-native-ui-lib \
+     --env npm-release --allow-publish
+   ```
+
 3. Enable GitHub Actions for this repository. Check Wix's Actions policy permits the pinned
    checkout, setup-node, upload-artifact, and download-artifact actions. Allow
    workflow-created pull requests. Ensure existing repository rules permit
@@ -55,8 +63,8 @@ before enabling publication. Creating or merging the workflow does not configure
    were created by the old flow on the `release` branch and are not reachable from `master`,
    so the first `kind=release` run fails with "No preceding reachable stable tag" until an
    admin creates an annotated `react-native-ui-lib@<npm latest>` tag on the `master` commit
-   that corresponds to that published version
-   (`git tag -a react-native-ui-lib@9.1.3 -m react-native-ui-lib@9.1.3 <sha>` and push it).
+   that corresponds to that published version. For 9.1.3 that commit is `2af5663e4`
+   (`git tag -a react-native-ui-lib@9.1.3 -m react-native-ui-lib@9.1.3 2af5663e4` and push it).
    Snapshots need no baseline; without one their notes list no pull requests.
 6. Verify a dry run and inspect its artifact. Then set the repository Actions variable
    `RELEASE_PUBLISH_ENABLED` to `true`. Without it, publish and resume fail closed.
@@ -71,7 +79,7 @@ before enabling publication. Creating or merging the workflow does not configure
 
 No npm write token is needed in GitHub. `GITHUB_TOKEN` performs repository bookkeeping; only
 the publish job has `id-token: write`. Publishing runs on a GitHub-hosted Ubuntu runner. The
-workflow uses Node 24.19.0, including npm 11.17.0; update this tested pair together. Older npm
+workflow uses Node 24.22.1, including npm 11.19.1; update this tested pair together. Older npm
 releases can execute `prepare` during `npm pack --ignore-scripts`. (`.nvmrc` stays at the
 development version; the release workflow pins its own Node.)
 
@@ -168,6 +176,7 @@ publishes only the remaining one; versions are never incremented to recover.
 | Same version and same integrity already published | Skip publication and finish GitHub steps                                   |
 | Same version with different integrity             | Stop; investigate the conflicting publication                              |
 | Registry failure or lost response                 | Fail without choosing another version; resume when healthy                 |
+| `E409 Cannot publish over previously staged`      | npm still hides that upload; wait until the version is visible and resume  |
 | Existing branch/tag/PR matches                    | Reuse it                                                                   |
 | Existing branch/tag/PR conflicts                  | Stop; never force-push or move a tag                                       |
 | Dry-run artifact selected                         | Reject; start a fresh publish run                                          |
@@ -185,7 +194,7 @@ rather than assuming every click is queued indefinitely.
 
 ## Validate changes to the release tooling
 
-With Node 24.19.0 and npm 11.17.0:
+With Node 24.22.1 and npm 11.19.1:
 
 ```sh
 node --test scripts/release/*.test.cjs

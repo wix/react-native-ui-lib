@@ -43,7 +43,7 @@ env:
   RELEASE_NPM_TAG: ${{ inputs.npm_tag }}
   RELEASE_SOURCE_RUN_ID: ${{ inputs.source_run_id }}
   RELEASE_PUBLISH_ENABLED: ${{ vars.RELEASE_PUBLISH_ENABLED }}
-  RELEASE_DIR: ${{ github.workspace }}/../release-artifacts
+  RELEASE_DIR: /home/runner/work/_temp/release-artifacts
   GH_TOKEN: ${{ github.token }}
 
 jobs:
@@ -67,7 +67,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@65d868f8d4d85d7d4abb7de0875cde3fcc8798f5
         with:
-          node-version: '24.19.0'
+          node-version: '24.22.1'
           package-manager-cache: false
       - name: Check admin authorization
         run: node scripts/release/index.cjs authorize
@@ -105,7 +105,7 @@ jobs:
       - name: Pack and record immutable release inputs
         if: inputs.operation != 'resume'
         run: node scripts/release/index.cjs prepare-artifact
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: inputs.operation != 'resume'
         id: upload
         with:
@@ -132,7 +132,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@65d868f8d4d85d7d4abb7de0875cde3fcc8798f5
         with:
-          node-version: '24.19.0'
+          node-version: '24.22.1'
           package-manager-cache: false
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
@@ -148,7 +148,7 @@ jobs:
     needs: [prepare, record]
     environment: npm-release
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 70
     permissions:
       contents: read
       actions: read
@@ -162,7 +162,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@65d868f8d4d85d7d4abb7de0875cde3fcc8798f5
         with:
-          node-version: '24.19.0'
+          node-version: '24.22.1'
           package-manager-cache: false
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
@@ -178,7 +178,7 @@ jobs:
     needs: [prepare, publish]
     environment: npm-release
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 70
     permissions:
       contents: write
       actions: read
@@ -193,7 +193,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@65d868f8d4d85d7d4abb7de0875cde3fcc8798f5
         with:
-          node-version: '24.19.0'
+          node-version: '24.22.1'
           package-manager-cache: false
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:

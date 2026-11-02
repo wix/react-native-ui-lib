@@ -99,7 +99,7 @@ function validatePackageFiles(files, pkg, { nativeDependency } = {}) {
 function pack(directory, name, options) {
   check(
     compareVersions(exec('npm', ['--version']).trim(), '11.17.0') >= 0,
-    'Package preparation requires npm >=11.17.0 (Node 24.19.0); older npm can run prepare despite --ignore-scripts'
+    'Package preparation requires npm >=11.17.0 (Node 24.22.1); older npm can run prepare despite --ignore-scripts'
   );
   fs.mkdirSync(directory, { recursive: true });
   const output = exec(

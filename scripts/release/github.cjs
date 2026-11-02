@@ -140,7 +140,7 @@ async function ensurePullRequest(github, manifest) {
   const branch = `ci/update-version-${pkg.version}`;
   const results = await github.request(
     'GET',
-    `${prefix}/pulls?state=all&head=wix:${branch}&base=${adapter.branch}&per_page=100`
+    `${prefix}/pulls?state=all&head=${adapter.repository.split('/')[0]}:${branch}&base=${adapter.branch}&per_page=100`
   );
   const existing = results.find((pr) => pr.head.ref === branch && pr.base.ref === adapter.branch);
   let pr = existing;
