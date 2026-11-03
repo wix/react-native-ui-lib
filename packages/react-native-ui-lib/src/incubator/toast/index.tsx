@@ -5,7 +5,8 @@ import {
   findNodeHandle,
   AccessibilityInfo,
   ViewStyle,
-  LayoutChangeEvent
+  LayoutChangeEvent,
+  Platform
 } from 'react-native';
 import {Constants, asBaseComponent} from '../../commons/new';
 import {useDidUpdate} from '../../hooks';
@@ -21,6 +22,8 @@ import useToastPresets from './helpers/useToastPresets';
 import useToastAnimation from './helpers/useToastAnimation';
 
 const THRESHOLD = {x: Constants.screenWidth / 4, y: 10};
+
+const isIOS26OrLater = Constants.isIOS && parseInt(String(Platform.Version), 10) >= 26;
 
 const Toast = (props: PropsWithChildren<ToastProps>) => {
   const {
@@ -213,7 +216,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
 
   const _renderAttachment = (positionStyle: object, zIndex?: number) => {
     return (
-      <View style={[positionStyle, {zIndex}]} pointerEvents={'box-none'}>
+      <View useSafeArea={isIOS26OrLater} style={[positionStyle, {zIndex}]} pointerEvents={'box-none'}>
         {renderAttachmentContent()}
       </View>
     );
