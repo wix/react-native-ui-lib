@@ -23,6 +23,11 @@ We are working on upgrading our UI Library to support the new React Native Archi
 Currently, we support React Native 0.73, and we plan to support React Native 0.77 next.
 While we don’t have a timeline yet, this is part of our roadmap.
 
+## Releases
+
+Repository administrators: see the [release runbook](docs/RELEASING.md) for manual releases,
+npm trusted publishing setup, and recovery.
+
 ## Links
 - [Docs](https://wix.github.io/react-native-ui-lib/)
 - [Figma library](https://www.figma.com/community/file/1379775092983284111/rnui-library)
