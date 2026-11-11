@@ -1,6 +1,15 @@
 import {useModifiers, useThemeProps} from 'hooks';
 import React, {useEffect, useMemo, useState} from 'react';
-import {View as RNView, SafeAreaView, Animated, ViewProps as RNViewProps, type StyleProp, type ViewStyle, type DimensionValue} from 'react-native';
+import {
+  View as RNView,
+  SafeAreaView,
+  Animated,
+  StyleSheet,
+  ViewProps as RNViewProps,
+  type StyleProp,
+  type ViewStyle,
+  type DimensionValue
+} from 'react-native';
 import type {AnimateProps as RNReanimatedProps} from 'react-native-reanimated';
 import {Constants, ContainerModifiers} from '../../commons/new';
 import type {RecorderProps} from '../../typings/recorderTypes';
@@ -14,9 +23,9 @@ type ReanimatedProps = Partial<Pick<RNReanimatedProps<object>, 'entering' | 'exi
 export interface ViewProps extends Omit<RNViewProps, 'style'>, ReanimatedProps, ContainerModifiers, RecorderProps {
   /**
    * If true, will render as SafeAreaView.
-   * When Constants.isLiquidGlass is on (the default on iOS 26 and later) this is React Native's SafeAreaView, which
-   * insets only the edges the view actually touches; otherwise it is react-native-safe-area-context's SafeAreaView when
-   * that package is installed.
+   * When Constants.isLiquidGlass is on (the default on iOS 26 and later) and the view sets no padding and no edges/mode,
+   * this is React Native's SafeAreaView, which insets only the edges the view actually touches; otherwise it is
+   * react-native-safe-area-context's SafeAreaView when that package is installed.
    */
   useSafeArea?: boolean;
   /**
@@ -61,6 +70,18 @@ const modifiersOptions = {
   gap: true
 };
 
+function hasPadding(paddings: object | undefined, style: ViewProps['style']) {
+  if (paddings && Object.keys(paddings).length > 0) {
+    return true;
+  }
+  const flatStyle = StyleSheet.flatten(style as StyleProp<ViewStyle>);
+  return !!flatStyle && Object.keys(flatStyle).some(key => key.startsWith('padding'));
+}
+
+function hasSafeAreaEdges(props: object) {
+  return 'edges' in props || 'mode' in props;
+}
+
 /**
  * @description: An enhanced View component
  * @extends: View
@@ -100,6 +121,8 @@ function View(props: ViewProps, ref: any) {
     gap
   } = useModifiers(themeProps, modifiersOptions);
   const [ready, setReady] = useState(!renderDelay);
+  const usesPositionAwareSafeArea =
+    !!useSafeArea && Constants.isLiquidGlass && !!SafeAreaView && !hasPadding(paddings, style) && !hasSafeAreaEdges(others);
 
   useEffect(() => {
     if (renderDelay) {
@@ -111,7 +134,7 @@ function View(props: ViewProps, ref: any) {
 
   const ViewContainer = useMemo(() => {
     let container: React.ComponentType<any> = RNView;
-    if (useSafeArea && Constants.isLiquidGlass) {
+    if (usesPositionAwareSafeArea) {
       container = SafeAreaView;
     } else if (useSafeArea && SafeAreaContextPackage?.SafeAreaView) {
       container = SafeAreaContextPackage.SafeAreaView;
@@ -127,7 +150,7 @@ function View(props: ViewProps, ref: any) {
     }
 
     return container;
-  }, [useSafeArea, animated, reanimated]) as React.ComponentType<any>;
+  }, [useSafeArea, usesPositionAwareSafeArea, animated, reanimated]) as React.ComponentType<any>;
 
   const _style = useMemo(() => {
     const backgroundColor = backgroundColorProps || backgroundColorModifiers;

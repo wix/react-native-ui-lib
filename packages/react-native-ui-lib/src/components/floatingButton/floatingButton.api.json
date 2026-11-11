@@ -26,7 +26,7 @@
     {
       "name": "bottomMargin",
       "type": "number",
-      "description": "The bottom margin of the button, or secondary button if passed"
+      "description": "The bottom margin of the button, or secondary button if passed. When Constants.isLiquidGlass is on, the bottom safe-area inset is added to it while the keyboard is hidden"
     },
     {
       "name": "fullWidth",
