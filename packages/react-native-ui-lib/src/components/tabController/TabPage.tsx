@@ -112,5 +112,5 @@ export default function TabPage({
 }
 
 const styles = StyleSheet.create({
-  page: StyleSheet.absoluteFillObject
+  page: StyleSheet.absoluteFill
 });

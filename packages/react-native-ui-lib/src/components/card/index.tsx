@@ -316,11 +316,11 @@ function createStyles({width, height, borderRadius, selectionOptions}: CardProps
       shadowOffset: {height: 5, width: 0}
     },
     blurView: {
-      ...StyleSheet.absoluteFillObject,
+      ...StyleSheet.absoluteFill,
       borderRadius: brRadius
     },
     selectedBorder: {
-      ...StyleSheet.absoluteFillObject,
+      ...StyleSheet.absoluteFill,
       borderRadius: DEFAULT_BORDER_RADIUS,
       borderWidth: selectionOptionsWithDefaults.borderWidth,
       borderColor: selectionOptionsWithDefaults.color

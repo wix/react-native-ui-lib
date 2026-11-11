@@ -468,7 +468,7 @@ class Hint extends Component<HintProps, HintState> {
           testID={`${testID}.overlay`}
         >
           {onBackgroundPress && (
-            <TouchableWithoutFeedback style={StyleSheet.absoluteFillObject} onPress={onBackgroundPress}>
+            <TouchableWithoutFeedback style={StyleSheet.absoluteFill} onPress={onBackgroundPress}>
               <View flex/>
             </TouchableWithoutFeedback>
           )}

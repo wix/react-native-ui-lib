@@ -74,7 +74,7 @@ export default class AnimatedScanner extends BaseComponent {
     const {isDone, animatedProgress} = this.state;
 
     return (
-      <View style={[{...StyleSheet.absoluteFillObject}, containerStyle]}>
+      <View style={[{...StyleSheet.absoluteFill}, containerStyle]}>
         <Animated.View
           style={[
             this.styles.container,
@@ -100,12 +100,12 @@ export default class AnimatedScanner extends BaseComponent {
 function createStyles() {
   return StyleSheet.create({
     container: {
-      ...StyleSheet.absoluteFillObject,
+      ...StyleSheet.absoluteFill,
       backgroundColor: Colors.white,
       opacity: 0.9
     },
     scanner: {
-      ...StyleSheet.absoluteFillObject,
+      ...StyleSheet.absoluteFill,
       borderWidth: StyleSheet.hairlineWidth,
       borderColor: Colors.grey50
     }

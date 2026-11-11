@@ -126,7 +126,7 @@ class Overlay extends PureComponent<OverlayTypes> {
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     width: Constants.isWeb ? '100%' : undefined
   },
   top: {
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     height: '40%'
   },
   customContent: {
-    ...StyleSheet.absoluteFillObject
+    ...StyleSheet.absoluteFill
   }
 });
 
