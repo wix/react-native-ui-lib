@@ -26,7 +26,9 @@ function breakpointComparator(b1: Breakpoint, b2: Breakpoint) {
 const isAndroid: boolean = Platform.OS === 'android';
 const isIOS: boolean = Platform.OS === 'ios';
 const isWeb: boolean = Platform.OS === 'web';
+const supportsLiquidGlass: boolean = isIOS && parseInt(String(Platform.Version), 10) >= 26;
 let isTablet: boolean;
+let isLiquidGlass = supportsLiquidGlass;
 let statusBarHeight: number;
 let screenHeight: number = Dimensions.get('screen').height;
 let screenWidth: number = Dimensions.get('screen').width;
@@ -138,6 +140,12 @@ const constants = {
   },
   set isTablet(value: boolean) {
     isTablet = value;
+  },
+  get isLiquidGlass() {
+    return isLiquidGlass;
+  },
+  set isLiquidGlass(value: boolean) {
+    isLiquidGlass = supportsLiquidGlass && value;
   },
   setBreakpoints(value: Breakpoint[], options?: {defaultMargin: number}) {
     breakpoints = value.sort(breakpointComparator);

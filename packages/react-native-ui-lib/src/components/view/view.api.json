@@ -8,7 +8,11 @@
   "example": "https://github.com/wix/react-native-ui-lib/blob/master/demo/src/screens/componentScreens/ViewScreen.js",
   "images": [],
   "props": [
-    {"name": "useSafeArea", "type": "boolean", "description": "If true, will render as SafeAreaView"},
+    {
+      "name": "useSafeArea",
+      "type": "boolean",
+      "description": "If true, will render as SafeAreaView. When Constants.isLiquidGlass is on (the default on iOS 26 and later) and the view mounts with no padding, no edges/mode and no animated/reanimated container, this is React Native's SafeAreaView, which insets only the edges the view actually touches and ignores padding added later; otherwise it is react-native-safe-area-context's SafeAreaView when that package is installed. The choice is made when the view mounts"
+    },
     {"name": "animated", "type": "boolean", "description": "Use Animate.View as a container"},
     {
       "name": "reanimated",

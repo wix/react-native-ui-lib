@@ -213,7 +213,7 @@ const Toast = (props: PropsWithChildren<ToastProps>) => {
 
   const _renderAttachment = (positionStyle: object, zIndex?: number) => {
     return (
-      <View style={[positionStyle, {zIndex}]} pointerEvents={'box-none'}>
+      <View useSafeArea={Constants.isLiquidGlass && position !== 'top'} style={[positionStyle, {zIndex}]} pointerEvents={'box-none'}>
         {renderAttachmentContent()}
       </View>
     );

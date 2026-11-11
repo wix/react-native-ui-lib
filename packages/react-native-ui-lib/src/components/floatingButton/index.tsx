@@ -1,7 +1,8 @@
-import React, {PropsWithChildren, useEffect, useMemo} from 'react';
-import {StyleSheet} from 'react-native';
+import React, {PropsWithChildren, useContext, useEffect, useMemo, useState} from 'react';
+import {Keyboard, StyleSheet} from 'react-native';
 import {asBaseComponent, Constants} from '../../commons/new';
 import {LogService} from '../../services';
+import {SafeAreaContextPackage} from '../../optionalDependencies';
 import {Colors, Shadows, Spacings} from '../../style';
 import Button, {ButtonProps} from '../button';
 import ScreenFooter, {ScreenFooterProps, ScreenFooterLayouts, ScreenFooterBackgrounds, KeyboardBehavior, ItemsFit} from '../screenFooter';
@@ -25,7 +26,8 @@ export interface FloatingButtonProps extends Pick<ScreenFooterProps, 'isAndroidE
    */
   secondaryButton?: PropsWithChildren<ButtonProps>;
   /**
-   * The bottom margin of the button, or secondary button if passed
+   * The bottom margin of the button, or secondary button if passed.
+   * When Constants.isLiquidGlass is on, the bottom safe-area inset is added to it; a hoisted button drops it while the keyboard is shown.
    */
   bottomMargin?: number;
   /**
@@ -63,6 +65,27 @@ export interface FloatingButtonProps extends Pick<ScreenFooterProps, 'isAndroidE
   testID?: string;
 }
 
+const useKeyboardWillBeShown = (enabled: boolean) => {
+  const [keyboardShown, setKeyboardShown] = useState(() => enabled && Keyboard.isVisible());
+  useEffect(() => {
+    if (!enabled) {
+      return;
+    }
+    setKeyboardShown(Keyboard.isVisible());
+    const showSubscription = Keyboard.addListener('keyboardWillShow', () => setKeyboardShown(true));
+    const hideSubscription = Keyboard.addListener('keyboardWillHide', () => setKeyboardShown(false));
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, [enabled]);
+  return enabled && keyboardShown;
+};
+
+const NoSafeAreaInsetsContext = React.createContext<{bottom: number} | null>(null);
+const SafeAreaInsetsContext: React.Context<{bottom: number} | null> =
+  SafeAreaContextPackage?.SafeAreaInsetsContext ?? NoSafeAreaInsetsContext;
+
 /**
  * @description: Hovering button with gradient background, backed by ScreenFooter
  * @modifiers: margin, background, color
@@ -93,16 +116,19 @@ const FloatingButton = (props: FloatingButtonProps) => {
     );
   }, []);
 
+  const insets = useContext(SafeAreaInsetsContext);
+  const keyboardShown = useKeyboardWillBeShown(Constants.isLiquidGlass && hoisted);
+  const bottomInset = Constants.isLiquidGlass && !keyboardShown ? insets?.bottom ?? 0 : 0;
   const isSecondaryOnly = !!secondaryButton && !button;
   const isHorizontal = buttonLayout === FloatingButtonLayouts.HORIZONTAL || isSecondaryOnly;
 
   const footerContentContainerStyle = useMemo(() => {
     if (bottomMargin !== undefined) {
-      return {paddingBottom: bottomMargin};
+      return {paddingBottom: bottomMargin + bottomInset};
     }
     const isSecondaryAtBottom = !!secondaryButton && (isSecondaryOnly || !isHorizontal);
-    return {paddingBottom: isSecondaryAtBottom ? Spacings.s7 : Spacings.s8};
-  }, [bottomMargin, secondaryButton, isSecondaryOnly, isHorizontal]);
+    return {paddingBottom: (isSecondaryAtBottom ? Spacings.s7 : Spacings.s8) + bottomInset};
+  }, [bottomMargin, secondaryButton, isSecondaryOnly, isHorizontal, bottomInset]);
 
   if (!button && !secondaryButton) {
     return null;
