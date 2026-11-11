@@ -14,6 +14,7 @@ import type {AnimateProps as RNReanimatedProps} from 'react-native-reanimated';
 import {Constants, ContainerModifiers} from '../../commons/new';
 import type {RecorderProps} from '../../typings/recorderTypes';
 import {SafeAreaContextPackage} from '../../optionalDependencies';
+import {LogService} from '../../services';
 
 /**
  * Extra props when using reanimated (only non experimental props)
@@ -25,8 +26,8 @@ export interface ViewProps extends Omit<RNViewProps, 'style'>, ReanimatedProps, 
    * If true, will render as SafeAreaView.
    * When Constants.isLiquidGlass is on (the default on iOS 26 and later) and the view mounts with no padding, no
    * edges/mode and no animated/reanimated container, this is React Native's SafeAreaView, which insets only the edges
-   * the view actually touches; otherwise it is react-native-safe-area-context's SafeAreaView when that package is
-   * installed.
+   * the view actually touches and ignores padding added later; otherwise it is react-native-safe-area-context's
+   * SafeAreaView when that package is installed. The choice is made when the view mounts.
    */
   useSafeArea?: boolean;
   /**
@@ -122,11 +123,24 @@ function View(props: ViewProps, ref: any) {
     gap
   } = useModifiers(themeProps, modifiersOptions);
   const [ready, setReady] = useState(!renderDelay);
-  const [canUsePositionAwareSafeArea] = useState(() => {
-    return !animated && !reanimated && !hasPadding(paddings, style) && !hasSafeAreaEdges(others);
+  const [usesPositionAwareSafeArea] = useState(() => {
+    return (
+      !!useSafeArea &&
+      Constants.isLiquidGlass &&
+      !!SafeAreaView &&
+      !animated &&
+      !reanimated &&
+      !hasPadding(paddings, style) &&
+      !hasSafeAreaEdges(others)
+    );
   });
-  const usesPositionAwareSafeArea =
-    !!useSafeArea && Constants.isLiquidGlass && !!SafeAreaView && canUsePositionAwareSafeArea;
+
+  useEffect(() => {
+    if (__DEV__ && usesPositionAwareSafeArea && hasPadding(paddings, style)) {
+      // eslint-disable-next-line max-len
+      LogService.warn('RNUILib View: padding added after mount to a useSafeArea view is ignored on iOS 26 with Constants.isLiquidGlass on. Set the padding when the view mounts, or wrap the content in an inner View.');
+    }
+  }, [usesPositionAwareSafeArea, paddings, style]);
 
   useEffect(() => {
     if (renderDelay) {

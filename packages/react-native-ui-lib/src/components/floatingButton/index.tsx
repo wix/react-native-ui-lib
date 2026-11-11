@@ -27,7 +27,7 @@ export interface FloatingButtonProps extends Pick<ScreenFooterProps, 'isAndroidE
   secondaryButton?: PropsWithChildren<ButtonProps>;
   /**
    * The bottom margin of the button, or secondary button if passed.
-   * When Constants.isLiquidGlass is on, the bottom safe-area inset is added to it while the keyboard is hidden (or about to hide).
+   * When Constants.isLiquidGlass is on, the bottom safe-area inset is added to it; a hoisted button drops it while the keyboard is shown.
    */
   bottomMargin?: number;
   /**
@@ -65,20 +65,21 @@ export interface FloatingButtonProps extends Pick<ScreenFooterProps, 'isAndroidE
   testID?: string;
 }
 
-const useKeyboardWillBeShown = () => {
-  const [keyboardShown, setKeyboardShown] = useState(false);
+const useKeyboardWillBeShown = (enabled: boolean) => {
+  const [keyboardShown, setKeyboardShown] = useState(() => enabled && Keyboard.isVisible());
   useEffect(() => {
-    if (!Constants.isLiquidGlass) {
+    if (!enabled) {
       return;
     }
+    setKeyboardShown(Keyboard.isVisible());
     const showSubscription = Keyboard.addListener('keyboardWillShow', () => setKeyboardShown(true));
     const hideSubscription = Keyboard.addListener('keyboardWillHide', () => setKeyboardShown(false));
     return () => {
       showSubscription.remove();
       hideSubscription.remove();
     };
-  }, []);
-  return keyboardShown;
+  }, [enabled]);
+  return enabled && keyboardShown;
 };
 
 const NoSafeAreaInsetsContext = React.createContext<{bottom: number} | null>(null);
@@ -116,7 +117,7 @@ const FloatingButton = (props: FloatingButtonProps) => {
   }, []);
 
   const insets = useContext(SafeAreaInsetsContext);
-  const keyboardShown = useKeyboardWillBeShown();
+  const keyboardShown = useKeyboardWillBeShown(Constants.isLiquidGlass && hoisted);
   const bottomInset = Constants.isLiquidGlass && !keyboardShown ? insets?.bottom ?? 0 : 0;
   const isSecondaryOnly = !!secondaryButton && !button;
   const isHorizontal = buttonLayout === FloatingButtonLayouts.HORIZONTAL || isSecondaryOnly;

@@ -49,17 +49,28 @@ describe('FloatingButton with Liquid Glass', () => {
     expect(contentPaddingBottom(renderButton({bottomMargin: 10}))).toBe(10 + INSETS.bottom);
   });
 
-  it('should drop the inset as the keyboard starts to show and restore it as it starts to hide', () => {
-    const renderTree = renderButton();
+  it('should drop the inset of a hoisted button as the keyboard starts to show and restore it as it starts to hide', () => {
+    const renderTree = renderButton({hoisted: true});
     act(() => keyboardListeners.keyboardWillShow());
     expect(contentPaddingBottom(renderTree)).toBe(Spacings.s8);
     act(() => keyboardListeners.keyboardWillHide());
     expect(contentPaddingBottom(renderTree)).toBe(Spacings.s8 + INSETS.bottom);
   });
 
+  it('should drop the inset of a hoisted button that mounts while the keyboard is shown', () => {
+    jest.spyOn(Keyboard, 'isVisible').mockReturnValue(true);
+    expect(contentPaddingBottom(renderButton({hoisted: true}))).toBe(Spacings.s8);
+  });
+
+  it('should keep the inset of a sticky button and not listen to the keyboard', () => {
+    const renderTree = renderButton();
+    expect(keyboardListeners.keyboardWillShow).toBeUndefined();
+    expect(contentPaddingBottom(renderTree)).toBe(Spacings.s8 + INSETS.bottom);
+  });
+
   it('should not listen to the keyboard when Liquid Glass is off', () => {
     liquidGlass.mockReturnValue(false);
-    renderButton();
+    renderButton({hoisted: true});
     expect(keyboardListeners.keyboardWillShow).toBeUndefined();
     expect(keyboardListeners.keyboardWillHide).toBeUndefined();
   });

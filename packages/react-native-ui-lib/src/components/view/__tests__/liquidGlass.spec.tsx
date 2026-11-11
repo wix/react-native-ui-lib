@@ -2,6 +2,7 @@ import React from 'react';
 import {SafeAreaView, View as RNView} from 'react-native';
 import {render} from '@testing-library/react-native';
 import {Constants} from '../../../commons/new';
+import {LogService} from '../../../services';
 import View from '../index';
 
 jest.mock('../../../optionalDependencies', () => {
@@ -50,13 +51,23 @@ describe('View useSafeArea with Liquid Glass', () => {
     expect(UNSAFE_queryByType(SafeAreaView)).toBeNull();
   });
 
-  it('should switch container when the flag changes after mount', () => {
+  it('should keep the container chosen at mount when the flag changes', () => {
     liquidGlass.mockReturnValue(false);
     const {UNSAFE_queryByType, rerender} = render(<View useSafeArea testID="view"/>);
     expect(UNSAFE_queryByType(SafeAreaView)).toBeNull();
     liquidGlass.mockReturnValue(true);
     rerender(<View useSafeArea testID="view"/>);
-    expect(UNSAFE_queryByType(SafeAreaView)).toBeTruthy();
+    expect(UNSAFE_queryByType(SafeAreaView)).toBeNull();
+    expect(UNSAFE_queryByType(SafeAreaContextPackage.SafeAreaView)).toBeTruthy();
+  });
+
+  it('should warn when padding is added after mount to a position-aware view', () => {
+    const warn = jest.spyOn(LogService, 'warn').mockImplementation(() => {});
+    const {rerender} = render(<View useSafeArea testID="view"/>);
+    expect(warn).not.toHaveBeenCalled();
+    rerender(<View useSafeArea testID="view" style={{paddingBottom: 20}}/>);
+    expect(warn).toHaveBeenCalledTimes(1);
+    warn.mockRestore();
   });
 
   it.each([
@@ -65,6 +76,7 @@ describe('View useSafeArea with Liquid Glass', () => {
   ])('should keep the safe-area-context SafeAreaView for an %s view', (_name, props) => {
     const {UNSAFE_queryByType} = render(<View useSafeArea testID="view" {...props}/>);
     expect(UNSAFE_queryByType(SafeAreaView)).toBeNull();
+    expect(UNSAFE_queryByType(SafeAreaContextPackage.SafeAreaView)).toBeTruthy();
   });
 
   it('should not remount its children when padding toggles', () => {
