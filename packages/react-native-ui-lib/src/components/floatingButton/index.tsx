@@ -1,5 +1,5 @@
 import React, {PropsWithChildren, useEffect, useMemo} from 'react';
-import {StyleSheet, Platform} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {asBaseComponent, Constants} from '../../commons/new';
 import {LogService} from '../../services';
 import {SafeAreaContextPackage} from '../../optionalDependencies';
@@ -64,7 +64,6 @@ export interface FloatingButtonProps extends Pick<ScreenFooterProps, 'isAndroidE
   testID?: string;
 }
 
-const isIOS26OrLater = Constants.isIOS && parseInt(String(Platform.Version), 10) >= 26;
 const useSafeAreaInsets = SafeAreaContextPackage?.useSafeAreaInsets ?? (() => Constants.getSafeAreaInsets());
 
 /**
@@ -98,7 +97,7 @@ const FloatingButton = (props: FloatingButtonProps) => {
   }, []);
 
   const insets = useSafeAreaInsets();
-  const bottomInset = isIOS26OrLater ? insets.bottom : 0;
+  const bottomInset = Constants.isLiquidGlass ? insets.bottom : 0;
   const isSecondaryOnly = !!secondaryButton && !button;
   const isHorizontal = buttonLayout === FloatingButtonLayouts.HORIZONTAL || isSecondaryOnly;
 

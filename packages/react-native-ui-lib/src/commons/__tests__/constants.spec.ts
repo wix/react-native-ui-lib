@@ -86,4 +86,39 @@ describe('Constants', () => {
       expect(Constants.getPageMargins()).toBe(5);
     });
   });
+
+  describe('isLiquidGlass', () => {
+    const loadConstants = (os: string, version: number | string) => {
+      let constants: typeof Constants;
+      jest.isolateModules(() => {
+        const {Platform} = require('react-native');
+        const original = {OS: Platform.OS, Version: Platform.Version};
+        Object.defineProperty(Platform, 'OS', {value: os, configurable: true, writable: true});
+        Object.defineProperty(Platform, 'Version', {value: version, configurable: true, writable: true});
+        constants = require('../Constants').default;
+        Object.defineProperty(Platform, 'OS', {value: original.OS, configurable: true, writable: true});
+        Object.defineProperty(Platform, 'Version', {value: original.Version, configurable: true, writable: true});
+      });
+      return constants!;
+    };
+
+    it('is on by default on iOS 26 and later', () => {
+      expect(loadConstants('ios', '26.0').isLiquidGlass).toBe(true);
+    });
+
+    it('can be turned off and back on by apps that opt out of Liquid Glass', () => {
+      const constants = loadConstants('ios', '26.0');
+      constants.isLiquidGlass = false;
+      expect(constants.isLiquidGlass).toBe(false);
+      constants.isLiquidGlass = true;
+      expect(constants.isLiquidGlass).toBe(true);
+    });
+
+    it('stays off below iOS 26', () => {
+      const constants = loadConstants('ios', '18.5');
+      expect(constants.isLiquidGlass).toBe(false);
+      constants.isLiquidGlass = true;
+      expect(constants.isLiquidGlass).toBe(false);
+    });
+  });
 });
