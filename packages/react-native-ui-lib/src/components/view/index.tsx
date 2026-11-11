@@ -23,9 +23,10 @@ type ReanimatedProps = Partial<Pick<RNReanimatedProps<object>, 'entering' | 'exi
 export interface ViewProps extends Omit<RNViewProps, 'style'>, ReanimatedProps, ContainerModifiers, RecorderProps {
   /**
    * If true, will render as SafeAreaView.
-   * When Constants.isLiquidGlass is on (the default on iOS 26 and later) and the view sets no padding and no edges/mode,
-   * this is React Native's SafeAreaView, which insets only the edges the view actually touches; otherwise it is
-   * react-native-safe-area-context's SafeAreaView when that package is installed.
+   * When Constants.isLiquidGlass is on (the default on iOS 26 and later) and the view mounts with no padding, no
+   * edges/mode and no animated/reanimated container, this is React Native's SafeAreaView, which insets only the edges
+   * the view actually touches; otherwise it is react-native-safe-area-context's SafeAreaView when that package is
+   * installed.
    */
   useSafeArea?: boolean;
   /**
@@ -121,8 +122,11 @@ function View(props: ViewProps, ref: any) {
     gap
   } = useModifiers(themeProps, modifiersOptions);
   const [ready, setReady] = useState(!renderDelay);
+  const [canUsePositionAwareSafeArea] = useState(() => {
+    return !animated && !reanimated && !hasPadding(paddings, style) && !hasSafeAreaEdges(others);
+  });
   const usesPositionAwareSafeArea =
-    !!useSafeArea && Constants.isLiquidGlass && !!SafeAreaView && !hasPadding(paddings, style) && !hasSafeAreaEdges(others);
+    !!useSafeArea && Constants.isLiquidGlass && !!SafeAreaView && canUsePositionAwareSafeArea;
 
   useEffect(() => {
     if (renderDelay) {

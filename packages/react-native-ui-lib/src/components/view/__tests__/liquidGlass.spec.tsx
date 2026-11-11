@@ -59,6 +59,26 @@ describe('View useSafeArea with Liquid Glass', () => {
     expect(UNSAFE_queryByType(SafeAreaView)).toBeTruthy();
   });
 
+  it.each([
+    ['animated', {animated: true}],
+    ['reanimated', {reanimated: true}]
+  ])('should keep the safe-area-context SafeAreaView for an %s view', (_name, props) => {
+    const {UNSAFE_queryByType} = render(<View useSafeArea testID="view" {...props}/>);
+    expect(UNSAFE_queryByType(SafeAreaView)).toBeNull();
+  });
+
+  it('should not remount its children when padding toggles', () => {
+    const mounts = jest.fn();
+    const Child = () => {
+      React.useEffect(() => mounts(), []);
+      return null;
+    };
+    const {rerender} = render(<View useSafeArea testID="view"><Child/></View>);
+    rerender(<View useSafeArea testID="view" style={{paddingBottom: 20}}><Child/></View>);
+    rerender(<View useSafeArea testID="view"><Child/></View>);
+    expect(mounts).toHaveBeenCalledTimes(1);
+  });
+
   it('should render a plain view without useSafeArea', () => {
     const {UNSAFE_queryByType} = render(<View testID="view"/>);
     expect(UNSAFE_queryByType(SafeAreaView)).toBeNull();

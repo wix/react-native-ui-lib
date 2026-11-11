@@ -4,8 +4,8 @@ import {render} from '@testing-library/react-native';
 import {Constants} from '../../../commons/new';
 import Toast from '../index';
 
-const renderHiddenToastWithAttachment = () =>
-  render(<Toast visible={false} testID="toast" renderAttachment={() => <Text testID="attachment">Attachment</Text>}/>);
+const renderHiddenToastWithAttachment = (position?: 'top' | 'bottom') =>
+  render(<Toast visible={false} position={position} testID="toast" renderAttachment={() => <Text testID="attachment">Attachment</Text>}/>);
 
 describe('Toast attachment with Liquid Glass', () => {
   let liquidGlass: jest.SpyInstance;
@@ -22,6 +22,12 @@ describe('Toast attachment with Liquid Glass', () => {
     const {UNSAFE_queryByType, getByTestId} = renderHiddenToastWithAttachment();
     expect(getByTestId('attachment')).toBeTruthy();
     expect(UNSAFE_queryByType(SafeAreaView)).toBeTruthy();
+  });
+
+  it('should keep a top attachment flush with the top of the screen', () => {
+    const {UNSAFE_queryByType, getByTestId} = renderHiddenToastWithAttachment('top');
+    expect(getByTestId('attachment')).toBeTruthy();
+    expect(UNSAFE_queryByType(SafeAreaView)).toBeNull();
   });
 
   it('should render the hidden attachment in a plain view when Liquid Glass is off', () => {

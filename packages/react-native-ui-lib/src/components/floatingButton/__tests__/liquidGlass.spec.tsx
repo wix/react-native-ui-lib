@@ -1,12 +1,9 @@
 import React from 'react';
-import {StyleSheet, ViewStyle} from 'react-native';
-import {render} from '@testing-library/react-native';
+import {Keyboard, StyleSheet, ViewStyle} from 'react-native';
+import {act, render} from '@testing-library/react-native';
 import {Constants} from '../../../commons/new';
 import {Spacings} from '../../../style';
-import useKeyboardHeight from '../../../hooks/useKeyboardHeight';
 import FloatingButton from '../index';
-
-jest.mock('../../../hooks/useKeyboardHeight', () => ({__esModule: true, default: jest.fn(() => 0)}));
 
 jest.mock('../../../optionalDependencies', () => {
   const actualOptional = jest.requireActual('../../../optionalDependencies');
@@ -20,7 +17,8 @@ const TEST_ID = 'floating_button';
 
 const renderButton = (props: object = {}, insets: object | null = INSETS) => {
   const tree = <FloatingButton visible hoisted={false} button={{label: 'First'}} testID={TEST_ID} {...props}/>;
-  return render(insets ? <SafeAreaContextPackage.SafeAreaInsetsContext.Provider value={insets}>{tree}</SafeAreaContextPackage.SafeAreaInsetsContext.Provider> : tree);
+  const {SafeAreaInsetsContext} = SafeAreaContextPackage;
+  return render(insets ? <SafeAreaInsetsContext.Provider value={insets}>{tree}</SafeAreaInsetsContext.Provider> : tree);
 };
 
 const contentPaddingBottom = (renderTree: ReturnType<typeof render>) =>
@@ -28,14 +26,19 @@ const contentPaddingBottom = (renderTree: ReturnType<typeof render>) =>
 
 describe('FloatingButton with Liquid Glass', () => {
   let liquidGlass: jest.SpyInstance;
+  let keyboardListeners: Record<string, () => void>;
 
   beforeEach(() => {
     liquidGlass = jest.spyOn(Constants, 'isLiquidGlass', 'get').mockReturnValue(true);
-    (useKeyboardHeight as jest.Mock).mockReturnValue(0);
+    keyboardListeners = {};
+    jest.spyOn(Keyboard, 'addListener').mockImplementation(((event: string, listener: () => void) => {
+      keyboardListeners[event] = listener;
+      return {remove: jest.fn()};
+    }) as any);
   });
 
   afterEach(() => {
-    liquidGlass.mockRestore();
+    jest.restoreAllMocks();
   });
 
   it('should add the bottom safe-area inset', () => {
@@ -46,9 +49,19 @@ describe('FloatingButton with Liquid Glass', () => {
     expect(contentPaddingBottom(renderButton({bottomMargin: 10}))).toBe(10 + INSETS.bottom);
   });
 
-  it('should not add the inset while the keyboard is visible', () => {
-    (useKeyboardHeight as jest.Mock).mockReturnValue(300);
-    expect(contentPaddingBottom(renderButton())).toBe(Spacings.s8);
+  it('should drop the inset as the keyboard starts to show and restore it as it starts to hide', () => {
+    const renderTree = renderButton();
+    act(() => keyboardListeners.keyboardWillShow());
+    expect(contentPaddingBottom(renderTree)).toBe(Spacings.s8);
+    act(() => keyboardListeners.keyboardWillHide());
+    expect(contentPaddingBottom(renderTree)).toBe(Spacings.s8 + INSETS.bottom);
+  });
+
+  it('should not listen to the keyboard when Liquid Glass is off', () => {
+    liquidGlass.mockReturnValue(false);
+    renderButton();
+    expect(keyboardListeners.keyboardWillShow).toBeUndefined();
+    expect(keyboardListeners.keyboardWillHide).toBeUndefined();
   });
 
   it('should not add an inset outside a safe area provider', () => {

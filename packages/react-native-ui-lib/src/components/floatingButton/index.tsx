@@ -1,8 +1,7 @@
-import React, {PropsWithChildren, useContext, useEffect, useMemo} from 'react';
-import {StyleSheet} from 'react-native';
+import React, {PropsWithChildren, useContext, useEffect, useMemo, useState} from 'react';
+import {Keyboard, StyleSheet} from 'react-native';
 import {asBaseComponent, Constants} from '../../commons/new';
 import {LogService} from '../../services';
-import {useKeyboardHeight} from '../../hooks';
 import {SafeAreaContextPackage} from '../../optionalDependencies';
 import {Colors, Shadows, Spacings} from '../../style';
 import Button, {ButtonProps} from '../button';
@@ -28,7 +27,7 @@ export interface FloatingButtonProps extends Pick<ScreenFooterProps, 'isAndroidE
   secondaryButton?: PropsWithChildren<ButtonProps>;
   /**
    * The bottom margin of the button, or secondary button if passed.
-   * When Constants.isLiquidGlass is on, the bottom safe-area inset is added to it while the keyboard is hidden.
+   * When Constants.isLiquidGlass is on, the bottom safe-area inset is added to it while the keyboard is hidden (or about to hide).
    */
   bottomMargin?: number;
   /**
@@ -66,6 +65,22 @@ export interface FloatingButtonProps extends Pick<ScreenFooterProps, 'isAndroidE
   testID?: string;
 }
 
+const useKeyboardWillBeShown = () => {
+  const [keyboardShown, setKeyboardShown] = useState(false);
+  useEffect(() => {
+    if (!Constants.isLiquidGlass) {
+      return;
+    }
+    const showSubscription = Keyboard.addListener('keyboardWillShow', () => setKeyboardShown(true));
+    const hideSubscription = Keyboard.addListener('keyboardWillHide', () => setKeyboardShown(false));
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
+  return keyboardShown;
+};
+
 const NoSafeAreaInsetsContext = React.createContext<{bottom: number} | null>(null);
 const SafeAreaInsetsContext: React.Context<{bottom: number} | null> =
   SafeAreaContextPackage?.SafeAreaInsetsContext ?? NoSafeAreaInsetsContext;
@@ -101,8 +116,8 @@ const FloatingButton = (props: FloatingButtonProps) => {
   }, []);
 
   const insets = useContext(SafeAreaInsetsContext);
-  const keyboardHeight = useKeyboardHeight();
-  const bottomInset = Constants.isLiquidGlass && keyboardHeight === 0 ? insets?.bottom ?? 0 : 0;
+  const keyboardShown = useKeyboardWillBeShown();
+  const bottomInset = Constants.isLiquidGlass && !keyboardShown ? insets?.bottom ?? 0 : 0;
   const isSecondaryOnly = !!secondaryButton && !button;
   const isHorizontal = buttonLayout === FloatingButtonLayouts.HORIZONTAL || isSecondaryOnly;
 

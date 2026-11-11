@@ -11,7 +11,7 @@
     {
       "name": "useSafeArea",
       "type": "boolean",
-      "description": "If true, will render as SafeAreaView. When Constants.isLiquidGlass is on (the default on iOS 26 and later) and the view sets no padding and no edges/mode, this is React Native's SafeAreaView, which insets only the edges the view actually touches; otherwise it is react-native-safe-area-context's SafeAreaView when that package is installed"
+      "description": "If true, will render as SafeAreaView. When Constants.isLiquidGlass is on (the default on iOS 26 and later) and the view mounts with no padding, no edges/mode and no animated/reanimated container, this is React Native's SafeAreaView, which insets only the edges the view actually touches; otherwise it is react-native-safe-area-context's SafeAreaView when that package is installed"
     },
     {"name": "animated", "type": "boolean", "description": "Use Animate.View as a container"},
     {
