@@ -9,6 +9,7 @@
 #import "RCTCustomKeyboardViewControllerTemp.h"
 
 #import <React/RCTUIManager.h>
+#import <React/RCTUtils.h>
 #import <objc/runtime.h>
 
 #import "LNAnimatorTemp.h"
@@ -264,7 +265,7 @@ RCT_EXPORT_METHOD(resetInput:(nonnull NSNumber*)inputFieldTag)
 
 RCT_EXPORT_METHOD(dismissKeyboard)
 {
-    UIView *firstResponder = [self getFirstResponder:[UIApplication sharedApplication].delegate.window];
+    UIView *firstResponder = [self getFirstResponder:RCTKeyWindow()];
     if(firstResponder != nil)
     {
         [firstResponder resignFirstResponder];
