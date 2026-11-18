@@ -8,6 +8,7 @@ import type {
   TextStyle,
   ViewStyle
 } from 'react-native';
+import type {ModalProps} from '../modal';
 
 export type PositionStyle = Pick<ViewStyle, 'top' | 'bottom' | 'left' | 'right'>;
 
@@ -65,6 +66,10 @@ export interface HintProps {
    * Open the hint using a Modal component
    */
   useModal?: boolean;
+  /**
+   * Additional props for the modal.
+   */
+  modalProps?: ModalProps;
   /**
    * Show side tips instead of the middle tip
    */

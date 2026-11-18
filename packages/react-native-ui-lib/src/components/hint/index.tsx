@@ -34,6 +34,7 @@ const Hint = (props: HintProps) => {
     edgeMargins = DEFAULT_EDGE_MARGINS,
     targetFrame,
     useSideTip,
+    modalProps,
     onPress,
     onBackgroundPress,
     backdropColor,
@@ -216,6 +217,7 @@ const Hint = (props: HintProps) => {
       {renderChildren()}
       {isUsingModal ? (
         <Modal
+          {...modalProps}
           visible={showHint}
           animationType={backdropColor ? 'fade' : 'none'}
           overlayBackgroundColor={backdropColor}
