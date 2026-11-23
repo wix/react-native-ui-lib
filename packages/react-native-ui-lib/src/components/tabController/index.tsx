@@ -1,8 +1,9 @@
 // TODO: support commented props
 import _ from 'lodash';
-import React, {PropsWithChildren, useMemo, useEffect, useState, useCallback} from 'react';
+import React, {PropsWithChildren, useMemo, useEffect, useCallback} from 'react';
+import {useWindowDimensions} from 'react-native';
 import {useAnimatedReaction, useSharedValue, withTiming, runOnJS} from 'react-native-reanimated';
-import {useOrientation, useThemeProps} from '../../hooks';
+import {useThemeProps} from '../../hooks';
 import {Constants} from '../../commons/new';
 import TabBarContext from './TabBarContext';
 import TabBar, {TabControllerBarProps} from './TabBar';
@@ -52,9 +53,9 @@ export interface TabControllerProps {
   children?: React.ReactNode;
 }
 
-const getScreenWidth = (useSafeArea: boolean) => {
+const getScreenWidth = (useSafeArea: boolean, windowWidth: number = Constants.windowWidth) => {
   const {left, right} = Constants.getSafeAreaInsets();
-  return Constants.windowWidth - (useSafeArea && Constants.isIphoneX ? left + right : 0);
+  return windowWidth - (useSafeArea && Constants.isIphoneX ? left + right : 0);
 };
 
 /**
@@ -75,17 +76,14 @@ const TabController = React.forwardRef((props: PropsWithChildren<TabControllerPr
     useSafeArea = false,
     children
   } = themeProps;
-  const [screenWidth, setScreenWidth] = useState<number>(getScreenWidth(useSafeArea));
+  // Re-layout when the window width changes, not only on orientation changes
+  // (foldables and split-screen keep the same orientation).
+  const {width: windowWidth} = useWindowDimensions();
+  const screenWidth = useMemo(() => getScreenWidth(useSafeArea, windowWidth), [windowWidth, useSafeArea]);
 
   if (items?.length < 2) {
     console.warn('TabController component expect a minimum of 2 items');
   }
-
-  useOrientation({
-    onOrientationChange: () => {
-      setScreenWidth(getScreenWidth(useSafeArea));
-    }
-  });
 
   const pageWidth = useMemo(() => {
     return carouselPageWidth || screenWidth;
