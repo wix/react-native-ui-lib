@@ -161,12 +161,12 @@ const TabBar = (props: Props) => {
   } = props;
 
   const tabBar = useRef<FadedScrollViewRef>(null);
-  const [key, setKey] = useState<string>(generateKey(Constants.orientation, labelColor, selectedLabelColor));
-  const context = useContext(TabBarContext);
+    const context = useContext(TabBarContext);
   const {items: contextItems, currentPage, targetPage, containerWidth: contextContainerWidth} = context;
   const containerWidth: number = useMemo(() => {
     return propsContainerWidth || contextContainerWidth;
   }, [propsContainerWidth, contextContainerWidth]);
+  const [key, setKey] = useState<string>(generateKey(Constants.orientation, labelColor, selectedLabelColor, containerWidth));
   const items = useMemo(() => {
     return contextItems || propsItems;
   }, [contextItems, propsItems]);
@@ -285,12 +285,12 @@ const TabBar = (props: Props) => {
       focusIndex(currentPage.value);
     } else {
       reset();
-      setKey(generateKey(Constants.orientation, labelColor, selectedLabelColor));
+      setKey(generateKey(Constants.orientation, labelColor, selectedLabelColor, containerWidth));
     }
   }, [containerWidth]);
 
   useDidUpdate(() => {
-    setKey(generateKey(Constants.orientation, labelColor, selectedLabelColor));
+    setKey(generateKey(Constants.orientation, labelColor, selectedLabelColor, containerWidth));
   }, [labelColor, selectedLabelColor]);
 
   return (
@@ -360,7 +360,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const generateKey = (orientation: string, labelColor = '', selectedLabelColor = '') =>
-  `${orientation}_${labelColor}_${selectedLabelColor}`;
+const generateKey = (orientation: string, labelColor = '', selectedLabelColor = '', containerWidth?: number) =>
+  `${orientation}_${labelColor}_${selectedLabelColor}_${containerWidth}`;
 
 export default asBaseComponent<TabControllerBarProps>(forwardRef<Props>(TabBar));
